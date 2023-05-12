@@ -1,0 +1,398 @@
+@extends('layouts.app')
+@section('content')
+<style>
+    .signature-pad--body { }
+    .signature-pad--footer { margin-top: 5px; }
+    .signature-pad--actions .button { background: #ddd; border: none; border-radius: 5px; display; inline-block; margin: 5px 5px 0 0; padding: 3px 15px; }
+    .signature-pad--actions .button:hover { background: #333; color: #fff; }
+    .signature-pad--body canvas { border: #E1E1E1 solid 1px; width: 100%; height: 200px; }
+</style>
+<?php
+	$content = [];
+    if($page2->json_content){
+        $content = json_decode($page2->json_content, true);
+    }
+
+?>
+<div class="main-wrap">
+				@include('inc.banner')
+				<div class="container main-inner">
+					<h1 class="title-1 text-center">Insurance</h1>
+                    @include('inc.breadcrumb')
+                    @include('inc.messages')
+					<div class="form-details">
+						<h2 class="title-2">Section 1: Main Driver's Particulars</h2>
+						<div class="form-control txt"><strong>Name</strong>: {{$insurance->main_driver_full_name??""}}</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>NRIC</strong>: <span>{{$insurance->main_driver_nric??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Marital Status</strong>: <span>{{$insurance->main_driver_marital_status??""}}</span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Date of Birth</strong>: <span>{{$insurance->main_driver_date_of_birth??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Occupation</strong>: <span>{{$insurance->main_driver_occupation??""}}</span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>License Passed Date</strong>: <span>{{$insurance->main_driver_license_pass_date??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Contact Number</strong>: <span>{{$insurance->main_driver_country_code??""}}{{$insurance->main_driver_contact_number??""}}</span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Gender</strong>: <span>{{$insurance->main_driver_gender??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Email Address</strong>: <span>{{$insurance->main_driver_email??""}}</span></div>
+							</div>
+						</div>
+                        @if(isset($insurance->named_driver) && $insurance->named_driver==1)
+						<h2 class="title-2 mt-50 mt-991-30">Section 2</h2>
+						<div class="title-3">Named Drive</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Name</strong>: <span>{{$insurance->driver_full_name??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Gender</strong>: <span>{{$insurance->driver_gender??""}}</span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>NRIC</strong>: <span>{{$insurance->driver_nric??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Marital Status</strong>: <span>{{$insurance->driver_marital_status??""}}</span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Date of Birth</strong>: <span>{{$insurance->driver_date_of_birth??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Occupation</strong>: <span>{{$insurance->driver_occupation??""}}</span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>License Passed Date</strong>: <span>{{$insurance->driver_license_pass_date??""}}</span></div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<div class="form-control txt"><strong>Relationship to Main Driver</strong>: <span>{{$insurance->relationship_main_driver??""}}</span></div>
+							</div>
+						</div>
+                        @endif
+						<h2 class="title-2 mt-50 mt-991-30">Vehicle Details for Insurance Quotation</h2>
+						<div class="row">
+							<div class="col-lg-6">
+								<label class="lb-3">Car Plate Number</label>
+								<div class="form-control txt">{{$insurance->vehicles_car_plate_no??""}}</div>
+							</div>
+							<div class="col-lg-6 mt-991-20">
+								<label class="lb-3">Make/Model</label>
+								<div class="form-control txt">{{$insurance->make_model??""}}</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Engine Capacity</label>
+								<div class="form-control txt">{{$insurance->engine_capacity??""}}</div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Date of Registration</label>
+								<div class="form-control txt">{{$insurance->date_of_registration??""}}</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Year of Manufacture</label>
+								<div class="form-control txt">{{$insurance->year_of_manufacture??""}}</div>
+							</div>
+							<div class="col-lg-6 check-inline mt-20">
+								<div class="lb">Is this an OPC Car</div>
+							    <div class="group form-control txt" style="border:none !important;">
+								<div class="radio">
+									<input type="radio" id="opc-yes" disabled="disabled" name="is_opc_car" value="1" @if($insurance->is_opc_car==1)checked @endif />
+									<label for="opc-yes">Yes</label>
+								</div>
+								<div class="radio">
+									<input type="radio" id="opc-no" disabled="disabled" name="is_opc_car" value="2" @if($insurance->is_opc_car==2)checked @endif />
+									<label for="opc-no">No</label>
+								</div>
+							</div>
+							</div>
+						</div>
+						<div class="title-3 mt-30 line-1">If you don't have the information </div>
+						<div class="mt-20">
+							<label class="lb-3">Car Plate Number</label>
+							<div class="form-control txt">{{$insurance->car_plate_no??""}}</div>
+						</div>
+						<div class="mt-20">
+							<label class="lb-3">NRIC/UEN/Business/Passport Number</label>
+							<div class="form-control txt">{{$insurance->nric_uen_business_passport??""}}</div>
+						</div>
+						<div class="line-1 mt-30">
+							<div class="row">
+								<div class="col-lg-6">
+									<label class="title-3">NCD (%)</label>
+									<div class="form-control txt">{{$insurance->ncd??""}}</div>
+								</div>
+								<div class="col-lg-6 mt-991-20">
+									<label class="title-3">From previous vehicle number</label>
+									<div class="form-control txt">{{$insurance->previous_vehicle_number??""}}</div>
+								</div>
+							</div>
+						</div>
+                        <div class="checkbox mt-30">
+							<input disabled="disabled" type="checkbox" @if($insurance->terms_condition==1) checked="checked" @endif id="information" name="terms_condition" value="1" />
+							<label class="pt-3" for="information"> @isset($content['section_1'])
+                         {!! $content['section_1'] !!}
+                         @endisset </label>
+						        @if ($errors->has('terms_condition'))
+                                <span class="text-danger">&nbsp;{{ $errors->first('terms_condition') }}</span>
+                                @endif
+                        </div>
+                         @if(isset($partners) && $partners->count()>0)
+						<h2 class="title-2 mt-50 mt-991-30">Quotation Details</h2>
+                         <form method="post" class="form-ani" action="{{url('quotation-submit')}}">
+                         @csrf
+                         @php
+                         $k=0;
+                         $i=0;
+                         @endphp
+                         @foreach($partners as $key=>$val)
+                         @php
+                         $k++;
+                         $quotations=getQuotationByPartner($val->partner_id,$insurance->insurance_id);
+                         $admin=getUserAdmin($val->partner_id);
+                         @endphp
+                        @if($insurance->quotation_id==null)
+                        @if(isset($admin)) <div class="title-3 mt-30">{{$admin->firstname.' '.$admin->lastname}}</div> @endif
+                        @endif
+						<div class="table-responsive">
+							<table class="tb-1 detail text-center">
+								<thead>
+									<tr>
+										<th rowspan="2">Select one</th>
+										<th rowspan="2">Quotation</th>
+										<th rowspan="2">Insurer</th>
+										<th rowspan="2">Premium</th>
+										<th rowspan="2">@if(isset($insurance->discount)) {{$insurance->discount}} @else {{systemSetting()->insurance_discount}}@endif% <br>Discount</th>
+										<th rowspan="2">Premium after <br>Discount</th>
+										<th colspan="2">Excess</th>
+									</tr>
+									<tr>
+										<th><small>Own <br>Damage</small></th>
+										<th><small>3rd <br>Party</small></th>
+									</tr>
+								</thead>
+								<tbody>
+
+
+                                       @foreach($quotations as $quotation)
+                                       @php $i++; @endphp
+									    <tr>
+										<td>
+											<div class="radio">
+												<input @if(isset($insurance->quotation_id)) disabled @endif  @if(isset($insurance->quotation_id) && $insurance->quotation_id==$quotation->id)checked="checked" @endif type="radio" value="<?=$quotation->id?>" name="quotation" id="check-{{$i}}">
+												<label for="check-{{$i}}"></label>
+											</div>
+										</td>
+										<td><?=$quotation->quotation_number?></td>
+										<td><?=$quotation->insurer_name?></td>
+										<td><?=$quotation->premium?></td>
+										<td>
+										<?php
+										if(isset($insurance->discount))
+										{
+										echo $discount=$insurance->discount*$quotation->premium/100 ;
+										}
+										else
+										{
+										echo $discount=systemSetting()->insurance_discount*$quotation->premium/100 ;
+										}
+										?>
+                                        </td>
+										<td><?=$quotation->premium-$discount?></td>
+										<td><?=$quotation->excess_own_damage?></td>
+										<td><?=$quotation->excess_party?></td>
+									</tr>
+                                       @endforeach
+
+								</tbody>
+							</table>
+						</div>
+                        @endforeach
+                        @if(!isset($insurance->quotation_id))
+						<div class="mt-30 text-center">
+							<button class="btn-1 minw-190 accept" type="submit">ACCEPT <i class="fas fa-arrow-right"></i></button>
+						</div>
+                        @endif
+                        <input type="hidden" value="{{$insurance->insurance_id??''}}" name="insurance_id" />
+                        </form>
+                        @endif
+
+						@if(isset($insurance->quotation_id) && getQuotation($insurance->quotation_id))
+						<?php $quote=getQuotation($insurance->quotation_id);?>
+                          @if(isset($quote->insurance_proposal_form))
+                            <h2 class="title-2 mt-50 mt-991-30">Insurance Details</h2>
+                            <div class="row">
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Address</label>
+								<div class="form-control txt">{{$quote->address??'-'}}</div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Engine Number</label>
+								<div class="form-control txt">{{$quote->engine_number??'-'}}</div>
+							</div>
+						    </div>
+                            <div class="row">
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Chassis Number </label>
+								<div class="form-control txt">{{$quote->chassis_number??'-'}}</div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Finance Company</label>
+								<div class="form-control txt">{{$quote->finance_company??'-'}}</div>
+							</div>
+						    </div>
+                            <div class="row">
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Start Date of Proposal</label>
+								<div class="form-control txt">{{date('j F Y',strtotime($quote->start_date_of_proposal))}}</div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">End Date</label>
+								<div class="form-control txt">{{date('j F Y',strtotime($quote->end_date))}}</div>
+							</div>
+						</div>
+                            <div class="row">
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Seating Capacity</label>
+								<div class="form-control txt">{{$quote->seating_capacity??'-'}}</div>
+							</div>
+							<div class="col-lg-6 mt-20">
+								<label class="lb-3">Previous Insurer</label>
+								<div class="form-control txt">{{$quote->previous_insurer??'-'}}</div>
+							</div>
+						</div>
+
+                            <div class="mt-50 text-center">
+
+                                @if(isset($quote->insurance_proposal_form))
+                                <p>Company's Insurance Proposal forms</p>
+                                <div class="output-1">
+                                <iframe src="https://docs.google.com/viewer?url={{url($quote->insurance_proposal_form)}}&embedded=true" frameborder="0" height="1030px" width="100%"></iframe>
+
+                                </div>
+                                @endif
+                                <!--Additional info added-->
+                                    @if(isset($quote->partner_sign))
+                                    <form method="post" enctype="multipart/form-data" class="form-ani" action="{{route('insurance.customer.sign')}}">
+                                         @csrf
+                                    <div class="row justify-content-center eheight">
+                                    @if(isset($quote->customer_sign))
+                                        <div class="col-md-3">
+                                            <figure class="ecol" style="height: 200px;"><img src="{{url($quote->customer_sign)}}" alt="Customer Signature"></figure>
+                                            Applicant's Signature
+                                        </div>
+                                    @else
+
+                                         <div class="col-md-3">
+
+                                         <div class="form-group">
+                                                <div id="signature-pad" class="signature-pad">
+                                    <div class="signature-pad--body">
+                                        <canvas></canvas>
+                                    </div>
+                                    <div class="signature-pad--footer">
+                                        <div class="description">Applicant's Signature<br />Please sign in the above box</div>
+
+                                        <div class="signature-pad--actions">
+                                            <div>
+                                                <button type="button" class="button clear" data-action="clear">Clear</button>
+                                                <button type="button" class="button d-none" data-action="change-color">Change color</button>
+                                                <button type="button" class="button" data-action="undo">Undo</button>
+
+                                            </div>
+                                            <div>
+                                                <button type="button" class="button save d-none" data-action="save-png">Save as PNG</button>
+                                                <button type="button" class="button save d-none" data-action="save-jpg">Save as JPG</button>
+                                                <button type="button" class="button save d-none" data-action="save-svg">Save as SVG</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                <input type="hidden" name="customer_sign" value="">
+                                                @if ($errors->has('customer_sign'))
+                                                <span class="text-danger d-block">
+                                                    <strong>{{ $errors->first('customer_sign') }}</strong>
+                                                </span>
+                                                @endif
+                                                <input type="hidden" name="quotation_id" id="quotation_id" value="{{$quote->id}}" />
+                                                <input type="hidden" name="insurance_id" id="insurance_id" value="{{$quote->id}}" />
+
+                                             </div>
+
+                                       </div>
+                                       <script src="{{ asset('js/signature_pad/signature_pad.umd.js') }}"></script>
+                                       <script src="{{ asset('js/signature_pad/app.js') }}"></script>
+
+                                    @endif
+                                        @if(isset($quote->partner_sign))
+                                        <div class="col-md-3">
+                                            <figure class="ecol" style="height: 200px;"><img src="{{url($quote->partner_sign)}}" alt="Insurance Partner Signature"></figure>
+                                            Insurance Partner's Signature
+                                        </div>
+                                        @endif
+                                    </div>
+                                    @if(!isset($quote->customer_sign))
+                                    <button class="btn-1 minw-190 mt-50" type="submit">Submit <i class="fas fa-arrow-right"></i></button>
+                                    @endif
+                                    </form>
+                                    @endif
+                               <!--END Additional info added-->
+                            </div>
+                          @endif
+                        @endif
+					</div>
+				</div>
+			</div>
+
+            <script type="text/javascript">
+			$(".accept").click(function() {
+			   if ($('input[name="quotation"]:checked').length == 0) {
+				 alert('Please choose quotation.');
+				 return false;
+				 }
+			   return true;
+    		});
+
+    $(function() {
+        $(".seller, .buyer").find("input, select, textarea").attr("disabled", true);
+        $("input[name='customer_sign']").attr("disabled", false);
+        $('.positive-integer').numeric(
+            {negative: false}
+        );
+
+        var canvas = document.querySelector("canvas");
+
+
+        var signaturePad = new SignaturePad(canvas, {
+            onEnd: function () {
+                $("input[name='customer_sign']").val(signaturePad.toDataURL("image/jpeg"));
+            },
+            backgroundColor: "white",
+        });
+    });
+</script>
+@endsection

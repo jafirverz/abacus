@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DIY Cars</title>
+	<style>	
+		th {
+			text-align: left;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<img src="images/diy-cars-logo.png" alt="DIY Cars" style="width:250px;" />
+	</header>
+	<h1 style="font-family: Arial, 'sans-serif';font-size: 24px; margin: 20px 0 10px;">Sales and Purchase Agreement</h1>
+	<hr>			
+	<table cellpadding="0" cellspacing="0" width="100%" style="font-family: Arial, 'sans-serif';font-size: 14px;">
+		<tr>
+			<td style="padding: 10px 0 20px;" valign="top">
+				<table cellpadding="0" cellspacing="0" width="100%">						
+					<tbody>
+						<tr>
+							<td style="background: #f6f6f6; border: #ddd solid 1px; font-size: 20px; font-weight: bold; margin: 0; padding: 10px;">Seller's Particulars</td>
+						</tr>
+						<tr>
+							<td style="border: #ddd solid 1px; padding: 0 10px 10px;">
+								<table cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td colspan="2" style="border-bottom: #ddd solid 1px; font-size: 16px; font-weight: bold; padding: 10px 0 5px;">Company's Information</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 10px 10px 5px;">Company Name:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->company_name ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 5px 10px;">NRIC:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->nric ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 5px 10px;">Registered Address:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->address ?? '' }}</td>
+									</tr>
+									<tr>
+										<td colspan="2" style="border-bottom: #ddd solid 1px; font-size: 16px; font-weight: bold; padding: 10px 0 5px;">Basic Information</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 10px 10px 5px;">Full Name:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->seller_name ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 5px 10px;">Passport:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->passport ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 5px 10px;">Gender:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->seller_gender ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 5px 10px;">Country Code:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->seller_country_code ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="font-size: 14px;width:150px;padding: 5px 10px;">Contact No.:</th>
+										<td style="font-size: 14px;padding:5px 10px;">{{ $seller_particular->seller_mobile ?? '' }}</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<td style="padding: 10px 0 20px;width:30px;" valign="top">&nbsp;</td>
+			<td style="padding: 10px 0 20px;" valign="top">
+				<table cellpadding="0" cellspacing="0" width="100%">						
+					<tbody>
+						<tr>
+							<td style="background: #f6f6f6; border: #ddd solid 1px; font-size: 20px; font-weight: bold; margin: 0; padding: 10px;">Buyer's Particulars</td>
+						</tr>
+						<tr>
+							<td style="border: #ddd solid 1px; padding: 0 10px 10px;">
+								<table cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td colspan="2" style="border-bottom: #ddd solid 1px; font-size: 16px; font-weight: bold; padding: 10px 0 5px;">Company's Information</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 10px 10px 5px;">Company Name:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->company_name ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 5px 10px;">NRIC:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->nric ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 5px 10px;">Registered Address:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->address ?? '' }}</td>
+									</tr>
+									<tr>
+										<td colspan="2" style="border-bottom: #ddd solid 1px; font-size: 16px; font-weight: bold; padding: 10px 0 5px;">Basic Information</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 10px 10px 5px;">Full Name:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->buyer_name ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 5px 10px;">Passport:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->passport ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 5px 10px;">Gender:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->buyer_gender ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 5px 10px;">Country Code:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->country_code ?? '' }}</td>
+									</tr>
+									<tr>
+										<th style="width:150px;padding: 5px 10px;">Contact No.:</th>
+										<td style="padding:5px 10px;">{{ $buyer_particular->phone ?? '' }}</td>
+									</tr>
+								</table>	
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table cellpadding="0" cellspacing="0" width="100%" style="border: #ddd solid 1px;font-family: Arial, 'sans-serif';font-size: 14px;">
+		<tr>
+			<td colspan="2" style="background: #f6f6f6; font-size: 20px; font-weight: bold; padding: 10px;">Vehicle Details</td>
+		</tr>
+		<tr>
+			<td style="padding: 5px 10px;width: 50%" valign="top">
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<th style="width:150px;padding: 10px;">Vehicle No.:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->registration_no ?? '' }}</td>
+					</tr>
+					<tr style="background: #f6f6f6;">
+						<th style="width:150px;padding: 10px;">Vehicle Make:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->make ?? '' }}</td>
+					</tr>
+					<tr>
+						<th style="width:150px;padding: 10px;">Vehicle Model:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->model ?? '' }}</td>
+					</tr>
+					<tr style="background: #f6f6f6;">
+						<th style="width:150px;padding: 10px;">Primary Colour:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->color ?? '' }}</td>
+					</tr>
+					<tr>
+						<th style="width:150px;padding: 10px;">Manufacturing Year:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->year_of_manufacturer ?? '' }}</td>
+					</tr>
+					<tr style="background: #f6f6f6;">
+						<th style="width:150px;padding: 10px;">Engine No.:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->engine_no ?? '' }}</td>
+					</tr>
+					<tr>
+						<th style="width:150px;padding: 10px;">Chassis No.:</th>
+						<td style="padding:10px;">{{ $seller_particular->vehicleparticular->chassis_no ?? '' }}</td>
+					</tr>
+				</table>
+			</td>
+			<td style="padding: 5px 10px;width: 50%" valign="top">
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<th style="width:180px;padding: 10px;">Open Market Value:</th>
+						<td style="padding:10px;">{{ $seller_particular->vehicleparticular->open_market_value ?? '' }}</td>
+					</tr>
+					<tr style="background: #f6f6f6;">
+						<th style="width:180px;padding: 10px;">Original Registration Date:</th>
+						<td style="padding:10px;">{{ $seller_particular->vehicleparticular->registration_date ?? '' }}</td>
+					</tr>
+					<tr>
+						<th style="width:180px;padding: 10px;">Transfer Count:</th>
+						<td style="padding:10px;">{{ $seller_particular->vehicleparticular->no_of_transfer ?? '' }}</td>
+					</tr>
+					<tr style="background: #f6f6f6;">
+						<th style="width:180px;padding: 10px;">Actual ARF Paid:</th>
+						<td style="padding:10px;">{{ $seller_particular->vehicleparticular->arf_paid ?? '' }}</td>
+					</tr>
+					<tr>
+						<th style="width:180px;padding: 10px;">COE Expiry Date:</th>
+						<td style="padding:10px;">{{ $seller_particular->vehicleparticular->coe_expiry_date ?? '' }}</td>
+					</tr>
+					<tr style="background: #f6f6f6;">
+						<th style="width:180px;padding: 10px;">Engine Capacity (CC):</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->engine_output ?? '' }}</td>
+					</tr>
+					<tr>
+						<th style="width:180px;padding: 10px;">Vehicle Type:</th>
+						<td style="padding: 10px;">{{ $seller_particular->vehicleparticular->vehicle_type ?? '' }}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table cellpadding="0" cellspacing="0" width="100%" style="font-family: Arial, 'sans-serif';font-size: 14px;">
+		<tr>
+			<td style="height: 20px;" colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; padding:5px 10px;">Agreed Price</td>
+			<td style="padding:5px 10px;text-align: right;">{{ $buyer_particular->agreed_price ?? '' }}</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; padding:5px 10px;">Deposit <div style="font-size: 12px; font-weight: normal;">(* <em>Deposit received by Autolink Holdings Pte. Ltd. on <strong>Date.</strong></em>)</div></td>
+			<td style="padding:5px 10px;text-align: right;">{{ $buyer_particular->deposit_amount ?? '' }}</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; padding:5px 10px;">Balance Payment <span style="font-weight: normal;">(Before Loan Amount)</span></td>
+			<td style="padding:5px 10px;text-align: right;">{{ $buyer_particular->balance_payment ?? '' }}</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; padding:5px 10px;">Less: <span style="font-weight: normal;">Required Loan Amount</span></td>
+			<td style="padding:5px 10px;text-align: right;">{{ $buyer_particular->buyerloandetail->loan_amount ?? '' }}</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; padding:5px 10px 5px 30px;">Bank and Interest Rate:</td>
+			<td style="padding:5px 10px;text-align: right;">{{ $buyer_particular->buyerloandetail->bank ?? '' }} {{ $buyer_particular->buyerloandetail->interest ?? '' }}</td>
+		</tr>
+		<tr>
+			<td style="font-weight: bold; padding:5px 10px;">Final Balance Payment</td>
+			<td style="padding:5px 10px;text-align: right;">{{ $buyer_particular->buyerloandetail->balance ?? '' }}</td>
+		</tr>
+		<tr>
+			<td style="height: 30px;" colspan="2">&nbsp;</td>
+		</tr>
+	</table>
+	<table cellpadding="0" cellspacing="0" width="100%" style="border: #ddd solid 1px;font-family: Arial, 'sans-serif';font-size: 14px;">
+		<tr>
+			<td style="font-size: 20px; font-weight: bold;padding: 10px;text-align: center;">Agreed by Seller:</td>
+			<td style="border-left: #ddd solid 1px;font-size: 20px; font-weight: bold;padding: 10px;text-align: center;">Agreed by Buyer:</td>
+		</tr>
+		<tr>
+			<td style="height:100px;padding: 10px;text-align: center;">&nbsp;</td>
+			<td style="border-left: #ddd solid 1px;height:100px;padding: 10px;text-align: center;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="font-size:12px;padding: 10px;text-align: center;">Seller Sign Here</td>
+			<td style="border-left: #ddd solid 1px;font-size:12px;padding: 10px;text-align: center;">Buyer Sign Here</td>
+		</tr>
+	</table>
+	<footer style="font-family: Arial, 'sans-serif';font-size: 12px; padding-top:10px;text-align: center;">© 2022 DIY Cars Pte Ltd. All rights reserved.</footer>
+</body>
+</html>

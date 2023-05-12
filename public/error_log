@@ -1,0 +1,1 @@
+[22-Sep-2022 10:01:04 Asia/Singapore] PHP Fatal error:  Out of memory (allocated 6291456) (tried to allocate 262144 bytes) in /home/diycarsc0286/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 335

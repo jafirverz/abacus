@@ -1,0 +1,184 @@
+@extends('admin.layout.app')
+
+@section('content')
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <div class="section-header-back">
+                <a href="{{ route('loan-application.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            </div>
+            <h1>{{ $title ?? '-' }}</h1>
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_loan_crud', 'Show', route('loan-application.show', $loan_application->id))])
+        </div>
+
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                            <div class="card-body">
+                                <h2 class="section-title">Vehicle Info (Seller's Car)</h2>
+                                <div class="form-group">
+                                    <label for="vehicle_registration_no">Vehicle Registration No</label>
+                                    <input type="text" name="vehicle_registration_no" class="form-control" id=""
+                                        value="{{ old('vehicle_registration_no') ?? $loan_application->vehicle_registration_no ?? '' }}" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="nric_company_registration_no">Last 4 Character NRIC/Business ID/Company Registration No</label>
+                                    <input type="text" name="nric_company_registration_no" class="form-control" id=""
+                                        value="{{ old('nric_company_registration_no') ?? $loan_application->nric_company_registration_no ?? '' }}" >
+                                </div>
+                                <h2 class="section-title">Loan Information</h2>
+                                <div class="form-group">
+                                    <label for="name">Applicant Name</label>
+                                    <input type="text" name="name" class="form-control" id=""
+                                        value="{{ $loan_application->user->name ?? '' }}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Applicant Email</label>
+                                    <input type="text" name="email" class="form-control" id=""
+                                        value="{{ $loan_application->user->email ?? '' }}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile">Applicant Mobile</label>
+                                    <input type="text" name="mobile" class="form-control" id=""
+                                        value="{{ $loan_application->user->mobile ?? '' }}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loan_purchase_price">Purchase Price</label>
+                                    <input type="text" name="loan_purchase_price" class="form-control positive-integer" id=""
+                                        value="{{ old('loan_purchase_price') ?? $loan_application->loan_purchase_price ?? 0 }}" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="loan_amount">Loan Amount</label>
+                                    <input type="text" name="loan_amount" class="form-control positive-integer" id=""
+                                        value="{{ old('loan_amount') ?? $loan_application->loan_amount ?? '' }}" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="bank_id">Bank and Interest Rate</label>
+                                    <select name="bank_id" class="form-control">
+                                        <option value="">-- Select Bank and Interest Rate</option>
+                                        @if(getBankDetail())
+                                            @foreach (getBankDetail() as $value)
+                                                <option value="{{ $value->id }}" @if(old('bank_id')) @if(old('bank_id')==$value->id) selected @endif @elseif(isset($loan_application->bank_id)) @if($loan_application->bank_id==$value->id) selected @endif @endif>{{ $value->title }} - {{ $value->interest.'%' }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="form-group">
+                                            @if(tenor())
+                                                @foreach (tenor() as $key => $value)
+                                                <div class="form-check form-check-inline">
+                                                    <input  name="tenor" class="form-check-input" type="radio" id="inlineradio{{ $key }}" value="{{ $key }}" @if(old('tenor')==$key) checked @elseif($loan_application->tenor==$key) checked @elseif($key==1) checked @endif>
+                                                    <label class="form-check-label" for="inlineradio{{ $key }}">{{ $value }}</label>
+                                                </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="form-group">
+                                            <label>Year</label>
+                                            <input name="year" type="text" class="form-control"  value="{{ old('year') ?? $loan_application->year ?? '' }}"  />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Month</label>
+                                            <input name="month" type="text" class="form-control"  value="{{ old('month') ?? $loan_application->month ?? '' }}"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2 class="section-title">Need us to Quote your Trade In?</h2>
+                                <div class="form-group">
+                                    @if(getYesNo())
+                                        @foreach (getYesNo() as $key => $value)
+                                        <div class="form-check form-check-inline">
+                                            <input  name="quote_trade" class="form-check-input" type="radio" id="inlineradio{{ $key }}" value="{{ $key }}" @if(old('quote_trade')==$key) checked @elseif($loan_application->quote_trade==$key) checked @elseif($key==1) checked @endif>
+                                            <label class="form-check-label" for="inlineradio{{ $key }}">{{ $value }}</label>
+                                        </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <div class="tradin">
+                                    @php
+                                        $trade_details = $loan_application->trade_details ? json_decode($loan_application->trade_details) : null;
+                                    @endphp
+                                    <div class="form-group">
+                                        <label for="vehicle_no">Vehicle No</label>
+                                        <input type="text" name="vehicle_no" class="form-control" id=""
+                                            value="{{ old('vehicle_no') ?? $trade_details->vehicle_no ?? '' }}" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nric">Last 4 Characters NRIC No</label>
+                                        <input type="text" name="nric" class="form-control" id=""
+                                            value="{{ old('nric') ?? $trade_details->nric ?? '' }}" >
+                                    </div>
+                                    <div class="form-group">
+
+                                        <label for="estimated_mileage">Estimated Mileage</label>
+                                        <input type="text" name="estimated_mileage" class="form-control positive-integer" id=""
+                                            value="{{ old('estimated_mileage') ?? $trade_details->estimated_mileage ?? 0 }}" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @php
+                                        $file_format = '.jpg, .png, .gif';
+                                    @endphp
+                                    <label for="estimated_mileage">Uploaded Document</label>
+                                    <div class="col-12 attachment_data">
+                                        @if(isset($loan_application->other_documents))
+                                        @php
+                                            $other_documents = json_decode($loan_application->other_documents);
+                                        @endphp
+                                        @foreach ($other_documents as $photokey => $photovalue)
+                                        <div class="uploaded_file">
+                                            <a href="<?php echo url($photovalue); ?>" target="_blank">
+                                                <?php
+                                                $file_display = explode('/', $photovalue);
+                                                if($file_display[2])
+                                                {
+                                                    $file_name = explode('__', $file_display[2]);
+                                                    $my_file_name = end($file_name);
+                                                    echo $my_file_name;
+                                                }
+                                                ?>
+                                            </a>
+                                            <input type="hidden" name="other_document_uploaded[]" value="<?php echo $photovalue ?>">
+                                        </div>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if(getLoanStatus())
+                                            @foreach (getLoanStatus() as $key => $value)
+                                                <option value="{{ $key }}" @if(old('status')) @if(old('status')==$key) selected @endif @elseif(isset($loan_application->status)) @if($loan_application->status==$key) selected @endif @endif>{{ $value }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('status'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $(function() {
+
+
+
+        $("input, select, textarea").attr("disabled", true);
+    });
+</script>
+@endsection

@@ -1,0 +1,34 @@
+<?php
+    $content = [];
+    if($page->json_content){
+        $content = json_decode($page->json_content, true);
+    }
+
+?>
+
+
+<div class="form-group non-external">
+<div class="section-title">Insurance</div>
+        <label for="section_1_content">Terms & Condition Title</label>
+        <textarea name="section_1" class="form-control my-editor" id="" cols="30"
+            rows="10">{!! $content['section_1'] ?? '' !!}</textarea>
+       @if ($errors->has('section_1'))
+        <span class="text-danger d-block">
+            <strong>{{ $errors->first('section_1') }}</strong>
+        </span>
+       @endif
+</div>
+
+<div class="form-group non-external">
+    <div class="section-title">Insurance</div>
+            <label for="section_2_content">SEO Content</label>
+            <textarea name="section_2" class="form-control my-editor" id="" cols="30"
+                rows="10">{!! $content['section_2'] ?? '' !!}</textarea>
+           @if ($errors->has('section_2'))
+            <span class="text-danger d-block">
+                <strong>{{ $errors->first('section_2') }}</strong>
+            </span>
+           @endif
+    </div>
+
+<!-- End Marketplace Section -->

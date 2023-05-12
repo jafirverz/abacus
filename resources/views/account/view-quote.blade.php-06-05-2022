@@ -1,0 +1,168 @@
+@extends('layouts.app')
+@section('content')
+<div class="main-wrap" style="padding-bottom: 305.8px; padding-top: 118.8px;">
+  <div class="bn-inner bg-get-image">
+    <img class="bgimg" src="{{ asset('images/tempt/bn-loan.jpg') }}" alt="Loan Applications">
+  </div>
+  @include('inc.messages')
+  <form action="{{ route('my-profile.update') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="container main-inner">
+      <div class="row">
+        <div class="col-lg-3 mb-991-30">
+          @include('inc.account-profile-image')
+          @include('inc.account-sidebar')
+
+        </div>
+        <div class="col-lg-9">
+          <div class="title-5 type">
+
+            <h1>My Quote View</h1>
+          </div>
+          <div class="table-responsive">
+            <div class="section-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Owner's Particulars
+                        <hr />
+                      </h5>
+                      <div class="form-group">
+                        <strong>Full Name</strong>: {{ $quote_request->full_name }}
+                      </div>
+                      <div class="form-group">
+                        <strong>NRIC</strong>: {{ $quote_request->nric }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Contact Number</strong>: {{ "+".$quote_request->country."
+                        ".$quote_request->contact_number }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Email</strong>: {{ $quote_request->email }}
+                      </div>
+                      <div class="form-group">
+                        @php $gender_arr = ['1' => 'Male', '2' => 'Female']; @endphp
+                        <strong>Gender</strong>: {{ $gender_arr[$quote_request->gender] }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Vehicle Details
+                        <hr />
+                      </h5>
+                      <div class="form-group">
+                        <strong>Vehicle Number</strong>: {{ $quote_request->vehicle_number }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Vehicle Make</strong>: {{ $quote_request->vehicle_make }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Vehicle Modek</strong>: {{ $quote_request->vehicle_model }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Primary Color</strong>: {{ $quote_request->primary_color }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Year of Manufacuture</strong>: {{ $quote_request->year_of_manufacture }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Open Market Value</strong>: {{ $quote_request->open_market_value }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Original Registration Date</strong>: {{ date('d-m-Y', strtotime($quote_request->orig_reg_date)) }}
+                      </div>
+                      <div class="form-group">
+                        <strong>First Registration Date</strong>: {{ date('d-m-Y', strtotime($quote_request->first_reg_date)) }}
+                      </div>
+                      <div class="form-group">
+                        <strong>No of Transfer</strong>: {{ $quote_request->no_of_transfer }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Minimum PARF Benefit</strong>: {{ $quote_request->minimumparfbenefit }}
+                      </div>
+                      <div class="form-group">
+                        <strong>COE Expiry Date</strong>: {{ date('d-m-Y', strtotime($quote_request->coe_expiry_date)) }}
+                      </div>
+                      <div class="form-group">
+                        <strong>COE Category</strong>: {{ $quote_request->coe_category }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Quota Premium</strong>: {{ $quote_request->quota_premium }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Vehicle Type</strong>: {{ $quote_request->vehicle_type }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Propellant</strong>: {{ $quote_request->propellant }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Engine Capacity</strong>: {{ $quote_request->engine_capacity }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Engine Number</strong>: {{ $quote_request->engine_no }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Chassis Number</strong>: {{ $quote_request->chassis_no }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Max Unladen Weight</strong>: {{ $quote_request->max_unladen_weight }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Vehicle Scheme</strong>: {{ $quote_request->vehicle_scheme }}
+                      </div>
+                      <div class="form-group">
+                        <strong>Road Tax Expiry Date</strong>: {{ date('d-m-Y', strtotime($quote_request->roadtaxexpirydate)) }}
+                      </div>
+                      
+
+
+
+                      <div class="form-group">
+                        <strong>Mileage</strong>: {{ isset($quote_request->mileage) ? $quote_request->mileage.' km' : ''
+                        }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Additional Details
+                        <hr />
+                      </h5>
+                      <div class="form-group">
+                        <strong>Seller's Remarks</strong>: {{ $quote_request->seller_remarks }}
+                      </div>
+                      
+                      <div class="form-group">
+                        <strong>Photos:</strong>
+                        @php $uploaded_files = json_decode($quote_request->upload_file); @endphp
+                        @if(isset($uploaded_files))
+                        <ul>
+                          @foreach($uploaded_files as $key=>$item)
+                          <li><a href="{{ url($item) }}">{{ $item }}</a></li>
+                          @endforeach
+                        </ul>
+                        @endif
+                      </div>
+                      <div class="form-group">
+                        @php $statusArr = ['0'=>'', '1'=>'Processing', '2'=>'Approved']; @endphp
+                        <strong>Status</strong>: {{ $statusArr[$quote_request->status] }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+@endsection

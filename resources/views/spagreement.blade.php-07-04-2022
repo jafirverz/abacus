@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DIY Cars</title>
+	<style>
+		th {
+			text-align: left;
+			width: 35%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="main-container">
+		<header>
+			<a class="logo" href="javascript::void(0);">
+				<img src="images/diy-cars-logo.png" alt="DIY Cars" />
+			</a>
+		</header>
+
+		<div class="main-content">
+			<h1>Sales and Purchase Agreement</h1>
+			<hr>
+			<div class="row">
+				<div class="col-6">
+					<h2>Seller's Particulars</h2>
+					<h3>Company's Information</h3>
+					<table width="100%">
+						<tr>
+							<th>Company Name:</th>
+							<td>{{ $seller_particular->company_name ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>UEN:</th>
+							<td>{{ $seller_particular->uen ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Registered Address:</th>
+							<td>{{ $seller_particular->address ?? '' }}</td>
+						</tr>
+					</table>
+					<hr>
+					<h3>Basic Information</h3>
+					<table width="100%">
+						<tr>
+							<th>Full Name:</th>
+							<td>{{ $seller_particular->seller_name ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>NRIC/FIN/Passport:</th>
+							<td>{{ $seller_particular->nric ?? '' }}/ {{ $seller_particular->fin ?? '' }}/{{
+								$seller_particular->passport ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Gender:</th>
+							<td>@if($seller_particular->user->gender == 1) Male @else Female @endif</td>
+						</tr>
+						<tr>
+							<th>Country Code:</th>
+							<td>{{ $seller_particular->seller_country_code ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Contact No.:</th>
+							<td>{{ $seller_particular->seller_mobile ?? '' }}</td>
+						</tr>
+					</table>
+					<hr>
+
+				</div>
+				<hr>
+				<div class="col-6">
+					<h2>Buyer's Particulars</h2>
+					<h3>Company's Information</h3>
+					<table width="100%">
+						<tr>
+							<th>Company Name:</th>
+							<td>{{ $buyer_particular->company_name ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>UEN:</th>
+							<td>{{ $buyer_particular->uen ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Registered Address:</th>
+							<td>{{ $buyer_particular->address ?? '' }}</td>
+						</tr>
+					</table>
+					<hr>
+					<h3>Basic Information</h3>
+					<table width="100%">
+						<tr>
+							<th>Full Name:</th>
+							<td>{{ $buyer_particular->buyer_name ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>NRIC/FIN/Passport:</th>
+							<td>{{ $buyer_particular->nric ?? '' }} / {{ $buyer_particular->fin ?? '' }} / {{
+								$buyer_particular->passport ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Gender:</th>
+							<td>@if($buyer_particular->user->gender == 1) Male @else Female @endif</td>
+						</tr>
+						<tr>
+							<th>Country Code:</th>
+							<td>{{ $buyer_particular->country_code ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Contact No.:</th>
+							<td>{{ $buyer_particular->phone ?? '' }}</td>
+						</tr>
+					</table>
+					<hr>
+					<!-- <h3>Basic Information</h3> -->
+					<!-- <table width="100%">
+						<tr>
+							<th>Full Name:</th>
+							<td>Information goes here</td>
+						</tr>
+						<tr>
+							<th>NRIC/FIN/Passport:</th>
+							<td>Information goes here</td>
+						</tr>
+						<tr>
+							<th>Gender:</th>
+							<td>Information goes here</td>
+						</tr>
+						<tr>
+							<th>Country Code:</th>
+							<td>Information goes here</td>
+						</tr>
+						<tr>
+							<th>Contact No.:</th>
+							<td>Information goes here</td>
+						</tr>
+						<tr>
+							<th>Registered Address:</th>
+							<td>Information goes here</td>
+						</tr>
+					</table> -->
+				</div>
+			</div>
+			<div id="vehicle-details">
+				<hr>
+				<h2>Vehicle Details</h2>
+				<div id="row" style="display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap;">
+					<table width="100%">
+						<tr>
+							<th>Vehicle No.:</th>
+							<td>{{ $seller_particular->vehicleparticular->registration_no ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Vehicle Make:</th>
+							<td>{{ $seller_particular->vehicleparticular->make ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Vehicle Model:</th>
+							<td>{{ $seller_particular->vehicleparticular->model ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Primary Colour:</th>
+							<td>{{ $seller_particular->vehicleparticular->color ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Manufacturing Year:</th>
+							<td>{{ $seller_particular->vehicleparticular->year_of_manufacturer ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Engine No.:</th>
+							<td>{{ $seller_particular->vehicleparticular->engine_no ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Chassis No.:</th>
+							<td>{{ $seller_particular->vehicleparticular->chassis_no ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Open Market Value:</th>
+							<td>{{ $seller_particular->vehicleparticular->open_market_value ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Original Registration Date:</th>
+							<td>{{ $seller_particular->vehicleparticular->registration_date ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Transfer Count:</th>
+							<td>{{ $seller_particular->vehicleparticular->no_of_transfer ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Actual ARF Paid:</th>
+							<td>{{ $seller_particular->vehicleparticular->arf_paid ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>COE Expiry Date:</th>
+							<td>{{ $seller_particular->vehicleparticular->coe_expiry_date ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Engine Capacity (CC):</th>
+							<td>{{ $seller_particular->vehicleparticular->engine_output ?? '' }}</td>
+						</tr>
+						<tr>
+							<th>Vehicle Type:</th>
+							<td>{{ $seller_particular->vehicleparticular->vehicle_type ?? '' }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div id="terms-and-conditions">
+				<hr>
+				@php 
+				$terms = json_decode($seller_particular->spcontract->terms_and_condition);
+				@endphp
+				<h2>Terms and Conditions</h2>
+				<table width="100%">
+					@foreach($terms as $key=>$term)
+					<tr>
+						<td style="width: 2%;">{{ $key+1 }}</td>
+						<td>{{ $term }}</td>
+					</tr>
+					@endforeach
+				</table>
+			</div>
+			<div id="pricing">
+				<hr>
+				<h3 class="alt">Agreed Price</h3>
+				<p>{{ $buyer_particular->agreed_price ?? '' }}</p>
+				<h3 class="alt">Deposit</h3>
+				<p>{{ $buyer_particular->deposit_amount ?? '' }}</p>
+				<p><span class="alt">*</span><em>Deposit received by Autolink Holdings Pte. Ltd. on <strong>Date.</strong></em>
+				</p>
+				<h3 class="alt">Balance Payment <span style="font-weight: 300;">(Before Loan Amount)</span></h3>
+				<p>{{ $buyer_particular->balance_payment ?? '' }}</p>
+				<h3 class="alt">Less: <span style="font-weight:300;">Required Loan Amount</span></h3>
+				<p>{{ $buyer_particular->buyerloandetail->loan_amount ?? '' }}</p>
+				<p><strong>Bank and Interest Rate:</strong> 
+					<span>{{ $buyer_particular->buyerloandetail->bank ?? '' }} {{ $buyer_particular->buyerloandetail->interest ?? '' }}</span></p>
+				<h3 class="alt">Final Balance Payment</h3>
+				<p>{{ $buyer_particular->buyerloandetail->balance ?? '' }}</p>
+			</div>
+			<!-- <div id="diycars-terms-and-conditions">
+				<hr>
+				<h2>DIY Cars Contract Terms and Policy</h2>
+				<table width="100%">
+					<tr>
+						<td style="width: 2%;">1.)</td>
+						<td>Information goes here</td>
+					</tr>
+					<tr>
+						<td style="width: 2%;">2.)</td>
+						<td>Information goes here</td>
+					</tr>
+					<tr>
+						<td style="width: 2%;">3.)</td>
+						<td>Information goes here</td>
+					</tr>
+					<tr>
+						<td style="width: 2%;">4.)</td>
+						<td>Information goes here</td>
+					</tr>
+					<tr>
+						<td style="width: 2%;">5.)</td>
+						<td>Information goes here</td>
+					</tr>
+					<tr>
+						<td style="width: 2%;">6.)</td>
+						<td>Information goes here</td>
+					</tr>
+					<tr>
+						<td style="width: 2%;">7.)</td>
+						<td>Information goes here</td>
+					</tr>
+				</table>
+			</div> -->
+			<div id="signature">
+				<hr>
+				<div id="row" style="display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap;">
+					<table width="100%">
+						<tr>
+							<td>
+								<h3>Agreed by Seller:</h3>
+							</td>
+							<td>
+								<h3>Agreed by Buyer:</h3>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding-top: 100px; padding-bottom: 10px;">Seller Sign Here</td>
+							<td style="padding-top: 100px; padding-bottom: 10px;">Buyer Sign Here</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<footer>© 2022 DIY Cars Pte Ltd. All rights reserved.</footer>
+</body>
+
+</html>
