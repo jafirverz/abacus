@@ -1,0 +1,193 @@
+@extends('layouts.app')
+
+@section('content')
+<?php
+    $content = [];
+    if(isset($page) && !is_null($page))
+    {
+        if($page->json_content)
+        {
+            $content = json_decode($page->json_content, true);
+        }
+    }
+?>
+<div class="main-wrap">
+	@if($sliders->count())
+	<div class="banner">
+		<div id="slider">
+			@foreach($sliders as $item)
+			<div class="item">
+				<div class="bg-get-image"><img class="bgimg" src="{{ asset($item->slider_images) }}" alt="" /></div>
+				<div class="container">
+					<div class="content delay-1">
+						{!! $item->content ?? '' !!}
+						@php 
+						$link = $item->link ?? '';
+						$isYoutube = 0;
+						if (strpos($link, 'youtube') !== false) {
+								$isYoutube = 1;
+						}else{
+							$isYoutube = 0;
+						}
+						@endphp
+						@if($isYoutube == 0)
+						<a href="{{ $item->link ?? '' }}" class="btn-1">{{ $item->link_label }} <i
+								class="fas fa-arrow-right"></i></a>
+						@else
+						<a href="{{ $link }}" data-fancybox class="btn-1">Watch Video <i
+							class="fas fa-arrow-right"></i></a>
+						@endif
+					</div>
+				</div>
+			</div>
+			@endforeach
+		</div>
+	</div>
+
+	@endif
+	<div class="container intro-home-1">
+		<h1 class="hidden">DIY Cars</h1>
+		<div class="row grid-1">
+			{!!$page->content!!}
+		</div>
+	</div>
+
+
+	<div class="intro-home-3">
+		<div class="row grid sp-col-10 eheight break-425">
+			<div class="col-md-4 col-6 sp-col">
+				<div class="inner">
+					<div class="bg-get-image"><img class="bgimg" src="images/tempt/img-loan.jpg" alt="Loan" /></div>
+					<div class="descript ecol">
+						<div>
+							<img src="images/tempt/ico-loan.png" alt="" />
+							<h3>LOAN</h3>
+							<p class="more"><i class="fas fa-arrow-circle-right"></i> LEARN MORE</p>
+						</div>
+					</div>
+					<a href="{{url('loan')}}" class="link-fix">View more</a>
+				</div>
+			</div>
+			<div class="col-md-4 col-6 sp-col">
+				<div class="inner">
+					<div class="bg-get-image"><img class="bgimg" src="images/tempt/img-insurance.jpg" alt="insurance" /></div>
+					<div class="descript ecol">
+						<div>
+							<img src="images/tempt/ico-insurance.png" alt="" />
+							<h3>Insurance</h3>
+							<p class="more"><i class="fas fa-arrow-circle-right"></i> LEARN MORE</p>
+						</div>
+					</div>
+					<a href="{{url('insurance')}}" class="link-fix">View more</a>
+				</div>
+			</div>
+			<div class="col-md-4 col-6 sp-col">
+				<div class="inner">
+					<div class="bg-get-image"><img class="bgimg" src="images/tempt/img-monitor.jpg" alt="Monitor" /></div>
+					<div class="descript ecol">
+						<div>
+							<img src="images/tempt/ico-monitor.png" alt="" />
+							<h3>Quote my car</h3>
+							<p class="more"><i class="fas fa-arrow-circle-right"></i> LEARN MORE</p>
+						</div>
+					</div>
+					<a href="{{url('quote-my-car-form')}}" class="link-fix">View more</a>
+				</div>
+			</div>
+			<div class="col-md-4 col-6 sp-col">
+				<div class="inner">
+					<div class="bg-get-image"><img class="bgimg" src="images/tempt/img-coming-soonimg.jpg" alt="form" /></div>
+					<div class="descript ecol">
+						<div>
+							<img src="images/tempt/ico-forms.png" alt="" />
+							<h3>consign my car</h3>
+							<p class="more"><i class="fas fa-arrow-circle-right"></i> LEARN MORE</p>
+						</div>
+					</div>
+					<a href="{{url('advertise-my-car-form')}}" class="link-fix">View more</a>
+				</div>
+			</div>
+			<div class="col-md-4 col-6 sp-col">
+				<div class="inner">
+					<div class="bg-get-image"><img class="bgimg" src="images/tempt/img-form.jpg" alt="form" /></div>
+					<div class="descript ecol">
+						<div>
+							<img src="images/tempt/ico-forms.png" alt="" />
+							<h3>forms</h3>
+							<p class="more"><i class="fas fa-arrow-circle-right"></i> LEARN MORE</p>
+						</div>
+					</div>
+					<a href="{{url('forms')}}" class="link-fix">View more</a>
+				</div>
+			</div>
+			<div class="col-md-4 col-6 sp-col">
+				<div class="inner">
+					<div class="bg-get-image"><img class="bgimg" src="images/tempt/img-monitor.jpg" alt="Monitor" /></div>
+					<div class="descript ecol">
+						<div>
+							<img src="images/tempt/ico-monitor.png" alt="" />
+							<h3>one motoring</h3>
+							<p class="more"><i class="fas fa-arrow-circle-right"></i> LEARN MORE</p>
+						</div>
+					</div>
+					<a href="{{url('one-motoring')}}" class="link-fix">View more</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
+
+
+	<div class="intro-home-4">
+		<div class="container">
+			@if($partners->count())
+			<h2 class="title-4">Our <strong>Partners</strong></h2>
+			<div class="row sp-col-0 logo-grid align-content-center">
+				@foreach($partners as $item)
+				<div class="col-lg-3 col-sm-4 col-6 sp-col">
+					<div><img src="{{ asset($item->logo) }}" alt="{{ $item->partner_name }}" /></div>
+				</div>
+				@endforeach
+			</div>
+			@endif
+
+
+
+			@if($testimonials->count())
+			<div class="title-wrap-1">
+				<h2 class="title-4"><span>Client's <strong>Reviews</strong></span></h2>
+				<!-- <a class="view" href="#">view more</a> -->
+				<a href="#" class="btn-prev"><i class="fas fa-arrow-left"></i></a>
+				<a href="#" class="btn-next"><i class="fas fa-arrow-right"></i></a>
+			</div>
+			<div class="slick-1-wrap">
+				<div class="eheight slick-1">
+					@foreach($testimonials as $item)
+					<div class="item">
+						<div class="inner">
+							<div class="intro">
+								<figure class="bg-get-image">
+									<img class="bgimg" src="{{ asset($item->picture) }}" alt="jane lee" />
+								</figure>
+								<div class="descripts">
+									<p class="author"><strong>{{ $item->customer_name }}</strong></p>
+									<div class="vote">{{ $item->designation }}</div>
+									<!-- <div class="vote"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div> -->
+								</div>
+							</div>
+							<div class="content">{!! $item->content !!}</div>
+						</div>
+					</div>
+
+					@endforeach
+
+				</div>
+			</div>
+			@endif
+
+		</div>
+	</div>
+</div>
+@endsection

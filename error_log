@@ -1,0 +1,1 @@
+[20-Sep-2022 12:00:07 Asia/Singapore] PHP Fatal error:  Out of memory (allocated 6291456) (tried to allocate 4096 bytes) in /home/diycarsc0286/public_html/vendor/composer/autoload_static.php on line 932

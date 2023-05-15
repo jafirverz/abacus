@@ -1,0 +1,254 @@
+@extends('layouts.app')
+
+@section('content')
+
+<div class="main-wrap">
+    @include('inc.banner')
+    <div class="container main-inner">
+        <h1 class="title-1 text-center">Sign Up</h1>
+        @include('inc.breadcrumb')
+        <div class="maxw-770 ml-auto mr-auto">
+            @include('inc.messages')
+
+            @if($errors->any())
+            <div class="alert alert-danger alert-dismissible show fade">{{$errors->first()}}</div>
+            @endif
+
+            <div class="note-2">
+                <div class="row align-items-center">
+                    <div class="col-lg-7 col-md-8">
+                        <h4>Faster form filling with Singpass. <strong>(Individual)</strong></h4>
+                        <p>Singpass enables you to retrieve your personal data from participating Government agencies.
+                            With your consent, we can auto-fill this, making your application convenient.</p>
+                    </div>
+                    <div class="col-lg-5 col-md-4 last">
+                        <a href="javascript::void(0);" onclick="callAuthoriseApi();"  class="btn-6"><strong>Retrieve Myinfo</strong> <span>with <img
+                                    src="{{ asset('images/tempt/singpass-logo.png') }}" alt="singpass"></span></a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="note-2">
+				<div class="row align-items-center">
+					<div class="col-lg-7 col-md-8">
+						<h4>Faster form filling with Singpass. <strong>(Business)</strong></h4>
+						<p>Singpass enables you to retrieve your personal data from participating Government agencies. With your consent, we can auto-fill this, making your application convenient.</p>
+					</div>
+					<div class="col-lg-5 col-md-4 last">
+						<a href="#" class="btn-6"><strong>Retrieve Myinfo Business</strong> <span>with <img src="{{ asset('images/tempt/singpass-logo.png') }}" alt="singpass"></span></a>
+					</div>
+				</div>
+			</div> -->
+            {{--
+            <div class="note-2">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 col-lg-7 col-md-8">
+                        <p>Myinfo Business is currently unvailable.<br /> For business applications, kindly contact us
+                            at <a href="tel:8939 3383"><strong>8939 3383</strong></a> or <a
+                                href="mailto:info@diycars.com"><strong>info@diycars.com</strong></a></p>
+                    </div>
+                    <div class="col-xl-4 col-lg-5 col-md-4 last"> <a href="#myinfo" class="btn-6"
+                            data-toggle="modal"><strong>Retrieve Myinfo Business</strong> <br><span>with <img
+                                    src="{{ asset('images/tempt/singpass-logo.png') }}" alt="singpass" /></span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="myinfo" class="modal pp-agreement ppbg" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content"> <button type="button" class="ppclose" data-dismiss="modal"
+                            aria-label="Close"><i class="fas fa-times-circle"></i></button>
+                        <p>Myinfo Business is currently unvailable.<br /> For business applications, kindly contact us
+                            at <a href="tel:8939 3383"><strong>8939 3383</strong></a> or <a
+                                href="mailto:info@diycars.com"><strong>info@diycars.com</strong></a></p>
+                    </div>
+                </div>
+            </div>
+            --}}
+            @php 
+    		if(!empty(session()->get('myinfosignup'))){
+    		    $data = serialize(session()->get('myinfosignup'));
+    		    $test = unserialize($data);
+        		if(sizeof($test)>0){
+        		    $name1 = $test['name'] ?? '';
+        		    $email1 = $test['email'] ?? '';
+        		    $mobileno1 = $test['mobileno'] ?? '';
+        		    $sex = $test['sex'] ?? '';
+        		}
+    		}else{
+    		    $name1 = '';
+        		$email1 = '';
+        		$mobileno1 = '';
+        		$sex = '';
+    		}
+    		@endphp
+
+            <form class="form-ani" method="post" action="{{ url('register') }}" autocomplete="off">
+
+                @csrf
+
+                <h2 class="title-8 mb-0 mt-30">Applicant's Particulars</h2>
+                <div class="inrow">
+                    <label><span class="required">*</span> Full Name</label>
+                    <input type="text" name="name" value="{{old('name', $name1 ?? '')}}" class="form-control" />
+                </div>
+                @if ($errors->has('name'))
+                <span class="text-danger d-block">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </span>
+                @endif
+                <div class="inrow">
+                    <label><span class="required">*</span> Email Address</label>
+                    <input type="text" name="email" value="{{old('email', $email1 ?? '')}}" class="form-control" />
+                </div>
+                @if ($errors->has('email'))
+                <span class="text-danger d-block">
+                    <strong>{{ $errors->first('email') }}</strong>
+                </span>
+                @endif
+                <div class="inrow inpico-wrap">
+                    <label><span class="required">*</span> Password (Min. 8 Characters)</label>
+                    <input type="password" name="password" class="form-control" id="password" />
+                    <i class="fa fa-eye" onclick="myFunction('password');" aria-hidden="true"></i>
+                </div>
+                @if ($errors->has('password'))
+                <span class="text-danger d-block">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+                @endif
+                <div class="inrow inpico-wrap">
+                    <label><span class="required">*</span> Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="form-control" id="confirmpass" />
+                    <i class="fa fa-eye" onclick="myFunction('confirmpass');" aria-hidden="true"></i>
+                </div>
+                <div class="row sp-col-5">
+                    <div class="col-auto sp-col">
+                        <div class="mt-20 wcode">
+                            <select class="selectpicker" name="country_code" data-title="Country Code">
+                                <option value="+65" @if(old('country_code')=="+65" ) selected="selected"
+                                    @elseif(empty(old('country_code'))) selected @endif>+65</option>
+                                <option value="+66" @if(old('country_code')=="+66" ) selected="selected" @endif>+66
+                                </option>
+                                <option value="+673" @if(old('country_code')=="+673" ) selected="selected" @endif>+673
+                                </option>
+
+                            </select>
+
+                            @if ($errors->has('country_code'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('country_code') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col sp-col">
+                        <div class="inrow"> <label><span class="required">*</span> Mobile Number</label> <input
+                                type="text" name="mobile" value="{{old('mobile', $mobileno1 ?? '')}}" class="form-control" /> </div>
+                        @if ($errors->has('mobile'))
+                        <span class="text-danger d-block">
+                            <strong>{{ $errors->first('mobile') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+
+                <!--div class="inrow">
+                    <label>Address</label>
+                    <input type="text" class="form-control" value="{{old('address')}}" name="address" />
+                </div-->
+                @if ($errors->has('address'))
+                <!--span class="text-danger d-block">
+                    <strong>{{ $errors->first('address') }}</strong>
+                </span-->
+                @endif
+                <div class="mt-20">
+                    <select name="gender" class="selectpicker" data-title="Gender">
+                        <option @if(old('gender')=="1" ) selected="selected" @elseif($sex == 'MALE') selected @endif value="1">Male</option>
+                        <option @if(old('gender')=="2" ) selected="selected" @elseif($sex == 'FEMALE') selected @endif value="2">Female</option>
+                    </select>
+                </div>
+                @if ($errors->has('gender'))
+                <span class="text-danger d-block">
+                    <strong>{{ $errors->first('gender') }}</strong>
+                </span>
+                @endif
+                <input type="hidden" name="url" value="">
+                <h2 class="title-8 mb-0 mt-30">Company's Information (Optional)</h2>
+                <div class="inrow mt-20">
+                    <label>Company Name</label>
+                    <input name="company_name" value="{{old('company_name')}}" id="company_name" type="text"
+                        class="form-control" />
+                </div>
+                <div class="mt-30 text-center">
+                    <button class="btn-1 minw-190" type="submit">SIGN UP <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <div class="captcha">
+                    <!-- Google reCAPTCHA widget -->
+                    <div class="google-recaptcha">
+                        <div class="g-recaptcha" data-callback="setResponse" data-size="invisible"
+                            data-sitekey="{{config('system_settings')->recaptcha_site_key}}"></div>
+                        <input type="hidden" id="captcha-response" name="captcha_response" />
+                    </div>
+                    <!-- Google reCAPTCHA widget -->
+                </div>
+            </form>
+            <!--div class="tempt-1 mt-30">
+                <h4>Or Sign Up with</h4>
+                <ul class="socials type">
+                    <li class="facebook"><a href="{{url('login/facebook')}}" target="_blank"><i
+                                class="fab fa-facebook-f"></i> Facebook</a></li>
+                    <li class="google"><a href="{{url('login/google')}}" target="_blank"><i class="fab fa-google"></i>
+                            google</a></li>
+                </ul>
+            </div-->
+        </div>
+    </div>
+</div>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+<script>
+    var onloadCallback = function () {
+        grecaptcha.execute();
+    };
+
+    function setResponse(response) {
+        document.getElementById('captcha-response').value = response;
+    }
+
+</script>
+<script>
+    function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+<script>
+	function callAuthoriseApi() {
+		let authApiUrl = 'https://api.myinfo.gov.sg/com/v3/authorise';
+		let clientId = 'PROD-200501881C-AUTOLINK-ACCTREG';
+		let redirectUrl = 'https://www.diycars.com/acc-reg/callback';
+		let attributes = 'name,email,mobileno,sex';
+		let purpose = 'state the purpose of requesting the data. This will be shown to the Entity when requesting for their consent';
+		let state = 'D43IoH6a64FuAujEgd5Hq29pfcydnAIFvouQ9rVt1642739624';
+      var authoriseUrl = authApiUrl +
+        "?client_id=" + clientId +
+        "&attributes=" + attributes +
+        "&purpose=" + purpose +
+        "&state=" + state +
+        "&redirect_uri=" + redirectUrl;
+         
+        window.location = authoriseUrl;
+    }
+
+    $(document).ready(function() {
+                $(window).keydown(function(event){
+                    if(event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                    }
+                });
+            });
+</script>
+@endsection

@@ -1,0 +1,298 @@
+.tb {
+	&-1 { width: 100%;
+		th, td { padding: 20px 30px;
+			@include maxmedia(1199px) {
+				padding: 15px;
+			}
+		}
+		th { background: #A4A07A; color: $white; font-size: 14px; font-weight: 700; text-transform: uppercase; }
+		td { background: $white; border-top: #BDBDBB dashed 1px; }
+		tbody {
+			tr:first-child {
+				td { border-top: none; }
+			}
+		}
+		.tbico-1 { 
+			img { max-width: 50px; }
+		}
+	}	
+	&-2 { width: 100%;
+		th, td { padding: 15px 20px;
+			@include maxmedia(1299px) {
+				padding: 15px 10px;
+			}
+			@include maxmedia(574px) {
+				padding: 10px;
+			}
+		}
+		th { background: #A4A07A; border: #D1D1D1 solid 1px; color: $white; font-size: 14px; font-weight: 700; white-space: nowrap;
+			.btn-tooltip { color: $white !important; font-size: 12px; 
+				&:hover { color: #333 !important; }
+			}
+		}
+		td { background: $white; border: #D1D1D1 solid 1px; font-size: 20px; vertical-align: top;
+			@include maxmedia(991px) {
+				font-size: 16px;
+			}
+			@include maxmedia(574px) {
+				font-size: 14px;
+			}
+		}
+		.typecol { 
+			&-1 { border-right: none; color: #1E1E1E; font-size: 18px; padding-right: 0; width: 50px; }
+			&-2 { border-left: none; padding-left: 10px; text-align: right; width: 150px; }
+			&-3 { border-bottom: none; border-right: none; border-right: none; }
+		}
+		.colnumber { font-size: 18px; text-align: center;
+			@include maxmedia(991px) {
+				font-size: 14px;
+			}
+			@include maxmedia(574px) {
+				font-size: 12px;
+			}
+		}
+		.colanswer { padding: 0; 
+			.form-control { background: none !important; @include bd-radius(0); box-shadow: none !important; font-size: 20px; font-weight: 700; height: 60px; 
+				@include maxmedia(574px) {
+					font-size: 18px; height: 50px; 
+				}				
+				&:focus {
+					background: #F6F6F6 !important;
+					border-color: $green !important;
+					color: #000 !important;
+				}
+			}
+		}
+		.wcol { 
+			&-1 { width: 40px; }
+			&-2 { width: 110px; }
+			&-3 { width: 180px; }
+			&-4 { width: 230px; }
+			&-5 { width: 200px; }
+		}
+		.tbactions { white-space: nowrap;
+			a { color: $red; @include bd-radius (10px 0 10px 0); border: $red solid 1px; display: inline-block; font-size: 14px; margin-right: 5px; margin-top: 5px; padding: 3px 7px;
+				&:hover { background: $red; color: $white; }
+			}
+		}
+		.hasaction { padding-right: 30px; position: relative;
+			a { position: absolute; right: 0; top: 1px; }
+			&.bot a { bottom: 0; top: auto; }
+		}
+		&.tbtype { 
+			&-1 { font-weight: 700; }
+			&-2 { font-weight: 700; 
+				tbody {
+					td { border-bottom: none; border-top: none; padding-bottom: 10px; padding-top: 10px;
+						@include maxmedia(1199px) {
+							padding-bottom: 5px; padding-top: 5px;
+						}
+					}
+					tr {
+						&:first-child td { padding-top: 10px; }
+						&:last-child td { padding-bottom: 10px; }
+					}
+				}
+			}
+			&-3 {
+				th, td { border: none; }
+				th { font-size: 24px; 
+					@include maxmedia(1199px) {
+						font-size: 20px; 
+					}
+					@include maxmedia(991px) {
+						font-size: 16px; 
+					}
+					@include maxmedia(574px) {
+						font-size: 14px; 
+					}
+				}
+				tbody {
+					tr:nth-child(even) {
+						td { background: #F8F7EE; }
+					}					
+				}
+			}
+			&-4 {
+				th, td { border: none; font-size: 16px; }
+				th { font-size: 14px; }
+				tbody {
+					tr:nth-child(even) {
+						td { background: #F8F7EE; }
+					}					
+				}
+			}
+			&-5 { font-weight: 700; 
+				th { font-size: 16px; 
+					&:first-child { background: none; border: none; }
+				}
+				tbody {
+					td { border-bottom: none; border-top: none; font-size: 18px; padding-bottom: 10px; padding-top: 10px;
+						@include maxmedia(1199px) {
+							padding-bottom: 5px; padding-top: 5px;
+						}
+						&:first-child { background: none; border: none; }
+					}
+					tr {
+						&:first-child td { padding-top: 10px; }
+						&:last-child td { padding-bottom: 10px; }
+					}
+				}
+				tfoot {
+					td { border-bottom: none; border-top: none; 
+						&:first-child { background: none; border: none; }						
+					}
+				}
+			}
+		}
+		tfoot {
+			td { background: #F1F1F1; vertical-align: middle;
+				&:first-child { padding-bottom: 0; padding-top: 0; }
+				&.lb { font-size: 18px; }
+				&.colanswer { 
+					.form-control { border-color: #F1F1F1 !important; text-align: right;
+						&.minwinpt {
+							&-1 { min-width: 50px; }
+						}
+						&.status { 
+							&-wrong { background: #FF979C !important; border-color: #FF979C !important; }
+							&-right { background: #5ABB10 !important; border-color: #5ABB10 !important; }
+						}
+					}
+					&.text-center {
+						.form-control { padding-left: 5px; padding-right: 5px; text-align: center; }
+					}
+				}
+				&.lbtb { 
+					&-1 { font-size: 14px; font-weight: 400; }
+					&-2 { font-size: 14px; font-weight: 400; }
+				}
+			}
+		}
+	}	
+	&-4 { width: 100%;
+		th, td { padding: 10px; text-align: center;
+			&:first-child { padding-left: 0; text-align: left; }
+		}
+		th { font-weight: 400; white-space: nowrap; }
+		.checkbxtype { margin: 0 auto; width: 25px; }
+		tfoot td { padding-top: 0; }
+	}
+	&-fixed { border: #F1F1F1 solid 1px; max-height: 540px; overflow: auto; position: relative; width: 100%; -webkit-overflow-scrolling: touch;
+		&::-webkit-scrollbar { @include bd-radius (20px); height: 10px; width: 6px; }
+		&::-webkit-scrollbar-track, &::-webkit-scrollbar-corner { background: #F1F1F1; }
+		&::-webkit-scrollbar-thumb { background: #48420E; }
+		&::-webkit-scrollbar-thumb:hover { background: $red; }
+		table { border-spacing: 0; margin: 0; min-width: 800px; position: relative; z-index: 1;}
+		thead { position: -webkit-sticky; z-index: 500; overflow: visible; position: sticky; top: 0; background: #fff; }
+		tbody tr:first-child td { border-top: none; }
+		table th:first-child, table td:first-child { border-left: none; }
+		table th:last-child, table td:last-child { border-right: none; }	
+	}
+}
+
+.gtb {
+	&-1 { border-left: #D1D1D1 solid 1px; border-top: #D1D1D1 solid 1px; @include flexwrap;
+		.col { flex: 0 0 auto; width: 10%; 
+			@include maxmedia(991px) {
+				 width: 20%; 
+			}
+			@include maxmedia(474px) {
+				 width: 25%; 
+			}
+			@include maxmedia(374px) {
+				 width: 33.3333%; 
+			}
+		}
+		.form-control { border-color: #D1D1D1 !important; border-left: none !important; border-top: none !important; @include bd-radius (0); padding: 10px 5px; text-align: center; 
+			&:focus { background: #F6F6F6 !important; }
+		}
+	}
+	&-2 { width: 100%;
+		&.gtbw-1 { 
+			@include minmedia(1300px) {
+				width: 85%;
+			}
+		}
+		.sublb { display: block; padding-left: 15px; }
+		.grow { align-items: center; @include flexwrap; 
+			@include maxmedia(767px) {
+				align-items: flex-start; 
+			}
+			> div { flex: 0 0 auto; padding: 10px; text-align: center; width: 12%;
+				@include maxmedia(1199px) {
+					width: 14%;
+				}
+				@include maxmedia(767px) {
+					text-align: left; width: 50%;
+				}
+				@include maxmedia(374px) {
+					width: 100%;
+				}
+				&:first-child { text-align: left; width: 52%; 
+					@include maxmedia(1199px) {
+						width: 44%;
+					}
+					@include maxmedia(767px) {
+						width: 100%;
+					}
+				}
+			}
+		}
+		.ghead { white-space: nowrap; 
+			@include maxmedia(767px) {
+				display: none;
+			}
+		}
+		.gfoot {
+			@include maxmedia(767px) {
+				display: none;
+			}
+		}
+		th, td { padding: 10px 20px 10px 0; }
+		th { font-weight: 400; text-align: center; white-space: nowrap;
+			strong { font-weight: 700; }
+			&:first-child { text-align: left; }
+		}
+		thead {
+			@include maxmedia(767px) {	
+				display: none; 
+			}			
+		}
+		tfoot {
+			@include maxmedia(767px) {	
+				display: none; 
+			}
+			td { text-align: center; white-space: nowrap; }
+		}
+		tbody { 
+			@include maxmedia(767px) {				
+				tr { align-items: center; @include flexwrap; }
+				td { flex: 0 0 auto; width: 50%;					
+					@include maxmedia(374px) {
+						width: 100%;
+					}
+					&:first-child { width: 100%; }
+				}
+			}
+		}
+		.checkbxtype, .radiotype { margin: 0 auto; width: 25px; 
+			@include maxmedia(767px) {
+				margin-left: 15px; width: auto; 
+			}
+			label { font-size: 0; min-height: 25px;
+				@include maxmedia(767px) {
+					font-size: 16px;
+				}
+				em { color: #999; display: block; font-size: 0.9em; 						
+					@include maxmedia(374px) {
+						display: inline-block;
+					}
+				}
+			}
+		}
+		.radiotype { 
+			label { min-height: 25px;	}
+		}
+	}
+}

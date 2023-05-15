@@ -1,0 +1,54 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="main-wrap">
+    <div class="container main-inner">
+        <h2 class="title-2 mt-50 mt-991-30">{{ $title ?? '' }}</h2>
+        <div class="table-responsive">
+            <table class="tb-1 detail text-center">
+                <thead>
+                    <tr>
+                        <th rowspan="2">S/N</th>
+                        <th rowspan="2">Additional Documents</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if(isset($loan_application->other_documents))
+                    @php
+                        $other_documents = json_decode($loan_application->other_documents);
+                        $i = 1;
+                    @endphp
+                    @foreach ($other_documents as $photokey => $photovalue)
+                    <tr>
+                        <td>
+                            {{ $i }}
+                        </td>
+                        <td>
+                            <a href="<?php echo url($photovalue); ?>" target="_blank">
+                                <?php
+                                $file_display = explode('/', $photovalue);
+                                if($file_display[2])
+                                {
+                                    $file_name = explode('__', $file_display[2]);
+                                    $my_file_name = end($file_name);
+                                    echo $my_file_name;
+                                }
+                                ?>
+                            </a>
+                        </td>
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                    @endforeach
+                    @else
+                    <tr>
+                        <td colspan="2">No Data Available</td>
+                    </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection

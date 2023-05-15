@@ -1,0 +1,129 @@
+﻿.multiselect-wrapper {
+	width: 100%;
+	display: inline-block;
+	white-space: nowrap;
+	font-size: 12px;
+	position: relative;
+}
+
+.multiselect-wrapper .multiselect-input {
+	width: 100%;
+	padding-right: 50px;
+}
+
+.multiselect-wrapper label {
+	display: block;
+	font-size: 12px;
+	font-weight : 600;
+	margin-bottom: 0;
+}
+
+.multiselect-wrapper .multiselect-list {
+	z-index: 1;
+	position: absolute;
+	left: 0;
+	right: 0;
+	display: none;
+	background-color: white;
+	border: 1px solid #e4e6fc;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	margin-top: -2px;
+}
+
+	.multiselect-wrapper .multiselect-list.active {
+		display: block;
+	}
+
+	.multiselect-wrapper .multiselect-list > span {
+		font-weight: bold;
+	}
+
+	.multiselect-wrapper .multiselect-list .multiselect-checkbox {
+		margin-right: 2px;
+	}
+
+	.multiselect-wrapper .multiselect-list > span,
+	.multiselect-wrapper .multiselect-list li {
+		cursor: default;
+	}
+
+.multiselect-wrapper .multiselect-list {
+	padding: 5px;
+	min-width: 200px;
+}
+
+.multiselect-wrapper .multiselect-list label {
+	padding: 2px 20px 2px 10px;
+}	
+
+.multiselect-wrapper ul {
+	list-style: none;
+	display: block;
+	position: relative;
+	padding: 0px;
+	margin: 0px;
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+	.multiselect-wrapper ul li {
+		display: block;
+	}
+
+		.multiselect-wrapper ul li.active {
+			background-color: #f1f1f1;
+		}
+
+		.multiselect-wrapper ul li:hover {
+			background-color: #f1f1f1;
+		}
+
+.multiselect-input-div {
+	height: 42px;
+}
+
+	.multiselect-input-div input{
+		border: 1px solid #e4e6fc;
+		border-radius: 3px;
+		background : #fff;
+		height: 42px;
+		margin: 0;
+		padding: 5px 15px;
+		vertical-align:middle;
+	}
+.multiselect-wrapper.disabled .multiselect-input-div input {  background: #e9ecef; }
+
+.multiselect-count {
+	position: relative;
+	text-align: center;
+	border-radius: 2px;
+	background-color: lightblue;
+	display: inline-block !important;
+	padding: 2px 7px;
+	left: -45px;
+}
+
+.multiselect-wrapper.disabled .multiselect-dropdown-arrow {
+	border-top: 5px solid lightgray;
+}
+
+.multiselect-wrapper.disabled .multiselect-count {
+	background-color: lightgray;
+}
+
+.multiselect-dropdown-arrow {
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid black;
+	position: absolute;
+	line-height: 20px;
+	text-align: center;
+	display: inline-block !important;
+	margin-top: 17px;
+	margin-left: -42px;
+}
+

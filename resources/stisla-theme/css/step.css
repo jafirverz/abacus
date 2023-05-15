@@ -1,0 +1,77 @@
+.step-top { border-radius: 3px; text-align: center; padding: 35px 0 20px; background-color: #EFEFEF; }
+.step-list { margin: 0; padding: 0; display: flex; justify-content: space-between; align-items: center; align-items: flex-start; position: relative; }
+.step-list:before { content: ''; height: 1px; border-top: 1px dashed #707070; left: 7%; right: 30px; top: 23px; right: 7%; position: absolute; }
+.step-list li { cursor: pointer; list-style: none; margin: 0 5px 10px; position: relative; z-index: 1; width: calc(100% / 7); }
+.step-list li span { display: flex; justify-content: center; align-items: center; border-radius: 50%; width: 46px; height: 46px; background-color: #7F7F7F; font-weight: 900; position: relative; margin: 0 auto 20px; color: #fff; }
+.step-list li p { font-weight: 500; line-height: 1.4; max-width: 85px; margin: 0 auto 15px; }
+.step-list li .fas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; line-height: 16px; }
+.step-list li .fa-circle { font-size: 13px; }
+.step-list li .fa-check { opacity: 0; z-index: 2; }
+.step-list li.active span { background-color: #F73E31; }
+.step-list li.passed .fa-circle { opacity: 0; }
+.step-list li.passed span { font-size: 0; line-height: 0; background-color: #82CF49; }
+.step-list li.passed .fa-check { opacity: 1; }
+ @media (max-width: 768px) {
+    .step-list { flex-wrap: wrap; }
+    .step-list:before { left: 11%; right: 11%; }
+    .step-list:after { content: ''; width: calc(100% - 110px); height: 1px; border-top: 1px dashed #707070; right: 60px; top: 135px; position: absolute; }
+    .step-list li { width: calc(100% / 4 - 10px); } 
+}
+@media (max-width: 425px) {
+	.step-list li { width: calc(100% / 3 - 10px); }
+	.step-list:after { top: 135px; } 
+}
+
+.alert-bx { background: #F73E31; border-radius: 3px; color: #fff; font-size: 18px; font-weight: 500; padding: 15px; text-align: center; }
+
+@media (max-width: 767px) {
+    .step-title { flex-wrap: wrap; }
+    .step-title ul { width: 100%; margin-top: 15px; } 
+}
+
+.date-wrap { background: #fff; position: relative; }
+.date-wrap .form-control { background: none; cursor: pointer; position: relative; z-index: 2; }
+.date-wrap .far, .date-wrap .fas { color: #333; margin-top: -8px; position: absolute; right: 12px; top: 50%; z-index: 9; }
+.bootstrap-timepicker-widget table td input { border: none; }
+
+.hauto { height: auto !important; }
+span.required { color: #f00; }
+
+.bx-disable { background: #ddd; opacity: 0.8; }
+.btn-link { padding-left: 0; padding-right: 0; }
+
+.photo-grid .inner { border: #E1E1E1 solid 1px; margin: 10px 0;	padding: 10px; text-align: center; }
+.photo-grid img { max-width: 100%; }
+.lb-1 { position: relative;	}
+.lb-1:after { content: ":"; }
+.status-1 { color: #E8B407; }
+
+.selectgroup.type { display: block; }
+.selectgroup.type label { margin-right: 10px; vertical-align: top; }
+.selectgroup.type .selectgroup-button { border: #ddd dashed 1px; border-radius: 5px; display: flex; align-items: center; height: 42px; line-height: 1; }
+
+.tb-1 { width: 100%; }
+.tb-1 th, .tb-1 td { padding: 10px 20px; }
+.tb-1 th { background: #333; color: #fff; vertical-align: top; }
+.tb-1 td { border: #E1E1E1 solid 1px; border-radius: 5px 5px 0 0; }
+.tb-1 tr:nth-child(odd) td { background: #E1E1E1; }
+.tb-1 .lb { color: #191919; }
+
+.tb-2 { width: 100%; }
+.tb-2 th, .tb-2 td { padding: 10px 20px; }
+.tb-2 th { background: #333; border-right: #fff solid 1px; color: #fff; vertical-align: top; }
+.tb-2 td { border-right: #E1E1E1 solid 1px; border-top: #E1E1E1 solid 1px; }
+.tb-2 th:last-child, .tb-2 td:last-child { border-right: none; }
+.tb-2 tr:nth-child(odd) td { background: #f1f1f1; }
+.tb-2 .lb { color: #191919; }
+
+.tabs-wrap .tabs { border-bottom: none; }
+.tabs-wrap .tabs .nav-item { margin-bottom: 0; margin-right: 5px; }
+.tabs-wrap .tabs .nav-item a { background: #fff; border: none; color: #333; }
+.tabs-wrap .tabs .nav-item a:hover, .tabs-wrap .tabs .active a { background: #333; color: #fff; }
+.tabs-wrap .tab-content { background: #fff; height: 0; overflow: hidden; }
+.tabs-wrap .tab-content.active { height: auto; overflow: visible; }
+
+ @media (min-width: 576px) {
+	 .lb-1:after { line-height: 1; position: absolute; right: 0; top: 3px; }
+ }
