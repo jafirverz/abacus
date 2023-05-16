@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('country_code_phone')->nullable();
             $table->string('mobile')->nullable();
             $table->date('dob')->nullable();
-            $table->string('verification_token')->nullable();
+            $table->string('verification_token')->unique();
             $table->string('password');
             $table->string('country_code')->nullable();
             $table->text('address')->nullable();

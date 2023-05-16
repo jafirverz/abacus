@@ -62,7 +62,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
 		  //  'company_name' => ['required', 'string'],
-			'fullname' => ['required', 'string'],
+			'name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'country_code' => ['required', 'regex:/^(\+)([1-9]{1,3})$/'],
@@ -85,7 +85,7 @@ class RegisterController extends Controller
 
         $messages = [
             'country_code.regex' => 'The Country code entered is invalid.',
-            'fullname.required' => 'This field is required',
+            'name.required' => 'This field is required',
             'email.required' => 'This field is required',
             'password.required' => 'This field is required',
             'country_code.required' => 'This field is required',
@@ -97,7 +97,7 @@ class RegisterController extends Controller
         ];
 
 		$request->validate([
-				'fullname' => 'required|string',
+				'name' => 'required|string',
                 'email' =>  'required|email|unique:users,email|max:191',
                 'password'  =>  'required|min:8',
                 'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
@@ -113,14 +113,14 @@ class RegisterController extends Controller
             $acName = '';
             $dob = date('Y-m-d', strtotime($request->dob));
             $dob1 = date('dmy', strtotime($dob));
-            $fullnameEx = explode(' ', $request->fullname);
+            $fullnameEx = explode(' ', $request->name);
             foreach($fullnameEx as $funame){
                 $acName .= strtoupper(substr($funame, 0, 1));
             }
             $accountId = 'SUD-'.$dob1.$acName;
 			$users = new User;
             $users->dob = $dob ?? null;
-			$users->fullname = $request->fullname;
+			$users->name = $request->name;
             $users->account_id = $accountId;
             $users->email = $request->email;
             $users->password = Hash::make($request->password);
@@ -156,7 +156,7 @@ class RegisterController extends Controller
                     $data['subject'] = $email_template->subject;
 
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->fullname, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->fullname];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->fullname];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -182,7 +182,7 @@ class RegisterController extends Controller
                 $data['subject'] = $email_template->subject;
 
                 $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                $value = [$request->fullname, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->fullname];
+                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->fullname];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 

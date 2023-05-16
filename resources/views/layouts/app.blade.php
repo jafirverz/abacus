@@ -3,12 +3,11 @@
 
 @include('inc.head')
 
-<body>
-
+<body class="temptpage">
 
 
     <div class="mm-page" id="toppage">
-			 @include('inc.header')
+			 @include('inc.headerstudent')
 			 @yield('content')
 
     </div><!-- //page -->

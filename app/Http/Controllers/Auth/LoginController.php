@@ -10,7 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\View;
 
 use Illuminate\Validation\ValidationException;
@@ -142,6 +143,65 @@ class LoginController extends Controller
         return view('auth.login',compact("page"));
     }
 
+    public function forgetaccountid()
+    {
+        return view('forget_account_id');
+    }
+
+    public function checkaccountid(Request $request)
+    {
+        $messages = [
+            'name.required' => 'This field is required',
+            'email.required' => 'This field is required',
+            'dob.required' => 'This field is required',
+
+        ];
+
+        $request->validate([
+            'name' => 'required|string',
+            'email' =>  'required|email|exists:users,email',
+            'dob' => 'required',
+        ], $messages);
+
+        $dob = date('Y-m-d', strtotime($request->dob));
+        $user = User::where('email', $request->email)->where('dob', $dob)->first();
+        if(empty($user)){
+            throw ValidationException::withMessages(['email' => 'Email Id and DOB does not match']);
+//            return back()->withErrors('Details does not match')->withInput();
+        }
+        if($user){
+            //			Student email for forget account id
+            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_STUDENT_ACCOUNT_ID'));
+
+            if ($email_template) {
+                $data = [];
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$user->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{account_id}}'];
+                    $value = [$user->account_id];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($user->email)->send(new EmailNotification($data));
+                        return redirect('forget-account-id')->with('success',  'Please check your email.');
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+
+            }
+        }
+    }
+
+
+
+
+
 	protected function credentials(Request $request)
     {
 		//return array_merge($request->only($this->username(), 'password'));
@@ -200,7 +260,7 @@ class LoginController extends Controller
         $sessionKey = $this->guard()->getName();
         $this->guard()->logout();
         $request->session()->forget($sessionKey);
-        return $this->loggedOut($request) ?: redirect('/home');
+        return $this->loggedOut($request) ?: redirect('/login');
     }
 
 

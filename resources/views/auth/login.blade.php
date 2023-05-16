@@ -33,10 +33,10 @@
                             @endif
                         </div>
                         <div class="wrap-1">
-                            <a href="forgot-account-id.html">Forgot Account ID?</a><a href="#">Forgot Password?</a>
+                            <a href="{{url('forget-account-id')}}">Forgot Account ID?</a><a href="{{url('forget-password')}}">Forgot Password?</a>
                         </div>
                         <div class="wrap-2">For existing student who does not have an account, please register <a
-                                href="register.html">here</a>.
+                                href="{{url('register')}}">here</a>.
                         </div>
                         <div class="output-1">
                             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i>

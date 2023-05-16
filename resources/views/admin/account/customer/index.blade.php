@@ -62,10 +62,10 @@
                                         </div>
                                     </th>
                                     <th>Action</th>
-                                    <th>Name</th>
+                                    <th>Full Name</th>
                                     <th>Email Address</th>
                                     <th>Customer Number</th>
-                                    <th>Company Name</th>
+                                    <th>Account ID</th>
                                     <th>Last Updated</th>
                                 </tr>
                             </thead>
@@ -91,16 +91,16 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{ $item->name ?? '' }}
+                                        {{ $item->name }}
                                     </td>
                                     <td>
                                         {{ $item->email }}
                                     </td>
                                     <td>
-                                        {{ $item->mobilewithcountrycode ?? '' }}
+                                        {{ $item->mobile ?? '' }}
                                     </td>
                                     <td>
-                                        {{ $item->company_name ?? '' }}
+                                        {{ $item->account_id ?? '' }}
                                     </td>
                                     <td>
                                         {{ $item->updated_at->format('d M, Y h:i A') }}
