@@ -23,7 +23,7 @@
                                 <label for="">Account ID</label>: {{ $customer->account_id ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Customer Name</label>: {{ $customer->name ?? '' }}
+                                <label for="">Customer Name</label>: {{ $customer->fullname ?? '' }}
                             </div>
                             <div class="form-group">
                                 <label for="">Email Address</label>: {{ $customer->email ?? '' }}
