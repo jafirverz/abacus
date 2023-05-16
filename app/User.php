@@ -26,9 +26,15 @@ class User extends Authenticatable
      *
      * @var array
      */
+<<<<<<< HEAD
     protected $fillable = [
         'name', 'gender', 'email', 'mobile', 'password', 'address', 'company_name', 'profile_picture',
     ];
+=======
+//    protected $fillable = [
+//        'name', 'gender', 'email', 'mobile', 'password', 'address',
+//    ];
+>>>>>>> e10d52334c928058a0a52e9b89577fef6aa77766
 
     /**
      * The attributes that should be hidden for arrays.
@@ -111,6 +117,7 @@ class User extends Authenticatable
         }
     }
 
+<<<<<<< HEAD
     public function loan()
     {
         return $this->hasMany('App\Loan', 'user_id');
@@ -130,4 +137,25 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\SellerParticular', 'buyer_email', 'email');
     }
+=======
+//    public function loan()
+//    {
+//        return $this->hasMany('App\Loan', 'user_id');
+//    }
+//
+//    public function sellerparticular()
+//    {
+//        return $this->hasMany('App\SellerParticular', 'user_id');
+//    }
+//
+//    public function buyerparticular()
+//    {
+//        return $this->hasMany('App\BuyerParticular', 'user_id');
+//    }
+//
+//    public function buyeruserparticular()
+//    {
+//        return $this->hasMany('App\SellerParticular', 'buyer_email', 'email');
+//    }
+>>>>>>> e10d52334c928058a0a52e9b89577fef6aa77766
 }
