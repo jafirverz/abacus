@@ -306,13 +306,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('contact', 'CMS\ContactController');
 
 
-    // LOAN CALCULATOR SETTINGS
-    Route::get('loan-calculator-settings', 'CMS\LoanCalculatorSettingController@index');
-    Route::post('loan-calculator-settings', 'CMS\LoanCalculatorSettingController@store');
-
-    // BANK MASTER
+    // LEVEL MASTER
     Route::get('level/search', 'CMS\LevelController@search')->name('level.search');
     Route::resource('level', 'CMS\LevelController');
+
+    // TOPIC MASTER
+    Route::get('topic/search', 'CMS\TopicController@search')->name('topic.search');
+    Route::resource('topic', 'CMS\TopicController');
 
     // CHAT WINDOW
     Route::get('chat-window/search', 'CMS\ChatWindowController@search')->name('chat-window.search');

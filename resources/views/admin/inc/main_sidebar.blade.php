@@ -31,9 +31,9 @@
                     'url'   =>  'admin/level',
                 ],
                 [
-                    'title' =>  __('Car Features'),
+                    'title' =>  __('Topics'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/specifications',
+                    'url'   =>  'admin/topic',
                 ],
                 [
                     'title' =>  __('Car Accessories'),
