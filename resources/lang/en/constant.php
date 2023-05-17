@@ -40,7 +40,7 @@ return [
     'CHECKLIST' => 'Checklist',
     'FORMS' => 'Forms',
     'SMART_BLOCK' => 'Smart Block',
-    'BANK' => 'Bank',
+    'LEVEL' => 'Level',
     'HEADER_MENU_TITLE' => 'Header',
     'FOOTER_MENU_TITLE' => 'Footer',
     'LOAN_APPLICATION' => 'Loan Application',

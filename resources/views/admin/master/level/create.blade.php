@@ -6,17 +6,17 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('bank.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('level.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Create', route('bank.create'))])
+{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Create', route('bank.create'))])--}}
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('bank.store') }}" method="post">
+                        <form action="{{ route('level.store') }}" method="post">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -30,36 +30,8 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="interest">Interest (%)</label>
-                                    <input type="text" name="interest" class="form-control numeric" id=""
-                                        value="{{ old('interest') }}">
-                                    @if ($errors->has('interest'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('interest') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="terms_and_condition">Terms and Condition</label>
-                                    <input type="text" name="terms_and_condition" class="form-control numeric" id=""
-                                        value="{{ old('terms_and_condition') }}">
-                                    @if ($errors->has('terms_and_condition'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('terms_and_condition') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="view_order">View Order</label>
-                                    <input type="number" name="view_order" class="form-control numeric" id=""
-                                        value="{{ old('view_order') }}" min="0">
-                                    @if ($errors->has('view_order'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('view_order') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
+
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">

@@ -311,8 +311,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('loan-calculator-settings', 'CMS\LoanCalculatorSettingController@store');
 
     // BANK MASTER
-    Route::get('bank/search', 'CMS\BankController@search')->name('bank.search');
-    Route::resource('bank', 'CMS\BankController');
+    Route::get('level/search', 'CMS\LevelController@search')->name('level.search');
+    Route::resource('level', 'CMS\LevelController');
 
     // CHAT WINDOW
     Route::get('chat-window/search', 'CMS\ChatWindowController@search')->name('chat-window.search');

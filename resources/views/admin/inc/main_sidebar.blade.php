@@ -26,9 +26,9 @@
             'menu_header'   =>  __('constant.MASTER'),
             'main_menu' =>  [
                 [
-                    'title' =>  __('constant.BANK'),
+                    'title' =>  __('constant.LEVEL'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/bank',
+                    'url'   =>  'admin/level',
                 ],
                 [
                     'title' =>  __('Car Features'),
