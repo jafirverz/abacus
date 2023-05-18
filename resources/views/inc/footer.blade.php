@@ -1,13 +1,13 @@
 <footer class="footer-container">
     <div class="bgfoot">
-        <img class="bg-1" src="images/bg-footer-top.png" alt="bg foot" />
-        <img class="bg-2" src="images/3g-abacus-mascot.png" alt="3g abacus mascot" />
+        <img class="bg-1" src="{{asset('images/bg-footer-top.png')}}" alt="bg foot" />
+        <img class="bg-2" src="{{asset('images/3g-abacus-mascot.png')}}" alt="3g abacus mascot" />
     </div>
     <div class="container">
         <div class="row sp-col-30 align-items-center footer-info">
             <div class="col-xl-auto sp-col">
                 <div class="logo">
-                    <a href="index.html"><img src="images/3g-abacus-logo-2.png" alt="3G Abacus" /></a>
+                    <a href="index.html"><img src="{{asset('images/3g-abacus-logo-2.png')}}" alt="3G Abacus" /></a>
                 </div>
             </div>
             <div class="col-xl sp-col">

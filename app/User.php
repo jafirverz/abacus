@@ -81,7 +81,6 @@ class User extends Authenticatable
      */
     public function sendPasswordResetNotification($token)
     {
-
         // EMAIL Notification to the User
         $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_FORGET_PASSWORD'));
         if ($email_template) {

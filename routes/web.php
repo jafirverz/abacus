@@ -48,9 +48,9 @@ Route::get('/forget-account-id', 'Auth\LoginController@forgetaccountid');
 Route::post('/forget-account-id', 'Auth\LoginController@checkaccountid')->name('forgetaccountid');
 
 Route::get('/forget-password', 'Auth\ForgotPasswordController@showForm');
-Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('forgetpassword');
+Route::post('/forget-password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('forgetpassword');
 
-Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@showResetForm');
+//Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@showResetForm');
 
 Route::get('/home', 'PagesFrontController@index')->name('home');
 
