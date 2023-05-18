@@ -18,6 +18,7 @@ class CreateTopicsTable extends Migration
             $table->unsignedBigInteger('level_id');
             $table->foreign('level_id')->references('id')->on('levels');
             $table->string('title')->nullable();
+            $table->smallInteger('status')->default(1)->comment('1=>active, 2=>inactive');
             $table->timestamps();
         });
     }

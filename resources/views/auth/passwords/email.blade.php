@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.appLogin')
 
 @section('content')
-<div class="main-wrap">				
+<div class="main-wrap">
 				<div class="bn-inner bg-get-image">
 					<img class="bgimg" src="/images/tempt/bn-sign-up.jpg" alt="Sign Up" />
-				</div>  
+				</div>
 				<div class="container main-inner">
 					<h1 class="title-1 text-center">Password Reset</h1>
                     <ul class="breadcrumb justify-content-center">
@@ -18,7 +18,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-					@include('inc.messages')      
+					@include('inc.messages')
                    <form method="POST" action="{{ url('password/email') }}"  class="form-ani">
                         @csrf
                          <div class="form-group row">

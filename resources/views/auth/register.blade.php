@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appLogin')
 
 @section('content')
 
@@ -17,11 +17,11 @@
                           method="post">
                         @csrf
                         <label class="lb-1">Full Name <span class="required">*</span></label>
-                        <input class="form-control" name="fullname" value="{{old('fullname')}}" type="text"
+                        <input class="form-control" name="name" value="{{old('name')}}" type="text"
                                placeholder="e.g. Michelle Tan"/>
-                        @if ($errors->has('fullname'))
+                        @if ($errors->has('name'))
                             <span class="text-danger d-block">
-                                {{ $errors->first('fullname') }}
+                                {{ $errors->first('name') }}
                             </span>
                         @endif
                         <label class="lb-1">Email Address <span class="required">*</span></label>

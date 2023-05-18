@@ -40,7 +40,8 @@ return [
     'CHECKLIST' => 'Checklist',
     'FORMS' => 'Forms',
     'SMART_BLOCK' => 'Smart Block',
-    'BANK' => 'Bank',
+    'LEVEL' => 'Level',
+    'TOPIC' => 'Topics',
     'HEADER_MENU_TITLE' => 'Header',
     'FOOTER_MENU_TITLE' => 'Footer',
     'LOAN_APPLICATION' => 'Loan Application',
@@ -80,6 +81,8 @@ return [
     //  EMAIL TEMPLATE ID
     'EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION' =>  '1',
     'EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REGISTRATION' =>  '2',
+    'EMAIL_TEMPLATE_TO_STUDENT_ACCOUNT_ID' =>  '3',
+    'EMAIL_TEMPLATE_TO_FORGET_PASSWORD' => '4',
 
     // SLUG
     'SLUG_LOGIN' => 'login',

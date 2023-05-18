@@ -7,9 +7,9 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
-                <a href="{{ route('bank.create') }}" class="btn btn-primary">Add New</a>
+                <a href="{{ route('topic.create') }}" class="btn btn-primary">Add New</a>
             </div>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])
+{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
         </div>
         <br />
@@ -22,19 +22,19 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('bank.destroy', 'bank') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('topic.destroy', 'level') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('bank.destroy', 'bank') }}" method="post">
+                            <form id="destroy" action="{{ route('topic.destroy', 'level') }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('bank.search') }}" method="get">
+                                <form action="{{ route('topic.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search"
@@ -47,6 +47,7 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-md">
@@ -62,17 +63,16 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
+                                            <th>Level</th>
                                             <th>Title</th>
-                                            <th>Interest</th>
-                                            <th>View Order</th>
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($bank->count())
-                                        @foreach ($bank as $key => $item)
+                                        @if($topic->count())
+                                        @foreach ($topic as $key => $item)
                                         <tr>
                                             <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
@@ -82,16 +82,16 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('bank.show', $item->id) }}"
+                                                <a href="{{ route('topic.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('bank.edit', $item->id) }}"
+                                                <a href="{{ route('topic.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
+                                            <td>{{ $item->level->title }}</td>
                                             <td>{{ $item->title }}</td>
-                                            <td>{{ $item->interest }}%</td>
-                                            <td>{{ $item->view_order }}</td>
+
                                             <td>
                                                 @if(getActiveStatus())
                                                 <div class="badge @if ($item->status==1) badge-success @else badge-danger @endif">{{ getActiveStatus($item->status) }}</div>
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ $bank->links() }}
+                            {{ $topic->links() }}
                         </div>
                     </div>
                 </div>

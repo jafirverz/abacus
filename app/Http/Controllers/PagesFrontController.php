@@ -46,16 +46,16 @@ class PagesFrontController extends Controller
         $this->system_settings = $this->systemSetting();
         $this->smart_blocks = $this->smartBlock();
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
-        /* $this->middleware('auth:web')->except(['index', 'pages']);
+        $this->middleware('auth:web');
 
 
 
         $this->middleware(function ($request, $next) {
-            $this->student_id = Auth::user()->student_id;
+            $this->student_id = Auth::user()->id;
             $this->previous = url()->previous();
             return $next($request);
 
-        })->except(['index', 'pages']);*/
+        });
     }
 
 
