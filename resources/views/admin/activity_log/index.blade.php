@@ -21,17 +21,17 @@
                             $_GET['page_name']!="" ) value="{{ $_GET['page_name'] }}" @endif> </div>
                     <div class="col-lg-4"><label>First Name:</label><input type="text" name="firstname"
                             class="form-control" id="" @if(isset($_GET['firstname']) &&
-                            $_GET['firstname']!="" ) value="{{ $_GET['firstname'] }}" @else value="" @endif> </div>        
+                            $_GET['firstname']!="" ) value="{{ $_GET['firstname'] }}" @else value="" @endif> </div>
                     <div class="col-lg-4"><label>Last Name:</label><input type="text" name="lastname"
                             class="form-control" id="lastname" @if(isset($_GET['lastname']) &&
                             $_GET['lastname']!="" ) value="{{ $_GET['lastname'] }}" @endif> </div>
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-lg-6"><label>Fields Updated:</label><input type="text" name="fields_updated"
                             class="form-control" id="" @if(isset($_GET['fields_updated']) &&
                             $_GET['fields_updated']!="" ) value="{{ $_GET['fields_updated'] }}" @else value="" @endif> </div>
-                    
+
                 </div>
                 <br />
                 <div class="row">
@@ -63,9 +63,9 @@
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
-                            
+
                         </div>
-                        
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-md">
@@ -81,7 +81,7 @@
                                             <th>Action</th>
                                             <th>Page Name</th>
                                             <th>Updated By</th>
-                                            <th>Updated At</th>
+                                            <th>Updated On</th>
                                             <th>Fields Updated</th>
                                             <th>View Action</th>
                                             <th>IP address</th>
