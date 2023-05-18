@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 
 Route::get('/clear', function () {
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('cache:clear');
-    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $exitCode4 = \Illuminate\Support\Facades\Artisan::call('config:clear');
     $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
     $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
     return '<h1>CLEARED All </h1>';

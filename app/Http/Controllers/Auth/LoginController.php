@@ -61,7 +61,7 @@ class LoginController extends Controller
 
      */
 
-    protected $redirectTo = 'my-profile';
+    protected $redirectTo = 'home';
     /**
 
      * Create a new controller instance.
@@ -96,7 +96,7 @@ class LoginController extends Controller
 
         $credentials = $request->only('account_id', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
+            return redirect()->intended('home')
                 ->withSuccess('Signed in');
         }
 
