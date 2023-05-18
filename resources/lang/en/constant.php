@@ -17,7 +17,7 @@ return [
     'TESTIMONIAL'  =>  'Testimonial',
     'CATEGORY'  =>  'Category',
     'ONE_MOTORING'  =>  'One Motoring',
-    'ACTIVITYLOG'   =>  'Activity Log',
+    'ACTIVITYLOG'   =>  'Audit Trail Logs',
     'CMS'   =>  'CMS',
     'MENUS'  =>  'Menus',
     'MENU'  =>  'Menu',
