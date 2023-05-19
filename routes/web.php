@@ -54,73 +54,10 @@ Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 //Route::get('auth/callback', 'Auth\SingpassLoginController@handleCallback');
 //Route::get('singpass/error', 'Auth\SingpassLoginController@showError');
-Route::get('marketplace-search-results', 'PagesFrontController@marketplace_search_results');
-
-Route::get('myinfo/user', 'Auth\MyinfoController@createAuthorizeUrl');
 
 
-
-// Individual
-Route::get('seller-sales-purchase/callback', 'Auth\SPAgreementController@authorise');
-Route::get('car-insurance/callback', 'Auth\MyinfoController@authorise');
-Route::get('car-loan/callback', 'Auth\LoanController@authorise');
-Route::get('advertise-car/callback', 'Auth\AdvertiseMyCarController@authorise');
-Route::get('quote-my-car/callback', 'Auth\QuoteMyCarController@authorise');
-Route::get('buyer-sales-purchase/callback', 'Auth\BuyerSPAgreementController@authorise');
-Route::get('acc-reg/callback', 'Auth\AccountRegistrationController@authorise');
-
-// Business
-Route::get('mib-car-loan/callback', 'Auth\LoanControllerBusiness@authorise');
-Route::get('mib-car-insurance/callback', 'Auth\InsuranceBusinessController@authorise');
-Route::get('mib-seller-sales-purchase/callback', 'Auth\SPAgreementBusinessController@authorise');
-Route::get('mib-quote-my-car/callback', 'Auth\QuoteMyCarBusinessController@authorise');
-Route::get('mib-advertise-car/callback', 'Auth\AdvertiseMyCarBusinessController@authorise');
-
-
-Route::get('sp-pdf', 'TestPdfController@index');
-
-
-// ************ ACCOUNT/PROFILE *******************/
-
-Route::get('my-profile', 'ProfileController@index')->name('my-profile');
-Route::get('my-chats/{carId?}/{buyerId?}', 'ProfileController@myChat');
-Route::get('chat/details/{id}/{buyerId}', 'ProfileController@chatDetails')->name('chat.details');
-Route::get('chat/offer/{carId?}', 'ProfileController@makeOffer')->name('make.offer');
-Route::post('chat/save', 'ProfileController@saveChat')->name('save.chat');
-Route::post('chat/save/offer', 'ProfileController@saveOffer')->name('saveOffer');
-Route::post('chat/approve/offer', 'ProfileController@approveOffer')->name('save.sellerApprove');
-Route::post('chat/approve/revised/offer', 'ProfileController@approveOfferRevised')->name('save.sellerApproveRevised');
-Route::post('chat/cancel/offer', 'ProfileController@cancelOffer')->name('cancel.offer');
-Route::post('chat/revise/offer', 'ProfileController@reviseOffer')->name('revise.offer');
-Route::post('chat/block/user', 'ProfileController@blockUser')->name('block.user');
-Route::post('chat/delete', 'ProfileController@deleteChat')->name('delete.chat');
-Route::post('chat/stainspection', 'ProfileController@staInspection')->name('stainspection');
-Route::post('chat/buyer-info', 'ProfileController@buyerInfo')->name('buyerInfo');
-Route::post('chat/booking-confirm', 'ProfileController@confirmBooking')->name('confirmBooking');
-Route::post('my-chats/{carId?}/{buyerId?}', 'ProfileController@myChat')->name('search.message');
-Route::post('chat/report/user', 'ProfileController@reportUser')->name('report.user');
-
-
-Route::get('my-cars', 'ProfileController@my_cars')->name('my-cars');
-Route::get('my-quote-requests', 'ProfileController@my_quote_requests')->name('my-quote-requests');
-Route::get('my-invoices', 'ProfileController@my_invoices')->name('my-invoices');
-Route::get('view-invoice/{id}', 'ProfileController@view_invoice')->name('view-invoice');
-Route::get('advertise-my-car-form', 'ProfileController@advertise_my_car_form')->name('advertise-my-car-form');
-Route::post('advertise-my-car-form', 'ProfileController@advertise_my_car_store')->name('advertise-my-car-form1');
-Route::get('quote-my-car-form', 'ProfileController@quote_my_car_form')->name('quote-my-car-form');
-Route::post('quote-my-car-form', 'ProfileController@quote_my_car_store')->name('quote-my-car-form1');
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
 Route::post('my-profile/account/delete', 'ProfileController@destroy')->name('my-profile.account.delete');
-Route::get('change-password', 'ProfileController@change_password')->name('change-password');
-Route::post('change-password', 'ProfileController@change_password_update')->name('change-password.update');
-//INSURANCE
-Route::get('insurance-applications', 'ProfileController@insurance_applications');
-Route::get('insurance-applications/{id}', 'ProfileController@insurance_applications_detail');
-Route::post('quotation-submit', 'ProfileController@quotation_submit');
-Route::post('insurance-customer-sign', 'ProfileController@insurance_customer_sign')->name('insurance.customer.sign');
-
-Route::post('insurance-applications/archived', 'ProfileController@archivedInsurance');
-Route::get('insurance-applications/archived/show', 'ProfileController@archivedInsuranceShow');
 
 Route::get('logout', 'Auth\LoginController@logout');
 
@@ -150,8 +87,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout')->name('admin_logout');
     Route::get('/logout', 'AdminAuth\LoginController@showLoginForm');*/
-    Route::get('insurance/callback', 'DocusignInsuranceController@callback')->name('docusign.callback.insurance');
-    Route::get('insurance/seller/{id?}', 'DocusignInsuranceController@seller')->name('docusign.sign.insurance');
+
 
     Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm')->name('admin_register');
     Route::post('/register', 'AdminAuth\RegisterController@register');
@@ -174,9 +110,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/profile', 'CMS\ProfileController@edit')->name('admin.profile');
     Route::post('/profile/update', 'CMS\ProfileController@update')->name('admin.profile.update');
 
-    // SYSTEM SETTINGS
-    Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');
-    Route::post('/system-settings/update', 'CMS\SystemSettingsController@update')->name('admin.system-settings.update');
+
 
     // PAGES
     Route::get('pages/search', 'CMS\PagesController@search')->name('pages.search');
@@ -228,10 +162,26 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('slider/search', 'CMS\SliderController@search')->name('slider.search');
     Route::resource('slider', 'CMS\SliderController');
 
-    // ROLES AND PERMISSION
-    Route::get('roles-and-permission/search', 'CMS\RolesPermissionController@search')->name('roles-and-permission.search');
-    Route::get('/access-not-allowed', 'CMS\RolesPermissionController@access_not_allowed')->name('access-not-allowed');
-    Route::resource('roles-and-permission', 'CMS\RolesPermissionController');
+    Route::get('/system-setting', 'CMS\SystemSettingController@index')->name('system-setting.index');
+    Route::get('/system-setting/create', 'CMS\SystemSettingController@create');
+    Route::post('/system-setting/store', 'CMS\SystemSettingController@store');
+    Route::get('/system-setting/edit/{id}', 'CMS\SystemSettingController@edit');
+    Route::post('/system-setting/update/{id}', 'CMS\SystemSettingController@update');
+    Route::get('/system-setting/destroy/{id}', 'CMS\SystemSettingController@destroy');
+    /*end filter module backend*/
+    Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed');
+    Route::get('/roles-and-permission', 'AdminAuth\Account\PermissionController@index');
+    Route::get('/roles-and-permission/create', 'AdminAuth\Account\PermissionController@create');
+    Route::post('/roles-and-permission/store', 'AdminAuth\Account\PermissionController@store');
+    Route::get('/roles-and-permission/edit/{id}', 'AdminAuth\Account\PermissionController@edit');
+    Route::post('/roles-and-permission/update/{id}', 'AdminAuth\Account\PermissionController@update');
+    Route::post('/roles-and-permission/delete', 'AdminAuth\Account\PermissionController@destroy');
+
+    Route::get('/roles/create', 'AdminAuth\Account\PermissionController@create_roles');
+    Route::post('/roles/store', 'AdminAuth\Account\PermissionController@store_roles');
+    Route::get('/roles/edit/{id}', 'AdminAuth\Account\PermissionController@edit_roles');
+    Route::post('/roles/update/{id}', 'AdminAuth\Account\PermissionController@update_roles');
+    Route::post('/roles/delete', 'AdminAuth\Account\PermissionController@delete_roles');
 
     // USER ACCOUNT
     Route::get('user-account/search', 'CMS\UserAccountController@search')->name('user-account.search');
