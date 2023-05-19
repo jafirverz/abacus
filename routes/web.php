@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 
 Route::get('/clear', function () {
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('cache:clear');
-    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $exitCode4 = \Illuminate\Support\Facades\Artisan::call('config:clear');
     $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
     $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
     return '<h1>CLEARED All </h1>';
@@ -39,17 +39,21 @@ Route::get('/storage-link', function () {
     return $exitCode2;
 });
 
-
-Route::get('docusign', 'DocusignController@index')->name('docusign');
-Route::get('connect-docusign', 'DocusignController@connectDocusign')->name('connect.docusign');
-
-Route::get('sign-document', 'DocusignController@signDocument')->name('docusign.sign');
-
-Route::get('connect/docusign/insurance', 'DocusignInsuranceController@connectDocusign')->name('connect.docusign.insurance');
+Auth::routes(['verify' => true]);
 
 Auth::routes();
 Route::get('/', 'PagesFrontController@index');
+
+Route::get('/forget-account-id', 'Auth\LoginController@forgetaccountid');
+Route::post('/forget-account-id', 'Auth\LoginController@checkaccountid')->name('forgetaccountid');
+
+Route::get('/forget-password', 'Auth\ForgotPasswordController@showForm');
+Route::post('/forget-password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('forgetpassword');
+
+//Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@showResetForm');
+
 Route::get('/home', 'PagesFrontController@index')->name('home');
+
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 //Route::get('auth/callback', 'Auth\SingpassLoginController@handleCallback');

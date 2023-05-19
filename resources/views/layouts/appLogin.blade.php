@@ -4,21 +4,19 @@
 @include('inc.head')
 
 <body>
-   
-    
-    <div class="mm-page" >		
-			 @include('inc.header')
-			 @yield('content')
-            		
-    </div><!-- //page -->
-   
-    @include('inc.footer')
-    @include('inc.footer_script')
-    @stack('footer-scripts')
-    
-    @php
-    Session::forget('previous_urlforseo')
-    @endphp
+
+
+<div class="mm-page" id="toppage">
+    @include('inc.header')
+    @yield('content')
+
+</div><!-- //page -->
+
+
+@include('inc.footer')
+@include('inc.footer_script')
+@stack('footer-scripts')
+@yield('footer-js')
 </body>
 
 </html>

@@ -26,6 +26,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+
 //    protected $fillable = [
 //        'name', 'gender', 'email', 'mobile', 'password', 'address',
 //    ];
@@ -80,7 +81,6 @@ class User extends Authenticatable
      */
     public function sendPasswordResetNotification($token)
     {
-
         // EMAIL Notification to the User
         $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_FORGET_PASSWORD'));
         if ($email_template) {
@@ -111,23 +111,4 @@ class User extends Authenticatable
         }
     }
 
-//    public function loan()
-//    {
-//        return $this->hasMany('App\Loan', 'user_id');
-//    }
-//
-//    public function sellerparticular()
-//    {
-//        return $this->hasMany('App\SellerParticular', 'user_id');
-//    }
-//
-//    public function buyerparticular()
-//    {
-//        return $this->hasMany('App\BuyerParticular', 'user_id');
-//    }
-//
-//    public function buyeruserparticular()
-//    {
-//        return $this->hasMany('App\SellerParticular', 'buyer_email', 'email');
-//    }
 }
