@@ -16,22 +16,25 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('topic.store') }}" method="post">
+                        <form action="{{ route('worksheet.store') }}" method="post">
                             @csrf
                             @method('POST')
                             <div class="card-body">
 
                                 <div class="form-group">
                                     <label for="type">Topics</label>
-                                    <select name="level" class="form-control" id="" style="height: 200px;" multiple>
+                                    @php
+                                    $postTopic = old('topic') ?? [];
+                                    @endphp
+                                    <select name="topic[]" class="form-control" id="" style="height: 200px;" multiple>
                                         <option value="">-- Select --</option>
                                         @foreach($topics as $topic)
-                                            <option value="{{$topic->id}}">{{$topic->title}}</option>
+                                            <option value="{{$topic->id}}" @if(in_array($topic->id, $postTopic)) selected @endif>{{$topic->title}}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('level'))
+                                    @if ($errors->has('topic'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('level') }}</strong>
+                                        <strong>{{ $errors->first('topic') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -51,8 +54,8 @@
                                     <label for="title">Free/Paid</label>
                                     <select name="fee" class="form-control" onchange="showAmount(this.value);">
                                         <option value="">-- Select --</option>
-                                        <option value="1">Free</option>
-                                        <option value="2">Paid</option>
+                                        <option value="1" @if(old('fee') == 1) selected @endif>Free</option>
+                                        <option value="2" @if(old('fee') == 2) selected @endif>Paid</option>
                                     </select>
                                     @if ($errors->has('fee'))
                                         <span class="text-danger d-block">
@@ -61,7 +64,15 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group" style="display: none" id="amountblock">
+                                @php
+                                $feeP = old('fee') ?? '';
+                                if(empty($feeP) || $feeP == 1){
+                                    $stylee = 'display: none';
+                                }else{
+                                    $stylee = 'display: block';
+                                }
+                                @endphp
+                                <div class="form-group" style="{{$stylee}}"  id="amountblock">
                                     <label for="title">Amount</label>
                                     <input type="text" name="amount" class="form-control" id=""
                                            value="{{ old('amount') }}">
@@ -85,11 +96,25 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="title">Question Type</label>
+                                    <select name="questiontype" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option value="1" @if(old('questiontype') == 1) selected @endif>Vertical</option>
+                                        <option value="2" @if(old('questiontype') == 2) selected @endif>Horizontal</option>
+                                    </select>
+                                    @if ($errors->has('questiontype'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('questiontype') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                     <label for="title">Stopwatch timing</label>
                                     <select name="stopwatch" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
+                                        <option value="1" @if(old('stopwatch') == 1) selected @endif>Yes</option>
+                                        <option value="2" @if(old('stopwatch') == 2) selected @endif>No</option>
                                     </select>
                                     @if ($errors->has('stopwatch'))
                                         <span class="text-danger d-block">
@@ -102,8 +127,8 @@
                                     <label for="title">Preset Timing</label>
                                     <select name="presettiming" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
+                                        <option value="1" @if(old('presettiming') == 1) selected @endif>Yes</option>
+                                        <option value="2" @if(old('presettiming') == 2) selected @endif>No</option>
                                     </select>
                                     @if ($errors->has('presettiming'))
                                         <span class="text-danger d-block">
@@ -112,7 +137,11 @@
                                     @endif
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label for="title">Description</label>
+                                    <textarea name="description" class="form-control my-editor" cols="30"
+                                              rows="5">{{old('description')}}</textarea>
+                                </div>
 
 
                                 <div class="form-group">

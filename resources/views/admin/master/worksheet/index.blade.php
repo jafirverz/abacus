@@ -22,12 +22,12 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('worksheet.destroy', 'level') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('worksheet.destroy', 'worksheet') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('worksheet.destroy', 'level') }}" method="post">
+                            <form id="destroy" action="{{ route('worksheet.destroy', 'worksheet') }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
@@ -63,7 +63,6 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
-                                            <th>Level</th>
                                             <th>Title</th>
                                             <th>Status</th>
                                             <th>Created At</th>
@@ -89,7 +88,6 @@
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
-                                            <td>{{ $item->level->title }}</td>
                                             <td>{{ $item->title }}</td>
 
                                             <td>

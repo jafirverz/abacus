@@ -15,7 +15,7 @@ class CreateWorksheetsTable extends Migration
     {
         Schema::create('worksheets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('role_id')->nullable();
 //            $table->unsignedBigInteger('level_id');
 //            $table->unsignedBigInteger('topic_id');
             $table->unsignedBigInteger('question_template_id')->nullable();
@@ -31,6 +31,8 @@ class CreateWorksheetsTable extends Migration
             $table->smallInteger('stopwatch_timing')->nullable()->comment('1 -> yes, 2 -> no');
             $table->smallInteger('preset_timing')->nullable()->comment('1 -> yes, 2 -> no');
             $table->string('question_type')->nullable()->comment('1 -> vertical, 2 -> horizontal');
+            $table->text('description')->nullable();
+            $table->smallInteger('status')->nullable()->comment('1 -> active, 2 -> inactive');
             $table->timestamps();
         });
     }
