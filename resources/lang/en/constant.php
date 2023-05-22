@@ -42,6 +42,7 @@ return [
     'SMART_BLOCK' => 'Smart Block',
     'LEVEL' => 'Level',
     'TOPIC' => 'Topics',
+    'WORKSHEET' => 'Worksheets',
     'HEADER_MENU_TITLE' => 'Header',
     'FOOTER_MENU_TITLE' => 'Footer',
     'LOAN_APPLICATION' => 'Loan Application',
