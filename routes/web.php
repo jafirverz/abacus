@@ -195,7 +195,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('contact/search', 'CMS\ContactController@search')->name('contact.search');
     Route::resource('contact', 'CMS\ContactController');
 
-
+    // TEMPLATE
+    Route::get('template/search', 'CMS\TemplateController@search')->name('template.search');
+    Route::resource('template', 'CMS\TemplateController');
 
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');

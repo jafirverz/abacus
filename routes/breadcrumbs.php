@@ -34,14 +34,14 @@ Breadcrumbs::for('admin_pages_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 
-// CATEGORY
-Breadcrumbs::for('admin_categry', function ($trail) {
+// TEMPLATE
+Breadcrumbs::for('admin_template', function ($trail) {
     $trail->parent('admin_home');
-    $trail->push(__('constant.CATEGORY'), route('category.index'));
+    $trail->push(__('constant.TEMPLATE'), route('template.index'));
 });
 
-Breadcrumbs::for('admin_categry_crud', function ($trail, $title, $url = '#') {
-    $trail->parent('admin_categry');
+Breadcrumbs::for('admin_template_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_template');
     $trail->push($title, $url);
 });
 
