@@ -22,7 +22,27 @@
                 ],
             ],
         ],
+        [
+            'menu_header'   =>  __('constant.MASTER'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.LEVEL'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/level',
+                ],
+                [
+                    'title' =>  __('Topics'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/topic',
+                ],
+                [
+                    'title' =>  __('Worksheet Management'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/worksheet',
+                ],
 
+            ],
+        ],
         [
             'menu_header'   =>  __('constant.CMS'),
             'main_menu' =>  [

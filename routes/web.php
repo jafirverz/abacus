@@ -195,9 +195,22 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('contact/search', 'CMS\ContactController@search')->name('contact.search');
     Route::resource('contact', 'CMS\ContactController');
 
+
     // TEMPLATE
     Route::get('template/search', 'CMS\TemplateController@search')->name('template.search');
     Route::resource('template', 'CMS\TemplateController');
+
+
+    // LEVEL MASTER
+    Route::get('level/search', 'CMS\LevelController@search')->name('level.search');
+    Route::resource('level', 'CMS\LevelController');
+
+
+
+    // WORKSHEET MASTER
+    Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
+    Route::resource('worksheet', 'CMS\WorksheetController');
+
 
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');

@@ -63,9 +63,9 @@ class User extends Authenticatable
         }
     }
 
-    public function getFullnameAttribute() {
-		return ucfirst($this->firstname) . ' ' . ucfirst($this->lastname);
-    }
+//    public function getFullnameAttribute() {
+//		return ucfirst($this->firstname) . ' ' . ucfirst($this->lastname);
+//    }
 
     public function getMobilewithcountrycodeAttribute()
     {
