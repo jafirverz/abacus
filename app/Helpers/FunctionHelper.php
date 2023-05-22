@@ -556,7 +556,14 @@ if (!function_exists('getPageList')) {
 		    return NULL;
     }
 
-
+    function admin_last_login($id)
+    {
+        $authentication_log = DB::table('authentication_log')->where('authenticatable_id', $id)->orderby('id', 'desc')->first();
+        if ($authentication_log) {
+            return date('d M, Y h:i A', strtotime($authentication_log->login_at));
+        }
+        return "-";
+    }
 
     function getYesNo($id = null)
     {
