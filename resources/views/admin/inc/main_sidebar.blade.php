@@ -36,20 +36,11 @@
                     'url'   =>  'admin/topic',
                 ],
                 [
-                    'title' =>  __('Car Accessories'),
+                    'title' =>  __('Worksheet Management'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/attributes',
+                    'url'   =>  'admin/worksheet',
                 ],
-                [
-                    'title' =>  __('constant.FILTER_MANAGEMENT'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/filter',
-                ],
-                [
-                    'title' =>  __('constant.CHAT_WINDOW_MANAGEMENT'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/chat-window',
-                ],
+
             ],
         ],
         [
