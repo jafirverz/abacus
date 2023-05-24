@@ -14,6 +14,7 @@ use App\User;
 use App\Admin;
 use App\Chat;
 use App\ChatMessage;
+use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ProfileController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('auth:web')->except('account_verification', 'insurance_applications_detail', 'likeVehicle', 'reportVehicle');
+		$this->middleware('auth:web');
 		$this->system_settings = $this->systemSetting();
 		$this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
 		$this->middleware(function ($request, $next) {
@@ -73,6 +74,7 @@ class ProfileController extends Controller
 		$user = $this->user;
 		//dd($user);
 		$page = get_page_by_slug($slug);
+        $instructors = User::where('role_id', 7)->get();
 
 		if (!$page) {
 			return abort(404);
@@ -80,7 +82,7 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.my-profile', compact("page", "user"));
+		return view('account.my-profile', compact("page", "user", "instructors"));
 	}
 
 	/**
@@ -100,57 +102,96 @@ class ProfileController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$messages = [
-			'country_code.regex' => 'The Country code entered is invalid.',
-		];
+//        dd($request->all());
+        $users = User::find($this->user->id);
+        if($request->updateimage == 1 && $request->updateprofile == 0){
+            if ($request->hasFile('profile_picture')) {
 
-		$request->validate([
-			'profile_picture'  =>  'nullable|file|mimes:jpg,png,gif,jpeg|max:2500',
-			'name' => 'required|string',
-			'password'  =>  'nullable|min:8',
-			'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
-			'mobile' => 'required|string',
-			'gender' => 'required|string',
-		], $messages); //dd($request);
+                $profile_picture = $request->file('profile_picture');
 
-		$users = User::find($this->user->id);
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $profile_picture->getClientOriginalName();
 
-		$users->company_name = $request->company_name ?? NULL;
-		$users->name = $request->name;
-		//$users->email = $request->email;
-		if ($request->password != '') {
-			//dd($request->password);
-			$users->password = Hash::make($request->password);
-		}
-		$users->address = $request->address ?? NULL;
-		$users->country_code = $request->country_code;
-		$users->mobile = $request->mobile;
-		$users->gender = $request->gender;
+                $filepath = 'storage/profile/';
 
-		//Image upload..
+                Storage::putFileAs(
 
-		if ($request->hasFile('profile_picture')) {
+                    'public/profile',
+                    $profile_picture,
+                    $filename
 
-			$profile_picture = $request->file('profile_picture');
+                );
 
-			$filename = Carbon::now()->timestamp . '__' . guid() . '__' . $profile_picture->getClientOriginalName();
+                $path_profile_picture = $filepath . $filename;
 
-			$filepath = 'storage/profile/';
+                $users->profile_picture = $path_profile_picture;
+            }
+            $users->updated_at = Carbon::now();
+            $users->save();
+        }elseif($request->updateimage == 1 && $request->updateprofile == 1){
+            $messages = [
+                'country_code.regex' => 'The Country code entered is invalid.',
+            ];
+            if($request->updateprofile == 1){
+                $request->validate([
+                    'name' => 'required',
+                    'email' => 'required|unique:users,email,'.$users->id,
+                    'dob' => 'required',
+                    'country_code_phone' => 'required',
+                    'mobile' => 'required',
+                    'gender' => 'required',
+                    'instructor' => 'required',
+                    'country_code' => 'required',
+//                'password'  =>  'nullable|min:8',
+//			'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
 
-			Storage::putFileAs(
 
-				'public/profile',
-				$profile_picture,
-				$filename
+                ], $messages); //dd($request);
+            }
+            $dob = date('Y-m-d', strtotime($request->dob));
+            $updateUserProfile = new UserProfileUpdate();
+            $updateUserProfile->user_id  = $users->id;
+            $updateUserProfile->name = $request->name;
+            $updateUserProfile->email = $request->email;
+            //$users->email = $request->email;
+            if ($request->password != '') {
+                //dd($request->password);
+                $updateUserProfile->password = Hash::make($request->password);
+            }
+            $updateUserProfile->address = $request->address ?? NULL;
+            $updateUserProfile->country_code = $request->country_code;
+            $updateUserProfile->country_code_phone = $request->country_code_phone;
+            $updateUserProfile->dob = $dob;
+            $updateUserProfile->instructor_id  = $request->instructor;
+            $updateUserProfile->mobile = $request->mobile;
+            $updateUserProfile->gender = $request->gender;
 
-			);
+            //Image upload..
 
-			$path_profile_picture = $filepath . $filename;
+            if ($request->hasFile('profile_picture')) {
 
-			$users->profile_picture = $path_profile_picture;
-		}
-		$users->updated_at = Carbon::now();
-		$users->save();
+                $profile_picture = $request->file('profile_picture');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $profile_picture->getClientOriginalName();
+
+                $filepath = 'storage/profile/';
+
+                Storage::putFileAs(
+
+                    'public/profile',
+                    $profile_picture,
+                    $filename
+
+                );
+
+                $path_profile_picture = $filepath . $filename;
+
+                $updateUserProfile->profile_picture = $path_profile_picture;
+            }
+            $updateUserProfile->updated_at = Carbon::now();
+            $updateUserProfile->save();
+        }
+
+
 
 		return redirect()->back()->with('success', __('constant.ACOUNT_UPDATED'));
 	}
@@ -186,7 +227,6 @@ class ProfileController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
 	}
 
 	/**
@@ -392,7 +432,7 @@ class ProfileController extends Controller
 		$messages['roadtaxexpirydate.required'] = 'This field is required';
 		$messages['mileage.required'] = 'This field is required';
 		$messages['price.required'] = 'This field is required';
-		
+
 		if (!Session::get('myinfoadvertisecar')) {
             $request->validate([
             'full_name' => 'required',
@@ -420,10 +460,10 @@ class ProfileController extends Controller
 			// 'max_weight' => 'required',
 			// 'vehicle_scheme' => 'required',
 			// 'roadtaxexpirydate' => 'required',
-            
-            
+
+
             // 'upload_file' => 'required',
-            
+
             // 'vehicle_make' => 'required',
             // 'vehicle_model' => 'required',
             // 'primary_color' => 'required',
@@ -464,7 +504,7 @@ class ProfileController extends Controller
 			'price' => 'required',
 			// 'specification' => 'required|array|min:1',
             'terms_condition' => 'required',
-            
+
         	], $messages);
 		}
 
@@ -512,7 +552,7 @@ class ProfileController extends Controller
 //             'additional_accessories.*' => 'required',
 //             'upload_file' => 'required',
 //             'terms_condition' => 'required',
-            
+
 //         	], $messages);
 // 		}
 
@@ -584,7 +624,7 @@ class ProfileController extends Controller
         $notification->link = 'https://www.diycars.com/admin/marketplace/'.$vehicleMain->id.'/edit';
         $notification->status = 1;
         $notification->save();
-        
+
         // EMAIL TO Admin
 		$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_ADVERTISE_CAR_TO_ADMIN'));
 		//dd($email_template);
@@ -600,7 +640,7 @@ class ProfileController extends Controller
 
 				$url = url('admin/marketplace/' . $VehicleDetail->id . '/edit');
 				$link = '<a href="' . $url . '">' . $url . '</a>';
-				
+
 				$data['email'] = [$this->systemSetting()->to_email];
 
 				$key = ['{{url}}'];
@@ -615,7 +655,7 @@ class ProfileController extends Controller
 					//dd($exception);
 				}
 		}
-		
+
 		return redirect('thank-you')->with('success', 'Your car added successfully.');
 	}
 
@@ -658,7 +698,7 @@ class ProfileController extends Controller
 		$messages['max_unladen_weight.required'] = 'This field is required';
 		$messages['vehicle_scheme.required'] = 'This field is required';
 		$messages['roadtaxexpirydate.required'] = 'This field is required';
-		
+
 		if (!Session::get('myinfoquotemycar')) {
             $request->validate([
             'full_name' => 'required',
@@ -685,10 +725,10 @@ class ProfileController extends Controller
 			// 'max_unladen_weight' => 'required',
 			// 'vehicle_scheme' => 'required',
 			// 'roadtaxexpirydate' => 'required',
-			
-           
+
+
             // 'upload_file' => 'required',
-           
+
             // 'vehicle_make' => 'required',
             // 'vehicle_model' => 'required',
             // 'primary_color' => 'required',
@@ -727,7 +767,7 @@ class ProfileController extends Controller
 			'mileage' => 'required',
             'handing_over_date' => 'required|date',
             'terms_condition' => 'required',
-            
+
         	], $messages);
 		}
 
@@ -774,7 +814,7 @@ class ProfileController extends Controller
 //             'mileage' => 'required',
 //             'handing_over_date' => 'required|date',
 //             'terms_condition' => 'required',
-            
+
 //         	], $messages);
 // 		}
 
@@ -796,7 +836,7 @@ class ProfileController extends Controller
         $quote_request->seller_remarks = $request->seller_remarks;
         $quote_request->handing_over_date = date('Y-m-d', strtotime($request->handing_over_date)) ?? null;
         $quote_request->vehicle_number = $request->vehicle_number;
-        
+
         $quote_request->vehicle_make = $request->vehicle_make; // New
 		$quote_request->vehicle_model = $request->vehicle_model; // New
 		$quote_request->primary_color = $request->primary_color; // New
@@ -817,7 +857,7 @@ class ProfileController extends Controller
 		$quote_request->max_unladen_weight = str_replace(',','',$request->max_unladen_weight); // New
 		$quote_request->vehicle_scheme = $request->vehicle_scheme; // New
 		$quote_request->roadtaxexpirydate = date('Y-m-d', strtotime($request->roadtaxexpirydate)); // New
-		
+
         $quote_request->nric = $request->nric;
         $quote_request->mileage = str_replace(',','',$request->mileage);
         $files = [];
@@ -838,7 +878,7 @@ class ProfileController extends Controller
         $quote_request->upload_file  = json_encode($files);
 		$quote_request->status = 1;
         $quote_request->save();
-        
+
         $message = 'New Quote Request by '.$request->full_name;
 		$notification = new Notification();
 		$notification->insurance_id = NULL;
@@ -848,7 +888,7 @@ class ProfileController extends Controller
 		$notification->link = 'https://www.diycars.com/admin/quoterequest/'.$quote_request->id.'/edit';
 		$notification->status = 1;
 		$notification->save();
-		
+
 			// EMAIL TO Admin
 		$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_QUOTE_MY_CAR_TO_ADMIN'));
 		if ($email_template) {
@@ -863,7 +903,7 @@ class ProfileController extends Controller
 
 				$url = url('admin/quoterequest/' . $quote_request->id . '/edit');
 				$link = '<a href="' . $url . '">' . $url . '</a>';
-				
+
 				$data['email'] = [$this->systemSetting()->to_email];
 
 				$key = ['{{url}}'];
@@ -878,9 +918,9 @@ class ProfileController extends Controller
 				// 	dd($exception);
 				}
 		}
-		
 
-			
+
+
 		return redirect('thank-you-quote-my-car')->with('success', 'Your quote request has been submitted successfully.');
 	}
 
@@ -979,7 +1019,7 @@ class ProfileController extends Controller
 			return $this->loginRedirect();
 		}
 // 		$insurance = Insurance::join('insurance_information', 'insurance_information.insurance_id', 'insurances.id')->join('insurance_vehicles', 'insurance_vehicles.insurance_id', 'insurances.id')->where('insurances.user_id', Auth::user()->id)->where('insurances.id', $id)->first();
-		
+
 		$insurance = Insurance::has('insurance_information')->has('insurance_vehicle')->where('user_id', $this->user->id)->orderBy('id', 'desc')->where('id', $id)->first();
 		if (!$insurance) {
 			return abort(403, "Unauthorized access.");
@@ -1149,7 +1189,7 @@ class ProfileController extends Controller
 			$data['email_sender_name'] = $this->systemSetting()->email_sender_name;
 			$data['from_email'] = $this->systemSetting()->from_email;
 			$data['cc_to_email'] = [];
-			
+
 			$key1 = ['{{customer}}'];
 			$value1 = [$insurance->main_driver_full_name];
 			$data['subject'] = str_replace($key1, $value1, $email_template->subject);
@@ -1830,20 +1870,20 @@ class ProfileController extends Controller
             return response()->json(['success' => '401']);
         }
     }
-    
+
     public function viewQuote($id, Request $request)
 	{
 		if (Auth::check()) {
 			$user_id = Auth::user()->id;
 			$quote_request = QuoteRequest::where('id', '=', $id)->first();
 			return view('account.view-quote', compact('quote_request'));
-			
+
 		} else {
 			$request->session()->put('previous_url', url()->previous());
 			return $this->loginRedirect();
 		}
 	}
-	
+
 	public function archivedInsurance(Request $request){
 		$id = $request->multiple_archive;
 		$expId = explode(',', $id);
