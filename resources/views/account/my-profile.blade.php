@@ -29,6 +29,7 @@
             </div>
             <div class="col-lg-9 sp-col tempt-2-inner">
                 <div class="tempt-2-content">
+                    @include('inc.messages')
                     <h1 class="title-3">My Profile</h1>
                     <div class="box-1">
                         <div class="row align-items-center title-type">
