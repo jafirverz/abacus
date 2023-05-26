@@ -74,7 +74,7 @@ class ProfileController extends Controller
 		$user = $this->user;
 		//dd($user);
 		$page = get_page_by_slug($slug);
-        $instructors = User::where('role_id', 7)->get();
+        $instructors = User::where('user_type_id', 5)->get();
 
 		if (!$page) {
 			return abort(404);
