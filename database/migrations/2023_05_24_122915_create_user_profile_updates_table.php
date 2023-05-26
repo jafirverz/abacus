@@ -21,7 +21,7 @@ class CreateUserProfileUpdatesTable extends Migration
             $table->foreign('instructor_id')->references('id')->on('users');
             $table->string('name')->nullable();
             $table->smallInteger('gender')->nullable()->comment('1=>male, 2=>female');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('country_code_phone')->nullable();
             $table->string('mobile')->nullable();
             $table->date('dob')->nullable();
