@@ -189,6 +189,68 @@ class ProfileController extends Controller
             }
             $updateUserProfile->updated_at = Carbon::now();
             $updateUserProfile->save();
+
+            if($request->gender == 1){
+                $gender = 'Male';
+            }else{
+                $gender = 'Female';
+            }
+
+            $instructorDetail = User::where('id', $request->instructor)->first();
+            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_PROFILE_UPDATE'));
+
+            if ($email_template) {
+                if($instructorDetail){
+                    $data = [];
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$instructorDetail->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructorDetail->name];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($instructorDetail->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+
+            }
+
+            //			Admin email for new student registration
+            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE'));
+            $admins = Admin::get();
+
+            if ($email_template) {
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructorDetail->name];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
         }
 
 
