@@ -20,7 +20,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="be-profile.html">
+                            <a href="{{url('my-profile')}}">
                                 <span><img src="images/tempt/ico-profile.png" alt="Profile icon" /></span>
                                 <strong>My Profile</strong>
                             </a>

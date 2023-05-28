@@ -56,12 +56,14 @@ Route::get('/home', 'PagesFrontController@index')->name('home');
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
-//Route::get('auth/callback', 'Auth\SingpassLoginController@handleCallback');
-//Route::get('singpass/error', 'Auth\SingpassLoginController@showError');
 
 
+
+// ************ ACCOUNT/PROFILE *******************/
+
+Route::get('my-profile', 'ProfileController@index')->name('my-profile');
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
-Route::post('my-profile/account/delete', 'ProfileController@destroy')->name('my-profile.account.delete');
+
 
 Route::get('logout', 'Auth\LoginController@logout');
 
@@ -93,14 +95,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/logout', 'AdminAuth\LoginController@showLoginForm');*/
 
 
-    Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm')->name('admin_register');
-    Route::post('/register', 'AdminAuth\RegisterController@register');
 
     Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.request');
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('admin.password.email');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.reset');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
-
 
 
     // ACTIVITY LOG
@@ -205,7 +204,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('level/search', 'CMS\LevelController@search')->name('level.search');
     Route::resource('level', 'CMS\LevelController');
 
-
+    // TOPIC MASTER
+    Route::get('topic/search', 'CMS\TopicController@search')->name('topic.search');
+    Route::resource('topic', 'CMS\TopicController');
 
     // WORKSHEET MASTER
     Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
@@ -220,10 +221,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('customer-account/search', 'CMS\CustomerAccountController@search')->name('customer-account.search');
     Route::resource('customer-account', 'CMS\CustomerAccountController');
 
+
     // RECRUITER
     Route::get('instructor-account/search', 'CMS\InstructorAccountController@search')->name('instructor-account.search');
     Route::resource('instructor-account', 'CMS\InstructorAccountController');
 
 });
+
 
 

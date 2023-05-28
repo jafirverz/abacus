@@ -147,6 +147,7 @@ class RegisterController extends Controller
 			$users->gender = $request->gender;
 			$users->verification_token = Str::random(60);
 			$users->role_id = 3;
+            $users->user_type_id = 1;
             $users->created_at = Carbon::now();
             $users->save();
 
@@ -233,7 +234,7 @@ class RegisterController extends Controller
     {
         $slug = __('constant.SLUG_REGISTER');
 		$page = get_page_by_slug($slug);
-        $instructors = User::where('role_id', 7)->get();
+        $instructors = User::where('user_type_id', 5)->get();
         return view('auth.register',compact("page","instructors"));
     }
 
