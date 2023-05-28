@@ -207,6 +207,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('customer-account/search', 'CMS\CustomerAccountController@search')->name('customer-account.search');
     Route::resource('customer-account', 'CMS\CustomerAccountController');
 
+    // RECRUITER
+    Route::get('instructor-account/search', 'CMS\InstructorAccountController@search')->name('instructor-account.search');
+    Route::resource('instructor-account', 'CMS\InstructorAccountController');
+
 });
 
 

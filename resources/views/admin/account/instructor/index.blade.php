@@ -6,10 +6,10 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-           <div class="section-header-button">
-                <a href="{{ route('customer-account.create') }}" class="btn btn-primary">Add New</a>
+            <div class="section-header-button">
+                <a href="{{ route('instructor-account.create') }}" class="btn btn-primary">Add New</a>
         </div>
-        @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
+        @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('instructor_account')])
 </div>
 
 <div class="section-body">
@@ -18,12 +18,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('customer-account.destroy', 'customer-account') }}"
+                    <a href="{{ route('instructor-account.destroy', 'instructor-account') }}"
                         class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?"
                         data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                         data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                             class="badge badge-transparent">0</span></a>
-                    <form id="destroy" action="{{ route('customer-account.destroy', 'customer-account') }}"
+                    <form id="destroy" action="{{ route('instructor-account.destroy', 'instructor-account') }}"
                         method="post">
                         @csrf
                         @method('DELETE')
@@ -31,7 +31,7 @@
                     </form>
                     <h4></h4>
                     <div class="card-header-form form-inline">
-                        <form action="{{ route('customer-account.search') }}" method="get">
+                        <form action="{{ route('instructor-account.search') }}" method="get">
                             @csrf
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Search"
@@ -64,7 +64,6 @@
                                     <th>Action</th>
                                     <th>Full Name</th>
                                     <th>Email Address</th>
-                                    <th>Type</th>
                                     <th>Customer Number</th>
                                     <th>Account ID</th>
                                     <th>Last Updated</th>
@@ -82,10 +81,10 @@
                                                 class="custom-control-label">&nbsp;</label></div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('customer-account.show', $item->id) }}"
+                                        <a href="{{ route('instructor-account.show', $item->id) }}"
                                             class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('customer-account.edit', $item->id) }}"
+                                        <a href="{{ route('instructor-account.edit', $item->id) }}"
                                             class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View">
                                             <i aria-hidden="true" class="fa fa-edit"></i>
@@ -96,11 +95,6 @@
                                     </td>
                                     <td>
                                         {{ $item->email }}
-                                    </td>
-                                    <td>
-                                        @if(isset($item->user_type_id))
-                                        {{ getUserTypes($item->user_type_id)  }}
-                                        @endif
                                     </td>
                                     <td>
                                         {{ $item->mobile ?? '' }}
