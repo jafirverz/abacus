@@ -62,8 +62,8 @@
                                 <label class="lb-1">Gender <span class="required">*</span></label>
                                 <select class="selectpicker" name="gender">
                                     <option value="">Please Select</option>
-                                    <option value="2" @if(old('gender') == 2) selected @endif>Female</option>
                                     <option value="1" @if(old('gender') == 1) selected @endif>Male</option>
+                                    <option value="2" @if(old('gender') == 2) selected @endif>Female</option>
                                 </select>
                                 @if ($errors->has('gender'))
                                     <span class="text-danger d-block">
@@ -77,8 +77,8 @@
                         <div class="row sp-col-10">
                             <div class="col-auto sp-col">
                                 <select class="selectpicker" name="country_code_phone">
-                                    <option value="" @if(old('country_code_phone') == '+65') selected @endif>+65</option>
-                                    <option value="" @if(old('country_code_phone') == '+84') selected @endif>+84</option>
+                                    <option value="+65" @if(old('country_code_phone') == '+65') selected @endif>+65</option>
+                                    <option value="+84" @if(old('country_code_phone') == '+84') selected @endif>+84</option>
                                 </select>
                             </div>
                             <div class="col sp-col">
@@ -114,7 +114,7 @@
                                 <select class="selectpicker" name="instructor">
                                     <option value="">Please Select</option>
                                     @foreach($instructors as $instructor)
-                                        <option value="{{$instructor->id}}" @if(old('instructor') == $instructor->id) selected @endif>{{$instructor->fullname}}</option>
+                                        <option value="{{$instructor->id}}" @if(old('instructor') == $instructor->id) selected @endif>{{$instructor->name}}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('instructor'))

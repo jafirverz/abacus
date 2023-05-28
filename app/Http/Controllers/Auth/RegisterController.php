@@ -118,6 +118,21 @@ class RegisterController extends Controller
                 $acName .= strtoupper(substr($funame, 0, 1));
             }
             $accountId = 'SUD-'.$dob1.$acName;
+            $chkAccountId = User::where('account_id', 'like', '%'.$accountId.'%')->orderBy('id', 'desc')->first();
+            if($chkAccountId){
+                $accId = $chkAccountId->account_id;
+                $expAcc = explode('-', $accId);
+                $i = 1;
+                if(count($expAcc) < 3){
+                    $accountId = 'SUD-'.$dob1.$acName.'-'.$i;
+                }else{
+                    $incre = $expAcc[2] + 1;
+                    $accountId = 'SUD-'.$dob1.$acName.'-'.$incre;
+                }
+            }else{
+                $accountId = 'SUD-'.$dob1.$acName;
+            }
+            //dd($request->all());
 			$users = new User;
             $users->dob = $dob ?? null;
 			$users->name = $request->name;
@@ -140,7 +155,7 @@ class RegisterController extends Controller
             }else{
                 $gender = 'Female';
             }
-            $instructor = Instructor::where('id', $request->instructor)->get();
+            $instructor = User::where('id', $request->instructor)->first();
 
 //			Admin email for new student registration
 			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
@@ -156,7 +171,7 @@ class RegisterController extends Controller
                     $data['subject'] = $email_template->subject;
 
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->fullname];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -182,13 +197,13 @@ class RegisterController extends Controller
                 $data['subject'] = $email_template->subject;
 
                 $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->fullname];
+                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 
                 $data['contents'] = $newContents;
                 try {
-                    $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    $mail = Mail::to($instructor->email)->send(new EmailNotification($data));
                 } catch (Exception $exception) {
                     dd($exception);
                 }
@@ -218,7 +233,7 @@ class RegisterController extends Controller
     {
         $slug = __('constant.SLUG_REGISTER');
 		$page = get_page_by_slug($slug);
-        $instructors = Instructor::get();
+        $instructors = User::where('role_id', 7)->get();
         return view('auth.register',compact("page","instructors"));
     }
 

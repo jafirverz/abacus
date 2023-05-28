@@ -27,6 +27,7 @@ return [
     'MODULES' => 'Modules',
     'LEVEL' => 'Level',
     'TOPIC' => 'Topics',
+    'WORKSHEET' => 'Worksheets',
     'HEADER_MENU_TITLE' => 'Header',
     'FOOTER_MENU_TITLE' => 'Footer',
     'CUSTOMER_ACCOUNT' => 'Student',
