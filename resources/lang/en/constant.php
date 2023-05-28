@@ -30,7 +30,8 @@ return [
     'WORKSHEET' => 'Worksheets',
     'HEADER_MENU_TITLE' => 'Header',
     'FOOTER_MENU_TITLE' => 'Footer',
-    'CUSTOMER_ACCOUNT' => 'Customer',
+    'CUSTOMER_ACCOUNT' => 'Student',
+    'INSTRUCTOR_ACCOUNT' => 'Instructor',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',

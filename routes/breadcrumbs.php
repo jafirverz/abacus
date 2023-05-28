@@ -197,3 +197,13 @@ Breadcrumbs::for('customer_account_crud', function ($trail, $title, $url = '#') 
     $trail->push($title, $url);
 });
 
+Breadcrumbs::for('instructor_account', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.INSTRUCTOR_ACCOUNT'), route('instructor-account.index'));
+});
+
+Breadcrumbs::for('instructor_account_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('instructor_account');
+    $trail->push($title, $url);
+});
+

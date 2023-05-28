@@ -6,12 +6,12 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('customer-account.index') }}" class="btn btn-icon"><i
+                <a href="{{ route('instructor-account.index') }}" class="btn btn-icon"><i
                         class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account_crud', 'Show',
-            route('customer-account.show', $customer->id))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('instructor_account_crud', 'Show',
+            route('instructor-account.show', $customer->id))])
         </div>
 
         <div class="section-body">

@@ -192,10 +192,42 @@ if (!function_exists('getPageList')) {
             $country_arr[$i] =    $country->country;
         }
         if ($id) {
-            return $country_arr[$id];
+            if(isset($country_arr[$id]))
+            {
+                return $country_arr[$id];
+            }
+            else
+            {
+                return NULL;
+            }
+
         }
         return $country_arr;
     }
+
+    function getUserTypes($id = null)
+    {
+        $user_types = DB::table('user_types')->where('id','!=',5)->orderBy('id', 'asc')->get();
+        $types_arr = [];
+        $i = 0;
+        foreach ($user_types as $type) {
+            $i++;
+            $types_arr[$type->id] =    $type->name;
+        }
+        if ($id) {
+            if(isset($types_arr[$id]))
+            {
+                return $types_arr[$id];
+            }
+            else
+            {
+                return NULL;
+            }
+
+        }
+        return $types_arr;
+    }
+
 
     function getChildPage($array, $page_id, $indent = 0)
     {
