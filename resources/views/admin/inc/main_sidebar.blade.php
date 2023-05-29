@@ -88,17 +88,7 @@
 
             ],
         ],
-        [
-            'menu_header'   =>  __('constant.MODULES'),
-            'main_menu' =>  [
-                [
-                    'title' =>  __('constant.LOAN_APPLICATION'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/loan-application',
-                ],
-
-            ],
-        ],
+        
         [
             'menu_header'   =>  __('constant.ROLES_AND_PERMISSION'),
             'main_menu' =>  [

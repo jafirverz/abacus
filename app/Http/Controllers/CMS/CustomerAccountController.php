@@ -48,7 +48,7 @@ class CustomerAccountController extends Controller
     public function create()
     {
         $title = $this->title;
-        $instructors = User::orderBy('id','desc')->get();
+        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         return view('admin.account.customer.create', compact('title','instructors'));
     }
 
@@ -139,7 +139,7 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-        $instructors = User::orderBy('id','desc')->get();
+        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         return view('admin.account.customer.edit', compact('title', 'customer','instructors'));
     }
 
