@@ -6,9 +6,9 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-            {{-- <div class="section-header-button">
+           <div class="section-header-button">
                 <a href="{{ route('customer-account.create') }}" class="btn btn-primary">Add New</a>
-        </div> --}}
+        </div>
         @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
 </div>
 
@@ -64,6 +64,7 @@
                                     <th>Action</th>
                                     <th>Full Name</th>
                                     <th>Email Address</th>
+                                    <th>Type</th>
                                     <th>Customer Number</th>
                                     <th>Account ID</th>
                                     <th>Last Updated</th>
@@ -95,6 +96,11 @@
                                     </td>
                                     <td>
                                         {{ $item->email }}
+                                    </td>
+                                    <td>
+                                        @if(isset($item->user_type_id))
+                                        {{ getUserTypes($item->user_type_id)  }}
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $item->mobile ?? '' }}

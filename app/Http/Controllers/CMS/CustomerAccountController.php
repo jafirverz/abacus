@@ -47,7 +47,9 @@ class CustomerAccountController extends Controller
      */
     public function create()
     {
-        return abort(404);
+        $title = $this->title;
+        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        return view('admin.account.customer.create', compact('title','instructors'));
     }
 
     /**
@@ -58,16 +60,56 @@ class CustomerAccountController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'firstname'  =>  'required',
-            'lastname'  =>  'required',
-            'email' =>  'required|email|unique:users',
-        ]);
+        //dd($request);
+        $fields = [
+            'email' =>  'required|email|unique:users,email',
+            'name' => 'required|string',
+            'password'  =>  'required|min:8',
+            'country_code' => 'required',
+            'user_type_id' => 'required',
+            'instructor_id' => 'required',
+            'dob' => 'required',
+            'mobile' => 'required|string',
+            'gender' => 'required|string',
+            'status' => 'required',
+        ];
 
+        $messages = [];
+        $messages['email.required'] = 'The email address field is required.';
+        $messages['name.required'] = 'The name field is required.';
+        $messages['password.required'] = 'The password field is required.';
+        $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code.required'] = 'The country code field is required.';
+        $messages['user_type_id.required'] = 'User type field is required.';
+        $messages['dob.required'] = 'Date of Birth is required.';
+        $messages['mobile.required'] = 'The contact number field is required.';
+        $messages['instructor_id.required'] = 'The instructor field is required.';
+        $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
+        $request->validate($fields, $messages);
+        $acName = '';
+        $dob = date('Y-m-d', strtotime($request->dob));
+        $dob1 = date('dmy', strtotime($dob));
+        $fullnameEx = explode(' ', $request->name);
+        foreach($fullnameEx as $funame){
+            $acName .= strtoupper(substr($funame, 0, 1));
+        }
+        $accountId = 'SUD-'.$dob1.$acName;
         $customer = new User();
-        $customer->firstname = $request->firstname;
-        $customer->lastname = $request->lastname;
-        $customer->email = $request->email;
+        $customer->name = $request->name;
+        $customer->account_id = $accountId;
+        $customer->instructor_id = $request->instructor_id??NULL;
+        $customer->user_type_id = $request->user_type_id??NULL;
+        $customer->dob = $request->dob??NULL;
+        $customer->email = $request->email??NULL;
+        $customer->address = $request->address??NULL;
+        $customer->gender = $request->gender??NULL;
+        $customer->country_code = $request->country_code??NULL;
+        $customer->mobile = $request->mobile??NULL;
+		$customer->approve_status = $request->status??NULL;
+        if (!is_null($request->password)) {
+            $customer->password = Hash::make($request->password);
+        }
+        $customer->created_at = Carbon::now();
         $customer->save();
 
         return redirect()->route('customer-account.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
@@ -83,8 +125,8 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-
-        return view('admin.account.customer.show', compact('title', 'customer'));
+        $instructors = User::findorfail($customer->instructor_id);
+        return view('admin.account.customer.show', compact('title', 'customer','instructors'));
     }
 
     /**
@@ -97,8 +139,8 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-
-        return view('admin.account.customer.edit', compact('title', 'customer'));
+        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        return view('admin.account.customer.edit', compact('title', 'customer','instructors'));
     }
 
     /**
@@ -114,42 +156,44 @@ class CustomerAccountController extends Controller
             'email' =>  'required|email|unique:users,email,' . $id . ',id',
             'name' => 'required|string',
             'password'  =>  'nullable|min:8',
-            'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
+            'country_code' => 'required',
+            'user_type_id' => 'required',
+            'dob' => 'required',
+            'instructor_id' => 'required',
             'mobile' => 'required|string',
             'gender' => 'required|string',
         ];
         $messages = [];
         $messages['email.required'] = 'The email address field is required.';
-        $messages['name.required'] = 'The customer name field is required.';
+        $messages['name.required'] = 'The name field is required.';
+        $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
         $messages['country_code.required'] = 'The country code field is required.';
-        $messages['country_code.regex'] = 'The Country code entered is invalid.';
+        $messages['user_type_id.required'] = 'User type field is required.';
+        $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
+        $messages['instructor_id.required'] = 'The instructor field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
 
         $customer = User::find($id);
         $customer->name = $request->name;
-        $customer->company_name = $request->company_name??NULL;
-        $customer->email = $request->email;
+        $customer->instructor_id = $request->instructor_id??NULL;
+        $customer->dob = $request->dob??NULL;
+        $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
-        $customer->gender = $request->gender;
-        $customer->country_code = $request->country_code;
-        $customer->mobile = $request->mobile;
-		$customer->status = $request->status;
+        $customer->gender = $request->gender??NULL;
+        $customer->user_type_id = $request->user_type_id??NULL;
+        $customer->country_code = $request->country_code??NULL;
+        $customer->mobile = $request->mobile??NULL;
+		$customer->approve_status = $request->status??NULL;
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
         $customer->updated_at = Carbon::now();
         $customer->save();
-        
-        if(!empty($request->previousUrll)){
-            return redirect($request->previousUrll)->with('success',  __('constant.UPDATED', ['module' => $this->title]));
-        }else{
-            return redirect()->route('customer-account.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
-        }
 
-        // return redirect()->route('customer-account.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
+        return redirect()->route('customer-account.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
 
     /**
@@ -171,11 +215,11 @@ class CustomerAccountController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
-        $customer = User::search($search_term)->paginate($this->pagination);
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->select('users.*')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
             $customer->appends('search', $search_term);
         }
-
+        //dd($customer);
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
 }

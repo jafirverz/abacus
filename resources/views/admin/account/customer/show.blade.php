@@ -23,10 +23,16 @@
                                 <label for="">Account ID</label>: {{ $customer->account_id ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Customer Name</label>: {{ $customer->fullname ?? '' }}
+                                <label for="">Name</label>: {{ $customer->name ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Email Address</label>: {{ $customer->email ?? '' }}
+                                <label for="">Email</label>: {{ $customer->email ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Date Of Birth</label>: {{ $customer->dob ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Phone</label>: {{ $customer->mobile ?? '' }}
                             </div>
                             <div class="form-group">
                                 <label for="">Gender</label>:
@@ -34,11 +40,18 @@
                                 @elseif($customer->gender == '2') Female
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label for="">Contact Number</label>: {{ $customer->mobilewithcountrycode ?? '' }}
-                            </div>
+
                             <div class="form-group">
                                 <label for="">Address</label>: {{ $customer->address ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Country</label>: {{ getCountry($customer->country_code) ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Instructor</label>: {{ $instructors->name ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">User Type</label>: {{ getUserTypes($customer->user_type_id) ?? ''  }}
                             </div>
                             <div class="form-group">
                                 <label for="">Created At</label>: {{ $customer->created_at->format('d M, Y h:i A') }}
