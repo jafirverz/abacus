@@ -5,10 +5,12 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
+use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class CustomerAccountController extends Controller
 {
@@ -222,4 +224,5 @@ class CustomerAccountController extends Controller
         //dd($customer);
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
+
 }
