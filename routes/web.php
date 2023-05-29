@@ -372,6 +372,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('customer-account', 'CMS\CustomerAccountController');
 
 
+    Route::get('customer/pending-request', 'CMS\UserProfileUpdateController@index')->name('customer.pendingRequest');
+    Route::get('customer/search', 'CMS\UserProfileUpdateController@search')->name('customer.search');
+    Route::get('customer/edit/{id}', 'CMS\UserProfileUpdateController@edit')->name('customer.edit');
+    Route::post('customer/update/{id}', 'CMS\UserProfileUpdateController@update')->name('customer.update');
+    Route::get('customer/show/{id}', 'CMS\UserProfileUpdateController@show')->name('customer.show');
+
+
+
     // NOTIFICATION
     Route::get('notification/search', 'CMS\NotificationController@search')->name('notification.search');
     Route::get('notification/redirect/{id}', 'CMS\NotificationController@showRedirect')->name('notification.show-redirect');

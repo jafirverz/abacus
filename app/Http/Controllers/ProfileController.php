@@ -33,6 +33,7 @@ use App\VehicleDetail;
 use Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Validation\ValidationException;
 use PDFMerger;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
@@ -147,6 +148,12 @@ class ProfileController extends Controller
 
                 ], $messages); //dd($request);
             }
+//            $checkPendingRequest = UserProfileUpdate::where('user_id', $users->id)->where('approve_status', '!=', 1)->first();
+//            if($checkPendingRequest){
+//                //throw ValidationException::withMessages(['Profile Update request already pending']);
+//                return back()->withErrors('Profile Update request already pending');
+//            }
+
             $dob = date('Y-m-d', strtotime($request->dob));
             $updateUserProfile = new UserProfileUpdate();
             $updateUserProfile->user_id  = $users->id;
