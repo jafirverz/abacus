@@ -9,10 +9,10 @@
     <?php /*?><link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}"><?php */?>
     <link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}">
     <!-- General CSS Files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://localhost:81/abacus/public/stisla-theme/css/app.css">
-    <link rel="stylesheet" href="http://localhost:81/abacus/public/stisla-theme/css/stisla.css">
-    <link rel="stylesheet" href="http://localhost:81/abacus/public/stisla-theme/css/bootstrap-datetimepicker.css">
+
+    <link rel="stylesheet" href="{{ asset('stisla-theme/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('stisla-theme/css/stisla.css') }}">
+    <link rel="stylesheet" href="{{ asset('stisla-theme/css/bootstrap-datetimepicker.css') }}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">

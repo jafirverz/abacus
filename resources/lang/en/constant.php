@@ -49,7 +49,7 @@ return [
     'SUBMIT' => ':Module has been submit successfully!',
     'DUPLICATED' => ':Module has been duplicated successfully!',
     'UPDATED' => ':Module has been updated succesfully.',
-    'ACOUNT_UPDATED' => 'Your profile has been updated.',
+    'ACOUNT_UPDATED' => 'Your profile update request has been sent.',
     'SAVED' =>  ':Module has been saved.',
     'NO_DATA_FOUND' => 'Oops! No data found.',
     'FOREIGN' => 'Foreign key constraint violation.',
@@ -67,6 +67,8 @@ return [
     'EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REGISTRATION' =>  '2',
     'EMAIL_TEMPLATE_TO_STUDENT_ACCOUNT_ID' =>  '3',
     'EMAIL_TEMPLATE_TO_FORGET_PASSWORD' => '4',
+    'EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_PROFILE_UPDATE' => '5',
+    'EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE' => '5',
 
     // SLUG
     'SLUG_LOGIN' => 'login',
