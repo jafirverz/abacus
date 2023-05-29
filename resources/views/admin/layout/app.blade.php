@@ -9,8 +9,8 @@
     <?php /*?><link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}"><?php */?>
     <link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}">
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ mix('stisla-theme/css/app.css') }}">
-    <link rel="stylesheet" href="{{ mix('stisla-theme/css/stisla.css') }}">
+    <link rel="stylesheet" href="{{ asset('stisla-theme/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('stisla-theme/css/stisla.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla-theme/css/bootstrap-datetimepicker.css') }}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">

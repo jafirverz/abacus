@@ -73,101 +73,22 @@
                     'icon'  =>  '<i class="fas fa-images"></i>',
                     'url'   =>  'admin/banner-management',
                 ],
-                [
-                    'title' =>  __('constant.SMART_BLOCK'),
-                    'icon'  =>  '<i class="fas fa-clone"></i>',
-                    'url'   =>  'admin/smart-block',
-                ],
-                [
-                'title' => __('constant.ONE_MOTORING'),
-                'icon' => '<i class="fas fa-bars"></i>',
-                'url' => '#',
-                "sub_menu" =>[
-                    [
-                    'title' => __('constant.ONE_MOTORING'),
-                    'icon' => '<i class="fas fa-bars"></i>',
-                    'url' => 'admin/oneMotoring',
-                    ],
-                    [
-                    'title' => __('constant.CATEGORY'),
-                    'icon' => '<i class="fas fa-bars"></i>',
-                    'url' => 'admin/category',
-                    ]
-                ]
-                ],
-                [
-                    'title' =>  __('constant.FAQ'),
-                    'icon'  =>  '<i class="fas fa-question"></i>',
-                    'url'   =>  'admin/faqs',
-                ]
-                ,
+
                 [
                     'title' =>  __('constant.CONTACT'),
                     'icon'  =>  '<i class="fas fa-phone"></i>',
                     'url'   =>  'admin/contact',
                 ],
-                [
-                    'title' =>  __('constant.TESTIMONIAL'),
-                    'icon'  =>  '<i class="fas fa-chalkboard-teacher"></i>',
-                    'url'   =>  'admin/testimonial',
-                ],
-                [
-                    'title' =>  __('constant.PARTNER'),
-                    'icon'  =>  '<i class="fas fa-handshake"></i>',
-                    'url'   =>  'admin/partner',
-                ],
+
                 [
                     'title' =>  __('constant.EMAIL_TEMPLATE'),
                     'icon'  =>  '<i class="fas fa-envelope"></i>',
                     'url'   =>  'admin/email-template',
                 ],
-                [
-                    'title' =>  __('constant.MESSAGE_TEMPLATE'),
-                    'icon'  =>  '<i class="fas fa-envelope"></i>',
-                    'url'   =>  'admin/message-template',
-                ],
-                [
-                    'title' =>  __('constant.STA_INSPECTION'),
-                    'icon'  =>  '<i class="fas fa-bars"></i>',
-                    'url'   =>  'admin/sta-inspection',
-                ],
+
             ],
         ],
-        [
-            'menu_header'   =>  __('constant.MODULES'),
-            'main_menu' =>  [
-                [
-                    'title' =>  __('constant.LOAN_APPLICATION'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/loan-application',
-                ],
-                [
-                    'title' =>  __('constant.SP_AGREEMENT'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/sp-agreement',
-                ],
-                [
-                    'title' =>  __('constant.INSURANCE'),
-                    'icon'  =>  '<i class="fas fa-handshake"></i>',
-                    'url'   =>  'admin/insurance',
-                ],
-                [
-                    'title' =>  __('Car Marketplace'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/marketplace',
-                ],
-                [
-                    'title' =>  __('Invoices'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/invoice',
-                ],
-                [
-                    'title' =>  __('Quote Requests'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/quoterequest',
-                ],
-            ],
-        ],
+        
         [
             'menu_header'   =>  __('constant.ROLES_AND_PERMISSION'),
             'main_menu' =>  [

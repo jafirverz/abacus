@@ -32,14 +32,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         config([
             'system_settings' => $this->systemSetting(),
-            'smart_blocks' => $this->smartBlock(),
         ]);
 
 
-        // DB::listen(function ($query) {
-        //     $query->sql;
-        //     $query->bindings;
-        //     $query->time;
-        // });
     }
 }
