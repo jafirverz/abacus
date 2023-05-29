@@ -7,8 +7,7 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
            <div class="section-header-button">
-                <a href="{{ route('customer-account.create') }}" class="btn btn-primary">Add New</a>
-               <a href="{{ route('customer.pendingRequest') }}" class="btn btn-primary">Profile Update Request</a>
+
         </div>
         @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
 </div>
@@ -32,7 +31,7 @@
                     </form>
                     <h4></h4>
                     <div class="card-header-form form-inline">
-                        <form action="{{ route('customer-account.search') }}" method="get">
+                        <form action="{{ route('customer.search') }}" method="get">
                             @csrf
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Search"
@@ -65,9 +64,7 @@
                                     <th>Action</th>
                                     <th>Full Name</th>
                                     <th>Email Address</th>
-                                    <th>Type</th>
-                                    <th>Customer Number</th>
-                                    <th>Account ID</th>
+                                    <th>Phone</th>
                                     <th>Last Updated</th>
                                 </tr>
                             </thead>
@@ -83,10 +80,10 @@
                                                 class="custom-control-label">&nbsp;</label></div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('customer-account.show', $item->id) }}"
+                                        <a href="{{ route('customer.show', $item->id) }}"
                                             class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('customer-account.edit', $item->id) }}"
+                                        <a href="{{ route('customer.edit', $item->id) }}"
                                             class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View">
                                             <i aria-hidden="true" class="fa fa-edit"></i>
@@ -98,17 +95,11 @@
                                     <td>
                                         {{ $item->email }}
                                     </td>
-                                    <td>
-                                        @if(isset($item->user_type_id))
-                                        {{ getUserTypes($item->user_type_id)  }}
-                                        @endif
-                                    </td>
+
                                     <td>
                                         {{ $item->mobile ?? '' }}
                                     </td>
-                                    <td>
-                                        {{ $item->account_id ?? '' }}
-                                    </td>
+
                                     <td>
                                         {{ $item->updated_at->format('d M, Y h:i A') }}
                                     </td>
