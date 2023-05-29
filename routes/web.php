@@ -205,6 +205,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('level/search', 'CMS\LevelController@search')->name('level.search');
     Route::resource('level', 'CMS\LevelController');
 
+    //QUESTION
+    Route::get('question/search', 'CMS\QuestionController@search')->name('question.search');
+    Route::resource('question', 'CMS\QuestionController');
+    Route::post('question/find-worksheet', 'CMS\QuestionController@find_worksheet');
+
 
 
     // WORKSHEET MASTER

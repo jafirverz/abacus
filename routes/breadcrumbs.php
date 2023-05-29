@@ -186,6 +186,17 @@ Breadcrumbs::for('edit_role', function ($trail, $id) {
     $trail->push('Edit Role', url('/admin/roles/edit/'.$id));
 });
 
+// QUESTION
+Breadcrumbs::for('question', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.QUESTION_MANAGEMENT'), route('question.index'));
+});
+
+Breadcrumbs::for('question_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('question');
+    $trail->push($title, $url);
+});
+
 // CUSTOMER
 Breadcrumbs::for('customer_account', function ($trail) {
     $trail->parent('admin_home');

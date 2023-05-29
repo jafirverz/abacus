@@ -6,18 +6,18 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('instructor-account.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('customer-account.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
             @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('instructor_account_crud', 'Edit',
-            route('instructor-account.edit', $customer->id))])
+            route('customer-account.edit', $customer->id))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('instructor-account.update', $customer->id) }}" method="post">
+                        <form action="{{ route('customer-account.update', $customer->id) }}" method="post">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="previousUrll" value="{{ url()->previous() }}">
