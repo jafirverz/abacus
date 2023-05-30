@@ -92,7 +92,7 @@
                                         {{ $item->title }}
                                     </td>
                                     <td>
-                                        {{ $item->worksheet_id }}
+                                        {{ $item->worksheet->title }}
                                     </td>
 
                                     <td>
