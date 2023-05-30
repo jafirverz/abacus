@@ -80,7 +80,7 @@ class QuestionController extends Controller
         $json['input_2']=$request->input_2;
         $json['input_3']=$request->input_3;
         }
-        else
+        elseif($request->question_type==2)
         {
             if ($request->hasfile('input_1')) {
                 foreach ($request->file('input_1') as $file) {
@@ -94,6 +94,12 @@ class QuestionController extends Controller
                 $json['input_2']=$request->input_2;
             }
         }
+        elseif($request->question_type==4)
+        {
+            $json['input_1']=$request->input_1;
+            $json['input_2']=$request->input_2;
+        }
+
         //dd($question);
         $messages = [];
         $messages['title.required'] = 'The title field is required.';
@@ -175,11 +181,6 @@ class QuestionController extends Controller
 
             }
             $json['input_1']=$input_1_old;
-            $json['input_2']=$request->input_2;
-        }
-        elseif($request->question_type==3)
-        {
-            $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
         }
 

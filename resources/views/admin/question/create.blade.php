@@ -33,11 +33,11 @@
 
                                 <div class="form-group">
                                     <label for="worksheet">Worksheet</label>
-                                    <select  id="worksheet_id" required class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                    <select  id="worksheet_id"  required class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
                                         @if ($worksheets)
                                         @foreach ($worksheets as $item)
-                                        <option value="<?php echo url('/'); ?>/admin/question/create?worksheet_id={{ $item->id }}&question-type={{ $item->question_type }}" @if(isset($_GET['question-type']) && old('worksheet_id',$_GET['question-type'])==$item->id) selected @endif> {{ $item->title }} </option>
+                                        <option value="<?php echo url('/'); ?>/admin/question/create?worksheet_id={{ $item->id }}&question-type={{ $item->question_template_id }}" @if(isset($_GET['worksheet_id']) && $_GET['worksheet_id']==$item->id) selected @endif> {{ $item->title }} </option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -81,7 +81,7 @@
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
 
-                                @elseif(isset($_GET['question-type']) && $_GET['question-type']==3)
+                                @elseif(isset($_GET['question-type']) && $_GET['question-type']==4)
 
                                     <label for="" class=" control-label">Adddition/Subtraction</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
