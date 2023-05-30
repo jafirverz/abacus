@@ -244,6 +244,15 @@ if (!function_exists('getPageList')) {
         return $data;
     }
 
+    function getQuestionType($id = null)
+    {
+        $array_list = ['1'  =>  'Listening Questions', '2'  =>  'Visual Flashing Questions' , '3' => 'Number Questions', '4' => 'Add and subtract Questions', '5' => 'Multiply and Divide Questions', '6' => 'Challenge Questions', '7' => 'Mixed Questions', '8' => 'Abacus simulator Questions', '9' => 'Online Lessons'];
+        if ($id) {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
     function getActiveStatus($id = null)
     {
         $array_list = ['1'  =>  'Active', '2'  =>  'Inactive'];
