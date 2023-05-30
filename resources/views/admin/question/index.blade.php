@@ -9,7 +9,7 @@
            <div class="section-header-button">
                 <a href="{{ route('question.create') }}" class="btn btn-primary">Add New</a>
         </div>
-        @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
+        @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('question')])
 </div>
 
 <div class="section-body">
