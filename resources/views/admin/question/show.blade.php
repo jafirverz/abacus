@@ -10,8 +10,8 @@
                         class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account_crud', 'Show',
-            route('question.show', $customer->id))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('question_crud', 'Show',
+            route('question.show', $question->id))])
         </div>
 
         <div class="section-body">
@@ -19,46 +19,79 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
+
                             <div class="form-group">
-                                <label for="">Account ID</label>: {{ $customer->account_id ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Name</label>: {{ $customer->name ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Email</label>: {{ $customer->email ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Date Of Birth</label>: {{ $customer->dob ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Phone</label>: {{ $customer->mobile ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Gender</label>:
-                                @if($customer->gender=='1') Male
-                                @elseif($customer->gender == '2') Female
-                                @endif
+                                <label for="">Title</label>
+                                <input readonly="readonly" type="text" name="title" class="form-control" value="{{ old('title', $question->title) }}">
+
                             </div>
 
                             <div class="form-group">
-                                <label for="">Address</label>: {{ $customer->address ?? '' }}
+                                <label for="worksheet">Worksheet</label>
+                                <select disabled="disabled"  id="worksheet_id" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                    <option value="">-- Select --</option>
+                                    @if ($worksheets)
+                                    @foreach ($worksheets as $item)
+                                    <option value="<?php echo url('/'); ?>/admin/question/{{ $question->id }}/edit?question-type={{ $item->question_type }}" @if(old('worksheet_id', $question->worksheet_id)==$item->id) selected @endif> {{ $item->title }} </option>
+                                    @endforeach
+                                    @endif
+                                </select>
+
+
                             </div>
-                            <div class="form-group">
-                                <label for="">Country</label>: {{ getCountry($customer->country_code) ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Instructor</label>: {{ $instructors->name ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">User Type</label>: {{ getUserTypes($customer->user_type_id) ?? ''  }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Created At</label>: {{ $customer->created_at->format('d M, Y h:i A') }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Updated At</label>: {{ $customer->updated_at->format('d M, Y h:i A') }}
-                            </div>
+                            @if($question->question_type==1)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+                                @php
+                                    $json_question=json_decode($question->json_question);
+                                    for($i=0;$i<count($json_question->input_1);$i++)
+                                    {
+
+                                @endphp
+
+                                    <div class="form-group">
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-4">
+                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                @php } @endphp
+
+
+                                @elseif($question->question_type==2)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+                                @php
+                                $json_question=json_decode($question->json_question);
+                                for($i=0;$i<count($json_question->input_1);$i++)
+                                {
+
+                                    @endphp
+
+                                        <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-4">
+                                                    <input readonly="readonly" class="form-control"  value="{{ $json_question->input_1[$i] }}" name="input_1_old[]" type="hidden">
+                                                    <a href="{{ url('/') }}/upload-file/{{ $json_question->input_1[$i] }}" target="_blank"> {{ $json_question->input_1[$i] }} </a>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @php } @endphp
+
+                                @endif
+
+
+
                         </div>
                     </div>
                 </div>
