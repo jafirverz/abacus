@@ -6,6 +6,7 @@ return [
     'MASTER' => 'Master',
     'CONTACT' => 'Contact Enquiry',
     'BANNER_MANAGEMENT'  =>  'Banner Management',
+    'QUESTION_MANAGEMENT'  =>  'Question Management',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
     'TESTIMONIAL'  =>  'Testimonial',
