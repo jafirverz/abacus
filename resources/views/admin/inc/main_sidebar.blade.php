@@ -40,6 +40,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/worksheet',
                 ],
+                [
+                    'title' =>  __('constant.QUESTION_MANAGEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/question',
+                ],
 
             ],
         ],
@@ -88,7 +93,7 @@
 
             ],
         ],
-        
+
         [
             'menu_header'   =>  __('constant.ROLES_AND_PERMISSION'),
             'main_menu' =>  [
@@ -112,6 +117,11 @@
                     'title' =>  __('constant.CUSTOMER_ACCOUNT'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/customer-account',
+                ],
+                [
+                    'title' =>  __('constant.INSTRUCTOR_ACCOUNT'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/instructor-account',
                 ],
             ],
         ],
