@@ -159,7 +159,7 @@ class QuestionController extends Controller
         $json['input_2']=$request->input_2;
         $json['input_3']=$request->input_3;
         }
-        else
+        elseif($request->question_type==2)
         {
             $input_1_old=$request->input_1_old;
             if ($request->hasfile('input_1')) {
@@ -175,6 +175,11 @@ class QuestionController extends Controller
 
             }
             $json['input_1']=$input_1_old;
+            $json['input_2']=$request->input_2;
+        }
+        elseif($request->question_type==3)
+        {
+            $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
         }
 
