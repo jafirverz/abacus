@@ -51,7 +51,7 @@
                                     @endif
                                 </div>
                                 @if((isset($_GET['question-type']) && $_GET['question-type']==1) || $question->question_type==1)
-                                    <label for="" class=" control-label">Multiplication</label>
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(1) }}</label>
                                     @php
                                         $json_question=json_decode($question->json_question);
                                         for($i=0;$i<count($json_question->input_1);$i++)
@@ -82,7 +82,7 @@
                                     </div>
 
                                     @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $question->question_type==2)
-
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
                                     @php
                                     $json_question=json_decode($question->json_question);
                                     for($i=0;$i<count($json_question->input_1);$i++)

@@ -50,7 +50,7 @@
                                 </div>
 
                             @if(isset($_GET['question-type']) && $_GET['question-type']==1)
-                                    <label for="" class=" control-label">Multiplication/Division</label>
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-4">
                                             <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
@@ -67,7 +67,7 @@
                                     </div>
                             @elseif(isset($_GET['question-type']) && $_GET['question-type']==2)
 
-                                <label for="" class=" control-label">Audio</label>
+                                <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
                                     <div class="col-md-6">
                                         <input class="form-control" required value="" name="input_1[]"  type="file">
@@ -83,7 +83,7 @@
 
                                 @elseif(isset($_GET['question-type']) && $_GET['question-type']==4)
 
-                                    <label for="" class=" control-label">Adddition/Subtraction</label>
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-6">
                                             <textarea class="" rows="5" cols="60" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>

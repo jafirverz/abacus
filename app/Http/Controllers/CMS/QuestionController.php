@@ -127,7 +127,8 @@ class QuestionController extends Controller
     {
         $title = $this->title;
         $question = Question::findorfail($id);
-        return view('admin.question.show', compact('title', 'question'));
+        $worksheets = Worksheet::orderBy('id','desc')->get();
+        return view('admin.question.show', compact('title', 'question','worksheets'));
     }
 
     /**
@@ -219,11 +220,11 @@ class QuestionController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
-        $customer = Question::join('user_types','users.user_type_id','user_types.id')->select('users.*')->search($search_term)->paginate($this->pagination);
+        $questions = Question::join('worksheets','worksheets.id','questions.worksheet_id')->select('questions.*')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
-            $customer->appends('search', $search_term);
+            $questions->appends('search', $search_term);
         }
         //dd($customer);
-        return view('admin.question.index', compact('title', 'customer'));
+        return view('admin.question.index', compact('title', 'questions'));
     }
 }
