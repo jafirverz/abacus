@@ -109,6 +109,34 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+
+                                @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $question->question_type==4)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(4) }}</label>
+                                    @php
+                                        $json_question=json_decode($question->json_question);
+                                        for($i=0;$i<count($json_question->input_1);$i++)
+                                        {
+
+                                    @endphp
+
+                                    <div class="form-group">
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-6">
+                                                <textarea rows="10" cols="60" name="input_1[]">{{ $json_question->input_1[$i] }}</textarea>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                    @php } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
                                     @endif
 
 
@@ -171,6 +199,23 @@
       </div>
     </div>
 </div>
+
+<div class="copy3" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <textarea class="" rows="5" cols="60" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            </div>
+
+        </div>
+        <div class="input-group-btn">
+            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+    </div>
+</div>
 <script>
 
     $(document).ready(function () {
@@ -203,6 +248,11 @@
           var html = $(".copy2").html();
           $(".after-add-more").after(html);
           });
+
+        $(".add-more3").click(function(){
+            var html = $(".copy3").html();
+            $(".after-add-more").after(html);
+        });
 
           $("body").on("click",".remove",function(){
               $(this).parents(".form-group").remove();
