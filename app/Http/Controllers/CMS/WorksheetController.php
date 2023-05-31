@@ -10,6 +10,7 @@ use App\Traits\SystemSettingTrait;
 use App\Worksheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\QuestionTemplate;
 
 class WorksheetController extends Controller
 {
@@ -53,7 +54,8 @@ class WorksheetController extends Controller
         $worksheet = Worksheet::get();
         $levels = Level::get();
         $topics = Topic::get();
-        return view('admin.master.worksheet.create', compact('title','worksheet', 'levels', 'topics'));
+        $questionTempleates = QuestionTemplate::get();
+        return view('admin.master.worksheet.create', compact('title','worksheet', 'levels', 'topics', 'questionTempleates'));
     }
 
     /**
@@ -72,7 +74,7 @@ class WorksheetController extends Controller
             'title'  =>  'required',
             'fee'  =>  'required',
             'amount' => 'required_if:fee,2',
-//            'questiontemplate'  =>  'required',
+           'questiontemplate'  =>  'required',
             'stopwatch'  =>  'required',
             'presettiming'  =>  'required',
             'questiontype' => 'required',
@@ -84,7 +86,7 @@ class WorksheetController extends Controller
         $worksheet->title = $request->title;
         $worksheet->type = $request->fee;
         $worksheet->amount = $request->amount;
-        $worksheet->question_type = $request->questiontemplate;
+        $worksheet->question_template_id = $request->questiontemplate;
         $worksheet->stopwatch_timing = $request->stopwatch;
         $worksheet->preset_timing = $request->presettiming;
         $worksheet->description = $request->description;
@@ -135,8 +137,9 @@ class WorksheetController extends Controller
         $worksheet = Worksheet::find($id);
         $levels = Level::get();
         $topics = Topic::get();
+        $questionTempleates = QuestionTemplate::get();
         $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('topic_id')->toArray();
-        return view('admin.master.worksheet.edit', compact('title', 'worksheet', 'levels', 'topics', 'levelTopic'));
+        return view('admin.master.worksheet.edit', compact('title', 'worksheet', 'levels', 'topics', 'levelTopic', 'questionTempleates'));
     }
 
     /**
@@ -156,7 +159,7 @@ class WorksheetController extends Controller
             'title'  =>  'required',
             'fee'  =>  'required',
             'amount' => 'required_if:fee,2',
-//            'questiontemplate'  =>  'required',
+            'questiontemplate'  =>  'required',
             'stopwatch'  =>  'required',
             'presettiming'  =>  'required',
             'questiontype' => 'required',
@@ -168,7 +171,7 @@ class WorksheetController extends Controller
         $worksheet->title = $request->title;
         $worksheet->type = $request->fee;
         $worksheet->amount = $request->amount;
-        $worksheet->question_type = $request->questiontemplate;
+        $worksheet->question_template_id = $request->questiontemplate;
         $worksheet->stopwatch_timing = $request->stopwatch;
         $worksheet->preset_timing = $request->presettiming;
         $worksheet->description = $request->description;

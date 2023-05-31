@@ -87,6 +87,9 @@
                                     <label for="title">Question Template</label>
                                     <select name="questiontemplate" class="form-control">
                                         <option value="">-- Select --</option>
+                                        @foreach($questionTempleates as $questionTemp)
+                                        <option value="{{ $questionTemp->id }}" @if(old('questionTemp') == $questionTemp->id) selected @endif>{{ $questionTemp->title }}</option>
+                                        @endforeach
                                     </select>
                                     @if ($errors->has('questiontemplate'))
                                         <span class="text-danger d-block">
