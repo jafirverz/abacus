@@ -104,42 +104,8 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="instructor_id">Instructor</label>
-                                    <select name="instructor_id" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if ($instructors)
-                                        @foreach ($instructors as $item)
-                                        <option value="{{ $item->id }}" @if(old('instructor_id')==$item->id)
-                                            selected
-                                            @endif>{{ $item->name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('instructor_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('instructor_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="user_type_id">User Type</label>
-                                    <select name="user_type_id" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (getUserTypes())
-                                        @foreach (getUserTypes()  as $key => $item)
-                                        <option value="{{ $key }}" @if(old('user_type_id')==$key)
-                                            selected
-                                            @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('user_type_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('user_type_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
+
                                 <div class="form-group">
                                     <label for="">Password</label>
                                     <input type="password" name="password" class="form-control">

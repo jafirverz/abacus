@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Insurance;
 use App\Notification;
-use App\InsuranceInformation;
-use App\InsuranceQuotation;
-use App\InsuranceVehicle;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use App\Admin;
-use App\Chat;
-use App\ChatMessage;
 use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Exception;
@@ -25,25 +19,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Traits\PageTrait;
 use Illuminate\Support\Str;
 use App\Jobs\SendEmail;
-use App\Exports\NotifyListExport;
-use App\Exports\EnquiryExport;
-use App\Exports\TransactionExport;
-use App\VehicleMain;
-use App\VehicleDetail;
-use Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\ValidationException;
-use PDFMerger;
-use Mpdf\Config\ConfigVariables;
-use Mpdf\Config\FontVariables;
-use Mpdf\Mpdf as PDF;
-use App\LikeCount;
-use App\ReportVehicle;
-use App\QuoteRequest;
-use App\MessageTemplate;
-use App\SellerParticular;
-use App\Invoice;
+
 use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
@@ -65,7 +44,47 @@ class ProfileController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function instructor()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		//dd($user);
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.instructor-profile', compact("page", "user"));
+	}
+
+    public function overview()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		//dd($user);
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.overview', compact("page", "user"));
+	}
+
+    public function index()
 	{
 		//
 
@@ -349,649 +368,12 @@ class ProfileController extends Controller
 		return redirect('login')->with('success', 'Your account deleted successfully.');
 	}
 
-	public function my_cars($slug = 'advertise-my-car')
-	{
-		$users = $this->user;
-		$page = $this->getPages($slug);
 
-		//dd($page);
-		if (!$page) {
-			return abort(404);
-		}
 
-		$all_pages = $this->getAllPages();
-		$menu = $this->getMenu();
-		$my_cars = VehicleMain::join('vehicle_details', 'vehicle_details.vehicle_id', 'vehicle_mains.id')
-					->where('vehicle_mains.seller_id', $this->user->id)
-					->where('vehicle_mains.status','!=',0)
-					->select('vehicle_details.*', 'vehicle_mains.status as status')
-					->paginate($this->pagination);
-		//dd($my_cars);
-		return view('account.my-car', compact("page", "all_pages", "menu", 'my_cars'));
-	}
 
-	public function my_quote_requests($slug = 'advertise-my-car'){
-		$users = $this->user;
-		$page = $this->getPages($slug);
 
-		//dd($page);
-		if (!$page) {
-			return abort(404);
-		}
 
-		$all_pages = $this->getAllPages();
-		$menu = $this->getMenu();
 
-		$my_quote_requests = QuoteRequest::where('seller_id', $this->user->id)
-								->orderBy('created_at', 'desc')
-                            	->paginate($this->pagination);
-
-		return view('account.my-quote-request', compact("page", "all_pages", "menu", 'my_quote_requests'));
-	}
-
-	public function my_invoices($slug = 'advertise-my-car'){
-		$users = $this->user;
-		$page = $this->getPages($slug);
-
-		//dd($page);
-		if (!$page) {
-			return abort(404);
-		}
-
-		$all_pages = $this->getAllPages();
-		$menu = $this->getMenu();
-
-		$my_invoices = Invoice::where('seller_id', $this->user->id)->orWhere('buyer_id', $this->user->id)
-								->orderBy('created_at', 'desc')
-                            	->paginate($this->pagination);
-
-		return view('account.my-invoice', compact("page", "all_pages", "menu", 'my_invoices'));
-	}
-
-	public function view_invoice($id, $slug = 'invoice'){
-		$users = $this->user;
-		$page = $this->getPages($slug);
-
-		//dd($page);
-		if (!$page) {
-			return abort(404);
-		}
-
-		$all_pages = $this->getAllPages();
-		$menu = $this->getMenu();
-
-		$invoice = Invoice::with('items')->where('id', '=', $id)->get();
-
-		return view('account.view-invoice', compact("page", "all_pages", "menu", 'invoice'));
-	}
-
-	public function advertise_my_car_form($slug = 'advertise-my-car')
-	{
-		$users = $this->user;
-		$page = $this->getPages($slug);
-
-		//dd($page);
-
-		if (!$page) {
-			return abort(404);
-		}
-
-		$all_pages = $this->getAllPages();
-
-		$menu = $this->getMenu();
-
-		return view('account.advertise-my-car-form', compact("page", "all_pages", "menu", 'users'));
-	}
-
-	public function quote_my_car_form($slug = 'quote-my-car')
-	{
-		$users = $this->user;
-		$page = $this->getPages($slug);
-
-		//dd($page);
-
-		if (!$page) {
-			return abort(404);
-		}
-
-		$all_pages = $this->getAllPages();
-
-		$menu = $this->getMenu();
-
-		return view('account.quote-my-car-form', compact("page", "all_pages", "menu", 'users'));
-	}
-
-	public function advertise_my_car_store(Request $request)
-	{
-		$system_settings = $this->system_settings;
-		// Get verify response data
-		// $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $system_settings->recaptcha_secret_key . '&response=' . $request->captcha_response);
-		// $responseData = json_decode($verifyResponse);
-		$messages = [];
-// 		$messages['nric.required'] = 'The NRIC field is required.';
-        $messages['full_name.required'] = 'This field is required';
-		$messages['nric.required'] = 'This field is required';
-		$messages['gender.required'] = 'This field is required';
-		$messages['country.required'] = 'This field is required';
-		$messages['contact_number.required'] = 'This field is required';
-		$messages['email.required'] = 'This field is required';
-		$messages['vehicle_number.required'] = 'This field is required';
-		$messages['mileage.required'] = 'This field is required';
-		$messages['price.required'] = 'This field is required';
-		$messages['terms_condition.required'] = 'This field is required';
-		$messages['vehicle_make.required'] = 'This field is required';
-		$messages['vehicle_model.required'] = 'This field is required';
-		$messages['primary_color.required'] = 'This field is required';
-		$messages['year_of_manufacture.required'] = 'This field is required';
-		$messages['open_market_value.required'] = 'This field is required';
-		$messages['orig_reg_date.required'] = 'This field is required';
-		$messages['first_reg_date.required'] = 'This field is required';
-		$messages['no_of_transfer.required'] = 'This field is required';
-		$messages['minimumparfbenefit.required'] = 'This field is required';
-		$messages['coe_expiry_date.required'] = 'This field is required';
-		$messages['coe_category.required'] = 'This field is required';
-		$messages['quota_premium.required'] = 'This field is required';
-		$messages['vehicle_type.required'] = 'This field is required';
-		$messages['propellant.required'] = 'This field is required';
-		$messages['power_rate.required'] = 'This field is required';
-		$messages['vehicle_emission_rate.required'] = 'This field is required';
-		$messages['max_weight.required'] = 'This field is required';
-		$messages['vehicle_scheme.required'] = 'This field is required';
-		$messages['engine_capacity.required'] = 'This field is required';
-		$messages['roadtaxexpirydate.required'] = 'This field is required';
-		$messages['mileage.required'] = 'This field is required';
-		$messages['price.required'] = 'This field is required';
-
-		if (!Session::get('myinfoadvertisecar')) {
-            $request->validate([
-            'full_name' => 'required',
-			'nric' => 'required',
-			'gender' => 'required',
-			'country' => 'required',
-			'contact_number' => 'required|numeric',
-			'email' => 'required',
-            'vehicle_number' => 'required',
-			'mileage' => 'required',
-            'price' => 'required',
-            // 'specification' => 'required|array|min:1',
-            'terms_condition' => 'required',
-			// 'additional_accessories' => 'required|array|min:1',
-			// 'open_market_value' => 'required',
-			// 'no_of_transfer' => 'required',
-			// 'minimumparfbenefit' => 'required',
-			// 'coe_expiry_date' => 'required',
-			// 'coe_category' => 'required',
-			// 'quota_premium' => 'required',
-			// 'vehicle_type' => 'required',
-			// 'propellant' => 'required',
-			// 'power_rate' => 'required',
-			// 'vehicle_emission_rate' => 'required',
-			// 'max_weight' => 'required',
-			// 'vehicle_scheme' => 'required',
-			// 'roadtaxexpirydate' => 'required',
-
-
-            // 'upload_file' => 'required',
-
-            // 'vehicle_make' => 'required',
-            // 'vehicle_model' => 'required',
-            // 'primary_color' => 'required',
-            // 'year_of_manufacture' => 'required',
-            // 'orig_reg_date' => 'required',
-            // 'engine_capacity' => 'required',
-        	], $messages);
-        }else{
-		    $request->validate([
-			'full_name' => 'required',
-			'nric' => 'required',
-			'gender' => 'required',
-			'country' => 'required',
-			'contact_number' => 'required|numeric',
-			'email' => 'required',
-            'vehicle_number' => 'required',
-			'vehicle_make' => 'required',
-            'vehicle_model' => 'required',
-			'primary_color' => 'required',
-			'year_of_manufacture' => 'required',
-			'open_market_value' => 'required',
-			'orig_reg_date' => 'required',
-			'first_reg_date' => 'required',
-			'no_of_transfer' => 'required',
-			'minimumparfbenefit' => 'required',
-			'coe_expiry_date' => 'required',
-			'coe_category' => 'required',
-			'quota_premium' => 'required',
-			'vehicle_type' => 'required',
-			'propellant' => 'required',
-			'power_rate' => 'required',
-			'vehicle_emission_rate' => 'required',
-			'max_weight' => 'required',
-			'vehicle_scheme' => 'required',
-			'engine_capacity' => 'required',
-			'roadtaxexpirydate' => 'required',
-			'mileage' => 'required',
-			'price' => 'required',
-			// 'specification' => 'required|array|min:1',
-            'terms_condition' => 'required',
-
-        	], $messages);
-		}
-
-// 		if (!Session::get('myinfoadvertisecar')) {
-//             $request->validate([
-//             'full_name' => 'required',
-// 			'gender' => 'required',
-// // 			'open_market_value' => 'required',
-// // 			'no_of_transfer' => 'required',
-// // 			'minimumparfbenefit' => 'required',
-// // 			'coe_expiry_date' => 'required',
-// // 			'coe_category' => 'required',
-// // 			'quota_premium' => 'required',
-// // 			'vehicle_type' => 'required',
-// // 			'propellant' => 'required',
-// // 			'power_rate' => 'required',
-// // 			'vehicle_emission_rate' => 'required',
-// // 			'max_weight' => 'required',
-// // 			'vehicle_scheme' => 'required',
-// // 			'roadtaxexpirydate' => 'required',
-//             'country' => 'required',
-//             'contact_number' => 'required|numeric',
-//             'email' => 'required',
-//             'vehicle_number' => 'required',
-//             'nric' => 'required',
-//             'price' => 'required',
-//             'mileage' => 'required',
-//             'specification' => 'required|array|min:1',
-//             'additional_accessories' => 'required|array|min:1',
-//             // 'upload_file' => 'required',
-//             'terms_condition' => 'required',
-//             // 'vehicle_make' => 'required',
-//             // 'vehicle_model' => 'required',
-//             // 'primary_color' => 'required',
-//             // 'year_of_manufacture' => 'required',
-//             // 'orig_reg_date' => 'required',
-//             // 'engine_capacity' => 'required',
-//         	], $messages);
-//         }else{
-// 			$request->validate([
-//             'contact_number' => 'required|numeric',
-//             'email' => 'required',
-//             'price' => 'required',
-//             'specification.*' => 'required',
-//             'additional_accessories.*' => 'required',
-//             'upload_file' => 'required',
-//             'terms_condition' => 'required',
-
-//         	], $messages);
-// 		}
-
-		// if (!$responseData->success) {
-		// 	return redirect()->back()->withInput()->with('error', __('constant.CAPTCHA_ERROR'));
-		// }
-		//dd($request->all());
-		$vehicleMain = new VehicleMain();
-		$vehicleMain->seller_id = Auth::user()->id;
-		$vehicleMain->full_name = $request->full_name;
-		$vehicleMain->email = $request->email;
-		$vehicleMain->country = $request->country;
-		$vehicleMain->gender = $request->gender; // New
-		$vehicleMain->contact_number = $request->contact_number;
-		$vehicleMain->specification = json_encode($request->specification);
-		$vehicleMain->additional_accessories = json_encode($request->additional_accessories);
-		$vehicleMain->seller_comment = $request->seller_comment;
-        $vehicleMain->status = 1;
-		$vehicleMain->save();
-
-		$VehicleDetail = new VehicleDetail();
-		$VehicleDetail->vehicle_id  = $vehicleMain->id;
-		$files = [];
-		if ($request->hasfile('upload_file')) {
-			foreach ($request->file('upload_file') as $file) {
-				$filename = time() . rand(1, 50) . '.' . $file->extension();
-				$filepath = 'storage/upload-file/';
-				Storage::putFileAs(
-					'public/upload-file',
-					$file,
-					$filename
-				);
-				$files[] = $filepath . $filename;
-			}
-		}
-        $VehicleDetail->vehicle_number  = $request->vehicle_number;
-        $VehicleDetail->coe_expiry_date  = date('Y-m-d', strtotime($request->coe_expiry_date));
-		$VehicleDetail->year_of_mfg  = $request->year_of_manufacture;
-		$VehicleDetail->first_reg_date  = date('Y-m-d', strtotime($request->first_reg_date));
-		$VehicleDetail->vehicle_type  = $request->vehicle_type;
-		$VehicleDetail->vehicle_make  = $request->vehicle_make;
-		$VehicleDetail->vehicle_model  = $request->vehicle_model;
-		$VehicleDetail->primary_color  = $request->primary_color;
-		$VehicleDetail->open_market_value  = str_replace(',','',$request->open_market_value);
-		$VehicleDetail->orig_reg_date  = date('Y-m-d', strtotime($request->orig_reg_date));
-		$VehicleDetail->no_of_transfers  = $request->no_of_transfer;
-		$VehicleDetail->min_parf_benefit  = str_replace(',','',$request->minimumparfbenefit);
-		$VehicleDetail->coe_category  = $request->coe_category;
-		$VehicleDetail->quota_premium  = str_replace(',','',$request->quota_premium);
-		$VehicleDetail->propellant  = $request->propellant;
-		$VehicleDetail->power_rate  = $request->power_rate;
-		$VehicleDetail->co2_emission_rate  = $request->vehicle_emission_rate;
-		$VehicleDetail->max_unladden_weight  = str_replace(',','',$request->max_weight);
-		$VehicleDetail->vehicle_scheme  = $request->vehicle_scheme;
-		$VehicleDetail->engine_cc  = $request->engine_capacity;
-		$VehicleDetail->road_tax_expiry_date  = date('Y-m-d', strtotime($request->roadtaxexpirydate));
-        $VehicleDetail->nric  = $request->nric;
-        $VehicleDetail->price  = str_replace(',','',$request->price);
-		$VehicleDetail->mileage  = str_replace(',','',$request->mileage);
-		$VehicleDetail->upload_file  = json_encode($files);
-		$VehicleDetail->save();
-
-        $message = $request->full_name . ' added a new car.';
-        $notification = new Notification();
-        $notification->insurance_id = NULL;
-        $notification->quotaton_id = NULL;
-        $notification->partner_id = Auth::user()->id;
-        $notification->message = $message;
-        $notification->link = 'https://www.diycars.com/admin/marketplace/'.$vehicleMain->id.'/edit';
-        $notification->status = 1;
-        $notification->save();
-
-        // EMAIL TO Admin
-		$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_ADVERTISE_CAR_TO_ADMIN'));
-		//dd($email_template);
-		if ($email_template) {
-			$data = [];
-
-			$data['email_sender_name'] =  $this->systemSetting()->email_sender_name;
-			// $data['from_email'] = $this->systemSetting()->from_email;
-			$data['from_email'] = $this->systemSetting()->from_email;
-			$data['cc_to_email'] = [];
-			$data['subject'] = $email_template->subject;
-			//dd($partners);
-
-				$url = url('admin/marketplace/' . $VehicleDetail->id . '/edit');
-				$link = '<a href="' . $url . '">' . $url . '</a>';
-
-				$data['email'] = [$this->systemSetting()->to_email];
-
-				$key = ['{{url}}'];
-				$value = [$link];
-				$newContent = str_replace($key, $value, $email_template->content);
-				$data['contents'] = $newContent;
-				//dd($data);
-
-				try {
-					SendEmail::dispatchNow($data);
-				} catch (Exception $exception) {
-					//dd($exception);
-				}
-		}
-
-		return redirect('thank-you')->with('success', 'Your car added successfully.');
-	}
-
-	public function quote_my_car_store(Request $request)
-	{
-	   // dd("test");
-		$system_settings = $this->system_settings;
-		$messages = [];
-// 		$messages['full_name.required'] = 'The name field is required.';
-// 		$messages['nric.required'] = 'The NRIC field is required.';
-
-        $messages['full_name.required'] = 'This field is required';
-		$messages['nric.required'] = 'This field is required';
-		$messages['country.required'] = 'This field is required';
-		$messages['contact_number.required'] = 'This field is required';
-		$messages['email.required'] = 'This field is required';
-		$messages['gender.required'] = 'This field is required';
-		$messages['vehicle_number.required'] = 'This field is required';
-		$messages['mileage.required'] = 'This field is required';
-		$messages['handing_over_date.required'] = 'This field is required';
-		$messages['terms_condition.required'] = 'This field is required';
-
-		$messages['vehicle_make.required'] = 'This field is required';
-		$messages['vehicle_model.required'] = 'This field is required';
-		$messages['primary_color.required'] = 'This field is required';
-		$messages['year_of_manufacture.required'] = 'This field is required';
-		$messages['open_market_value.required'] = 'This field is required';
-		$messages['orig_reg_date.required'] = 'This field is required';
-		$messages['first_reg_date.required'] = 'This field is required';
-		$messages['no_of_transfer.required'] = 'This field is required';
-		$messages['minimumparfbenefit.required'] = 'This field is required';
-		$messages['coe_expiry_date.required'] = 'This field is required';
-		$messages['coe_category.required'] = 'This field is required';
-		$messages['quota_premium.required'] = 'This field is required';
-		$messages['vehicle_type.required'] = 'This field is required';
-		$messages['propellant.required'] = 'This field is required';
-		$messages['engine_capacity.required'] = 'This field is required';
-		$messages['engine_no.required'] = 'This field is required';
-		$messages['chassis_no.required'] = 'This field is required';
-		$messages['max_unladen_weight.required'] = 'This field is required';
-		$messages['vehicle_scheme.required'] = 'This field is required';
-		$messages['roadtaxexpirydate.required'] = 'This field is required';
-
-		if (!Session::get('myinfoquotemycar')) {
-            $request->validate([
-            'full_name' => 'required',
-			'nric' => 'required',
-            'country' => 'required',
-            'contact_number' => 'required|numeric',
-            'email' => 'required',
-			'gender' => 'required',
-            'vehicle_number' => 'required',
-            'mileage' => 'required',
-			'handing_over_date' => 'required|date',
-			'terms_condition' => 'required',
-			// 'open_market_value' => 'required',
-			// 'orig_reg_date' => 'required',
-			// 'first_reg_date' => 'required',
-			// 'no_of_transfer' => 'required',
-			// 'minimumparfbenefit' => 'required',
-			// 'coe_expiry_date' => 'required',
-			// 'coe_category' => 'required',
-			// 'quota_premium' => 'required',
-			// 'vehicle_type' => 'required',
-			// 'propellant' => 'required',
-			// 'chassis_no' => 'required',
-			// 'max_unladen_weight' => 'required',
-			// 'vehicle_scheme' => 'required',
-			// 'roadtaxexpirydate' => 'required',
-
-
-            // 'upload_file' => 'required',
-
-            // 'vehicle_make' => 'required',
-            // 'vehicle_model' => 'required',
-            // 'primary_color' => 'required',
-            // 'year_of_manufacture' => 'required',
-            // 'engine_capacity' => 'required',
-            // 'engine_no' => 'required',
-        	], $messages);
-        }else{
-			$request->validate([
-            'full_name' => 'required',
-			'nric' => 'required',
-            'contact_number' => 'required|numeric',
-            'email' => 'required',
-			'vehicle_number' => 'required',
-			'gender' => 'required',
-			'vehicle_make' => 'required',
-			'vehicle_model' => 'required',
-			'primary_color' => 'required',
-			'year_of_manufacture' => 'required',
-			'open_market_value' => 'required',
-			'orig_reg_date' => 'required',
-			'first_reg_date' => 'required',
-			'no_of_transfer' => 'required',
-			'minimumparfbenefit' => 'required',
-			'coe_expiry_date' => 'required',
-			'coe_category' => 'required',
-			'quota_premium' => 'required',
-			'vehicle_type' => 'required',
-			'propellant' => 'required',
-			'engine_capacity' => 'required',
-			'engine_no' => 'required',
-			'chassis_no' => 'required',
-			'max_unladen_weight' => 'required',
-			'vehicle_scheme' => 'required',
-			'roadtaxexpirydate' => 'required',
-			'mileage' => 'required',
-            'handing_over_date' => 'required|date',
-            'terms_condition' => 'required',
-
-        	], $messages);
-		}
-
-// 		if (!Session::get('myinfoquotemycar')) {
-//             $request->validate([
-//             'full_name' => 'required',
-//             'country' => 'required',
-//             'contact_number' => 'required|numeric',
-//             'email' => 'required',
-//             'vehicle_number' => 'required',
-//             'nric' => 'required',
-// 			'gender' => 'required',
-// // 			'open_market_value' => 'required',
-// // 			'orig_reg_date' => 'required',
-// // 			'first_reg_date' => 'required',
-// // 			'no_of_transfer' => 'required',
-// // 			'minimumparfbenefit' => 'required',
-// // 			'coe_expiry_date' => 'required',
-// // 			'coe_category' => 'required',
-// // 			'quota_premium' => 'required',
-// // 			'vehicle_type' => 'required',
-// // 			'propellant' => 'required',
-// // 			'chassis_no' => 'required',
-// // 			'max_unladen_weight' => 'required',
-// // 			'vehicle_scheme' => 'required',
-// // 			'roadtaxexpirydate' => 'required',
-// 			'mileage' => 'required',
-//             'handing_over_date' => 'required|date',
-//             // 'upload_file' => 'required',
-//             'terms_condition' => 'required',
-//             // 'vehicle_make' => 'required',
-//             // 'vehicle_model' => 'required',
-//             // 'primary_color' => 'required',
-//             // 'year_of_manufacture' => 'required',
-//             // 'engine_capacity' => 'required',
-//             // 'engine_no' => 'required',
-//         	], $messages);
-//         }else{
-// 			$request->validate([
-//             'full_name' => 'required',
-//             'contact_number' => 'required|numeric',
-//             'email' => 'required',
-//             'nric' => 'required',
-//             'mileage' => 'required',
-//             'handing_over_date' => 'required|date',
-//             'terms_condition' => 'required',
-
-//         	], $messages);
-// 		}
-
-		//dd($request->all());
-		if($request->gender == 'MALE' || $request->gender == 'Male'){
-			$gender = 1;
-		}elseif($request->gender == 'FEMALE' || $request->gender == 'Female'){
-			$gender = 2;
-		}else{
-			$gender = $request->gender ?? 0;
-		}
-		$quote_request = new QuoteRequest;
-        $quote_request->seller_id = $this->user->id;
-        $quote_request->full_name = $request->full_name;
-        $quote_request->email = $request->email;
-        $quote_request->country = $request->country;
-        $quote_request->contact_number = $request->contact_number;
-        $quote_request->gender = $gender;
-        $quote_request->seller_remarks = $request->seller_remarks;
-        $quote_request->handing_over_date = date('Y-m-d', strtotime($request->handing_over_date)) ?? null;
-        $quote_request->vehicle_number = $request->vehicle_number;
-
-        $quote_request->vehicle_make = $request->vehicle_make; // New
-		$quote_request->vehicle_model = $request->vehicle_model; // New
-		$quote_request->primary_color = $request->primary_color; // New
-		$quote_request->year_of_manufacture = $request->year_of_manufacture; // New
-		$quote_request->open_market_value = str_replace(',','',$request->open_market_value); // New
-		$quote_request->orig_reg_date = date('Y-m-d', strtotime($request->orig_reg_date)); // New
-		$quote_request->first_reg_date = date('Y-m-d', strtotime($request->first_reg_date)); // New
-		$quote_request->no_of_transfer = $request->no_of_transfer; // New
-		$quote_request->minimumparfbenefit = str_replace(',','',$request->minimumparfbenefit); // New
-		$quote_request->coe_expiry_date = date('Y-m-d', strtotime($request->coe_expiry_date)); // New
-		$quote_request->coe_category = $request->coe_category; // New
-		$quote_request->quota_premium = str_replace(',','',$request->quota_premium); // New
-		$quote_request->vehicle_type = $request->vehicle_type; // New
-		$quote_request->propellant = $request->propellant; // New
-		$quote_request->engine_capacity = str_replace(',','',$request->engine_capacity); // New
-		$quote_request->engine_no = $request->engine_no; // New
-		$quote_request->chassis_no = $request->chassis_no; // New
-		$quote_request->max_unladen_weight = str_replace(',','',$request->max_unladen_weight); // New
-		$quote_request->vehicle_scheme = $request->vehicle_scheme; // New
-		$quote_request->roadtaxexpirydate = date('Y-m-d', strtotime($request->roadtaxexpirydate)); // New
-
-        $quote_request->nric = $request->nric;
-        $quote_request->mileage = str_replace(',','',$request->mileage);
-        $files = [];
-        if($request->hasfile('upload_file'))
-        {
-            foreach($request->file('upload_file') as $file)
-            {
-                $filename = time().rand(1,50).'.'.$file->extension();
-                $filepath = 'storage/upload-file/';
-							Storage::putFileAs(
-								'public/upload-file',
-								$file,
-								$filename
-							);
-                $files[] = $filepath.$filename;
-            }
-        }
-        $quote_request->upload_file  = json_encode($files);
-		$quote_request->status = 1;
-        $quote_request->save();
-
-        $message = 'New Quote Request by '.$request->full_name;
-		$notification = new Notification();
-		$notification->insurance_id = NULL;
-		$notification->quotaton_id = NULL;
-		$notification->partner_id = Auth::user()->id;
-		$notification->message = $message;
-		$notification->link = 'https://www.diycars.com/admin/quoterequest/'.$quote_request->id.'/edit';
-		$notification->status = 1;
-		$notification->save();
-
-			// EMAIL TO Admin
-		$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_QUOTE_MY_CAR_TO_ADMIN'));
-		if ($email_template) {
-			$data = [];
-
-			$data['email_sender_name'] =  $this->systemSetting()->email_sender_name;
-			// $data['from_email'] = $this->systemSetting()->from_email;
-			$data['from_email'] = $this->systemSetting()->from_email;
-			$data['cc_to_email'] = [];
-			$data['subject'] = $email_template->subject;
-			//dd($partners);
-
-				$url = url('admin/quoterequest/' . $quote_request->id . '/edit');
-				$link = '<a href="' . $url . '">' . $url . '</a>';
-
-				$data['email'] = [$this->systemSetting()->to_email];
-
-				$key = ['{{url}}'];
-				$value = [$link];
-				$newContent = str_replace($key, $value, $email_template->content);
-				$data['contents'] = $newContent;
-
-				try {
-				    // $mail = Mail::to($this->systemSetting()->from_email)->send(new EmailNotification($data));
-					SendEmail::dispatchNow($data);
-				} catch (Exception $exception) {
-				// 	dd($exception);
-				}
-		}
-
-
-
-		return redirect('thank-you-quote-my-car')->with('success', 'Your quote request has been submitted successfully.');
-	}
 
 	public function change_password($slug = 'my-profile')
 	{
