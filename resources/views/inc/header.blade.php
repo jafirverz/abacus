@@ -1,6 +1,6 @@
 <header class="header-container">
     <div class="logo">
-        <a href="index.html">
+        <a href="{{ url('login') }}">
             <img src="{{asset('images/3g-abacus-logo.png')}}" alt="3G Abacus" />
         </a>
     </div>
