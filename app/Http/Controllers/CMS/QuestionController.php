@@ -184,6 +184,11 @@ class QuestionController extends Controller
             $json['input_1']=$input_1_old;
             $json['input_2']=$request->input_2;
         }
+        elseif($request->question_type==4)
+        {
+            $json['input_1']=$request->input_1;
+            $json['input_2']=$request->input_2;
+        }
 
         //dd($question);
         $messages = [];
