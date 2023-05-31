@@ -35,7 +35,7 @@ class InstructorAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::orderBy('id','desc')->paginate($this->pagination);
+        $customer = User::where('user_type_id',5)->orderBy('id','desc')->paginate($this->pagination);
 
         return view('admin.account.instructor.index', compact('title', 'customer'));
     }
@@ -65,8 +65,6 @@ class InstructorAccountController extends Controller
             'name' => 'required|string',
             'password'  =>  'required|min:8',
             'country_code' => 'required',
-            'user_type_id' => 'required',
-            'instructor_id' => 'required',
             'dob' => 'required',
             'mobile' => 'required|string',
             'gender' => 'required|string',
@@ -79,10 +77,8 @@ class InstructorAccountController extends Controller
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
         $messages['country_code.required'] = 'The country code field is required.';
-        $messages['user_type_id.required'] = 'User type field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
-        $messages['instructor_id.required'] = 'The instructor field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
         $acName = '';
@@ -97,7 +93,7 @@ class InstructorAccountController extends Controller
         $customer->name = $request->name;
         $customer->account_id = $accountId;
         $customer->instructor_id = $request->instructor_id??NULL;
-        $customer->user_type_id = $request->user_type_id??NULL;
+        $customer->user_type_id = 5;
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
@@ -157,22 +153,19 @@ class InstructorAccountController extends Controller
             'name' => 'required|string',
             'password'  =>  'nullable|min:8',
             'country_code' => 'required',
-            'user_type_id' => 'required',
             'dob' => 'required',
-            'instructor_id' => 'required',
             'mobile' => 'required|string',
             'gender' => 'required|string',
         ];
+
         $messages = [];
         $messages['email.required'] = 'The email address field is required.';
         $messages['name.required'] = 'The name field is required.';
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
         $messages['country_code.required'] = 'The country code field is required.';
-        $messages['user_type_id.required'] = 'User type field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
-        $messages['instructor_id.required'] = 'The instructor field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
 
@@ -183,7 +176,7 @@ class InstructorAccountController extends Controller
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
-        $customer->user_type_id = $request->user_type_id??NULL;
+        //$customer->user_type_id = 5;
         $customer->country_code = $request->country_code??NULL;
         $customer->mobile = $request->mobile??NULL;
 		$customer->approve_status = $request->status??NULL;
@@ -215,7 +208,7 @@ class InstructorAccountController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
-        $customer = User::join('user_types','users.user_type_id','user_types.id')->select('users.*')->search($search_term)->paginate($this->pagination);
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->where('user_type_id',5)->select('users.*')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
             $customer->appends('search', $search_term);
         }
