@@ -73,6 +73,18 @@ class PagesFrontController extends Controller
         return view('home', compact("page"));
     }
 
+    public function instructor($slug = null){
+        // dd($slug);
+        $page = get_page_by_slug($slug);
+        $userType = array(1,2,3,4);
+        if (!$page || in_array(Auth::user()->user_type_id,$userType) ) {
+            return abort(404);
+        }else{
+
+        }
+        
+    }
+
     public function pages($slug, $reference = null, $id = null, Request $request)
     {
         session()->forget('previous_url');

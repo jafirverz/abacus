@@ -53,6 +53,7 @@ Route::post('/forget-password/email', 'Auth\ForgotPasswordController@sendResetLi
 //Route::get('/reset-password/{token}', 'Auth\ResetPasswordController@showResetForm');
 
 Route::get('/home', 'PagesFrontController@index')->name('home');
+Route::get('/instructor/{slug?}', 'PagesFrontController@instructor')->name('instructor.overview');
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');

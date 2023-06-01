@@ -96,8 +96,15 @@ class LoginController extends Controller
 
         $credentials = $request->only('account_id', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('home')
+            $userType = array(1,2,3,4);
+            if(in_array(Auth::user()->user_type_id,$userType)){
+                return redirect()->intended('home')
                 ->withSuccess('Signed in');
+            }else{
+                return redirect()->intended('instructor/overview')
+                ->withSuccess('Signed in');
+            }
+            
         }
 
         return redirect("login")->withError('Login details are not valid');
