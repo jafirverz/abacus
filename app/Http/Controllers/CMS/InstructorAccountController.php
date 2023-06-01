@@ -115,6 +115,65 @@ class InstructorAccountController extends Controller
         $customer->created_at = Carbon::now();
         $customer->save();
 
+        if($request->gender == 1){
+            $gender = 'Male';
+        }else{
+            $gender = 'Female';
+        }
+
+        //			Admin email for new student registration
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
+            $admins = Admin::get();
+
+            if ($email_template) {
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
+
+            //			Instructor email for new student registration
+        $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REGISTRATION'));
+
+        if ($email_template) {
+            $data = [];
+                $data['email_sender_name'] = systemSetting()->email_sender_name;
+                $data['from_email'] = systemSetting()->from_email;
+                $data['to_email'] = [$instructor->email];
+                $data['cc_to_email'] = [];
+                $data['subject'] = $email_template->subject;
+
+                $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+
+                $newContents = str_replace($key, $value, $email_template->content);
+
+                $data['contents'] = $newContents;
+                try {
+                    $mail = Mail::to($instructor->email)->send(new EmailNotification($data));
+                } catch (Exception $exception) {
+                    dd($exception);
+                }
+
+        }
+
 
         return redirect()->route('instructor-account.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
