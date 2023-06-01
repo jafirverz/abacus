@@ -807,5 +807,25 @@ if (!function_exists('getPageList')) {
         }
     }
 
+    /**
+     * fileReadText(array $file_format, string $filesize, string $pixel_size)
+     */
+    function fileReadText($file_format = null, $filesize = null, $pixel_size = null)
+    {
+        $file_format = implode(', ', $file_format);
+
+        $full_text = "";
+        if ($file_format) {
+            $full_text .= 'only ' . $file_format . ' supported file format ';
+        }
+        if ($filesize) {
+            $full_text .= 'upto ' . $filesize . '. ';
+        }
+        if ($pixel_size) {
+            $full_text .= 'Upload ' . $pixel_size . ' pixel size for better viewing experience.';
+        }
+        return ucFirst($full_text);
+    }
+
 
 }
