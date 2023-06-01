@@ -94,96 +94,9 @@ class PagesFrontController extends Controller
         if (!$page) {
             return abort(404);
         }
-        if (in_array($page->id, [__('constant.ABOUT_PAGE_ID')])) {
-            return view('about', compact('page', 'system_settings', 'smart_blocks'));
-        } elseif (in_array($page->id, [__('constant.CONTACT_PAGE_ID')])) {
-            return view('contact_us', compact('page', 'system_settings', 'smart_blocks'));
-        } elseif (in_array($page->id, [__('constant.THANK_YOU_PAGE_ID'), __('constant.TESTIMONIAL_THANK_YOU_PAGE_ID')])) {
-            return view('thank_you', compact('page', 'system_settings', 'smart_blocks'));
-        }
-		elseif (in_array($page->id, [__('constant.ONE_MOTORING_PAGE_ID')])) {
-			$categories = Category::OrderBy('view_order','asc')->get();
-			return view('one-motoring', compact('page', 'system_settings', 'smart_blocks', 'categories'));
-        } elseif (in_array($page->id, [__('constant.FAQ_PAGE_ID')])) {
-            $faqs = Faq::where('status', 1)->orderBy('view_order', 'asc')->get();
-            return view('faq', compact('page', 'system_settings', 'smart_blocks', 'faqs'));
-        }
-        elseif(in_array($page->id, [__('constant.LOAN_PAGE_ID')]))
-        {
-            $request->session()->put('previous_url', url()->current());
-            return view('loan', compact('page'));
-        }
-        elseif(in_array($page->id, [__('constant.FORMS_DETAIL_PAGE_ID')]))
-        {
-            $request->session()->put('previous_url', url()->current());
-            if(Auth::check())
-            {
-                $system_settings = $this->system_settings;
-                if(strpos(url()->current(), 'view')!==false)
-                {
-                    $seller_particular = SellerParticular::where('id', $id)->where('created_at', date('Y-m-d H:i:s', $reference))->first();
-
-
-                    if(!$seller_particular)
-                    {
-                        if(!Auth::check())
-                        {
-                            return $this->loginRedirect();
-                        }
-                        else
-                        {
-                            return abort(403, "Unauthorized access.");
-                        }
-                    }
-                    if( $request->segment(1) == 'forms' && $request->segment(2) == 'form-details' && empty($request->segment(4))){
-                        $carId = $request->segment(3);
-                    }else{
-                        $carId = '';
-                    }
-                    if(!empty($carId)){
-                        $buyer_particular = BuyerParticular::where('seller_particular_id', $seller_particular->id)->where('vehicle_main_id', $carId)->first();
-                        $buyer_case = SellerParticular::where('id', $id)->where('created_at', date('Y-m-d H:i:s', $reference))->where('buyer_email', Auth::user()->email)->first();
-
-                        return view('forms.form-details-view', compact('page', 'seller_particular', 'buyer_particular', 'buyer_case', 'reference', 'id', 'carId'));
-                    }else{
-                        $buyer_particular = BuyerParticular::where('seller_particular_id', $seller_particular->id)->first();
-                        $buyer_case = SellerParticular::where('id', $id)->where('created_at', date('Y-m-d H:i:s', $reference))->where('buyer_email', Auth::user()->email)->first();
-
-                        return view('forms.form-details-view', compact('page', 'seller_particular', 'buyer_particular', 'buyer_case', 'reference', 'id'));
-                    }
-
-                }
-                else
-                {
-                    if( $request->segment(1) == 'forms' && $request->segment(2) == 'form-details' && empty($request->segment(4))){
-                        $carId = $request->segment(3);
-                        if(!Session::get('carId')){
-                            Session::put('carId', $carId);
-                        }else{
-                            Session::forget('carId');
-                            Session::put('carId', $carId);
-                        }
-                    }else{
-                        $carId = '';
-                    }
-                    if(empty($carId)){
-                        return view('forms.form-details', compact('page', 'system_settings'));
-                    }else{
-                        return view('forms.form-details', compact('page', 'system_settings', 'carId'));
-                    }
-
-                }
-            }
-            else
-            {
-                return $this->loginRedirect();
-            }
-        }
-        elseif(in_array($page->id, [__('constant.FORMS_PAGE_ID')]))
-        {
-            $request->session()->put('previous_url', url('forms/form-details'));
-            return view('forms.index', compact('page', 'system_settings', 'smart_blocks'));
-        }
+        
+        
+        
         return view('pages', compact('page', 'system_settings', 'smart_blocks'));
     }
 
