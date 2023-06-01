@@ -1,59 +1,15 @@
 @extends('layouts.app')
 @section('content')
-<main class="main-wrap">	
+<main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
             <div class="menu-aside">
-                <h3>My Dashboard</h3>
-                <ul>
-                    <li class="active">
-                        <a href="be-teacher-dashboard-overview.html">
-                            <span><img src="images/tempt/ico-overview.png" alt="Overview icon" /></span>
-                            <strong>Overview</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="be-teacher-dashboard-profile.html">
-                            <span><img src="images/tempt/ico-profile.png" alt="Profile icon" /></span>
-                            <strong>My Profile</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="be-teacher-dashboard-students.html">
-                            <span><img src="images/tempt/ico-students.png" alt="Students icon" /></span>
-                            <strong>My Students</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="be-teacher-dashboard-teaching.html">
-                            <span><img src="images/tempt/ico-teaching.png" alt="Teaching icon" /></span>
-                            <strong>Teaching Materials</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="be-teacher-dashboard-grading.html">
-                            <span><img src="images/tempt/ico-grading.png" alt="Grading icon" /></span>
-                            <strong>Grading Examinations</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="be-teacher-dashboard-competitions.html">
-                            <span><img src="images/tempt/ico-competitions.png" alt="Competitions icon" /></span>
-                            <strong>Competitions</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="be-teacher-dashboard-allocation.html">
-                            <span><img src="images/tempt/ico-allocation.png" alt="Allocation icon" /></span>
-                            <strong>Test and Survey Allocation</strong>
-                        </a>
-                    </li>
-                </ul>
+                @include('inc.intructor-account-sidebar')
             </div>
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
-            <div class="tempt-2-content">	
-                <h1 class="title-3">Good Morning Teacher Christine,</h1>
+            <div class="tempt-2-content">
+                <h1 class="title-3">Good Morning Teacher {{Auth::user()->name}},</h1>
                 <div class="box-1">
                     <h2 class="title-2">Announcements</h2>
                     <div class="accordion acctype mt-20">
@@ -67,10 +23,8 @@
                                         <img src="images/tempt/img-2.jpg" alt="" />
                                     </figure>
                                     <article class="document">
-                                        <h3>Lorem ipsum dolor sit amet, consetetur sadipscing elitr.</h3>
-                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                                        <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
-                                        <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea</p>
+                                        <h3>{{ $page->title }}</h3>
+                                        {!! $page->content !!}
                                     </article>
                                     <hr/>
                                     <div>Attachments:</div>
@@ -165,7 +119,7 @@
                 </div>
             </div>
         </div>
-    </div>	
+    </div>
 </main>
-   
+
 @endsection

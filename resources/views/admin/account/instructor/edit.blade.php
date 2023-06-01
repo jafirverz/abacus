@@ -52,16 +52,31 @@
                                     </span>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="">Phone</label>
-                                    <input type="text" name="mobile" class="form-control"
-                                        value="{{ old('mobile', $customer->mobile) }}">
-                                    @if ($errors->has('mobile'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('mobile') }}</strong>
-                                    </span>
-                                    @endif
+                                    <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="text" name="country_code_phone" class="form-control"
+                                                    value="{{ old('country_code_phone', $customer->country_code_phone) }}">
+                                                @if ($errors->has('country_code_phone'))
+                                                <span class="text-danger d-block">
+                                                    <strong>{{ $errors->first('country_code_phone') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-9">
+                                                    <input type="text" name="mobile" class="form-control"
+                                                        value="{{ old('mobile', $customer->mobile) }}">
+                                                    @if ($errors->has('mobile'))
+                                                    <span class="text-danger d-block">
+                                                        <strong>{{ $errors->first('mobile') }}</strong>
+                                                    </span>
+                                                    @endif
+                                            </div>
+                                    </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="">Gender</label>
                                     <select name="gender" class="form-control" tabindex="-98">
@@ -99,6 +114,52 @@
                                     @if ($errors->has('country_code'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('country_code') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Year Attained Qualified Instructor Certification</label>
+                                    <input type="text" name="year_attained_qualified_instructor" class="form-control" value="{{ old('year_attained_qualified_instructor', $customer->year_attained_qualified_instructor) }}">
+                                    @if ($errors->has('year_attained_qualified_instructor'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('year_attained_qualified_instructor') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Year Attained Senior Instructor Certification</label>
+                                    <input type="text" name="year_attained_senior_instructor" class="form-control" value="{{ old('year_attained_senior_instructor', $customer->year_attained_senior_instructor) }}">
+                                    @if ($errors->has('year_attained_senior_instructor'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('year_attained_senior_instructor') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Highest Abacus Grade Attained</label>
+                                    <input type="text" name="highest_abacus_grade" class="form-control" value="{{ old('highest_abacus_grade', $customer->highest_abacus_grade) }}">
+                                    @if ($errors->has('highest_abacus_grade'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('highest_abacus_grade') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Highest Mental Grade Attained</label>
+                                    <input type="text" name="highest_mental_grade" class="form-control" value="{{ old('highest_mental_grade', $customer->highest_mental_grade) }}">
+                                    @if ($errors->has('highest_mental_grade'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('highest_mental_grade') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Awards</label>
+                                    <textarea name="awards" class="form-control">{{ old('awards', $customer->awards) }}</textarea>
+                                    @if ($errors->has('awards'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('awards') }}</strong>
                                     </span>
                                     @endif
                                 </div>
