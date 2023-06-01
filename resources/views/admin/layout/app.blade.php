@@ -55,7 +55,7 @@
 <script src="{{ mix('stisla-theme/js/custom.js') }}"></script>
 <script type="text/javascript">
     $(function () {
-        $('.datepicker').datetimepicker({
+        $('.datepicker1').datetimepicker({
             format: 'YYYY-MM-DD',
         });
     });
