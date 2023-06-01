@@ -1,0 +1,14 @@
+Header always edit Set-Cookie (.*) "$1; HTTPOnly"
+Header onsuccess edit Set-Cookie (.*) "$1; HTTPOnly"
+Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure;SameSite=strict
+Header set Set-Cookie HttpOnly;Secure 
+Header set X-XSS-Protection "1; mode=block" 
+Header set X-Content-Type-Options "nosniff"
+Header always append X-Frame-Options SAMEORIGIN
+Header set Content-Security-Policy "default-src 'self'"
+Header set Content-Security-Policy "frame-ancestors 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; img-src 'self' data: https: http:; style-src 'self' 'unsafe-inline' https: data:; font-src 'self' data: https:; frame-src 'self' https://forms.office.com https://*.google.com https://*.countryflags.io https://player.vimeo.com https://www.linkedin.com https://*.twitter.com https://*.facebook.com https://*.youtube.com  https://*.youtube-nocookie.com https://geo.wpforms.com https://ekr.zdassets.com https://sato-globalhelp.zendesk.com https://api.smooch.io wss://api.smooch.io https://*.googletagmanager.com https://stats.g.doubleclick.net; connect-src 'self' https://*.google.com https://*.googleapis.com https://*.google-analytics.com https://player.vimeo.com https://*.twitter.com https://*.facebook.com https://*.youtube.com  https://*.youtube-nocookie.com https://geo.wpforms.com https://ekr.zdassets.com https://sato-globalhelp.zendesk.com https://*.countryflags.io https://api.smooch.io wss://api.smooch.io https://stats.g.doubleclick.net https://forms.office.com; object-src 'self';"
+Header set Strict-Transport-Security "max-age=31536000"
+Header always add Access-Control-Allow-Credentials  'true'
+Header always add Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+Header always add Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-skip-cache, x-cache-tag, x-cache-seconds"

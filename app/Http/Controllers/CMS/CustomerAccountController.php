@@ -71,7 +71,8 @@ class CustomerAccountController extends Controller
             'user_type_id' => 'required',
             'instructor_id' => 'required',
             'dob' => 'required',
-            'mobile' => 'required|string',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
             'status' => 'required',
         ];
@@ -81,6 +82,7 @@ class CustomerAccountController extends Controller
         $messages['name.required'] = 'The name field is required.';
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
         $messages['country_code.required'] = 'The country code field is required.';
         $messages['user_type_id.required'] = 'User type field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
@@ -106,6 +108,7 @@ class CustomerAccountController extends Controller
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
         $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
 		$customer->approve_status = $request->status??NULL;
         if (!is_null($request->password)) {
@@ -162,7 +165,8 @@ class CustomerAccountController extends Controller
             'user_type_id' => 'required',
             'dob' => 'required',
             'instructor_id' => 'required',
-            'mobile' => 'required|string',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
         ];
         $messages = [];
@@ -170,6 +174,7 @@ class CustomerAccountController extends Controller
         $messages['name.required'] = 'The name field is required.';
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
         $messages['country_code.required'] = 'The country code field is required.';
         $messages['user_type_id.required'] = 'User type field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
@@ -187,6 +192,7 @@ class CustomerAccountController extends Controller
         $customer->gender = $request->gender??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
         $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
 		$customer->approve_status = $request->status??NULL;
         if (!is_null($request->password)) {

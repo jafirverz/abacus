@@ -59,7 +59,6 @@ class ProfileController extends Controller
 			return abort(404);
 		}
 
-		//dd($user);
 
 		return view('account.instructor-profile', compact("page", "user"));
 	}
@@ -79,7 +78,7 @@ class ProfileController extends Controller
 			return abort(404);
 		}
 
-		//dd($user);
+		dd($user);
 
 		return view('account.overview', compact("page", "user"));
 	}

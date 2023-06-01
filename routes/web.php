@@ -62,8 +62,7 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
-Route::get('intructor-profile', 'ProfileController@instructor')->name('intructor-profile');
-Route::get('overview', 'ProfileController@overview')->name('overview');
+Route::get('instructor-profile', 'ProfileController@instructor')->name('instructor-profile');
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
 
 

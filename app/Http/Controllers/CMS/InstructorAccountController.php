@@ -66,7 +66,8 @@ class InstructorAccountController extends Controller
             'password'  =>  'required|min:8',
             'country_code' => 'required',
             'dob' => 'required',
-            'mobile' => 'required|string',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
             'status' => 'required',
         ];
@@ -76,6 +77,7 @@ class InstructorAccountController extends Controller
         $messages['name.required'] = 'The name field is required.';
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
         $messages['country_code.required'] = 'The country code field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
@@ -97,9 +99,15 @@ class InstructorAccountController extends Controller
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
+        $customer->year_attained_qualified_instructor = $request->year_attained_qualified_instructor??NULL;
+        $customer->year_attained_senior_instructor = $request->year_attained_senior_instructor??NULL;
+        $customer->highest_abacus_grade = $request->highest_abacus_grade??NULL;
+        $customer->highest_mental_grade = $request->highest_mental_grade??NULL;
+        $customer->awards = $request->awards??NULL;
         $customer->gender = $request->gender??NULL;
         $customer->country_code = $request->country_code??NULL;
         $customer->mobile = $request->mobile??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
 		$customer->approve_status = $request->status??NULL;
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
@@ -154,7 +162,8 @@ class InstructorAccountController extends Controller
             'password'  =>  'nullable|min:8',
             'country_code' => 'required',
             'dob' => 'required',
-            'mobile' => 'required|string',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
         ];
 
@@ -163,6 +172,7 @@ class InstructorAccountController extends Controller
         $messages['name.required'] = 'The name field is required.';
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
         $messages['country_code.required'] = 'The country code field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
@@ -175,9 +185,15 @@ class InstructorAccountController extends Controller
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
+        $customer->year_attained_qualified_instructor = $request->year_attained_qualified_instructor??NULL;
+        $customer->year_attained_senior_instructor = $request->year_attained_senior_instructor??NULL;
+        $customer->highest_abacus_grade = $request->highest_abacus_grade??NULL;
+        $customer->highest_mental_grade = $request->highest_mental_grade??NULL;
+        $customer->awards = $request->awards??NULL;
         $customer->gender = $request->gender??NULL;
         //$customer->user_type_id = 5;
         $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
 		$customer->approve_status = $request->status??NULL;
         if (!is_null($request->password)) {

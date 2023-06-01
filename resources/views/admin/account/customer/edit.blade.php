@@ -54,13 +54,26 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Phone</label>
-                                    <input type="text" name="mobile" class="form-control"
-                                        value="{{ old('mobile', $customer->mobile) }}">
-                                    @if ($errors->has('mobile'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('mobile') }}</strong>
-                                    </span>
-                                    @endif
+                                    <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="text" name="country_code_phone" class="form-control"
+                                                    value="{{ old('country_code_phone', $customer->country_code_phone) }}">
+                                                @if ($errors->has('country_code_phone'))
+                                                <span class="text-danger d-block">
+                                                    <strong>{{ $errors->first('country_code_phone') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-9">
+                                                    <input type="text" name="mobile" class="form-control"
+                                                        value="{{ old('mobile', $customer->mobile) }}">
+                                                    @if ($errors->has('mobile'))
+                                                    <span class="text-danger d-block">
+                                                        <strong>{{ $errors->first('mobile') }}</strong>
+                                                    </span>
+                                                    @endif
+                                            </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Gender</label>
