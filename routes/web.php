@@ -173,8 +173,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/system-setting/edit/{id}', 'CMS\SystemSettingController@edit');
     Route::post('/system-setting/update/{id}', 'CMS\SystemSettingController@update');
     Route::get('/system-setting/destroy/{id}', 'CMS\SystemSettingController@destroy');
+
     /*end filter module backend*/
-    Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed');
+    Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed')->name('access-not-allowed');
     Route::get('/roles-and-permission', 'AdminAuth\Account\PermissionController@index');
     Route::get('/roles-and-permission/create', 'AdminAuth\Account\PermissionController@create');
     Route::post('/roles-and-permission/store', 'AdminAuth\Account\PermissionController@store');

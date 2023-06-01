@@ -18,13 +18,22 @@
                     <form name="filter" method="post" action="{{ url('/admin/roles/store')}}">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="box-body">
-                        <div class="form-group @if($errors->first('name')) has-error @endif">
+                        <div class="form-group @if($errors->first('firstname')) has-error @endif">
                             <label>
-                                Name
+                               First Name
                             </label>
-                            <input class="form-control" name="name" placeholder="Enter name" type="text"
+                            <input class="form-control" name="firstname" placeholder="Enter first name" type="text"
                                 value="{{  old('name') }}">
-                            <span class="help-block">@if($errors->first('name')) {{ $errors->first('name') }}
+                            <span class="help-block">@if($errors->first('firstname')) {{ $errors->first('firstname') }}
+                                @endif</span>
+                        </div>
+                        <div class="form-group @if($errors->first('lastname')) has-error @endif">
+                            <label>
+                               Last Name
+                            </label>
+                            <input class="form-control" name="lastname" placeholder="Enter last name" type="text"
+                                value="{{  old('lastname') }}">
+                            <span class="help-block">@if($errors->first('lastname')) {{ $errors->first('lastname') }}
                                 @endif</span>
                         </div>
                         <div class="form-group @if($errors->first('email')) has-error @endif">

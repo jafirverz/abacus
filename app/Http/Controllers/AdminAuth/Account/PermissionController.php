@@ -177,14 +177,16 @@ class PermissionController extends Controller
     {
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $request->validate([
-            'name'  =>  'required',
+            'firstname'  =>  'required',
+            'lastname'  =>  'required',
             'email' =>  'required|email|unique:admins',
             'password'  =>  'required|min:8',
             'admin_role'    =>  'required',
         ]);
 
         $admins = new Admin;
-        $admins->name   =   $request->name;
+        $admins->firstname   =   $request->firstname;
+        $admins->lastname   =   $request->lastname;
         $admins->email = $request->email;
         $admins->password = Hash::make($request->password);
         $admins->admin_role = $request->admin_role;
@@ -208,14 +210,16 @@ class PermissionController extends Controller
     {
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $request->validate([
-            'name'  =>  'required',
+            'firstname'  =>  'required',
+            'lastname'  =>  'required',
             'email' =>  'required|email|unique:admins,email,'.$id.',id',
             'password'  =>  'nullable|min:8',
             'admin_role'    =>  'required',
         ]);
 
         $admins = Admin::find($id);
-        $admins->name   =   $request->name;
+        $admins->firstname   =   $request->firstname;
+        $admins->lastname   =   $request->lastname;
         $admins->email = $request->email;
         if($request->password)
         {
