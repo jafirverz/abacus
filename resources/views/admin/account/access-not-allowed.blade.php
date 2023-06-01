@@ -1,17 +1,17 @@
-@extends('admin.layout.dashboard')
+@extends('admin.layout.app')
 
 @section('content')
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="main-content">
+    <section class="section">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            {{ $page_title }}
-        </h1>
-        {{ Breadcrumbs::render('dashboard') }}
-    </section>
+    <div class="section-header">
+        <h1>{{ $page_title }}</h1>
+
+    @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_home')])
+    </div>
     <!-- Main content -->
-    <section class="content">
+    <div class="section-body">
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-md-12">
@@ -24,8 +24,9 @@
             </div>
         </div>
         <!-- /.row (main row) -->
-    </section>
+    </div>
     <!-- /.content -->
+  </section>
 </div>
 <!-- /.content-wrapper -->
 @endsection
