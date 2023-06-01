@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-6">
-                                                <textarea rows="10" cols="60" name="input_1[]">{{ $json_question->input_1[$i] }}</textarea>
+                                                <textarea rows="5" cols="40" name="input_1[]">{{ $json_question->input_1[$i] }}</textarea>
                                             </div>
                                             <div class="col-md-6">
                                                 <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
@@ -204,7 +204,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-6">
-                <textarea class="" rows="5" cols="60" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
             <div class="col-md-6">
                 <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">

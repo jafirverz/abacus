@@ -88,6 +88,29 @@
                                         </div>
                                     @php } @endphp
 
+                                    @elseif($question->question_type==4)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+                                    @php
+                                    $json_question=json_decode($question->json_question);
+                                    for($i=0;$i<count($json_question->input_1);$i++)
+                                    {
+    
+                                        @endphp
+    
+                                            <div class="form-group">
+                                                <div class="row" style="margin-bottom:30px;">
+                                                    <div class="col-md-4">
+                                                        <textarea readonly rows="5" cols="40">{{ $json_question->input_1[$i] }}</textarea>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                                    </div>
+                                                </div>
+    
+                                            </div>
+                                        @php } @endphp
+
                                 @endif
 
 
