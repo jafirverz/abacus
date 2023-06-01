@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Date Of Birth</label>
-                                    <input type="text" name="dob" class="form-control datepicker" value="{{ old('dob') }}">
+                                    <input type="text" name="dob" class="form-control datepicker1" value="{{ old('dob') }}">
                                     @if ($errors->has('dob'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('dob') }}</strong>

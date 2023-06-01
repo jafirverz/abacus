@@ -80,6 +80,7 @@ return [
     'SLUG_TRANSACTION_HISTORY' => 'transaction-history',
     'SLUG_NOTIFY_LIST' => 'notify-list',
     'SLUG_PREFERENCE' => 'preference',
+    'SLUG_OVERVIEW' => 'overview',
 
     //TYPE
     'PRICE_RANGE' => '1',
