@@ -86,7 +86,7 @@
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-6">
-                                            <textarea class="" rows="5" cols="60" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                                            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                         </div>
 
                                         <div class="col-md-6">
@@ -153,7 +153,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-6">
-                <textarea class="" rows="5" cols="60" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
             <div class="col-md-6">
                 <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
