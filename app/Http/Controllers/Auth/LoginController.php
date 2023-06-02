@@ -98,8 +98,14 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $userType = array(1,2,3,4);
             if(in_array(Auth::user()->user_type_id,$userType)){
-                return redirect()->intended('home')
+                if(Auth::user()->approve_status == 1){
+                    return redirect()->intended('home')
                 ->withSuccess('Signed in');
+                }else{
+                    Auth::logout();
+                    return redirect("login")->withError('User not approved');
+                }
+                
             }else{
                 return redirect()->intended('instructor/overview')
                 ->withSuccess('Signed in');

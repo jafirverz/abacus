@@ -37,7 +37,8 @@ class CustomerAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::orderBy('id','desc')->paginate($this->pagination);
+        $userType = array('1,2,3,4');
+        $customer = User::orderBy('id','desc')->whereIn('user_type_id', $userType)->paginate($this->pagination);
 
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
