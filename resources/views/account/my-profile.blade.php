@@ -3,29 +3,9 @@
     <main class="main-wrap">
         <div class="row sp-col-0 tempt-2">
             <div class="col-lg-3 sp-col tempt-2-aside">
-                <div class="menu-aside">
-                    <h3>My Dashboard</h3>
-                    <ul>
-                        <li>
-                            <a href="be-overview.html">
-                                <span><img src="images/tempt/ico-overview.png" alt="Overview icon" /></span>
-                                <strong>Overview</strong>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="be-achievements.html">
-                                <span><img src="images/tempt/ico-achievements.png" alt="Achievements icon" /></span>
-                                <strong>My Achievements</strong>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="{{url('my-profile')}}">
-                                <span><img src="images/tempt/ico-profile.png" alt="Profile icon" /></span>
-                                <strong>My Profile</strong>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @if(Auth::user()->user_type_id == 1)
+                    @include('inc.account-sidebar')
+                @endif
             </div>
             <div class="col-lg-9 sp-col tempt-2-inner">
                 <div class="tempt-2-content">
