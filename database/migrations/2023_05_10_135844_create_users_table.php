@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->unsignedBigInteger('level_id')->nullable();
-            $table->foreign('level_id')->references('id')->on('levels');
+            $table->string('level_id')->nullable();
+            // $table->foreign('level_id')->references('id')->on('levels');
             $table->unsignedBigInteger('instructor_id')->nullable();
             $table->foreign('instructor_id')->references('id')->on('instructors');
             $table->unsignedBigInteger('user_type_id')->nullable();
