@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\EmailNotification;
 use App\SellerParticular;
 use App\Jobs\SendEmail;
+use App\Level;
 use App\Traits\GetEmailTemplate;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -63,14 +64,16 @@ class PagesFrontController extends Controller
     {
         session()->forget('previous_url');
         $page = get_page_by_slug($slug);
-
         if (!$page) {
             return abort(404);
         }
+        $levels = Level::get();
+        $levelArray = json_decode(Auth::user()->level_id) ?? array();
+
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();
-        return view('home', compact("page"));
+        return view('home', compact("page", 'levels', 'levelArray'));
     }
 
     public function instructor($slug = null){

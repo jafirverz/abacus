@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('level.store') }}" method="post">
+                        <form action="{{ route('level.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -29,6 +29,20 @@
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                     @endif
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="title">Description</label>
+                                    <textarea class="form-control" name="description">{{ old('description') }}</textarea>
+                                </div>
+
+                                
+
+                                <div class="form-group">
+                                    <label for="title">Image</label>
+                                    <input type="file" name="image" class="form-control" >
+                                    
                                 </div>
 
 
