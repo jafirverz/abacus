@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Level;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use App\UserProfileUpdate;
@@ -51,8 +52,9 @@ class CustomerAccountController extends Controller
     public function create()
     {
         $title = $this->title;
+        $levels = Level::get();
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.account.customer.create', compact('title','instructors'));
+        return view('admin.account.customer.create', compact('title','instructors', 'levels'));
     }
 
     /**
@@ -63,7 +65,7 @@ class CustomerAccountController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        // dd($request);
         $fields = [
             'email' =>  'required|email|unique:users,email',
             'name' => 'required|string',
@@ -71,6 +73,7 @@ class CustomerAccountController extends Controller
             'country_code' => 'required',
             'user_type_id' => 'required',
             'instructor_id' => 'required',
+            'level' => 'required',
             'dob' => 'required',
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
@@ -105,6 +108,7 @@ class CustomerAccountController extends Controller
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
         $customer->dob = $request->dob??NULL;
+        $customer->level_id = json_encode($request->level);
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
@@ -205,8 +209,9 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
+        $levels = Level::get();
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.account.customer.edit', compact('title', 'customer','instructors'));
+        return view('admin.account.customer.edit', compact('title', 'customer','instructors', 'levels'));
     }
 
     /**
@@ -224,6 +229,7 @@ class CustomerAccountController extends Controller
             'password'  =>  'nullable|min:8',
             'country_code' => 'required',
             'user_type_id' => 'required',
+            'level' => 'required',
             'dob' => 'required',
             'instructor_id' => 'required',
             'country_code_phone' => 'required',
@@ -250,6 +256,7 @@ class CustomerAccountController extends Controller
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
+        $customer->level_id = json_encode($request->level);
         $customer->gender = $request->gender??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
         $customer->country_code = $request->country_code??NULL;

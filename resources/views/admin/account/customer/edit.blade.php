@@ -98,6 +98,25 @@
                                     </span>
                                     @endif
                                 </div>
+
+                                @php 
+                                $levelDecode = json_decode($customer->level_id);
+                                @endphp
+                                <div class="form-group">
+                                    <label for="">Level</label>
+                                    <select name="level" class="form-control" tabindex="-98" multiple>
+                                        @foreach($levels as $level)
+                                        <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @elseif(in_array($level->id, $levelDecode)) selected @endif>{{ $level->title }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('level'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('level') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 <div class="form-group">
                                     <label for="country_code">Country</label>
                                     <select name="country_code" class="form-control" id="country_code">
