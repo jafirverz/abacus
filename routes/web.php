@@ -59,6 +59,7 @@ Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 
 
+Route::get('/level/{slug?}', 'LevelController@index');
 
 // ************ ACCOUNT/PROFILE *******************/
 
