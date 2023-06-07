@@ -1,7 +1,7 @@
 <header class="header-container">
     <div class="logo">
         <a href="{{ url('home') }}">
-            <img src="images/3g-abacus-logo.png" alt="3G Abacus" />
+            <img src="{{ asset('images/3g-abacus-logo.png') }}" alt="3G Abacus" />
         </a>
     </div>
     <div class="actions">
