@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Grade;
+use App\GradeType;
 use App\User;
 use App\Traits\SystemSettingTrait;
 use Carbon\Carbon;
@@ -37,7 +38,6 @@ class GradeController extends Controller
     {
         $title = $this->title;
         $grades = Grade::paginate($this->pagination);
-
         return view('admin.grade.index', compact('title', 'grades'));
     }
 
@@ -50,8 +50,9 @@ class GradeController extends Controller
     {
         $title = $this->title;
         $grade = Grade::orderBy('title', 'asc')->get();
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.grade.create', compact('title', 'grade','instructors'));
+        $grade_types = GradeType::orderBy('id', 'asc')->get();
+        return view('admin.grade.create', compact('title', 'grade','grade_types'));
+
     }
 
     /**
@@ -86,8 +87,8 @@ class GradeController extends Controller
     {
         $title = $this->title;
         $grade = Grade::findorfail($id);
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.grade.show', compact('title', 'grade','instructors'));
+        $grade_types = GradeType::orderBy('id', 'asc')->get();
+        return view('admin.grade.show', compact('title', 'grade','grade_types'));
     }
 
     /**
@@ -100,8 +101,9 @@ class GradeController extends Controller
     {
         $title = $this->title;
         $grade = Grade::findorfail($id);
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.grade.edit', compact('title', 'grade','instructors'));
+        $grade_types = GradeType::orderBy('id', 'asc')->get();
+        return view('admin.grade.edit', compact('title', 'grade','grade_types'));
+
     }
 
     /**
@@ -144,9 +146,12 @@ class GradeController extends Controller
     public function search(Request $request)
     {
         //DB::enableQueryLog();
-		$title = $this->title;
+		    $title = $this->title;
         $grades = Grade::search($request->search)->paginate($this->systemSetting()->pagination);
+
+        $grade_types = GradeType::orderBy('id', 'asc')->get();
        // dd(DB::getQueryLog());
-        return view('admin.grade.index', compact('title', 'grades'));
+        return view('admin.grade.index', compact('title', 'grade_types'));
+
     }
 }
