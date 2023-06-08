@@ -7,6 +7,8 @@ use App\Level;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 
 class LevelController extends Controller
@@ -62,7 +64,29 @@ class LevelController extends Controller
         ]);
 
         $level = new Level();
+        if ($request->hasFile('image')) {
+
+            $image = $request->file('image');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $image->getClientOriginalName();
+
+            $filepath = 'storage/level/';
+
+            Storage::putFileAs(
+
+                'public/level',
+                $image,
+                $filename
+
+            );
+
+            $path_profile_picture = $filepath . $filename;
+
+            $level->image = $path_profile_picture;
+        }
         $level->title = $request->title;
+        $level->slug = str_slug($request->title);
+        $level->description = $request->description;
         $level->status = $request->status;
         $level->save();
 
@@ -111,7 +135,29 @@ class LevelController extends Controller
         ]);
 
         $level = Level::findorfail($id);
+        if ($request->hasFile('image')) {
+
+            $image = $request->file('image');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $image->getClientOriginalName();
+
+            $filepath = 'storage/level/';
+
+            Storage::putFileAs(
+
+                'public/level',
+                $image,
+                $filename
+
+            );
+
+            $path_profile_picture = $filepath . $filename;
+
+            $level->image = $path_profile_picture;
+        }
         $level->title = $request->title;
+        $level->slug = str_slug($request->title);
+        $level->description = $request->description;
         $level->status = $request->status;
         $level->save();
 
