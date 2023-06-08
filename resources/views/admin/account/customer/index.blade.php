@@ -11,7 +11,7 @@
                <a href="{{ route('customer.pendingRequest') }}" class="btn btn-primary">Profile Update Request</a>
         </div>
         @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
-</div>
+    </div>
 
 <div class="section-body">
     @include('admin.inc.messages')
