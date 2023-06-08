@@ -10,6 +10,7 @@
             </div>
             <h1>{{ $title ?? '-' }}</h1>
             @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grade_crud', 'Create', route('grade.create'))])
+
         </div>
 
         <div class="section-body">
@@ -17,6 +18,7 @@
                 <div class="col-12">
                     <div class="card">
                         <form action="{{ route('grade.store') }}" method="post">
+
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -30,6 +32,7 @@
                                     </span>
                                     @endif
                                 </div>
+
 
                                 <div class="form-group">
                                     <label for="grade_type_id">Grade Type</label>
@@ -46,6 +49,7 @@
                                     @if ($errors->has('grade_type_id'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('grade_type_id') }}</strong>
+
                                     </span>
                                     @endif
                                 </div>
