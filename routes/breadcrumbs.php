@@ -45,6 +45,38 @@ Breadcrumbs::for('admin_template_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 
+// ANNOUNCEMENT
+Breadcrumbs::for('admin_announcement', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.ANNOUNCEMENT'), route('announcement.index'));
+});
+
+Breadcrumbs::for('admin_announcement_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_announcement');
+    $trail->push($title, $url);
+});
+
+// TEACHING_MATERIALS
+Breadcrumbs::for('admin_teaching_materials', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.TEACHING_MATERIALS'), route('teaching-materials.index'));
+});
+
+Breadcrumbs::for('admin_teaching_materials_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_teaching_materials');
+    $trail->push($title, $url);
+});
+// GRADE
+Breadcrumbs::for('admin_grade', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.GRADE'), route('grade.index'));
+});
+
+Breadcrumbs::for('admin_grade_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_grade');
+    $trail->push($title, $url);
+});
+
 
 
 // MENU
