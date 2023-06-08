@@ -45,6 +45,21 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question',
                 ],
+                [
+                    'title' =>  __('constant.GRADE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/grade',
+                ],
+                [
+                    'title' =>  __('constant.TEACHING_MATERIALS'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/teaching-materials',
+                ],
+                [
+                    'title' =>  __('constant.ANNOUNCEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/announcement',
+                ],
 
             ],
         ],
