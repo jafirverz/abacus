@@ -6,17 +6,17 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('template.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('grade.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_template_crud', 'Create', route('template.create'))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grade_crud', 'Create', route('grade.create'))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('template.store') }}" method="post">
+                        <form action="{{ route('grade.store') }}" method="post">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -30,58 +30,22 @@
                                     </span>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="image">Image</label>
-                                    <input type="file" name="image" class="form-control">
-                                    @if ($errors->has('image'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('image') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="announcement_date">Date</label>
-                                    <input type="text" name="announcement_date" class="form-control" id=""
-                                        value="{{ old('announcement_date') }}">
-                                    @if ($errors->has('announcement_date'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('announcement_date') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea name="description" class="form-control" id="">{{ old('description') }}</textarea>
-                                    @if ($errors->has('description'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="function">Function</label>
-                                    <textarea name="function" class="form-control" id="">{{ old('function') }}</textarea>
-                                    @if ($errors->has('function'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('function') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="teacher_id">Teacher</label>
-                                    <select name="teacher_id" class="form-control">
+                                    <label for="grade_type_id">Grade Type</label>
+                                    <select name="grade_type_id" class="form-control">
                                         <option value="">-- Select --</option>
-                                        @if ($instructors)
-                                        @foreach ($instructors as $item)
-                                        <option value="{{ $item->id }}" @if(old('teacher_id')==$item->id)
+                                        @if ($grade_types)
+                                        @foreach ($grade_types as $item)
+                                        <option value="{{ $item->id }}" @if(old('grade_type_id')==$item->id)
                                             selected
-                                            @endif>{{ $item->name }}</option>
+                                            @endif>{{ $item->title }}</option>
                                         @endforeach
                                         @endif
                                     </select>
-                                    @if ($errors->has('teacher_id'))
+                                    @if ($errors->has('grade_type_id'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('teacher_id') }}</strong>
+                                        <strong>{{ $errors->first('grade_type_id') }}</strong>
                                     </span>
                                     @endif
                                 </div>

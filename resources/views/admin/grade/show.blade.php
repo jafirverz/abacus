@@ -6,11 +6,11 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('template.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('grade.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_template_crud', 'Show',
-            route('template.show', $template->id))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grade_crud', 'Show',
+            route('grade.show', $grade->id))])
         </div>
 
         <div class="section-body">
@@ -21,16 +21,16 @@
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <strong>Title</strong>: {{ $template->title }}
+                                    <strong>Title</strong>: {{ $grade->title }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>View Order</strong>: {{ $template->view_order }}
+                                    <strong>Grade Type</strong>: {{ $grade->grade_type_id }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>Created At</strong>: {{ $template->created_at->format('d M, Y h:i A') }}
+                                    <strong>Created At</strong>: {{ $grade->created_at->format('d M, Y h:i A') }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>Updated At</strong>: {{ $template->updated_at->format('d M, Y h:i A') }}
+                                    <strong>Updated At</strong>: {{ $grade->updated_at->format('d M, Y h:i A') }}
                                 </div>
                             </div>
                         </div>
