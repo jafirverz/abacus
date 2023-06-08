@@ -52,6 +52,7 @@ class GradeController extends Controller
         $grade = Grade::orderBy('title', 'asc')->get();
         $grade_types = GradeType::orderBy('id', 'asc')->get();
         return view('admin.grade.create', compact('title', 'grade','grade_types'));
+
     }
 
     /**
@@ -102,6 +103,7 @@ class GradeController extends Controller
         $grade = Grade::findorfail($id);
         $grade_types = GradeType::orderBy('id', 'asc')->get();
         return view('admin.grade.edit', compact('title', 'grade','grade_types'));
+
     }
 
     /**
@@ -144,10 +146,12 @@ class GradeController extends Controller
     public function search(Request $request)
     {
         //DB::enableQueryLog();
-		$title = $this->title;
+		    $title = $this->title;
         $grades = Grade::search($request->search)->paginate($this->systemSetting()->pagination);
+
         $grade_types = GradeType::orderBy('id', 'asc')->get();
        // dd(DB::getQueryLog());
         return view('admin.grade.index', compact('title', 'grade_types'));
+
     }
 }
