@@ -61,6 +61,8 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 
 Route::get('/level/{slug?}', 'LevelController@index');
 
+Route::get('/worksheet/{worksheetId?}/qId/{qid?}/lId/{lId?}', 'WorksheetController@index');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
