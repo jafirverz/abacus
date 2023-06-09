@@ -26,7 +26,7 @@
                                     <strong>Title</strong>: {{ $grade->title }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>Grade Type</strong>: {{ $grade->grade_type_id }}
+                                    <strong>Grade Type</strong>: {{ $grade->grade_type->title }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Created At</strong>: {{ $grade->created_at->format('d M, Y h:i A') }}

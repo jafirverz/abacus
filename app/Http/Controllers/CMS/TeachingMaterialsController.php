@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class TeachingMaterials extends Controller
+class TeachingMaterialsController extends Controller
 {
     use SystemSettingTrait;
 
@@ -36,7 +36,7 @@ class TeachingMaterials extends Controller
     public function index()
     {
         $title = $this->title;
-        $materials = TeachingMaterials::orderBy('view_order', 'asc')->paginate($this->pagination);
+        $materials = TeachingMaterials::orderBy('id', 'asc')->paginate($this->pagination);
 
         return view('admin.materials.index', compact('title', 'materials'));
     }
@@ -64,14 +64,19 @@ class TeachingMaterials extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'image'  =>  'required|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
             'teacher_id'  =>  'required',
         ]);
 
-        $announcement = new Announcement;
-        $announcement->title = $request->title;
-        $announcement->created_at = Carbon::now();
-        $announcement->save();
+        $material = new TeachingMaterials;
+        $material->title = $request->title ?? '';
+        if ($request->hasFile('uploaded_files')) {
+            $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
+        }
+        $material->description = $request->description ?? '';
+        $material->teacher_id = $request->teacher_id ?? '';
+        $material->created_at = Carbon::now();
+        $material->save();
 
         return redirect()->route('teaching-materials.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
@@ -85,9 +90,9 @@ class TeachingMaterials extends Controller
     public function show($id)
     {
         $title = $this->title;
-        $announcement = TeachingMaterials::findorfail($id);
+        $material = TeachingMaterials::findorfail($id);
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.materials.show', compact('title', 'announcement','instructors'));
+        return view('admin.materials.show', compact('title', 'material','instructors'));
     }
 
     /**
@@ -99,9 +104,9 @@ class TeachingMaterials extends Controller
     public function edit($id)
     {
         $title = $this->title;
-        $announcement = TeachingMaterials::findorfail($id);
+        $material = TeachingMaterials::findorfail($id);
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.materials.edit', compact('title', 'announcement','instructors'));
+        return view('admin.materials.edit', compact('title', 'material','instructors'));
     }
 
     /**
@@ -115,13 +120,19 @@ class TeachingMaterials extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'view_order'   =>  'required|numeric',
+            'uploaded_files'  =>  'nullable|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+            'teacher_id'  =>  'required',
         ]);
 
-        $materials = TeachingMaterials::findorfail($id);
-        $materials->title = $request->title;
-        $materials->updated_at = Carbon::now();
-        $materials->save();
+        $material = TeachingMaterials::findorfail($id);
+        $material->title = $request->title ?? '';
+        if ($request->hasFile('uploaded_files')) {
+            $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
+        }
+        $material->description = $request->description ?? '';
+        $material->teacher_id = $request->teacher_id ?? '';
+        $material->updated_at = Carbon::now();
+        $material->save();
 
         return redirect()->route('teaching-materials.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
@@ -144,7 +155,7 @@ class TeachingMaterials extends Controller
     {
         //DB::enableQueryLog();
 		$title = $this->title;
-        $materials = TeachingMaterials::search($request->search)->orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $materials = TeachingMaterials::search($request->search)->orderBy('id', 'asc')->paginate($this->systemSetting()->pagination);
        // dd(DB::getQueryLog());
         return view('admin.materials.index', compact('title', 'materials'));
     }
