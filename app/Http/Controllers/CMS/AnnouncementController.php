@@ -151,7 +151,15 @@ class AnnouncementController extends Controller
 
                 $name = $file->getClientOriginalName();
                 $file->move(public_path() . '/upload-file/', $name);
-                array_push($input_1_old,$name);
+                if(isset($input_1_old))
+                {
+                    array_push($input_1_old,$name);
+                }
+                else
+                {
+                    $input_1_old[]=$name;
+                }
+
             }
             $announcement->attachments = json_encode($input_1_old);
         }

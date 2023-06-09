@@ -12,7 +12,7 @@
                 @if(Auth::user()->user_type_id == 1)
                     @include('inc.my_profile_view')
                 @elseif(Auth::user()->user_type_id == 5)
-                    @include('account.overview')
+                    @include('account.instructor-overview')
                 @endif
 
             </div>

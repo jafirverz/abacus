@@ -43,18 +43,20 @@
                                 </div>
                                 <div class="form-group">
                                     <strong>Attachments</strong>:
+                                    @if(isset($announcement->attachments)  && $announcement->attachments!='')
                                     @php
                                     $json=json_decode($announcement->attachments);
                                     for($i=0;$i<count($json);$i++)
                                     {
-                                @endphp
+                                    @endphp
 
-                                            <div class="form-group">
-                                                <input class="form-control"  value="{{ $json[$i] }}" name="input_1_old[]" type="hidden">
-                                                <a href="{{ url('/') }}/upload-file/{{ $json[$i] }}" target="_blank"> {{ $json[$i] }} </a>
+                                                <div class="form-group">
+                                                    <input class="form-control"  value="{{ $json[$i] }}" name="input_1_old[]" type="hidden">
+                                                    <a href="{{ url('/') }}/upload-file/{{ $json[$i] }}" target="_blank"> {{ $json[$i] }} </a>
 
-                                            </div>
-                                @php } @endphp
+                                                </div>
+                                    @php } @endphp
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <strong>Teacher</strong>: {{ $announcement->teacher->name }}
