@@ -3,6 +3,7 @@
 use App\Admin;
 use App\PermissionAccess;
 use Yadahan\AuthenticationLog\AuthenticationLog;
+use App\Announcement;
 use App\Page;
 use App\Slider;
 use App\Role;
@@ -794,6 +795,15 @@ if (!function_exists('getPageList')) {
         if($admin->count())
         {
             return $admin;
+        }
+    }
+
+    function getAnnouncementsByTeacher($id)
+    {
+        $announcements = Announcement::where('teacher_id', $id)->get();
+        if($announcements->count())
+        {
+            return $announcements;
         }
     }
 

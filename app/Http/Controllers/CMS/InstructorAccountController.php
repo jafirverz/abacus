@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\CMS;
 
+
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use Carbon\Carbon;
+use App\Mail\EmailNotification;
+use App\Traits\GetEmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class InstructorAccountController extends Controller
 {
-    use SystemSettingTrait;
+    use GetEmailTemplate,SystemSettingTrait;
 
     public function __construct()
     {

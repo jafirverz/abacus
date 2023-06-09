@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Notification;
+use App\Announcement;
+use App\TeachingMaterials;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
@@ -71,16 +73,16 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		//dd($user);
+		$announcements = Announcement::where('teacher_id', $user->id)->get();
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
 			return abort(404);
 		}
 
-		dd($user);
+		//dd($user);
 
-		return view('account.overview', compact("page", "user"));
+		return view('account.instructor-overview', compact("page", "user","announcements"));
 	}
 
     public function index()

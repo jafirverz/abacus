@@ -85,7 +85,7 @@
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
-
+                                @if(isset($announcement->attachments) && $announcement->attachments!='')
                                 @php
                                     $json=json_decode($announcement->attachments);
                                     for($i=0;$i<count($json);$i++)
@@ -100,6 +100,7 @@
                                                 </div>
                                             </div>
                                 @php } @endphp
+                                @endif
                                 <div class="form-group">
                                     <label for="teacher_id">Teacher</label>
                                     <select name="teacher_id" class="form-control">
