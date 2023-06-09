@@ -88,7 +88,7 @@
                                                 <a href="{{ route('grade.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
-                                            <td>{{ $item->grade_type_id }}  </td>
+                                            <td>{{ $item->grade_type->title }}  </td>
 
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>

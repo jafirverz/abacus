@@ -241,12 +241,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('announcement', 'CMS\AnnouncementController');
 
      // GRADE
-     Route::get('grade/search', 'CMS\GradeController@search')->name('announcement.search');
+     Route::get('grade/search', 'CMS\GradeController@search')->name('grade.search');
      Route::resource('grade', 'CMS\GradeController');
 
       // TEACHING_MATERIALS
-    Route::get('teaching-materials/search', 'CMS\TeachingMaterials@search')->name('teaching-materials.search');
-    Route::resource('teaching-materials', 'CMS\TeachingMaterials');
+    Route::get('teaching-materials/search', 'CMS\TeachingMaterialsController@search')->name('teaching-materials.search');
+    Route::resource('teaching-materials', 'CMS\TeachingMaterialsController');
 
 
     // RECRUITER

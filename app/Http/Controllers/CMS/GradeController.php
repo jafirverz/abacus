@@ -147,11 +147,10 @@ class GradeController extends Controller
     {
         //DB::enableQueryLog();
 		    $title = $this->title;
-        $grades = Grade::search($request->search)->paginate($this->systemSetting()->pagination);
+        $grades = Grade::search($request->search)->join('grade_types','grade_types.id','grades.grade_type_id')->select('grades.*')->paginate($this->systemSetting()->pagination);
 
-        $grade_types = GradeType::orderBy('id', 'asc')->get();
        // dd(DB::getQueryLog());
-        return view('admin.grade.index', compact('title', 'grade_types'));
+        return view('admin.grade.index', compact('title', 'grades'));
 
     }
 }
