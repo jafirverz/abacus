@@ -31,8 +31,9 @@
 
     </script>
     <!-- daterangepicker -->
-<script src="{{ asset('assets/plugins/moment/min/moment.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="{{ asset('assets/plugins/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/jquery-ui.js') }}"></script>
