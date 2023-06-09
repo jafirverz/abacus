@@ -155,8 +155,8 @@ class TeachingMaterialsController extends Controller
     {
         //DB::enableQueryLog();
 		$title = $this->title;
-        $materials = TeachingMaterials::search($request->search)->orderBy('id', 'asc')->paginate($this->systemSetting()->pagination);
-       // dd(DB::getQueryLog());
+        $materials = TeachingMaterials::join('users','users.id','teaching_materials.teacher_id')->search($request->search)->select('teaching_materials.*')->orderBy('teaching_materials.id', 'asc')->paginate($this->systemSetting()->pagination);
+       //dd(DB::getQueryLog());
         return view('admin.materials.index', compact('title', 'materials'));
     }
 }

@@ -63,6 +63,7 @@
                                             </th>
                                             <th>Action</th>
                                             <th>Title</th>
+                                            <th>Teacher</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -79,6 +80,7 @@
                                                 <a href="{{ route('teaching-materials.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
+                                            <td>{{ $item->teacher->name }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
