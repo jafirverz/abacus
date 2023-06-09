@@ -36,7 +36,7 @@ class AnnouncementController extends Controller
     public function index()
     {
         $title = $this->title;
-        $announcements = Announcement::orderBy('view_order', 'asc')->paginate($this->pagination);
+        $announcements = Announcement::orderBy('id', 'asc')->paginate($this->pagination);
 
         return view('admin.announcement.index', compact('title', 'announcements'));
     }
@@ -71,10 +71,24 @@ class AnnouncementController extends Controller
         ]);
 
         $announcement = new Announcement;
-        $announcement->title = $request->title;
-        $announcement->announcement_date = $request->announcement_date;
-        $announcement->description = $request->description;
-        $announcement->teacher_id = $request->teacher_id;
+        $announcement->title = $request->title ?? Null;
+        $announcement->announcement_date = $request->announcement_date ?? Null;
+        if ($request->hasFile('image')) {
+            $announcement->image = uploadPicture($request->file('image'), $this->title);
+        }
+        if ($request->hasfile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+
+                $name = $file->getClientOriginalName();
+                $file->move(public_path() . '/upload-file/', $name);
+                $data[] = $name;
+            }
+
+            $announcement->attachments = json_encode($data);
+        }
+        $announcement->description = $request->description ?? Null;
+        $announcement->function = $request->function ?? Null;
+        $announcement->teacher_id = $request->teacher_id ?? Null;
         $announcement->created_at = Carbon::now();
         $announcement->save();
 
@@ -120,14 +134,35 @@ class AnnouncementController extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'view_order'   =>  'required|numeric',
+            'image'  =>  'nullable|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+            'announcement_date'  =>  'required|date',
+            'teacher_id'  =>  'required',
         ]);
 
         $announcement = Announcement::findorfail($id);
-        $announcement->title = $request->title;
-        $announcement->announcement_date = $request->announcement_date;
-        $announcement->description = $request->description;
-        $announcement->teacher_id = $request->teacher_id;
+        $announcement->title = $request->title ?? Null;
+        $announcement->announcement_date = $request->announcement_date ?? Null;
+        if ($request->hasFile('image')) {
+            $announcement->image = uploadPicture($request->file('image'), $this->title);
+        }
+        if ($request->hasfile('attachments')) {
+            $input_1_old=$request->input_1_old;
+            foreach ($request->file('attachments') as $file) {
+
+                $name = $file->getClientOriginalName();
+                $file->move(public_path() . '/upload-file/', $name);
+                array_push($input_1_old,$name);
+            }
+            $announcement->attachments = json_encode($input_1_old);
+        }
+        else
+        {
+            $input_1_old=$request->input_1_old;
+            $announcement->attachments = json_encode($input_1_old);
+        }
+        $announcement->description = $request->description ?? Null;
+        $announcement->function = $request->function ?? Null;
+        $announcement->teacher_id = $request->teacher_id ?? Null;
         $announcement->updated_at = Carbon::now();
         $announcement->save();
 
@@ -152,7 +187,7 @@ class AnnouncementController extends Controller
     {
         //DB::enableQueryLog();
 		$title = $this->title;
-        $announcements = Announcement::search($request->search)->orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
+        $announcements = Announcement::join('users','users.id','announcements.teacher_id')->select('announcements.*')->search($request->search)->orderBy('announcements.id', 'asc')->paginate($this->systemSetting()->pagination);
        // dd(DB::getQueryLog());
         return view('admin.announcement.index', compact('title', 'announcements'));
     }

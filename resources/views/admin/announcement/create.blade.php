@@ -6,17 +6,17 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('template.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('announcement.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_template_crud', 'Create', route('template.create'))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_announcement_crud', 'Create', route('announcement.create'))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('template.store') }}" method="post">
+                        <form action="{{ route('announcement.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="announcement_date">Date</label>
-                                    <input type="text" name="announcement_date" class="form-control" id=""
+                                    <input type="text" name="announcement_date" class="form-control datepicker1" id=""
                                         value="{{ old('announcement_date') }}">
                                     @if ($errors->has('announcement_date'))
                                     <span class="text-danger d-block">
@@ -66,6 +66,18 @@
                                         <strong>{{ $errors->first('function') }}</strong>
                                     </span>
                                     @endif
+                                </div>
+                                <div class="form-group after-add-more">
+                                    <label for="attachments">Attachments</label>
+                                    <input type="file" name="attachments[]" multiple="multiple" class="form-control">
+                                    @if ($errors->has('attachments'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('attachments') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
                                 <div class="form-group">
                                     <label for="teacher_id">Teacher</label>
@@ -97,7 +109,14 @@
         </div>
     </section>
 </div>
-
+<div class="copy" style="display:none;">
+    <div class="form-group">
+      <input class="form-control" required name="attachments[]"  type="file">
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         $("input[name='title']").on("change", function () {
@@ -106,5 +125,14 @@
         });
     });
 
+    $(".add-more").click(function(){
+          var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+
+      $("body").on("click",".remove",function(){
+          $(this).parents(".form-group").remove();
+      });
 </script>
+
 @endsection
