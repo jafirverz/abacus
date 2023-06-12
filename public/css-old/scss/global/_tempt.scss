@@ -1,0 +1,113 @@
+.tempt {
+	&-1 {		
+		a { display: inline-block; 
+			&:hover { color: $green; text-decoration: underline; }
+		}
+		hr { border-top: #E5E5E5 dashed 1px; margin: 50px 0; 
+			@include maxmedia(991px) {
+				margin: 30px 0; 
+			}
+		}
+		&-content { max-width: 830px; padding: 50px 30px 250px 190px; position: relative;
+			@include maxmedia(1599px) {
+				padding-bottom: 220px; padding-left: 150px; 
+			}
+			@include maxmedia(1199px) {
+				padding-bottom: 180px; padding-left: 100px; 
+			}
+			@include maxmedia(991px) {
+				padding-bottom: 150px; padding-left: 60px; 
+			}
+			@include maxmedia(574px) {
+				padding-bottom: 50px; padding-left: 15px; padding-right: 15px;
+			}
+			&:before { background: url("../images/bg-1.jpg") no-repeat 0 0; background-size: 100%; content: ""; height: 100%; left: 50px; position: absolute; top: -110px; width: 80px; 
+				@include maxmedia(1599px) {
+					left: 30px; width: 70px;
+				}
+				@include maxmedia(1199px) {
+					left: 20px; width: 50px;
+				}
+				@include maxmedia(991px) {
+					left: 10px; top: -90px; width: 40px;
+				}
+				@include maxmedia(767px) {
+					top: 0px; 
+				}
+				@include maxmedia(574px) {
+					display: none;
+				}
+			}
+		}
+		.image { @include bd-radius (0 150px 0 0);
+			@include maxmedia(1199px) {
+				@include bd-radius (0 100px 0 0);
+			}
+			@include maxmedia(767px) {
+				@include bd-radius (0 80px 0 0);
+			}
+			@include maxmedia(574px) {
+				background: none !important;
+				.bgimg { display: block !important; }
+			}
+		}
+		.wrap { 
+			&-1 { font-size: 14px; margin: 10px 0 30px; text-align: right; 
+				a { margin-left: 10px; }
+			}
+			&-2 { margin: 50px 0 20px; text-align: center; 
+				a { color: $green; text-decoration: underline;
+					&:hover { text-decoration: none; }
+				}
+			}
+		}
+	}
+	&-2 { padding-bottom: 250px; padding-top: 70px; 
+		@include maxmedia(1599px) {
+			padding-bottom: 180px;
+		}
+		@include maxmedia(991px) {
+			padding-bottom: 150px;
+		}		
+		@include maxmedia(474px) {
+			padding-bottom: 100px;
+		}		
+		&-aside { padding-bottom: 30px;
+			@include minmedia(1200px) {
+				width: 20%;
+			}		
+			@include minmedia(1700px) {
+				width: 16%;
+			}			
+			@include maxmedia(991px) {
+				display: none;
+			}			
+		}	
+		&-inner {
+			@include minmedia(1200px) {
+				width: 80%;
+			}		
+			@include minmedia(1700px) {
+				width: 84%;
+			}			
+		}
+		&-content {
+			padding: 0 60px 30px 40px;
+			@include maxmedia(1599px) {
+				padding: 0 30px 30px 30px;
+			}
+			@include maxmedia(991px) {
+				padding: 0 15px 30px 15px;
+			}
+		}
+	}
+	&-3, &-4 { padding: 60px 60px 250px 60px; 
+		@include maxmedia(1599px) {
+			padding: 60px 30px 220px 30px;
+		}
+		@include maxmedia(991px) {
+			padding: 50px 15px 170px 15px;
+		}
+	}
+	&-4 { margin: 0 auto; max-width: 1800px; }
+}

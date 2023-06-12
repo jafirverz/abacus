@@ -56,7 +56,7 @@
                           <ul class="list-1">
                             @foreach($worksheets as $worksheet)
                             @if($worksheet->question_template_id == $questions->id)
-                            <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id) }}">{{ $worksheet->title }}</a></li>
+                            <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
                             @endif
                             @endforeach
                             
