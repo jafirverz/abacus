@@ -1,7 +1,7 @@
 <h3>My Dashboard</h3>
                 <ul>
                     <li>
-                        <a href="be-teacher-dashboard-overview.html">
+                        <a href="{{ url('/') }}">
                             <span><img src="images/tempt/ico-overview.png" alt="Overview icon" /></span>
                             <strong>Overview</strong>
                         </a>
@@ -13,19 +13,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="be-teacher-dashboard-students.html">
+                        <a href="{{ url('/') }}">
                             <span><img src="images/tempt/ico-students.png" alt="Students icon" /></span>
                             <strong>My Students</strong>
                         </a>
                     </li>
                     <li>
-                        <a href="be-teacher-dashboard-teaching.html">
+                        <a href="{{ url('/') }}">
                             <span><img src="images/tempt/ico-teaching.png" alt="Teaching icon" /></span>
                             <strong>Teaching Materials</strong>
                         </a>
                     </li>
                     <li>
-                        <a href="be-teacher-dashboard-grading.html">
+                        <a href="{{ url('/') }}">
                             <span><img src="images/tempt/ico-grading.png" alt="Grading icon" /></span>
                             <strong>Grading Examinations</strong>
                         </a>

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Level;
 use App\Traits\SystemSettingTrait;
 use App\User;
-use App\UserProfileUpdate;
+use App\Level;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +37,7 @@ class CustomerAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $userType = array('1,2,3,4');
-        $customer = User::orderBy('id','desc')->whereIn('user_type_id', $userType)->paginate($this->pagination);
+        $customer = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->paginate($this->pagination);
 
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
@@ -52,9 +50,9 @@ class CustomerAccountController extends Controller
     public function create()
     {
         $title = $this->title;
-        $levels = Level::get();
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.account.customer.create', compact('title','instructors', 'levels'));
+        $levels = Level::get();
+        return view('admin.account.customer.create', compact('title','instructors','levels'));
     }
 
     /**
@@ -65,7 +63,7 @@ class CustomerAccountController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        //dd($request);
         $fields = [
             'email' =>  'required|email|unique:users,email',
             'name' => 'required|string',
@@ -78,7 +76,7 @@ class CustomerAccountController extends Controller
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
-            'status' => 'required',
+            'approve_status' => 'required',
         ];
 
         $messages = [];
@@ -108,7 +106,6 @@ class CustomerAccountController extends Controller
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
         $customer->dob = $request->dob??NULL;
-        $customer->level_id = json_encode($request->level);
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
@@ -209,9 +206,9 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-        $levels = Level::get();
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.account.customer.edit', compact('title', 'customer','instructors', 'levels'));
+        $levels = Level::get();
+        return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels'));
     }
 
     /**
@@ -235,6 +232,7 @@ class CustomerAccountController extends Controller
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
+            'approve_status' => 'required',
         ];
         $messages = [];
         $messages['email.required'] = 'The email address field is required.';
@@ -256,7 +254,6 @@ class CustomerAccountController extends Controller
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
-        $customer->level_id = json_encode($request->level);
         $customer->gender = $request->gender??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
         $customer->country_code = $request->country_code??NULL;
@@ -280,8 +277,14 @@ class CustomerAccountController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $id = explode(',', $request->multiple_delete);
-        User::destroy($id);
+        $ids = explode(',', $request->multiple_delete);
+        //User::destroy($id);
+        foreach($ids as $id)
+        {
+            $customer = User::find($id);
+            $customer->approve_status = NULL;
+            $customer->save();
+        };
 
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
@@ -291,7 +294,7 @@ class CustomerAccountController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
-        $customer = User::join('user_types','users.user_type_id','user_types.id')->select('users.*')->search($search_term)->paginate($this->pagination);
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->where('user_type_id','!=',5)->where('approve_status','!=',0)->select('users.*')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
             $customer->appends('search', $search_term);
         }

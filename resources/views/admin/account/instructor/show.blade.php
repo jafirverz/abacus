@@ -48,11 +48,30 @@
                                 <label for="">Country</label>: {{ getCountry($customer->country_code) ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Instructor</label>: {{ $instructors->name ?? '' }}
+                                <label for="">Year Attained Qualified Instructor Certification</label>
+
+                                {{  $customer->year_attained_qualified_instructor }}
                             </div>
                             <div class="form-group">
-                                <label for="">User Type</label>: {{ getUserTypes($customer->user_type_id) ?? ''  }}
+                                <label for="">Year Attained Senior Instructor Certification</label>
+                                {{  $customer->year_attained_senior_instructor }}
+
                             </div>
+                            <div class="form-group">
+                                <label for="">Highest Abacus Grade Attained</label>
+
+                                {{  $customer->highest_abacus_grade }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Highest Mental Grade Attained</label>
+                                {{  $customer->highest_mental_grade }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Awards</label>
+
+                                {{  $customer->awards }}
+                            </div>
+
                             <div class="form-group">
                                 <label for="">Created At</label>: {{ $customer->created_at->format('d M, Y h:i A') }}
                             </div>

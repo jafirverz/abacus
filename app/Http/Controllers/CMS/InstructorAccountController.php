@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers\CMS;
 
-
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use Carbon\Carbon;
-use App\Mail\EmailNotification;
-use App\Traits\GetEmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class InstructorAccountController extends Controller
 {
-    use GetEmailTemplate,SystemSettingTrait;
+    use SystemSettingTrait;
 
     public function __construct()
     {
@@ -38,7 +35,7 @@ class InstructorAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::where('user_type_id',5)->orderBy('id','desc')->paginate($this->pagination);
+        $customer = User::where('user_type_id',5)->where('approve_status','!=',0)->orderBy('id','desc')->paginate($this->pagination);
 
         return view('admin.account.instructor.index', compact('title', 'customer'));
     }
@@ -191,8 +188,7 @@ class InstructorAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-        $instructors = User::findorfail($customer->instructor_id);
-        return view('admin.account.instructor.show', compact('title', 'customer','instructors'));
+        return view('admin.account.instructor.show', compact('title', 'customer'));
     }
 
     /**
@@ -275,8 +271,14 @@ class InstructorAccountController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $id = explode(',', $request->multiple_delete);
-        User::destroy($id);
+        $ids = explode(',', $request->multiple_delete);
+        //User::destroy($id);
+        foreach($ids as $id)
+        {
+            $customer = User::find($id);
+            $customer->approve_status = NULL;
+            $customer->save();
+        }
 
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
