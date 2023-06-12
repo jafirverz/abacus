@@ -332,14 +332,6 @@ span.required { color: #CA0835; }
 	&-3 { font-size: 14px; font-style: italic; }
 }
 
-.inrow {	
-	&-1 { flex-flow: nowrap;
-		.sp-col { padding-bottom: 5px; padding-top: 5px;
-			&:last-child { text-align: right; }
-		}
-	}	
-}	
-
 .type-1 { color: #48420E; }
 
 .chooselist { 

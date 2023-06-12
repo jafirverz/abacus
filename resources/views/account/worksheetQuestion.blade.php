@@ -36,7 +36,7 @@
                     $count = count($questionns->input_1);
                     for($i=1;$i<=$count;$i++){
                     @endphp
-                      <th colspan="2" class="text-center">{{ $i }}</th>
+                    <th class="text-center">{{ $i }}</th>
                     @php
                     }
                     @endphp
@@ -44,43 +44,47 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @php 
-                  for($i=1;$i<=$count;$i++){
+                  
+                    <tr>
+                      <td></td>
+                      @php 
+                  for($i=0;$i<$count;$i++){
                     @endphp
-                  <tr>
-                    <td></td>
-                    <td class="typecol-1">$</td>
-                    <td class="typecol-2">48,544.17</td>
-                    <td></td>
-                  </tr>
-                  @php
+                      <td>
+                        @php
+                        $arrVal = explode(',', $questionns->input_1[$i]);
+                        foreach($arrVal as $val){
+                        @endphp
+                        <div class="row sp-col-5 inrow-1">
+                          <div class="col-auto sp-col">$</div>
+                          <div class="col sp-col">{{ $val }}</div>
+                        </div>
+                        @php
+                      }
+                        @endphp
+                      </td>
+                      @php
                     }
                     @endphp
+                     
+                    </tr>
+                  
                 </tbody>
                 <tfoot>
                   <tr>
                     <td class="lb">Answer</td>
-                    <td class="typecol-1">$</td>
-                    <td class="typecol-2 colanswer">
-                      <input class="form-control" type="number" />
+                    @php 
+                    for($i=0;$i<$count;$i++){
+                      @endphp
+                    <td class="coltype">
+                      <div class="row sp-col-5 inrow-1">
+                        <div class="col-auto sp-col">$</div>
+                        <div class="col colanswer sp-col"><input class="form-control" type="number" /></div>
+                      </div>
                     </td>
-                    <td class="typecol-1">$</td>
-                    <td class="typecol-2 colanswer">
-                      <input class="form-control" type="number" />
-                    </td>
-                    <td class="typecol-1">$</td>
-                    <td class="typecol-2 colanswer">
-                      <input class="form-control" type="number" />
-                    </td>
-                    <td class="typecol-1">$</td>
-                    <td class="typecol-2 colanswer">
-                      <input class="form-control" type="number" />
-                    </td>
-                    <td class="typecol-1">$</td>
-                    <td class="typecol-2 colanswer">
-                      <input class="form-control" type="number" />
-                    </td>
-                    <td></td>
+                    @php
+                  }
+                  @endphp
                   </tr>
                 </tfoot>
               </table>

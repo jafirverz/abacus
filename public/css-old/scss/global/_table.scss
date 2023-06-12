@@ -52,7 +52,7 @@
 			}
 		}
 		.colanswer { padding: 0; 
-			.form-control { background: none !important; border: none !important; @include bd-radius(0); box-shadow: none !important; font-size: 20px; font-weight: 700; height: 60px; 
+			.form-control { background: none !important; @include bd-radius(0); box-shadow: none !important; font-size: 20px; font-weight: 700; height: 60px; 
 				@include maxmedia(574px) {
 					font-size: 18px; height: 50px; 
 				}				
@@ -91,12 +91,6 @@
 					tr {
 						&:first-child td { padding-top: 10px; }
 						&:last-child td { padding-bottom: 10px; }
-					}
-				}
-				tfoot {
-					.coltype { padding-bottom: 0; padding-top: 0; 
-						.row { align-items: center; }
-						.form-control { background: none !important; padding-left: 0 !important; padding-right: 0 !important; text-align: right; }
 					}
 				}
 			}
