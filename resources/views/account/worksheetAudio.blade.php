@@ -36,7 +36,7 @@
               <div class="row sp-col-10 grow">
                 <div class="col-auto sp-col"><strong>Q1</strong></div>
                 <div class="col-auto sp-col">
-                  <button class="link-2" id="play_btn" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
+                  <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
                   <audio id="audio-{{ $k }}">
                     <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="audio/mp3">
                     <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="audio/ogg">
@@ -69,6 +69,7 @@
 
     function initAudioPlayer(val){
       var audio = new Audio();
+      // audio.pause();
       var aContainer = document.getElementById("audio-"+val);
       // assign the audio src
       audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
@@ -77,7 +78,7 @@
       audio.play();
 
       // Set object references
-      var playbtn = document.getElementById("play_btn");
+      var playbtn = document.getElementById("play_btn"+val);
 
         // Add Event Handling
         playbtn.addEventListener("click", playPause(audio, playbtn));
@@ -88,10 +89,10 @@
           return function () {
              if(audio.paused){
                audio.play();
-               $('.link-2').addClass('glyphicon-pause')
+               $('.link-2').html('<i class="bi bi-pause"></i>')
              } else {
                audio.pause();
-               $('.link-2').addClass('glyphicon-play-circle')
+               $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
              } 
           }
       }
