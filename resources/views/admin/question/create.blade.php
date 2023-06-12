@@ -49,7 +49,7 @@
                                     @endif
                                 </div>
 
-                            @if(isset($_GET['question-type']) && $_GET['question-type']==1)
+                            @if(isset($_GET['question-type']) && $_GET['question-type']==5)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-4">
@@ -65,7 +65,7 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
-                            @elseif(isset($_GET['question-type']) && $_GET['question-type']==2)
+                            @elseif(isset($_GET['question-type']) && ($_GET['question-type']==2 || $_GET['question-type']==1))
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
