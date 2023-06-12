@@ -74,7 +74,7 @@ class QuestionController extends Controller
             'worksheet_id'  =>  'required',
 
         ];
-        if($request->question_type==1)
+        if($request->question_type==5)
         {
         $json['input_1']=$request->input_1;
         $json['input_2']=$request->input_2;
@@ -98,6 +98,18 @@ class QuestionController extends Controller
         {
             $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
+        }elseif($request->question_type==1){
+            if ($request->hasfile('input_1')) {
+                foreach ($request->file('input_1') as $file) {
+
+                    $name = $file->getClientOriginalName();
+                    $file->move(public_path() . '/upload-file/', $name);
+                    $data[] = $name;
+                }
+
+                $json['input_1']=$data;
+                $json['input_2']=$request->input_2;
+            }
         }
 
         //dd($question);

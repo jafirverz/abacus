@@ -27,418 +27,32 @@
         <div class="row grid-4">
           <div class="col-xl-4 col-sm-6">
             <div class="inner">
+              @php 
+              $questionns = json_decode($questions->json_question);
+              $k=0;
+              $count = count($questionns->input_1);
+              for($i=1;$i<=$count;$i++){
+              @endphp
               <div class="row sp-col-10 grow">
                 <div class="col-auto sp-col"><strong>Q1</strong></div>
                 <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-1">
-                    <source src="audio/track.mp3" type="audio/mpeg">
+                  <button class="link-2" id="play_btn" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
+                  <audio id="audio-{{ $k }}">
+                    <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="audio/mp3">
+                    <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="audio/ogg">
                     Your browser does not support the audio element.
-                  </audio-->
+                  </audio>
                 </div>
                 <div class="col sp-col">
                   <input class="form-control" type="text" placeholder="Answer" />
                 </div>
               </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q2</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-2">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q3</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-3">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q4</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-4">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q5</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-5">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-6">
-            <div class="inner">
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-6">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q2</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-7">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q3</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-8">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q4</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-9">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q5</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-10">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-6">
-            <div class="inner">
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-11">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q2</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-12">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q3</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-13">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q4</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-14">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q5</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-15">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-6">
-            <div class="inner">
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-16">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q2</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-17">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q3</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-18">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q4</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-19">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q5</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-20">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-6">
-            <div class="inner">
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-21">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q2</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-22">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q3</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-23">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q4</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-24">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q5</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-25">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-6">
-            <div class="inner">
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-26">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q2</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-27">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q3</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-28">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q4</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-29">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q5</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" type="button"><i class="fa-solid fa-volume-high"></i></button>
-                  <!--audio id="audio-30">
-                    <source src="audio/track.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio-->
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-            </div>
-          </div>
+              @php
+              $k++;
+            }
+            @endphp
+
+          
         </div>
         <div class="output-1">
           <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
@@ -447,4 +61,40 @@
     </div>
   </div>	
 </main>
+
+<script>
+  
+
+  // initAudioPlayer();
+
+    function initAudioPlayer(val){
+      var audio = new Audio();
+      var aContainer = document.getElementById("audio-"+val);
+      // assign the audio src
+      audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
+      audio.load();
+      audio.loop = false;
+      audio.play();
+
+      // Set object references
+      var playbtn = document.getElementById("play_btn");
+
+        // Add Event Handling
+        playbtn.addEventListener("click", playPause(audio, playbtn));
+      }
+
+      // Functions
+      function playPause(audio, playbtn){
+          return function () {
+             if(audio.paused){
+               audio.play();
+               $('.link-2').addClass('glyphicon-pause')
+             } else {
+               audio.pause();
+               $('.link-2').addClass('glyphicon-play-circle')
+             } 
+          }
+      }
+  
+  </script>
 @endsection
