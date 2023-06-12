@@ -6,17 +6,17 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('template.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('teaching-materials.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_template_crud', 'Create', route('template.create'))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_teaching_materials_crud', 'Create', route('teaching-materials.create'))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('template.store') }}" method="post">
+                        <form action="{{ route('teaching-materials.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -31,24 +31,15 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="image">Image</label>
-                                    <input type="file" name="image" class="form-control">
-                                    @if ($errors->has('image'))
+                                    <label for="uploaded_files">Uploaded Files</label>
+                                    <input type="file" name="uploaded_files" class="form-control">
+                                    @if ($errors->has('uploaded_files'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('image') }}</strong>
+                                        <strong>{{ $errors->first('uploaded_files') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="announcement_date">Date</label>
-                                    <input type="text" name="announcement_date" class="form-control" id=""
-                                        value="{{ old('announcement_date') }}">
-                                    @if ($errors->has('announcement_date'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('announcement_date') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
                                 <div class="form-group">
                                     <label for="description">Description</label>
                                     <textarea name="description" class="form-control" id="">{{ old('description') }}</textarea>
@@ -58,15 +49,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="function">Function</label>
-                                    <textarea name="function" class="form-control" id="">{{ old('function') }}</textarea>
-                                    @if ($errors->has('function'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('function') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
                                 <div class="form-group">
                                     <label for="teacher_id">Teacher</label>
                                     <select name="teacher_id" class="form-control">
