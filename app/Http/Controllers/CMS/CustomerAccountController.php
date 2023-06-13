@@ -76,7 +76,7 @@ class CustomerAccountController extends Controller
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
-            'status' => 'required',
+            'approve_status' => 'required',
         ];
 
         $messages = [];
