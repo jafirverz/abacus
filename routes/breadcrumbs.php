@@ -249,4 +249,15 @@ Breadcrumbs::for('instructor_account_crud', function ($trail, $title, $url = '#'
     $trail->parent('instructor_account');
     $trail->push($title, $url);
 });
+// CATEGORY COMPETITION
+Breadcrumbs::for('category_competition', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.CATEGORY_COMPETITION'), route('category-competition.index'));
+});
+
+Breadcrumbs::for('category_competition_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('category_competition');
+    $trail->push($title, $url);
+});
+
 

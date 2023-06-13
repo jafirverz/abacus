@@ -12,6 +12,7 @@ return [
     'TEACHING_MATERIALS'  =>  'Teaching Materials',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
+    'CATEGORY_COMPETITION' => 'Category Competition',
     'TESTIMONIAL'  =>  'Testimonial',
     'TEMPLATE'  =>  'Template',
     'ACTIVITYLOG'   =>  'Audit Trail Logs',
