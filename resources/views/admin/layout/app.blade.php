@@ -9,9 +9,8 @@
     <?php /*?><link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}"><?php */?>
     <link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}">
     <!-- General CSS Files -->
-
-    <link rel="stylesheet" href="{{ asset('stisla-theme/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('stisla-theme/css/stisla.css') }}">
+    <link rel="stylesheet" href="{{ mix('stisla-theme/css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('stisla-theme/css/stisla.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla-theme/css/bootstrap-datetimepicker.css') }}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
@@ -31,9 +30,9 @@
 
     </script>
     <!-- daterangepicker -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="{{ asset('assets/plugins/moment/min/moment.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+	
+<script src="{{ asset('assets/plugins/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/jquery-ui.js') }}"></script>
