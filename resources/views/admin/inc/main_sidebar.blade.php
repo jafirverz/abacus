@@ -51,6 +51,11 @@
                     'url'   =>  'admin/grade',
                 ],
                 [
+                    'title' =>  __('constant.CATEGORY_COMPETITION'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/category-competition',
+                ],
+                [
                     'title' =>  __('constant.TEACHING_MATERIALS'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/teaching-materials',

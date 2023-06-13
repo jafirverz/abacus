@@ -60,7 +60,7 @@ class CategoryCompetitionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'  =>  'required|max:191',
+            'category_name'  =>  'required|max:191',
         ]);
 
         $category = new CompetitionCategory();
@@ -145,6 +145,6 @@ class CategoryCompetitionController extends Controller
             $category->appends('search', $search_term);
         }
 
-        return view('admin.master.category-competition.index', compact('title', 'level'));
+        return view('admin.master.category-competition.index', compact('title', 'category'));
     }
 }
