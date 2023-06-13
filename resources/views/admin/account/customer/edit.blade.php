@@ -99,14 +99,14 @@
                                     @endif
                                 </div>
 
-                                @php 
+                                @php
                                 $levelDecode = json_decode($customer->level_id);
                                 @endphp
                                 <div class="form-group">
                                     <label for="">Level</label>
                                     <select name="level" class="form-control" tabindex="-98" multiple>
                                         @foreach($levels as $level)
-                                        <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @elseif(in_array($level->id, $levelDecode)) selected @endif>{{ $level->title }}
+                                        <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @elseif(isset($levelDecode) && in_array($level->id, $levelDecode)) selected @endif>{{ $level->title }}
                                         </option>
                                         @endforeach
                                     </select>

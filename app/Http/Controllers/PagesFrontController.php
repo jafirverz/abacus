@@ -85,7 +85,7 @@ class PagesFrontController extends Controller
         }else{
 
         }
-        
+
     }
 
     public function pages($slug, $reference = null, $id = null, Request $request)
@@ -97,9 +97,9 @@ class PagesFrontController extends Controller
         if (!$page) {
             return abort(404);
         }
-        
-        
-        
+
+
+
         return view('pages', compact('page', 'system_settings', 'smart_blocks'));
     }
 

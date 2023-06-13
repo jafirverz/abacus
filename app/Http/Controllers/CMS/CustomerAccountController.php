@@ -232,7 +232,7 @@ class CustomerAccountController extends Controller
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
-            'approve_status' => 'required',
+            'status' => 'required',
         ];
         $messages = [];
         $messages['email.required'] = 'The email address field is required.';
