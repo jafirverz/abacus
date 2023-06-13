@@ -19,7 +19,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('/') }}">
+                        <a href="{{ url('teaching-materials') }}">
                             <span><img src="images/tempt/ico-teaching.png" alt="Teaching icon" /></span>
                             <strong>Teaching Materials</strong>
                         </a>
