@@ -228,6 +228,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('worksheet', 'CMS\WorksheetController');
 
 
+    // COMPETITION
+    // Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
+    Route::resource('competition', 'CMS\CompetitionController');
+
+
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');
     Route::post('/system-settings/update', 'CMS\SystemSettingsController@update')->name('admin.system-settings.update');
