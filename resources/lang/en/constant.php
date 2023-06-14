@@ -16,6 +16,7 @@ return [
     'TESTIMONIAL'  =>  'Testimonial',
     'TEMPLATE'  =>  'Template',
     'ACTIVITYLOG'   =>  'Audit Trail Logs',
+    'COMPETITION'   =>  'Competition',
     'CMS'   =>  'CMS',
     'MENUS'  =>  'Menus',
     'MENU'  =>  'Menu',
