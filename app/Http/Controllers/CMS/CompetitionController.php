@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\CategoryCompetition;
 use App\Competition;
+use App\CompetitionCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
@@ -35,7 +37,7 @@ class CompetitionController extends Controller
     {
         $title = $this->title;
         $competition = Competition::paginate($this->pagination);
-
+        
         return view('admin.competition.index', compact('title', 'competition'));
     }
 
@@ -47,8 +49,9 @@ class CompetitionController extends Controller
     public function create()
     {
         $title = $this->title;
+        $competitionCategory = CompetitionCategory::get();
         // $worksheets = Worksheet::orderBy('id','desc')->get();
-        return view('admin.competition.create', compact('title'));
+        return view('admin.competition.create', compact('title', 'competitionCategory'));
     }
 
     /**
@@ -60,6 +63,36 @@ class CompetitionController extends Controller
     public function store(Request $request)
     {
         //
+        $messages = [
+            // 'amount.required_if' => 'This field is required',
+        ];
+        $request->validate([
+            'title'  =>  'required',
+            'competition_type'  =>  'required',
+            'category' => 'required',
+            'date_of_competition'  =>  'required',
+            'start_time_of_competition'  =>  'required',
+            'end_time_of_competition'  =>  'required',
+        ], $messages);
+
+        $competition = new Competition();
+        $competition->title = $request->title;
+        $competition->date_of_competition = $request->date_of_competition;
+        $competition->start_time_of_competition = $request->start_time_of_competition;
+        $competition->end_time_of_competition = $request->end_time_of_competition;
+        $competition->description = $request->description;
+        $competition->competition_type = $request->competition_type;
+        $competition->save();
+
+        $competitionId = $competition->id;
+        foreach($request->category as $cate){
+            $catCompt = new CategoryCompetition();
+            $catCompt->competition_id = $competitionId;
+            $catCompt->category_id = $cate;
+            $catCompt->save();
+        }
+
+        return redirect()->route('competition.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
 
     /**

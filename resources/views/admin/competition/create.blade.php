@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('worksheet.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('competition.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Create', route('bank.create'))])--}}
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('worksheet.store') }}" method="post">
+                        <form action="{{ route('competition.store') }}" method="post">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -52,9 +52,11 @@
 
                                 <div class="form-group">
                                     <label for="title">Category</label>
-                                    <select name="category" class="form-control">
+                                    <select name="category[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
-                                        
+                                        @foreach($competitionCategory as $cate)
+                                        <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
+                                        @endforeach
                                     </select>
                                     @if ($errors->has('category'))
                                         <span class="text-danger d-block">
@@ -160,13 +162,5 @@
         </div>
     </section>
 </div>
-<script>
-    function showAmount(val){
-        if(val==2){
-            $('#amountblock').show();
-        }else{
-            $('#amountblock').hide();
-        }
-    }
-</script>
+
 @endsection
