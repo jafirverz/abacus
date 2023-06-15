@@ -22,19 +22,19 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('competition.destroy', 'worksheet') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('competition.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('worksheet.destroy', 'worksheet') }}" method="post">
+                            <form id="destroy" action="{{ route('competition.destroy', 'competition') }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('worksheet.search') }}" method="get">
+                                <form action="{{ route('competition.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search"

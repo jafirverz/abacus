@@ -235,7 +235,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     // COMPETITION
-    // Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
+    Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');
     Route::resource('competition', 'CMS\CompetitionController');
 
 

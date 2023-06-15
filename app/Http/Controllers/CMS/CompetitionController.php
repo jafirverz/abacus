@@ -181,4 +181,16 @@ class CompetitionController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $search_term = $request->search;
+        $title = $this->title;
+        $competition = Competition::search($search_term)->paginate($this->pagination);
+        if ($search_term) {
+            $competition->appends('search', $search_term);
+        }
+
+        return view('admin.competition.index', compact('title', 'competition'));
+    }
 }
