@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('worksheet.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('competition.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Edit', route('bank.edit', $bank->id))])--}}
@@ -16,126 +16,111 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('worksheet.update', $worksheet->id) }}" method="post">
+                        <form action="{{ route('competition.update', $competition->id) }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
 
-                                <div class="form-group">
-                                    <label for="type">Topics</label>
-                                    @php
-                                        $postTopic = old('topic') ?? [];
-                                    @endphp
-                                    <select name="topic[]" class="form-control" id="" style="height: 200px;" multiple>
-                                        <option value="">-- Select --</option>
-                                        @foreach($topics as $topic)
-                                            <option value="{{$topic->id}}" @if(in_array($topic->id, $postTopic)) selected @elseif(in_array($topic->id, $levelTopic)) selected @endif>{{$topic->title}}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('topic'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('topic') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                
 
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" name="title" class="form-control" id=""
-                                           value="{{ old('title') ?? $worksheet->title }}">
+                                        value="{{ old('title', $competition->title) ?? '' }}">
                                     @if ($errors->has('title'))
-                                        <span class="text-danger d-block">
+                                    <span class="text-danger d-block">
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Free/Paid</label>
-                                    <select name="fee" class="form-control" onchange="showAmount(this.value);">
+                                    <label for="title">Competition Type</label>
+                                    <select name="competition_type" class="form-control" >
                                         <option value="">-- Select --</option>
-                                        <option value="1" @if(old('fee') == 1) selected @elseif($worksheet->type == 1) selected @endif>Free</option>
-                                        <option value="2" @if(old('fee') == 2) selected @elseif($worksheet->type == 2) selected @endif>Paid</option>
+                                        <option value="online" @if(old('competition_type', $competition->competition_type) == 'online') selected @endif>Online</option>
+                                        <option value="physical" @if(old('competition_type', $competition->competition_type) == 'physical') selected @endif>Physical</option>
                                     </select>
-                                    @if ($errors->has('fee'))
+                                    @if ($errors->has('competition_type'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('fee') }}</strong>
+                                        <strong>{{ $errors->first('competition_type') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
-                                @php
-                                    $feeP = old('fee') ?? $worksheet->type;
-                                    if(empty($feeP) || $feeP == 1){
-                                        $stylee = 'display: none';
-                                    }else{
-                                        $stylee = 'display: block';
-                                    }
-                                @endphp
-                                <div class="form-group" style="{{$stylee}}"  id="amountblock">
-                                    <label for="title">Amount</label>
-                                    <input type="text" name="amount" class="form-control" id=""
-                                           value="{{ old('amount') ?? $worksheet->amount }}">
-                                    @if ($errors->has('amount'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('amount') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                               
 
                                 <div class="form-group">
-                                    <label for="title">Question Template</label>
-                                    <select name="questiontemplate" class="form-control">
+                                    <label for="title">Category</label>
+                                    <select name="category[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
-                                        @foreach($questionTempleates as $questionTemp)
-                                        <option value="{{ $questionTemp->id }}" @if(old('questiontemplate') == $questionTemp->id) selected @elseif($worksheet->question_template_id == $questionTemp->id) selected @endif>{{ $questionTemp->title }}</option>
+                                        @foreach($competitionCategory as $cate)
+                                        <option value="{{ $cate->id }}" @if(in_array($cate->id, $categoryCompetition)) selected @endif>{{ $cate->category_name }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('questiontemplate'))
+                                    @if ($errors->has('category'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('questiontemplate') }}</strong>
+                                        <strong>{{ $errors->first('category') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="title">Date of competition</label>
+                                    <input type="text" name="date_of_competition" class="form-control datepicker1" id=""
+                                        value="{{ old('date_of_competition', $competition->date_of_competition) }}">
+                                    @if ($errors->has('date_of_competition'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('date_of_competition') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Question Type</label>
-                                    <select name="questiontype" class="form-control">
+                                    <label for="title">Start Time of competition</label>
+                                    <select name="start_time_of_competition" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1" @if(old('questiontype') == 1) selected @elseif($worksheet->question_type == 1) selected @endif>Vertical</option>
-                                        <option value="2" @if(old('questiontype') == 2) selected @elseif($worksheet->question_type == 2) selected @endif>Horizontal</option>
+                                        <option value="10" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '10') selected @endif>10.00</option>
+                                        <option value="11" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '11') selected @endif>11.00</option>
+                                        <option value="12" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '12') selected @endif>12.00</option>
+                                        <option value="13" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '13') selected @endif>13.00</option>
+                                        <option value="14" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '14') selected @endif>14.00</option>
+                                        <option value="15" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '15') selected @endif>15.00</option>
+                                        <option value="16" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '16') selected @endif>16.00</option>
+                                        <option value="17" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '17') selected @endif>17.00</option>
+                                        <option value="18" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '18') selected @endif>18.00</option>
+                                        <option value="19" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '19') selected @endif>19.00</option>
+                                        <option value="20" @if(old('start_time_of_competition', $competition->start_time_of_competition) == '20') selected @endif>20.00</option>
                                     </select>
-                                    @if ($errors->has('questiontype'))
+                                    
+                                    @if ($errors->has('start_time_of_competition'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('questiontype') }}</strong>
+                                        <strong>{{ $errors->first('start_time_of_competition') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Stopwatch timing</label>
-                                    <select name="stopwatch" class="form-control">
+                                    <label for="title">End Time of competition</label>
+                                    <select name="end_time_of_competition" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1" @if(old('stopwatch') == 1) selected @elseif($worksheet->stopwatch_timing == 1) selected @endif>Yes</option>
-                                        <option value="2" @if(old('stopwatch') == 2) selected @elseif($worksheet->stopwatch_timing == 2) selected @endif>No</option>
+                                        <option value="10" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '10') selected @endif>10.00</option>
+                                        <option value="11" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '11') selected @endif>11.00</option>
+                                        <option value="12" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '12') selected @endif>12.00</option>
+                                        <option value="13" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '13') selected @endif>13.00</option>
+                                        <option value="14" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '14') selected @endif>14.00</option>
+                                        <option value="15" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '15') selected @endif>15.00</option>
+                                        <option value="16" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '16') selected @endif>16.00</option>
+                                        <option value="17" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '17') selected @endif>17.00</option>
+                                        <option value="18" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '18') selected @endif>18.00</option>
+                                        <option value="19" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '19') selected @endif>19.00</option>
+                                        <option value="20" @if(old('end_time_of_competition', $competition->end_time_of_competition) == '20') selected @endif>20.00</option>
                                     </select>
-                                    @if ($errors->has('stopwatch'))
+                                    
+                                    @if ($errors->has('end_time_of_competition'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('stopwatch') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="title">Preset Timing</label>
-                                    <select name="presettiming" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        <option value="1" @if(old('presettiming') == 1) selected @elseif($worksheet->preset_timing == 1) selected @endif>Yes</option>
-                                        <option value="2" @if(old('presettiming') == 1) selected @elseif($worksheet->preset_timing == 2) selected @endif>No</option>
-                                    </select>
-                                    @if ($errors->has('presettiming'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('presettiming') }}</strong>
+                                        <strong>{{ $errors->first('end_time_of_competition') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -143,26 +128,30 @@
                                 <div class="form-group">
                                     <label for="title">Description</label>
                                     <textarea name="description" class="form-control my-editor" cols="30"
-                                              rows="5">{{old('description') ?? $worksheet->description}}</textarea>
+                                              rows="5">{{old('description', $competition->description)}}</textarea>
                                 </div>
 
-
+                                {{-- 
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1" @if(old('status') == 1) selected @elseif($worksheet->status == 1) selected @endif>Active</option>
-                                        <option value="2" @if(old('status') == 2) selected @elseif($worksheet->status == 2) selected @endif>Inactive</option>
+                                        @if(getActiveStatus())
+                                        @foreach (getActiveStatus() as $key => $item)
+                                            <option value="{{ $key }}" @if(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
                                     </select>
                                     @if ($errors->has('status'))
-                                        <span class="text-danger d-block">
+                                    <span class="text-danger d-block">
                                         <strong>{{ $errors->first('status') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-
+                                --}}
 
                             </div>
+                            
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
                                     Update</button>

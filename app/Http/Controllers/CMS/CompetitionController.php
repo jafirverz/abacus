@@ -101,9 +101,13 @@ class CompetitionController extends Controller
      * @param  \App\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $title = $this->title;
+        $competition = Competition::find($id);
+        $competitionCategory = CompetitionCategory::get();
+        $categoryCompetition = CategoryCompetition::where('competition_id', $id)->pluck('category_id')->toArray();
+        return view('admin.competition.show', compact('title', 'competition', 'categoryCompetition','competitionCategory'));
     }
 
     /**
@@ -112,9 +116,14 @@ class CompetitionController extends Controller
      * @param  \App\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        //
+        $title = $this->title;
+        $competition = Competition::find($id);
+        $competitionCategory = CompetitionCategory::get();
+        $categoryCompetition = CategoryCompetition::where('competition_id', $id)->pluck('category_id')->toArray();
+        
+        return view('admin.competition.edit', compact('title', 'competition', 'categoryCompetition','competitionCategory'));
     }
 
     /**
@@ -124,9 +133,42 @@ class CompetitionController extends Controller
      * @param  \App\cr  $cr
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
+        $messages = [
+            // 'amount.required_if' => 'This field is required',
+        ];
+        $request->validate([
+            'title'  =>  'required',
+            'competition_type'  =>  'required',
+            'category' => 'required',
+            'date_of_competition'  =>  'required',
+            'start_time_of_competition'  =>  'required',
+            'end_time_of_competition'  =>  'required',
+        ], $messages);
+
+        $competition = Competition::where('id', $id)->first();
+        $competition->title = $request->title;
+        $competition->date_of_competition = $request->date_of_competition;
+        $competition->start_time_of_competition = $request->start_time_of_competition;
+        $competition->end_time_of_competition = $request->end_time_of_competition;
+        $competition->description = $request->description;
+        $competition->competition_type = $request->competition_type;
+        $competition->save();
+
+        $categoryCompetition = CategoryCompetition::where('competition_id', $id)->get();
+        foreach($categoryCompetition as $deleteCategory){
+            $deleteCategory->delete();
+        }
+        foreach($request->category as $cate){
+            $catCompt = new CategoryCompetition();
+            $catCompt->competition_id = $id;
+            $catCompt->category_id = $cate;
+            $catCompt->save();
+        }
+
+        return redirect()->route('competition.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
 
     /**

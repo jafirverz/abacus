@@ -22,7 +22,7 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('worksheet.destroy', 'worksheet') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('competition.destroy', 'worksheet') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
@@ -81,10 +81,10 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('worksheet.show', $item->id) }}"
+                                                <a href="{{ route('competition.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('worksheet.edit', $item->id) }}"
+                                                <a href="{{ route('competition.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
