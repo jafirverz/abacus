@@ -250,6 +250,10 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('grade/search', 'CMS\GradeController@search')->name('grade.search');
      Route::resource('grade', 'CMS\GradeController');
 
+     // GRADING EXAM
+     Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
+     Route::resource('grading-exam', 'CMS\GradingExamController');
+
       // TEACHING_MATERIALS
     Route::get('teaching-materials/search', 'CMS\TeachingMaterialsController@search')->name('teaching-materials.search');
     Route::resource('teaching-materials', 'CMS\TeachingMaterialsController');

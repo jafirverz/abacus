@@ -617,6 +617,15 @@ if (!function_exists('getPageList')) {
         return $array_list;
     }
 
+    function gradingExamType($id = null)
+    {
+        $array_list = ['1' => 'Physical', '2' => 'Online'];
+        if ($id) {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
 
 
     function get_footer_menu($menuId = 2, $page_id = NULL, $title = true, $class = 'term')
