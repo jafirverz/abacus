@@ -27,11 +27,17 @@
             'main_menu' =>  [
                 [
                     'title' =>  __('constant.COMPETITION'),
-                    'icon'  =>  '<i class="fas fa-life-ring"></i>',
+                    'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/competition',
+                ],
+                [
+                    'title' =>  __('Competition Papers'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/papers',
                 ],
             ],
         ],
+        
         [
             'menu_header'   =>  __('constant.MASTER'),
             'main_menu' =>  [
