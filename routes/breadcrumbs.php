@@ -260,4 +260,16 @@ Breadcrumbs::for('category_competition_crud', function ($trail, $title, $url = '
     $trail->push($title, $url);
 });
 
+// GRADING EXAM
+Breadcrumbs::for('grading_exam', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.GRADING_EXAM'), route('grading-exam.index'));
+});
+
+Breadcrumbs::for('grading_exam_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('grading_exam');
+    $trail->push($title, $url);
+});
+
+
 
