@@ -35,6 +35,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/papers',
                 ],
+                [
+                    'title' =>  __('Competition Questions'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/competition-questions',
+                ],
             ],
         ],
         

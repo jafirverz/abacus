@@ -244,6 +244,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('papers', 'CMS\CompetitionPaperController');
 
 
+    // COMPETITION QUESTIONS
+    Route::get('papers/search', 'CMS\CompetitionQuestionsController@search')->name('competition.search');
+    Route::resource('competition-questions', 'CMS\CompetitionQuestionsController');
+
+
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');
     Route::post('/system-settings/update', 'CMS\SystemSettingsController@update')->name('admin.system-settings.update');
