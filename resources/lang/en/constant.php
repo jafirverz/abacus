@@ -18,6 +18,7 @@ return [
     'TEMPLATE'  =>  'Template',
     'ACTIVITYLOG'   =>  'Audit Trail Logs',
     'COMPETITION'   =>  'Competition',
+    'COMPETITIONPAPER'   =>  'Competition Papers',
     'CMS'   =>  'CMS',
     'MENUS'  =>  'Menus',
     'MENU'  =>  'Menu',
