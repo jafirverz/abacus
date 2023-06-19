@@ -66,15 +66,27 @@
                             @elseif(isset($question_template_id) && ($question_template_id==2 || $question_template_id==1))
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                <div class="row after-add-more" style="margin-bottom:30px;">
-                                    <div class="col-md-6">
-                                        <input class="form-control" required value="" name="input_1[]"  type="file">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
-                                    </div>
+                                @php 
+                                $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                @endphp
 
+                                @foreach($compPaperQuestion as $questionss)
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="{{ url('/') }}/upload-file/{{  $questionss->question_1 }}" target="_blank">{{ $questionss->question_1 }} </a> 
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input class="form-control" required value="{{  $questionss->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                        </div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div>
+
+                                    </div>
                                 </div>
+                                @endforeach
+                                <div class="after-add-more"></div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>

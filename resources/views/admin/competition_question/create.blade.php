@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('comp-questions.store') }}" method="post">
+                        <form action="{{ route('comp-questions.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -47,7 +47,7 @@
                                 
                                 @endphp
 
-                                @if(isset($question_template_id) && $question_template_id==5)
+                                @if(isset($question_template_id) && $question_template_id==9)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-4">
@@ -79,7 +79,7 @@
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
 
-                                @elseif(isset($question_template_id) && $question_template_id==4)
+                                @elseif(isset($question_template_id) && $question_template_id==4 || $question_template_id==5)
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
@@ -91,6 +91,8 @@
                                             <select name="input_2[]" class="form-control">
                                                 <option value="add">Add</option>
                                                 <option value="subtract">Subtract</option>
+                                                <option value="multiply">Multiply</option>
+                                                <option value="divide">Divide</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2">
@@ -196,6 +198,8 @@
                 <select name="input_2[]" class="form-control">
                     <option value="add">Add</option>
                     <option value="subtract">Subtract</option>
+                    <option value="multiply">Multiply</option>
+                    <option value="divide">Divide</option>
                 </select>
             </div>
             <div class="col-md-2">
