@@ -76,7 +76,7 @@ class CompetitionQuestionsController extends Controller
                 $storQues->save();
             }
         }
-        return redirect()->route('competition-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
         
     }
 
@@ -136,7 +136,7 @@ class CompetitionQuestionsController extends Controller
                 $storQues->save();
             }
         }
-        return redirect()->route('competition-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
 
     /**

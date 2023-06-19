@@ -7,7 +7,7 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
-                <a href="{{ route('competition-questions.create') }}" class="btn btn-primary">Add New</a>
+                <a href="{{ route('comp-questions.create') }}" class="btn btn-primary">Add New</a>
             </div>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
@@ -22,12 +22,12 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('competition-questions.destroy', 'competition-questions') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('comp-questions.destroy', 'comp-questions') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('competition-questions.destroy', 'competition-questions') }}" method="post">
+                            <form id="destroy" action="{{ route('comp-questions.destroy', 'comp-questions') }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
@@ -80,10 +80,10 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('competition-questions.show', $item->id) }}"
+                                                <a href="{{ route('comp-questions.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('competition-questions.edit', $item->id) }}"
+                                                <a href="{{ route('comp-questions.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>

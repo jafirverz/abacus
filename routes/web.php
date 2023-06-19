@@ -245,8 +245,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     // COMPETITION QUESTIONS
-    Route::get('papers/search', 'CMS\CompetitionQuestionsController@search')->name('competition.search');
-    Route::resource('competition-questions', 'CMS\CompetitionQuestionsController');
+    Route::get('comp-questions/search', 'CMS\CompetitionQuestionsController@search')->name('comp-questions.search');
+    Route::resource('comp-questions', 'CMS\CompetitionQuestionsController');
 
 
     // SYSTEM SETTINGS

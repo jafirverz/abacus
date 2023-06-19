@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('competition-questions.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('comp-questions.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Edit', route('bank.edit', $bank->id))])--}}
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('competition-questions.update', $competitionPaper->id) }}" method="post">
+                        <form action="{{ route('comp-questions.update', $competitionPaper->id) }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -26,7 +26,7 @@
                                     <select name="comp_paper" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" disabled>
                                         <option value="">-- Select --</option>
                                         @foreach($papers as $paper)
-                                        <option value="<?php echo url('/'); ?>/admin/competition-questions/{{ $competitionPaper->id }}/edit?paperId={{ $paper->id }}" @if((isset($_GET['paperId']) && $_GET['paperId']==$paper->id) || $competitionPaper->id == $paper->id) selected @endif>{{ $paper->title }}</option>
+                                        <option value="<?php echo url('/'); ?>/admin/comp-questions/{{ $competitionPaper->id }}/edit?paperId={{ $paper->id }}" @if((isset($_GET['paperId']) && $_GET['paperId']==$paper->id) || $competitionPaper->id == $paper->id) selected @endif>{{ $paper->title }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('comp_paper'))
