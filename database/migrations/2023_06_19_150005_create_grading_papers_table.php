@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSystemSettingsTable extends Migration
+class CreateGradingPapersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSystemSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('system_settings', function (Blueprint $table) {
+        Schema::create('grading_papers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('key');
             $table->string('title')->nullable();
+            $table->tinyInteger('question_type')->nullable();
+            $table->text('json_question')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateSystemSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('system_settings');
+        Schema::dropIfExists('grading_papers');
     }
 }

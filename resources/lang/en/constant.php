@@ -9,6 +9,7 @@ return [
     'QUESTION_MANAGEMENT'  =>  'Question Management',
     'ANNOUNCEMENT'  =>  'Announcement',
     'GRADE'  =>  'Grade',
+    'GRADING_PAPER'  =>  'Grading Paper',
     'TEACHING_MATERIALS'  =>  'Teaching Materials',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
