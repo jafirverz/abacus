@@ -20,8 +20,11 @@ class CreateCompetitionPapersTable extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('time')->nullable();
+            $table->string('pdf_file')->nullable();
+            $table->string('price')->nullable();
+            $table->string('competition_type')->nullable()->comment('physical, online');
             $table->string('type')->nullable()->comment('horizontal, vertical');
-            $table->string('timer')->nullable()->comment('yes, no');;
+            $table->string('timer')->nullable()->comment('yes, no');
             $table->timestamps();
         });
     }

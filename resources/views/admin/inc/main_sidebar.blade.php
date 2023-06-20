@@ -36,7 +36,7 @@
                     'url'   =>  'admin/papers',
                 ],
                 [
-                    'title' =>  __('Competition Questions'),
+                    'title' =>  __('Online Competition Questions'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/comp-questions',
                 ],

@@ -21,7 +21,11 @@
                             @method('PUT')
                             <div class="card-body">
 
-                                
+                                @if($competitionPaper->comp_contro->competition_type == 'physical')
+                                <input type="hidden" name="competionT" value="2">
+                                @else
+                                <input type="hidden" name="competionT" value="1">
+                                @endif
 
                                 <div class="form-group">
                                     <label for="title">Title</label>
@@ -49,6 +53,47 @@
                                     @endif
                                 </div>
 
+                                
+                                <div class="form-group">
+                                    <label for="title">Competition</label>
+                                    <select name="competition" class="form-control" readonly>
+                                        <option value="">-- Select --</option>
+                                        @foreach($competition as $comp)
+                                        <option value="{{ $comp->id }}" @if($comp->id == $competitionPaper->competition_controller_id) selected @endif>{{ $comp->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('competition'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('competition') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                
+                                
+                                @if($competitionPaper->comp_contro->competition_type == 'physical')
+                                <div class="form-group physicalclass" >
+                                    <label for="title">Price</label>
+                                    <input type="text" name="price" class="form-control" id=""
+                                        value="{{ old('price', $competitionPaper->price) ?? '' }}">
+                                    @if ($errors->has('price'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group physicalclass" >
+                                    <label for="title">PDF Upload</label>
+                                    <input type="file" name="pdf_upload" class="form-control" >
+                                    @if ($errors->has('pdf_upload'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('pdf_upload') }}</strong>
+                                    </span>
+                                    @endif
+                                    <a href="{{ url('/') }}/upload-file/{{  $competitionPaper->pdf_file }}" target="_blank">{{ $competitionPaper->pdf_file }}</a>
+                                </div>
+
+                                @else
                                 <div class="form-group">
                                     <label for="title">Question Template</label>
                                     <select name="questiontemplate" class="form-control">
@@ -64,20 +109,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="title">Competition</label>
-                                    <select name="competition" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @foreach($competition as $comp)
-                                        <option value="{{ $comp->id }}" @if($comp->id == $competitionPaper->competition_controller_id) selected @endif>{{ $comp->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('competition'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('competition') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                
 
                                 <div class="form-group">
                                     <label for="title">Time</label>
@@ -120,7 +152,7 @@
                                     @endif
                                 </div>
 
-                                
+                                @endif
 
                                 <div class="form-group">
                                     <label for="title">Description</label>

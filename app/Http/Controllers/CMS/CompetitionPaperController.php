@@ -70,16 +70,28 @@ class CompetitionPaperController extends Controller
     {
         //
         $messages = [
-            // 'amount.required_if' => 'This field is required',
+            'questiontemplate.required_if' => 'This field is required',
         ];
         $request->validate([
             'title'  =>  'required',
-            'questiontemplate'  =>  'required',
-            'competition' => 'required',
-            'time'  =>  'required',
-            'question_type'  =>  'required',
             'category'  =>  'required',
+            'competition' => 'required',
+            'price'  =>  'required_if:competionT,2',
+            'pdf_upload'  =>  'required_if:competionT,2',
+            'questiontemplate'  =>  'required_if:competionT,1',
+            'time'  =>  'required_if:competionT,1',
+            'question_type'  =>  'required_if:competionT,1',
+            
         ], $messages);
+
+        if ($request->hasfile('pdf_upload')) {
+            $file = $request->file('pdf_upload');
+            $name = $file->getClientOriginalName();
+            $file->move(public_path() . '/upload-file/', $name);
+
+            // $json['input_1']=$data;
+            // $json['input_2']=$request->input_2;
+        }
 
         $competitionPaper = new CompetitionPaper();
         $competitionPaper->title = $request->title;
@@ -87,6 +99,8 @@ class CompetitionPaperController extends Controller
         $competitionPaper->competition_controller_id = $request->competition;
         $competitionPaper->description = $request->description;
         $competitionPaper->time = $request->time;
+        $competitionPaper->price = $request->price;
+        $competitionPaper->pdf_file = $name??null;
         $competitionPaper->type = $request->question_type;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->save();
@@ -124,7 +138,7 @@ class CompetitionPaperController extends Controller
     {
         //
         $title = $this->title;
-        $competitionPaper = CompetitionPaper::find($id);
+        $competitionPaper = CompetitionPaper::with('comp_contro')->find($id);
         $competitionCategory = CompetitionCategory::get();
         $questionTempleates = QuestionTemplate::get();
         $competition = Competition::get();
@@ -143,17 +157,34 @@ class CompetitionPaperController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // $messages = [
+        //     // 'amount.required_if' => 'This field is required',
+        // ];
+        // $request->validate([
+        //     'title'  =>  'required',
+        //     'questiontemplate'  =>  'required',
+        //     'competition' => 'required',
+        //     'time'  =>  'required',
+        //     'question_type'  =>  'required',
+        //     'category'  =>  'required',
+        // ], $messages);
+
         $messages = [
-            // 'amount.required_if' => 'This field is required',
+            'questiontemplate.required_if' => 'This field is required',
         ];
         $request->validate([
             'title'  =>  'required',
-            'questiontemplate'  =>  'required',
-            'competition' => 'required',
-            'time'  =>  'required',
-            'question_type'  =>  'required',
             'category'  =>  'required',
+            'competition' => 'required',
+            'price'  =>  'required_if:competionT,2',
+            // 'pdf_upload'  =>  'required_if:competionT,2',
+            'questiontemplate'  =>  'required_if:competionT,1',
+            'time'  =>  'required_if:competionT,1',
+            'question_type'  =>  'required_if:competionT,1',
+            
         ], $messages);
+
+        
 
         $competitionPaper = CompetitionPaper::where('id', $id)->first();
         $competitionPaper->title = $request->title;
@@ -161,6 +192,16 @@ class CompetitionPaperController extends Controller
         $competitionPaper->competition_controller_id = $request->competition;
         $competitionPaper->description = $request->description;
         $competitionPaper->time = $request->time;
+        $competitionPaper->price = $request->price;
+        if ($request->hasfile('pdf_upload')) {
+            $file = $request->file('pdf_upload');
+            $name = $file->getClientOriginalName();
+            $file->move(public_path() . '/upload-file/', $name);
+            $competitionPaper->pdf_file = $name;
+            // $json['input_1']=$data;
+            // $json['input_2']=$request->input_2;
+        }
+        
         $competitionPaper->type = $request->question_type;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->save();

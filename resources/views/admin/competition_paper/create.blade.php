@@ -16,12 +16,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('papers.store') }}" method="post">
+                        <form action="{{ route('papers.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="card-body">
 
-                                
+                                <input type="hidden" name="competionT" id="competionT" value="">
 
                                 <div class="form-group">
                                     <label for="title">Title</label>
@@ -50,6 +50,43 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="title">Competition</label>
+                                    <select name="competition" class="form-control" id="competition" >
+                                        <option value="">-- Select --</option>
+                                        @foreach($competition as $comp)
+                                        <option value="{{ $comp->id }}" data-comp="{{ $comp->competition_type }}" @if(old('competition') == $comp->id) selected @endif>{{ $comp->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('competition'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('competition') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group physicalclass" style="display: none">
+                                    <label for="title">Price</label>
+                                    <input type="text" name="price" class="form-control" id=""
+                                        value="{{ old('price') }}">
+                                    @if ($errors->has('price'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group physicalclass" style="display: none">
+                                    <label for="title">PDF Upload</label>
+                                    <input type="file" name="pdf_upload" class="form-control" >
+                                    @if ($errors->has('pdf_upload'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('pdf_upload') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group onlineclass" style="display: none">
                                     <label for="title">Question Template</label>
                                     <select name="questiontemplate" class="form-control">
                                         <option value="">-- Select --</option>
@@ -64,22 +101,9 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="title">Competition</label>
-                                    <select name="competition" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @foreach($competition as $comp)
-                                        <option value="{{ $comp->id }}" @if(old('competition') == $comp->id) selected @endif>{{ $comp->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('competition'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('competition') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                
 
-                                <div class="form-group">
+                                <div class="form-group onlineclass" style="display: none">
                                     <label for="title">Time</label>
                                     <input type="text" name="time" class="form-control" id=""
                                         value="{{ old('time') }}">
@@ -90,7 +114,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group onlineclass" style="display: none">
                                     <label for="title">Question Type</label>
                                     <select name="question_type" class="form-control" >
                                         <option value="">-- Select --</option>
@@ -106,7 +130,7 @@
 
                                
 
-                                <div class="form-group">
+                                <div class="form-group onlineclass" style="display: none">
                                     <label for="title">Timer</label>
                                     <select name="timer" class="form-control">
                                         <option value="">-- Select --</option>
@@ -120,13 +144,14 @@
                                     @endif
                                 </div>
 
-                                
 
                                 <div class="form-group">
                                     <label for="title">Description</label>
                                     <textarea name="description" class="form-control my-editor" cols="30"
                                               rows="5">{{old('description')}}</textarea>
                                 </div>
+
+
 
                                 {{-- 
                                 <div class="form-group">
@@ -159,5 +184,42 @@
         </div>
     </section>
 </div>
+
+@if(old('competionT') == 1)
+<script>
+    $( document ).ready(function() {
+        $('.onlineclass').show();
+        $('.physicalclass').hide();
+        $('#competionT').val(1);
+    });
+</script>
+@endif
+@if(old('competionT') == 2)
+<script>
+    $( document ).ready(function() {
+        $('.onlineclass').hide();
+        $('.physicalclass').show();
+        $('#competionT').val(2);
+    });
+</script>
+@endif
+
+<script>
+    $( document ).ready(function() {
+        $('#competition').change(function(){
+            let compType = '';
+            compType = $(this).find(':selected').data('comp');
+            if(compType == 'online'){
+                $('.onlineclass').show();
+                $('.physicalclass').hide();
+                $('#competionT').val(1);
+            }else{
+                $('.onlineclass').hide();
+                $('.physicalclass').show();
+                $('#competionT').val(2);
+            }
+        });
+    });
+</script>
 
 @endsection
