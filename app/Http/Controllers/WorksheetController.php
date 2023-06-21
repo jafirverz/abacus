@@ -39,5 +39,25 @@ class WorksheetController extends Controller
             $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
             return view('account.worksheetAudio', compact("worksheet", 'level', 'questions'));
         }
+
+        if($qId == 3) {
+            if(empty($worksheetId)){
+                return abort(404);
+            }
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $lId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
+            return view('account.worksheetNumber', compact("worksheet", 'level', 'questions'));
+        }
+
+        if($qId == 6) {
+            if(empty($worksheetId)){
+                return abort(404);
+            }
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $lId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
+            return view('account.worksheetChallenge', compact("worksheet", 'level', 'questions'));
+        }
     }
 }
