@@ -146,7 +146,7 @@
                         <div class="row sp-col-xl-30" >
                             <div class="col-xl-4 sp-col" id="disableinstructor">
                                 <label class="lb-1">Instructor <span class="required">*</span></label>
-                                <select class="selectpicker" disabled >
+                                <select class="selectpicker" id="instructor" disabled >
                                     <option value="" selected>Please Select</option>
                                     @foreach($instructors as $instructor)
                                     <option value="{{$instructor->id}}" @if($instructor->id == $user->instructor_id) selected @endif>{{$instructor->name}}</option>
@@ -154,6 +154,9 @@
                                 </select>
 
                             </div>
+                            <input type="hidden" name="oldInstructorId" value="{{ $user->instructor_id }}">
+                            
+                            {{-- 
                             @php
                                 $instructor_id = $user->instructor_id;
                                 if(old("instructor")){
@@ -172,7 +175,7 @@
                                     <span class="text-danger">&nbsp;{{ $errors->first('instructor') }}</span>
                                 @endif
                             </div>
-
+                            --}}
 
                             <div class="col-xl-3 sp-col" id="disablecountry">
                                 <label class="lb-1">Country <span class="required">*</span></label>
@@ -228,8 +231,8 @@
                 $('#enablegender').show();
                 $('#disablecountry').hide();
                 $('#enablecountry').show();
-                $('#disableinstructor').hide();
-                $('#enableinstructor').show();
+                //$('#disableinstructor').hide();
+                //$('#enableinstructor').show();
                 $('#updateprofile').val(1);
                 // $('#profileform').hide();
                 // $('#profileformedit').show();
@@ -272,8 +275,8 @@
         $('#enablegender').show();
         $('#disablecountry').hide();
         $('#enablecountry').show();
-        $('#disableinstructor').hide();
-        $('#enableinstructor').show();
+        //$('#disableinstructor').hide();
+        //$('#enableinstructor').show();
         $('#updateprofile').val(1);
         // $('#profileform').hide();
         // $('#profileformedit').show();
