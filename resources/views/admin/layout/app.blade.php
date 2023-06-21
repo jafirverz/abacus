@@ -54,7 +54,7 @@
 
 
 </body>
-<script src="http://localhost:81/abacus/public/stisla-theme/js/custom.js"></script>
+<script src="{{ asset('stisla-theme/js/custom.js') }}"></script>
 <script type="text/javascript">
     $(function () {
         $('.datepicker1').datetimepicker({
