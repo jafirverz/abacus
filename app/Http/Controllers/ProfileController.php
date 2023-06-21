@@ -188,7 +188,7 @@ class ProfileController extends Controller
             $updateUserProfile->country_code = $request->country_code;
             $updateUserProfile->country_code_phone = $request->country_code_phone;
             $updateUserProfile->dob = $dob;
-            $updateUserProfile->instructor_id  = $request->instructor;
+            $updateUserProfile->instructor_id  = $request->oldInstructorId;
             $updateUserProfile->mobile = $request->mobile;
             $updateUserProfile->gender = $request->gender;
 
