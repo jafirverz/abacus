@@ -9,15 +9,15 @@
     <?php /*?><link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}"><?php */?>
     <link rel="icon" href="{{ asset(config('system_settings')->favicon ?? '') }}">
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ mix('stisla-theme/css/app.css') }}">
-    <link rel="stylesheet" href="{{ mix('stisla-theme/css/stisla.css') }}">
+    <link rel="stylesheet" href="http://localhost:81/abacus/public/stisla-theme/css/app.css">
+    <link rel="stylesheet" href="http://localhost:81/abacus/public/stisla-theme/css/stisla.css">
     <link rel="stylesheet" href="{{ asset('stisla-theme/css/bootstrap-datetimepicker.css') }}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="{{ mix('stisla-theme/js/app.js') }}"></script>
-    <script src="{{ asset('tinymce/tinymce.js') }}"></script>
+    <script src="http://localhost:81/abacus/public/stisla-theme/js/app.js"></script>
+    <script src="{{ asset('http://localhost:81/abacus/public/tinymce/tinymce.js') }}"></script>
 
 
     <!-- CSRF Token -->
@@ -30,7 +30,7 @@
 
     </script>
     <!-- daterangepicker -->
-	
+
 <script src="{{ asset('assets/plugins/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('stisla-theme/js/moment-with-locales.min.js') }}"></script>
@@ -52,7 +52,7 @@
 
 
 </body>
-<script src="{{ mix('stisla-theme/js/custom.js') }}"></script>
+<script src="http://localhost:81/abacus/public/stisla-theme/js/custom.js"></script>
 <script type="text/javascript">
     $(function () {
         $('.datepicker1').datetimepicker({
