@@ -220,9 +220,9 @@ class GradingPaperController extends Controller
         $search_term = $request->search;
         $templates = QuestionTemplate::get();
         $title = $this->title;
-        $paper = GradingPaper::join('question_templates','question_templates.id','grading_papers.question_type')->search($search_term)->paginate($this->pagination);
+        $paper = GradingPaper::join('question_templates','question_templates.id','grading_papers.question_type')->search($search_term)->select('grading_papers.*')->paginate($this->pagination);
         if ($search_term) {
-            $category->appends('search', $search_term);
+            $paper->appends('search', $search_term);
         }
 
         return view('admin.master.grading-paper.index', compact('title', 'templates','paper'));
