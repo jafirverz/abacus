@@ -160,7 +160,7 @@ class ProfileController extends Controller
                     'country_code_phone' => 'required',
                     'mobile' => 'required',
                     'gender' => 'required',
-                    'instructor' => 'required',
+                    // 'instructor' => 'required',
                     'country_code' => 'required',
 //                'password'  =>  'nullable|min:8',
 //			'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
@@ -188,7 +188,7 @@ class ProfileController extends Controller
             $updateUserProfile->country_code = $request->country_code;
             $updateUserProfile->country_code_phone = $request->country_code_phone;
             $updateUserProfile->dob = $dob;
-            $updateUserProfile->instructor_id  = $request->instructor;
+            $updateUserProfile->instructor_id  = $request->oldInstructorId;
             $updateUserProfile->mobile = $request->mobile;
             $updateUserProfile->gender = $request->gender;
 
@@ -223,7 +223,7 @@ class ProfileController extends Controller
                 $gender = 'Female';
             }
 
-            $instructorDetail = User::where('id', $request->instructor)->first();
+            $instructorDetail = User::where('id', $request->oldInstructorId)->first();
             $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_PROFILE_UPDATE'));
 
             if ($email_template) {
@@ -250,7 +250,6 @@ class ProfileController extends Controller
 
 
             }
-
             //			Admin email for new student registration
             $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE'));
             $admins = Admin::get();
