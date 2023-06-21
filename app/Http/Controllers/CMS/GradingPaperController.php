@@ -62,12 +62,12 @@ class GradingPaperController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $fields=[
             'title'  =>  'required',
             'question_type'  =>  'required',
-        ]);
+        ];
 
-        if($request->question_type==5)
+        if($request->question_type==5 || $request->question_type==4)
         {
         $json['input_1']=$request->input_1;
         $json['input_2']=$request->input_2;
@@ -87,11 +87,7 @@ class GradingPaperController extends Controller
                 $json['input_2']=$request->input_2;
             }
         }
-        elseif($request->question_type==4)
-        {
-            $json['input_1']=$request->input_1;
-            $json['input_2']=$request->input_2;
-        }elseif($request->question_type==1){
+        elseif($request->question_type==1){
             if ($request->hasfile('input_1')) {
                 foreach ($request->file('input_1') as $file) {
 
@@ -113,7 +109,6 @@ class GradingPaperController extends Controller
 
         $paper = new GradingPaper();
         $paper->title = $request->title;
-        $paper->worksheet_id = $request->worksheet_id;
         $paper->question_type = $request->question_type;
         $paper->json_question = json_encode($json);
         $paper->created_at = Carbon::now();
