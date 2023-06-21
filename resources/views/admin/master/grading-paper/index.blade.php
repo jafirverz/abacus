@@ -92,7 +92,7 @@
                                         {{ $item->title }}
                                     </td>
                                     <td>
-                                        {{ $item->question_type }}
+                                        {{ $item->template->title }}
                                     </td>
 
                                     <td>
