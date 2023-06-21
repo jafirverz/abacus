@@ -53,7 +53,7 @@
                                 @php 
                                 $_GET['question-type'] = '';
                                 @endphp
-                                @if((isset($_GET['question-type']) && $_GET['question-type']==3) || $question->question_type==3)
+                                @if((isset($_GET['question-type']) && $_GET['question-type']==9) || $question->question_type==9)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(3) }}</label>
                                     @php
                                         $json_question=json_decode($question->json_question);
@@ -84,7 +84,7 @@
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
-                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $question->question_type==2 || $question->question_type==1 || $_GET['question-type']==1)
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $question->question_type==2 || $question->question_type==1 || $_GET['question-type']==1 || $question->question_type==3 || $_GET['question-type']==3)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
                                     @php
                                     $json_question=json_decode($question->json_question);
@@ -145,7 +145,7 @@
 
 
                             </div>
-                            @if(isset($_GET['question-type']))
+                            @if(!empty($_GET['question-type']))
                             <input type="hidden" name="question_type" value="{{ $_GET['question-type'] }}">
                             @else
                             <input type="hidden" name="question_type" value="{{ $question->question_type }}">
