@@ -179,6 +179,7 @@ class PermissionController extends Controller
         $request->validate([
             'firstname'  =>  'required',
             'lastname'  =>  'required',
+            'country_id'  =>  'required',
             'email' =>  'required|email|unique:admins',
             'password'  =>  'required|min:8',
             'admin_role'    =>  'required',
@@ -188,6 +189,7 @@ class PermissionController extends Controller
         $admins->firstname   =   $request->firstname;
         $admins->lastname   =   $request->lastname;
         $admins->email = $request->email;
+        $admins->country_id = $request->country_id;
         $admins->password = Hash::make($request->password);
         $admins->admin_role = $request->admin_role;
         $admins->status = $request->status;
@@ -212,6 +214,7 @@ class PermissionController extends Controller
         $request->validate([
             'firstname'  =>  'required',
             'lastname'  =>  'required',
+            'country_id'  =>  'required',
             'email' =>  'required|email|unique:admins,email,'.$id.',id',
             'password'  =>  'nullable|min:8',
             'admin_role'    =>  'required',
@@ -221,6 +224,7 @@ class PermissionController extends Controller
         $admins->firstname   =   $request->firstname;
         $admins->lastname   =   $request->lastname;
         $admins->email = $request->email;
+        $admins->country_id = $request->country_id;
         if($request->password)
         {
             $admins->password = Hash::make($request->password);

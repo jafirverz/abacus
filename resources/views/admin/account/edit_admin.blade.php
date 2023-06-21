@@ -48,6 +48,23 @@
                             <input class="form-control" name="password" placeholder="Enter password" type="password" value="">
                             <span class="help-block">@if($errors->first('password')) {{ $errors->first('password') }} @endif</span>
                         </div>
+                        <div class="form-group">
+                            <label for="country_id">Country</label>
+                            <select name="country_id" class="form-control" id="country_id">
+                                <option value="">-- Select --</option>
+                                @if(getCountry())
+                                @foreach (getCountry() as $key => $item)
+                                <option value="{{ $key }}" @if(old('country_id',$admin->country_id)==$key) selected @endif>{{ $item }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                            @if ($errors->has('country_id'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('country_id') }}</strong>
+                            </span>
+                            @endif
+                        </div>
                         <div class="form-group @if($errors->first('admin_role')) has-error @endif">
                             <label>
                                 Role
