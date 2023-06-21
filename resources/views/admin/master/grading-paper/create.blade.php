@@ -32,24 +32,24 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="worksheet">Worksheet</label>
-                                    <select  id="worksheet_id"  required class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                    <label for="question_type">Type</label>
+                                    <select  id="question_type"  required class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
-                                        @if ($worksheets)
-                                        @foreach ($worksheets as $item)
-                                        <option value="<?php echo url('/'); ?>/admin/question/create?worksheet_id={{ $item->id }}&question-type={{ $item->question_template_id }}" @if(isset($_GET['worksheet_id']) && $_GET['worksheet_id']==$item->id) selected @endif> {{ $item->title }} </option>
+                                        @if ($templates)
+                                        @foreach ($templates as $item)
+                                        <option value="<?php echo url('/'); ?>/admin/grading-paper/create?question-type={{ $item->id }}" @if(isset($_GET['question-type']) && $_GET['question-type']==$item->id) selected @endif> {{ $item->title }} </option>
                                         @endforeach
                                         @endif
                                     </select>
 
-                                    @if ($errors->has('worksheet'))
+                                    @if ($errors->has('question_type'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('worksheet') }}</strong>
+                                        <strong>{{ $errors->first('question_type') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
-                            @if(isset($_GET['question-type']) && $_GET['question-type']==5)
+                            @if(isset($_GET['question-type']) && ($_GET['question-type']==5 || $_GET['question-type']==4))
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-4">
@@ -81,7 +81,7 @@
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
 
-                                @elseif(isset($_GET['question-type']) && $_GET['question-type']==4)
+                                @elseif(isset($_GET['question-type']) && ($_GET['question-type']==6 || $_GET['question-type']==7 || $_GET['question-type']==8 || $_GET['question-type']==9))
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">

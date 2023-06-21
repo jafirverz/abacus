@@ -14,7 +14,8 @@ class GradingPaper extends Model
     protected static $logAttributes = ['*'];
     protected static $logOnlyDirty = true;
 
-    public function worksheet(){
+    public function template()
+    {
         return $this->belongsTo('App\QuestionTemplate', 'question_type', 'id');
     }
 
@@ -27,7 +28,6 @@ class GradingPaper extends Model
             $query->orWhere('question_templates.title', 'like', '%'.$search_term.'%');
             $query->orwhere(DB::raw("(DATE_FORMAT(grading_papers.created_at,'%d %b, %Y %h:%i %p'))"), 'like', '%'.$search_term.'%');
             $query->orwhere(DB::raw("(DATE_FORMAT(grading_papers.updated_at,'%d %b, %Y %h:%i %p'))"), 'like', '%'.$search_term.'%');
-
             return $query;
         }
     }
