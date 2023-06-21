@@ -26,23 +26,25 @@
 
                             </div>
 
+
+
                             <div class="form-group">
-                                <label for="worksheet">Worksheet</label>
-                                <select disabled="disabled"  id="worksheet_id" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                <label for="question_type">Type</label>
+                                <select disabled="disabled"  id="question_type" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                     <option value="">-- Select --</option>
-                                    @if ($worksheets)
-                                    @foreach ($worksheets as $item)
-                                    <option value="<?php echo url('/'); ?>/admin/question/{{ $question->id }}/edit?question-type={{ $item->question_type }}" @if(old('worksheet_id', $question->worksheet_id)==$item->id) selected @endif> {{ $item->title }} </option>
+                                    @if ($templates)
+                                    @foreach ($templates as $item)
+                                    <option value="<?php echo url('/'); ?>/admin/grading-paper/{{ $paper->id }}/edit?question-type={{ $item->id }}" @if(old('question_type', $paper->question_type)==$item->id) selected @endif> {{ $item->title }} </option>
                                     @endforeach
                                     @endif
                                 </select>
 
-
                             </div>
-                            @if($question->question_type==1)
-                                <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+
+                            @if($paper->question_type==4 || $paper->question_type==5)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($paper->question_type) }}</label>
                                 @php
-                                    $json_question=json_decode($question->json_question);
+                                    $json_question=json_decode($paper->json_question);
                                     for($i=0;$i<count($json_question->input_1);$i++)
                                     {
 
@@ -65,10 +67,10 @@
                                 @php } @endphp
 
 
-                                @elseif($question->question_type==2)
-                                <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+                                @elseif($paper->question_type==2)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($paper->question_type) }}</label>
                                 @php
-                                $json_question=json_decode($question->json_question);
+                                $json_question=json_decode($paper->json_question);
                                 for($i=0;$i<count($json_question->input_1);$i++)
                                 {
 
@@ -88,10 +90,10 @@
                                         </div>
                                     @php } @endphp
 
-                                    @elseif($question->question_type==4)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+                                    @elseif($paper->question_type==4)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($paper->question_type) }}</label>
                                     @php
-                                    $json_question=json_decode($question->json_question);
+                                    $json_question=json_decode($paper->json_question);
                                     for($i=0;$i<count($json_question->input_1);$i++)
                                     {
 

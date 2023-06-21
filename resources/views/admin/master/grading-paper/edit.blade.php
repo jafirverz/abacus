@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('grading-paper.update', $question->id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('grading-paper.update', $paper->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="previousUrll" value="{{ url()->previous() }}">
@@ -34,26 +34,26 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="worksheet">Worksheet</label>
-                                    <select disabled="disabled"  id="worksheet_id" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                    <label for="question_type">Type</label>
+                                    <select disabled="disabled"  id="question_type" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
-                                        @if ($worksheets)
-                                        @foreach ($worksheets as $item)
-                                        <option value="<?php echo url('/'); ?>/admin/question/{{ $question->id }}/edit?question-type={{ $item->question_type }}" @if(old('worksheet_id', $question->worksheet_id)==$item->id) selected @endif> {{ $item->title }} </option>
+                                        @if ($templates)
+                                        @foreach ($templates as $item)
+                                        <option value="<?php echo url('/'); ?>/admin/grading-paper/{{ $paper->id }}/edit?question-type={{ $item->id }}" @if(old('question_type', $paper->question_type)==$item->id) selected @endif> {{ $item->title }} </option>
                                         @endforeach
                                         @endif
                                     </select>
 
-                                    @if ($errors->has('worksheet'))
+                                    @if ($errors->has('question_type'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('worksheet') }}</strong>
+                                        <strong>{{ $errors->first('question_type') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                                @if((isset($_GET['question-type']) && $_GET['question-type']==1) || $question->question_type==1)
+                                @if((isset($_GET['question-type']) && $_GET['question-type']==1) || $paper->question_type==1)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(1) }}</label>
                                     @php
-                                        $json_question=json_decode($question->json_question);
+                                        $json_question=json_decode($paper->json_question);
                                         for($i=0;$i<count($json_question->input_1);$i++)
                                         {
 
@@ -80,13 +80,72 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==5) || $paper->question_type==5)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(5) }}</label>
+                                    @php
+                                        $json_question=json_decode($paper->json_question);
+                                        for($i=0;$i<count($json_question->input_1);$i++)
+                                        {
 
-                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $question->question_type==2)
+                                    @endphp
+
+                                        <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-4">
+                                                    <input class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div>
+                                        </div>
+                                    @php } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $paper->question_type==4)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(4) }}</label>
+                                    @php
+                                        $json_question=json_decode($paper->json_question);
+                                        for($i=0;$i<count($json_question->input_1);$i++)
+                                        {
+
+                                    @endphp
+
+                                        <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-4">
+                                                    <input class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div>
+                                        </div>
+                                    @php } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $paper->question_type==2)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
                                     @php
-                                    $json_question=json_decode($question->json_question);
-                                    for($i=0;$i<count($json_question->input_1);$i++)
-                                    {
+                                        $json_question=json_decode($paper->json_question);
+                                        for($i=0;$i<count($json_question->input_1);$i++)
+                                        {
 
                                         @endphp
 
@@ -110,10 +169,10 @@
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
-                                @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $question->question_type==4)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate(4) }}</label>
+                                @elseif((isset($_GET['question-type']) && $_GET['question-type']==6) || $paper->question_type==6)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(6) }}</label>
                                     @php
-                                        $json_question=json_decode($question->json_question);
+                                        $json_question=json_decode($paper->json_question);
                                         for($i=0;$i<count($json_question->input_1);$i++)
                                         {
 
@@ -145,14 +204,10 @@
                             @if(isset($_GET['question-type']))
                             <input type="hidden" name="question_type" value="{{ $_GET['question-type'] }}">
                             @else
-                            <input type="hidden" name="question_type" value="{{ $question->question_type }}">
+                            <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
                             @endif
 
-                            @if(isset($_GET['worksheet_id']))
-                            <input type="hidden" name="worksheet_id" value="{{ $_GET['worksheet_id'] }}">
-                            @else
-                            <input type="hidden" name="worksheet_id" value="{{ $question->worksheet_id }}">
-                            @endif
+
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
                             </div>

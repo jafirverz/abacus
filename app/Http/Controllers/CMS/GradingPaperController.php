@@ -154,12 +154,12 @@ class GradingPaperController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $fields=[
             'title'  =>  'required',
             'question_type'  =>  'required',
-        ]);
+        ];
 
-        if($request->question_type==1)
+         if($request->question_type==5 || $request->question_type==4)
         {
         $json['input_1']=$request->input_1;
         $json['input_2']=$request->input_2;
@@ -183,11 +183,7 @@ class GradingPaperController extends Controller
             $json['input_1']=$input_1_old;
             $json['input_2']=$request->input_2;
         }
-        elseif($request->question_type==4)
-        {
-            $json['input_1']=$request->input_1;
-            $json['input_2']=$request->input_2;
-        }
+
 
         //dd($question);
         $messages = [];
@@ -224,7 +220,7 @@ class GradingPaperController extends Controller
         $search_term = $request->search;
         $templates = QuestionTemplate::get();
         $title = $this->title;
-        $paper = GradingPaper::search($search_term)->paginate($this->pagination);
+        $paper = GradingPaper::join('question_templates','question_templates.id','grading_papers.question_type')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
             $category->appends('search', $search_term);
         }
