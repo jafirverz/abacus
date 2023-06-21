@@ -7,9 +7,9 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
            <div class="section-header-button">
-                <a href="{{ route('grading-paper.create') }}" class="btn btn-primary">Add New</a>
+
         </div>
-        @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('grading_paper')])
+        @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
 </div>
 
 <div class="section-body">
@@ -18,12 +18,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('grading-paper.destroy', 'grading-paper') }}"
+                    <a href="{{ route('customer-account.destroy', 'customer-account') }}"
                         class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?"
                         data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                         data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                             class="badge badge-transparent">0</span></a>
-                    <form id="destroy" action="{{ route('grading-paper.destroy', 'grading-paper') }}"
+                    <form id="destroy" action="{{ route('customer-account.destroy', 'customer-account') }}"
                         method="post">
                         @csrf
                         @method('DELETE')
@@ -31,7 +31,7 @@
                     </form>
                     <h4></h4>
                     <div class="card-header-form form-inline">
-                        <form action="{{ route('grading-paper.search') }}" method="get">
+                        <form action="{{ route('customer.search') }}" method="get">
                             @csrf
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Search"
@@ -62,14 +62,15 @@
                                         </div>
                                     </th>
                                     <th>Action</th>
-                                    <th>Title</th>
-                                    <th>Type</th>
+                                    <th>Full Name</th>
+                                    <th>Email Address</th>
+                                    <th>Phone</th>
                                     <th>Last Updated</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($paper->count())
-                                @foreach($paper as $key => $item)
+                                @if($customer->count())
+                                @foreach($customer as $key => $item)
                                 <tr>
                                     <td scope="row">
                                         <div class="custom-checkbox custom-control"> <input type="checkbox"
@@ -79,20 +80,24 @@
                                                 class="custom-control-label">&nbsp;</label></div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('grading-paper.show', $item->id) }}"
+                                        <a href="{{ route('customer.show', $item->id) }}"
                                             class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('grading-paper.edit', $item->id) }}"
+                                        <a href="{{ route('customer.edit', $item->id) }}"
                                             class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View">
                                             <i aria-hidden="true" class="fa fa-edit"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        {{ $item->title }}
+                                        {{ $item->name }}
                                     </td>
                                     <td>
-                                        {{ $item->question_type }}
+                                        {{ $item->email }}
+                                    </td>
+
+                                    <td>
+                                        {{ $item->mobile ?? '' }}
                                     </td>
 
                                     <td>
@@ -110,7 +115,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    {{ $paper->links() }}
+                    {{ $customer->links() }}
                 </div>
             </div>
         </div>

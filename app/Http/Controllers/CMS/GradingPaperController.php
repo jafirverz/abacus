@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\GradingPaper;
 use App\User;
+use App\QuestionTemplate;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,8 @@ class GradingPaperController extends Controller
     public function create()
     {
         $title = $this->title;
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.master.grading-paper.create', compact('title','students'));
+        $templates = QuestionTemplate::get();
+        return view('admin.master.grading-paper.create', compact('title','templates'));
     }
 
     /**
@@ -131,8 +132,8 @@ class GradingPaperController extends Controller
     {
         $title = $this->title;
         $paper = GradingPaper::find($id);
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.master.grading-paper.show', compact('title', 'paper','students'));
+        $templates = QuestionTemplate::get();
+        return view('admin.master.grading-paper.show', compact('title', 'paper','templates'));
     }
 
     /**
@@ -145,8 +146,8 @@ class GradingPaperController extends Controller
     {
         $title = $this->title;
         $paper = GradingPaper::findorfail($id);
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.master.grading-paper.edit', compact('title', 'paper','students'));
+        $templates = QuestionTemplate::get();
+        return view('admin.master.grading-paper.edit', compact('title', 'paper','templates'));
     }
 
     /**
@@ -226,12 +227,13 @@ class GradingPaperController extends Controller
     public function search(Request $request)
     {
         $search_term = $request->search;
+        $templates = QuestionTemplate::get();
         $title = $this->title;
-        $category = GradingPaper::search($search_term)->paginate($this->pagination);
+        $paper = GradingPaper::search($search_term)->paginate($this->pagination);
         if ($search_term) {
             $category->appends('search', $search_term);
         }
 
-        return view('admin.master.grading-paper.index', compact('title', 'category'));
+        return view('admin.master.grading-paper.index', compact('title', 'templates','paper'));
     }
 }
