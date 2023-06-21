@@ -255,7 +255,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     // CUSTOMER
     Route::get('customer-account/search', 'CMS\CustomerAccountController@search')->name('customer-account.search');
-    Route::resource('customer-account', 'CMS\CustomerAccountController');\
+    Route::resource('customer-account', 'CMS\CustomerAccountController');
 
     // ANNOUNCEMENT
     Route::get('announcement/search', 'CMS\AnnouncementController@search')->name('announcement.search');
@@ -266,10 +266,14 @@ Route::group(['prefix' => 'admin'], function () {
      Route::resource('grade', 'CMS\GradeController');
 
      // GRADING EXAM
-     Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
-     Route::resource('grading-exam', 'CMS\GradingExamController');
+     Route::get('grading-paper/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
+     Route::resource('grading-paper', 'CMS\GradingExamController');
 
-      // TEACHING_MATERIALS
+     // GRADING PAPER
+     Route::get('grading-paper/search', 'CMS\GradingPaperController@search')->name('grading-paper.search');
+     Route::resource('grading-paper', 'CMS\GradingPaperController');
+
+    //TEACHING MATERIALS
     Route::get('teaching-materials/search', 'CMS\TeachingMaterialsController@search')->name('teaching-materials.search');
     Route::resource('teaching-materials', 'CMS\TeachingMaterialsController');
 
