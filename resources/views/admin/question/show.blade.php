@@ -39,7 +39,7 @@
 
 
                             </div>
-                            @if($question->question_type==1)
+                            @if($question->question_type==9)
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
                                 @php
                                     $json_question=json_decode($question->json_question);
@@ -65,7 +65,7 @@
                                 @php } @endphp
 
 
-                                @elseif($question->question_type==2)
+                                @elseif($question->question_type==2 || $question->question_type==1 || $question->question_type==3)
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
                                 @php
                                 $json_question=json_decode($question->json_question);

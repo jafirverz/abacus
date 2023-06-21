@@ -76,11 +76,11 @@ class QuestionController extends Controller
         ];
         if($request->question_type==5)
         {
-        $json['input_1']=$request->input_1;
-        $json['input_2']=$request->input_2;
-        $json['input_3']=$request->input_3;
+            $json['input_1']=$request->input_1;
+            $json['input_2']=$request->input_2;
+            $json['input_3']=$request->input_3;
         }
-        elseif($request->question_type==2)
+        elseif($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
             if ($request->hasfile('input_1')) {
                 foreach ($request->file('input_1') as $file) {
@@ -98,19 +98,20 @@ class QuestionController extends Controller
         {
             $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
-        }elseif($request->question_type==1){
-            if ($request->hasfile('input_1')) {
-                foreach ($request->file('input_1') as $file) {
-
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    $data[] = $name;
-                }
-
-                $json['input_1']=$data;
-                $json['input_2']=$request->input_2;
-            }
         }
+        // elseif($request->question_type==1){
+        //     if ($request->hasfile('input_1')) {
+        //         foreach ($request->file('input_1') as $file) {
+
+        //             $name = $file->getClientOriginalName();
+        //             $file->move(public_path() . '/upload-file/', $name);
+        //             $data[] = $name;
+        //         }
+
+        //         $json['input_1']=$data;
+        //         $json['input_2']=$request->input_2;
+        //     }
+        // }
 
         //dd($question);
         $messages = [];
@@ -172,13 +173,13 @@ class QuestionController extends Controller
 
         ];
 
-        if($request->question_type==1)
+        if($request->question_type==5)
         {
         $json['input_1']=$request->input_1;
         $json['input_2']=$request->input_2;
         $json['input_3']=$request->input_3;
         }
-        elseif($request->question_type==2)
+        elseif($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
             $input_1_old=$request->input_1_old;
             if ($request->hasfile('input_1')) {
