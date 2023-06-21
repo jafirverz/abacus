@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\MiscQuestion;
 use App\Traits\SystemSettingTrait;
 use App\Question;
 use App\Worksheet;
@@ -74,11 +75,23 @@ class QuestionController extends Controller
             'worksheet_id'  =>  'required',
 
         ];
+        $messages = [];
+        $messages['title.required'] = 'The title field is required.';
+        $messages['worksheet.required'] = 'The worksheet field is required.';
+        $request->validate($fields, $messages);
+
         if($request->question_type==5)
         {
             $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
             $json['input_3']=$request->input_3;
+            $question = new Question();
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            $question->json_question = json_encode($json);
+            $question->created_at = Carbon::now();
+            $question->save();
         }
         elseif($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
@@ -93,11 +106,46 @@ class QuestionController extends Controller
                 $json['input_1']=$data;
                 $json['input_2']=$request->input_2;
             }
+            $question = new Question();
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            $question->json_question = json_encode($json);
+            $question->created_at = Carbon::now();
+            $question->save();
         }
         elseif($request->question_type==4)
         {
             $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
+            $question = new Question();
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            $question->json_question = json_encode($json);
+            $question->created_at = Carbon::now();
+            $question->save();
+        }
+        elseif($request->question_type==6){
+            $count = count($request->input_1);
+            $question = new Question();
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            // $question->json_question = json_encode($json);
+            $question->created_at = Carbon::now();
+            $question->save();
+
+            for($i=0; $i<$count; $i++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $request->input_1[$i];
+                $storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
         }
         // elseif($request->question_type==1){
         //     if ($request->hasfile('input_1')) {
@@ -114,19 +162,7 @@ class QuestionController extends Controller
         // }
 
         //dd($question);
-        $messages = [];
-        $messages['title.required'] = 'The title field is required.';
-        $messages['worksheet.required'] = 'The worksheet field is required.';
-        $request->validate($fields, $messages);
-
-        $question = new Question();
-        $question->title = $request->title;
-        $question->worksheet_id = $request->worksheet_id;
-        $question->question_type = $request->question_type;
-        $question->json_question = json_encode($json);
-        $question->created_at = Carbon::now();
-        $question->save();
-
+        
         return redirect()->route('question.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
 
@@ -172,12 +208,22 @@ class QuestionController extends Controller
             'worksheet_id'  =>  'required',
 
         ];
+        $messages = [];
+        $messages['title.required'] = 'The title field is required.';
+        $messages['worksheet.required'] = 'The worksheet field is required.';
+        $request->validate($fields, $messages);
 
         if($request->question_type==5)
         {
-        $json['input_1']=$request->input_1;
-        $json['input_2']=$request->input_2;
-        $json['input_3']=$request->input_3;
+            $json['input_1']=$request->input_1;
+            $json['input_2']=$request->input_2;
+            $json['input_3']=$request->input_3;
+            $question = Question::find($id);
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->json_question = json_encode($json);
+            $question->updated_at = Carbon::now();
+            $question->save();
         }
         elseif($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
@@ -189,32 +235,57 @@ class QuestionController extends Controller
                     $file->move(public_path() . '/upload-file/', $name);
                     array_push($input_1_old,$name);
                 }
-
-
-
-
             }
             $json['input_1']=$input_1_old;
             $json['input_2']=$request->input_2;
+            $question = Question::find($id);
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->json_question = json_encode($json);
+            $question->updated_at = Carbon::now();
+            $question->save();
         }
         elseif($request->question_type==4)
         {
             $json['input_1']=$request->input_1;
             $json['input_2']=$request->input_2;
+            $question = Question::find($id);
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->json_question = json_encode($json);
+            $question->updated_at = Carbon::now();
+            $question->save();
+        }
+        elseif($request->question_type==6){
+            $count = count($request->input_1);
+            $question = Question::find($id);
+            $question->title = $request->title;
+            // $question->worksheet_id = $request->worksheet_id;
+            // $question->json_question = json_encode($json);
+            $question->updated_at = Carbon::now();
+            $question->save();
+
+            $storQues = MiscQuestion::where('question_id', $id)->get();
+            foreach($storQues as $quess){
+                $quess->delete();
+            }
+
+            for($i=0; $i<$count; $i++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $request->input_1[$i];
+                $storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
         }
 
         //dd($question);
-        $messages = [];
-        $messages['title.required'] = 'The title field is required.';
-        $messages['worksheet.required'] = 'The worksheet field is required.';
-        $request->validate($fields, $messages);
+        
 
-        $question = Question::find($id);
-        $question->title = $request->title;
-        $question->worksheet_id = $request->worksheet_id;
-        $question->json_question = json_encode($json);
-        $question->updated_at = Carbon::now();
-        $question->save();
+        
 
         return redirect()->route('question.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
