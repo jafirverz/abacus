@@ -65,7 +65,7 @@
                                             <th>Action</th>
                                             <th>Title</th>
                                             <th>Type</th>
-                                            <th>Student</th>
+                                            <th>Layout</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -91,7 +91,7 @@
                                             </td>
                                             <td>{{ $item->title }}</td>
                                             <td>{{ gradingExamType($item->type) }}</td>
-                                            <td>{{ $item->student_id }}</td>
+                                            <td>{{ gradingExamLayout($item->layout) }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
