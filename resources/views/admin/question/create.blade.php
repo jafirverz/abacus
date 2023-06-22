@@ -22,16 +22,6 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label for="">Title</label>
-                                    <input type="text" required name="title" class="form-control" value="{{ old('title') }}">
-                                    @if ($errors->has('title'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group">
                                     <label for="worksheet">Worksheet</label>
                                     <select  id="worksheet_id"  required class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
@@ -49,17 +39,38 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="">Title</label>
+                                    <input type="text" required name="title" class="form-control" value="{{ old('title') }}">
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                
+
                             @if(isset($_GET['question-type']) && $_GET['question-type']==5)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
-                                        <div class="col-md-4">
-                                            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="input_2[]" class="form-control">
+                                                <option value="multiply">Multiply</option>
+                                                <option value="divide">Divide</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
-                                        <div class="col-md-4">
-                                            <input class="form-control" required value="" name="input_3[]" placeholder="= Answer" type="text">
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
                                         </div>
                                     </div>
                                     <div class="input-group-btn">
@@ -83,13 +94,11 @@
                                 <div class="col-md-2">
                                     <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
                                 </div>
-
-                                <div class="col-md-2">
-                                    <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
-                                </div>
-
                                 <div class="col-md-4">
                                     <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
                                 </div>
                             </div>
                             <div class="input-group-btn">
@@ -146,15 +155,27 @@
 <div class="copy" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-4">
-            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-        </div>
-        <div class="col-md-4">
-            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-        </div>
-        <div class="col-md-4">
-            <input class="form-control" required value="" name="input_3[]" placeholder="= Answer" type="text">
-        </div>
+        
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
+            </div>
+            <div class="col-md-2">
+                <select name="input_2[]" class="form-control">
+                    <option value="multiply">Multiply</option>
+                    <option value="divide">Divide</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
+            </div>
+
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            </div>
+
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -212,12 +233,11 @@
             <div class="col-md-2">
                 <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
             </div>
-            <div class="col-md-2">
-                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
-            </div>
-
             <div class="col-md-4">
                 <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
             </div>
 
         </div>
