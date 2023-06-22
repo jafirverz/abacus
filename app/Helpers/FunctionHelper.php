@@ -627,6 +627,15 @@ if (!function_exists('getPageList')) {
     }
 
 
+    function gradingExamLayout($id = null)
+    {
+        $array_list = ['1' => 'Vertical sum layout', '2' => 'Horizontal sum layout'];
+        if ($id) {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
 
     function get_footer_menu($menuId = 2, $page_id = NULL, $title = true, $class = 'term')
     {

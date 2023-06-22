@@ -21,6 +21,16 @@
                             @method('POST')
                             <div class="card-body">
                                 <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" name="title" class="form-control" id=""
+                                        value="{{ old('title') }}">
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label for="type">Type</label>
                                     <select name="type" class="form-control">
                                         <option value="">-- Select --</option>
@@ -40,25 +50,35 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="timed">Timed</label>
-                                    <input type="text" name="timed" class="form-control" id=""
-                                        value="{{ old('timed') }}">
-                                    @if ($errors->has('timed'))
+                                    <label for="layout">Layout</label>
+                                    <select name="layout" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if (gradingExamLayout())
+                                        @foreach (gradingExamLayout() as $key=>$item)
+                                        <option value="{{ $key }}" @if(old('type')==$item)
+                                            selected
+                                            @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('layout'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('timed') }}</strong>
+                                        <strong>{{ $errors->first('layout') }}</strong>
+
                                     </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="marks">Marks</label>
-                                    <input type="text" name="marks" class="form-control" id=""
-                                        value="{{ old('marks') }}">
-                                    @if ($errors->has('marks'))
+                                    <label for="exam_date">Exam Date</label>
+                                    <input type="text" name="exam_date" class="form-control datetimepicker" id=""
+                                        value="{{ old('exam_date') }}">
+                                    @if ($errors->has('exam_date'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('marks') }}</strong>
+                                        <strong>{{ $errors->first('exam_date') }}</strong>
                                     </span>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="student_id">Student</label>
                                     <select multiple name="student_id[]" class="form-control">
@@ -72,6 +92,16 @@
                                     @if ($errors->has('student_id'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('student_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="important_note">Notes</label>
+                                    <textarea name="important_note" class="form-control my-editor" id="" cols="30"
+                                    rows="10"> {{ old('important_note') }} </textarea>
+                                    @if ($errors->has('important_note'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('important_note') }}</strong>
                                     </span>
                                     @endif
                                 </div>

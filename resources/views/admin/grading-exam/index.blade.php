@@ -63,6 +63,7 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
+                                            <th>Title</th>
                                             <th>Type</th>
                                             <th>Student</th>
                                             <th>Created At</th>
@@ -88,6 +89,7 @@
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
+                                            <td>{{ $item->title }}</td>
                                             <td>{{ gradingExamType($item->type) }}</td>
                                             <td>{{ $item->student_id }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>

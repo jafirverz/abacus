@@ -42,7 +42,7 @@
                 ],
             ],
         ],
-        
+
         [
             'menu_header'   =>  __('constant.MASTER'),
             'main_menu' =>  [
@@ -70,6 +70,11 @@
                     'title' =>  __('constant.GRADE'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/grade',
+                ],
+                [
+                    'title' =>  __('constant.GRADING_EXAM'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/grading-exam',
                 ],
                 [
                     'title' =>  __('constant.GRADING_PAPER'),
