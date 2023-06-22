@@ -67,6 +67,7 @@ class GradingExamController extends Controller
             'layout'  =>  'required',
             'exam_date'  =>  'required',
             'student_id.*'  =>  'required',
+            'status'  =>  'required',
         ]);
 
         $gradingExam = new GradingExam();
@@ -77,6 +78,7 @@ class GradingExamController extends Controller
         $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
         $gradingExam->layout = $request->layout ?? NULL;
         $gradingExam->important_note = $request->important_note ?? NULL;
+        $gradingExam->status = $request->status ?? NULL;
         $gradingExam->save();
 
         return redirect()->route('grading-exam.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
@@ -91,9 +93,9 @@ class GradingExamController extends Controller
     public function show($id)
     {
         $title = $this->title;
-        $category = GradingExam::find($id);
+        $exam = GradingExam::find($id);
         $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.show', compact('title', 'category','students'));
+        return view('admin.grading-exam.show', compact('title', 'exam','students'));
     }
 
     /**
@@ -125,6 +127,7 @@ class GradingExamController extends Controller
             'layout'  =>  'required',
             'exam_date'  =>  'required',
             'student_id.*'  =>  'required',
+            'status'  =>  'required',
         ]);
 
         $gradingExam = GradingExam::findorfail($id);
@@ -135,6 +138,7 @@ class GradingExamController extends Controller
         $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
         $gradingExam->layout = $request->layout ?? NULL;
         $gradingExam->important_note = $request->important_note ?? NULL;
+        $gradingExam->status = $request->status ?? NULL;
         $gradingExam->save();
 
         return redirect()->route('grading-exam.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));

@@ -263,6 +263,15 @@ if (!function_exists('getPageList')) {
         return $array_list;
     }
 
+    function getStatuses($id = null)
+    {
+        $array_list = ['1'  =>  'Active', '2'  =>  'Draft'];
+        if ($id) {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
     function input_types($id = null)
     {
         $array_list = ['1' => 'Textbox', '2' => 'Dropdown', '3' => 'Datepicker', '4' => 'Upload', '5' => 'Radio button', '6' => 'Number', '7' => 'URL Link'];

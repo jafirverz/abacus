@@ -9,7 +9,7 @@
                 <a href="{{ route('grading-exam.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-          @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('category_competition_crud', 'Edit', route('grading-exam.edit', $exam->id))])
+          @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('grading_exam_crud', 'Edit', route('grading-exam.edit', $exam->id))])
         </div>
 
         <div class="section-body">
@@ -107,6 +107,24 @@
                                     @if ($errors->has('important_note'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('important_note') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if (getStatuses())
+                                        @foreach (getStatuses() as $key => $value)
+                                        <option value="{{ $key }}" @if(old('status', $exam->status)==$key)
+                                        selected
+                                        @endif>{{ $value }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('status'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
                                     </span>
                                     @endif
                                 </div>
