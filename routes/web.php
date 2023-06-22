@@ -266,8 +266,8 @@ Route::group(['prefix' => 'admin'], function () {
      Route::resource('grade', 'CMS\GradeController');
 
      // GRADING EXAM
-     Route::get('grading-paper/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
-     Route::resource('grading-paper', 'CMS\GradingExamController');
+     Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
+     Route::resource('grading-exam', 'CMS\GradingExamController');
 
      // GRADING PAPER
      Route::get('grading-paper/search', 'CMS\GradingPaperController@search')->name('grading-paper.search');

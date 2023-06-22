@@ -62,14 +62,22 @@ class GradingExamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name'  =>  'required|max:191',
+            'title'  =>  'required',
+            'type'  =>  'required',
+            'layout'  =>  'required',
+            'exam_date'  =>  'required',
+            'student_id.*'  =>  'required',
         ]);
 
-        $category = new CompetitionCategory();
-
-        $category->category_name = $request->category_name;
-        $category->description = $request->description;
-        $category->save();
+        $gradingExam = new GradingExam();
+        $gradingExam->title = $request->title ?? NULL;
+        $gradingExam->type = $request->type ?? NULL;
+        $gradingExam->layout = $request->layout ?? NULL;
+        $gradingExam->exam_date = $request->exam_date ?? NULL;
+        $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
+        $gradingExam->layout = $request->layout ?? NULL;
+        $gradingExam->important_note = $request->important_note ?? NULL;
+        $gradingExam->save();
 
         return redirect()->route('grading-exam.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
@@ -97,9 +105,9 @@ class GradingExamController extends Controller
     public function edit($id)
     {
         $title = $this->title;
-        $category = GradingExam::findorfail($id);
+        $exam = GradingExam::findorfail($id);
         $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.edit', compact('title', 'category','students'));
+        return view('admin.grading-exam.edit', compact('title', 'exam','students'));
     }
 
     /**
@@ -112,14 +120,22 @@ class GradingExamController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'category_name'  =>  'required|max:191',
+            'title'  =>  'required',
+            'type'  =>  'required',
+            'layout'  =>  'required',
+            'exam_date'  =>  'required',
+            'student_id.*'  =>  'required',
         ]);
 
-        $category = GradingExam::findorfail($id);
-
-        $category->category_name = $request->category_name;
-        $category->description = $request->description;
-        $category->save();
+        $gradingExam = GradingExam::findorfail($id);
+        $gradingExam->title = $request->title ?? NULL;
+        $gradingExam->type = $request->type ?? NULL;
+        $gradingExam->layout = $request->layout ?? NULL;
+        $gradingExam->exam_date = $request->exam_date ?? NULL;
+        $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
+        $gradingExam->layout = $request->layout ?? NULL;
+        $gradingExam->important_note = $request->important_note ?? NULL;
+        $gradingExam->save();
 
         return redirect()->route('grading-exam.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
