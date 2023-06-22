@@ -269,6 +269,16 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
      Route::resource('grading-exam', 'CMS\GradingExamController');
 
+     // GRADING EXAM LIST
+    Route::get('grading-exam-list/{exam_id}/search', 'CMS\GradingExamListController@search')->name('grading-exam-list.search');
+    Route::get('grading-exam-list/{exam_id}', 'CMS\GradingExamListController@index')->name('grading-exam-list.index');
+    Route::get('grading-exam-list/{exam_id}/create', 'CMS\GradingExamListController@create')->name('grading-exam-list.create');
+    Route::post('grading-exam-list/{exam_id}/create', 'CMS\GradingExamListController@store')->name('grading-exam-list.store');
+    Route::get('grading-exam-list/{exam_id}/{id}', 'CMS\GradingExamListController@show')->name('grading-exam-list.show');
+    Route::get('grading-exam-list/{exam_id}/{id}/edit', 'CMS\GradingExamListController@edit')->name('grading-exam-list.edit');
+    Route::post('grading-exam-list/{exam_id}/{id}/edit', 'CMS\GradingExamListController@update')->name('grading-exam-list.update');
+    Route::post('grading-exam-list/{exam_id}/{id}', 'CMS\GradingExamListController@destroy')->name('grading-exam-list.destroy');
+
      // GRADING PAPER
      Route::get('grading-paper/search', 'CMS\GradingPaperController@search')->name('grading-paper.search');
      Route::resource('grading-paper', 'CMS\GradingPaperController');

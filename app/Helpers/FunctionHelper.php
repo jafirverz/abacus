@@ -6,8 +6,10 @@ use Yadahan\AuthenticationLog\AuthenticationLog;
 use App\Announcement;
 use App\Page;
 use App\Slider;
+use App\GradingExam;
 use App\Role;
 use App\User;
+use App\Menu;
 use App\SystemSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -392,6 +394,13 @@ if (!function_exists('getPageList')) {
     function getMenuName($menu)
     {
         $result = Menu::find($menu);
+        if ($result) {
+            return $result->title;
+        }
+    }
+    function getExamName($exam)
+    {
+        $result = GradingExam::find($exam);
         if ($result) {
             return $result->title;
         }

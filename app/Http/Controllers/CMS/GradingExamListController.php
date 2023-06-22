@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\GradingExam;
+use App\GradingExamList;
 use App\User;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
@@ -12,14 +13,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 
-class GradingExamController extends Controller
+class GradingExamListController extends Controller
 {
     use SystemSettingTrait;
 
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->title = __('constant.GRADING_EXAM');
+        $this->title = __('constant.GRADING_EXAM_LIST');
         $this->module = 'GRADING_EXAM';
         $this->middleware('grant.permission:'.$this->module);
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
@@ -33,12 +34,12 @@ class GradingExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($exam_id)
     {
         $title = $this->title;
-        $exam = GradingExam::paginate($this->pagination);
+        $list = GradingExamList::paginate($this->pagination);
 
-        return view('admin.grading-exam.index', compact('title', 'exam'));
+        return view('admin.grading-exam.listing.index', compact('title', 'list','exam_id'));
     }
 
     /**
@@ -46,11 +47,10 @@ class GradingExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($exam_id)
     {
         $title = $this->title;
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.create', compact('title','students'));
+        return view('admin.grading-exam.listing.create', compact('title','exam_id'));
     }
 
     /**
