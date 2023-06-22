@@ -14,6 +14,7 @@ return [
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
     'GRADING_EXAM' => 'Grading Exam',
+    'GRADING_EXAM_LIST' => 'Grading Exam List',
     'CATEGORY_COMPETITION' => 'Category Competition',
     'TESTIMONIAL'  =>  'Testimonial',
     'TEMPLATE'  =>  'Template',

@@ -7,9 +7,9 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
-                <a href="{{ route('grading-exam.create') }}" class="btn btn-primary">Add New</a>
+                <a href="{{ route('grading-exam-list.create',$exam_id) }}" class="btn btn-primary">Add New</a>
             </div>
-           @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('grading_exam')])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grading_exam_list', $exam_id)])
 
         </div>
         <br />
@@ -22,19 +22,19 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('grading-exam.destroy', 'grading-exam') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('grading-exam-list.destroy', ['exam_id' => $exam_id, 'id' => 'grading-exam-list']) }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('grading-exam.destroy', 'grading-exam') }}" method="post">
+                            <form id="destroy" action="{{ route('grading-exam-list.destroy', ['exam_id' => $exam_id, 'id' => 'grading-exam-list']) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('grading-exam.search') }}" method="get">
+                                <form action="{{ route('grading-exam-list.search',$exam_id) }}" method="get">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search"
@@ -63,16 +63,14 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
-                                            <th>Title</th>
-                                            <th>Type</th>
-                                            <th>Layout</th>
+                                            <th>Heading</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($exam->count())
-                                        @foreach ($exam as $key => $item)
+                                        @if($list->count())
+                                        @foreach ($list as $key => $item)
                                         <tr>
                                             <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
@@ -82,18 +80,16 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('grading-exam.show', $item->id) }}"
+                                                <a href="{{ route('grading-exam-list.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('grading-exam.edit', $item->id) }}"
+                                                <a href="{{ route('grading-exam-list.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
-                                                    <a href="{{ route('grading-exam-list.index', $item->id) }}" class="btn btn-light mr-1 mt-1"
+                                                    <a href="{{ route('grading-exam-list-list.index', $item->id) }}" class="btn btn-light mr-1 mt-1"
                                                         data-toggle="tooltip" data-original-title="List"><i class="fas fa-bars"></i></a>
                                             </td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ gradingExamType($item->type) }}</td>
-                                            <td>{{ gradingExamLayout($item->layout) }}</td>
+                                            <td>{{ $item->heading }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
@@ -108,7 +104,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ $exam->links() }}
+                            {{ $list->links() }}
                         </div>
                     </div>
                 </div>
