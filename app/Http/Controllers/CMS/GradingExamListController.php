@@ -69,19 +69,33 @@ class GradingExamListController extends Controller
         $gradingExamList = new GradingExamList();
         $gradingExamList->heading = $request->heading ?? NULL;
         $gradingExamList->grading_exams_id  = $request->exam_id;
-        if ($request->hasfile('input_3')) {
-            foreach ($request->file('input_3') as $file) {
+        if($request->type==1)
+        {
+            if ($request->hasfile('input_3')) {
+                foreach ($request->file('input_3') as $file) {
 
-                //$name = $file->getClientOriginalName();
-                //$file->move(public_path() . '/upload-file/', $name);
-                $data[] = uploadPicture($file, 'upload-file');;
+                    //$name = $file->getClientOriginalName();
+                    //$file->move(public_path() . '/upload-file/', $name);
+                    $data[] = uploadPicture($file, 'upload-file');;
+                }
+
+                $json['input_3']=$data;
+                $json['input_2']=$request->input_2;
+                $json['input_1']=$request->input_1;
+                $gradingExamList->json_content = json_encode($json);
             }
-
-            $json['input_3']=$data;
-            $json['input_2']=$request->input_2;
-            $json['input_1']=$request->input_1;
-            $gradingExamList->json_content = json_encode($json);
         }
+        else
+        {
+
+
+                $json['input_3']=$request->input_3;
+                $json['input_2']=$request->input_2;
+                $json['input_1']=$request->input_1;
+                $gradingExamList->json_content = json_encode($json);
+
+        }
+
         $gradingExamList->save();
 
         return redirect()->route('grading-exam-list.index',$request->exam_id)->with('success', __('constant.CREATED', ['module' => $this->title]));

@@ -64,7 +64,7 @@
                                     <div class="col-md-4">
                                         <select class="form-control" required name="input_3[]">
                                             <option value="">--Select--</option>
-                                            @foreach(getAllGradingExam() as $val)
+                                            @foreach(getAllGradingPaper() as $val)
                                             <option value="{{ $val->id }}">{{ $val->title }}</option>
                                             @endforeach
                                         </select>
@@ -77,6 +77,7 @@
                                 </div>
                                 @endif
                             </div>
+                            <input type="hidden" name="type" value="<?=getExamDetail($exam_id)->type?>">
                             <input type="hidden" name="exam_id" value="<?=$exam_id?>">
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
@@ -109,6 +110,30 @@
       </div>
     </div>
 </div>
+<div class="copy2" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_1[]"  type="text" placeholder="Question">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_2[]"  type="text" placeholder="Price">
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" required name="input_3[]">
+                    <option value="">--Select--</option>
+                    @foreach(getAllGradingPaper() as $val)
+                    <option value="{{ $val->id }}">{{ $val->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
 
 <script>
 
