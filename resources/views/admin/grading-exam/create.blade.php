@@ -105,22 +105,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="student_id">Student</label>
-                                    <select multiple name="student_id[]" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if ($students)
-                                        @foreach ($students as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('student_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('student_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">

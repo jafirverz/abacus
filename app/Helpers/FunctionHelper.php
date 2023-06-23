@@ -405,6 +405,20 @@ if (!function_exists('getPageList')) {
             return $result->title;
         }
     }
+    function getExamDetail($exam)
+    {
+        $result = GradingExam::find($exam);
+        if ($result) {
+            return $result;
+        }
+    }
+    function getAllGradingExam()
+    {
+        $result = GradingExam::get();
+        if ($result) {
+            return $result;
+        }
+    }
     function activePageHierarchy($page_id)
     {
         $pageIds = [];

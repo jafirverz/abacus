@@ -37,7 +37,7 @@ class GradingExamListController extends Controller
     public function index($exam_id)
     {
         $title = $this->title;
-        $list = GradingExamList::paginate($this->pagination);
+        $list = GradingExamList::where('grading_exams_id',$exam_id)->paginate($this->pagination);
 
         return view('admin.grading-exam.listing.index', compact('title', 'list','exam_id'));
     }
@@ -62,26 +62,29 @@ class GradingExamListController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'  =>  'required',
-            'type'  =>  'required',
-            'layout'  =>  'required',
-            'exam_date'  =>  'required',
-            'student_id.*'  =>  'required',
-            'status'  =>  'required',
+            'heading'  =>  'required',
+
         ]);
 
-        $gradingExam = new GradingExam();
-        $gradingExam->title = $request->title ?? NULL;
-        $gradingExam->type = $request->type ?? NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->exam_date = $request->exam_date ?? NULL;
-        $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->important_note = $request->important_note ?? NULL;
-        $gradingExam->status = $request->status ?? NULL;
-        $gradingExam->save();
+        $gradingExamList = new GradingExamList();
+        $gradingExamList->heading = $request->heading ?? NULL;
+        $gradingExamList->grading_exams_id  = $request->exam_id;
+        if ($request->hasfile('input_3')) {
+            foreach ($request->file('input_3') as $file) {
 
-        return redirect()->route('grading-exam.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+                //$name = $file->getClientOriginalName();
+                //$file->move(public_path() . '/upload-file/', $name);
+                $data[] = uploadPicture($file, 'upload-file');;
+            }
+
+            $json['input_3']=$data;
+            $json['input_2']=$request->input_2;
+            $json['input_1']=$request->input_1;
+            $gradingExamList->json_content = json_encode($json);
+        }
+        $gradingExamList->save();
+
+        return redirect()->route('grading-exam-list.index',$request->exam_id)->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
 
     /**
@@ -95,7 +98,7 @@ class GradingExamListController extends Controller
         $title = $this->title;
         $exam = GradingExam::find($id);
         $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.show', compact('title', 'exam','students'));
+        return view('admin.grading-exam.listing.show', compact('title', 'exam','students'));
     }
 
     /**
@@ -109,7 +112,7 @@ class GradingExamListController extends Controller
         $title = $this->title;
         $exam = GradingExam::findorfail($id);
         $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.edit', compact('title', 'exam','students'));
+        return view('admin.grading-exam.listing.edit', compact('title', 'exam','students'));
     }
 
     /**
@@ -122,12 +125,8 @@ class GradingExamListController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title'  =>  'required',
-            'type'  =>  'required',
-            'layout'  =>  'required',
-            'exam_date'  =>  'required',
-            'student_id.*'  =>  'required',
-            'status'  =>  'required',
+            'heading'  =>  'required',
+
         ]);
 
         $gradingExam = GradingExam::findorfail($id);
@@ -141,7 +140,7 @@ class GradingExamListController extends Controller
         $gradingExam->status = $request->status ?? NULL;
         $gradingExam->save();
 
-        return redirect()->route('grading-exam.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
+        return redirect()->route('grading-exam-list.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
 
     /**
@@ -158,15 +157,15 @@ class GradingExamListController extends Controller
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
 
-    public function search(Request $request)
+    public function search(Request $request,$exam_id)
     {
         $search_term = $request->search;
         $title = $this->title;
-        $category = GradingExam::search($search_term)->paginate($this->pagination);
+        $list = GradingExamList::where('grading_exams_id',$exam_id)->search($search_term)->paginate($this->pagination);
         if ($search_term) {
-            $category->appends('search', $search_term);
+            $list->appends('search', $search_term);
         }
 
-        return view('admin.grading-exam.index', compact('title', 'category'));
+        return view('admin.grading-exam.listing.index', compact('title', 'list','exam_id'));
     }
 }
