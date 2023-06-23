@@ -7,6 +7,7 @@ use App\Announcement;
 use App\Page;
 use App\Slider;
 use App\GradingExam;
+use App\GradingPaper;
 use App\Role;
 use App\User;
 use App\Menu;
@@ -415,6 +416,13 @@ if (!function_exists('getPageList')) {
     function getAllGradingExam()
     {
         $result = GradingExam::get();
+        if ($result) {
+            return $result;
+        }
+    }
+    function getAllGradingPaper()
+    {
+        $result = GradingPaper::get();
         if ($result) {
             return $result;
         }
