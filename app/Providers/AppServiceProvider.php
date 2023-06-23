@@ -29,10 +29,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Commented by Bhupesh
-        //Schema::defaultStringLength(191);
-        //config([
-           // 'system_settings' => $this->systemSetting(),
-        //]);
+        Schema::defaultStringLength(191);
+        config([
+           'system_settings' => $this->systemSetting(),
+        ]);
 
 
     }
