@@ -1,135 +1,110 @@
 @extends('admin.layout.app')
 
 @section('content')
+
 <!-- Main Content -->
 <div class="main-content">
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('grading-exam.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('grading-exam-list.index',$list->grading_exams_id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-          @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('grading_exam_crud', 'Edit', route('grading-exam.edit', $exam->id))])
+          @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grading_exam_list_crud', $list->grading_exams_id,
+            'Edit', route('grading-exam-list.edit', ['exam_id' => $list->grading_exams_id, 'id' => $list->id]))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('grading-exam.update', $exam->id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('grading-exam-list.update',  ['exam_id' => $list->grading_exams_id, 'id' => $list->id]) }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
+                            @method('POST')
+                            <input type="hidden" name="previousUrll" value="{{ url()->previous() }}">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" name="title" class="form-control" id=""
-                                        value="{{ old('title', $exam->title) }}">
-                                    @if ($errors->has('title'))
+                                    <label for="heading">Heading</label>
+                                    <input type="text" name="heading" class="form-control" id=""
+                                        value="{{ old('heading', $list->heading) }}">
+                                    @if ($errors->has('heading'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
+                                        <strong>{{ $errors->first('heading') }}</strong>
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="type">Type</label>
-                                    <select name="type" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (gradingExamType())
-                                        @foreach (gradingExamType() as $key=>$item)
-                                        <option value="{{ $key }}" @if(old('type', $exam->type)==$key)
-                                            selected
-                                            @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('type'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('type') }}</strong>
-
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="layout">Layout</label>
-                                    <select name="layout" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (gradingExamLayout())
-                                        @foreach (gradingExamLayout() as $key=>$item)
-                                        <option value="{{ $key }}" @if(old('layout', $exam->layout)==$key)
-                                            selected
-                                            @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('layout'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('layout') }}</strong>
-
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="exam_date">Exam Date</label>
-                                    <input type="text" name="exam_date" class="form-control datetimepicker" id=""
-                                        value="{{ old('exam_date', $exam->exam_date) }}">
-                                    @if ($errors->has('exam_date'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('exam_date') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                @if(getExamDetail($exam_id)->type==1)
+                                <label for="" class=" control-label">Physical</label>
                                 @php
-                                 $student_id=json_decode($exam->student_id);
+                                    $json_content=json_decode($list->json_content);
+                                    for($i=0;$i<count($json_content->input_1);$i++)
+                                    {
+
                                 @endphp
+
+                                    <div class="form-group">
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $json_content->input_1[$i] }}" name="input_1[]" placeholder="Question" type="text">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $json_content->input_2[$i] }}" name="input_2[]" placeholder="Price" type="text">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control"  value="{{ $json_content->input_3[$i] }}" name="input_3_old[]" type="hidden">
+                                                <a href="{{ url('/') }}/{{ $json_content->input_3[$i] }}" target="_blank"> {{ $json_content->input_3[$i] }} </a>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                @php } @endphp
+                                <div class="after-add-more"></div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                               @else
+                               <label for="" class=" control-label">Online</label>
+                                @php
+                                    $json_content=json_decode($list->json_content);
+                                    for($i=0;$i<count($json_content->input_1);$i++)
+                                    {
+
                                 @endphp
-                                <div class="form-group">
-                                    <label for="student_id">Student</label>
-                                    <select multiple name="student_id[]" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if ($students)
-                                        @foreach ($students as $item)
-                                        <option value="{{ $item->id }}" @if(in_array($item->id,$student_id)==$item->id)
-                                            selected
-                                            @endif>{{ $item->name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('student_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('student_id') }}</strong>
-                                    </span>
-                                    @endif
+
+                                    <div class="form-group">
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $json_content->input_1[$i] }}" name="input_1[]" placeholder="Question" type="text">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $json_content->input_2[$i] }}" name="input_2[]" placeholder="Price" type="text">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" required name="input_3[]">
+                                                    <option value="">--Select--</option>
+                                                    @foreach(getAllGradingPaper() as $val)
+                                                    <option @if($val->id==$json_content->input_3[$i]) selected @endif value="{{ $val->id }}">{{ $val->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                @php } @endphp
+                                <div class="after-add-more"></div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="important_note">Notes</label>
-                                    <textarea name="important_note" class="form-control my-editor" id="" cols="30"
-                                    rows="10"> {{ old('important_note', $exam->important_note) }} </textarea>
-                                    @if ($errors->has('important_note'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('important_note') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select name="status" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (getStatuses())
-                                        @foreach (getStatuses() as $key => $value)
-                                        <option value="{{ $key }}" @if(old('status', $exam->status)==$key)
-                                        selected
-                                        @endif>{{ $value }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('status'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('status') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                               @endif
+
 
                             </div>
+                            <input type="hidden" name="type" value="<?=getExamDetail($exam_id)->type?>">
+                            <input type="hidden" name="exam_id" value="<?=$exam_id?>">
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
                                     Update</button>
@@ -141,4 +116,69 @@
         </div>
     </section>
 </div>
+
+<div class="copy" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_1[]"  type="text" placeholder="Question">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_2[]"  type="text" placeholder="Price">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_3[]"  type="file">
+            </div>
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+<div class="copy2" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_1[]"  type="text" placeholder="Question">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_2[]"  type="text" placeholder="Price">
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" required name="input_3[]">
+                    <option value="">--Select--</option>
+                    @foreach(getAllGradingPaper() as $val)
+                    <option value="{{ $val->id }}">{{ $val->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+
+          $(".add-more").click(function(){
+              var html = $(".copy").html();
+              $(".after-add-more").after(html);
+          });
+
+          $(".add-more2").click(function(){
+              var html = $(".copy2").html();
+              $(".after-add-more").after(html);
+          });
+
+
+          $("body").on("click",".remove",function(){
+              $(this).parents(".form-group").remove();
+          });
+
+        });
+    </script>
 @endsection
