@@ -174,8 +174,10 @@ class ProfileController extends Controller
 //                //throw ValidationException::withMessages(['Profile Update request already pending']);
 //                return back()->withErrors('Profile Update request already pending');
 //            }
-
-            $dob = date('Y-m-d', strtotime($request->dob));
+						$var = $request->dob;
+						$date = str_replace('/', '-', $var);
+						$dob = date('Y-m-d', strtotime($date));
+            // $dob = date('Y-m-d', strtotime($request->dob));
             $updateUserProfile = new UserProfileUpdate();
             $updateUserProfile->user_id  = $users->id;
             $updateUserProfile->name = $request->name;

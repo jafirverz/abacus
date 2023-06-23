@@ -112,7 +112,9 @@ class RegisterController extends Controller
 //            return redirect()->back()->withInput()->with('error', __('constant.CAPTCHA_ERROR'));
 //        }
             $acName = '';
-            $dob = date('Y-m-d', strtotime($request->dob));
+            $var = $request->dob;
+            $date = str_replace('/', '-', $var);
+            $dob = date('Y-m-d', strtotime($date));
             $dob1 = date('dmy', strtotime($dob));
             $fullnameEx = explode(' ', $request->name);
             foreach($fullnameEx as $funame){
@@ -133,6 +135,7 @@ class RegisterController extends Controller
             }else{
                 $accountId = 'SUD-'.$dob1.$acName;
             }
+            
             //dd($request->all());
 			$users = new User;
             $users->dob = $dob ?? null;
