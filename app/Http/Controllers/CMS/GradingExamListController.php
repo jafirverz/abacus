@@ -76,7 +76,7 @@ class GradingExamListController extends Controller
 
                     //$name = $file->getClientOriginalName();
                     //$file->move(public_path() . '/upload-file/', $name);
-                    $data[] = uploadPicture($file, 'upload-file');;
+                    $data[] = uploadPicture($file, 'upload-file');
                 }
 
                 $json['input_3']=$data;
@@ -121,12 +121,11 @@ class GradingExamListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($exam_id,$id)
     {
         $title = $this->title;
-        $exam = GradingExam::findorfail($id);
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.listing.edit', compact('title', 'exam','students'));
+        $list = GradingExamList::findorfail($id);
+        return view('admin.grading-exam.listing.edit', compact('title', 'list','exam_id'));
     }
 
     /**
@@ -136,25 +135,42 @@ class GradingExamListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,$exam_id, $id)
     {
         $request->validate([
             'heading'  =>  'required',
-
         ]);
 
-        $gradingExam = GradingExam::findorfail($id);
-        $gradingExam->title = $request->title ?? NULL;
-        $gradingExam->type = $request->type ?? NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->exam_date = $request->exam_date ?? NULL;
-        $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->important_note = $request->important_note ?? NULL;
-        $gradingExam->status = $request->status ?? NULL;
-        $gradingExam->save();
+        $gradingExamList = GradingExamList::findorfail($id);
+        if($request->type==1)
+        {
+            $input_3_old=$request->input_3_old;
+            if ($request->hasfile('input_3')) {
+                foreach ($request->file('input_3') as $file) {
 
-        return redirect()->route('grading-exam-list.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
+                    $name = uploadPicture($file, 'upload-file');
+                    array_push($input_3_old,$name);
+                }
+
+            }
+                $json['input_3']=$input_3_old;
+                $json['input_2']=$request->input_2;
+                $json['input_1']=$request->input_1;
+                $gradingExamList->json_content = json_encode($json);
+        }
+        else
+        {
+
+
+                $json['input_3']=$request->input_3;
+                $json['input_2']=$request->input_2;
+                $json['input_1']=$request->input_1;
+                $gradingExamList->json_content = json_encode($json);
+
+        }
+        $gradingExamList->save();
+
+        return redirect()->route('grading-exam-list.index',$exam_id)->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
 
     /**
