@@ -37,7 +37,7 @@ class CustomerAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->paginate($this->pagination);
+        $customer = User::orderBy('id','desc')->where('user_type_id','!=',5)->paginate($this->pagination);
 
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
@@ -101,11 +101,12 @@ class CustomerAccountController extends Controller
         }
         $accountId = 'SUD-'.$dob1.$acName;
         $customer = new User();
+        $customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
         $customer->account_id = $accountId;
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
-        $customer->dob = $request->dob??NULL;
+        $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
@@ -250,8 +251,9 @@ class CustomerAccountController extends Controller
 
         $customer = User::find($id);
         $customer->name = $request->name;
+        $customer->level_id = json_encode($request->level);
         $customer->instructor_id = $request->instructor_id??NULL;
-        $customer->dob = $request->dob??NULL;
+        $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;

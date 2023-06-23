@@ -78,8 +78,9 @@
                                 <div class="row sp-col-10">
                                     <div class="col-auto sp-col">
                                         <select class="selectpicker" disabled>
-                                            <option value="+65" @if($user->country_code_phone == '+65') selected @endif>+65</option>
-                                            <option value="+84" @if($user->country_code_phone == '+84') selected @endif>+84</option>
+                                            @foreach($country as $countr)
+                                            <option value="{{ $countr->phonecode}}" @if($user->country_code_phone == $countr->phonecode) selected @endif>+{{ $countr->phonecode}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col sp-col">
@@ -98,8 +99,9 @@
                                 <div class="row sp-col-10">
                                     <div class="col-auto sp-col">
                                         <select class="selectpicker" name="country_code_phone">
-                                            <option value="+65" @if($country_code_phone == '+65') selected @endif>+65</option>
-                                            <option value="+84" @if($country_code_phone == '+84') selected @endif>+84</option>
+                                            @foreach($country as $countr)
+                                            <option value="{{ $countr->phonecode}}" @if($country_code_phone == $countr->phonecode) selected @endif>+{{ $countr->phonecode}}</option>
+                                            @endforeach
                                         </select>
                                         @if ($errors->has('country_code_phone'))
                                             <span class="text-danger">&nbsp;{{ $errors->first('country_code_phone') }}</span>
@@ -181,8 +183,9 @@
                                 <label class="lb-1">Country <span class="required">*</span></label>
                                 <select class="selectpicker"  disabled>
                                     <option>Please Select</option>
-                                    <option value="+65" @if($user->country_code == '+65') selected @endif>Singapore</option>
-                                    <option value="+63" @if($user->country_code == '+63') selected @endif>Vietnam</option>
+                                    @foreach($country as $countr)
+                                    <option value="+65" @if($user->country_code == $countr->id) selected @endif>{{ $countr->country}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             @php
@@ -195,8 +198,10 @@
                                 <label class="lb-1">Country <span class="required">*</span></label>
                                 <select class="selectpicker" name="country_code">
                                     <option value="">Please Select</option>
-                                    <option value="+65" @if($country_code == '+65' && !$errors->has('country_code')) selected @endif>Singapore</option>
-                                    <option value="+63" @if($country_code == '+63' && !$errors->has('country_code')) selected @endif>Vietnam</option>
+                                    @foreach($country as $countr)
+                                    <option value="{{ $countr->id }}" @if($country_code == $countr->id && !$errors->has('country_code')) selected @endif>{{ $countr->country}}</option>
+                                    @endforeach
+                                    
                                 </select>
                                 @if ($errors->has('country_code'))
                                     <span class="text-danger">&nbsp;{{ $errors->first('country_code') }}</span>

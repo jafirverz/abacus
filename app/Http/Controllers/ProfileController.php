@@ -10,6 +10,7 @@ use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use App\Admin;
+use App\Country;
 use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Exception;
@@ -102,8 +103,8 @@ class ProfileController extends Controller
 		}
 
 		//dd($user);
-
-		return view('account.my-profile', compact("page", "user", "instructors"));
+		$country = Country::orderBy('country', 'asc')->get();
+		return view('account.my-profile', compact("page", "user", "instructors", 'country'));
 	}
 
 	/**

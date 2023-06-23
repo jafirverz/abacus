@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Admin;
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Instructor;
 use App\User;
@@ -100,7 +101,7 @@ class RegisterController extends Controller
 				'name' => 'required|string',
                 'email' =>  'required|email|unique:users,email|max:191',
                 'password'  =>  'required|min:8',
-                'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
+                'country_code' => 'required',
 				'mobile' => 'required|string',
 				'gender' => 'required',
                 'dob' => 'required',
@@ -235,7 +236,8 @@ class RegisterController extends Controller
         $slug = __('constant.SLUG_REGISTER');
 		$page = get_page_by_slug($slug);
         $instructors = User::where('user_type_id', 5)->get();
-        return view('auth.register',compact("page","instructors"));
+        $country = Country::orderBy('country', 'asc')->get();
+        return view('auth.register',compact("page","instructors", 'country'));
     }
 
 }
