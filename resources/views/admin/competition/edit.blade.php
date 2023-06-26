@@ -48,6 +48,22 @@
                                     @endif
                                 </div>
 
+
+                                <div class="form-group">
+                                    <label for="title">Select Student</label>
+                                    <select name="students[]" class="form-control" multiple>
+                                        <option value="">-- Select --</option>
+                                        @foreach($students as $student)
+                                        <option value="{{ $student ->id}}" @if(in_array($student ->id, $comptStu)) selected @endif>{{$student->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('students'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('students') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                
 
                                 <div class="form-group">
@@ -101,6 +117,7 @@
                                     @endif
                                 </div>
 
+                                {{-- 
                                 <div class="form-group">
                                     <label for="title">End Time of competition</label>
                                     <select name="end_time_of_competition" class="form-control">
@@ -124,6 +141,8 @@
                                     </span>
                                     @endif
                                 </div>
+                                --}}
+
 
                                 <div class="form-group">
                                     <label for="title">Description</label>
@@ -131,16 +150,12 @@
                                               rows="5">{{old('description', $competition->description)}}</textarea>
                                 </div>
 
-                                {{-- 
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>
-                                        @if(getActiveStatus())
-                                        @foreach (getActiveStatus() as $key => $item)
-                                            <option value="{{ $key }}" @if(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
+                                        <option value="1" @if(old('status', $competition->status) == 1) selected @endif>Published</option>
+                                        <option value="2" @if(old('status', $competition->status) == 2) selected @endif>Draft</option>
                                     </select>
                                     @if ($errors->has('status'))
                                     <span class="text-danger d-block">
@@ -148,7 +163,6 @@
                                     </span>
                                     @endif
                                 </div>
-                                --}}
 
                             </div>
                             

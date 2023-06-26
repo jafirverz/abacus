@@ -20,7 +20,8 @@ class CreateCompetitionControllersTable extends Migration
             $table->string('start_time_of_competition')->nullable();
             $table->string('end_time_of_competition')->nullable();
             $table->text('description')->nullable();
-            $table->string('competition_type')->nullable()->comment('onlne, physical');
+            $table->string('competition_type')->nullable()->comment('online, physical');
+            $table->smallInteger('status')->nullable()->comment('1=>published, 2=>draft');
             $table->timestamps();
         });
     }

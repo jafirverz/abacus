@@ -21,8 +21,6 @@
                             @method('POST')
                             <div class="card-body">
 
-                                
-
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" name="title" class="form-control" id=""
@@ -44,6 +42,22 @@
                                     @if ($errors->has('competition_type'))
                                         <span class="text-danger d-block">
                                         <strong>{{ $errors->first('competition_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="title">Select Student</label>
+                                    <select name="students[]" class="form-control" multiple>
+                                        <option value="">-- Select --</option>
+                                        @foreach($students as $student)
+                                        <option value="{{ $student ->id}}">{{$student->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('students'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('students') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -81,17 +95,17 @@
                                     <label for="title">Start Time of competition</label>
                                     <select name="start_time_of_competition" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="10">10.00</option>
-                                        <option value="11">11.00</option>
-                                        <option value="12">12.00</option>
-                                        <option value="13">13.00</option>
-                                        <option value="14">14.00</option>
-                                        <option value="15">15.00</option>
-                                        <option value="16">16.00</option>
-                                        <option value="17">17.00</option>
-                                        <option value="18">18.00</option>
-                                        <option value="19">19.00</option>
-                                        <option value="20">20.00</option>
+                                        <option value="10" @if(old('start_time_of_competition') == '10') selected @endif>10.00</option>
+                                        <option value="11" @if(old('start_time_of_competition') == '11') selected @endif>11.00</option>
+                                        <option value="12" @if(old('start_time_of_competition') == '12') selected @endif>12.00</option>
+                                        <option value="13" @if(old('start_time_of_competition') == '13') selected @endif>13.00</option>
+                                        <option value="14" @if(old('start_time_of_competition') == '14') selected @endif>14.00</option>
+                                        <option value="15" @if(old('start_time_of_competition') == '15') selected @endif>15.00</option>
+                                        <option value="16" @if(old('start_time_of_competition') == '16') selected @endif>16.00</option>
+                                        <option value="17" @if(old('start_time_of_competition') == '17') selected @endif>17.00</option>
+                                        <option value="18" @if(old('start_time_of_competition') == '18') selected @endif>18.00</option>
+                                        <option value="19" @if(old('start_time_of_competition') == '19') selected @endif>19.00</option>
+                                        <option value="20" @if(old('start_time_of_competition') == '20') selected @endif>20.00</option>
                                     </select>
                                     
                                     @if ($errors->has('start_time_of_competition'))
@@ -101,6 +115,7 @@
                                     @endif
                                 </div>
 
+                                {{-- 
                                 <div class="form-group">
                                     <label for="title">End Time of competition</label>
                                     <select name="end_time_of_competition" class="form-control">
@@ -124,6 +139,8 @@
                                     </span>
                                     @endif
                                 </div>
+                                --}}
+
 
                                 <div class="form-group">
                                     <label for="title">Description</label>
@@ -131,16 +148,12 @@
                                               rows="5">{{old('description')}}</textarea>
                                 </div>
 
-                                {{-- 
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>
-                                        @if(getActiveStatus())
-                                        @foreach (getActiveStatus() as $key => $item)
-                                            <option value="{{ $key }}" @if(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
+                                        <option value="1" @if(old('status') == 1) selected @endif>Published</option>
+                                        <option value="2" @if(old('status') == 2) selected @endif>Draft</option>
                                     </select>
                                     @if ($errors->has('status'))
                                     <span class="text-danger d-block">
@@ -148,7 +161,6 @@
                                     </span>
                                     @endif
                                 </div>
-                                --}}
 
                             </div>
                             <div class="card-footer text-right">

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\CMS;
 use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
+use App\CompetitionStudent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class CompetitionController extends Controller
@@ -50,8 +52,10 @@ class CompetitionController extends Controller
     {
         $title = $this->title;
         $competitionCategory = CompetitionCategory::get();
+        $userType = array(1,2,3,4);
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
         // $worksheets = Worksheet::orderBy('id','desc')->get();
-        return view('admin.competition.create', compact('title', 'competitionCategory'));
+        return view('admin.competition.create', compact('title', 'competitionCategory', 'students'));
     }
 
     /**
@@ -69,10 +73,11 @@ class CompetitionController extends Controller
         $request->validate([
             'title'  =>  'required',
             'competition_type'  =>  'required',
+            //'students' => 'required',
             'category' => 'required',
             'date_of_competition'  =>  'required',
             'start_time_of_competition'  =>  'required',
-            'end_time_of_competition'  =>  'required',
+            //'end_time_of_competition'  =>  'required',
         ], $messages);
 
         $competition = new Competition();
@@ -82,6 +87,7 @@ class CompetitionController extends Controller
         $competition->end_time_of_competition = $request->end_time_of_competition;
         $competition->description = $request->description;
         $competition->competition_type = $request->competition_type;
+        $competition->status = $request->status ?? null;
         $competition->save();
 
         $competitionId = $competition->id;
@@ -90,6 +96,13 @@ class CompetitionController extends Controller
             $catCompt->competition_id = $competitionId;
             $catCompt->category_id = $cate;
             $catCompt->save();
+        }
+
+        foreach($request->students as $student){
+            $comptStu = new CompetitionStudent();
+            $comptStu->competition_controller_id = $competitionId;
+            $comptStu->user_id = $student;
+            $comptStu->save();
         }
 
         return redirect()->route('competition.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
@@ -121,9 +134,11 @@ class CompetitionController extends Controller
         $title = $this->title;
         $competition = Competition::find($id);
         $competitionCategory = CompetitionCategory::get();
+        $userType = array(1,2,3,4);
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
         $categoryCompetition = CategoryCompetition::where('competition_id', $id)->pluck('category_id')->toArray();
-        
-        return view('admin.competition.edit', compact('title', 'competition', 'categoryCompetition','competitionCategory'));
+        $comptStu = CompetitionStudent::where('competition_controller_id', $id)->pluck('user_id')->toArray();
+        return view('admin.competition.edit', compact('title', 'competition', 'categoryCompetition','competitionCategory', 'students', 'comptStu'));
     }
 
     /**
@@ -145,7 +160,7 @@ class CompetitionController extends Controller
             'category' => 'required',
             'date_of_competition'  =>  'required',
             'start_time_of_competition'  =>  'required',
-            'end_time_of_competition'  =>  'required',
+            // 'end_time_of_competition'  =>  'required',
         ], $messages);
 
         $competition = Competition::where('id', $id)->first();
@@ -166,6 +181,17 @@ class CompetitionController extends Controller
             $catCompt->competition_id = $id;
             $catCompt->category_id = $cate;
             $catCompt->save();
+        }
+
+        $studentCompetition = CompetitionStudent::where('competition_controller_id', $id)->get();
+        foreach($studentCompetition as $deleteStudent){
+            $deleteStudent->delete();
+        }
+        foreach($request->students as $student){
+            $student = new CompetitionStudent();
+            $student->competition_controller_id = $id;
+            $student->user_id = $student;
+            $student->save();
         }
 
         return redirect()->route('competition.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
