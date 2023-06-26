@@ -17,6 +17,7 @@ use App\Contact;
 use App\Menu;
 use App\Slider;
 use App\Category;
+use App\Competition;
 use App\Partner;
 use App\SystemSetting;
 use App\Testimonial;
@@ -69,11 +70,11 @@ class PagesFrontController extends Controller
         }
         $levels = Level::get();
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
-
+        $competition = Competition::where('status', 1)->first();
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();
-        return view('home', compact("page", 'levels', 'levelArray'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition'));
     }
 
     public function instructor($slug = null){

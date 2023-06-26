@@ -49,7 +49,24 @@
                     <div class="descripts">
                         <h3>Competition</h3>
                         <div class="gactions">
-                            <a href="{{ url('competition') }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @php
+                            if($competition){
+                                $competitionId = $competition->id;
+                                $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->first();
+                                if($compStu){
+                                    $url = 1; 
+                                }else{
+                                    $url = '0';
+                                }
+                            }else{
+                                $url = '1';
+                            }
+                            @endphp
+                            @if(!empty($url))
+                            <a href="{{ url('competition/'.$competitionId) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @else
+                            <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>

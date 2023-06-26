@@ -21,7 +21,31 @@
                             @method('POST')
                             <div class="card-body">
 
-                                <input type="hidden" name="competionT" id="competionT" value="">
+                                @if(isset($_GET['type']) && $_GET['type'] == 'physical')
+                                <input type="hidden" name="competionT" id="competionT" value="2">
+                                @else
+                                <input type="hidden" name="competionT" id="competionT" value="1">
+                                @endif
+
+
+                                <div class="form-group">
+                                    <label for="title">Competition</label>
+                                    <select name="competitionn" class="form-control" id="competition" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                        <option value="">-- Select --</option>
+                                        @foreach($competition as $comp)
+                                        <option value="<?php echo url('/'); ?>/admin/papers/create?comp_id={{ $comp->id }}&type={{ $comp->competition_type }}" data-comp="{{ $comp->competition_type }}" @if(isset($_GET['comp_id']) && $_GET['comp_id']==$comp->id) selected @endif>{{ $comp->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('competition'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('competition') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                @if(isset($_GET['comp_id']))
+                                <input type="hidden" name="competition" value="{{ $_GET['comp_id'] }}">
+                                @endif
 
                                 <div class="form-group">
                                     <label for="title">Title</label>
@@ -33,12 +57,26 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                @php 
+                                if(isset($_GET['comp_id'])){
+                                    $compId = $_GET['comp_id'];
+                                    if($compId){
+                                        $catComp = \App\CategoryCompetition::where('competition_id', $compId)->pluck('category_id')->toArray();
+                                        $compCat = \App\CompetitionCategory::whereIn('id', $catComp)->get();
+                                    }
+                                    else{
+                                        $compCat = array();
+                                    }
+                                }
+                                
+                                @endphp
+                                
+                                @if(isset($_GET['comp_id']))
                                 <div class="form-group">
                                     <label for="title">Category</label>
                                     <select name="category[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
-                                        @foreach($competitionCategory as $cate)
+                                        @foreach($compCat as $cate)
                                         <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
                                         @endforeach
                                     </select>
@@ -48,23 +86,11 @@
                                     </span>
                                     @endif
                                 </div>
+                                @endif
 
-                                <div class="form-group">
-                                    <label for="title">Competition</label>
-                                    <select name="competition" class="form-control" id="competition" >
-                                        <option value="">-- Select --</option>
-                                        @foreach($competition as $comp)
-                                        <option value="{{ $comp->id }}" data-comp="{{ $comp->competition_type }}" @if(old('competition') == $comp->id) selected @endif>{{ $comp->title }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('competition'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('competition') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                @if(isset($_GET['type']) && $_GET['type'] == 'physical')
 
-                                <div class="form-group physicalclass" style="display: none">
+                                <div class="form-group physicalclass" >
                                     <label for="title">Price</label>
                                     <input type="text" name="price" class="form-control" id=""
                                         value="{{ old('price') }}">
@@ -75,7 +101,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group physicalclass" style="display: none">
+                                <div class="form-group physicalclass">
                                     <label for="title">PDF Upload</label>
                                     <input type="file" name="pdf_upload" class="form-control" >
                                     @if ($errors->has('pdf_upload'))
@@ -84,9 +110,11 @@
                                     </span>
                                     @endif
                                 </div>
+                                @endif
 
 
-                                <div class="form-group onlineclass" style="display: none">
+                                @if(isset($_GET['type']) && $_GET['type'] == 'online')
+                                <div class="form-group onlineclass" >
                                     <label for="title">Question Template</label>
                                     <select name="questiontemplate" class="form-control">
                                         <option value="">-- Select --</option>
@@ -103,7 +131,7 @@
 
                                 
 
-                                <div class="form-group onlineclass" style="display: none">
+                                <div class="form-group onlineclass" >
                                     <label for="title">Time</label>
                                     <input type="text" name="time" class="form-control" id=""
                                         value="{{ old('time') }}">
@@ -114,7 +142,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group onlineclass" style="display: none">
+                                <div class="form-group onlineclass">
                                     <label for="title">Question Type</label>
                                     <select name="question_type" class="form-control" >
                                         <option value="">-- Select --</option>
@@ -130,7 +158,7 @@
 
                                
 
-                                <div class="form-group onlineclass" style="display: none">
+                                <div class="form-group onlineclass" >
                                     <label for="title">Timer</label>
                                     <select name="timer" class="form-control">
                                         <option value="">-- Select --</option>
@@ -143,7 +171,7 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                @endif
 
                                 <div class="form-group">
                                     <label for="title">Description</label>
@@ -185,41 +213,5 @@
     </section>
 </div>
 
-@if(old('competionT') == 1)
-<script>
-    $( document ).ready(function() {
-        $('.onlineclass').show();
-        $('.physicalclass').hide();
-        $('#competionT').val(1);
-    });
-</script>
-@endif
-@if(old('competionT') == 2)
-<script>
-    $( document ).ready(function() {
-        $('.onlineclass').hide();
-        $('.physicalclass').show();
-        $('#competionT').val(2);
-    });
-</script>
-@endif
-
-<script>
-    $( document ).ready(function() {
-        $('#competition').change(function(){
-            let compType = '';
-            compType = $(this).find(':selected').data('comp');
-            if(compType == 'online'){
-                $('.onlineclass').show();
-                $('.physicalclass').hide();
-                $('#competionT').val(1);
-            }else{
-                $('.onlineclass').hide();
-                $('.physicalclass').show();
-                $('#competionT').val(2);
-            }
-        });
-    });
-</script>
 
 @endsection

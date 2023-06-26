@@ -22,4 +22,9 @@ class Competition extends Model
             return $query;
         }
     }
+
+    public function compStu(){
+        return $this->hasMany('App\CompetitionStudent', 'competition_controller_id', 'id');
+    }
+
 }

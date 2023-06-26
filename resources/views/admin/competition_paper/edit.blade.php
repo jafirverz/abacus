@@ -56,7 +56,7 @@
                                 
                                 <div class="form-group">
                                     <label for="title">Competition</label>
-                                    <select name="competition" class="form-control" readonly>
+                                    <select name="competitionn" class="form-control" disabled>
                                         <option value="">-- Select --</option>
                                         @foreach($competition as $comp)
                                         <option value="{{ $comp->id }}" @if($comp->id == $competitionPaper->competition_controller_id) selected @endif>{{ $comp->title }}</option>
@@ -68,7 +68,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                
+                                <input type="hidden" name="competition" value="{{ $competitionPaper->competition_controller_id }}">
                                 
                                 @if($competitionPaper->comp_contro->competition_type == 'physical')
                                 <div class="form-group physicalclass" >

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
 use App\CompetitionPaper;
@@ -139,11 +140,15 @@ class CompetitionPaperController extends Controller
         //
         $title = $this->title;
         $competitionPaper = CompetitionPaper::with('comp_contro')->find($id);
-        $competitionCategory = CompetitionCategory::get();
+        
         $questionTempleates = QuestionTemplate::get();
         $competition = Competition::get();
+
         $categoryCompetition = PaperCategory::where('competition_paper_id', $id)->pluck('category_id')->toArray();
-        
+        $categoryCompetition1 = PaperCategory::where('competition_paper_id', $id)->pluck('competition_id')->toArray();
+        $catComp = CategoryCompetition::whereIn('competition_id', $categoryCompetition1)->pluck('category_id')->toArray();
+        $competitionCategory = CompetitionCategory::whereIn('id', $catComp)->get();
+
         return view('admin.competition_paper.edit', compact('title', 'competitionPaper', 'categoryCompetition','competitionCategory', 'questionTempleates', 'competition'));
     }
 
