@@ -70,118 +70,68 @@
 
                         @foreach($catComp as $key=>$cat)
 
-                        @php 
-                        $catt = \App\CompetitionCategory::where('id', $cat)->first();
-                        if($key == 0){
-                            $collaspse = '';
-                            $show = 'show';
-                        }else{
-                            $collaspse = 'collapsed';
-                            $show = '';
-                        }
-                        @endphp
-                        <div class="accordion-item">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button {{ $collaspse }}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-{{ $i }}" aria-expanded="false" aria-controls="faq-{{ $i }}">{{ $catt->category_name}}</button>
-                            </h3>
+                            @php
+                            $checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
+                            @endphp
 
 
-                            <div id="faq-{{ $i }}" class="accordion-collapse collapse {{ $show }}">
-                                <div class="accordion-body">
-                                    <div class="row break-1500">
 
-                                        <div class="col-xl-6 sp-col">
-                                            <div class="box-2">
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 1</span></label>
+                            @php 
+                            $catt = \App\CompetitionCategory::where('id', $cat)->first();
+                            if($key == 0){
+                                $collaspse = '';
+                                $show = 'show';
+                            }else{
+                                $collaspse = 'collapsed';
+                                $show = '';
+                            }
+                            @endphp
+                            @if($checkPaperCategory)
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header">
+                                        <button class="accordion-button {{ $collaspse }}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-{{ $i }}" aria-expanded="false" aria-controls="faq-{{ $i }}">{{ $catt->category_name}}</button>
+                                    </h3>
+
+
+                                    <div id="faq-{{ $i }}" class="accordion-collapse collapse {{ $show }}">
+                                        <div class="accordion-body">
+                                            <div class="row break-1500">
+                                                @php 
+                                                $papers = \App\PaperCategory::where('competition_id', $compId)->where('category_id', $cat)->get();
+                                                @endphp
+                                                <div class="col-xl-6 sp-col">
+                                                    <div class="box-2">
+                                                    @foreach($papers as $paper)
+                                                    @php 
+                                                        $pape = \App\CompetitionPaper::where('id', $paper->competition_paper_id)->first();
+                                                        @endphp
+                                                        <div class="bxrow">
+                                                            <div class="checkbxtype">
+                                                                <input type="checkbox" id="practice-7">
+                                                                <label><span>{{ $pape->title }}</span></label>
+                                                            </div>
+                                                            <!-- <a class="lnk btn-2" href="#">Download</a> -->
+                                                        </div>
+                                                        @endforeach
+                                                        
                                                     </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
                                                 </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 2</span></label>
-                                                    </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 3</span></label>
-                                                    </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 4</span></label>
-                                                    </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 5</span></label>
-                                                    </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype">
-                                                        <input type="checkbox" id="practice-6" />
-                                                        <label for="practice-6"><span>Category A - Practice 6</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                </div>
+
+                                                
+                                            
+
+
+                                            </div>
+                                            <div class="output-2 mt-0">
+                                                <a class="btn-1" href="#">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></a>
                                             </div>
                                         </div>
-                                        <div class="col-xl-6 sp-col">
-                                            <div class="box-2">
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype">
-                                                        <input type="checkbox" id="practice-7" />
-                                                        <label for="practice-7"><span>Category A - Practice 7</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype">
-                                                        <input type="checkbox" id="practice-8" />
-                                                        <label for="practice-8"><span>Category A - Practice 8</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 9</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
-                                                </div>
-                                                <div class="bxrow">																
-                                                    <div class="checkbxtype nocheck">
-                                                        <label><span>Category A - Practice 10</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                    <a class="lnk btn-2" href="#">Download</a>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype">
-                                                        <input type="checkbox" id="practice-11" />
-                                                        <label for="practice-11"><span>Category A - Practice 11</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                </div>
-                                                <div class="bxrow">
-                                                    <div class="checkbxtype">
-                                                        <input type="checkbox" id="practice-12" />
-                                                        <label for="practice-12"><span>Category A - Practice 12</span> <strong>$0.50</strong></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="output-2 mt-0">
-                                        <a class="btn-1" href="#">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        @php 
-                        $i++;
-                        @endphp
+                                @php 
+                                $i++;
+                                @endphp
+                            @endif
                         @endforeach
 
                         
