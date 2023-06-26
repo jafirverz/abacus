@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Notification;
 use App\Announcement;
+use App\GradingExam;
+use App\GradingExamList;
 use App\TeachingMaterials;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
@@ -84,6 +86,28 @@ class ProfileController extends Controller
 
 		return view('account.instructor-overview', compact("page", "user","announcements"));
 	}
+
+    public function grading_overview()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		$gradingExam = GradingExam::where('status', 1)->first();
+        $gradingExamList = GradingExamList::where('grading_exams_id', $gradingExam->id)->get();
+		$page = get_page_by_slug($slug);
+        //dd($gradingExamList);
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.grading-overview', compact("page", "gradingExam","gradingExamList"));
+	}
+
 
     public function index()
 	{
