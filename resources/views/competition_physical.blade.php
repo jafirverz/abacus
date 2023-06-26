@@ -98,6 +98,7 @@
                                             <div class="row break-1500">
                                                 @php 
                                                 $papers = \App\PaperCategory::where('competition_id', $compId)->where('category_id', $cat)->get();
+                                                $countP = count($papers);
                                                 @endphp
                                                 <div class="col-xl-6 sp-col">
                                                     <div class="box-2">
@@ -105,10 +106,13 @@
                                                     @php 
                                                         $pape = \App\CompetitionPaper::where('id', $paper->competition_paper_id)->first();
                                                         @endphp
+                                                        
                                                         <div class="bxrow">
                                                             <div class="checkbxtype">
                                                                 <input type="checkbox" id="practice-7">
-                                                                <label><span>{{ $pape->title }}</span></label>
+                                                                <label><span>{{ $pape->title }}</span>
+                                                                    <strong>${{ $pape->price }}</strong>
+                                                                </label>
                                                             </div>
                                                             <!-- <a class="lnk btn-2" href="#">Download</a> -->
                                                         </div>
