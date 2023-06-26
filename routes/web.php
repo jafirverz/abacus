@@ -69,6 +69,7 @@ Route::get('/competition/{id?}', 'CompetitionController@index');
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
 Route::get('instructor-profile', 'ProfileController@instructor')->name('instructor-profile');
+Route::get('grading-overview', 'ProfileController@grading_overview')->name('grading-overview');
 Route::get('teaching-materials', 'ProfileController@teaching_materials')->name('teaching-materials');
 Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
