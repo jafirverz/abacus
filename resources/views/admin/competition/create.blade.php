@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('competition.store') }}" method="post">
+                        <form action="{{ route('competition.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -143,10 +143,22 @@
 
 
                                 <div class="form-group">
+                                    <label for="title">Image Overview Page</label>
+                                    <input type="file" name="compoverimage" value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">Image Competition Page</label>
+                                    <input type="file" name="compimage" value="">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="title">Description</label>
                                     <textarea name="description" class="form-control my-editor" cols="30"
                                               rows="5">{{old('description')}}</textarea>
                                 </div>
+
+                                
 
                                 <div class="form-group">
                                     <label for="status">Status</label>

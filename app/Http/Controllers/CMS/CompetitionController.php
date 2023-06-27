@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class CompetitionController extends Controller
 {
@@ -81,6 +83,46 @@ class CompetitionController extends Controller
         ], $messages);
 
         $competition = new Competition();
+        if ($request->hasFile('compoverimage')) {
+
+            $compoverimage = $request->file('compoverimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compoverimage->getClientOriginalName();
+
+            $filepath = 'storage/competition/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compoverimage,
+                $filename
+
+            );
+
+            $compoverimage_path = $filepath . $filename;
+
+            $competition->overview_image =  $compoverimage_path;
+        }
+        if ($request->hasFile('compimage')) {
+
+            $compimage = $request->file('compimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compimage->getClientOriginalName();
+
+            $filepath = 'storage/competition/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compimage,
+                $filename
+
+            );
+
+            $competition_path = $filepath . $filename;
+
+            $competition->comp_image = $competition_path;
+        }
         $competition->title = $request->title;
         $competition->date_of_competition = $request->date_of_competition;
         $competition->start_time_of_competition = $request->start_time_of_competition;
@@ -164,6 +206,46 @@ class CompetitionController extends Controller
         ], $messages);
 
         $competition = Competition::where('id', $id)->first();
+        if ($request->hasFile('compoverimage')) {
+
+            $compoverimage = $request->file('compoverimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compoverimage->getClientOriginalName();
+
+            $filepath = 'storage/competition/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compoverimage,
+                $filename
+
+            );
+
+            $compoverimage_path = $filepath . $filename;
+
+            $competition->overview_image =  $compoverimage_path;
+        }
+        if ($request->hasFile('compimage')) {
+
+            $compimage = $request->file('compimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compimage->getClientOriginalName();
+
+            $filepath = 'storage/competition/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compimage,
+                $filename
+
+            );
+
+            $competition_path = $filepath . $filename;
+
+            $competition->comp_image = $competition_path;
+        }
         $competition->title = $request->title;
         $competition->date_of_competition = $request->date_of_competition;
         $competition->start_time_of_competition = $request->start_time_of_competition;
@@ -184,13 +266,14 @@ class CompetitionController extends Controller
         }
 
         $studentCompetition = CompetitionStudent::where('competition_controller_id', $id)->get();
+        
         foreach($studentCompetition as $deleteStudent){
             $deleteStudent->delete();
         }
-        foreach($request->students as $student){
+        foreach($request->students as $key=>$studenttt){
             $student = new CompetitionStudent();
             $student->competition_controller_id = $id;
-            $student->user_id = $student;
+            $student->user_id = $studenttt;
             $student->save();
         }
 

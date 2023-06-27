@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('competition.update', $competition->id) }}" method="post">
+                        <form action="{{ route('competition.update', $competition->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -142,6 +142,22 @@
                                     @endif
                                 </div>
                                 --}}
+
+                                <div class="form-group">
+                                    <label for="title">Image Overview Page</label>
+                                    <input type="file" name="compoverimage" value="">
+                                </div>
+                                @if($competition->overview_image)
+                                <img src="{{ asset($competition->overview_image) }}" width="200px;">
+                                @endif
+
+                                <div class="form-group">
+                                    <label for="title">Image Competition Page</label>
+                                    <input type="file" name="compimage" value="">
+                                </div>
+                                @if($competition->comp_image)
+                                <img src="{{ asset($competition->comp_image) }}" width="200px;">
+                                @endif
 
 
                                 <div class="form-group">
