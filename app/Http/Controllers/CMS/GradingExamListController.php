@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\GradingExam;
 use App\GradingExamList;
+use App\GradingListingDetail;
 use App\User;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
@@ -69,34 +70,46 @@ class GradingExamListController extends Controller
         $gradingExamList = new GradingExamList();
         $gradingExamList->heading = $request->heading ?? NULL;
         $gradingExamList->grading_exams_id  = $request->exam_id;
+        $gradingExamList->save();
         if($request->type==1)
         {
-            if ($request->hasfile('input_3')) {
+            if ($request->hasfile('input_3'))
+            {
+                $i=0;
                 foreach ($request->file('input_3') as $file) {
-
+                    $i++;
                     //$name = $file->getClientOriginalName();
                     //$file->move(public_path() . '/upload-file/', $name);
-                    $data[] = uploadPicture($file, 'upload-file');
+                    //Physical
+                    $gradingListingDetail = new GradingListingDetail();
+                    $gradingListingDetail->uploaded_file = uploadPicture($file, 'upload-file');
+                    $gradingListingDetail->grading_listing_id   = $gradingExamList->id;
+                    $gradingListingDetail->title   = $request->input_1[$i];
+                    $gradingListingDetail->price   = $request->input_2[$i];
+                    $gradingExamList->save();
+
                 }
 
-                $json['input_3']=$data;
-                $json['input_2']=$request->input_2;
-                $json['input_1']=$request->input_1;
-                $gradingExamList->json_content = json_encode($json);
             }
         }
         else
         {
 
+            for($k=0;count($request->input_1);$k++)
+            {
+                //Online
+                $gradingListingDetail = new GradingListingDetail();
+                $gradingListingDetail->grading_listing_id   = $gradingExamList->id;
+                $gradingListingDetail->title   = $request->input_1[$i];
+                $gradingListingDetail->price   = $request->input_2[$i];
+                $gradingListingDetail->paper_id   = $request->input_3[$i];
+                $gradingExamList->save();
+            }
 
-                $json['input_3']=$request->input_3;
-                $json['input_2']=$request->input_2;
-                $json['input_1']=$request->input_1;
-                $gradingExamList->json_content = json_encode($json);
 
         }
 
-        $gradingExamList->save();
+
 
         return redirect()->route('grading-exam-list.index',$request->exam_id)->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
