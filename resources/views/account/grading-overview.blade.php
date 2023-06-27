@@ -76,10 +76,22 @@
                                                     {
                                                     @endphp
                                                     <div class="bxrow">
+                                                        @if(isset($json_content->input_2[$k]) && $json_content->input_2[$k]>0)
+
+                                                        <div class="checkbxtype">
+                                                            <input type="checkbox" name="grade_pay[]" value="" id="exercise-{{ $i.$k }}">
+                                                            <label for="exercise-{{ $i.$k }}"><span>{{ $json_content->input_1[$k] ?? '' }}</span> <strong>${{ $json_content->input_2[$k] ?? '' }}</strong></label>
+                                                        </div>
+                                                        @else
                                                         <div class="checkbxtype nocheck">
                                                             <label><span>{{ $json_content->input_1[$k] ?? '' }}</span> <strong>${{ $json_content->input_2[$k] ?? '' }}</strong></label>
                                                         </div>
                                                         <a class="lnk btn-2" href="#">Download</a>
+
+                                                        @endif
+
+
+
                                                     </div>
                                                     @php } @endphp
                                                 </div>
