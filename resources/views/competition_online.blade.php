@@ -114,9 +114,7 @@
                                                                     <strong>${{ $pape->price ?? 0 }}</strong>
                                                                 </label>
                                                             </div>
-                                                            @if(empty($pape->price))
-                                                            <a class="lnk btn-2" href="{{ asset('upload-file/'.$pape->pdf_file) }}" target="_blank">Download</a>
-                                                            @endif
+                                                            <a class="lnk btn-2" href="{{ url('competition-paper/'.$pape->id) }}" >View</a>
                                                         </div>
                                                         @endforeach
                                                         
@@ -128,9 +126,9 @@
 
 
                                             </div>
-                                            <div class="output-2 mt-0">
+                                            <!-- <div class="output-2 mt-0">
                                                 <a class="btn-1" href="#">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></a>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
