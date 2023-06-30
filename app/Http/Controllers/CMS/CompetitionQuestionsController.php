@@ -73,6 +73,7 @@ class CompetitionQuestionsController extends Controller
                 $storQues->question_2 = $request->input_3[$i];
                 $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
                 $storQues->save();
             }
         }
@@ -91,6 +92,7 @@ class CompetitionQuestionsController extends Controller
                     $storQues->question_1 = $name;
                     $storQues->symbol = 'listening';
                     $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
                     $storQues->save();
                     $i++;
                 }
@@ -114,6 +116,31 @@ class CompetitionQuestionsController extends Controller
                     $storQues->question_1 = $name;
                     $storQues->symbol = 'video';
                     $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                    $i++;
+                }
+
+                // $json['input_1']=$data;
+                // $json['input_2']=$request->input_2;
+            }
+        }
+        elseif($question_template_id == 3)
+        {
+            
+            if ($request->hasfile('input_1')) {
+                $i = 0;
+                foreach ($request->file('input_1') as $file) {
+
+                    $name = $file->getClientOriginalName();
+                    $file->move(public_path() . '/upload-file/', $name);
+                    //$data[] = $name;
+                    $storQues = new CompetitionQuestions();
+                    $storQues->competition_paper_id = $competition_paper_id;
+                    $storQues->question_1 = $name;
+                    $storQues->symbol = 'number_question';
+                    $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
                     $storQues->save();
                     $i++;
                 }
@@ -179,6 +206,7 @@ class CompetitionQuestionsController extends Controller
                 $storQues->question_2 = $request->input_3[$i];
                 $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
                 $storQues->save();
             }
         }
@@ -197,6 +225,7 @@ class CompetitionQuestionsController extends Controller
                     $storQues->question_1 = $name;
                     $storQues->symbol = 'listening';
                     $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
                     $storQues->save();
                     $i++;
                 }
@@ -220,6 +249,31 @@ class CompetitionQuestionsController extends Controller
                     $storQues->question_1 = $name;
                     $storQues->symbol = 'video';
                     $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                    $i++;
+                }
+
+                // $json['input_1']=$data;
+                // $json['input_2']=$request->input_2;
+            }
+        }
+        elseif($question_template_id == 3)
+        {
+            
+            if ($request->hasfile('input_1')) {
+                $i = 0;
+                foreach ($request->file('input_1') as $file) {
+
+                    $name = $file->getClientOriginalName();
+                    $file->move(public_path() . '/upload-file/', $name);
+                    //$data[] = $name;
+                    $storQues = new CompetitionQuestions();
+                    $storQues->competition_paper_id = $competition_paper_id;
+                    $storQues->question_1 = $name;
+                    $storQues->symbol = 'number_question';
+                    $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
                     $storQues->save();
                     $i++;
                 }
