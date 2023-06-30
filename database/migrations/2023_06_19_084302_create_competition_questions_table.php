@@ -21,6 +21,7 @@ class CreateCompetitionQuestionsTable extends Migration
             $table->string('question_2')->nullable();
             $table->string('symbol')->nullable();
             $table->string('answer')->nullable();
+            $table->string('marks')->nullable();
             $table->timestamps();
         });
     }

@@ -65,6 +65,8 @@ Route::get('/worksheet/{worksheetId?}/qId/{qid?}/lId/{lId?}', 'WorksheetControll
 
 Route::get('/competition/{id?}', 'CompetitionController@index');
 
+Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
