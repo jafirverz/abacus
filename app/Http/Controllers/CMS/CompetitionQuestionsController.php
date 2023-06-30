@@ -64,7 +64,7 @@ class CompetitionQuestionsController extends Controller
         // dd($request);
         $competition_paper_id = $request->paperId;
         $question_template_id = $request->question_template_id;
-        if($question_template_id == 4 || $question_template_id == 5 || $question_template_id == 6){
+        if($question_template_id == 4 || $question_template_id == 5 || $question_template_id == 6 || $question_template_id == 7){
             $count = count($request->input_1);
             for($i=0; $i<$count; $i++){
                 $storQues = new CompetitionQuestions();
@@ -197,7 +197,7 @@ class CompetitionQuestionsController extends Controller
         foreach($storQues as $quess){
             $quess->delete();
         }
-        if($question_template_id == 4 || $question_template_id == 5 || $question_template_id == 6){
+        if($question_template_id == 4 || $question_template_id == 5 || $question_template_id == 6 || $question_template_id == 7){
             $count = count($request->input_1);
             for($i=0; $i<$count; $i++){
                 $storQues = new CompetitionQuestions();
