@@ -29,7 +29,7 @@
                                     class="badge badge-transparent">0</span></a>
                             <form id="destroy" action="{{ route('grading-exam-list.destroy', ['exam_id' => $exam_id, 'id' => 'grading-exam-list']) }}" method="post">
                                 @csrf
-                                @method('DELETE')
+                                @method('POST')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>

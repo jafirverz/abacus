@@ -77,16 +77,24 @@ class GradingExamListController extends Controller
             {
                 $i=0;
                 foreach ($request->file('input_3') as $file) {
-                    $i++;
+
                     //$name = $file->getClientOriginalName();
                     //$file->move(public_path() . '/upload-file/', $name);
                     //Physical
+
+                    if(isset($request->input_1[$i]))
+                    {
                     $gradingListingDetail = new GradingListingDetail();
                     $gradingListingDetail->uploaded_file = uploadPicture($file, 'upload-file');
                     $gradingListingDetail->grading_listing_id   = $gradingExamList->id;
                     $gradingListingDetail->title   = $request->input_1[$i];
                     $gradingListingDetail->price   = $request->input_2[$i];
-                    $gradingExamList->save();
+                    $gradingListingDetail->save();
+
+                    }
+
+                    $i++;
+
 
                 }
 
@@ -157,28 +165,95 @@ class GradingExamListController extends Controller
         $gradingExamList = GradingExamList::findorfail($id);
         if($request->type==1)
         {
-            $input_3_old=$request->input_3_old;
-            if ($request->hasfile('input_3')) {
-                foreach ($request->file('input_3') as $file) {
 
-                    $name = uploadPicture($file, 'upload-file');
-                    array_push($input_3_old,$name);
-                }
 
-            }
-                $json['input_3']=$input_3_old;
-                $json['input_2']=$request->input_2;
-                $json['input_1']=$request->input_1;
-                $gradingExamList->json_content = json_encode($json);
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $gradingListingDetail = GradingListingDetail::findorfail($request->listing_detail_id[$m]);
+                                    $gradingListingDetail->title   = $request->old_input_1[$m];
+                                    $gradingListingDetail->price   = $request->old_input_2[$m];
+                                    $gradingListingDetail->save();
+                                }
+                                else
+                                {
+                                    GradingListingDetail::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+                     $n=0;
+                     if($request->hasFile('input_3'))
+                     {
+
+                     foreach ($request->file('input_3') as $file) {
+                            $gradingListingDetail = new GradingListingDetail();
+                            $gradingListingDetail->grading_listing_id   = $id;
+                            $gradingListingDetail->uploaded_file = uploadPicture($file, 'upload-file');
+                            $gradingListingDetail->title   = $request->input_1[$n];
+                            $gradingListingDetail->price   = $request->input_2[$n];
+                            $gradingListingDetail->save();
+                            $n++;
+                        }
+
+                     }
+
+
+
+
         }
         else
         {
 
 
-                $json['input_3']=$request->input_3;
-                $json['input_2']=$request->input_2;
-                $json['input_1']=$request->input_1;
-                $gradingExamList->json_content = json_encode($json);
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+                        if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                        {
+                            if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                            {
+                                $gradingListingDetail = GradingListingDetail::findorfail($request->listing_detail_id[$m]);
+                                $gradingListingDetail->title   = $request->old_input_1[$m];
+                                $gradingListingDetail->price   = $request->old_input_2[$m];
+                                $gradingListingDetail->paper_id   = $request->old_input_3[$m];
+                                $gradingListingDetail->save();
+                            }
+                            else
+                            {
+                                GradingListingDetail::where('id',$request->listing_detail_id[$m])->delete();
+                            }
+
+
+                        }
+                    }
+
+
+
+                     if($request->input_1)
+                     {
+
+                        for($z=0;$z<count($request->input_1);$z++)
+                        {
+                            if(isset($request->input_1[$z]))
+                            {
+                                $gradingListingDetail = new GradingListingDetail();
+                                $gradingListingDetail->grading_listing_id   = $id;
+                                $gradingListingDetail->paper_id = $request->input_3[$z];
+                                $gradingListingDetail->title   = $request->input_1[$z];
+                                $gradingListingDetail->price   = $request->input_2[$z];
+                                $gradingListingDetail->save();
+                            }
+
+                        }
+
+                     }
 
         }
         $gradingExamList->save();
@@ -195,7 +270,7 @@ class GradingExamListController extends Controller
     public function destroy(Request $request)
     {
         $id = explode(',', $request->multiple_delete);
-        GradingExam::destroy($id);
+        GradingExamList::destroy($id);
 
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }

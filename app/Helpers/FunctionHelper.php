@@ -8,6 +8,8 @@ use App\Page;
 use App\Slider;
 use App\GradingExam;
 use App\GradingPaper;
+use App\GradingExamList;
+use App\GradingListingDetail;
 use App\Role;
 use App\User;
 use App\Menu;
@@ -419,6 +421,14 @@ if (!function_exists('getPageList')) {
         if ($result) {
             return $result;
         }
+    }
+    function getAllGradingExamListDetail($id)
+    {
+        $result = GradingListingDetail::where('grading_listing_id',$id)->get();
+        if ($result) {
+            return $result;
+        }
+         return NULL;
     }
     function getAllGradingPaper()
     {

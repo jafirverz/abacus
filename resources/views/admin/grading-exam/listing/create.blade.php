@@ -62,12 +62,7 @@
                                         <input class="form-control" required value="" name="input_2[]"  type="text" placeholder="Price">
                                     </div>
                                     <div class="col-md-4">
-                                        <select class="form-control" required name="input_3[]">
-                                            <option value="">--Select--</option>
-                                            @foreach(getAllGradingPaper() as $val)
-                                            <option value="{{ $val->id }}">{{ $val->title }}</option>
-                                            @endforeach
-                                        </select>
+                                        
                                     </div>
 
                                 </div>
