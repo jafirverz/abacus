@@ -16,7 +16,6 @@
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
           <li><a href="{{ url('') }}">Preparatory Level</a></li>
-          <li><strong>{{ $worksheet->title }}</strong></li> 
         </ul>
         <div class="box-1">
           {{ $worksheet->description }}
