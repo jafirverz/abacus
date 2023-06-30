@@ -36,8 +36,10 @@
                                 @if(getExamDetail($exam_id)->type==1)
                                 <label for="" class=" control-label">Physical</label>
                                 @php
-                                    $json_content=json_decode($list->json_content);
-                                    for($i=0;$i<count($json_content->input_1);$i++)
+                                    $detail=getAllGradingExamListDetail($list->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
                                     {
 
                                 @endphp
@@ -45,21 +47,22 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $json_content->input_1[$i] }}" name="input_1[]" placeholder="Question" type="text">
+                                                <input class="form-control" required value="{{ $value->title }}" name="old_input_1[]" placeholder="Question" type="text">
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $json_content->input_2[$i] }}" name="input_2[]" placeholder="Price" type="text">
+                                                <input class="form-control" required value="{{ $value->price }}" name="old_input_2[]" placeholder="Price" type="text">
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control"  value="{{ $json_content->input_3[$i] }}" name="input_3_old[]" type="hidden">
-                                                <a href="{{ url('/') }}/{{ $json_content->input_3[$i] }}" target="_blank"> {{ $json_content->input_3[$i] }} </a>
+                                                <input class="form-control"  value="{{ $value->uploaded_file }}" name="old_input_3[]" type="hidden">
+                                                <a href="{{ url('/') }}/{{ $value->uploaded_file }}" target="_blank"> {{ $value->uploaded_file }} </a>
                                             </div>
                                         </div>
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                         </div>
                                     </div>
-                                @php } @endphp
+                                    <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                @php } } @endphp
                                 <div class="after-add-more"></div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
@@ -67,8 +70,10 @@
                                @else
                                <label for="" class=" control-label">Online</label>
                                 @php
-                                    $json_content=json_decode($list->json_content);
-                                    for($i=0;$i<count($json_content->input_1);$i++)
+                                    $detail=getAllGradingExamListDetail($list->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
                                     {
 
                                 @endphp
@@ -76,16 +81,16 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $json_content->input_1[$i] }}" name="input_1[]" placeholder="Question" type="text">
+                                                <input class="form-control" required value="{{ $value->title }}" name="old_input_1[]" placeholder="Question" type="text">
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $json_content->input_2[$i] }}" name="input_2[]" placeholder="Price" type="text">
+                                                <input class="form-control" required value="{{ $value->price }}" name="old_input_2[]" placeholder="Price" type="text">
                                             </div>
                                             <div class="col-md-4">
-                                                <select class="form-control" required name="input_3[]">
+                                                <select class="form-control" required name="old_input_3[]">
                                                     <option value="">--Select--</option>
                                                     @foreach(getAllGradingPaper() as $val)
-                                                    <option @if($val->id==$json_content->input_3[$i]) selected @endif value="{{ $val->id }}">{{ $val->title }}</option>
+                                                    <option @if($val->id==$value->paper_id) selected @endif value="{{ $val->id }}">{{ $val->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -94,7 +99,8 @@
                                             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                         </div>
                                     </div>
-                                @php } @endphp
+                                    <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                @php }} @endphp
                                 <div class="after-add-more"></div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
@@ -134,6 +140,7 @@
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
       </div>
     </div>
+    <input type="hidden" name="listing_detail_id[]" value="">
 </div>
 <div class="copy2" style="display:none;">
     <div class="form-group">
@@ -157,6 +164,7 @@
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
       </div>
     </div>
+    <input type="hidden" name="listing_detail_id[]" value="">
 </div>
 
 
