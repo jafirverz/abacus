@@ -26,6 +26,7 @@
         <div class="row grid-5">
           @php 
           $k = 1;
+          $i = 1;
           @endphp
           @foreach($questions as $question)
           <div class="col-lg-4 col-md-6">
@@ -43,6 +44,7 @@
           </div>
           @php 
           $k++;
+          $i++;
           @endphp
           @endforeach
           
