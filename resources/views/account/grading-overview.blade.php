@@ -21,18 +21,18 @@
                             <div class="row sp-col-15">
                                 <div class="col-lg-12 sp-col gincol-1">
                                     <div class="inrow">
-                                        <strong>Title:</strong> <?=$gradingExam->title?>
+                                        <strong>Title:</strong> {{$gradingExam->title ?? ''}}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Date:</strong> <?=$gradingExam->exam_date?>
+                                        <strong>Date:</strong> {{$gradingExam->exam_date ?? ''}}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Exam Venue:</strong> XXXX
+                                        <strong>Exam Venue:</strong> {{$gradingExam->exam_venue ?? ''}}
                                     </div>
                                 </div>
                                 <div class="col-lg-12 sp-col gincol-2">
                                     <div class="inrow">
-                                        <strong>Exam Type:</strong> <span class="status-1">{{ gradingExamLayout($gradingExam->layout) ?? '' }}</span>
+                                        <strong>Exam Type:</strong> <span class="status-1">{{ gradingExamType($gradingExam->type) ?? '' }}</span>
                                     </div>
                                     <div class="inrow">
                                         <strong>My Registered Grades:</strong> <br/>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="accordion mt-30">
                         @if($gradingExamList->count())
-                        @php $i=0;@endphp
+                          @php $i=0; @endphp
                             @foreach ($gradingExamList as $key => $item)
                             @php $i++;@endphp
                             <div class="accordion-item">
@@ -70,30 +70,36 @@
 
                                             <div class="col-xl-6 sp-col">
                                                 <div class="box-2">
-                                                    @php
-                                                    $json_content=json_decode($item->json_content);
-                                                    for($k=0;$k<count($json_content->input_1);$k++)
-                                                    {
-                                                    @endphp
-                                                    <div class="bxrow">
-                                                        @if(isset($json_content->input_2[$k]) && $json_content->input_2[$k]>0)
+                                                    @if(getAllGradingExamListDetail($item->id))
+                                                        @php $k=0;@endphp
+                                                        @foreach(getAllGradingExamListDetail($item->id) as $key => $val)
+                                                        @php $k++;@endphp
+                                                        <div class="bxrow">
 
-                                                        <div class="checkbxtype">
-                                                            <input type="checkbox" name="grade_pay[]" value="" id="exercise-{{ $i.$k }}">
-                                                            <label for="exercise-{{ $i.$k }}"><span>{{ $json_content->input_1[$k] ?? '' }}</span> <strong>${{ $json_content->input_2[$k] ?? '' }}</strong></label>
+                                                          @if($gradingExam->type==1)
+                                                            @if($val->price>0)
+                                                            <div class="checkbxtype">
+                                                                <input type="checkbox" name="grade_pay[]" value="" id="exercise-{{ $i.$k }}">
+                                                                <label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                            </div>
+                                                            @else
+                                                            <div class="checkbxtype nocheck">
+                                                                <label><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                            </div>
+                                                            <a class="lnk btn-2" href="{{ url() }}/{{ $val->uploaded_file }}">Download</a>
+                                                            @endif
+                                                          @else
+                                                            <div class="bxrow">
+																<div class="checkbxtype">
+																	<input name="grade_pay[]" type="checkbox" id="exercise-{{ $i.$k }}" />
+																	<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+																</div>
+																<a class="lnk btn-2" href="#">Add to Cart</a>
+															</div>
+                                                          @endif
                                                         </div>
-                                                        @else
-                                                        <div class="checkbxtype nocheck">
-                                                            <label><span>{{ $json_content->input_1[$k] ?? '' }}</span> <strong>${{ $json_content->input_2[$k] ?? '' }}</strong></label>
-                                                        </div>
-                                                        <a class="lnk btn-2" href="#">Download</a>
-
-                                                        @endif
-
-
-
-                                                    </div>
-                                                    @php } @endphp
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </div>
 

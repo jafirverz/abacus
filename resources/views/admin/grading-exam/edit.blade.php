@@ -78,10 +78,20 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="exam_venue">Exam Venue</label>
+                                    <input type="text" name="exam_venue" class="form-control" id=""
+                                        value="{{ old('exam_venue', $exam->exam_venue) }}">
+                                    @if ($errors->has('exam_venue'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('exam_venue') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 @php
                                  $student_id=json_decode($exam->student_id);
                                 @endphp
-                                @endphp
+                                
                                 <div class="form-group">
                                     <label for="student_id">Student</label>
                                     <select multiple name="student_id[]" class="form-control">
