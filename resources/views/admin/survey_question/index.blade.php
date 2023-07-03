@@ -7,7 +7,7 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
            <div class="section-header-button">
-                <a href="{{ route('surveys.create') }}" class="btn btn-primary">Add New</a>
+                <a href="{{ route('survey-questions.create') }}" class="btn btn-primary">Add New</a>
         </div>
         {{-- @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('survey')]) --}}
 </div>
@@ -18,12 +18,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('surveys.destroy', 'surveys') }}"
+                    <a href="{{ route('survey-questions.destroy', 'survey-questions') }}"
                         class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?"
                         data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                         data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                             class="badge badge-transparent">0</span></a>
-                    <form id="destroy" action="{{ route('surveys.destroy', 'surveys') }}"
+                    <form id="destroy" action="{{ route('survey-questions.destroy', 'survey-questions') }}"
                         method="post">
                         @csrf
                         @method('DELETE')
@@ -31,7 +31,7 @@
                     </form>
                     <h4></h4>
                     <div class="card-header-form form-inline">
-                        <form action="{{ route('surveys.search') }}" method="get">
+                        <form action="{{ route('survey-questions.search') }}" method="get">
                             @csrf
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Search"
@@ -78,10 +78,10 @@
                                                 class="custom-control-label">&nbsp;</label></div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('surveys.show', $item->id) }}"
+                                        <a href="{{ route('survey-questions.show', $item->id) }}"
                                             class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('surveys.edit', $item->id) }}"
+                                        <a href="{{ route('survey-questions.edit', $item->id) }}"
                                             class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View">
                                             <i aria-hidden="true" class="fa fa-edit"></i>

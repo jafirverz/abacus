@@ -99,7 +99,7 @@
                 [
                     'title' =>  __('constant.SURVEY'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/survey',
+                    'url'   =>  'admin/surveys',
                 ],
                 [
                     'title' =>  __('constant.SURVEY_QUESTIONS'),

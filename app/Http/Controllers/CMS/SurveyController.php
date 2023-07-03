@@ -76,7 +76,7 @@ class SurveyController extends Controller
         $survey->status = $request->status;
         $survey->save();
 
-        return redirect()->route('survey.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+        return redirect()->route('surveys.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
 
     /**
@@ -129,7 +129,7 @@ class SurveyController extends Controller
         $survey->status = $request->status;
         $survey->save();
 
-        return redirect()->route('survey.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+        return redirect()->route('surveys.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
 
     /**

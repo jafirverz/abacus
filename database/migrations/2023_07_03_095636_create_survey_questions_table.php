@@ -18,6 +18,7 @@ class CreateSurveyQuestionsTable extends Migration
             $table->unsignedBigInteger('survey_id')->nullable();
             $table->foreign('survey_id')->references('id')->on('surveys');
             $table->string('title')->nullable();
+            $table->string('note_help')->nullable();
             $table->string('type')->nullable()->comment('radio, checkbox, textarea, blank space');
             $table->smallInteger('status')->nullable()->comment('1=>active, 2=>inactive');
             $table->timestamps();

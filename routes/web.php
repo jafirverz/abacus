@@ -255,8 +255,13 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     // SURVEY
-    Route::get('survey/search', 'CMS\SurveyController@search')->name('survey.search');
-    Route::resource('survey', 'CMS\SurveyController');
+    Route::get('surveys/search', 'CMS\SurveyController@search')->name('surveys.search');
+    Route::resource('surveys', 'CMS\SurveyController');
+
+
+    // SURVEY QUESTIONS
+    Route::get('survey-question/search', 'CMS\SurveyQuestionController@search')->name('survey-questions.search');
+    Route::resource('survey-questions', 'CMS\SurveyQuestionController');
 
 
     // SYSTEM SETTINGS
