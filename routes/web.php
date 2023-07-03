@@ -264,6 +264,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('survey-questions', 'CMS\SurveyQuestionController');
 
 
+    // SURVEY QUESTIONS OPTIONS
+    Route::get('options-survey-questions/search', 'CMS\SurveyQuestionOptionController@search')->name('options-survey-questions.search');
+    Route::resource('options-survey-questions', 'CMS\SurveyQuestionOptionController');
+
+
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');
     Route::post('/system-settings/update', 'CMS\SystemSettingsController@update')->name('admin.system-settings.update');
