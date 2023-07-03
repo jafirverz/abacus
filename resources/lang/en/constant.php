@@ -43,6 +43,9 @@ return [
     'FOOTER_MENU_TITLE' => 'Footer',
     'CUSTOMER_ACCOUNT' => 'Student',
     'INSTRUCTOR_ACCOUNT' => 'Instructor',
+    'SURVEY' => 'Surveys',
+    'SURVEY_QUESTIONS' => 'Survey Questions',
+    'SURVEY_QUESTIONS_OPTIONS' => 'Survey Questions Options',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',
