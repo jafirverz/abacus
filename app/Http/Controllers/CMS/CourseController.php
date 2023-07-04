@@ -9,7 +9,7 @@ use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class TopicController extends Controller
+class CourseController extends Controller
 {
     use SystemSettingTrait;
 
@@ -35,7 +35,7 @@ class TopicController extends Controller
         $title = $this->title;
         $course = Course::paginate($this->pagination);
 
-        return view('admin.master.course.index', compact('title', 'topic'));
+        return view('admin.master.course.index', compact('title', 'course'));
     }
 
     /**
@@ -83,7 +83,7 @@ class TopicController extends Controller
         $title = $this->title;
         $course = Course::find($id);
 
-        return view('admin.master.course.show', compact('title', 'topic'));
+        return view('admin.master.course.show', compact('title', 'course'));
     }
 
     /**
@@ -97,7 +97,7 @@ class TopicController extends Controller
         $title = $this->title;
         $course = Course::findorfail($id);
         $levels = Level::get();
-        return view('admin.master.course.edit', compact('title', 'topic', 'levels'));
+        return view('admin.master.course.edit', compact('title', 'course', 'levels'));
     }
 
     /**
@@ -146,6 +146,6 @@ class TopicController extends Controller
             $course->appends('search', $search_term);
         }
 
-        return view('admin.master.course.index', compact('title', 'topic'));
+        return view('admin.master.course.index', compact('title', 'course'));
     }
 }

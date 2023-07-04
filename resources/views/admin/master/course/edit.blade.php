@@ -6,17 +6,17 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('topic.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('course.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Edit', route('bank.edit', $bank->id))])--}}
+         @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('course_crud', 'Edit', route('course.edit', $course->id))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('topic.update', $topic->id) }}" method="post">
+                        <form action="{{ route('course.update', $course->id) }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -25,7 +25,7 @@
                                     <select name="level" class="form-control" id="">
                                         <option value="">-- Select --</option>
                                         @foreach($levels as $level)
-                                            <option value="{{$level->id}}" @if($level->id == $topic->level_id) selected @endif>{{$level->title}}</option>
+                                            <option value="{{$level->id}}" @if($level->id == $course->level_id) selected @endif>{{$level->title}}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('level'))
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" name="title" class="form-control" id=""
-                                        value="{{ old('title', $topic->title) }}">
+                                        value="{{ old('title', $course->title) }}">
                                     @if ($errors->has('title'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('title') }}</strong>
@@ -52,7 +52,7 @@
                                         <option value="">-- Select --</option>
                                         @if(getActiveStatus())
                                         @foreach (getActiveStatus() as $key => $item)
-                                            <option value="{{ $key }}" @if(isset($topic->status)) @if($topic->status==$key) selected @endif @elseif(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
+                                            <option value="{{ $key }}" @if(isset($course->status)) @if($course->status==$key) selected @endif @elseif(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
                                         @endforeach
                                         @endif
                                     </select>

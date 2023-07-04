@@ -6,17 +6,17 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('topic.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('course.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Create', route('bank.create'))])--}}
+    @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('course_crud', 'Create', route('course.create'))])
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('topic.store') }}" method="post">
+                        <form action="{{ route('course.store') }}" method="post">
                             @csrf
                             @method('POST')
                             <div class="card-body">
