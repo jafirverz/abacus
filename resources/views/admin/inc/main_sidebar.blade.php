@@ -62,6 +62,11 @@
                     'url'   =>  'admin/worksheet',
                 ],
                 [
+                    'title' =>  __('constant.COURSE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/course',
+                ],
+                [
                     'title' =>  __('constant.QUESTION_MANAGEMENT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question',
