@@ -111,6 +111,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/options-survey-questions',
                 ],
+                [
+                    'title' =>  __('constant.OPTIONS_CHOICES'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/option-choices',
+                ],
 
             ],
         ],

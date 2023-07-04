@@ -46,6 +46,7 @@ return [
     'SURVEY' => 'Surveys',
     'SURVEY_QUESTIONS' => 'Survey Questions',
     'SURVEY_QUESTIONS_OPTIONS' => 'Survey Questions Options',
+    'OPTIONS_CHOICES' => 'Survey Questions Choices',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',
