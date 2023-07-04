@@ -282,6 +282,28 @@ Breadcrumbs::for('admin_grading_exam_list_crud', function ($trail, $exam, $title
     $trail->push($title, $url);
 });
 
+// TEST MANAGEMENT
+Breadcrumbs::for('test_management', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.TEST_MANAGEMENT'), route('test-management.index'));
+});
+
+Breadcrumbs::for('test_management_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('test_management');
+    $trail->push($title, $url);
+});
+
+// COURSE
+Breadcrumbs::for('course', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.COURSE'), route('course.index'));
+});
+
+Breadcrumbs::for('course_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('course');
+    $trail->push($title, $url);
+});
+
 // GRADING PAPER
 Breadcrumbs::for('grading_paper', function ($trail) {
     $trail->parent('admin_home');

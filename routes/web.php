@@ -284,6 +284,14 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('grading-paper/search', 'CMS\GradingPaperController@search')->name('grading-paper.search');
      Route::resource('grading-paper', 'CMS\GradingPaperController');
 
+     // TEST MANAGEMENT
+     Route::get('test-management/search', 'CMS\TestManagementController@search')->name('test-management.search');
+     Route::resource('test-management', 'CMS\TestManagementController');
+
+     // COURSE
+     Route::get('course/search', 'CMS\CourseController@search')->name('course.search');
+     Route::resource('course', 'CMS\CourseController');
+
     //TEACHING MATERIALS
     Route::get('teaching-materials/search', 'CMS\TeachingMaterialsController@search')->name('teaching-materials.search');
     Route::resource('teaching-materials', 'CMS\TeachingMaterialsController');
