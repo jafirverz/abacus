@@ -7,32 +7,35 @@
         <a class="link-1 lico" href="#"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
       </div>
       <h1 class="title-3">Survey Form</h1>
+      <form name="surveyform" method="post" action="{{ route('survey.submit') }}">
+        @csrf
       <div class="box-5">
         <h2 class="title-1 text-center"><span>Course Title:</span> 3G Abacus Mental-Arithmetic Course</h2>
+        
         <div class="chooselist-2">
           <div class="radiotype">
-            <input name="course" type="radio" id="children" />
+            <input  type="radio" required name="surveyfor" value="children" id="children" />
             <label for="children">Children Course</label>
           </div>
           <div class="radiotype">
-            <input name="course" type="radio" id="adult" />
+            <input  type="radio" required name="surveyfor" value="adult" id="adult" />
             <label for="adult">Adult Course</label>
           </div>
         </div>
         <div class="row mb-40">
           <div class="col-lg-7 col-sm-6">
             <label class="lb-1">Name of Student:</label>
-            <input class="form-control" type="text" placeholder="enter student name" />
+            <input class="form-control" required type="text" name="name" placeholder="enter student name" />
           </div>
           <div class="col-lg-5 col-sm-6">
             <label class="lb-1">Date</label>
             <div class="date-wrap">
               <i class="fa-solid fa-calendar-days ico"></i>
-              <input class="form-control inptype-1" type="text" placeholder="dd/mm/yyyy" />
+              <input class="form-control inptype-1 required" name="date" type="text" placeholder="dd/mm/yyyy" />
             </div>
           </div>
         </div>
-
+        <input type="hidden" name="surveyId" value="{{ $surveys->id }}">
         @php
         $i = 1;
         @endphp
@@ -60,7 +63,7 @@
                         @foreach($optionChoices as $choices)
                           <div class="gitem">
                             <div class="radiotype">
-                              <input name="sex" type="radio" id="male" />
+                              <input name="{{ strtolower($options->title) }}" required type="radio" id="male" value="{{ $choices->title }}" />
                               <label for="male">{{ $choices->title }}</label>
                             </div>
                           </div>
@@ -102,7 +105,7 @@
                     @foreach($optionChoices as $choices)
                     <td>	
                       <div class="radiotype">
-                          <input name="ele" type="radio" id="ele-1" />
+                          <input name="{{ strtolower($quesChoices->title) }}" required type="radio" id="ele-1"  value="{{ $choices->title }}" />
                           <label for="ele-1">{{ $choices->title }}</label>
                         </div>
                     </td>
@@ -120,7 +123,7 @@
           @elseif($questionType == 'textarea' && $questionOptions)
               @foreach($questionOptions as $options)
                 <label class="lb-1">{{ $options->title }}</label>
-                <textarea class="form-control" cols="30" rows="5" placeholder="Type your feedback"></textarea>
+                <textarea class="form-control" cols="30" rows="5" placeholder="Type your feedback" name="{{ strtolower($options->title) }}" value=""></textarea>
               @endforeach
               <hr />
           @endif
@@ -137,21 +140,22 @@
           <div class="col-auto">
             <div class="chooselist-4">										
               <div class="radiotype">
-                <input name="allow" type="radio" id="allow" />
+                <input name="consent" value="allow" required type="radio" id="allow" />
                 <label for="allow">I allow</label>
               </div>										
               <div class="radiotype">
-                <input name="allow" type="radio" id="disallow" />
+                <input name="consent" value="donotallow" required type="radio" id="disallow" />
                 <label for="disallow">I disallow</label>
               </div>
             </div>
           </div>
         </div>
-
+      
       </div>
       <div class="output-1">
         <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
       </div>
+    </form>
     </div>
   </div>	
 </main>

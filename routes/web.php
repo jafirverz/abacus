@@ -70,6 +70,8 @@ Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
 
 Route::get('/survey-form', 'SurveyController@index');
 
+Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
