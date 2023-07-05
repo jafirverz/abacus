@@ -67,6 +67,9 @@ Route::get('/competition/{id?}', 'CompetitionController@index');
 
 Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
 
+
+Route::get('/survey-form', 'SurveyController@index');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');

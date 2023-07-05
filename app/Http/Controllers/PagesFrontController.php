@@ -34,6 +34,8 @@ use App\Mail\EmailNotification;
 use App\SellerParticular;
 use App\Jobs\SendEmail;
 use App\Level;
+use App\Survey;
+use App\SurveyQuestion;
 use App\Traits\GetEmailTemplate;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -74,7 +76,10 @@ class PagesFrontController extends Controller
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();
-        return view('home', compact("page", 'levels', 'levelArray', 'competition'));
+        $surveys = Survey::where('status', 1)->first();
+        
+        
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'surveyQuestions'));
     }
 
     public function instructor($slug = null){

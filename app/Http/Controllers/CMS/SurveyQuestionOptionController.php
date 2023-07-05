@@ -137,16 +137,19 @@ class SurveyQuestionOptionController extends Controller
 
         $i = 0;
         $count = count($request->input_1);
+        if($count > 0){
             for($i=0; $i<$count; $i++){
-            $survey = new SurveyQuestionOption();
-            $survey->survey_question_id = $request->survey_question_id;
-            $survey->title = $request->input_1[$i];
-            if(isset($request->radio_type) && sizeof($request->radio_type)>0){
-                $survey->option_type = $request->radio_type[$i];
+                $survey = new SurveyQuestionOption();
+                $survey->survey_question_id = $request->survey_question_id;
+                $survey->title = $request->input_1[$i];
+                if(isset($request->radio_type) && sizeof($request->radio_type)>0){
+                    $survey->option_type = $request->radio_type[$i];
+                }
+                
+                $survey->save();
             }
-            
-            $survey->save();
         }
+        
         
 
         return redirect()->route('options-survey-questions.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
