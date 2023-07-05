@@ -79,7 +79,14 @@
                     <div class="descripts">
                         <h3>Test/Survey</h3>
                         <div class="gactions">
-                            <a href="{{ url('test-survey') }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @php
+                            if($surveys){
+                                $url = '/survey-form';
+                            }else{
+                                $url = 'javascript::void(0);'; 
+                            }
+                            @endphp
+                            <a href="{{ url($url) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
                 </div>

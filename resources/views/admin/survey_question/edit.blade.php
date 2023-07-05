@@ -64,7 +64,6 @@
                                     <select name="question_type" class="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="radio" @if(old('question_type', $surveysQuestion->type) == 'radio') selected @endif>Radio</option>
-                                        <option value="checkbox" @if(old('question_type', $surveysQuestion->type) == 'checkbox') selected @endif>Checkbox</option>
                                         <option value="textarea" @if(old('question_type', $surveysQuestion->type) == 'textarea') selected @endif>Textarea</option>
                                         
                                     </select>
