@@ -96,23 +96,38 @@ class QuestionController extends Controller
         elseif($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
             if ($request->hasfile('input_1')) {
+                $question = new Question();
+                $question->title = $request->title;
+                $question->worksheet_id = $request->worksheet_id;
+                $question->question_type = $request->question_type;
+                // $question->json_question = json_encode($json);
+                $question->created_at = Carbon::now();
+                $question->save();
+                $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
                     $name = $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
+
+                    $storQues = new MiscQuestion();
+                    $storQues->question_id = $question->id;
+                    $storQues->question_1 = $name;
+                    // $storQues->question_2 = $request->input_3[$i];
+                    // $storQues->symbol = $request->input_2[$i];
+                    $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                    $i++;
                 }
 
-                $json['input_1']=$data;
-                $json['input_2']=$request->input_2;
+                // $json['input_1']=$data;
+                // $json['input_2']=$request->input_2;
             }
-            $question = new Question();
-            $question->title = $request->title;
-            $question->worksheet_id = $request->worksheet_id;
-            $question->question_type = $request->question_type;
-            $question->json_question = json_encode($json);
-            $question->created_at = Carbon::now();
-            $question->save();
+            
+
+            
+            
         }
         elseif($request->question_type==4)
         {
@@ -248,23 +263,55 @@ class QuestionController extends Controller
         }
         elseif($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
+            // dd($request->all());
             $input_1_old=$request->input_1_old;
+
+            $question = Question::find($id);
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            //$question->json_question = json_encode($json);
+            $question->updated_at = Carbon::now();
+            $question->save();
+
+            $storQues = MiscQuestion::where('question_id', $id)->get();
+            foreach($storQues as $quess){
+                $quess->delete();
+            }
+            
+            for($k=0; $k<count($input_1_old); $k++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $input_1_old[$k];
+                // $storQues->question_2 = $request->input_3[$i];
+                // $storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->input_2[$k];
+                $storQues->marks = $request->marks[$k];
+                $storQues->save();
+            }
+
             if ($request->hasfile('input_1')) {
+                $count = count($input_1_old);
+                $i = $count;
                 foreach ($request->file('input_1') as $file) {
 
                     $name = $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
-                    array_push($input_1_old,$name);
+                    //array_push($input_1_old,$name);
+
+                    $storQues = new MiscQuestion();
+                    $storQues->question_id = $question->id;
+                    $storQues->question_1 = $name;
+                    // $storQues->question_2 = $request->input_3[$i];
+                    // $storQues->symbol = $request->input_2[$i];
+                    $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                    $i++;
                 }
             }
-            $json['input_1']=$input_1_old;
-            $json['input_2']=$request->input_2;
-            $question = Question::find($id);
-            $question->title = $request->title;
-            $question->worksheet_id = $request->worksheet_id;
-            $question->json_question = json_encode($json);
-            $question->updated_at = Carbon::now();
-            $question->save();
+            // $json['input_1']=$input_1_old;
+            // $json['input_2']=$request->input_2;
+            
         }
         elseif($request->question_type==4)
         {

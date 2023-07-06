@@ -79,7 +79,7 @@ class PagesFrontController extends Controller
         $surveys = Survey::where('status', 1)->first();
         
         
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'surveyQuestions'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys'));
     }
 
     public function instructor($slug = null){

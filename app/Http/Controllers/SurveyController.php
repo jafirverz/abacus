@@ -30,5 +30,9 @@ class SurveyController extends Controller
         $user_survey->user_id = $userId;
         $user_survey->survey_data = $surveyData;
         $user_survey->save();
+
+        
+
+        return redirect('/');
     }
 }

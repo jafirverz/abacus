@@ -108,11 +108,14 @@
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <input class="form-control" required value="" name="input_1[]"  type="file">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" placeholder="Enter Marks" name="marks[]"  type="text">
                                     </div>
 
                                 </div>
@@ -186,12 +189,15 @@
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-6">
-            <input class="form-control" required name="input_1[]"  type="file">
-        </div>
-        <div class="col-md-6">
-            <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
-        </div>
+            <div class="col-md-5">
+                <input class="form-control" required name="input_1[]"  type="file">
+            </div>
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Enter Marks"  type="text">
+            </div>
 
        </div>
        <div class="input-group-btn">
