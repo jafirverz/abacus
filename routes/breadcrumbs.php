@@ -315,5 +315,16 @@ Breadcrumbs::for('grading_paper_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 
+// TEST PAPER
+Breadcrumbs::for('test_paper', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.TEST_PAPER'), route('test-paper.index'));
+});
+
+Breadcrumbs::for('test_paper_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('test_paper');
+    $trail->push($title, $url);
+});
+
 
 

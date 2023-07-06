@@ -42,6 +42,26 @@
                 ],
             ],
         ],
+        [
+            'menu_header'   =>  __('constant.GRADE'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.GRADE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/grade',
+                ],
+                [
+                    'title' =>  __('constant.GRADING_EXAM'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/grading-exam',
+                ],
+                [
+                    'title' =>  __('constant.GRADING_PAPER'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/grading-paper',
+                ],
+            ],
+        ],
 
         [
             'menu_header'   =>  __('constant.MASTER'),
@@ -70,21 +90,6 @@
                     'title' =>  __('constant.QUESTION_MANAGEMENT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question',
-                ],
-                [
-                    'title' =>  __('constant.GRADE'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/grade',
-                ],
-                [
-                    'title' =>  __('constant.GRADING_EXAM'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/grading-exam',
-                ],
-                [
-                    'title' =>  __('constant.GRADING_PAPER'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/grading-paper',
                 ],
                 [
                     'title' =>  __('constant.CATEGORY_COMPETITION'),

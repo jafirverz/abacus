@@ -249,6 +249,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('comp-questions/search', 'CMS\CompetitionQuestionsController@search')->name('comp-questions.search');
     Route::resource('comp-questions', 'CMS\CompetitionQuestionsController');
 
+    // TEST PAPER
+    Route::get('test-paper/search', 'CMS\TestPaperController@search')->name('test-paper.search');
+    Route::resource('test-paper', 'CMS\TestPaperController');
+
 
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');
