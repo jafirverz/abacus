@@ -22,6 +22,7 @@ class CreateMiscQuestionsTable extends Migration
             $table->string('symbol')->nullable();
             $table->string('answer')->nullable();
             $table->string('marks')->nullable();
+            $table->smallInteger('block')->nullable();
             $table->timestamps();
         });
     }
