@@ -104,7 +104,7 @@
                             <div class="input-group-btn">
                                 <button class="btn btn-success add-more6" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                             </div>
-                            @elseif(isset($_GET['question-type']) && ($_GET['question-type']==2 || $_GET['question-type']==1 || $_GET['question-type']==3))
+                            @elseif(isset($_GET['question-type']) && ($_GET['question-type']==2 || $_GET['question-type']==3))
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
@@ -121,6 +121,29 @@
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+
+
+                            @elseif(isset($_GET['question-type']) && ($_GET['question-type']==1 ))
+
+                                <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
+                                <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="col-md-4">
+                                        <input class="form-control" required value="" name="input_1[]"  type="file">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" placeholder="Enter Marks" name="marks[]"  type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" placeholder="Enter Block" name="blocks[]"  type="text">
+                                    </div>
+
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
 
                                 @elseif(isset($_GET['question-type']) && $_GET['question-type']==4)
@@ -177,6 +200,29 @@
             </div>
             <div class="col-md-2">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            </div>
+
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
+<div class="copy1" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <input class="form-control" required name="input_1[]"  type="file">
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Enter Marks"  type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="blocks[]" placeholder="Enter Block"  type="text">
             </div>
 
        </div>
@@ -280,6 +326,10 @@ $(document).ready(function () {
 
       $(".add-more").click(function(){
           var html = $(".copy").html();
+          $(".after-add-more").after(html);
+      });
+      $(".add-more1").click(function(){
+          var html = $(".copy1").html();
           $(".after-add-more").after(html);
       });
 

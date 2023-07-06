@@ -117,6 +117,9 @@ class QuestionController extends Controller
                     // $storQues->symbol = $request->input_2[$i];
                     $storQues->answer = $request->input_2[$i];
                     $storQues->marks = $request->marks[$i];
+                    if($request->question_type==1){
+                        $storQues->block = $request->blocks[$i];
+                    }
                     $storQues->save();
                     $i++;
                 }
@@ -286,6 +289,9 @@ class QuestionController extends Controller
                 // $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->input_2[$k];
                 $storQues->marks = $request->marks[$k];
+                if($request->question_type==1){
+                    $storQues->block = $request->blocks[$k];
+                }
                 $storQues->save();
             }
 
@@ -305,6 +311,9 @@ class QuestionController extends Controller
                     // $storQues->symbol = $request->input_2[$i];
                     $storQues->answer = $request->input_2[$i];
                     $storQues->marks = $request->marks[$i];
+                    if($request->question_type==1){
+                        $storQues->block = $request->blocks[$i];
+                    }
                     $storQues->save();
                     $i++;
                 }

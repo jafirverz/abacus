@@ -84,7 +84,7 @@
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
-                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $question->question_type==2 || $question->question_type==1 || $_GET['question-type']==1 || $question->question_type==3 || $_GET['question-type']==3)
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $question->question_type==2 || $question->question_type==3 || $_GET['question-type']==3)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
                                     @php
                                     //$json_question=json_decode($question->json_question);
@@ -115,6 +115,42 @@
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==1) || $question->question_type==1)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(1) }}</label>
+                                    @php
+                                    //$json_question=json_decode($question->json_question);
+                                    $json_question=\App\MiscQuestion::where('question_id', $question->id)->get();
+                                    foreach($json_question as $quest)
+                                    {
+
+                                        @endphp
+
+                                            <div class="form-group">
+                                                <div class="row" style="margin-bottom:30px;">
+                                                    <div class="col-md-4">
+                                                        <input class="form-control"  value="{{ $quest->question_1 }}" name="input_1_old[]" type="hidden">
+                                                        <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-control" required value="{{ $quest->block }}" name="blocks[]" placeholder="Block" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                        @php } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
                                 @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $question->question_type==4)
@@ -272,6 +308,29 @@
       </div>
     </div>
 </div>
+
+<div class="copy1" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+        <div class="col-md-4">
+            <input class="form-control" required name="input_1[]"  type="file">
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="blocks[]" placeholder="Block" type="text">
+        </div>
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
@@ -394,6 +453,12 @@
 
           $(".add-more").click(function(){
               var html = $(".copy").html();
+              $(".after-add-more").after(html);
+          });
+
+
+          $(".add-more1").click(function(){
+              var html = $(".copy1").html();
               $(".after-add-more").after(html);
           });
 
