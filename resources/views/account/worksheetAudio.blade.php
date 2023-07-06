@@ -25,39 +25,49 @@
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <div class="row grid-4">
-          <div class="col-xl-4 col-sm-6">
-            <div class="inner">
-              @php 
-              $questionns = json_decode($questions->json_question);
-              $k=0;
-              $count = count($questionns->input_1);
-              for($i=1;$i<=$count;$i++){
-              @endphp
-              <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
-                <div class="col-auto sp-col">
-                  <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
-                  <audio id="audio-{{ $k }}">
-                    <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="audio/mp3">
-                    <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="audio/ogg">
-                    Your browser does not support the audio element.
-                  </audio>
-                </div>
-                <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
-                </div>
-              </div>
-              @php
-              $k++;
-            }
-            @endphp
 
-          
+          @php 
+          $k=1;
+          $questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
+          foreach($questionns as $questionn){
+          @endphp
+            <div class="col-xl-4 col-sm-6">
+              <div class="inner">
+                @php 
+                $questionnss = \App\MiscQuestion::where('question_id', $questions->id)->where('block', $questionn->block)->get();
+                
+                foreach($questionnss as $question){
+                @endphp
+                <div class="row sp-col-10 grow">
+                  <input type="hidden" value="{{ $question->id }}">
+                  <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
+                  <div class="col-auto sp-col">
+                    <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
+                    <audio id="audio-{{ $k }}">
+                      <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/mp3">
+                      <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/ogg">
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                  <div class="col sp-col">
+                    <input class="form-control" type="text" placeholder="Answer" />
+                  </div>
+                </div>
+                
+                @php
+                $k++;
+                }
+                
+              @endphp
+              </div>
+            </div>
+          @php 
+          }
+          @endphp
+
         </div>
-        <div class="output-1">
-          <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-        </div>
-      </div>
+    <div class="output-1">
+      <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
     </div>
   </div>	
 </main>

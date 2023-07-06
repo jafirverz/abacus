@@ -26,25 +26,28 @@
         </div>
         <div class="row grid-5">
           @php 
-          $questionns = json_decode($questions->json_question);
-          $count = count($questionns->input_1);
+          
+          $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          //$count = count($questionns->input_1);
           $k=0;
-          for($i=1;$i<=$count;$i++){
+          $i = 1;
+          foreach($questionns as $question){
           @endphp
           <div class="col-lg-4 col-md-6">
             <div class="inner">
               <strong class="number">Q{{ $i }}</strong>
               <div class="vdwrap">
                 <video width="400">
-                  <source src="{{ url('/upload-file/'.$questionns->input_1[$k]) }}" type="video/mp4">
+                  <source src="{{ url('/upload-file/'.$question->question_1) }}" type="video/mp4">
                   Your browser does not support HTML video.
                 </video>
-                <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$questionns->input_1[$k]) }}"><i class="fa-solid fa-play"></i></a>
+                <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$question->question_1) }}"><i class="fa-solid fa-play"></i></a>
               </div>
               <textarea class="form-control" rows="3" cols="30" placeholder="Answer"></textarea>
             </div>
           </div>
           @php
+          $i++;
           $k++;
           }
           @endphp
