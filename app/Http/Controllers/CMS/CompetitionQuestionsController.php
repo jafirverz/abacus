@@ -79,7 +79,7 @@ class CompetitionQuestionsController extends Controller
         }
         elseif($question_template_id == 1)
         {
-            
+
             if ($request->hasfile('input_1')) {
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
@@ -103,7 +103,7 @@ class CompetitionQuestionsController extends Controller
         }
         elseif($question_template_id == 2)
         {
-            
+
             if ($request->hasfile('input_1')) {
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
@@ -150,7 +150,7 @@ class CompetitionQuestionsController extends Controller
             }
         }
         return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
-        
+
     }
 
     /**
@@ -212,7 +212,7 @@ class CompetitionQuestionsController extends Controller
         }
         elseif($question_template_id == 1)
         {
-            
+
             if ($request->hasfile('input_1')) {
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
@@ -236,7 +236,7 @@ class CompetitionQuestionsController extends Controller
         }
         elseif($question_template_id == 2)
         {
-            
+
             if ($request->hasfile('input_1')) {
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
