@@ -17,6 +17,9 @@ class CreateUserFeedbackTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('enquiry')->nullable();
             $table->text('message')->nullable();
             $table->timestamps();
