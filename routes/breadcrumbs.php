@@ -326,5 +326,16 @@ Breadcrumbs::for('test_paper_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 
+// TEST PAPER QUIESTION
+Breadcrumbs::for('admin_test_paper_question', function ($trail, $paper) {
+    $trail->parent('test_paper', $paper);
+    $trail->push(getPaperName($paper), route('test-paper-question.index', $paper));
+});
+
+Breadcrumbs::for('admin_test_paper_question_crud', function ($trail, $paper, $title, $url = '#') {
+    $trail->parent('admin_test_paper_question', $paper);
+    $trail->push($title, $url);
+});
+
 
 

@@ -9,6 +9,9 @@ use App\Slider;
 use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
+use App\TestPaper;
+use App\TestPaperDetail;
+use App\TestPaperQuestionDetail;
 use App\GradingListingDetail;
 use App\Role;
 use App\User;
@@ -408,6 +411,21 @@ if (!function_exists('getPageList')) {
             return $result->title;
         }
     }
+    function getPaperName($paper)
+    {
+        $result = TestPaper::find($paper);
+        if ($result) {
+            return $result->title;
+        }
+    }
+
+    function getPaperDetail($paper)
+    {
+        $result = TestPaper::find($paper);
+        if ($result) {
+            return $result;
+        }
+    }
     function getExamDetail($exam)
     {
         $result = GradingExam::find($exam);
@@ -425,6 +443,14 @@ if (!function_exists('getPageList')) {
     function getAllGradingExamListDetail($id)
     {
         $result = GradingListingDetail::where('grading_listing_id',$id)->get();
+        if ($result) {
+            return $result;
+        }
+         return NULL;
+    }
+    function getAllQuestions($id)
+    {
+        $result = TestPaperQuestionDetail::where('test_paper_question_id',$id)->get();
         if ($result) {
             return $result;
         }

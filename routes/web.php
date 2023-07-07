@@ -253,6 +253,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('test-paper/search', 'CMS\TestPaperController@search')->name('test-paper.search');
     Route::resource('test-paper', 'CMS\TestPaperController');
 
+    Route::get('test-paper-question/{paper_id}/search', 'CMS\TestPaperQuestionController@search')->name('test-paper-question.search');
+    Route::get('test-paper-question/{paper_id}', 'CMS\TestPaperQuestionController@index')->name('test-paper-question.index');
+    Route::get('test-paper-question/{paper_id}/create', 'CMS\TestPaperQuestionController@create')->name('test-paper-question.create');
+    Route::post('test-paper-question/{paper_id}/create', 'CMS\TestPaperQuestionController@store')->name('test-paper-question.store');
+    Route::get('test-paper-question/{paper_id}/{id}', 'CMS\TestPaperQuestionController@show')->name('test-paper-question.show');
+    Route::get('test-paper-question/{paper_id}/{id}/edit', 'CMS\TestPaperQuestionController@edit')->name('test-paper-question.edit');
+    Route::post('test-paper-question/{paper_id}/{id}/edit', 'CMS\TestPaperQuestionController@update')->name('test-paper-question.update');
+    Route::post('test-paper-question/{paper_id}/{id}', 'CMS\TestPaperQuestionController@destroy')->name('test-paper-question.destroy');
+
+
 
     // SYSTEM SETTINGS
     Route::get('/system-settings', 'CMS\SystemSettingsController@edit')->name('admin.system-settings');

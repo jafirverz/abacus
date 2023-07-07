@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Controllers\Controller;
 use App\TestPaper;
 use App\TestPaperDetail;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\QuestionTemplate;
+use App\User;
 use App\Traits\SystemSettingTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 class TestPaperController extends Controller
 {
-
     use SystemSettingTrait;
 
     public function __construct()
@@ -33,10 +37,10 @@ class TestPaperController extends Controller
      */
     public function index()
     {
-        //
         $title = $this->title;
-        $testPaper = TestPaper::paginate($this->pagination);
-        return view('admin.test-paper.index', compact('title', 'testPaper'));
+        $paper = TestPaper::paginate($this->pagination);
+
+        return view('admin.test-paper.index', compact('title', 'paper'));
     }
 
     /**
@@ -46,10 +50,9 @@ class TestPaperController extends Controller
      */
     public function create()
     {
-        //
         $title = $this->title;
-        $testPaper = TestPaper::get();
-        return view('admin.test-paper.create', compact('title', 'testPaper'));
+        $questions = QuestionTemplate::whereIn('id',[3,4,5,6,7,8,9])->orderBy('id','desc')->get();
+        return view('admin.test-paper.create', compact('title','questions'));
     }
 
     /**
@@ -60,125 +63,91 @@ class TestPaperController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $paper_id  = $request->paper_id ;
-        $question_template_id = $request->question_template_id;
-        if($question_template_id == 4 || $question_template_id == 5){
-            $count = count($request->input_1);
-            for($i=0; $i<$count; $i++){
-                $testPaperDetail = new TestPaperDetail();
-                $testPaperDetail->paper_id  = $paper_id ;
-                $testPaperDetail->question = $request->input_1[$i];
-                $testPaperDetail->save();
-            }
-        }
-        elseif($question_template_id == 1)
-        {
+        $request->validate([
+            'title'  =>  'required',
+            'question_template_id'  =>  'required',
+        ]);
 
-            if ($request->hasfile('input_1')) {
-                $i = 0;
-                foreach ($request->file('input_1') as $file) {
+        $testPaper = new TestPaper();
+        $testPaper->title = $request->title ?? NULL;
+        $testPaper->question_template_id = $request->question_template_id ?? NULL;
+        $testPaper->save();
 
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    $testPaperDetail = new TestPaperDetail();
-                    $testPaperDetail->paper_id  = $paper_id ;
-                    $testPaperDetail->question = $name;
-                    $testPaperDetail->save();
-                    $i++;
-                }
-
-                // $json['input_1']=$data;
-                // $json['input_2']=$request->input_2;
-            }
-        }
-
-        return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
-
+        return redirect()->route('test-paper.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\CompetitionQuestions  $competitionQuestions
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $title = $this->title;
+        $paper = TestPaper::find($id);
+        return view('admin.test-paper.show', compact('title', 'paper'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CompetitionQuestions  $competitionQuestions
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
         $title = $this->title;
-        $testPaper = TestPaper::where('id', $id)->first();
-        $testPaperDetail = TestPaperDetail::where('competition_paper_id', $id)->get();
-        return view('admin.test-paper.edit', compact('title', 'testPaper', 'testPaperDetail'));
+        $paper = TestPaper::findorfail($id);
+        $questions = QuestionTemplate::whereIn('id',[3,4,5,6,7,8,9])->orderBy('id','desc')->get();
+        return view('admin.test-paper.edit', compact('title', 'paper','questions'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CompetitionQuestions  $competitionQuestions
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
-        // dd($request->all());
-        $paper_id  = $request->paper_id ;
-        $question_template_id = $request->question_template_id;
-        $testPaperDetail = TestPaperDetail::where('paper_id', $paper_id)->get();
-        foreach($testPaperDetail as $detail){
-            $detail->delete();
-        }
-        if($question_template_id == 4 || $question_template_id == 5){
-            $count = count($request->input_1);
-            for($i=0; $i<$count; $i++){
-                $testPaperDetail = new TestPaperDetail();
-                $testPaperDetail->paper_id  = $paper_id ;
-                $testPaperDetail->question = $request->input_1[$i];
-                $testPaperDetail->save();
-            }
-        }
-        elseif($question_template_id == 1)
-        {
+        $request->validate([
+            'title'  =>  'required',
+            'question_template_id'  =>  'required',
+        ]);
 
-            if ($request->hasfile('input_1')) {
-                $i = 0;
-                foreach ($request->file('input_1') as $file) {
+        $testPaper = TestPaper::findorfail($id);
+        $testPaper->title = $request->title ?? NULL;
+        $testPaper->question_template_id = $request->question_template_id ?? NULL;
+        $testPaper->save();
 
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    $testPaperDetail = new TestPaperDetail();
-                    $testPaperDetail->paper_id  = $paper_id ;
-                    $testPaperDetail->question = $name;
-                    $testPaperDetail->save();
-                }
-
-            }
-        }
-
-
-        return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        return redirect()->route('test-paper.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CompetitionQuestions  $competitionQuestions
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionQuestions $competitionQuestions)
+    public function destroy(Request $request)
     {
-        //
+        $id = explode(',', $request->multiple_delete);
+        TestPaper::destroy($id);
+
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
+    }
+
+    public function search(Request $request)
+    {
+        $search_term = $request->search;
+        $title = $this->title;
+        $paper = TestPaper::search($search_term)->paginate($this->pagination);
+        if ($search_term) {
+            $paper->appends('search', $search_term);
+        }
+
+        return view('admin.test-paper.index', compact('title', 'paper'));
     }
 }

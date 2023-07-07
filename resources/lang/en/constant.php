@@ -12,6 +12,8 @@ return [
     'GRADING_PAPER'  =>  'Grading Paper',
     'TEACHING_MATERIALS'  =>  'Teaching Materials',
     'TEST_MANAGEMENT'  =>  'Test Management',
+    'TEST_PAPER'  =>  'Test Paper',
+    'TEST_PAPER_QUIESTION'  =>  'Test Question Paper',
     'COURSE'  =>  'Courses',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
