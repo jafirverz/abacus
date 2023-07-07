@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Traits\PageTrait;
 use Illuminate\Support\Str;
 use App\Jobs\SendEmail;
+use App\Level;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\ValidationException;
@@ -444,6 +445,14 @@ class ProfileController extends Controller
 
 
 		return redirect()->back()->with('success', __('constant.ACOUNT_UPDATED'));
+	}
+
+	public function studentlist(){
+		$instructor_id = User::where('id', Auth::user()->id)->first();
+		$students = User::where('instructor_id', $instructor_id->id)->paginate(5);
+		$levels = Level::get();
+		return view('account.teaching-students', compact('students', 'levels'));
+		dd("hello");
 	}
 
 	/**

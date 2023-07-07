@@ -13,7 +13,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('/') }}">
+                        <a href="{{ url('/instructor-students') }}">
                             <span><img src="images/tempt/ico-students.png" alt="Students icon" /></span>
                             <strong>My Students</strong>
                         </a>

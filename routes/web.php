@@ -72,6 +72,9 @@ Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name
 Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')->name('feedback.submit');
 
 
+Route::get('/instructor-students', 'ProfileController@studentlist');
+
+
 Route::get('/survey-form', 'SurveyController@index');
 
 Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');
