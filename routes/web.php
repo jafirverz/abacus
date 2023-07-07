@@ -68,6 +68,10 @@ Route::get('/competition/{id?}', 'CompetitionController@index');
 Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
 
 
+Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name('feedback');
+Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')->name('feedback.submit');
+
+
 Route::get('/survey-form', 'SurveyController@index');
 
 Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');

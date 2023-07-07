@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
@@ -11,10 +12,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Mail\EmailNotification;
+use App\Traits\GetEmailTemplate;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerAccountController extends Controller
 {
-    use SystemSettingTrait;
+    use SystemSettingTrait, GetEmailTemplate;
 
     public function __construct()
     {
@@ -51,8 +55,9 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
-        return view('admin.account.customer.create', compact('title','instructors','levels'));
+        return view('admin.account.customer.create', compact('title','instructors','levels', 'country'));
     }
 
     /**
@@ -76,7 +81,7 @@ class CustomerAccountController extends Controller
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
-            'approve_status' => 'required',
+            'status' => 'required',
         ];
 
         $messages = [];
@@ -207,9 +212,10 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
+        $country = Country::orderBy('phonecode')->get();
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         $levels = Level::get();
-        return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels'));
+        return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels', 'country'));
     }
 
     /**
