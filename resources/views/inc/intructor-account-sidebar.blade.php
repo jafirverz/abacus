@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="be-teacher-dashboard-competitions.html">
+                        <a href="{{ url('instructor-competition') }}">
                             <span><img src="images/tempt/ico-competitions.png" alt="Competitions icon" /></span>
                             <strong>Competitions</strong>
                         </a>

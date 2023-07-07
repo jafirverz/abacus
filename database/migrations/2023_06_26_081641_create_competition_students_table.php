@@ -19,7 +19,9 @@ class CreateCompetitionStudentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('competition_controller_id');
             $table->foreign('competition_controller_id')->references('id')->on('competition_controllers');
+            $table->unsignedBigInteger('instructor_id');
             $table->string('marks');
+            $table->smallInteger('approve_status')->nullable()->comment('1=> approved, 2=>notapproved');
             $table->timestamps();
         });
     }

@@ -112,4 +112,8 @@ class User extends Authenticatable
         }
     }
 
+    public function userlist(){
+        return $this->hasMany('App\CompetitionStudent', 'user_id', 'id');
+    }
+
 }

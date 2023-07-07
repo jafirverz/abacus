@@ -12,6 +12,8 @@ use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use App\Admin;
+use App\Competition;
+use App\CompetitionStudent;
 use App\Country;
 use App\UserProfileUpdate;
 use Carbon\Carbon;
@@ -452,7 +454,15 @@ class ProfileController extends Controller
 		$students = User::where('instructor_id', $instructor_id->id)->paginate(5);
 		$levels = Level::get();
 		return view('account.teaching-students', compact('students', 'levels'));
-		dd("hello");
+	}
+
+	public function competition()
+	{
+		$instructor_id = User::where('id', Auth::user()->id)->first();
+		$competition = Competition::where('status', 1)->orderBy('id', 'desc')->first();
+		$students = User::has('userlist')->where('instructor_id', $instructor_id->id)->paginate(5);
+		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $instructor_id->id)->paginate(5);
+		return view('account.competition-students', compact('competition', 'compStudents', 'competition'));
 	}
 
 	/**

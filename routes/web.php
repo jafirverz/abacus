@@ -73,6 +73,7 @@ Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')
 
 
 Route::get('/instructor-students', 'ProfileController@studentlist');
+Route::get('/instructor-competition', 'ProfileController@competition');
 
 
 Route::get('/survey-form', 'SurveyController@index');
