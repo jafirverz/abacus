@@ -291,6 +291,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('customer-account/search', 'CMS\CustomerAccountController@search')->name('customer-account.search');
     Route::resource('customer-account', 'CMS\CustomerAccountController');
 
+    Route::resource('student-feedback', 'CMS\FeedbackController');
+
+
     // ANNOUNCEMENT
     Route::get('announcement/search', 'CMS\AnnouncementController@search')->name('announcement.search');
     Route::resource('announcement', 'CMS\AnnouncementController');

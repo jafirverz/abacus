@@ -45,6 +45,7 @@ return [
     'FOOTER_MENU_TITLE' => 'Footer',
     'CUSTOMER_ACCOUNT' => 'Student',
     'INSTRUCTOR_ACCOUNT' => 'Instructor',
+    'FEEDBACK' => 'Student Feedback',
     'SURVEY' => 'Surveys',
     'SURVEY_QUESTIONS' => 'Survey Questions',
     'SURVEY_QUESTIONS_OPTIONS' => 'Survey Questions Options',

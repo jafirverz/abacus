@@ -199,6 +199,11 @@
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/instructor-account',
                 ],
+                [
+                    'title' =>  __('constant.FEEDBACK'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/student-feedback',
+                ],
             ],
         ],
     ];

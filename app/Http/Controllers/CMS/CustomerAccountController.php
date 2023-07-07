@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
+use App\UserFeedback;
 use Illuminate\Support\Facades\Mail;
 
 class CustomerAccountController extends Controller
@@ -309,5 +310,7 @@ class CustomerAccountController extends Controller
         //dd($customer);
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
+
+    
 
 }
