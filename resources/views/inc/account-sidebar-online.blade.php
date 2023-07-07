@@ -2,7 +2,7 @@
     <h3>My Dashboard</h3>
     <ul>
       <li class="active">
-        <a href="be-online-student-dashboard-profile.html">
+        <a href="{{ url('/') }}">
           <span><img src="{{ asset('images/tempt/ico-profile.png') }}" alt="Profile icon" /></span>
           <strong>My Profile</strong>
         </a>

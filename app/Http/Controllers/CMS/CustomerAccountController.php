@@ -76,7 +76,7 @@ class CustomerAccountController extends Controller
             'password'  =>  'required|min:8',
             'country_code' => 'required',
             'user_type_id' => 'required',
-            'instructor_id' => 'required',
+            'instructor_id' => 'required_if:user_type_id,1,2',
             'level' => 'required',
             'dob' => 'required',
             'country_code_phone' => 'required',
@@ -95,7 +95,7 @@ class CustomerAccountController extends Controller
         $messages['user_type_id.required'] = 'User type field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
-        $messages['instructor_id.required'] = 'The instructor field is required.';
+        $messages['instructor_id.required_if'] = 'The instructor field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
         $acName = '';

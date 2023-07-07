@@ -89,7 +89,7 @@ class PagesFrontController extends Controller
         if (!$page || in_array(Auth::user()->user_type_id,$userType) ) {
             return abort(404);
         }else{
-
+            
         }
 
     }
