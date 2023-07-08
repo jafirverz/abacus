@@ -18,6 +18,7 @@ use App\Menu;
 use App\Slider;
 use App\Category;
 use App\Competition;
+use App\Country;
 use App\Partner;
 use App\SystemSetting;
 use App\Testimonial;
@@ -77,9 +78,9 @@ class PagesFrontController extends Controller
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();
         $surveys = Survey::where('status', 1)->first();
-        
-        
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys'));
+        $user = User::where('id', Auth::user()->id)->first();
+        $country = Country::orderBy('phonecode', 'asc')->get();
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country'));
     }
 
     public function instructor($slug = null){

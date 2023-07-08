@@ -89,6 +89,8 @@ Route::get('teaching-materials', 'ProfileController@teaching_materials')->name('
 Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
 
+Route::post('external-profile', 'ExternalAccountController@external_store')->name('external-profile.update');
+
 
 Route::get('logout', 'Auth\LoginController@logout');
 
