@@ -10,6 +10,9 @@
                 @if(Auth::user()->user_type_id == 3)
                     @include('inc.account-sidebar-online')
                 @endif
+                @if(Auth::user()->user_type_id == 6)
+                    @include('inc.account-sidebar-external')
+                @endif
             </div>
             <div class="col-lg-9 sp-col tempt-2-inner">
                 @if(Auth::user()->user_type_id == 1)
@@ -18,6 +21,8 @@
                     @include('account.instructor-overview')
                 @elseif(Auth::user()->user_type_id == 3)
                     @include('account.online-overview')
+                @elseif(Auth::user()->user_type_id == 6)
+                    @include('account.external-overview')
                 @endif
 
             </div>
