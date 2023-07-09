@@ -9,7 +9,7 @@
                 <a href="{{ route('test-management.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_teaching_materials_crud', 'Create', route('test-management.create'))])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('test_management_crud', 'Create', route('test-management.create'))])
         </div>
 
         <div class="section-body">
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="student_id">Students</label>
-                                    <select name="student_id" class="form-control" multiple>
+                                    <select name="student_id[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($students)
                                         @foreach ($students as $item)
