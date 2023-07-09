@@ -133,6 +133,46 @@ class ProfileController extends Controller
 		return view('account.allocation', compact("page", "user","announcements"));
 	}
 
+    public function allocation_test()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.allocation-test', compact("page", "user","announcements"));
+	}
+
+    public function allocation_survey()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.allocation-survey', compact("page", "user","announcements"));
+	}
+
     public function grading_overview()
 	{
 		//

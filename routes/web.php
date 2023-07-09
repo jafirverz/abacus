@@ -87,6 +87,8 @@ Route::get('instructor-profile', 'ProfileController@instructor')->name('instruct
 Route::get('grading-overview', 'ProfileController@grading_overview')->name('grading-overview');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('allocation', 'ProfileController@allocation')->name('allocation');
+Route::get('allocation/test/{id?}', 'ProfileController@allocation_test');
+Route::get('allocation/survey/{id?}', 'ProfileController@allocation_survey');
 Route::get('teaching-materials', 'ProfileController@teaching_materials')->name('teaching-materials');
 Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
