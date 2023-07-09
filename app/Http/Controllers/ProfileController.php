@@ -11,8 +11,9 @@ use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
 use App\TestManagement;
+use App\Survey;
 use App\User;
-use App\TestPaper;
+use App\Allocation;
 use App\Admin;
 use App\Competition;
 use App\CompetitionStudent;
@@ -121,7 +122,8 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$test = TestManagement::orderBy('id', 'asc')->paginate($this->pagination);
+        $survey = Survey::where('status',1)->orderBy('id', 'asc')->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -130,10 +132,31 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.allocation', compact("page", "user","announcements"));
+		return view('account.allocation', compact("page", "user","test","survey"));
 	}
 
-    public function allocation_test()
+    public function allocation_test($test_id)
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+        $students = User::where('user_type_id','!=', 5)->orderBy('id','desc')->get();
+		$user = $this->user;
+        $test = TestManagement::findorfail($test_id);
+        $list = TestManagement::join('allocations','test_management.id','allocations.assigned_id')->where('allocations.type',1)->orderBy('test_management.id', 'desc')->paginate($this->pagination);
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.allocation-test', compact("page", "user","test_id","test","list","students"));
+	}
+
+    public function allocation_survey($survey_id)
 	{
 		//
 
@@ -141,7 +164,7 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$survey = Survey::findorfail($survey_id);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -150,27 +173,7 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.allocation-test', compact("page", "user","announcements"));
-	}
-
-    public function allocation_survey()
-	{
-		//
-
-		$title = __('constant.MY_PROFILE');
-		$slug =  __('constant.SLUG_MY_PROFILE');
-
-		$user = $this->user;
-		$announcements = Announcement::where('teacher_id', $user->id)->get();
-		$page = get_page_by_slug($slug);
-
-		if (!$page) {
-			return abort(404);
-		}
-
-		//dd($user);
-
-		return view('account.allocation-survey', compact("page", "user","announcements"));
+		return view('account.allocation-survey', compact("page", "user","survey"));
 	}
 
     public function grading_overview()

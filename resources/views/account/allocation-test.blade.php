@@ -68,26 +68,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-4">PASSED</em></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-5">FAILED</em></td>
-                                </tr>
+                                @if($list->count())
+                                @foreach ($list as $key => $item)
                                 <tr>
                                     <td>
                                         <em>001</em>
@@ -98,75 +80,15 @@
                                     <td><em>3hrs, 15mins</em></td>
                                     <td><em class="status-5">FAILED</em></td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-4">PASSED</em></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-4">PASSED</em></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-4">PASSED</em></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-4">PASSED</em></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-4">PASSED</em></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <em>001</em>
-                                        <div class="tbactions"><a href="#">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>1/12/2022</em></td>
-                                    <td><em>31/12/2022</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
-                                    <td><em class="status-5">FAILED</em></td>
-                                </tr>
+                                @endforeach
+                                @else
+                                <li>{{ __('constant.NO_DATA_FOUND') }}</li>
+                                @endif
                             </tbody>
                         </table>
                     </div><div id="mCSB_1_scrollbar_horizontal" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 30px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div><div class="mCSB_draggerRail"></div></div></div></div></div></div>
                     <ul class="page-numbers mt-30">
-                        <li><a class="prev" href="#">prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a class="current" href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a class="next" href="#">next</a></li>
+                        {{ $list->links() }}
                     </ul>
                 </div>
             </div>
