@@ -62,7 +62,26 @@
                 ],
             ],
         ],
-
+        [
+            'menu_header'   =>  __('constant.TEST_MANAGEMENT'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.TEST_MANAGEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/test-management',
+                ],
+                [
+                    'title' =>  __('constant.TEST_PAPER'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/test-paper',
+                ],
+                [
+                    'title' =>  __('constant.COURSE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/course',
+                ],
+            ],
+        ],
         [
             'menu_header'   =>  __('constant.MASTER'),
             'main_menu' =>  [
