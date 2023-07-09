@@ -10,7 +10,9 @@ use App\TeachingMaterials;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
+use App\TestManagement;
 use App\User;
+use App\TestPaper;
 use App\Admin;
 use App\Competition;
 use App\CompetitionStudent;
@@ -89,6 +91,46 @@ class ProfileController extends Controller
 		//dd($user);
 
 		return view('account.instructor-overview', compact("page", "user","announcements"));
+	}
+
+    public function grading_examination()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.grading-examination', compact("page", "user","announcements"));
+	}
+
+    public function allocation()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.allocation', compact("page", "user","announcements"));
 	}
 
     public function grading_overview()
