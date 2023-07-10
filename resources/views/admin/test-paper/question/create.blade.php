@@ -59,11 +59,17 @@
                                 @if(isset($question_template_id) && $question_template_id==9 || $question_template_id==5)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="input_3[]" class="form-control">
+                                                <option value="multiply">Multiply</option>
+                                                <option value="divide">Divide</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-4">
                                             <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
@@ -130,11 +136,17 @@
 <div class="copy" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+        </div>
+        <div class="col-md-2">
+            <select name="input_3[]" class="form-control">
+                <option value="multiply">Multiply</option>
+                <option value="divide">Divide</option>
+            </select>
         </div>
         <div class="col-md-4">
             <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
