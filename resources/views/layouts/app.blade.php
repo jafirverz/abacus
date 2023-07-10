@@ -17,6 +17,13 @@
     @include('inc.footer_script')
     @stack('footer-scripts')
     @yield('footer-js')
+    <script type="text/javascript">
+        $(function () {
+            $('.datetimepicker').datetimepicker({
+                format: 'YYYY-MM-DD H:i:s',
+            });
+        });
+    </script>
 </body>
 
 </html>

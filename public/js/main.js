@@ -75,7 +75,7 @@ $(document).ready(function() {
 
 	var dateInput  =  $('.date-wrap input');
 	dateInput.datetimepicker({
-		format: 'DD/MM/YYYY',
+		format: 'YYYY-MM-DD H:s',
 		widgetParent: 'body',
 		icons: {
 			time: 'far fa-clock',

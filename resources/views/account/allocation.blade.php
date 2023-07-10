@@ -11,29 +11,23 @@
                 <div class="box-1">
                     <h2 class="title-4">Online Test</h2>
                     <ul class="list-4">
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Preparatory 1 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Preparatory 2 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Preparatory 3 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Preparatory 4 Test (Online</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Beginner Level Tests (Online</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Elementary 1 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Elementary 2 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Intermediate 1 Test Online</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Intermediate 2 Test Online</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Advanced 1 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Advanced 2 Test (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-test.html">Advanced 3 Test (Online)</a></li>
+                        @if($test->count())
+                        @foreach ($test as $key => $item)
+                        <li><a href="{{ url('allocation/test/'.$item->id) }}">{{ $item->title }}</a></li>
+                        @endforeach
+                        @else
+                        <li>{{ __('constant.NO_DATA_FOUND') }}</li>
+                         @endif
                     </ul>
                     <h2 class="title-4 mt-40">Surveys</h2>
                     <ul class="list-4">
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 1 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 2 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 3 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 4 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 5 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 6 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 7 (Online)</a></li>
-                        <li><a href="be-teacher-dashboard-allocation-survey.html">Survey 8 (Online)</a></li>
+                        @if($survey->count())
+                        @foreach ($survey as $key => $item)
+                        <li><a href="{{ url('allocation/survey/'.$item->id) }}">{{ $item->title }}</a></li>
+                        @endforeach
+                        @else
+                        <li>{{ __('constant.NO_DATA_FOUND') }}</li>
+                         @endif
                     </ul>
                 </div>
             </div>

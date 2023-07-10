@@ -52,6 +52,9 @@ return [
     'SURVEY_QUESTIONS' => 'Survey Questions',
     'SURVEY_QUESTIONS_OPTIONS' => 'Survey Questions Options',
     'OPTIONS_CHOICES' => 'Survey Questions Choices',
+    'ALLOCATE_DELETED' => 'Your Record has been deleted successfully.',
+    'ALLOCATE_UPDATED' => 'Student allocated successfully.',
+    'SURVEY_UPDATED' => 'Survey assigned successfully.',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',
