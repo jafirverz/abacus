@@ -141,10 +141,18 @@ class ProfileController extends Controller
 
 		$title = __('constant.MY_PROFILE');
 		$slug =  __('constant.SLUG_MY_PROFILE');
-        $students = User::where('user_type_id','!=', 5)->orderBy('id','desc')->get();
+
 		$user = $this->user;
+        $allocated_user = Allocation::where('type',1)->where('assigned_id',$test_id)->select('student_id')->get();
+        $allocate_user_array=[];
+        foreach($allocated_user->toArray() as $value)
+        {
+            $allocate_user_array[]=$value['student_id'];
+        }
+        $students = User::where('user_type_id','!=', 5)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+
         $test = TestManagement::findorfail($test_id);
-        $list = TestManagement::join('allocations','test_management.id','allocations.assigned_id')->where('allocations.type',1)->orderBy('test_management.id', 'desc')->paginate($this->pagination);
+        $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.type',1)->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -164,16 +172,23 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
+        $allocated_user = Allocation::where('type',2)->where('assigned_id',$survey_id)->select('student_id')->get();
+        $allocate_user_array=[];
+        foreach($allocated_user->toArray() as $value)
+        {
+            $allocate_user_array[]=$value['student_id'];
+        }
+        $students = User::where('user_type_id','!=', 5)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 		$survey = Survey::findorfail($survey_id);
 		$page = get_page_by_slug($slug);
-
+        $list = Allocation::where('allocations.assigned_id',$survey_id)->where('allocations.type',2)->paginate($this->pagination);
 		if (!$page) {
 			return abort(404);
 		}
 
 		//dd($user);
 
-		return view('account.allocation-survey', compact("page", "user","survey"));
+		return view('account.allocation-survey', compact("page", "user","survey","list","students","survey_id"));
 	}
 
     public function grading_overview()
@@ -227,6 +242,66 @@ class ProfileController extends Controller
 	public function create()
 	{
 	}
+
+
+    public function allocation_store(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
+
+
+        $allocation = new Allocation();
+        $allocation->student_id  = $request->student_id ?? NULL;
+        $allocation->assigned_by  = $this->user->id;
+        $allocation->assigned_id  = $id;
+        $allocation->start_date  = $request->start_date ?? NULL;
+        $allocation->end_date  = $request->end_date ?? NULL;
+        $allocation->type  = 1;
+        $allocation->save();
+
+		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
+	}
+
+    public function survey_store(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
+
+
+        $allocation = new Allocation();
+        $allocation->student_id  = $request->student_id ?? NULL;
+        $allocation->assigned_id  = $id;
+        $allocation->assigned_by  = $this->user->id;
+        $allocation->start_date  = $request->start_date ?? NULL;
+        $allocation->end_date  = $request->end_date ?? NULL;
+        $allocation->type  = 2;
+        $allocation->save();
+
+		return redirect()->back()->with('success', __('constant.SURVEY_UPDATED'));
+	}
+
+
+    public function allocation_test_delete($id)
+    {
+        Allocation::where('id', $id)->delete();
+        return redirect()->back()->with('success', __('constant.ALLOCATE_DELETED'));
+    }
+
+    public function allocation_survey_delete($id)
+    {
+        Allocation::where('id', $id)->delete();
+        return redirect()->back()->with('success', __('constant.ALLOCATE_DELETED'));
+    }
 
 	/**
 	 * Store a newly created resource in storage.
