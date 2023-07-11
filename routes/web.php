@@ -262,6 +262,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('lessons/search', 'CMS\LessonManagementController@search')->name('lessons.search');
     Route::resource('lessons', 'CMS\LessonManagementController');
 
+
+    // LESSONS QUESTIONS MASTER
+    Route::get('lesson-questions/search', 'CMS\LessonQuestionManagementController@search')->name('lesson-questions.search');
+    Route::resource('lesson-questions', 'CMS\LessonQuestionManagementController');
+
+
     // CATEGORY COMPETITION
     Route::get('category-competition/search', 'CMS\CategoryCompetitionController@search')->name('category-competition.search');
     Route::resource('category-competition', 'CMS\CategoryCompetitionController');

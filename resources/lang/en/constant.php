@@ -56,6 +56,7 @@ return [
     'ALLOCATE_UPDATED' => 'Student allocated successfully.',
     'SURVEY_UPDATED' => 'Survey assigned successfully.',
     'LESSON_MANAGEMENT' => 'Lesson Management',
+    'LESSON_QUESTION_MANAGEMENT' => 'Lesson Questions Management',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',
