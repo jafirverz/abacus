@@ -55,6 +55,7 @@ return [
     'ALLOCATE_DELETED' => 'Your Record has been deleted successfully.',
     'ALLOCATE_UPDATED' => 'Student allocated successfully.',
     'SURVEY_UPDATED' => 'Survey assigned successfully.',
+    'LESSON_MANAGEMENT' => 'Lesson Management',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',
