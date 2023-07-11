@@ -145,12 +145,13 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <a href="{{ url('/') }}/upload-file/{{  $questionss->question_1 }}" target="_blank">{{ $questionss->question_1 }} </a> 
+                                            <input value="{{ $questionss->question_1 }}" name="input_1_old[]"  type="hidden">
                                         </div>
                                         <div class="col-md-5">
-                                            <input class="form-control" required value="{{  $questionss->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                            <input class="form-control" required value="{{  $questionss->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                         </div>
                                         <div class="col-md-2">
-                                            <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                            <input class="form-control" required value="{{  $questionss->marks }}" name="marks_old[]" placeholder="Marks" type="text">
                                         </div>
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -176,17 +177,8 @@
                                     <div class="form-group">
                                     <div class="row">
 
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <select name="input_2[]" class="form-control">
-                                                <option value="add" @if($questionss->symbol == 'add') selected @endif>Add</option>
-                                                <option value="subtract" @if($questionss->symbol == 'subtract') selected @endif>Subtract</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{ $questionss->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
+                                        <div class="col-md-5">
+                                            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data">{{ $questionss->question_1 }}</textarea>
                                         </div>
 
                                         <div class="col-md-4">
@@ -421,17 +413,8 @@
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-2">
-                <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
-            </div>
-            <div class="col-md-2">
-                <select name="input_2[]" class="form-control">
-                    <option value="add">Add</option>
-                    <option value="subtract">Subtract</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
+            <div class="col-md-5">
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
 
             <div class="col-md-4">
