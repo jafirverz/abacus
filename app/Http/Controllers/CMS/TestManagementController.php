@@ -94,9 +94,8 @@ class TestManagementController extends Controller
     public function show($id)
     {
         $title = $this->title;
-        $material = TestManagement::findorfail($id);
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.test_management.show', compact('title', 'material','instructors'));
+        $test = TestManagement::findorfail($id);
+        return view('admin.test-management.show', compact('title', 'test'));
     }
 
     /**
@@ -134,8 +133,6 @@ class TestManagementController extends Controller
 
         $testManagement = TestManagement::findorfail($id);
         $testManagement->title = $request->title ?? '';
-
-        $testManagement->teacher_id = $request->teacher_id ?? '';
         $testManagement->paper_id = $request->paper_id ?? '';
         $testManagement->course_id = $request->course_id ?? '';
         $testManagement->student_id = json_encode($request->student_id);
@@ -163,8 +160,8 @@ class TestManagementController extends Controller
     {
         //DB::enableQueryLog();
 		$title = $this->title;
-        $materials = TestManagement::join('users','users.id','teaching_materials.teacher_id')->search($request->search)->select('teaching_materials.*')->orderBy('teaching_materials.id', 'asc')->paginate($this->systemSetting()->pagination);
+        $test = TestManagement::orderBy('id', 'asc')->paginate($this->systemSetting()->pagination);
        //dd(DB::getQueryLog());
-        return view('admin.test_management.index', compact('title', 'materials'));
+        return view('admin.test-management.index', compact('title', 'test'));
     }
 }
