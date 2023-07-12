@@ -286,7 +286,6 @@ class StandalonePageController extends Controller
                     $name = $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
-
                     $storQues = new StandaloneQuestions();
                     $storQues->standalone_page_id = 1;
                     $storQues->question_template_id = $id;

@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('standalone.questions.update', $qestion_template_id) }}" method="post">
+                        <form action="{{ route('standalone.questions.update', $qestion_template_id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
 
