@@ -84,7 +84,7 @@
                                                 <a href="{{ route('standalone.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('standalone.edit', $item->id) }}"
+                                                <a href="{{ route('standalone.questions.edit', $item->question_template_id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
 

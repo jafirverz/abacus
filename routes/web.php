@@ -294,7 +294,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('standalone/questions/{id?}', 'CMS\StandalonePageController@questionslist')->name('standalone.questions');
     Route::get('standalone/questions/{id?}/add', 'CMS\StandalonePageController@questionsAdd')->name('standalone.questions.add');
+    Route::get('standalone/questions/{id?}/edit', 'CMS\StandalonePageController@questionsEdit')->name('standalone.questions.edit');
     Route::post('standalone/questions/add', 'CMS\StandalonePageController@questionsStore')->name('standalone.questions.store');
+    Route::post('standalone/questions/{id?}/update', 'CMS\StandalonePageController@questionsUpdate')->name('standalone.questions.update');
 
 
 

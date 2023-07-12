@@ -245,4 +245,137 @@ class StandalonePageController extends Controller
         
         return redirect()->route('standalone.questions.add', 1)->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
+
+    public function questionsEdit($id)
+    {
+        $qestion_template_id = $id;
+        $questions = StandaloneQuestions::where('question_template_id', $id)->get();
+        $title = 'Standalone Questions';
+        $questionsTemplate = QuestionTemplate::whereIn('id', [3,4,5,6,7])->get();
+        return view('admin.standalone-questionsEdit', compact('title', 'questionsTemplate', 'questions', 'qestion_template_id'));
+    }
+
+    public function questionsUpdate(Request $request, $id){
+        //dd($request->all());
+        $storQues = StandaloneQuestions::where('question_template_id', $id)->get();
+        foreach($storQues as $quess){
+            $quess->delete();
+        }
+        if($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
+        {
+            if($request->input_1_old){
+                $oldInput = $request->input_1_old;
+                $countt = count($oldInput);
+                for($k=0; $k<$countt; $k++){
+                    $storQues = new StandaloneQuestions();
+                    $storQues->standalone_page_id = 1;
+                    $storQues->question_template_id = $id;
+                    $storQues->question_1 = $request->input_1_old[$k];
+                    $storQues->symbol = 'number_question';
+                    $storQues->answer = $request->input_2_old[$k];
+                    $storQues->marks = $request->marks_old[$k];
+                    $storQues->save();
+                }
+            }
+
+            if ($request->hasfile('input_1')) {
+                
+                $i = 0;
+                foreach ($request->file('input_1') as $file) {
+
+                    $name = $file->getClientOriginalName();
+                    $file->move(public_path() . '/upload-file/', $name);
+                    $data[] = $name;
+
+                    $storQues = new StandaloneQuestions();
+                    $storQues->standalone_page_id = 1;
+                    $storQues->question_template_id = $id;
+                    $storQues->question_1 = $name;
+                    // $storQues->question_2 = $request->input_3[$i];
+                    // $storQues->symbol = $request->input_2[$i];
+                    $storQues->answer = $request->input_2[$i];
+                    $storQues->marks = $request->marks[$i];
+                    if($request->question_type==1){
+                        $storQues->block = $request->blocks[$i];
+                    }
+                    $storQues->save();
+                    $i++;
+                }
+
+                // $json['input_1']=$data;
+                // $json['input_2']=$request->input_2;
+            }
+            
+
+            
+            
+        }
+        elseif($request->question_type==4)
+        {
+            
+
+            $count = count($request->input_1);
+            for($i=0; $i<$count; $i++){
+                $storQues = new StandaloneQuestions();
+                $json['input_1']=$request->input_1[$i];
+                $storQues->standalone_page_id = 1;
+                $storQues->question_template_id = $id;
+                $storQues->question_1 = $request->input_1[$i];
+                //$storQues->question_2 = $request->input_3[$i];
+                //$storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->input_2[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
+        }
+        elseif($request->question_type==6){
+            $count = count($request->input_1);
+            
+
+            for($i=0; $i<$count; $i++){
+                $storQues = new StandaloneQuestions();
+                $storQues->standalone_page_id = 1;
+                $storQues->question_template_id = $id;
+                $storQues->question_1 = $request->input_1[$i];
+                $storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
+        }
+        elseif($request->question_type==5){
+            $count = count($request->input_1);
+            
+
+            for($i=0; $i<$count; $i++){
+                $storQues = new StandaloneQuestions();
+                $storQues->standalone_page_id = 1;
+                $storQues->question_template_id = $id;
+                $storQues->question_1 = $request->input_1[$i];
+                $storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
+        }
+        // elseif($request->question_type==1){
+        //     if ($request->hasfile('input_1')) {
+        //         foreach ($request->file('input_1') as $file) {
+
+        //             $name = $file->getClientOriginalName();
+        //             $file->move(public_path() . '/upload-file/', $name);
+        //             $data[] = $name;
+        //         }
+
+        //         $json['input_1']=$data;
+        //         $json['input_2']=$request->input_2;
+        //     }
+        // }
+
+        //dd($question);
+        
+        return redirect()->route('standalone.questions.add', 1)->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+    }
 }
