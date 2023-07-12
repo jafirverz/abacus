@@ -155,6 +155,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/option-choices',
                 ],
+                [
+                    'title' =>  __('constant.STANDALONE_PAGE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/standalone',
+                ],
 
             ],
         ],

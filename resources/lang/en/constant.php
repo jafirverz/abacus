@@ -57,6 +57,8 @@ return [
     'SURVEY_UPDATED' => 'Survey assigned successfully.',
     'LESSON_MANAGEMENT' => 'Lesson Management',
     'LESSON_QUESTION_MANAGEMENT' => 'Lesson Questions Management',
+    'STANDALONE_PAGE' => 'Standalone Page',
+    'STANDALONE_QUESTIONS' => 'Standalone Questions',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',

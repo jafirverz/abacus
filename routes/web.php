@@ -287,6 +287,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('comp-questions/search', 'CMS\CompetitionQuestionsController@search')->name('comp-questions.search');
     Route::resource('comp-questions', 'CMS\CompetitionQuestionsController');
 
+
+    // STANDALONE PAGE
+    Route::get('standalone/search', 'CMS\StandalonePageController@search')->name('standalone.search');
+    Route::resource('standalone', 'CMS\StandalonePageController');
+
+    Route::get('standalone/questions/{id?}', 'CMS\StandalonePageController@questionslist')->name('standalone.questions');
+    Route::get('standalone/questions/{id?}/add', 'CMS\StandalonePageController@questionsAdd')->name('standalone.questions.add');
+    Route::post('standalone/questions/add', 'CMS\StandalonePageController@questionsStore')->name('standalone.questions.store');
+
+
+
     // TEST PAPER
     Route::get('test-paper/search', 'CMS\TestPaperController@search')->name('test-paper.search');
     Route::resource('test-paper', 'CMS\TestPaperController');
