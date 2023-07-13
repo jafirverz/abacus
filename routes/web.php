@@ -80,6 +80,9 @@ Route::get('/survey-form', 'SurveyController@index');
 
 Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');
 
+
+Route::get('/standalone-page', 'StandalonePageController@index');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
