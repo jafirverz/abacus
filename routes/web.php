@@ -301,6 +301,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('standalone/questions/add', 'CMS\StandalonePageController@questionsStore')->name('standalone.questions.store');
     Route::post('standalone/questions/{id?}/update', 'CMS\StandalonePageController@questionsUpdate')->name('standalone.questions.update');
 
+    Route::post('standalone/questions/{id?}/destroy', 'CMS\StandalonePageController@destroy')->name('standalone-questions.destroy');
+
 
 
     // TEST PAPER

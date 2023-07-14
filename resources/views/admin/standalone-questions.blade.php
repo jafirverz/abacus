@@ -22,14 +22,13 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('standalone.destroy', 'standalone') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('standalone-questions.destroy', 'standalone') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('standalone.destroy', 'standalone') }}" method="post">
+                            <form id="destroy" action="{{ route('standalone-questions.destroy', '1') }}" method="post">
                                 @csrf
-                                @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>

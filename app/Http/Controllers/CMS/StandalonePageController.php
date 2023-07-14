@@ -123,8 +123,10 @@ class StandalonePageController extends Controller
      * @param  \App\StandalonePage  $standalonePage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StandalonePage $standalonePage)
+    public function destroy(Request $request)
     {
+        dd($request->all());
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
         //
     }
 
