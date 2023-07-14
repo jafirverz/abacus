@@ -16,7 +16,7 @@ class StandalonePageController extends Controller
     public function index()
     {
         //
-        $standalonePage = StandalonePage::with('questions')->where('status', 1)->first();
+        $standalonePage = StandalonePage::with('questionsPage')->where('status', 1)->first();
         return view('standalone.index', compact('standalonePage'));
     }
 

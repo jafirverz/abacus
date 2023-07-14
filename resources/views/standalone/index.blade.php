@@ -23,11 +23,11 @@
           </div>
           <div class="col-xl-6 col-md-7 sp-col order-md-first">
 
-            @if($standalonePage->questions)
-              @foreach($standalonePage->questions as $questions)
+            @if($standalonePage->questionsPage)
+              @foreach($standalonePage->questionsPage as $questions)
                 @if($questions->question_template_id == 4)
                 @php 
-                $questi = \App\StandaloneQuestions::where('question_template_id', $questions->question_template_id)->get();
+                $questi = \App\StandaloneQuestions::where('standalone_page_question_id', $questions->id)->get();
                 $countQ = count($questi);
                 @endphp
                 <div class="xscrollbar mt-30">
