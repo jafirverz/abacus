@@ -17,8 +17,7 @@
         </div>								
         <h1 class="title-3">{{ $standalonePage->title }}</h1>
         <div>{!! $standalonePage->description !!}</div>
-        <form method="post" action="{{ url('standalone-page/result') }}">
-          @csrf
+       
         <div class="row sp-col-20">
           <div class="col-xl-6 col-md-5 sp-col mt-30 order-md-last">
             <iframe src="https://3gabacus.com/interactive_abacus_frame/" width="500px"></iframe>
@@ -67,11 +66,25 @@
                       <tr>
                         <td class="lbtb-1">Your<br/>Answer:</td>
                         @foreach($questi as $ques)
-                        <td class="colanswer text-center"><input class="form-control minwinpt-1" type="number" value="" name="answer[{{ $ques->id }}]" /></td>
+                        @php 
+                        if (array_key_exists($ques->id,$values)){
+                          $value = $values[$ques->id];
+                          if($value == $ques->answer){
+                            $correct = '';
+                          }else{
+                            $correct = 'status-wrong';
+                          }
+                        }
+                        @endphp
+                        <td class="colanswer text-center"><input class="form-control minwinpt-1 {{ $correct }}" type="number" value="{{ $value }}" name="answer[{{ $ques->id }}]" /></td>
                         @endforeach
-                        
                       </tr>
-                     
+                      <tr>
+                        <td class="lbtb-1">Correct<br/>Answer:</td>
+                        @foreach($questi as $ques)
+                        <td class="colanswer text-center"><input class="form-control minwinpt-1 status-right" type="number" value="{{ $ques->answer }}" disabled /></td>
+                        @endforeach
+                      </tr>
                     </tfoot>
                   </table>
                 </div>
@@ -127,9 +140,14 @@
           </div>
         </div>
         <div class="output-1 mt-50">
-          <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+          <a href="{{ url('standalone-page') }}" class="btn-1" >Reset <i class="fa-solid fa-arrow-right-long"></i></a>
         </div>
-      </form>
+        <div class="box-msg-2 mt-50">
+          <h4>Thank you for your submission.</h4>
+          <h2>Here is your marks {{ $correctMarks }} out of {{ $totalMarks }}.</h2>
+          <p>To find a learning location near you, please click here.</p>
+        </div>
+
       </div>
     </div>
   </div>	

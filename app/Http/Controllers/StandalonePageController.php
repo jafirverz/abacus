@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\StandalonePage;
+use App\StandaloneQuestions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -84,5 +85,21 @@ class StandalonePageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function result(Request $request){
+        //dd("aa");
+        $totalMarks = 0;
+        $correctMarks = 0;
+        foreach($request->answer as $key=>$value){
+            $getMarks = StandaloneQuestions::where('id', $key)->first();
+            $totalMarks+= $getMarks->marks;
+            if($getMarks->answer == $value){
+                $correctMarks+= $getMarks->marks;
+            }
+        }
+        $values = $request->answer;
+        $standalonePage = StandalonePage::with('questionsPage')->where('status', 1)->first();
+        return view('standalone.result', compact('standalonePage', 'values', 'totalMarks', 'correctMarks'));
     }
 }

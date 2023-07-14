@@ -83,6 +83,10 @@ Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submi
 
 Route::get('/standalone-page', 'StandalonePageController@index');
 
+//Route::post('/standalone-page', 'StandalonePageController@checkanswer');
+
+Route::post('/standalone-page/result', 'StandalonePageController@result');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
