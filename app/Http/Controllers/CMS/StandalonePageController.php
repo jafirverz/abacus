@@ -6,6 +6,7 @@ use App\StandalonePage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\QuestionTemplate;
+use App\StandalonePageQuestions;
 use App\StandaloneQuestions;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Auth;
@@ -125,7 +126,7 @@ class StandalonePageController extends Controller
      */
     public function destroy(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
         //
     }
@@ -133,7 +134,8 @@ class StandalonePageController extends Controller
     public function questionslist($id){
         $standalonePageId = $id;
         $title = 'Standalone Questions';
-        $questions = StandaloneQuestions::groupBy('question_template_id')->get();
+        //$questions = StandaloneQuestions::groupBy('question_template_id')->get();
+        $questions = StandalonePageQuestions::get();
         return view('admin.standalone-questions', compact('title', 'questions', 'standalonePageId'));
     }
 
@@ -145,6 +147,20 @@ class StandalonePageController extends Controller
     }
 
     public function questionsStore(Request $request){
+        $fields = [
+            'title' => 'required',
+
+        ];
+        $messages = [];
+        $messages['title.required'] = 'The title field is required.';
+        $request->validate($fields, $messages);
+
+        $spq = new StandalonePageQuestions();
+        $spq->title = $request->title;
+        $spq->standalone_page_id = 1;
+        $spq->question_template_id = $request->question_type;
+        $spq->save();
+
         if($request->question_type==2 || $request->question_type==1 || $request->question_type==3)
         {
             if ($request->hasfile('input_1')) {
@@ -157,7 +173,7 @@ class StandalonePageController extends Controller
                     $data[] = $name;
 
                     $storQues = new StandaloneQuestions();
-                    $storQues->standalone_page_id = 1;
+                    $storQues->standalone_page_question_id = $spq->id;
                     $storQues->question_template_id = $request->question_type;
                     $storQues->question_1 = $name;
                     // $storQues->question_2 = $request->input_3[$i];
@@ -187,7 +203,7 @@ class StandalonePageController extends Controller
             for($i=0; $i<$count; $i++){
                 $storQues = new StandaloneQuestions();
                 $json['input_1']=$request->input_1[$i];
-                $storQues->standalone_page_id = 1;
+                $storQues->standalone_page_question_id = $spq->id;
                 $storQues->question_template_id = $request->question_type;
                 $storQues->question_1 = $request->input_1[$i];
                 //$storQues->question_2 = $request->input_3[$i];
@@ -203,7 +219,7 @@ class StandalonePageController extends Controller
 
             for($i=0; $i<$count; $i++){
                 $storQues = new StandaloneQuestions();
-                $storQues->standalone_page_id = 1;
+                $storQues->standalone_page_question_id = $spq->id;
                 $storQues->question_template_id = $request->question_type;
                 $storQues->question_1 = $request->input_1[$i];
                 $storQues->question_2 = $request->input_3[$i];
@@ -219,7 +235,7 @@ class StandalonePageController extends Controller
 
             for($i=0; $i<$count; $i++){
                 $storQues = new StandaloneQuestions();
-                $storQues->standalone_page_id = 1;
+                $storQues->standalone_page_question_id = $spq->id;
                 $storQues->question_template_id = $request->question_type;
                 $storQues->question_1 = $request->input_1[$i];
                 $storQues->question_2 = $request->input_3[$i];
@@ -250,16 +266,30 @@ class StandalonePageController extends Controller
 
     public function questionsEdit($id)
     {
-        $qestion_template_id = $id;
-        $questions = StandaloneQuestions::where('question_template_id', $id)->get();
+        
+        $questionsPage = StandalonePageQuestions::where('id', $id)->first();
+        $qestion_template_id = $questionsPage->question_template_id;
+        $questions = StandaloneQuestions::where('standalone_page_question_id', $questionsPage->id)->get();
         $title = 'Standalone Questions';
         $questionsTemplate = QuestionTemplate::whereIn('id', [3,4,5,6,7])->get();
-        return view('admin.standalone-questionsEdit', compact('title', 'questionsTemplate', 'questions', 'qestion_template_id'));
+        return view('admin.standalone-questionsEdit', compact('title', 'questionsTemplate', 'questions', 'qestion_template_id', 'questionsPage'));
     }
 
     public function questionsUpdate(Request $request, $id){
-        //dd($request->all());
-        $storQues = StandaloneQuestions::where('question_template_id', $id)->get();
+        // dd($request->all());
+        $fields = [
+            'title' => 'required',
+
+        ];
+        $messages = [];
+        $messages['title.required'] = 'The title field is required.';
+        $request->validate($fields, $messages);
+
+        $spq = StandalonePageQuestions::where('id', $id)->first();
+        $spq->title = $request->title;
+        $spq->save();
+
+        $storQues = StandaloneQuestions::where('standalone_page_question_id', $request->standalonePageQuestionId)->get();
         foreach($storQues as $quess){
             $quess->delete();
         }
@@ -270,8 +300,8 @@ class StandalonePageController extends Controller
                 $countt = count($oldInput);
                 for($k=0; $k<$countt; $k++){
                     $storQues = new StandaloneQuestions();
-                    $storQues->standalone_page_id = 1;
-                    $storQues->question_template_id = $id;
+                    $storQues->standalone_page_question_id = $id;
+                    $storQues->question_template_id = $request->question_type;
                     $storQues->question_1 = $request->input_1_old[$k];
                     $storQues->symbol = 'number_question';
                     $storQues->answer = $request->input_2_old[$k];
@@ -289,8 +319,8 @@ class StandalonePageController extends Controller
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
                     $storQues = new StandaloneQuestions();
-                    $storQues->standalone_page_id = 1;
-                    $storQues->question_template_id = $id;
+                    $storQues->standalone_page_question_id = $id;
+                    $storQues->question_template_id = $request->question_type;
                     $storQues->question_1 = $name;
                     // $storQues->question_2 = $request->input_3[$i];
                     // $storQues->symbol = $request->input_2[$i];
@@ -319,8 +349,8 @@ class StandalonePageController extends Controller
             for($i=0; $i<$count; $i++){
                 $storQues = new StandaloneQuestions();
                 $json['input_1']=$request->input_1[$i];
-                $storQues->standalone_page_id = 1;
-                $storQues->question_template_id = $id;
+                $storQues->standalone_page_question_id = $id;
+                $storQues->question_template_id = $request->question_type;
                 $storQues->question_1 = $request->input_1[$i];
                 //$storQues->question_2 = $request->input_3[$i];
                 //$storQues->symbol = $request->input_2[$i];
@@ -335,8 +365,8 @@ class StandalonePageController extends Controller
 
             for($i=0; $i<$count; $i++){
                 $storQues = new StandaloneQuestions();
-                $storQues->standalone_page_id = 1;
-                $storQues->question_template_id = $id;
+                $storQues->standalone_page_question_id = $id;
+                $storQues->question_template_id = $request->question_type;
                 $storQues->question_1 = $request->input_1[$i];
                 $storQues->question_2 = $request->input_3[$i];
                 $storQues->symbol = $request->input_2[$i];
@@ -351,8 +381,8 @@ class StandalonePageController extends Controller
 
             for($i=0; $i<$count; $i++){
                 $storQues = new StandaloneQuestions();
-                $storQues->standalone_page_id = 1;
-                $storQues->question_template_id = $id;
+                $storQues->standalone_page_question_id = $id;
+                $storQues->question_template_id = $request->question_type;
                 $storQues->question_1 = $request->input_1[$i];
                 $storQues->question_2 = $request->input_3[$i];
                 $storQues->symbol = $request->input_2[$i];

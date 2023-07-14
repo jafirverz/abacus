@@ -83,13 +83,13 @@
                                                 <a href="{{ route('standalone.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('standalone.questions.edit', $item->question_template_id) }}"
+                                                <a href="{{ route('standalone.questions.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
 
                                                 <!-- <a href="{{ route('standalone.questions', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a> -->
                                             </td>
-                                            <td>{{ $item->questionTemp->title }}</td>
+                                            <td>{{ $item->title }}</td>
 
                                             
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>

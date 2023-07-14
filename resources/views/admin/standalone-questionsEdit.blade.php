@@ -16,11 +16,19 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('standalone.questions.update', $qestion_template_id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('standalone.questions.update', $questionsPage->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
 
-                                
+                                <div class="form-group">
+                                    <label for="status">Title*</label>
+                                    <input type="text" name="title" value="{{ $questionsPage->title }}" class="form-control" required>
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
                                 @php 
                                 if(isset($qestion_template_id)){
@@ -255,6 +263,7 @@
 
                                 
                             <input type="hidden" name="question_type" value="{{ $qestion_template_id }}">
+                            <input type="hidden" name="standalonePageQuestionId" value="{{ $questionsPage->id }}">
 
                                
 

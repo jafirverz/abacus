@@ -21,20 +21,34 @@
                             @method('POST')
                             <div class="card-body">
 
+                                
+
                                 <div class="form-group">
                                     <label for="title">Question Template</label>
                                     <select name="comp_paper" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
                                         @foreach($questionsTemplate as $paper)
-                                        @if(in_array($paper->id, $questions))
+                                        {{-- @if(in_array($paper->id, $questions))
                                         @else
                                         <option value="<?php echo url('/'); ?>/admin/standalone/questions/1/add?questemp={{ $paper->id }}" @if(isset($_GET['questemp']) && $_GET['questemp']==$paper->id) selected @endif>{{ $paper->title }}</option>
                                         @endif
+                                        --}}
+                                        <option value="<?php echo url('/'); ?>/admin/standalone/questions/1/add?questemp={{ $paper->id }}" @if(isset($_GET['questemp']) && $_GET['questemp']==$paper->id) selected @endif>{{ $paper->title }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('comp_paper'))
                                         <span class="text-danger d-block">
                                         <strong>{{ $errors->first('comp_paper') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">Title*</label>
+                                    <input type="text" name="title" value="" class="form-control" required>
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                     @endif
                                 </div>
