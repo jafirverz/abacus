@@ -19,6 +19,7 @@ use App\Competition;
 use App\CompetitionStudent;
 use App\Country;
 use App\UserProfileUpdate;
+use App\InstructorCalendar;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -263,6 +264,32 @@ class ProfileController extends Controller
         $allocation->end_date  = $request->end_date ?? NULL;
         $allocation->type  = 1;
         $allocation->save();
+
+		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
+	}
+
+    public function cal_store(Request $request)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'full_name' => 'required',
+            'start_date' => 'date|required',
+            'start_time' => 'required',
+            'note' => 'required',
+            'reminder' => 'required',
+        ]);
+
+
+        $instructorCalendar = new InstructorCalendar();
+        $instructorCalendar->full_name  = $request->full_name ?? NULL;
+        $instructorCalendar->teacher_id  = $this->user->id;
+        $instructorCalendar->start_date  = $request->start_date ?? NULL;
+        $instructorCalendar->start_time  = $request->start_time ?? NULL;
+        $instructorCalendar->note  = $request->note ?? NULL;
+        $instructorCalendar->reminder  = 1;
+        $instructorCalendar->save();
 
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
 	}

@@ -18,6 +18,7 @@ return [
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
     'GRADING_EXAM' => 'Grading Exam',
+    'INSTRUCTOR_CALENDAR' => 'Instructor Calendar',
     'GRADING_EXAM_LIST' => 'Grading Exam List',
     'CATEGORY_COMPETITION' => 'Category Competition',
     'TESTIMONIAL'  =>  'Testimonial',

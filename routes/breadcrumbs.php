@@ -66,6 +66,16 @@ Breadcrumbs::for('admin_teaching_materials_crud', function ($trail, $title, $url
     $trail->parent('admin_teaching_materials');
     $trail->push($title, $url);
 });
+// INSTRUCTOR CALENDAR
+Breadcrumbs::for('admin_instructor_calendar', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.INSTRUCTOR_CALENDAR'), route('instructor-calendar.index'));
+});
+
+Breadcrumbs::for('admin_instructor_calendar_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_instructor_calendar');
+    $trail->push($title, $url);
+});
 // GRADE
 Breadcrumbs::for('admin_grade', function ($trail) {
     $trail->parent('admin_home');

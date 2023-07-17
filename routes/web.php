@@ -84,6 +84,8 @@ Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submi
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
 Route::get('instructor-profile', 'ProfileController@instructor')->name('instructor-profile');
+Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
+Route::post('instructor-profile-cal', 'ProfileController@cal_store')->name('instructor-profile.cal_update');
 Route::get('grading-overview', 'ProfileController@grading_overview')->name('grading-overview');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('allocation', 'ProfileController@allocation')->name('allocation');
@@ -94,7 +96,7 @@ Route::post('allocation/survey/{id?}', 'ProfileController@survey_store')->name('
 Route::post('allocation/test/{id?}', 'ProfileController@allocation_store')->name('allocation.update');
 Route::get('allocation/survey/{id?}', 'ProfileController@allocation_survey');
 Route::get('teaching-materials', 'ProfileController@teaching_materials')->name('teaching-materials');
-Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
+
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
 
 Route::post('external-profile', 'ExternalAccountController@external_store')->name('external-profile.update');
@@ -359,6 +361,11 @@ Route::group(['prefix' => 'admin'], function () {
     //TEACHING MATERIALS
     Route::get('teaching-materials/search', 'CMS\TeachingMaterialsController@search')->name('teaching-materials.search');
     Route::resource('teaching-materials', 'CMS\TeachingMaterialsController');
+
+    //INSTRUCTOR CALENDAR
+    Route::get('instructor-calendar/search', 'CMS\InstructorCalendarController@search')->name('instructor-calendar.search');
+    Route::resource('instructor-calendar', 'CMS\InstructorCalendarController');
+
 
 
     // RECRUITER
