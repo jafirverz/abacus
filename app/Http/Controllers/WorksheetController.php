@@ -94,8 +94,8 @@ class WorksheetController extends Controller
         $levelId = $request->levelId;
         $questionTypeId = $request->questionTypeId;
         $userId = Auth::user()->id;
-        $questTem = array(1,2,3,5,6);
-        $resultpage = array(1,2,5,6);
+        $questTem = array(1,2,3,4,5,6);
+        $resultpage = array(1,2,4,5,6);
         if(in_array($questionTypeId, $questTem)){
             $workshSub = new WorksheetSubmitted();
             $workshSub->worksheet_id = $worksheetId;

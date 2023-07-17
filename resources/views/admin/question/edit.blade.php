@@ -156,19 +156,22 @@
                                 @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $question->question_type==4)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(4) }}</label>
                                     @php
-                                        $json_question=json_decode($question->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
+                                        $json_question=\App\MiscQuestion::where('question_id', $question->id)->get();
+                                        foreach($json_question as $quest)
                                         {
 
                                     @endphp
 
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
-                                            <div class="col-md-6">
-                                                <textarea rows="5" cols="40" name="input_1[]">{{ $json_question->input_1[$i] }}</textarea>
+                                            <div class="col-md-5">
+                                                <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>
                                             </div>
-                                            <div class="col-md-6">
-                                                <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                            <div class="col-md-5">
+                                                <input class="form-control" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
                                             </div>
                                         </div>
                                         <div class="input-group-btn">
@@ -354,13 +357,15 @@
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
-            <div class="col-md-6">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
-
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Answer" type="text">
+            </div>
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>

@@ -24,7 +24,11 @@
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
-        <form action="post">
+        <form method="post" action="{{ route('answer.submit') }}">
+          @csrf
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
           <div class="box-1">
             <div class="xscrollbar">
               <table class="tb-2 tbtype-2">
@@ -32,12 +36,14 @@
                   <tr>
                     <th class="wcol-2"></th>
                     @php 
-                    $questionns = json_decode($questions->json_question);
-                    $count = count($questionns->input_1);
-                    for($i=1;$i<=$count;$i++){
+                    $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+                    $count = count($questionns);
+                    $i = 1;
+                    foreach($questionns as $question){
                     @endphp
                     <th class="text-center">{{ $i }}</th>
                     @php
+                    $i++;
                     }
                     @endphp
                     <th></th>
@@ -48,11 +54,11 @@
                     <tr>
                       <td></td>
                       @php 
-                  for($i=0;$i<$count;$i++){
+                    foreach($questionns as $question){
                     @endphp
                       <td>
                         @php
-                        $arrVal = explode(',', $questionns->input_1[$i]);
+                        $arrVal = explode(',', $question->question_1);
                         foreach($arrVal as $val){
                         @endphp
                         <div class="row sp-col-5 inrow-1">
@@ -74,12 +80,12 @@
                   <tr>
                     <td class="lb">Answer</td>
                     @php 
-                    for($i=0;$i<$count;$i++){
+                    foreach($questionns as $question){
                       @endphp
                     <td class="coltype">
                       <div class="row sp-col-5 inrow-1">
                         <div class="col-auto sp-col">$</div>
-                        <div class="col colanswer sp-col"><input class="form-control" type="number" /></div>
+                        <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
                       </div>
                     </td>
                     @php

@@ -150,12 +150,16 @@
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+                                        <div class="col-md-5">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
                                         </div>
                                     </div>
                                     <div class="input-group-btn">
@@ -255,13 +259,15 @@
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
-            <div class="col-md-6">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
-
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
