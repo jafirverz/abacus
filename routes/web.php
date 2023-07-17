@@ -62,6 +62,7 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/level/{slug?}', 'LevelController@index');
 
 Route::get('/worksheet/{worksheetId?}/qId/{qid?}/lId/{lId?}', 'WorksheetController@index');
+Route::post('/worksheet/result', 'WorksheetController@resultpage')->name('answer.submit');
 
 Route::get('/competition/{id?}', 'CompetitionController@index');
 

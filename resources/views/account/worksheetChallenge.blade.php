@@ -25,7 +25,11 @@
         <div class="timer-wrap">
           <div class="timer"><i class="icon-clock"></i> <strong>Timer: HH: MM: SS</strong></div>
         </div>
-        <form action="be-overview-challenge-details-submitted.html">
+        <form method="post" action="{{ route('answer.submit') }}">
+          @csrf
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
           <div class="box-1">
             <div class="note-3 mb-20">Sections 2 &amp; 3: Each question is worth 1 mark for each correct answer.</div>
             <div class="xscrollbar">
@@ -59,7 +63,7 @@
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" /></td>
+                    <td class="colanswer"><input class="form-control" name="answer[{{ $ques->id }}]" type="number" /></td>
                   </tr>
                   @php 
                   $i++;

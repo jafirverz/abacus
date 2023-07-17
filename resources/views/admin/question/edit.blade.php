@@ -101,10 +101,10 @@
                                                         <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks_old[]" placeholder="Marks" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="input-group-btn">
@@ -134,13 +134,13 @@
                                                         <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks_old[]" placeholder="Marks" type="text">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input class="form-control" required value="{{ $quest->block }}" name="blocks[]" placeholder="Block" type="text">
+                                                        <input class="form-control" required value="{{ $quest->block }}" name="blocks_old[]" placeholder="Block" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="input-group-btn">
