@@ -55,7 +55,10 @@
                         <div class="col-sm-6">
                           <ul class="list-1">
                             @foreach($worksheets as $worksheet)
-                            @if($worksheet->question_template_id == $questions->id)
+                            @php
+                            $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
+                            @endphp
+                            @if($worksheet->question_template_id == $questions->id && $checkQuestions)
                             <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
                             @endif
                             @endforeach
