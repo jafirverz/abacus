@@ -10,8 +10,10 @@
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <h1 class="title-3">Good Morning Teacher {{Auth::user()->name}},</h1>
+                @include('inc.messages')
                 <div class="box-1">
                     <h2 class="title-2">Announcements</h2>
+
                     <div class="accordion acctype mt-20">
                         @if(getAnnouncementsByTeacher(Auth::user()->id))
                         @php $i=0;@endphp
@@ -66,36 +68,58 @@
                         </div>
                     </div>
                     <div class="col-xl-5 sp-col order-xl-first">
+                        <form method="post" name="instructor" id="instructor" enctype="multipart/form-data" action="{{route('instructor-profile.cal_update')}}">
+                        @csrf
                         <div class="box-1">
                             <h2 class="title-2">My Calendar</h2>
                             <label class="lb-1">Full Name <span class="required">*</span></label>
-                            <input class="form-control" type="text" placeholder="e.g. Michelle Tan" />
+                            <input name="full_name" class="form-control" value="{{ old('full_name') }}" type="text" placeholder="e.g. Michelle Tan" />
+                                    @if ($errors->has('full_name'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('full_name') }}</strong>
+                                        </span>
+                                    @endif
                             <label class="lb-1">Date &amp; Time <span class="required">*</span></label>
                             <div class="row sp-col-10 break-424">
                                 <div class="col-6 sp-col">
                                     <div class="date-wrap">
                                         <i class="fa-solid fa-calendar-days ico"></i>
-                                        <input class="form-control" type="text" placeholder="Select Date" />
+                                        <input name="start_date" value="{{ old('start_date') }}" class="form-control" type="text" placeholder="Select Date" />
                                     </div>
+                                    @if ($errors->has('start_date'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('start_date') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="col-6 sp-col mt-474-10">
                                     <div class="time-wrap sp-col">
                                         <i class="icon-clock ico"></i>
-                                        <input class="form-control" type="text" placeholder="Select Time" />
+                                        <input name="start_time" value="{{ old('start_time') }}" class="form-control" type="text" placeholder="Select Time" />
+                                        @if ($errors->has('start_time'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('start_time') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <label class="lb-1">Note <span class="required">*</span></label>
-                            <textarea cols="30" rows="9" class="form-control" placeholder="What is your Note?"></textarea>
+                            <textarea cols="30" rows="9" name="note" class="form-control" placeholder="What is your Note?"></textarea>
+                            @if ($errors->has('note'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('note') }}</strong>
+                            </span>
+                            @endif
                             <div class="row mt-20">
                                 <div class="col-auto">Set Reminder ? <span class="required">*</span></div>
                                 <div class="col chooselist-1">
                                     <div class="radiotype">
-                                        <input id="yes" type="radio" name="reminder" checked />
+                                        <input id="yes" type="radio" value="1" name="reminder" checked />
                                         <label for="yes">Yes</label>
                                     </div>
                                     <div class="radiotype">
-                                        <input id="no" type="radio" name="reminder" />
+                                        <input id="no" type="radio" value="2" name="reminder" />
                                         <label for="no">No</label>
                                     </div>
                                 </div>
@@ -104,6 +128,7 @@
                                 <button class="btn-1" type="submit">Add <i class="fa-solid fa-arrow-right-long"></i></button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
