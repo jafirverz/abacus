@@ -171,6 +171,16 @@ if (!function_exists('getPageList')) {
         return $array_list;
     }
 
+
+    function getPaperType($id = null)
+    {
+        $array_list = ['1'  =>  'Test', '2'  =>  'Course'];
+        if ($id) {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
     function getDropdownPageList($array, $parent_page_id, $parent_id = 0, $indent = 0)
     {
         $data = '';

@@ -23,7 +23,9 @@
                                 <div class="form-group">
                                     <strong>Full Name</strong>: {{ $calendar->full_name ?? '' }}
                                 </div>
-
+                                <div class="form-group">
+                                    <strong>start_date</strong>: {{ $calendar->start_date ?? '' }}
+                                </div>
                                 <div class="form-group">
                                     <strong>Note</strong>: {{ $calendar->note ?? '' }}
                                 </div>

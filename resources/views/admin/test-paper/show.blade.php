@@ -22,7 +22,9 @@
                             <div class="form-group">
                                 <label for="template">Template</label>: {{ $paper->template->title }}
                             </div>
-
+                            <div class="form-group">
+                                <label for="paper_type">Paper Type</label>: {{ getPaperType($paper->paper_type) ?? '' }}
+                            </div>
                         </div>
                     </div>
                 </div>

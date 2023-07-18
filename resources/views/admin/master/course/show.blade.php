@@ -27,6 +27,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="title">Content</label>: {{ $course->content ?? '' }}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="title">Paper</label>: {{ $course->paper->title ?? '' }}
+                            </div>
+
+                            <div class="form-group">
                                 <label for="status">Status</label>: {{ getActiveStatus($course->status) }}
                             </div>
                         </div>

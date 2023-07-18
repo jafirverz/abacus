@@ -47,7 +47,34 @@
                                     @endif
                                 </div>
 
-
+                                <div class="form-group non-external">
+                                    <label for="content">Content</label>
+                                    <textarea name="content" class="form-control my-editor" id="" cols="30"
+                                        rows="10">{!! old('content') !!}</textarea>
+                                    @if ($errors->has('content'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('content') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="paper_id">Paper</label>
+                                    <select name="paper_id" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if ($papers)
+                                        @foreach ($papers as $item)
+                                        <option value="{{ $item->id }}" @if(old('paper_id')==$item->id)
+                                            selected
+                                            @endif>{{ $item->title }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('paper_id'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('paper_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
