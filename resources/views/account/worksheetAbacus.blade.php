@@ -23,8 +23,11 @@
 
         <h1 class="title-3">{{ $worksheet->title }}</h1>
         <div>{!! $worksheet->description !!}</div>
-        <form method="post" action="{{ url('standalone-page/result') }}">
+        <form method="post" action="{{ route('answer.submit') }}">
           @csrf
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
         <div class="row sp-col-20">
           <div class="col-xl-6 col-md-5 sp-col mt-30 order-md-last">
             <iframe src="{{ $questions->link }}" width="500px"></iframe>
