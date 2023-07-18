@@ -49,6 +49,16 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="">Abacus Link</label>
+                                    <input type="text" required name="link" class="form-control" value="{{ old('link') }}">
+                                    @if ($errors->has('link'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('link') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 
 
                             @if(isset($_GET['question-type']) && $_GET['question-type']==5)
@@ -164,6 +174,29 @@
                                     </div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+
+                            @elseif(isset($_GET['question-type']) && $_GET['question-type']==8)
+
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
+                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                        <div class="col-md-4">
+                                            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="blocks[]" placeholder="Block" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more8" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
                             @endif
 
@@ -305,7 +338,27 @@
     </div>
 </div>
 
-
+<div class="copy8" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="blocks[]" placeholder="Block" type="text">
+            </div>
+        </div>
+        <div class="input-group-btn">
+            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+    </div>
+</div>
 
 <script>
 
@@ -351,6 +404,10 @@ $(document).ready(function () {
 
     $(".add-more6").click(function(){
         var html = $(".copy6").html();
+        $(".after-add-more").after(html);
+    });
+    $(".add-more8").click(function(){
+        var html = $(".copy8").html();
         $(".after-add-more").after(html);
     });
 

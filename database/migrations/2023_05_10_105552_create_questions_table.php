@@ -19,6 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->foreign('worksheet_id')->references('id')->on('worksheets');
             $table->string('title')->nullable();
             $table->string('marks')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }
