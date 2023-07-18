@@ -21,6 +21,8 @@ class Course extends Model
         }
     }
 
+
+
     public function paper(){
         return $this->belongsTo('App\TestPaper', 'paper_id', 'id');
     }

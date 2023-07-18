@@ -71,7 +71,8 @@ Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
 
 Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name('feedback');
 Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')->name('feedback.submit');
-
+Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->name('my-course');
+Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 
 Route::get('/instructor-students', 'ProfileController@studentlist');
 Route::get('/instructor-competition', 'ProfileController@competition');

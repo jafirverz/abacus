@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Course;
+use App\TestPaper;
+use App\Level;
+use App\TestPaperDetail;
 use App\UserFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,5 +29,15 @@ class OnlineStudentController extends Controller
         $userfeedback->phone = Auth::user()->mobile;
         $userfeedback->save();
         return redirect()->route('feedback')->with('success', 'Submitted Successfully');
+    }
+
+    public function my_course(){
+        $level = Level::get();
+        return view('account.online-my-course', compact('level'));
+    }
+
+    public function detail_course($id){
+        $course = course::find($id);
+        return view('account.online-my-course-detail', compact('course'));
     }
 }

@@ -20,4 +20,10 @@ class Level extends Model
             return $query;
         }
     }
+
+
+    public function courses()
+    {
+        return $this->hasMany('App\Course', 'level_id', 'id');
+    }
 }
