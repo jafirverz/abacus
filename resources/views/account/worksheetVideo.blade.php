@@ -22,7 +22,7 @@
           {{ $worksheet->description }}
         </div>
         <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
+          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <form method="post" action="{{ route('answer.submit') }}">
           @csrf
@@ -31,8 +31,12 @@
           <input type="hidden" name="levelId" value="{{ $level->id }}">
           <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
           @php 
-          
-          $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          if(isset($_GET['s']) && $_GET['s'] == 1){
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
+          }else{
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          }
+          //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
           //$count = count($questionns->input_1);
           $k=0;
           $i = 1;
