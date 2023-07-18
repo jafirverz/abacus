@@ -8,7 +8,7 @@
         </a>
       </li>
       <li>
-        <a href="be-online-student-dashboard-courses.html">
+        <a href="{{ url('online-student/my-course')}}">
           <span><img src="{{ asset('images/tempt/ico-courses.png') }}" alt="Courses icon" /></span>
           <strong>My Courses</strong>
         </a>
