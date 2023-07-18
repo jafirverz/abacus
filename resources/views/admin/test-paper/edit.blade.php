@@ -49,7 +49,22 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="paper_type">Paper Type</label>
+                                    <select disabled name="paper_type" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if(getPaperType())
+                                        @foreach (getPaperType() as $key => $item)
+                                            <option value="{{ $key }}" @if(old('paper_type', $paper->paper_type)==$key) selected  @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('paper_type'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('paper_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>

@@ -64,6 +64,7 @@
                                             </th>
                                             <th>Action</th>
                                             <th>Title</th>
+                                            <th>Type</th>
                                             <th>Question Template</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -91,6 +92,7 @@
                                                         data-toggle="tooltip" data-original-title="List"><i class="fas fa-bars"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
+                                            <td>{{ getPaperType($item->paper_type) ?? '' }}</td>
                                             <td>{{ $item->template->title }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>

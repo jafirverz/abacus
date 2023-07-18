@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\Course;
+use App\TestPaper;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,8 @@ class CourseController extends Controller
     {
         $title = $this->title;
         $levels = Level::get();
-        return view('admin.master.course.create', compact('title','levels'));
+        $papers = TestPaper::orderBy('id','desc')->get();
+        return view('admin.master.course.create', compact('title','levels','papers'));
     }
 
     /**
@@ -60,12 +62,16 @@ class CourseController extends Controller
     {
         $request->validate([
             'level'  =>  'required',
+            'content'  =>  'required',
+            'paper_id'  =>  'required',
             'title'  =>  'required|unique:courses,title|max:191',
         ]);
 
         $course = new Course();
         $course->level_id = $request->level;
         $course->title = $request->title;
+        $course->paper_id = $request->paper_id;
+        $course->content = $request->content;
         $course->status = $request->status;
         $course->save();
 
@@ -97,7 +103,8 @@ class CourseController extends Controller
         $title = $this->title;
         $course = Course::findorfail($id);
         $levels = Level::get();
-        return view('admin.master.course.edit', compact('title', 'course', 'levels'));
+        $papers = TestPaper::orderBy('id','desc')->get();
+        return view('admin.master.course.edit', compact('title', 'course', 'levels','papers'));
     }
 
     /**
@@ -111,12 +118,16 @@ class CourseController extends Controller
     {
         $request->validate([
             'level'  =>  'required',
+            'content'  =>  'required',
+            'paper_id'  =>  'required',
             'title'  =>  'required|unique:courses,title,'.$id.',id|max:191',
         ]);
 
         $course = Course::findorfail($id);
         $course->level_id = $request->level;
         $course->title = $request->title;
+        $course->paper_id = $request->paper_id;
+        $course->content = $request->content;
         $course->status = $request->status;
         $course->save();
 
@@ -145,7 +156,7 @@ class CourseController extends Controller
         if ($search_term) {
             $course->appends('search', $search_term);
         }
-
-        return view('admin.master.course.index', compact('title', 'course'));
+        $papers = TestPaper::orderBy('id','desc')->get();
+        return view('admin.master.course.index', compact('title', 'course','papers'));
     }
 }

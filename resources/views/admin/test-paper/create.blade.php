@@ -30,14 +30,30 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="paper_type">Paper Type</label>
+                                    <select  class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                        <option value="">-- Select --</option>
+                                        @if(getPaperType())
+                                        @foreach (getPaperType() as $key => $item)
+                                            <option  value="?paper-type={{ $key }}" @if(old('paper_type')==$key) selected @elseif(isset($_GET['paper-type']) && $key==$_GET['paper-type']) selected @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    <input type="hidden" name="paper_type" value=" @if(isset($_GET['paper-type'])) {{ $_GET['paper-type'] }} @endif">
+                                    @if ($errors->has('paper_type'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('paper_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="question_template_id">Question Template</label>
                                     <select name="question_template_id" class="form-control">
                                         <option value="">-- Select --</option>
                                         @if ($questions)
                                             @foreach ($questions as $key=>$item)
-                                            <option value="{{ $item->id }}" @if(old('question_template_id')==$item->id)
+                                            <option @if(isset($_GET['paper-type']) && $_GET['paper-type']==1 && in_array($item->id,[1,2])) disabled @endif value="{{ $item->id }}" @if(old('question_template_id')==$item->id)
                                                 selected
                                                 @endif>{{ $item->title }}</option>
                                             @endforeach
@@ -50,6 +66,8 @@
                                     </span>
                                     @endif
                                 </div>
+
+
 
 
                             </div>

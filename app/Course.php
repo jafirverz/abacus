@@ -20,4 +20,8 @@ class Course extends Model
             return $query;
         }
     }
+
+    public function paper(){
+        return $this->belongsTo('App\TestPaper', 'paper_id', 'id');
+    }
 }
