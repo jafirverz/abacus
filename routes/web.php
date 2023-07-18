@@ -62,6 +62,7 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('/level/{slug?}', 'LevelController@index');
 
 Route::get('/worksheet/{worksheetId?}/qId/{qid?}/lId/{lId?}', 'WorksheetController@index');
+Route::post('/worksheet/result', 'WorksheetController@resultpage')->name('answer.submit');
 
 Route::get('/competition/{id?}', 'CompetitionController@index');
 
@@ -79,6 +80,13 @@ Route::get('/instructor-competition', 'ProfileController@competition');
 Route::get('/survey-form', 'SurveyController@index');
 
 Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');
+
+
+Route::get('/standalone-page', 'StandalonePageController@index');
+
+//Route::post('/standalone-page', 'StandalonePageController@checkanswer');
+
+Route::post('/standalone-page/result', 'StandalonePageController@result');
 
 // ************ ACCOUNT/PROFILE *******************/
 
@@ -259,6 +267,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
     Route::resource('worksheet', 'CMS\WorksheetController');
 
+
+    // LESSONS MASTER
+    Route::get('lessons/search', 'CMS\LessonManagementController@search')->name('lessons.search');
+    Route::resource('lessons', 'CMS\LessonManagementController');
+
+
+    // LESSONS QUESTIONS MASTER
+    Route::get('lesson-questions/search', 'CMS\LessonQuestionManagementController@search')->name('lesson-questions.search');
+    Route::resource('lesson-questions', 'CMS\LessonQuestionManagementController');
+
+
     // CATEGORY COMPETITION
     Route::get('category-competition/search', 'CMS\CategoryCompetitionController@search')->name('category-competition.search');
     Route::resource('category-competition', 'CMS\CategoryCompetitionController');
@@ -277,6 +296,21 @@ Route::group(['prefix' => 'admin'], function () {
     // COMPETITION QUESTIONS
     Route::get('comp-questions/search', 'CMS\CompetitionQuestionsController@search')->name('comp-questions.search');
     Route::resource('comp-questions', 'CMS\CompetitionQuestionsController');
+
+
+    // STANDALONE PAGE
+    Route::get('standalone/search', 'CMS\StandalonePageController@search')->name('standalone.search');
+    Route::resource('standalone', 'CMS\StandalonePageController');
+
+    Route::get('standalone/questions/{id?}', 'CMS\StandalonePageController@questionslist')->name('standalone.questions');
+    Route::get('standalone/questions/{id?}/add', 'CMS\StandalonePageController@questionsAdd')->name('standalone.questions.add');
+    Route::get('standalone/questions/{id?}/edit', 'CMS\StandalonePageController@questionsEdit')->name('standalone.questions.edit');
+    Route::post('standalone/questions/add', 'CMS\StandalonePageController@questionsStore')->name('standalone.questions.store');
+    Route::post('standalone/questions/{id?}/update', 'CMS\StandalonePageController@questionsUpdate')->name('standalone.questions.update');
+
+    Route::post('standalone/questions/{id?}/destroy', 'CMS\StandalonePageController@destroy')->name('standalone-questions.destroy');
+
+
 
     // TEST PAPER
     Route::get('test-paper/search', 'CMS\TestPaperController@search')->name('test-paper.search');

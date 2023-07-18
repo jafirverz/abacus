@@ -1,7 +1,7 @@
 <h3>My Dashboard</h3>
 <ul>
     <li class="active">
-        <a href="">
+        <a href="{{ url('/') }}">
             <span><img src="images/tempt/ico-profile.png" alt="Profile icon" /></span>
             <strong>My Profile</strong>
         </a>

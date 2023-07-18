@@ -20,4 +20,8 @@ class Worksheet extends Model
             return $query;
         }
     }
+
+    public function questions(){
+        return $this->hasMany('App\Question', 'worksheet_id', 'id');
+    }
 }

@@ -21,14 +21,23 @@
         <div class="box-1">
           {{ $worksheet->description }}
         </div>
+        <form method="post" action="{{ route('answer.submit') }}">
+          @csrf
         <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
+          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <div class="row grid-4">
-
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
           @php 
           $k=1;
-          $questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
+          if(isset($_GET['s']) && $_GET['s'] == 1){
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->inRandomOrder()->get();
+          }else{
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
+          }
+          //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
           foreach($questionns as $questionn){
           @endphp
             <div class="col-xl-4 col-sm-6">
@@ -50,7 +59,7 @@
                     </audio>
                   </div>
                   <div class="col sp-col">
-                    <input class="form-control" type="text" placeholder="Answer" />
+                    <input class="form-control" type="text" name="answer[{{ $question->id }}]" required placeholder="Answer" />
                   </div>
                 </div>
                 
@@ -69,6 +78,8 @@
     <div class="output-1">
       <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
     </div>
+  </form>
+
   </div>	
 </main>
 

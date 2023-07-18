@@ -21,25 +21,35 @@
         <div class="box-1">
           {{ $worksheet->description }}
         </div>
-        <form method="post" action="{{ route('answer.submit') }}">
-          @csrf
-          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
-          <input type="hidden" name="levelId" value="{{ $level->id }}">
-          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
+       
         <div class="row grid-3">
           @php 
+          $flag = 0;
           $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
-          $k=0;
+          $k=1;
           //$count = count($questionns->input_1);
           foreach($questionns as $question){
+            $questionSub = \App\WorksheetQuestionSubmitted::where('misc_question_id', $question->id)->first();
+            if($questionSub->question_answer != $questionSub->user_answer){
+              $addClass = 'ans-wrong';
+              $flag = 1;
+            }else{
+              $addClass = 'ans-right';
+              $flag = 0;
+            }
           @endphp
           <div class="col-md-4 col-6 sp-col">
             <div class="item">
-              <div class="inner">
+              <div class="inner" style="height: 306.133px;">
+                <div class="number">Q{{ $k }}</div>
                 <figure>
                   <img src="{{ url('/upload-file/'.$question->question_1) }}" alt="" />
                 </figure>
-                <textarea class="form-control" cols="10" rows="3" placeholder="Answer" name="answer[{{ $question->id }}]"></textarea>
+                @if($flag == 1)
+                <div class="answer wrong">{{ $questionSub->user_answer }}</div>
+                @endif
+                <div class="answer">{{ $questionSub->question_answer }}</div>
+                
               </div>
             </div>
           </div>
@@ -52,8 +62,6 @@
         <div class="output-1">
           <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
         </div>
-      </form>
-
     </div>
   </div>	
   </div>

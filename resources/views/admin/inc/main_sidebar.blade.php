@@ -126,6 +126,16 @@
                     'url'   =>  'admin/announcement',
                 ],
                 [
+                    'title' =>  __('constant.LESSON_MANAGEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/lessons',
+                ],
+                [
+                    'title' =>  __('constant.LESSON_QUESTION_MANAGEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/lesson-questions',
+                ],
+                [
                     'title' =>  __('constant.SURVEY'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/surveys',
@@ -144,6 +154,11 @@
                     'title' =>  __('constant.OPTIONS_CHOICES'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/option-choices',
+                ],
+                [
+                    'title' =>  __('constant.STANDALONE_PAGE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/standalone',
                 ],
 
             ],

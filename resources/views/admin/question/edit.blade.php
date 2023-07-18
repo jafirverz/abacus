@@ -50,6 +50,20 @@
                                     </span>
                                     @endif
                                 </div>
+
+                                @if($question->question_type==8)
+                                    <div class="form-group">
+                                        <label for="">Abacus Link</label>
+                                        <input type="text" required name="link" class="form-control" value="{{ old('link', $question->link) }}">
+                                        @if ($errors->has('link'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('link') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                @endif
+
+
                                 @php 
                                 $_GET['question-type'] = '';
                                 @endphp
@@ -101,10 +115,10 @@
                                                         <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks_old[]" placeholder="Marks" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="input-group-btn">
@@ -134,13 +148,13 @@
                                                         <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                                        <input class="form-control" required value="{{ $quest->marks }}" name="marks_old[]" placeholder="Marks" type="text">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input class="form-control" required value="{{ $quest->block }}" name="blocks[]" placeholder="Block" type="text">
+                                                        <input class="form-control" required value="{{ $quest->block }}" name="blocks_old[]" placeholder="Block" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="input-group-btn">
@@ -156,19 +170,22 @@
                                 @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $question->question_type==4)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(4) }}</label>
                                     @php
-                                        $json_question=json_decode($question->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
+                                        $json_question=\App\MiscQuestion::where('question_id', $question->id)->get();
+                                        foreach($json_question as $quest)
                                         {
 
                                     @endphp
 
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
-                                            <div class="col-md-6">
-                                                <textarea rows="5" cols="40" name="input_1[]">{{ $json_question->input_1[$i] }}</textarea>
+                                            <div class="col-md-5">
+                                                <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>
                                             </div>
-                                            <div class="col-md-6">
-                                                <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                            <div class="col-md-5">
+                                                <input class="form-control" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
                                             </div>
                                         </div>
                                         <div class="input-group-btn">
@@ -262,6 +279,41 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more5" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+
+
+                                @elseif((isset($_GET['question-type']) && $_GET['question-type']==8) || $question->question_type==8)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(8) }}</label>
+                                    @php
+                                        $json_question=\App\MiscQuestion::where('question_id', $question->id)->get();
+                                        foreach($json_question as $quest)
+                                        {
+
+                                    @endphp
+
+                                    <div class="form-group">
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-4">
+                                                <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $quest->block }}" name="blocks[]" placeholder="Block" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                    @php } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more8" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
                                 @endif
 
 
@@ -354,13 +406,15 @@
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
-            <div class="col-md-6">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
-
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -428,6 +482,28 @@
     </div>
 </div>
 
+<div class="copy8" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="blocks[]" placeholder="Block" type="text">
+            </div>
+        </div>
+        <div class="input-group-btn">
+            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+    </div>
+</div>
+
 <script>
 
     $(document).ready(function () {
@@ -479,6 +555,11 @@
 
         $(".add-more5").click(function(){
             var html = $(".copy5").html();
+            $(".after-add-more").after(html);
+        });
+
+        $(".add-more8").click(function(){
+            var html = $(".copy8").html();
             $(".after-add-more").after(html);
         });
 

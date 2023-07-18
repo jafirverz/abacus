@@ -22,12 +22,21 @@
           {{ $worksheet->description }}
         </div>
         <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
+          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
+        <form method="post" action="{{ route('answer.submit') }}">
+          @csrf
         <div class="row grid-5">
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
           @php 
-          
-          $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          if(isset($_GET['s']) && $_GET['s'] == 1){
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
+          }else{
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          }
+          //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
           //$count = count($questionns->input_1);
           $k=0;
           $i = 1;
@@ -43,7 +52,7 @@
                 </video>
                 <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$question->question_1) }}"><i class="fa-solid fa-play"></i></a>
               </div>
-              <textarea class="form-control" rows="3" cols="30" placeholder="Answer"></textarea>
+              <textarea class="form-control" rows="3" cols="30" name="answer[{{ $question->id }}]" placeholder="Answer"></textarea>
             </div>
           </div>
           @php
@@ -57,6 +66,8 @@
         <div class="output-1">
           <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
         </div>
+      </form>
+
       </div>
     </div>
   </div>	
