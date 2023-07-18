@@ -19,7 +19,7 @@ class LevelController extends Controller
             $levelDescription = $checkSlug->description;
             $levelTopics = LevelTopic::where('level_id', $levelId)->pluck('worksheet_id')->toArray();
             $worksheetsQuestionTemplate = Worksheet::whereIn('id', $levelTopics)->pluck('question_template_id')->toArray();
-            $worksheets = Worksheet::whereIn('id', $levelTopics)->get();
+            $worksheets = Worksheet::whereHas('questions')->whereIn('id', $levelTopics)->get();
             $qestionTemplate = QuestionTemplate::whereIn('id', $worksheetsQuestionTemplate)->get();
             return view('account.level_details', compact("qestionTemplate", 'checkSlug', 'worksheets'));
         }else{
