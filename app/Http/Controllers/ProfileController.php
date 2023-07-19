@@ -15,7 +15,9 @@ use App\Survey;
 use App\User;
 use App\Allocation;
 use App\Admin;
+use App\CategoryCompetition;
 use App\Competition;
+use App\CompetitionCategory;
 use App\CompetitionStudent;
 use App\Country;
 use App\UserProfileUpdate;
@@ -211,6 +213,31 @@ class ProfileController extends Controller
 		//dd($user);
 
 		return view('account.grading-overview', compact("page", "gradingExam","gradingExamList"));
+	}
+
+    public function competition_overview()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+		$page = get_page_by_slug($slug);
+		if (!$page) {
+			return abort(404);
+		}
+
+        //$competition = Competition::find($id);
+        //$competitionCategory = CompetitionCategory::get();
+        $userType = array(1,2,3,4);
+        //$students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
+        //$categoryCompetition = CategoryCompetition::where('competition_id', $id)->pluck('category_id')->toArray();
+        $competetion = Competition::join('competition_students','competition_students.competition_controller_id','competition_controllers.id')->select('competition_controllers.*')->where('competition_students.user_id', $user->id)->first();
+
+		//dd($competetion);
+
+		return view('account.competition-overview', compact("page", 'competetion'));
 	}
 
 
