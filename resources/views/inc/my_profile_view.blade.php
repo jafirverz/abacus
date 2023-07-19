@@ -50,7 +50,7 @@
                         <h3>Competition</h3>
                         <div class="gactions">
                             @php
-                            if($competition){
+                            if(isset($competition) && !empty($competition)){
                                 $competitionId = $competition->id;
                                 $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->first();
                                 if($compStu){
@@ -59,7 +59,7 @@
                                     $url = '0';
                                 }
                             }else{
-                                $url = '1';
+                                $url = '0';
                             }
                             @endphp
                             @if(!empty($url))

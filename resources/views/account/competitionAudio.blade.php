@@ -18,21 +18,23 @@
           <li><a href="{{ url('') }}">Competition</a></li>
           {{--  <li><strong>{{ $worksheet->title }}</strong></li> --}}
         </ul>
-        <div class="box-1">
-          {{-- $worksheet->description --}}
-        </div>
+        
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <div class="row grid-4">
+          @php 
+          $k=1;
+          @endphp
+          @foreach($questions as $question)
           <div class="col-xl-4 col-sm-6">
             <div class="inner">
               @php 
-              $k = 1;
+              $questionnss = \App\CompetitionQuestions::where('competition_paper_id', $question->competition_paper_id)->where('block', $question->block)->get();
               @endphp
-              @foreach($questions as $question)
+              @foreach($questionnss as $question)
               <div class="row sp-col-10 grow">
-                <div class="col-auto sp-col"><strong>Q1</strong></div>
+                <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
                 <div class="col-auto sp-col">
                   <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
                   <audio id="audio-{{ $k }}">
@@ -42,21 +44,22 @@
                   </audio>
                 </div>
                 <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
+                  <input class="form-control" type="text" name="answer[{{ $question->id }}]" placeholder="Answer" />
                 </div>
               </div>
               @php 
               $k++;
               @endphp
               @endforeach
+            </div>
+          </div>
+          @endforeach
+        </div>
 
-          
-        </div>
-        <div class="output-1">
-          <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-        </div>
-      </div>
+    <div class="output-1">
+      <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
     </div>
+
   </div>	
 </main>
 

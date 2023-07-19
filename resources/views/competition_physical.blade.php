@@ -109,13 +109,14 @@
                                                         
                                                         <div class="bxrow">
                                                             <div class="checkbxtype">
-                                                                <input type="checkbox" id="practice-7">
+                                                                <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
                                                                 <label><span>{{ $pape->title }}</span>
                                                                     <strong>${{ $pape->price ?? 0 }}</strong>
                                                                 </label>
                                                             </div>
                                                             @if(empty($pape->price))
                                                             <a class="lnk btn-2" href="{{ asset('upload-file/'.$pape->pdf_file) }}" target="_blank">Download</a>
+                                                            
                                                             @endif
                                                         </div>
                                                         @endforeach

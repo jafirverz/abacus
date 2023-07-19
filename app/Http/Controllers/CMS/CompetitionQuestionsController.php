@@ -93,6 +93,7 @@ class CompetitionQuestionsController extends Controller
                     $storQues->symbol = 'listening';
                     $storQues->answer = $request->input_2[$i];
                     $storQues->marks = $request->marks[$i];
+                    $storQues->block = $request->block[$i];
                     $storQues->save();
                     $i++;
                 }
@@ -210,9 +211,31 @@ class CompetitionQuestionsController extends Controller
                 $storQues->save();
             }
         }
-        elseif($question_template_id == 1)
+        elseif($question_template_id == 1 || $question_template_id == 2 || $question_template_id == 3)
         {
-
+            $input_1_old=$request->input_1_old;
+            if($request->input_1_old){
+                $oldInput = $request->input_1_old;
+                $countt = count($oldInput);
+                for($k=0; $k<$countt; $k++){
+                    $storQues = new CompetitionQuestions();
+                    $storQues->competition_paper_id = $competition_paper_id;
+                    $storQues->question_1 = $input_1_old[$k];
+                    if($question_template_id==1){
+                        $storQues->symbol = 'listening';
+                    }elseif($question_template_id==2){
+                        $storQues->symbol = 'video';
+                    }elseif($question_template_id==3){
+                        $storQues->symbol = 'number_question';
+                    }
+                    $storQues->answer = $request->input_2_old[$k];
+                    $storQues->marks = $request->marks_old[$k];
+                    if($question_template_id==1){
+                        $storQues->block = $request->block_old[$k];
+                    }
+                    $storQues->save();
+                }
+            }
             if ($request->hasfile('input_1')) {
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
@@ -223,9 +246,18 @@ class CompetitionQuestionsController extends Controller
                     $storQues = new CompetitionQuestions();
                     $storQues->competition_paper_id = $competition_paper_id;
                     $storQues->question_1 = $name;
-                    $storQues->symbol = 'listening';
+                    if($question_template_id==1){
+                        $storQues->symbol = 'listening';
+                    }elseif($question_template_id==2){
+                        $storQues->symbol = 'video';
+                    }elseif($question_template_id==3){
+                        $storQues->symbol = 'number_question';
+                    }
                     $storQues->answer = $request->input_2[$i];
                     $storQues->marks = $request->marks[$i];
+                    if($question_template_id==1){
+                        $storQues->block = $request->block[$i];
+                    }
                     $storQues->save();
                     $i++;
                 }
@@ -234,54 +266,7 @@ class CompetitionQuestionsController extends Controller
                 // $json['input_2']=$request->input_2;
             }
         }
-        elseif($question_template_id == 2)
-        {
-
-            if ($request->hasfile('input_1')) {
-                $i = 0;
-                foreach ($request->file('input_1') as $file) {
-
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    //$data[] = $name;
-                    $storQues = new CompetitionQuestions();
-                    $storQues->competition_paper_id = $competition_paper_id;
-                    $storQues->question_1 = $name;
-                    $storQues->symbol = 'video';
-                    $storQues->answer = $request->input_2[$i];
-                    $storQues->marks = $request->marks[$i];
-                    $storQues->save();
-                    $i++;
-                }
-
-                // $json['input_1']=$data;
-                // $json['input_2']=$request->input_2;
-            }
-        }
-        elseif($question_template_id == 3)
-        {
-            
-            if ($request->hasfile('input_1')) {
-                $i = 0;
-                foreach ($request->file('input_1') as $file) {
-
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    //$data[] = $name;
-                    $storQues = new CompetitionQuestions();
-                    $storQues->competition_paper_id = $competition_paper_id;
-                    $storQues->question_1 = $name;
-                    $storQues->symbol = 'number_question';
-                    $storQues->answer = $request->input_2[$i];
-                    $storQues->marks = $request->marks[$i];
-                    $storQues->save();
-                    $i++;
-                }
-
-                // $json['input_1']=$data;
-                // $json['input_2']=$request->input_2;
-            }
-        }
+        
 
         return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
