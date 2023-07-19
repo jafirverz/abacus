@@ -42,7 +42,7 @@
                   </audio>
                 </div>
                 <div class="col sp-col">
-                  <input class="form-control" type="text" placeholder="Answer" />
+                  <input class="form-control" type="text" name="answer[{{ $question->id }}]" placeholder="Answer" />
                 </div>
               </div>
               @php 
