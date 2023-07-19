@@ -1,0 +1,43 @@
+.breadcrumb { background: none; @include bd-radius(0); color: #A4A07A; font-size: 15px; font-weight: 500; letter-spacing: normal; line-height: 1.4; margin-bottom: 30px;
+	&-wrap { background: #F2F2F2; padding-bottom: 15px; padding-top: 15px; }
+	a {	color: #A4A07A !important; 
+		&:hover { color: #000 !important; }
+	}	
+	li { margin-bottom: 5px; padding-right: 10px;
+		& + li {
+			&:before { content: "\f054"; @include fonticon(900,12px); padding-right: 10px; }
+		}
+	}
+	&.bctype { font-size: 33px; font-weight: 700; line-height: 1.1;		
+		@include maxmedia(1899px) {	
+			font-size: 30px;
+		}
+		@include maxmedia(1699px) {	
+			font-size: 24px;
+		}
+		@include maxmedia(1199px) {	
+			font-size: 20px;
+		}
+		@include maxmedia(767px) {	
+			font-size: 16px;
+		}
+		li { 
+			@include maxmedia(767px) {	
+				padding-right: 5px;
+			}
+			& + li {
+				&:before { font-size: 23px; 
+					@include maxmedia(1699px) {	
+						font-size: 18px;
+					}
+					@include maxmedia(1199px) {	
+						font-size: 14px;
+					}
+					@include maxmedia(767px) {	
+						font-size: 12px; padding-right: 5px;
+					}
+				}
+			}
+		}		
+	}
+}

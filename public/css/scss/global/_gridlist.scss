@@ -132,7 +132,28 @@
 	&-3 { justify-content: center;
 		figure { align-items: center; background: $white; @include flexwrap; justify-content: center; margin: 0 0 15px; text-align: center; }
 		.form-control { @include bd-radius (5px); }
-		.inner { background: #F8F8F8; @include bd-radius (10px); margin-top: 20px; padding: 15px; }
+		.number { color: #1E1E1E; font-weight: 700; margin-bottom: 10px; }
+		.answer { background: #fff; font-size: 20px; font-weight: 700; margin-top: 10px; padding: 10px; text-align: center; }
+		.inner { background: #F8F8F8; border: #fff solid 1px; @include bd-radius (10px); margin-top: 20px; padding: 15px;
+			&.ans { 
+				&-right, &-wrong { 
+					.number { padding-right: 40px; position: relative; 
+						&:before { @include fonticon(900,32px); position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+					}
+				}				
+				&-right { border-color: #07C426; 
+					.number:before { color: #07C426; content: "\f058"; }
+				}
+				&-wrong { border-color: #ff0000; 
+					.number:before { color: #ff0000; content: "\f057"; }
+					.wrong { background: #f1f1f1; position: relative;
+						&:after, &:before { background: #f00; content: ""; height: 1px; left: 50%; margin-left: -20px; position: absolute; top: 24px; width: 40px; }
+						&:before { transform: rotate(45deg); }
+						&:after { transform: rotate(-45deg); }
+					}
+				}
+			}
+		}
 		.sp-col {			
 			@include minmedia(1500px) {
 				width: 20%;
