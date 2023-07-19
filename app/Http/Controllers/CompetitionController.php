@@ -27,7 +27,7 @@ class CompetitionController extends Controller
         $compPaper = CompetitionPaper::where('id', $id)->first();
         if($compPaper){
             if($compPaper->question_template_id == 1){
-                $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
+                $questions = CompetitionQuestions::where('competition_paper_id', $id)->groupBy('block')->get();
                 return view('account.competitionAudio', compact('questions'));
             }
             if($compPaper->question_template_id == 2){
