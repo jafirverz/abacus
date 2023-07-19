@@ -10,6 +10,7 @@ use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
 use App\TestPaper;
+use App\PaperCategory;
 use App\TestPaperDetail;
 use App\TestPaperQuestionDetail;
 use App\GradingListingDetail;
@@ -222,6 +223,17 @@ if (!function_exists('getPageList')) {
 
         }
         return $country_arr;
+    }
+
+    function get_category_paper_list($comprtetion_id,$category)
+    {
+        $list = PaperCategory::where('competition_id',$comprtetion_id)->where('category_id',$category)->get();
+        if($list)
+        {
+            return $list;
+        }
+
+           return null;
     }
 
     function getUserTypes($id = null)

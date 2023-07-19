@@ -27,4 +27,10 @@ class Competition extends Model
         return $this->hasMany('App\CompetitionStudent', 'competition_controller_id', 'id');
     }
 
+    public function compCate(){
+        return $this->hasMany('App\CategoryCompetition', 'competition_id', 'id');
+    }
+
+    
+
 }
