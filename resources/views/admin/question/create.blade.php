@@ -49,15 +49,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="">Abacus Link</label>
-                                    <input type="text" required name="link" class="form-control" value="{{ old('link') }}">
-                                    @if ($errors->has('link'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('link') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                
 
                                 
 
@@ -177,6 +169,15 @@
                                     </div>
 
                             @elseif(isset($_GET['question-type']) && $_GET['question-type']==8)
+                                    <div class="form-group">
+                                        <label for="">Abacus Link</label>
+                                        <input type="text" required name="link" class="form-control" value="{{ old('link') }}">
+                                        @if ($errors->has('link'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('link') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
