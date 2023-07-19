@@ -252,6 +252,7 @@ class CompetitionController extends Controller
         $competition->end_time_of_competition = $request->end_time_of_competition;
         $competition->description = $request->description;
         $competition->competition_type = $request->competition_type;
+        $competition->status = $request->status ?? null;
         $competition->save();
 
         $categoryCompetition = CategoryCompetition::where('competition_id', $id)->get();
