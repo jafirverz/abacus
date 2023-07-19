@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('comp-questions.update', $competitionPaper->id) }}" method="post">
+                        <form action="{{ route('comp-questions.update', $competitionPaper->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -73,14 +73,18 @@
                                 @foreach($compPaperQuestion as $questionss)
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <a href="{{ url('/') }}/upload-file/{{  $questionss->question_1 }}" target="_blank">{{ $questionss->question_1 }} </a> 
+                                        <div class="col-md-4">
+                                            <a href="{{ url('/') }}/upload-file/{{  $questionss->question_1 }}" target="_blank">{{ $questionss->question_1 }} </a>
+                                            <input class="form-control" required value="{{  $questionss->question_1 }}" name="input_1_old[]" placeholder="" type="hidden">
                                         </div>
-                                        <div class="col-md-5">
-                                            <input class="form-control" required value="{{  $questionss->answer }}" name="input_2[]" placeholder="Answer" type="text">
+                                        <div class="col-md-4">
+                                            <input class="form-control" required value="{{  $questionss->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                         </div>
                                         <div class="col-md-2">
-                                            <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                            <input class="form-control" required value="{{  $questionss->marks }}" name="marks_old[]" placeholder="Marks" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="{{  $questionss->block }}" name="block_old[]" placeholder="Block" type="text">
                                         </div>
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -337,14 +341,17 @@
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <input class="form-control" required name="input_1[]"  type="file">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
         </div>
         <div class="col-md-2">
             <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="block[]" placeholder="Block" type="text">
         </div>
        </div>
        <div class="input-group-btn">

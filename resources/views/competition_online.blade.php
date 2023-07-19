@@ -92,7 +92,6 @@
                                         <button class="accordion-button {{ $collaspse }}" type="button" data-bs-toggle="collapse" data-bs-target="#faq-{{ $i }}" aria-expanded="false" aria-controls="faq-{{ $i }}">{{ $catt->category_name}}</button>
                                     </h3>
 
-
                                     <div id="faq-{{ $i }}" class="accordion-collapse collapse {{ $show }}">
                                         <div class="accordion-body">
                                             <div class="row break-1500">
