@@ -23,7 +23,12 @@
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
-        <form action="post">
+        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
+          @csrf
+          <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
+          <input type="hidden" name="compId" value="{{ $compPaper->competition_controller_id }}">
+          <input type="hidden" name="questionTemp" value="{{ $compPaper->question_template_id }}">
+          <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
           <div class="box-1">
             <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
@@ -49,7 +54,7 @@
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" /></td>
+                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php 
                   $i++;
