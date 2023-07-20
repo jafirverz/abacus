@@ -287,6 +287,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('category-competition', 'CMS\CategoryCompetitionController');
 
 
+    // COMPETITION RESULTS
+    Route::get('results/search', 'CMS\CompetitionResultController@search')->name('results.search');
+    Route::resource('results', 'CMS\CompetitionResultController');
+    Route::get('results/competition/{id?}', 'CMS\CompetitionResultController@studentList')->name('results.competition');
+    Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
+    //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
+
+
     // COMPETITION
     Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');
     Route::resource('competition', 'CMS\CompetitionController');

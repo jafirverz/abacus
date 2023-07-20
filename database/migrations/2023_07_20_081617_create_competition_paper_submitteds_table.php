@@ -20,6 +20,7 @@ class CreateCompetitionPaperSubmittedsTable extends Migration
             $table->unsignedBigInteger('competition_paper_id')->nullable();
             $table->foreign('competition_paper_id')->references('id')->on('competition_papers');
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('paper_type')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('total_marks')->nullable();
             $table->string('user_marks')->nullable();

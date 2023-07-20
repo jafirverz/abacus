@@ -76,6 +76,7 @@ class CompetitionController extends Controller
             $workshSub->competition_id = $compId;
             $workshSub->competition_paper_id = $paperId;
             //$workshSub->question_template_id = $questionTypeId;
+            $workshSub->paper_type = $paperType;
             $workshSub->user_id = $userId;
             $workshSub->save();
             $totalMarks = 0;
