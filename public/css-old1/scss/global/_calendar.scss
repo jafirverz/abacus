@@ -1,0 +1,18 @@
+.fc {
+	&-toolbar-chunk {
+		h2 { color: #535353; display: inline-block; font-size: 26px; font-weight: 700; margin: 0 10px !important; vertical-align: middle; }
+	}
+	&-button { background: none !important; border: none !important; color: #707070 !important; font-size: 16px !important; line-height: 1 !important; padding: 0 !important; }
+	&-theme-standard { 
+		td, th { border: #A4A07A solid 1px !important; }
+		th { background: #A4A07A; padding-top: 5px !important; padding-bottom: 5px !important;
+			.fc-col-header-cell-cushion { color: #fff; font-size: 14px; text-decoration: none; }
+		}
+	}
+	.fc {
+		&-daygrid-day-number { color: #535353; font-size: 12px; font-weight: 700; text-decoration: none; }
+		&-h-event { background: #FFBA6B; border: none; @include bd-radius (10px); font-size: 10px; 
+			.fc-event-main { color: #535353; padding: 1px 3px; }
+		}		
+	}
+}

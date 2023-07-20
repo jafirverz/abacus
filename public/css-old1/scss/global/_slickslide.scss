@@ -1,0 +1,100 @@
+.slick-slider {
+    max-width: 100%;
+}
+
+.slick-dots {
+	font-size: 0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center
+}
+
+.slick-dots li,
+.slick-dots li button {
+    cursor: pointer
+}
+
+.slick-dots { font-size: 0;
+	li { display: inline-block; margin: 0 5px; 
+		button { background: $white !important; border: #B1B1B1 solid 2px !important; @include bd-radius(100%); display: block; height: 15px; line-height: 15px; margin: 5px auto; padding: 0; position: relative; width: 15px; @include transition(0.5s);
+		}
+		&:hover, &.slick-active {
+			button { background: #4D595F !important; border-color: #4D595F !important; opacity: 1; }
+		}
+	}
+}
+
+.slick-slider {
+    img {
+        display: inline-block;
+    }	
+}
+
+.slick-arrow, .slbtn-prev, .slbtn-next {
+    background: $white;
+    border: #E1E1E1 solid 1px;
+	box-shadow: rgba(0,0,0,0.05) 0 12px 16px;
+	@include bd-radius(100%);
+	color: #333333;
+    font-size: 0;
+	height: 60px;
+    line-height: 60px;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    z-index: 3;
+    text-align: center;
+    cursor: pointer;
+	width: 60px;
+	transform: translateY(-50%);
+	@include maxmedia(1299px) {			
+		height: 30px;
+		line-height: 30px;
+		width: 30px;
+	}
+	&:before { 
+		@include fonticon(900,18px);
+		@include maxmedia(1299px) {
+			font-size: 16px;
+		}
+	}
+	&:hover {
+		background: $blue;
+		border-color: $blue;
+		color: $white;
+	}
+    &.slick-disabled {
+		cursor: default;
+        opacity: 0.2;
+        &:hover {
+            opacity: 0.2;
+        }
+    }	
+}
+.slick-next, .slbtn-next {
+    right: 20px;
+	&:before { 
+		content: "\f061";
+	}
+	@include maxmedia(767px) {
+		right: 10px;
+	}
+}
+
+.slick-prev, .slbtn-prev {
+    left: 20px;
+	@include maxmedia(767px) {
+		left: 10px;
+	}
+	&:before {
+		content: "\f060";
+	}
+}
+
+.slbtn-prev, .slbtn-next { left: auto; margin-top: 0; position: relative; top: auto; transform: none; right: auto; }
+
+

@@ -1,0 +1,137 @@
+.box { 
+	&-1 { background: #F8F8F8; @include bd-radius (30px); margin-top: 20px; padding: 30px;
+		@include maxmedia(991px) {
+			@include bd-radius (20px); padding: 20px;
+		}
+		@include maxmedia(474px) {
+			padding: 15px;
+			.title-type { text-align: center; }
+		}
+		.form-control, .bootstrap-select>.dropdown-toggle { box-shadow: none !important; 
+			&.inptype { 
+				&-1, &-2 { background: #FBFBFB !important; box-shadow: rgba(0,0,0,0.07) 0 3px 6px !important; }		
+				&-2 { font-size: 20px; font-weight: 700; text-align: center; }
+			}
+		}
+		.form-control { 
+			&:focus {
+				background: #fff !important;
+			}
+		}
+		.date-wrap, .time-wrap { 
+			.form-control { 
+				&:focus {
+					background: none !important;
+				}
+			}
+		}
+	}
+	&-2 { border: #B6B6B6 solid 1px; @include bd-radius (15px); margin-bottom: 20px;
+		.bxrow { border-bottom: #BDBDBB dashed 1px; padding: 30px 190px 30px 20px; position: relative; 
+			@include maxmedia(574px) {
+				padding: 15px;
+			}
+			&:last-child { border-bottom: none; }
+			label { @include flexwrap; padding-left: 27px;
+				&:after, &:before { height: 18px; line-height: 15px; top: 2px; width: 18px; }
+				&:after { font-size: 13px; }
+				&:before { border-color: #333; @include bd-radius(100%); } 
+				span { flex: 0 0 auto; padding-right: 20px; width: 70%; }
+				strong { flex: 0 0 auto; font-weight: 700; width: 30%; }
+				@include maxmedia(640px) {
+					span { padding-right: 0; width: 100%; }
+					strong { margin-top: 5px; width: 100%; }
+				}
+			}
+			.btn-2 { min-width: 140px; padding-left: 10px; padding-right: 10px; }
+			.lnk { position: absolute; right: 20px; top: 50%; transform: translateY(-50%);				
+				@include maxmedia(574px) {
+					margin-left: 30px; margin-top: 10px; position: relative; right: auto; top: auto; transform: none;
+				}
+			}
+		}
+	}
+	&-3 { background: #fff; @include bd-radius (20px); box-shadow: rgba(0,0,0,0.1) 0 3px 15px; margin-bottom: 20px; padding: 30px;
+		@include maxmedia(991px) {
+			@include bd-radius (20px); padding: 20px;
+		}
+		@include maxmedia(474px) {
+			padding: 15px;
+		}
+		.txt-1 { display: inline-block; margin-right: 20px; }
+	}
+	&-4 { background: #B19258; @include bd-radius (30px); color: $white; margin-bottom: 20px; padding: 20px 30px; text-align: center;
+		@include maxmedia(991px) {
+			@include bd-radius (20px); padding: 20px;
+		}
+		@include maxmedia(474px) {
+			padding: 15px;
+		}
+		h4 { font-size: 18px; font-weight: 700; margin: 20px 0; }
+		p { margin: 20px 0; }
+	}
+	&-5, &-6 { background: #F8F8F8; @include bd-radius (30px); padding: 70px 100px;
+		@include maxmedia(991px) {
+			@include bd-radius (20px); padding: 20px;
+		}
+		@include maxmedia(474px) {
+			padding: 15px;
+			.title-type { text-align: center; }
+		}
+	}
+	&-6 { padding: 50px; 
+		@include maxmedia(1199px) {
+			background: none; padding: 0;
+		}
+		&-col {
+			@include maxmedia(1199px) {
+				background: #F8F8F8; @include bd-radius (20px); padding: 20px;
+			}			
+		}
+	}
+	&-msg { 
+		&-1 { padding-bottom: 50px; padding-top: 50px; text-align: center; 
+			h2 { font-size: 36px; font-weight: 700; margin: 0 0 30px;
+				@include maxmedia(574px) {
+					font-size: 32px;
+				}				 
+				@include maxmedia(474px) {
+					font-size: 28px;
+				}				 
+				@include maxmedia(320px) {
+					font-size: 21px;
+				}				 
+				strong { display: block; margin-top: 10px; }
+			}
+			h4 { font-size: 18px; font-weight: 700; margin: 0 0 20px;		 
+				@include maxmedia(574px) {
+					font-size: 16px;
+				}		
+			}
+		}
+		&-2 { background: #B19258; @include bd-radius (30px); color: $white; padding: 50px; text-align: center; 
+			@include maxmedia(991px) {
+				padding: 30px;
+			}	
+			h2 { font-size: 36px; font-weight: 700; margin: 0 0 30px;
+				@include maxmedia(574px) {
+					font-size: 32px;
+				}				 
+				@include maxmedia(474px) {
+					font-size: 28px;
+				}				 
+				@include maxmedia(320px) {
+					font-size: 21px;
+				}				 
+				strong { display: block; margin-top: 10px; }
+			}
+			h4 { font-size: 18px; font-weight: 700; margin: 0 0 5px;		 
+				@include maxmedia(574px) {
+					font-size: 16px;
+				}		
+			}
+			p { margin: 20px 0 0; }
+		}
+	}
+}
+		

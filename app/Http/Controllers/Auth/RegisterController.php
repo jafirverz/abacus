@@ -19,6 +19,7 @@ use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -99,7 +100,7 @@ class RegisterController extends Controller
 
 		$request->validate([
 				'name' => 'required|string',
-                'email' =>  'required|email|unique:users,email|max:191',
+                'email' =>  'required|email',
                 'password'  =>  'required|min:8',
                 'country_code' => 'required',
 				'mobile' => 'required|string',
@@ -107,6 +108,11 @@ class RegisterController extends Controller
                 'dob' => 'required',
                 'instructor' => 'required',
             ], $messages);
+
+        $usersCheck = User::where('email', $request->email)->first();
+        if($usersCheck->approve_status == 1 || $usersCheck->approve_status == 0){
+            throw ValidationException::withMessages(['email' => 'Email Id already exist']);
+        }
 
 //        if (!$responseData->success) {
 //            return redirect()->back()->withInput()->with('error', __('constant.CAPTCHA_ERROR'));

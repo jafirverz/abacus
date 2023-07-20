@@ -24,7 +24,12 @@
         <div class="timer-wrap">
           <div class="timer"><i class="icon-clock"></i> <strong>Timer: HH: MM: SS</strong></div>
         </div>
-        <form action="be-overview-challenge-details-submitted.html">
+        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
+          @csrf
+          <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
+          <input type="hidden" name="compId" value="{{ $compPaper->competition_controller_id }}">
+          <input type="hidden" name="questionTemp" value="{{ $compPaper->question_template_id }}">
+          <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
           <div class="box-1">
             <div class="note-3 mb-20">Sections 2 &amp; 3: Each question is worth 1 mark for each correct answer.</div>
             <div class="xscrollbar">
@@ -55,7 +60,7 @@
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" /></td>
+                    <td class="colanswer"><input class="form-control" type="number"  name="answer[{{ $ques->id }}]"/></td>
                   </tr>
                   @php 
                   $i++;

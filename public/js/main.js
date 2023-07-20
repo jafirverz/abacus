@@ -2,7 +2,7 @@ function respon() {
     var hfoot = parseInt($('.footer-container').outerHeight()),
         hhead = parseInt($('.header-container').outerHeight());
     $('.mm-page').css({ marginBottom: -hfoot });
-    $('.main-wrap').css({ paddingBottom: hfoot, paddingTop: hhead});
+    $('.main-wrap').css({ paddingBottom: hfoot, paddingTop: hhead});	
 }
 
 
@@ -23,7 +23,7 @@ function loadScroll(){
 		$(this).width(wThis);
 	});
 	thisScroll.mCustomScrollbar({
-		axis:"x"
+		axis:"x" 
 	});
 	var myTimeout;
 	$(window).on("resize",function() {
@@ -42,25 +42,25 @@ function loadScroll(){
 }
 
 
-$(document).ready(function() {
-
+$(document).ready(function() {	
+	
 	setTimeout(function() {
 		respon();
 	}, 500);
-
+	
 	$('.bg').each(function() {
 		var imgUrl1 = $(this).find('.bgimg').attr('src');
 		$(this).fixbg({ srcimg : imgUrl1});
     });
-
+	
 	$("input, textarea, select").on({ 'touchstart' : function() {
         zoomDisable();
     }});
 	$("input, textarea, select").on({ 'touchend' : function() {
         setTimeout(zoomEnable, 500);
     }});
-
-
+	
+	
 	$(window).scroll(function() {
 		var stickyTop = $(this).scrollTop();
 		//var hHeader = $(".header-container").outerHeight();
@@ -72,10 +72,10 @@ $(document).ready(function() {
 			$('.header-container').removeClass('fixhead');
 		}
 	});
-
+	
 	var dateInput  =  $('.date-wrap input');
 	dateInput.datetimepicker({
-		format: 'YYYY-MM-DD H:s',
+		format: 'DD/MM/YYYY',
 		widgetParent: 'body',
 		icons: {
 			time: 'far fa-clock',
@@ -89,7 +89,7 @@ $(document).ready(function() {
 			close: 'far fa-times-circle'
 		}
 	});
-	dateInput.on('dp.show', function(e){
+	dateInput.on('dp.show', function(e){ 
 		var selft  = $(e.currentTarget);
 		var selftCalandar = $("body > .bootstrap-datetimepicker-widget");
 		var offset = selft.offset();
@@ -107,7 +107,7 @@ $(document).ready(function() {
 		}
 		selftCalandar.css({"bottom": "auto", "right": "auto", "top": offsetTop, "left": offsetLeft});
 	});
-
+	
 	var timeInput  =  $('.time-wrap input');
 	timeInput.datetimepicker({
 		format: 'LT',
@@ -123,7 +123,7 @@ $(document).ready(function() {
 			close: 'far fa-times-circle'
 		}
 	});
-
+	
 	$(".toggle-password").click(function() {
 	  $(this).toggleClass("showeye");
 	  var input = $($(this).attr("toggle"));
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		input.attr("type", "password");
 	  }
 	});
-
+	
 	$("#uploadphoto").on('change',function(){
         var input = $(this)[0];
         if (input.files && input.files[0]) {
@@ -144,12 +144,12 @@ $(document).ready(function() {
             reader.readAsDataURL(input.files[0]);
         }
     });
-
+	
 	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 	  return new bootstrap.Tooltip(tooltipTriggerEl)
 	})
-
+	
 });
 
 
@@ -165,14 +165,15 @@ window.onload = new function() {
 		});
 		$('.grid-3').each(function () {
 			$(this).find('figure').matchHeight();
+			$(this).find('.inner').matchHeight();
 		});
     }, 500);
-
+	
 	loadScroll();
-
+	
 };
 
-$(window).resize(function() {
+$(window).resize(function() {  
 	setTimeout(function() {
 		respon();
 	}, 500);

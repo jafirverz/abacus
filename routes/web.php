@@ -67,6 +67,7 @@ Route::post('/worksheet/result', 'WorksheetController@resultpage')->name('answer
 Route::get('/competition/{id?}', 'CompetitionController@index');
 
 Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
+Route::post('/competition-paper/submit', 'CompetitionController@submitPaper')->name('competition.submit');
 
 
 Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name('feedback');
