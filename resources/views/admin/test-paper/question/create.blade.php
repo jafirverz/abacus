@@ -71,8 +71,11 @@
                                                 <option value="divide">Divide</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
                                         </div>
                                     </div>
                                     <div class="input-group-btn">
@@ -85,13 +88,17 @@
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
 
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <textarea class="form-control" required  name="input_1[]" placeholder="Variable 1" required></textarea>
                                     </div>
 
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
                                     </div>
                                 </div>
                                 <div class="input-group-btn">
@@ -103,10 +110,12 @@
                                         <input class="form-control" required value="" name="input_1[]"  type="file" placeholder="Upload File">
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <input class="form-control" required value="" name="answer[]"  type="text" placeholder="Answer">
                                     </div>
-
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+                                    </div>
                                 </div>
 
                                 <div class="input-group-btn">
@@ -148,8 +157,11 @@
                 <option value="divide">Divide</option>
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
         </div>
        </div>
        <div class="input-group-btn">
@@ -164,10 +176,12 @@
         <div class="col-md-6">
             <input class="form-control" required name="input_1[]"  type="file">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
         </div>
-
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+        </div>
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -178,16 +192,18 @@
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <textarea class="form-control" required value="" name="input_1[]" placeholder="Variable 1" required></textarea>
             </div>
 
 
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
             </div>
-
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            </div>
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -200,8 +216,11 @@
             <div class="col-md-6">
                 <input class="form-control" required value="" name="input_1[]"  type="file">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <input class="form-control" required value="" name="answer[]"  type="text" placeholder="Answer">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
             </div>
        </div>
        <div class="input-group-btn">
