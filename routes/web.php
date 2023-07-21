@@ -67,6 +67,7 @@ Route::post('/worksheet/result', 'WorksheetController@resultpage')->name('answer
 Route::get('/competition/{id?}', 'CompetitionController@index');
 
 Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
+Route::post('/competition-paper/submit', 'CompetitionController@submitPaper')->name('competition.submit');
 
 
 Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name('feedback');
@@ -285,6 +286,14 @@ Route::group(['prefix' => 'admin'], function () {
     // CATEGORY COMPETITION
     Route::get('category-competition/search', 'CMS\CategoryCompetitionController@search')->name('category-competition.search');
     Route::resource('category-competition', 'CMS\CategoryCompetitionController');
+
+
+    // COMPETITION RESULTS
+    Route::get('results/search', 'CMS\CompetitionResultController@search')->name('results.search');
+    Route::resource('results', 'CMS\CompetitionResultController');
+    Route::get('results/competition/{id?}', 'CMS\CompetitionResultController@studentList')->name('results.competition');
+    Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
+    //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
 
 
     // COMPETITION

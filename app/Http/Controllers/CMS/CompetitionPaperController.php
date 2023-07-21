@@ -82,7 +82,7 @@ class CompetitionPaperController extends Controller
             'questiontemplate'  =>  'required_if:competionT,1',
             'time'  =>  'required_if:competionT,1',
             'question_type'  =>  'required_if:competionT,1',
-            
+            'paper_type'  =>  'required',
         ], $messages);
 
         if ($request->hasfile('pdf_upload')) {
@@ -103,6 +103,7 @@ class CompetitionPaperController extends Controller
         $competitionPaper->price = $request->price;
         $competitionPaper->pdf_file = $name??null;
         $competitionPaper->type = $request->question_type;
+        $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->save();
 
@@ -176,6 +177,7 @@ class CompetitionPaperController extends Controller
 
         $messages = [
             'questiontemplate.required_if' => 'This field is required',
+            'paper_type.required_if' => 'This field is required',
         ];
         $request->validate([
             'title'  =>  'required',
@@ -186,7 +188,7 @@ class CompetitionPaperController extends Controller
             'questiontemplate'  =>  'required_if:competionT,1',
             'time'  =>  'required_if:competionT,1',
             'question_type'  =>  'required_if:competionT,1',
-            
+            'paper_type'  =>  'required',
         ], $messages);
 
         
@@ -197,6 +199,7 @@ class CompetitionPaperController extends Controller
         $competitionPaper->competition_controller_id = $request->competition;
         $competitionPaper->description = $request->description;
         $competitionPaper->time = $request->time;
+        $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->price = $request->price;
         if ($request->hasfile('pdf_upload')) {
             $file = $request->file('pdf_upload');

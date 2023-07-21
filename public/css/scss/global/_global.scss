@@ -153,9 +153,11 @@ p {
 	&-1 { box-shadow: #ddd 0 0 20px; }
 }
 	
-.date { padding-left: 20px; position: relative;
+.date, .dateinfo { padding-left: 20px; position: relative;
 	i { left: 0; position: absolute; top: 2px; }
 }
+
+.dateinfo i { font-size: 0.9em; top: 3px; }
 
 .fancybox-bg, .fancybox-button { background: rgba(0,0,0,0.7) !important; }
 .tooltip {

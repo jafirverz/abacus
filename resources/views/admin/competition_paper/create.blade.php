@@ -57,6 +57,20 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="form-group" >
+                                    <label for="title">Paper Type</label>
+                                    <select name="paper_type" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option value="practice" @if(old('paper_type') == 'practice') selected @endif>Practice Paper</option>
+                                        <option value="actual" @if(old('paper_type') == 'actual') selected @endif>Actual Paper</option>
+                                    </select>
+                                    @if ($errors->has('paper_type'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('paper_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 @php 
                                 if(isset($_GET['comp_id'])){
                                     $compId = $_GET['comp_id'];

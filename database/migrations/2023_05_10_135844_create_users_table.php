@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->smallInteger('gender')->nullable()->comment('1=>male, 2=>female');
             $table->smallInteger('mental_grade_id')->nullable();
             $table->smallInteger('abacus_grade_id')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('country_code_phone')->nullable();
             $table->string('mobile')->nullable();

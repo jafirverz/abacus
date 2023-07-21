@@ -54,13 +54,23 @@
                       <div class="row">	
                         <div class="col-sm-6">
                           <ul class="list-1">
-                            @foreach($worksheets as $worksheet)
-                            @php
-                            $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
+                            @php 
+                            $flag = 0;
                             @endphp
-                            @if($worksheet->question_template_id == $questions->id && $checkQuestions)
-                            <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
-                            @endif
+                            @foreach($worksheets as $worksheet)
+                              @php 
+                              if(!empty($worksheet->amount)){
+                                $flag = 1;
+                              }
+                              @endphp
+                              @if(empty($worksheet->amount))
+                                @php
+                                $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
+                                @endphp
+                                @if($worksheet->question_template_id == $questions->id && $checkQuestions)
+                                <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
+                                @endif
+                              @endif
                             @endforeach
                             
                           </ul>
@@ -68,24 +78,33 @@
                         
                       </div>
                     </div>
-                    <!-- <div class="col-xl-6 mt-1199-20">
+                    @if($flag == 1)
+                    <div class="col-xl-6 mt-1199-20">
                       <h4 class="title-5">Premium Contents</h4>
                       <div class="row">															
                         <div class="col-sm-6">
                           <ul class="list-1 disabled">
-                            <li>Listing Question: Worksheet Title 6</li>
-                            <li>Listing Question: Worksheet Title 7</li>
-                            <li>Listing Question: Worksheet Title 8</li>
+                            @foreach($worksheets as $worksheet)
+                              @if(!empty($worksheet->amount))
+                                @php
+                                $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
+                                @endphp
+                                @if($worksheet->question_template_id == $questions->id && $checkQuestions)
+                                  <li>{{ $worksheet->title }}</li>
+                                @endif
+                              @endif
+                            @endforeach
                           </ul>
                         </div>														
-                        <div class="col-sm-6">
+                        <!-- <div class="col-sm-6">
                           <ul class="list-1 disabled">
                             <li>Listing Question: Worksheet Title 9</li>
                             <li>Listing Question: Worksheet Title 10</li>
                           </ul>
-                        </div>
+                        </div> -->
                       </div>
-                    </div> -->
+                    </div>
+                    @endif
                   </div>
                  
                 </div>

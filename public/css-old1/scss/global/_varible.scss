@@ -1,0 +1,198 @@
+/* Verz HCM */
+
+$white: #fff;
+$black: #272727;
+$red: #EF3741;
+$blue: #253A97;
+$darkblue: #07175B;
+$green: #A4A07A;
+
+@mixin flexwrap {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+@mixin flexcol {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin resetlist {
+    list-style: none;
+	margin: 0;
+    padding: 0;
+}
+
+@mixin fonticon($fw, $fs) {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: $fw;
+    font-size: $fs;
+}
+@mixin fonttype($fs) {
+	font-family: 'Isadora', Arial, "sans-serif";
+    font-weight: 700;
+    font-size: $fs;
+}
+
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content
+    }
+    &:-moz-placeholder {
+        @content
+    }
+    &::-moz-placeholder {
+        @content
+    }
+    &:-ms-input-placeholder {
+        @content
+    }
+}
+
+@mixin placeholderfocus {
+    &:focus::-webkit-input-placeholder {
+        @content
+    }
+    &:focus:-moz-placeholder {
+        @content
+    }
+    &:focus::-moz-placeholder {
+        @content
+    }
+    &:focus:-ms-input-placeholder {
+        @content
+    }
+}
+
+@mixin transition($s) {
+    -webkit-transition: all $s ease;
+    -moz-transition: all $s ease;
+    -o-transition: all $s ease;
+    -ms-transition: all $s ease;
+    transition: all $s ease;
+}
+
+@mixin scale($x, $y) {
+    -webkit-transform: scale($x, $y);
+    -moz-transform: scale($x, $y);
+    -o-transform: scale($x, $y);
+    -ms-transform: scale($x, $y);
+    transform: scale($x, $y);
+}
+
+@mixin bd-radius($r) {
+    -webkit-border-radius: $r;
+    -moz-border-radius: $r;
+    -o-border-radius: $r;
+    -ms-border-radius: $r;
+    border-radius: $r;
+}
+
+@mixin widthflex($w) {
+    -ms-flex: 0 0 $w;
+    flex: 0 0 $w;
+    max-width: $w;
+}
+
+@mixin maxmedia($point) {
+    @media screen and (max-width: $point) {
+        @content;
+    }
+}
+
+@mixin minmedia($point) {
+    @media screen and (min-width: $point) {
+        @content;
+    }
+}
+
+@mixin paddingcol($pd) {
+    margin-left: -$pd !important;
+    margin-right: -$pd !important;
+    >.sp-col {
+        padding-left: $pd !important;
+        padding-right: $pd !important;
+    }
+}
+
+@mixin lgpaddingcol($pd) {
+    margin-left: -$pd !important;
+    margin-right: -$pd !important;
+    >.sp-col {
+        padding-left: $pd !important;
+        padding-right: $pd !important;
+    }
+    @include maxmedia (1199px) {
+        margin-left: calc(var(--bs-gutter-x)/ -2) !important;
+        margin-right: calc(var(--bs-gutter-x)/ -2) !important;
+        >.sp-col {
+            padding-left: calc(var(--bs-gutter-x)/ 2) !important;
+            padding-right: calc(var(--bs-gutter-x)/ 2) !important;
+        }
+    }
+}
+
+@mixin xlpaddingcol($pd) {
+    margin-left: -$pd !important;
+    margin-right: -$pd !important;
+    >.sp-col {
+        padding-left: $pd !important;
+        padding-right: $pd !important;
+    }
+    @include maxmedia (1799px) {
+        margin-left: calc(var(--bs-gutter-x)/ -2) !important;
+        margin-right: calc(var(--bs-gutter-x)/ -2) !important;
+        >.sp-col {
+            padding-left: calc(var(--bs-gutter-x)/ 2) !important;
+            padding-right: calc(var(--bs-gutter-x)/ 2) !important;
+        }
+    }
+}
+
+@mixin blockcol() {
+    display: block;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    >.sp-col {
+        display: block;
+        float: none;
+        flex: none;
+        max-width: none;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: auto !important;
+    }
+}
+
+@mixin scale($x, $y) {
+    -webkit-transform: scale($x, $y);
+    -moz-transform: scale($x, $y);
+    -o-transform: scale($x, $y);
+    -ms-transform: scale($x, $y);
+    transform: scale($x, $y);
+}
+
+@mixin translate($x, $y) {
+    -webkit-transform: translate($x, $y);
+    -moz-transform: translate($x, $y);
+    -o-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    transform: translate($x, $y);
+}
+
+@mixin transform($value) {
+    -webkit-transform: $value;
+    -moz-transform: $value;
+    -o-transform: $value;
+    -ms-transform: $value;
+    transform: $value;
+}

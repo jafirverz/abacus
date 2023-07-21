@@ -1,0 +1,37 @@
+
+.tab {
+	&-content {
+		>.tab-pane { display: block !important; height: 0; overflow: hidden; }
+		>.active { height: auto; overflow: visible; }
+	}	
+	&-inner { padding: 0;
+	}
+}
+
+.nav { 
+	&-tabs { border-bottom: none; @include flexwrap; @include resetlist; margin: 30px 0; justify-content: center; text-align: center; text-transform: capitalize; table-layout: fixed; width: 100%;
+		li { margin: 8px; min-width: 290px;
+			&:hover, &.active {
+				a { background: $blue; color: $white !important; } 
+			}
+			@include maxmedia(767px) {
+				min-width: 200px;
+			}
+			@include maxmedia(574px) {
+				min-width: 150px;
+			}
+			@include maxmedia(474px) {
+				min-width: 100px;
+			}
+			@include maxmedia(324px) {
+				min-width: 80px;
+			}
+		}
+		a { background: #EEEEEE; border: none; @include bd-radius (10px); color: #000 !important; display: block; font-size: 21px; font-weight: 500; letter-spacing: 0; line-height: 1.2; padding: 20px 10px; text-decoration: none; @include transition(0.5s);	
+			@include maxmedia(474px) {	
+				font-size: 16px; padding: 15px 10px; 
+			}
+		}
+	}
+}
+

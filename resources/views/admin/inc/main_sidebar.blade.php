@@ -26,6 +26,11 @@
             'menu_header'   =>  __('constant.COMPETITION'),
             'main_menu' =>  [
                 [
+                    'title' =>  __('constant.CATEGORY_COMPETITION'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/category-competition',
+                ],
+                [
                     'title' =>  __('constant.COMPETITION'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/competition',
@@ -39,6 +44,11 @@
                     'title' =>  __('Online Competition Questions'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/comp-questions',
+                ],
+                [
+                    'title' =>  __('constant.COMPETITION_RESULT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/results',
                 ],
             ],
         ],
@@ -110,11 +120,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question',
                 ],
-                [
-                    'title' =>  __('constant.CATEGORY_COMPETITION'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/category-competition',
-                ],
+                
                 [
                     'title' =>  __('constant.TEACHING_MATERIALS'),
                     'icon'  =>  '<i class="fas fa-check"></i>',

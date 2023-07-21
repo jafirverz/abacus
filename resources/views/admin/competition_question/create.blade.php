@@ -67,14 +67,17 @@
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <input class="form-control" required value="" name="input_1[]"  type="file">
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="block[]" placeholder="Block" type="text">
                                     </div>
 
                                 </div>
@@ -272,14 +275,17 @@
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <input class="form-control" required name="input_1[]"  type="file">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
         </div>
         <div class="col-md-2">
             <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="block[]" placeholder="Block" type="text">
         </div>
        </div>
        <div class="input-group-btn">

@@ -17,6 +17,7 @@ class CreateCompetitionPapersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('question_template_id')->nullable();
             $table->unsignedBigInteger('competition_controller_id')->nullable();
+            $table->string('paper_type')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('time')->nullable();

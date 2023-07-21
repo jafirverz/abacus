@@ -1,0 +1,31 @@
+.steps { @include flexwrap; @include resetlist; justify-content: center; margin-bottom: 30px; text-align: center;
+	@include maxmedia(574px) {
+		margin-bottom: 20px;
+	}
+	li { margin-bottom: 20px; padding: 0px 10%; position: relative;
+		@include maxmedia(374px) {
+			padding: 0px 5%;
+		}
+		&:before { border-top: #707070 dashed 1px; content: ""; left: 50%; position: absolute; top: 72px; width: 100%;			
+			@include maxmedia(574px) {
+				top: 45px;
+			}
+		}
+		span { background: $white; border: #707070 dashed 1px; @include bd-radius (100%); display: block; padding: 10px; position: relative;		
+			@include maxmedia(574px) {
+				padding: 5px;
+			}
+			img { @include bd-radius (100%); max-width: 144px;				
+				@include maxmedia(574px) {
+					max-width: 70px;
+				}
+			}
+		}
+		strong { color: #48420E; display: block; font-size: 23px; margin-top: 10px;
+			@include maxmedia(574px) {
+				font-size: 18px;
+			}
+		}
+		&:last-child:before { display: none; }
+	}
+}

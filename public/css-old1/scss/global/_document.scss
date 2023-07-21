@@ -1,0 +1,23 @@
+.document { 
+	figure, p, ol, ul { margin: 0 0 20px; }
+	h1, h2, h3, h4, h5 { font-weight: 700; margin: 35px 0 20px; }
+	h1, h2 { line-height: 1.1; }
+	h1 { font-size: 46px; }
+	h2 { font-size: 36px; margin-top: 50px;	} 
+	h3 { font-size: 26px; }
+	h4 { font-size: 19px; font-weight: 500; }
+	h5 { font-size: 16px; line-height: 1.6; }	
+	li { margin-bottom: 15px; }
+	ol ol, ul ul, ol ul, ul ol { margin-top: 15px; }
+	ol { padding-left: 10px;
+		ol { padding-left: 30px; }
+	}
+	ul { @include resetlist; margin-bottom: 20px; margin-left: 0px; 		
+		li { margin-bottom: 7px; padding-left: 20px; position: relative; 
+			&:before { background: #333; @include bd-radius(100%); content: ""; height: 6px; left: 0; position: absolute; top: 7px; width: 6px; }
+		}
+		ul { margin-left: 20px; }
+	}
+	strong { font-weight: 500; }
+	iframe { width: 100%; }
+}
