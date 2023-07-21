@@ -8,7 +8,7 @@ use App\Page;
 use App\Slider;
 use App\GradingExam;
 use App\GradingPaper;
-use App\GradingExamList;
+use App\GradingPaperQuestion;
 use App\TestPaper;
 use App\PaperCategory;
 use App\TestPaperDetail;
@@ -473,6 +473,15 @@ if (!function_exists('getPageList')) {
     function getAllQuestions($id)
     {
         $result = TestPaperQuestionDetail::where('test_paper_question_id',$id)->get();
+        if ($result) {
+            return $result;
+        }
+         return NULL;
+    }
+
+    function getPaperQuestions($id)
+    {
+        $result = GradingPaperQuestion::where('grading_paper_question_id',$id)->get();
         if ($result) {
             return $result;
         }

@@ -82,6 +82,7 @@ class TestPaperQuestionController extends Controller
                 $testPaperQuestionDetail->input_2   = $request->input_2[$k];
                 $testPaperQuestionDetail->input_3   = $request->input_3[$k];
                 $testPaperQuestionDetail->answer   = $request->answer[$k];
+                $testPaperQuestionDetail->marks   = $request->marks[$k];
                 $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
                 $testPaperQuestionDetail->save();
             }
@@ -94,6 +95,7 @@ class TestPaperQuestionController extends Controller
                 $testPaperQuestionDetail->input_1   = $request->input_1[$k];
                 $testPaperQuestionDetail->answer   = $request->answer[$k];
                 $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
+                $testPaperQuestionDetail->marks   = $request->marks[$k];
                 $testPaperQuestionDetail->save();
             }
 
@@ -114,6 +116,7 @@ class TestPaperQuestionController extends Controller
                     $testPaperQuestionDetail->input_1 = uploadPicture($file, 'upload-file');
                     $testPaperQuestionDetail->test_paper_question_id   = $testPaperDetail->id;
                     $testPaperQuestionDetail->answer   = $request->answer[$i];
+                    $testPaperQuestionDetail->marks   = $request->marks[$i];
                     $testPaperQuestionDetail->save();
 
                     }
@@ -136,6 +139,7 @@ class TestPaperQuestionController extends Controller
                 $testPaperQuestionDetail->input_1   = $request->input_1[$k];
                 $testPaperQuestionDetail->input_2   = $request->input_2[$k];
                 $testPaperQuestionDetail->answer   = $request->answer[$k];
+                $testPaperQuestionDetail->marks   = $request->marks[$k];
                 $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
                 $testPaperQuestionDetail->save();
             }
@@ -210,6 +214,7 @@ class TestPaperQuestionController extends Controller
                                     $testPaperQuestionDetail->input_2   = $request->old_input_2[$m];
                                     $testPaperQuestionDetail->input_3   = $request->old_input_3[$m];
                                     $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
                                     $testPaperQuestionDetail->save();
                                 }
                                 else
@@ -233,6 +238,7 @@ class TestPaperQuestionController extends Controller
                                 $testPaperQuestionDetail->input_2   = $request->input_2[$z];
                                 $testPaperQuestionDetail->input_3   = $request->input_3[$z];
                                 $testPaperQuestionDetail->answer   = $request->answer[$z];
+                                $testPaperQuestionDetail->marks   = $request->marks[$z];
                                 $testPaperQuestionDetail->test_paper_question_id    = $id;
                                 $testPaperQuestionDetail->save();
                             }
@@ -260,6 +266,7 @@ class TestPaperQuestionController extends Controller
                                 {
                                     $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
                                     $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
                                     $testPaperQuestionDetail->save();
                                 }
                                 else
@@ -281,6 +288,7 @@ class TestPaperQuestionController extends Controller
                             $testPaperQuestionDetail->input_1 = uploadPicture($file, 'upload-file');
                             $testPaperQuestionDetail->test_paper_question_id   = $testPaperDetail->id;
                             $testPaperQuestionDetail->answer   = $request->answer[$n];
+                            $testPaperQuestionDetail->marks   = $request->marks[$n];
                             $testPaperQuestionDetail->save();
 
                             $n++;
@@ -308,6 +316,8 @@ class TestPaperQuestionController extends Controller
                                     $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
                                     $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
                                     $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
+                                    
                                     $testPaperQuestionDetail->save();
                                 }
                                 else
@@ -329,6 +339,7 @@ class TestPaperQuestionController extends Controller
                                 $testPaperQuestionDetail = new TestPaperQuestionDetail();
                                 $testPaperQuestionDetail->input_1   = $request->input_1[$z];
                                 $testPaperQuestionDetail->answer   = $request->answer[$z];
+                                $testPaperQuestionDetail->marks   = $request->marks[$z];
                                 $testPaperQuestionDetail->test_paper_question_id    = $id;
                                 $testPaperQuestionDetail->save();
                             }
@@ -356,6 +367,7 @@ class TestPaperQuestionController extends Controller
                                 $testPaperQuestionDetail->title   = $request->old_input_1[$m];
                                 $testPaperQuestionDetail->price   = $request->old_input_2[$m];
                                 $testPaperQuestionDetail->paper_id   = $request->old_input_3[$m];
+                                $testPaperQuestionDetail->marks   = $request->old_marks[$m];
                                 $testPaperQuestionDetail->save();
                             }
                             else
@@ -381,6 +393,7 @@ class TestPaperQuestionController extends Controller
                                 $testPaperQuestionDetail->paper_id = $request->input_3[$z];
                                 $testPaperQuestionDetail->title   = $request->input_1[$z];
                                 $testPaperQuestionDetail->price   = $request->input_2[$z];
+                                $testPaperQuestionDetail->marks   = $request->marks[$z];
                                 $testPaperQuestionDetail->save();
                             }
 

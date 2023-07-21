@@ -50,62 +50,46 @@
                                     </span>
                                     @endif
                                 </div>
-                                @if((isset($_GET['question-type']) && $_GET['question-type']==1) || $paper->question_type==1)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate(1) }}</label>
-                                    @php
-                                        $json_question=json_decode($paper->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
-                                        {
 
-                                    @endphp
-
-                                        <div class="form-group">
-                                            <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                            </div>
-                                        </div>
-                                    @php } @endphp
-                                    <div class="after-add-more"></div>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                    </div>
-                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==5) || $paper->question_type==5)
+                                    @if((isset($_GET['question-type']) && $_GET['question-type']==5) || $paper->question_type==5)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(5) }}</label>
                                     @php
-                                        $json_question=json_decode($paper->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
-                                        {
-
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
                                     @endphp
 
                                         <div class="form-group">
                                             <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
+                                                <div class="col-md-2">
+                                                    <select name="old_input_3[]" class="form-control">
+                                                        <option value="add">Add</option>
+                                                        <option value="subtract">Subtract </option>
+                                                        <option value="multiply">Multiply</option>
+                                                        <option value="divide">Divide</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
                                                 </div>
                                             </div>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                             </div>
                                         </div>
-                                    @php } @endphp
+                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
@@ -113,62 +97,112 @@
                                     @elseif((isset($_GET['question-type']) && $_GET['question-type']==4) || $paper->question_type==4)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(4) }}</label>
                                     @php
-                                        $json_question=json_decode($paper->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
-                                        {
-
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
                                     @endphp
 
                                         <div class="form-group">
                                             <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
+                                                <div class="col-md-2">
+                                                    <select name="old_input_3[]" class="form-control">
+                                                        <option value="add">Add</option>
+                                                        <option value="subtract">Subtract </option>
+                                                        <option value="multiply">Multiply</option>
+                                                        <option value="divide">Divide</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
                                                 </div>
                                             </div>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                             </div>
                                         </div>
-                                    @php } @endphp
+                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
-                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $paper->question_type==2)
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==1) || $paper->question_type==1)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
                                     @php
-                                        $json_question=json_decode($paper->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
-                                        {
-
-                                        @endphp
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
+                                    @endphp
 
                                             <div class="form-group">
                                                 <div class="row" style="margin-bottom:30px;">
-                                                    <div class="col-md-4">
-                                                        <input class="form-control"  value="{{ $json_question->input_1[$i] }}" name="input_1_old[]" type="hidden">
-                                                        <a href="{{ url('/') }}/upload-file/{{ $json_question->input_1[$i] }}" target="_blank"> {{ $json_question->input_1[$i] }} </a>
+                                                    <div class="col-md-6">
+                                                        <input class="form-control"  value="{{ $value->input_1 }}" name="old_input_1[]" type="hidden">
+                                                        <a href="{{ url('/') }}/upload-file/{{ $value->input_1 }}" target="_blank"> {{ $value->input_1 }} </a>
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                                    <div class="col-md-3">
+                                                        <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                                 </div>
                                             </div>
-                                        @php } @endphp
+                                            <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                        @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $paper->question_type==2)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
+                                    @php
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
+                                    @endphp
 
+                                            <div class="form-group">
+                                                <div class="row" style="margin-bottom:30px;">
+                                                    <div class="col-md-6">
+                                                        <a href="{{ url('/') }}/upload-file/{{ $value->input_1 }}" target="_blank"> {{ $value->input_1 }} </a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control"  value="{{ $value->input_1 }}" name="old_input_1[]" type="hidden">
+                                                        <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                        @php }} @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
                                 @elseif((isset($_GET['question-type']) && $_GET['question-type']==6) || $paper->question_type==6)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(6) }}</label>
                                     @php
@@ -223,29 +257,44 @@
 <div class="copy" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-4">
-            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-        </div>
-        <div class="col-md-4">
-            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-        </div>
-        <div class="col-md-4">
-            <input class="form-control" required value="" name="input_3[]" placeholder="= Answer" type="text">
-        </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+            </div>
+            <div class="col-md-2">
+                <select name="input_3[]" class="form-control">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract </option>
+                    <option value="multiply">Multiply</option>
+                    <option value="divide">Divide</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
       </div>
     </div>
 </div>
+
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
         <div class="col-md-6">
             <input class="form-control" required name="input_1[]"  type="file">
         </div>
-        <div class="col-md-6">
-            <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
         </div>
 
        </div>
@@ -261,8 +310,11 @@
             <div class="col-md-6">
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
-            <div class="col-md-6">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
             </div>
 
         </div>
@@ -271,6 +323,7 @@
         </div>
     </div>
 </div>
+
 <script>
 
     $(document).ready(function () {

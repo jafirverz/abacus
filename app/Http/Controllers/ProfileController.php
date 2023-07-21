@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Notification;
 use App\Announcement;
 use App\GradingExam;
+use App\GradingPaper;
 use App\GradingExamList;
 use App\TeachingMaterials;
 use App\Mail\EmailNotification;
@@ -202,7 +203,11 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		$gradingExam = GradingExam::where('status', 1)->first();
+        $today=date('Y-m-d');
+		$gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','=',$today)->first();
+        if (!$gradingExam) {
+			return abort(404);
+		}
         $gradingExamList = GradingExamList::where('grading_exams_id', $gradingExam->id)->get();
 		$page = get_page_by_slug($slug);
         //dd($gradingExamList);
@@ -320,7 +325,18 @@ class ProfileController extends Controller
 
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
 	}
+    public function grading_paper($grading_exam_id,$listing_id,$paper_id)
+    {
+        $paper=GradingPaper::find($paper_id);
+        $qId=$paper->question_type;
+        if(empty($qId)){
+            return abort(404);
+        }
 
+        if($qId == 5){
+            return view('account.gradingMultipleDivision', compact("paper"));
+        }
+    }
     public function survey_store(Request $request,$id)
 	{
         //dd($request->all());

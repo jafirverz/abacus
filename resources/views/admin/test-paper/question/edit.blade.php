@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+  @extends('admin.layout.app')
 
 @section('content')
 @php
@@ -76,8 +76,11 @@
                                                     <option  @if($value->input_3=='divide') selected @endif value="divide">Divide</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
                                             </div>
                                         </div>
                                         <div class="input-group-btn">
@@ -100,13 +103,16 @@
                                 @endphp
                                 <div class="form-group">
                                     <div class="row" style="margin-bottom:30px;">
-                                        <div class="col-md-4">
-                                            <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
-                                        </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
+                                        <textarea class="form-control" required   name="old_input_1[]" placeholder="Variable 1" required>{{ $value->input_1 }}</textarea>
+                                    </div>
+                                        <div class="col-md-3">
                                             <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
                                         </div>
+                                        <div class="col-md-3">
+                                                <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                            </div>
                                     </div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -134,8 +140,11 @@
                                                 <input class="form-control"  value="{{ $value->input_1 }}" name="old_input_1[]" type="hidden">
                                                 <a href="{{ url('/') }}/{{ $value->input_1 }}" target="_blank"> {{ $value->input_1 }} </a>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
                                             </div>
                                         </div>
                                         <div class="input-group-btn">
@@ -166,68 +175,69 @@
     </section>
 </div>
 
+<!-- Copy Fields -->
 <div class="copy" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-            </div>
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-            </div>
-            <div class="col-md-2">
-                <select name="input_3[]" class="form-control">
-                    <option value="multiply">Multiply</option>
-                    <option value="divide">Divide</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
-            </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+        </div>
+        <div class="col-md-2">
+            <select name="input_3[]" class="form-control">
+                <option value="multiply">Multiply</option>
+                <option value="divide">Divide</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+        </div>
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
       </div>
     </div>
-    <input type="hidden" name="listing_detail_id[]" value="">
 </div>
+
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-4">
-                <input class="form-control" required value="" name="input_1[]"  type="text" placeholder="Question">
-            </div>
-            <div class="col-md-4">
-                <input class="form-control" required value="" name="input_2[]"  type="text" placeholder="Price">
-            </div>
-            <div class="col-md-4">
-                <select class="form-control" required name="input_3[]">
-                    <option value="">--Select--</option>
-                    @foreach(getAllGradingPaper() as $val)
-                    <option value="{{ $val->id }}">{{ $val->title }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="col-md-6">
+            <input class="form-control" required name="input_1[]"  type="file">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+        </div>
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
       </div>
     </div>
-    <input type="hidden" name="listing_detail_id[]" value="">
 </div>
+
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <textarea class="form-control" required value="" name="input_1[]" placeholder="Variable 1" required></textarea>
             </div>
 
 
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
             </div>
-
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            </div>
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -240,8 +250,11 @@
             <div class="col-md-6">
                 <input class="form-control" required value="" name="input_1[]"  type="file">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <input class="form-control" required value="" name="answer[]"  type="text" placeholder="Answer">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
             </div>
        </div>
        <div class="input-group-btn">

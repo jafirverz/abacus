@@ -89,6 +89,7 @@
                                                             <a class="lnk btn-2" href="{{ url() }}/{{ $val->uploaded_file }}">Download</a>
                                                             @endif
                                                           @else
+                                                            @if($val->price>0)
                                                             <div class="bxrow">
 																<div class="checkbxtype">
 																	<input name="grade_pay[]" type="checkbox" id="exercise-{{ $i.$k }}" />
@@ -96,6 +97,12 @@
 																</div>
 																<a class="lnk btn-2" href="#">Add to Cart</a>
 															</div>
+                                                            @else
+                                                            <div class="bxrow">
+																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+																<a class="lnk btn-2" href="#">View</a>
+															</div>
+                                                            @endif
                                                           @endif
                                                         </div>
                                                         @endforeach

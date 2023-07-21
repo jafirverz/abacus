@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\GradingPaper;
-use App\User;
+use App\GradingPaperQuestion;
 use App\QuestionTemplate;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
@@ -67,41 +67,6 @@ class GradingPaperController extends Controller
             'question_type'  =>  'required',
         ];
 
-        if($request->question_type==5 || $request->question_type==4)
-        {
-        $json['input_1']=$request->input_1;
-        $json['input_2']=$request->input_2;
-        $json['input_3']=$request->input_3;
-        }
-        elseif($request->question_type==2)
-        {
-            if ($request->hasfile('input_1')) {
-                foreach ($request->file('input_1') as $file) {
-
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    $data[] = $name;
-                }
-
-                $json['input_1']=$data;
-                $json['input_2']=$request->input_2;
-            }
-        }
-        elseif($request->question_type==1){
-            if ($request->hasfile('input_1')) {
-                foreach ($request->file('input_1') as $file) {
-
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    $data[] = $name;
-                }
-
-                $json['input_1']=$data;
-                $json['input_2']=$request->input_2;
-            }
-        }
-
-        //dd($question);
         $messages = [];
         $messages['title.required'] = 'The title field is required.';
         $messages['question_type.required'] = 'The question type field is required.';
@@ -110,9 +75,50 @@ class GradingPaperController extends Controller
         $paper = new GradingPaper();
         $paper->title = $request->title;
         $paper->question_type = $request->question_type;
-        $paper->json_question = json_encode($json);
         $paper->created_at = Carbon::now();
         $paper->save();
+
+        if($request->question_type==5 || $request->question_type==4)
+        {
+
+            for($k=0;$k<count($request->input_1);$k++)
+            {
+                $gradingPaperQuestion = new GradingPaperQuestion();
+                $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                $gradingPaperQuestion->input_2   = $request->input_2[$k];
+                $gradingPaperQuestion->input_3   = $request->input_3[$k];
+                $gradingPaperQuestion->answer   = $request->answer[$k];
+                $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                $gradingPaperQuestion->marks   = $request->marks[$k];
+                $gradingPaperQuestion->save();
+            }
+        }
+        elseif($request->question_type==2 || $request->question_type==1)
+        {
+            $i=0;
+                foreach ($request->file('input_1') as $file) {
+
+                    if(isset($request->answer[$i]))
+                    {
+                    $gradingPaperQuestion = new GradingPaperQuestion();
+                    $gradingPaperQuestion->input_1 = uploadPicture($file, 'upload-file');
+                    $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                    $gradingPaperQuestion->answer   = $request->answer[$i];
+                    $gradingPaperQuestion->marks   = $request->marks[$i];
+                    $gradingPaperQuestion->save();
+
+                    }
+
+                    $i++;
+
+
+                }
+        }
+
+
+        //dd($question);
+
+
 
         return redirect()->route('grading-paper.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
@@ -159,33 +165,6 @@ class GradingPaperController extends Controller
             'question_type'  =>  'required',
         ];
 
-         if($request->question_type==5 || $request->question_type==4)
-        {
-        $json['input_1']=$request->input_1;
-        $json['input_2']=$request->input_2;
-        $json['input_3']=$request->input_3;
-        }
-        elseif($request->question_type==2)
-        {
-            $input_1_old=$request->input_1_old;
-            if ($request->hasfile('input_1')) {
-                foreach ($request->file('input_1') as $file) {
-
-                    $name = $file->getClientOriginalName();
-                    $file->move(public_path() . '/upload-file/', $name);
-                    array_push($input_1_old,$name);
-                }
-
-
-
-
-            }
-            $json['input_1']=$input_1_old;
-            $json['input_2']=$request->input_2;
-        }
-
-
-        //dd($question);
         $messages = [];
         $messages['title.required'] = 'The title field is required.';
         $messages['question_type.required'] = 'The question type field is required.';
@@ -194,9 +173,101 @@ class GradingPaperController extends Controller
         $paper = GradingPaper::findorfail($id);
         $paper->title = $request->title;
         $paper->question_type = $request->question_type;
-        $paper->json_question = json_encode($json);
-        $paper->updated_at = Carbon::now();
+ $paper->updated_at = Carbon::now();
         $paper->save();
+
+         if($request->question_type==5 || $request->question_type==4)
+        {
+
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $gradingPaperQuestion = GradingPaperQuestion::findorfail($request->listing_detail_id[$m]);
+                                    $gradingPaperQuestion->input_1   = $request->old_input_1[$m];
+                                    $gradingPaperQuestion->input_2   = $request->old_input_2[$m];
+                                    $gradingPaperQuestion->input_3   = $request->old_input_3[$m];
+                                    $gradingPaperQuestion->answer   = $request->old_answer[$m];
+                                    $gradingPaperQuestion->marks   = $request->old_marks[$m];
+                                    $gradingPaperQuestion->save();
+                                }
+                                else
+                                {
+                                    GradingPaperQuestion::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+
+                    if($request->input_1)
+                     {
+                        for($k=0;$k<count($request->input_1);$k++)
+                        {
+                            $gradingPaperQuestion = new GradingPaperQuestion();
+                            $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                            $gradingPaperQuestion->input_2   = $request->input_2[$k];
+                            $gradingPaperQuestion->input_3   = $request->input_3[$k];
+                            $gradingPaperQuestion->answer   = $request->answer[$k];
+                            $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                            $gradingPaperQuestion->marks   = $request->marks[$k];
+                            $gradingPaperQuestion->save();
+                        }
+                     }
+        }
+        elseif($request->question_type==2 || $request->question_type==1)
+        {
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $gradingPaperQuestion = GradingPaperQuestion::findorfail($request->listing_detail_id[$m]);
+                                    $gradingPaperQuestion->answer   = $request->old_answer[$m];
+                                    $gradingPaperQuestion->marks   = $request->old_marks[$m];
+                                    $gradingPaperQuestion->save();
+                                }
+                                else
+                                {
+                                    GradingPaperQuestion::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+
+                     $n=0;
+                     foreach ($request->file('input_1') as $file) {
+
+                        if(isset($request->answer[$n]))
+                        {
+                        $gradingPaperQuestion = new GradingPaperQuestion();
+                        $gradingPaperQuestion->input_1 = uploadPicture($file, 'upload-file');
+                        $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                        $gradingPaperQuestion->answer   = $request->answer[$n];
+                        $gradingPaperQuestion->marks   = $request->marks[$n];
+                        $gradingPaperQuestion->save();
+
+                        }
+
+                        $n++;
+
+
+                    }
+        }
+
+
+        //dd($question);
+
 
         return redirect()->route('grading-paper.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }

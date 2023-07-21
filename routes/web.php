@@ -98,6 +98,7 @@ Route::post('instructor-profile', 'ProfileController@instructor_store')->name('i
 Route::post('instructor-profile-cal', 'ProfileController@cal_store')->name('instructor-profile.cal_update');
 Route::get('grading-overview', 'ProfileController@grading_overview')->name('grading-overview');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
+Route::get('grading-overview/{grading_exam_id?}/{listing_id?}/{paper_id?}', 'ProfileController@grading_paper');
 Route::get('competition-overview', 'ProfileController@competition_overview')->name('competition-overview');
 
 Route::get('allocation', 'ProfileController@allocation')->name('allocation');
