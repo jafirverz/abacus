@@ -17,8 +17,11 @@ class CreateTestPaperQuestionDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('test_paper_question_id');
             $table->foreign('test_paper_question_id')->references('id')->on('test_paper_details');
-            $table->text('question')->nullable();
-            $table->string('answer')->nullable();
+            $table->text('input_1')->nullable();
+            $table->string('input_2')->nullable();
+            $table->string('input_3')->nullable();
+            $table->integer('answer')->nullable();
+            $table->integer('marks')->nullable();
             $table->timestamps();
         });
     }
