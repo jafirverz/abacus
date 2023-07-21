@@ -21,4 +21,9 @@ class CompetitionPaperSubmitted extends Model
     {
         return $this->belongsTo('App\CompetitionPaper', 'competition_paper_id', 'id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo('App\CompetitionCategory', 'category_id', 'id');
+    }
 }
