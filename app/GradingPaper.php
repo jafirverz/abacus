@@ -19,7 +19,9 @@ class GradingPaper extends Model
         return $this->belongsTo('App\QuestionTemplate', 'question_type', 'id');
     }
 
-
+    public function questionsGrade(){
+        return $this->hasMany('App\GradingPaperQuestion', 'grading_paper_question_id', 'id');
+    }
     public function scopeSearch($query, $search_term)
     {
         if($search_term)

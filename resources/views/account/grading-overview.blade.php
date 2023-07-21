@@ -100,7 +100,9 @@
                                                             @else
                                                             <div class="bxrow">
 																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
-																<a class="lnk btn-2" href="#">View</a>
+
+																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->paper_id.'') }}">View</a>
+
 															</div>
                                                             @endif
                                                           @endif
