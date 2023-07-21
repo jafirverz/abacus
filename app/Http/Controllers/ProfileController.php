@@ -334,7 +334,7 @@ class ProfileController extends Controller
         }
 
         if($qId == 5){
-            return view('account.gradingMultipleDivision', compact("paper"));
+            return view('account.gradingMultipleDivision', compact("paper","grading_exam_id","listing_id"));
         }
     }
     public function survey_store(Request $request,$id)
