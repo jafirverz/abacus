@@ -18,6 +18,7 @@ use App\Admin;
 use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
+use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
 use App\Country;
 use App\UserProfileUpdate;
@@ -1753,6 +1754,9 @@ class ProfileController extends Controller
 
 	public function achievements(){
 		$userId = Auth::user()->id;
+		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		//dd($actualCompetitionPaperSubted);
+		return view("account.achievements", compact('actualCompetitionPaperSubted'));
 		//$competitionId = 
 	}
 }
