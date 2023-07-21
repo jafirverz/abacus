@@ -54,10 +54,10 @@
 
                                 <div class="form-group">
                                     <label for="title">Category</label>
-                                    <select name="category[]" class="form-control" multiple>
+                                    <select name="category" class="form-control" >
                                         <option value="">-- Select --</option>
-                                        @foreach($competitionCategory as $cate)
-                                        <option value="{{ $cate->id }}" @if(in_array($cate->id ,$categoryCompetition)) selected @endif>{{ $cate->category_name }}</option>
+                                        @foreach($catComp as $cate)
+                                        <option value="{{ $cate->category->id }}" @if($cate->category->id == $competitionPaper->category_id) selected @endif>{{ $cate->category->category_name }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('category'))

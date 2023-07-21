@@ -28,6 +28,7 @@
         <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
           @csrf
           <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
+          <input type="hidden" name="categoryId" value="{{ $compPaper->category_id }}">
           <input type="hidden" name="compId" value="{{ $compPaper->competition_controller_id }}">
           <input type="hidden" name="questionTemp" value="{{ $compPaper->question_template_id }}">
           <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">

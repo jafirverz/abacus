@@ -8,7 +8,7 @@
             </a>
         </li>
         <li>
-            <a href="be-achievements.html">
+            <a href="{{ route('normal.achievements') }}">
                 <span><img src="{{ asset('images/tempt/ico-achievements.png') }}" alt="Achievements icon" /></span>
                 <strong>My Achievements</strong>
             </a>

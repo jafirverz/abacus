@@ -88,7 +88,7 @@
                                 @if(isset($_GET['comp_id']))
                                 <div class="form-group">
                                     <label for="title">Category</label>
-                                    <select name="category[]" class="form-control" multiple>
+                                    <select name="category" class="form-control">
                                         <option value="">-- Select --</option>
                                         @foreach($compCat as $cate)
                                         <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>

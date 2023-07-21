@@ -90,6 +90,9 @@ Route::get('/standalone-page', 'StandalonePageController@index');
 
 Route::post('/standalone-page/result', 'StandalonePageController@result');
 
+
+Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
+
 // ************ ACCOUNT/PROFILE *******************/
 
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
