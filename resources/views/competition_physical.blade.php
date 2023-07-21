@@ -71,7 +71,9 @@
                         @foreach($catComp as $key=>$cat)
 
                             @php
-                            $checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
+                            //$checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
+
+                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->count();
                             @endphp
 
 

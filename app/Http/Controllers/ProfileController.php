@@ -1750,4 +1750,9 @@ class ProfileController extends Controller
 
 			return view("account.insurance-applications_show", compact("title", "insurance"));
     }
+
+	public function achievements(){
+		$userId = Auth::user()->id;
+		//$competitionId = 
+	}
 }
