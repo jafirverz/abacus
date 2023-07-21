@@ -79,6 +79,18 @@
                                     @endif
                                 </div>
 
+
+                                <div class="form-group">
+                                    <label for="title">Category Name</label>
+                                    <input type="text" name="" class="form-control" id="" disabled
+                                        value="{{ $competitionPaperSubmitted->category->category_name }}">
+                                    @if ($errors->has('date_of_competition'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('date_of_competition') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 <div class="form-group">
                                     <label for="title">Paper Name</label>
                                     <input type="text" name="" class="form-control" id="" disabled

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompetitionPaperSubmittedsTable extends Migration
+class CreateCompetitionStudentResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,19 @@ class CreateCompetitionPaperSubmittedsTable extends Migration
      */
     public function up()
     {
-        Schema::create('competition_paper_submitteds', function (Blueprint $table) {
+        Schema::create('competition_student_results', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('competition_id')->nullable();
             $table->foreign('competition_id')->references('id')->on('competition_controllers');
-            $table->unsignedBigInteger('competition_paper_id')->nullable();
-            $table->foreign('competition_paper_id')->references('id')->on('competition_papers');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('competition_categories');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('paper_type')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->string('total_marks')->nullable();
-            $table->string('user_marks')->nullable();
             $table->string('result')->nullable();
+            $table->string('rank')->nullable();
+            $table->string('abacus_grade')->nullable();
+            $table->string('mental_grade')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +37,6 @@ class CreateCompetitionPaperSubmittedsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('competition_paper_submitteds');
+        Schema::dropIfExists('competition_student_results');
     }
 }

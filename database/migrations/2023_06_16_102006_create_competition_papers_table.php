@@ -16,7 +16,11 @@ class CreateCompetitionPapersTable extends Migration
         Schema::create('competition_papers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('question_template_id')->nullable();
+            $table->foreign('question_template_id')->references('id')->on('question_templates');
             $table->unsignedBigInteger('competition_controller_id')->nullable();
+            $table->foreign('competition_controller_id')->references('id')->on('competition_controllers');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('competition_categories');
             $table->string('paper_type')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();

@@ -22,6 +22,7 @@ class CreateGradingStudentsTable extends Migration
             $table->unsignedBigInteger('instructor_id');
             $table->string('marks');
             $table->smallInteger('approve_status')->nullable()->comment('1=> approved, 2=>notapproved');
+
             $table->timestamps();
         });
     }

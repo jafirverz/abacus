@@ -62,6 +62,7 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>User Name</th>
+                                            <th>Category</th>
                                             <th>Paper</th>
                                             <th>Total Marks</th>
                                             <th>User Marks</th>
@@ -80,6 +81,7 @@
                                                 data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
                                             <td>{{ $item->user->name }}</td>
+                                            <td>{{ $item->category->category_name }}</td>
                                             <td>{{ $item->paper->title }}</td>
                                             <td>{{ $item->total_marks }}</td>
                                             <td>{{ $item->user_marks }}</td>

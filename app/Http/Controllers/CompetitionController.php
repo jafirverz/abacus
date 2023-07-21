@@ -68,6 +68,7 @@ class CompetitionController extends Controller
         $paperId = $request->paperId;
         $questionTypeId = $request->questionTemp;
         $paperType = $request->paperType;
+        $categoryId = $request->categoryId;
         $userId = Auth::user()->id;
         $questTem = array(1,2,3,4,5,6,7,8);
         //$resultpage = array(1,2,4,5,6,8);
@@ -78,6 +79,7 @@ class CompetitionController extends Controller
             //$workshSub->question_template_id = $questionTypeId;
             $workshSub->paper_type = $paperType;
             $workshSub->user_id = $userId;
+            $workshSub->category_id = $categoryId;
             $workshSub->save();
             $totalMarks = 0;
             $userMarks = 0;

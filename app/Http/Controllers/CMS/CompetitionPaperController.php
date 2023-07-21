@@ -105,16 +105,17 @@ class CompetitionPaperController extends Controller
         $competitionPaper->type = $request->question_type;
         $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->timer = $request->timer;
+        $competitionPaper->category_id = $request->category;
         $competitionPaper->save();
 
-        $competitionPaperId = $competitionPaper->id;
-        foreach($request->category as $cate){
-            $catCompt = new PaperCategory();
-            $catCompt->competition_paper_id = $competitionPaperId;
-            $catCompt->competition_id = $request->competition;
-            $catCompt->category_id = $cate;
-            $catCompt->save();
-        }
+        // $competitionPaperId = $competitionPaper->id;
+        // foreach($request->category as $cate){
+        //     $catCompt = new PaperCategory();
+        //     $catCompt->competition_paper_id = $competitionPaperId;
+        //     $catCompt->competition_id = $request->competition;
+        //     $catCompt->category_id = $cate;
+        //     $catCompt->save();
+        // }
 
         return redirect()->route('papers.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
@@ -141,16 +142,19 @@ class CompetitionPaperController extends Controller
         //
         $title = $this->title;
         $competitionPaper = CompetitionPaper::with('comp_contro')->find($id);
-        
         $questionTempleates = QuestionTemplate::get();
         $competition = Competition::get();
 
-        $categoryCompetition = PaperCategory::where('competition_paper_id', $id)->pluck('category_id')->toArray();
-        $categoryCompetition1 = PaperCategory::where('competition_paper_id', $id)->pluck('competition_id')->toArray();
-        $catComp = CategoryCompetition::whereIn('competition_id', $categoryCompetition1)->pluck('category_id')->toArray();
-        $competitionCategory = CompetitionCategory::whereIn('id', $catComp)->get();
+        $catComp = CategoryCompetition::where('competition_id', $competitionPaper->competition_controller_id)->get();
+        //dd($catComp);
+        // $categoryCompetition1 = PaperCategory::where('competition_paper_id', $id)->pluck('competition_id')->toArray();
+        // $catComp = CategoryCompetition::whereIn('competition_id', $categoryCompetition1)->pluck('category_id')->toArray();
+        // $competitionCategory = CompetitionCategory::whereIn('id', $catComp)->get();
 
-        return view('admin.competition_paper.edit', compact('title', 'competitionPaper', 'categoryCompetition','competitionCategory', 'questionTempleates', 'competition'));
+        // $categoryCompetition = PaperCategory::where('competition_paper_id', $id)->pluck('category_id')->toArray();
+        
+
+        return view('admin.competition_paper.edit', compact('title', 'competitionPaper', 'catComp', 'questionTempleates', 'competition'));
     }
 
     /**
@@ -201,6 +205,7 @@ class CompetitionPaperController extends Controller
         $competitionPaper->time = $request->time;
         $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->price = $request->price;
+        $competitionPaper->category_id = $request->category;
         if ($request->hasfile('pdf_upload')) {
             $file = $request->file('pdf_upload');
             $name = $file->getClientOriginalName();
@@ -214,19 +219,19 @@ class CompetitionPaperController extends Controller
         $competitionPaper->timer = $request->timer;
         $competitionPaper->save();
 
-        $categoryCompetition = PaperCategory::where('competition_paper_id', $id)->get();
-        foreach($categoryCompetition as $deleteCategory){
-            $deleteCategory->delete();
-        }
+        // $categoryCompetition = PaperCategory::where('competition_paper_id', $id)->get();
+        // foreach($categoryCompetition as $deleteCategory){
+        //     $deleteCategory->delete();
+        // }
 
-        $competitionPaperId = $competitionPaper->id;
-        foreach($request->category as $cate){
-            $catCompt = new PaperCategory();
-            $catCompt->competition_paper_id = $competitionPaperId;
-            $catCompt->competition_id = $request->competition;
-            $catCompt->category_id = $cate;
-            $catCompt->save();
-        }
+        // $competitionPaperId = $competitionPaper->id;
+        // foreach($request->category as $cate){
+        //     $catCompt = new PaperCategory();
+        //     $catCompt->competition_paper_id = $competitionPaperId;
+        //     $catCompt->competition_id = $request->competition;
+        //     $catCompt->category_id = $cate;
+        //     $catCompt->save();
+        // }
 
         return redirect()->route('papers.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
