@@ -15,6 +15,13 @@ class CreateGradingStudentsTable extends Migration
     {
         Schema::create('grading_students', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('grading_exam_id');
+            $table->foreign('grading_exam_id')->references('id')->on('grading_exams');
+            $table->unsignedBigInteger('instructor_id');
+            $table->string('marks');
+            $table->smallInteger('approve_status')->nullable()->comment('1=> approved, 2=>notapproved');
             $table->timestamps();
         });
     }
