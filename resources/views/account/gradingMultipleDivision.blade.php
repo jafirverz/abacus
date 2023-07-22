@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
+
 <main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
@@ -9,6 +10,7 @@
       @endif
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
+
         <div class="tempt-2-content">
             <div class="mb-20">
                 <a class="link-1 lico" href="be-overview-elementary.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
@@ -81,6 +83,7 @@
         </div>
     </div>
   </div>
+
   </div>
 </main>
 
@@ -115,9 +118,11 @@
              } else {
                audio.pause();
                $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
+
              }
           }
       }
 
   </script>
 @endsection
+

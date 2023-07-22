@@ -4,7 +4,7 @@
 <main class="main-wrap">	
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      @if(Auth::user()->user_type_id == 1)
+      @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
         @include('inc.account-sidebar')
       @endif
     </div>

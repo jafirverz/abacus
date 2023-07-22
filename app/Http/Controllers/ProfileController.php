@@ -19,6 +19,7 @@ use App\Admin;
 use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
+use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
 use App\Country;
 use App\UserProfileUpdate;
@@ -342,6 +343,8 @@ class ProfileController extends Controller
 
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
 	}
+
+
 
     public function survey_store(Request $request,$id)
 	{
@@ -1772,4 +1775,12 @@ class ProfileController extends Controller
 
 			return view("account.insurance-applications_show", compact("title", "insurance"));
     }
+
+	public function achievements(){
+		$userId = Auth::user()->id;
+		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		//dd($actualCompetitionPaperSubted);
+		return view("account.achievements", compact('actualCompetitionPaperSubted'));
+		//$competitionId =
+	}
 }
