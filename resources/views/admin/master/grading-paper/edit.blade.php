@@ -153,11 +153,14 @@
                                                         <input class="form-control"  value="{{ $value->input_1 }}" name="old_input_1[]" type="hidden">
                                                         <a href="{{ url('/') }}/upload-file/{{ $value->input_1 }}" target="_blank"> {{ $value->input_1 }} </a>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Block" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="input-group-btn">
@@ -168,7 +171,7 @@
                                         @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
-                                        <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                        <button class="btn btn-success add-more4" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
                                     @elseif((isset($_GET['question-type']) && $_GET['question-type']==2) || $paper->question_type==2)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
@@ -323,7 +326,25 @@
         </div>
     </div>
 </div>
+<div class="copy4" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <input class="form-control" required value="" name="input_1[]"  type="file">
+            </div>
 
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 
     $(document).ready(function () {
@@ -359,6 +380,11 @@
 
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
+            $(".after-add-more").after(html);
+        });
+
+        $(".add-more4").click(function(){
+            var html = $(".copy4").html();
             $(".after-add-more").after(html);
         });
 

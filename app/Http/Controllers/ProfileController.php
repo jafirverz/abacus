@@ -221,6 +221,23 @@ class ProfileController extends Controller
 		return view('account.grading-overview', compact("page", "gradingExam","gradingExamList"));
 	}
 
+    public function grading_paper($grading_exam_id,$listing_id,$paper_id)
+    {
+        $paper=GradingPaper::find($paper_id);
+        $gradingExam = GradingExam::find($grading_exam_id);
+        $qId=$paper->question_type;
+        if(empty($qId)){
+            return abort(404);
+        }
+
+        if($qId == 5){
+            return view('account.gradingMultipleDivision', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+        elseif($qId == 1){
+            return view('account.gradingAudio', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+    }
+
     public function competition_overview()
 	{
 		//
@@ -326,20 +343,9 @@ class ProfileController extends Controller
 
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
 	}
-    public function grading_paper($grading_exam_id,$listing_id,$paper_id)
-    {
-        $paper=GradingPaper::find($paper_id);
-        $qId=$paper->question_type;
-        if(empty($qId)){
-            return abort(404);
-        }
 
-        if($qId == 5){
 
-            return view('account.gradingMultipleDivision', compact("paper","grading_exam_id","listing_id"));
 
-        }
-    }
     public function survey_store(Request $request,$id)
 	{
         //dd($request->all());
@@ -1775,6 +1781,6 @@ class ProfileController extends Controller
 		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
 		//dd($actualCompetitionPaperSubted);
 		return view("account.achievements", compact('actualCompetitionPaperSubted'));
-		//$competitionId = 
+		//$competitionId =
 	}
 }
