@@ -103,15 +103,19 @@ class GradingExamListController extends Controller
         else
         {
 
-            for($k=0;count($request->input_1);$k++)
+            for($k=0;$k<count($request->input_1);$k++)
             {
                 //Online
-                $gradingListingDetail = new GradingListingDetail();
-                $gradingListingDetail->grading_listing_id   = $gradingExamList->id;
-                $gradingListingDetail->title   = $request->input_1[$i];
-                $gradingListingDetail->price   = $request->input_2[$i];
-                $gradingListingDetail->paper_id   = $request->input_3[$i];
-                $gradingExamList->save();
+                if(isset($request->input_1[$k]))
+                {
+                    $gradingListingDetail = new GradingListingDetail();
+                    $gradingListingDetail->grading_listing_id   = $gradingExamList->id;
+                    $gradingListingDetail->title   = $request->input_1[$k];
+                    $gradingListingDetail->price   = $request->input_2[$k];
+                    $gradingListingDetail->paper_id   = $request->input_3[$k];
+                    $gradingListingDetail->save();
+                }
+
             }
 
 

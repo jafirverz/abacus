@@ -76,7 +76,7 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
-                            @elseif(isset($_GET['question-type']) && ($_GET['question-type']==2 || $_GET['question-type']==1))
+                            @elseif(isset($_GET['question-type']) && $_GET['question-type']==2 )
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
@@ -94,7 +94,27 @@
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
+                                @elseif(isset($_GET['question-type']) && $_GET['question-type']==1)
 
+                                <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
+                                <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="col-md-6">
+                                        <input class="form-control" required value="" name="input_1[]"  type="file">
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+                                    </div>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more4" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
                                 @elseif(isset($_GET['question-type']) && ($_GET['question-type']==6 || $_GET['question-type']==7 || $_GET['question-type']==8 || $_GET['question-type']==9))
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
@@ -199,6 +219,25 @@
         </div>
     </div>
 </div>
+<div class="copy4" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <input class="form-control" required value="" name="input_1[]"  type="file">
+            </div>
+
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 
 $(document).ready(function () {
@@ -234,6 +273,11 @@ $(document).ready(function () {
 
     $(".add-more3").click(function(){
         var html = $(".copy3").html();
+        $(".after-add-more").after(html);
+    });
+
+    $(".add-more4").click(function(){
+        var html = $(".copy4").html();
         $(".after-add-more").after(html);
     });
 

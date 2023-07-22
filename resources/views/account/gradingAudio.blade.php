@@ -14,36 +14,36 @@
           <a class="link-1 lico" href="be-overview-preparatory.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
-          <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
-          <li><strong>{{ $worksheet->title }}</strong></li>
+            <li><a href="{{ url('grading-overview') }}">Grading Overview</a></li>
+            <li><strong>{{ $gradingExam->title }}</strong></li>
         </ul>
         <div class="box-1">
-          {{ $worksheet->description }}
+            {!! $gradingExam->important_note !!}
         </div>
-        <form method="post" action="{{ route('answer.submit') }}">
-          @csrf
+        <form method="post" action="{{ route('grading_answer.submit') }}">
+            @csrf
+            <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
+            <input type="hidden" name="listing_id" value="{{ $listing_id }}">
+            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
+            <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <div class="row grid-4">
-          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
-          <input type="hidden" name="levelId" value="{{ $level->id }}">
-          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
+
           @php
           $k=1;
           if(isset($_GET['s']) && $_GET['s'] == 1){
-            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->inRandomOrder()->get();
+            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->inRandomOrder()->get();
           }else{
-            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
+            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->get();
           }
-          //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
           foreach($questionns as $questionn){
           @endphp
             <div class="col-xl-4 col-sm-6">
               <div class="inner">
                 @php
-                $questionnss = \App\MiscQuestion::where('question_id', $questions->id)->where('block', $questionn->block)->get();
+                $questionnss = \App\GradingPaperQuestion::where('grading_paper_question_id', $questionn->grading_paper_question_id)->where('input_2', $questionn->input_2)->get();
 
                 foreach($questionnss as $question){
                 @endphp
@@ -53,8 +53,8 @@
                   <div class="col-auto sp-col">
                     <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
                     <audio id="audio-{{ $k }}">
-                      <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/mp3">
-                      <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/ogg">
+                      <source src="{{ url('/upload-file/'.$question->input_1) }}" type="audio/mp3">
+                      <source src="{{ url('/upload-file/'.$question->input_1) }}" type="audio/ogg">
                       Your browser does not support the audio element.
                     </audio>
                   </div>

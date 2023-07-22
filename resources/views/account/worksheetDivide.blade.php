@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<main class="main-wrap">	
+<main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
       @if(Auth::user()->user_type_id == 1)
@@ -16,7 +16,7 @@
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
           <li><a href="{{ url('') }}">Preparatory Level</a></li>
-          <li><strong>{{ $worksheet->title }}</strong></li> 
+          <li><strong>{{ $worksheet->title }}</strong></li>
         </ul>
         <div class="box-1">
           {{ $worksheet->description }}
@@ -36,7 +36,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @php 
+                  @php
                   $i = 1;
                   @endphp
                   @foreach($allQuestions as $ques)
@@ -45,11 +45,11 @@
                     <td class="text-center">{{ $ques->question_1 }} ÷ {{ $ques->question_2 }}  =</td>
                     <td class="colanswer"><input class="form-control" type="number" /></td>
                   </tr>
-                  @php 
+                  @php
                   $i++;
                   @endphp
                   @endforeach
-                  
+
                 </tbody>
               </table>
             </div>
@@ -59,12 +59,12 @@
           </div>
         </form>
     </div>
-  </div>	
+  </div>
   </div>
 </main>
 
 <script>
-  
+
 
   // initAudioPlayer();
 
@@ -94,9 +94,9 @@
              } else {
                audio.pause();
                $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
-             } 
+             }
           }
       }
-  
+
   </script>
 @endsection

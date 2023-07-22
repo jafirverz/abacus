@@ -14,25 +14,23 @@
                 <a class="link-1 lico" href="be-overview-elementary.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
             </div>
             <ul class="breadcrumb bctype">
-                <li><a href="be-overview.html">Overview</a></li>
-                <li><a href="be-overview-elementary.html">Elementary Level</a></li>
-                <li><a href="">Sample Grading Exam Questions</a></li>
-                <li><strong>Worksheet Title</strong></li>
+                <li><a href="{{ url('grading-overview') }}">Grading Overview</a></li>
+                <li><strong>{{ $paper->title }}</strong></li>
             </ul>
             <div class="box-1 mb-30">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+                {!! $gradingExam->important_note !!}
             </div>
             <div class="box-3">
                 <div class="row title-wrap-1">
                     <div class="col-xl-8 col-md-7">
-                        <h1 class="title-1">{{ $paper->title }}</h1>
+                        <h1 class="title-1">{{ $gradingExam->title }}</h1>
                     </div>
                     <div class="col-xl-4 col-md-5 lastcol">
                         <a class="btn-2" href="example.pdf" target="_blank">Download Sample PDF</a>
                     </div>
                 </div>
                 <div class="xscrollbar">
-                    <form method="post" action="{{ route('answer.submit') }}">
+                    <form method="post" action="{{ route('grading_answer.submit') }}">
                         @csrf
                         <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
                         <input type="hidden" name="listing_id" value="{{ $listing_id }}">
@@ -74,6 +72,9 @@
 
                             </tbody>
                         </table>
+                        <div class="output-1">
+                            <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+                          </div>
                     </form>
                 </div>
             </div>
