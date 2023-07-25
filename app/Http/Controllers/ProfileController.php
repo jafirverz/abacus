@@ -151,6 +151,30 @@ class ProfileController extends Controller
 		return view('account.register-grading-examination', compact("page", "user","students","mental_grades","abacus_grades","gradingExam"));
 	}
 
+    public function edit_grading($id)
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+        $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
+        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
+        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
+        $gradingExam = GradingExam::where('status', 1)->get();
+		$page = get_page_by_slug($slug);
+        $grading=GradingStudent::where('id', $id)->first();
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.edit-grading-examination', compact("page", "user","students","mental_grades","abacus_grades","gradingExam","grading"));
+	}
+
     public function delete_grading($id)
     {
         GradingStudent::where('id', $id)->delete();
@@ -391,6 +415,26 @@ class ProfileController extends Controller
         $gradingStudent->user_id   = $request->user_id ?? NULL;
         $gradingStudent->grading_exam_id   = $request->grading_exam_id ?? NULL;
         $gradingStudent->instructor_id  = $this->user->id;   //Test /Survey
+        $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
+        $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
+        $gradingStudent->remarks  = $request->remarks ?? NULL;
+        $gradingStudent->save();
+
+		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
+	}
+
+    public function update_grading(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'mental_grade' => 'required',
+            'abacus_grade' => 'required',
+        ]);
+
+
+        $gradingStudent = GradingStudent::find($id);
         $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
