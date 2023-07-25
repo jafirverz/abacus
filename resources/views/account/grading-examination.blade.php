@@ -9,11 +9,12 @@
             <div class="tempt-2-content">
                 <div class="row title-wrap-1">
                     <div class="col-md-6 order-md-last mt-0 lastcol">
-                        <a class="btn-1" href="#">Register for Grading Exam <i class="fa-solid fa-arrow-right-long"></i></a>
+                        <a class="btn-1" href="{{ url('register-grading-examination') }}">Register for Grading Exam <i class="fa-solid fa-arrow-right-long"></i></a>
                     </div>
                     <div class="col-md-6 order-md-first mt-767-20">
                         <h1 class="title-3">Grading Examinations</h1>
                     </div>
+                    @include('inc.messages')
                 </div>
                 <div class="box-1">
                     <h2 class="title-4">Registered Student's List</h2>
@@ -32,135 +33,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($grading)
+                                @php $i=0; @endphp
+                                @foreach($grading as $grade)
+                                @php $i++; @endphp
                                 <tr>
-                                    <td><em>001</em></td>
+                                    <td><em>{{ $i }}</em></td>
                                     <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="#">Exam Pass</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-2">Approved</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>002</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
+                                        <em>{{ $grade->student->name  ?? ''}}</em>
                                         <div class="tbactions"><a href="be-teacher-dashboard-grading-details.html">Edit</a> <a href="be-achievements.html">View</a> <a href="#">Delete</a></div>
                                     </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
+                                    <td><em>{{ $grade->mental->title ?? '' }}</em></td>
+                                    <td><em>{{ $grade->abacus->title ?? '' }}</em></td>
                                     <td><em class="status-3">Pending</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
+                                    <td><em>{{ $grade->remarks ?? ''}}</em></td>
+                                    <td><em>-- </em></td>
                                 </tr>
-                                <tr>
-                                    <td><em>003</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="#">Exam Pass</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-2">Approved</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>004</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="be-teacher-dashboard-grading-details.html">Edit</a> <a href="be-achievements.html">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-3">Pending</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>005</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="#">Exam Pass</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-2">Approved</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>006</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="be-teacher-dashboard-grading-details.html">Edit</a> <a href="be-achievements.html">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-3">Pending</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>007</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="#">Exam Pass</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-2">Approved</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>008</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="be-teacher-dashboard-grading-details.html">Edit</a> <a href="be-achievements.html">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-3">Pending</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>009</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="#">Exam Pass</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-2">Approved</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
-                                <tr>
-                                    <td><em>010</em></td>
-                                    <td>
-                                        <em>Timothy Yu</em>
-                                        <div class="tbactions"><a href="be-teacher-dashboard-grading-details.html">Edit</a> <a href="be-achievements.html">View</a> <a href="#">Delete</a></div>
-                                    </td>
-                                    <td><em>Super Degree</em></td>
-                                    <td><em>Lorem ipsum dolor sit amet, consetetur</em></td>
-                                    <td><em class="status-3">Pending</em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                    <td><em>Lorem ipsum </em></td>
-                                </tr>
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div><div id="mCSB_1_scrollbar_horizontal" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 30px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div><div class="mCSB_draggerRail"></div></div></div></div></div></div>
                     <ul class="page-numbers mt-30">
-                        <li><a class="prev" href="#">prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a class="current" href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a class="next" href="#">next</a></li>
+                        {{ $grading->links() }}
                     </ul>
                 </div>
             </div>

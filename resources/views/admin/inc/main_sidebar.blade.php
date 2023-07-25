@@ -91,6 +91,11 @@
                     'url'   =>  'admin/test-paper',
                 ],
                 [
+                    'title' =>  __('constant.TEST_ALLOCATION'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/test-allocation',
+                ],
+                [
                     'title' =>  __('constant.COURSE'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/course',
@@ -125,7 +130,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question',
                 ],
-                
+
                 [
                     'title' =>  __('constant.TEACHING_MATERIALS'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
@@ -160,6 +165,11 @@
                     'title' =>  __('constant.SURVEY_QUESTIONS_OPTIONS'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/options-survey-questions',
+                ],
+                [
+                    'title' =>  __('constant.SURVEY_ALLOCATION'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/survey-allocation',
                 ],
                 [
                     'title' =>  __('constant.OPTIONS_CHOICES'),

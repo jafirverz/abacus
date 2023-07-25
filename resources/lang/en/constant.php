@@ -4,6 +4,8 @@ return [
 
     'DASHBOARD' => 'Dashboard',
     'MASTER' => 'Master',
+    'TEST_ALLOCATION' => 'Test Allocation',
+    'SURVEY_ALLOCATION' => 'Survey Allocation',
     'CONTACT' => 'Contact Enquiry',
     'BANNER_MANAGEMENT'  =>  'Banner Management',
     'QUESTION_MANAGEMENT'  =>  'Question Management',
@@ -55,6 +57,7 @@ return [
     'OPTIONS_CHOICES' => 'Survey Questions Choices',
     'ALLOCATE_DELETED' => 'Your Record has been deleted successfully.',
     'ALLOCATE_UPDATED' => 'Student allocated successfully.',
+    'GRADING_UPDATED' => 'Student register successfully.',
     'SURVEY_UPDATED' => 'Survey assigned successfully.',
     'LESSON_MANAGEMENT' => 'Lesson Management',
     'LESSON_QUESTION_MANAGEMENT' => 'Lesson Questions Management',

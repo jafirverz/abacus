@@ -94,7 +94,7 @@ Route::post('/standalone-page/result', 'StandalonePageController@result');
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
 
 // ************ ACCOUNT/PROFILE *******************/
-
+Route::get('instructor-overview', 'ProfileController@instructor_overview')->name('instructor.overview');
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
 Route::get('instructor-profile', 'ProfileController@instructor')->name('instructor-profile');
 Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
@@ -102,6 +102,11 @@ Route::post('instructor-profile-cal', 'ProfileController@cal_store')->name('inst
 Route::get('grading-overview', 'ProfileController@grading_overview')->name('grading-overview');
 Route::post('grading-overview/result', 'GradingSubmitController@resultpage')->name('grading_answer.submit');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
+Route::get('grading-examination/delete/{id?}', 'ProfileController@delete_grading')->name('grading-examination.delete');
+Route::get('grading-examination/view/{id?}', 'ProfileController@view_grading')->name('grading-examination.view');
+Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
+Route::get('register-grading-examination', 'ProfileController@register_grading_examination')->name('register-grading-examination');
+Route::post('register-grading-examination/submit', 'ProfileController@grading_register_store')->name('register-grading-examination.submit');
 Route::get('grading-overview/{grading_exam_id?}/{listing_id?}/{paper_id?}', 'ProfileController@grading_paper');
 Route::get('competition-overview', 'ProfileController@competition_overview')->name('competition-overview');
 
@@ -253,6 +258,14 @@ Route::group(['prefix' => 'admin'], function () {
     // TEMPLATE
     Route::get('template/search', 'CMS\TemplateController@search')->name('template.search');
     Route::resource('template', 'CMS\TemplateController');
+
+    // TEST ALLOCATION
+    Route::get('test-allocation/search', 'CMS\TestAllocationController@search')->name('test-allocation.search');
+    Route::resource('test-allocation', 'CMS\TestAllocationController');
+
+    // SURVEY ALLOCATION
+    Route::get('survey-allocation/search', 'CMS\SurveyAllocationController@search')->name('survey-allocation.search');
+    Route::resource('survey-allocation', 'CMS\SurveyAllocationController');
 
 
     // LEVEL MASTER

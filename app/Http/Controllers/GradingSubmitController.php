@@ -25,8 +25,8 @@ class GradingSubmitController extends Controller
         $paper_id = $request->paper_id;
         $questionTypeId = $request->question_type;
         $userId = Auth::user()->id;
-        $questTem = array(1,2,3,4,5,6,8);
-        $resultpage = array(1,2,4,5,6,8);
+        $questTem = array(1,2,3,4,5,6,7,8);
+        $resultpage = array(1,2,3,4,5,6,7,8);
         if(in_array($questionTypeId, $questTem)){
             $gradeSub = new GradingSubmitted();
             $gradeSub->grading_exam_id  = $grading_exam_id;

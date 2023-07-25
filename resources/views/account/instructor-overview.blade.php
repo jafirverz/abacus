@@ -135,5 +135,30 @@
         </div>
     </div>
 </main>
+<script>
 
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        headerToolbar: {
+          left: '',
+          center: 'prev,title,next',
+          right: ''
+        },
+        events: [
+@foreach($calendars as $key=>$value)
+          {
+            title: '{{ $value->note }}',
+            start: '{{ $value->start_date }}T{{ $value->start_time }}',
+            end: '{{ $value->start_date }}T{{ $value->start_time }}'
+          },
+@endforeach
+        ]
+      });
+
+      calendar.render();
+    });
+
+  </script>
 @endsection

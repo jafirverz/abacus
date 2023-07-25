@@ -78,7 +78,7 @@ class GradingPaperController extends Controller
         $paper->created_at = Carbon::now();
         $paper->save();
 
-        if($request->question_type==5 || $request->question_type==4)
+        if($request->question_type==5 || $request->question_type==7)
         {
 
             for($k=0;$k<count($request->input_1);$k++)
@@ -93,7 +93,49 @@ class GradingPaperController extends Controller
                 $gradingPaperQuestion->save();
             }
         }
-        elseif($request->question_type==2)
+        else if($request->question_type==4)
+        {
+
+            for($k=0;$k<count($request->input_1);$k++)
+            {
+                $gradingPaperQuestion = new GradingPaperQuestion();
+                $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                $gradingPaperQuestion->answer   = $request->answer[$k];
+                $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                $gradingPaperQuestion->marks   = $request->marks[$k];
+                $gradingPaperQuestion->save();
+            }
+        }
+        else if($request->question_type==8)
+        {
+
+            for($k=0;$k<count($request->input_1);$k++)
+            {
+                $gradingPaperQuestion = new GradingPaperQuestion();
+                $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                $gradingPaperQuestion->input_2   = $request->input_2[$k];
+                $gradingPaperQuestion->answer   = $request->answer[$k];
+                $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                $gradingPaperQuestion->marks   = $request->marks[$k];
+                $gradingPaperQuestion->save();
+            }
+        }
+        elseif($request->question_type==6)
+        {
+
+            for($k=0;$k<count($request->input_1);$k++)
+            {
+                $gradingPaperQuestion = new GradingPaperQuestion();
+                $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                $gradingPaperQuestion->input_2   = $request->input_2[$k];
+                $gradingPaperQuestion->input_3   = $request->input_3[$k];
+                $gradingPaperQuestion->answer   = $request->answer[$k];
+                $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                $gradingPaperQuestion->marks   = $request->marks[$k];
+                $gradingPaperQuestion->save();
+            }
+        }
+        elseif($request->question_type==2 || $request->question_type==3)
         {
             $i=0;
                 foreach ($request->file('input_1') as $file) {
@@ -198,7 +240,7 @@ class GradingPaperController extends Controller
         $paper->updated_at = Carbon::now();
         $paper->save();
 
-         if($request->question_type==5 || $request->question_type==4)
+         if($request->question_type==5 || $request->question_type==7)
         {
 
                     for($m=0;$m<count($request->listing_detail_id);$m++)
@@ -242,7 +284,133 @@ class GradingPaperController extends Controller
                         }
                      }
         }
-        elseif($request->question_type==2)
+        elseif($request->question_type==4)
+        {
+
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $gradingPaperQuestion = GradingPaperQuestion::findorfail($request->listing_detail_id[$m]);
+                                    $gradingPaperQuestion->input_1   = $request->old_input_1[$m];
+                                    $gradingPaperQuestion->answer   = $request->old_answer[$m];
+                                    $gradingPaperQuestion->marks   = $request->old_marks[$m];
+                                    $gradingPaperQuestion->save();
+                                }
+                                else
+                                {
+                                    GradingPaperQuestion::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+
+                    if($request->input_1)
+                     {
+                        for($k=0;$k<count($request->input_1);$k++)
+                        {
+                            $gradingPaperQuestion = new GradingPaperQuestion();
+                            $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                            $gradingPaperQuestion->answer   = $request->answer[$k];
+                            $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                            $gradingPaperQuestion->marks   = $request->marks[$k];
+                            $gradingPaperQuestion->save();
+                        }
+                     }
+        }
+        elseif($request->question_type==8)
+        {
+
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $gradingPaperQuestion = GradingPaperQuestion::findorfail($request->listing_detail_id[$m]);
+                                    $gradingPaperQuestion->input_1   = $request->old_input_1[$m];
+                                    $gradingPaperQuestion->input_2   = $request->old_input_2[$m];
+                                    $gradingPaperQuestion->answer   = $request->old_answer[$m];
+                                    $gradingPaperQuestion->marks   = $request->old_marks[$m];
+                                    $gradingPaperQuestion->save();
+                                }
+                                else
+                                {
+                                    GradingPaperQuestion::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+
+                    if($request->input_1)
+                     {
+                        for($k=0;$k<count($request->input_1);$k++)
+                        {
+                            $gradingPaperQuestion = new GradingPaperQuestion();
+                            $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                            $gradingPaperQuestion->input_2   = $request->input_2[$k];
+                            $gradingPaperQuestion->answer   = $request->answer[$k];
+                            $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                            $gradingPaperQuestion->marks   = $request->marks[$k];
+                            $gradingPaperQuestion->save();
+                        }
+                     }
+        }
+        elseif($request->question_type==6)
+        {
+
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $gradingPaperQuestion = GradingPaperQuestion::findorfail($request->listing_detail_id[$m]);
+                                    $gradingPaperQuestion->input_1   = $request->old_input_1[$m];
+                                    $gradingPaperQuestion->input_2   = $request->old_input_2[$m];
+                                    $gradingPaperQuestion->input_3   = $request->old_input_3[$m];
+                                    $gradingPaperQuestion->answer   = $request->old_answer[$m];
+                                    $gradingPaperQuestion->marks   = $request->old_marks[$m];
+                                    $gradingPaperQuestion->save();
+                                }
+                                else
+                                {
+                                    GradingPaperQuestion::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+
+                    if($request->input_1)
+                     {
+                        for($k=0;$k<count($request->input_1);$k++)
+                        {
+                            $gradingPaperQuestion = new GradingPaperQuestion();
+                            $gradingPaperQuestion->input_1   = $request->input_1[$k];
+                            $gradingPaperQuestion->input_2   = $request->input_2[$k];
+                            $gradingPaperQuestion->input_3   = $request->input_3[$k];
+                            $gradingPaperQuestion->answer   = $request->answer[$k];
+                            $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                            $gradingPaperQuestion->marks   = $request->marks[$k];
+                            $gradingPaperQuestion->save();
+                        }
+                     }
+        }
+        elseif($request->question_type==2 || $request->question_type==3)
         {
                     for($m=0;$m<count($request->listing_detail_id);$m++)
                     {

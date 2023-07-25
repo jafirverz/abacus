@@ -71,10 +71,53 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <select name="old_input_3[]" class="form-control">
-                                                        <option value="add">Add</option>
-                                                        <option value="subtract">Subtract </option>
-                                                        <option value="multiply">Multiply</option>
-                                                        <option value="divide">Divide</option>
+                                                        <option @if($value->input_3=='add') selected @endif value="add" >Add</option>
+                                                        <option @if($value->input_3=='subtract') selected @endif value="subtract">Subtract </option>
+                                                        <option @if($value->input_3=='multiply') selected @endif value="multiply">Multiply</option>
+                                                        <option @if($value->input_3=='divide') selected @endif value="divide">Divide</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php }} @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==7) || $paper->question_type==7)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(7) }}</label>
+                                    @php
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
+                                    @endphp
+
+                                        <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <select name="old_input_3[]" class="form-control">
+                                                        <option @if($value->input_3=='add') selected @endif value="add" >Add</option>
+                                                        <option @if($value->input_3=='subtract') selected @endif value="subtract">Subtract </option>
+                                                        <option @if($value->input_3=='multiply') selected @endif value="multiply">Multiply</option>
+                                                        <option @if($value->input_3=='divide') selected @endif value="divide">Divide</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2">
@@ -104,22 +147,12 @@
                                     {
                                     @endphp
 
-                                        <div class="form-group">
+                                    <div class="form-group">
                                             <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
+                                                <div class="col-md-6">
+                                                    <textarea class="" rows="5" cols="40" required value="" name="old_input_1[]" placeholder="Enter Column 1 data">{{ $value->input_1 }}</textarea>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <select name="old_input_3[]" class="form-control">
-                                                        <option value="add">Add</option>
-                                                        <option value="subtract">Subtract </option>
-                                                        <option value="multiply">Multiply</option>
-                                                        <option value="divide">Divide</option>
-                                                    </select>
-                                                </div>
+
                                                 <div class="col-md-2">
                                                     <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
                                                 </div>
@@ -130,12 +163,48 @@
                                             <div class="input-group-btn">
                                                 <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                             </div>
-                                        </div>
-                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    </div>
+                                    <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
                                     @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                        <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==8) || $paper->question_type==8)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(8) }}</label>
+                                    @php
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
+                                    @endphp
+
+                                    <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-6">
+                                                    <textarea class="" rows="5" cols="40" required value="" name="old_input_1[]" placeholder="Enter Column 1 data">{{ $value->input_1 }}</textarea>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="= Marks" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div>
+                                    </div>
+                                    <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php }} @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more5" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
                                     @elseif((isset($_GET['question-type']) && $_GET['question-type']==1) || $paper->question_type==1)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
@@ -206,29 +275,78 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+                                    @elseif((isset($_GET['question-type']) && $_GET['question-type']==3) || $paper->question_type==3)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
+                                    @php
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
+                                    @endphp
+
+                                            <div class="form-group">
+                                                <div class="row" style="margin-bottom:30px;">
+                                                    <div class="col-md-6">
+                                                        <a href="{{ url('/') }}/upload-file/{{ $value->input_1 }}" target="_blank"> {{ $value->input_1 }} </a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control"  value="{{ $value->input_1 }}" name="old_input_1[]" type="hidden">
+                                                        <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                        @php }} @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
                                 @elseif((isset($_GET['question-type']) && $_GET['question-type']==6) || $paper->question_type==6)
                                     <label for="" class=" control-label">{{ getQuestionTemplate(6) }}</label>
                                     @php
-                                        $json_question=json_decode($paper->json_question);
-                                        for($i=0;$i<count($json_question->input_1);$i++)
-                                        {
-
+                                    $detail=getPaperQuestions($paper->id);
+                                    if($detail)
+                                    {
+                                    foreach($detail as $key=>$value)
+                                    {
                                     @endphp
 
-                                    <div class="form-group">
-                                        <div class="row" style="margin-bottom:30px;">
-                                            <div class="col-md-6">
-                                                <textarea rows="5" cols="40" name="input_1[]">{{ $json_question->input_1[$i] }}</textarea>
+                                        <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <select name="old_input_3[]" class="form-control">
+                                                        <option value="add">Add</option>
+                                                        <option value="subtract">Subtract </option>
+                                                        <option value="multiply">Multiply</option>
+                                                        <option value="divide">Divide</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                             </div>
                                         </div>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                        </div>
-                                    </div>
-                                    @php } @endphp
+                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
@@ -345,6 +463,24 @@
         </div>
     </div>
 </div>
+<div class="copy5" style="display:none;">
+    <div class="form-group">
+     <div class="row">
+           <div class="col-md-6">
+               <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+           </div>
+           <div class="col-md-2">
+               <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+           </div>
+           <div class="col-md-2">
+               <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+           </div>
+           <div class="col-md-2">
+               <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+           </div>
+        </div>
+    </div>
+   </div>
 <script>
 
     $(document).ready(function () {
@@ -386,6 +522,11 @@
         $(".add-more4").click(function(){
             var html = $(".copy4").html();
             $(".after-add-more").after(html);
+        });
+
+        $(".add-more5").click(function(){
+        var html = $(".copy5").html();
+        $(".after-add-more").after(html);
         });
 
           $("body").on("click",".remove",function(){

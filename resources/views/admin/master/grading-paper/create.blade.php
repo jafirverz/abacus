@@ -49,7 +49,7 @@
                                     @endif
                                 </div>
 
-                            @if(isset($_GET['question-type']) && ($_GET['question-type']==5 || $_GET['question-type']==4))
+                            @if(isset($_GET['question-type']) && $_GET['question-type']==5)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
                                         <div class="col-md-3">
@@ -76,7 +76,42 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
-                            @elseif(isset($_GET['question-type']) && $_GET['question-type']==2 )
+                                    @elseif(isset($_GET['question-type']) && $_GET['question-type']==4)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
+                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                        <div class="col-md-6">
+                                            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                                    @elseif(isset($_GET['question-type']) && $_GET['question-type']==8)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
+                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                        <div class="col-md-6">
+                                            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more5" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                                    @elseif(isset($_GET['question-type']) && ($_GET['question-type']==2 || $_GET['question-type']==3) )
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
@@ -94,6 +129,7 @@
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
+
                                 @elseif(isset($_GET['question-type']) && $_GET['question-type']==1)
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
@@ -119,19 +155,29 @@
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($_GET['question-type']) }}</label>
                                     <div class="row after-add-more" style="margin-bottom:30px;">
-                                        <div class="col-md-6">
-                                            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
-                                        </div>
-
                                         <div class="col-md-3">
-                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
                                         </div>
                                         <div class="col-md-3">
+                                            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="input_3[]" class="form-control">
+                                                <option value="add">Add</option>
+                                                <option value="subtract">Subtract </option>
+                                                <option value="multiply">Multiply</option>
+                                                <option value="divide">Divide</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                        </div>
+                                        <div class="col-md-2">
                                             <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
                                         </div>
                                     </div>
                                     <div class="input-group-btn">
-                                        <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
                             @endif
 
@@ -238,6 +284,24 @@
         </div>
     </div>
 </div>
+<div class="copy5" style="display:none;">
+ <div class="form-group">
+  <div class="row">
+        <div class="col-md-6">
+            <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+        </div>
+     </div>
+ </div>
+</div>
 <script>
 
 $(document).ready(function () {
@@ -278,6 +342,10 @@ $(document).ready(function () {
 
     $(".add-more4").click(function(){
         var html = $(".copy4").html();
+        $(".after-add-more").after(html);
+    });
+    $(".add-more5").click(function(){
+        var html = $(".copy5").html();
         $(".after-add-more").after(html);
     });
 
