@@ -50,6 +50,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/results',
                 ],
+                [
+                    'title' =>  __('constant.COMPETITION_RESULT_UPLOAD'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/comp-result',
+                ],
             ],
         ],
         [
