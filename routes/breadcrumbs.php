@@ -303,6 +303,28 @@ Breadcrumbs::for('test_management_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 
+// TEST ALLOCATION
+Breadcrumbs::for('test_allocation', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.TEST_ALLOCATION'), route('test-allocation.index'));
+});
+
+Breadcrumbs::for('test_allocation_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('test_allocation');
+    $trail->push($title, $url);
+});
+// SURVEY ALLOCATION
+Breadcrumbs::for('survey_allocation', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.SURVEY_ALLOCATION'), route('survey-allocation.index'));
+});
+
+Breadcrumbs::for('survey_allocation_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('survey_allocation');
+    $trail->push($title, $url);
+});
+
+
 // COURSE
 Breadcrumbs::for('course', function ($trail) {
     $trail->parent('admin_home');

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Notification;
 use App\Announcement;
+use App\InstructorCalendar;
+use App\Grade;
 use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
+use App\GradingStudent;
 use App\TeachingMaterials;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
@@ -23,7 +26,6 @@ use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
 use App\Country;
 use App\UserProfileUpdate;
-use App\InstructorCalendar;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -79,7 +81,7 @@ class ProfileController extends Controller
 		return view('account.instructor-profile', compact("page", "user"));
 	}
 
-    public function overview()
+    public function instructor_overview()
 	{
 		//
 
@@ -88,6 +90,7 @@ class ProfileController extends Controller
 
 		$user = $this->user;
 		$announcements = Announcement::where('teacher_id', $user->id)->get();
+        $calendars = InstructorCalendar::where('teacher_id', $user->id)->get();
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -96,7 +99,7 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.instructor-overview', compact("page", "user","announcements"));
+		return view('account.instructor-overview', compact("page", "user","announcements","calendars"));
 	}
 
     public function grading_examination()
@@ -107,7 +110,7 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		$announcements = Announcement::where('teacher_id', $user->id)->get();
+		$grading = GradingStudent::where('instructor_id',$user->id)->paginate($this->pagination);;
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -116,8 +119,43 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.grading-examination', compact("page", "user","announcements"));
+		return view('account.grading-examination', compact("page", "user","grading"));
 	}
+
+    public function register_grading_examination()
+	{
+		//
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+
+		$user = $this->user;
+        $allocated_user = GradingStudent::where('instructor_id',$user->id)->select('user_id')->get();
+        $allocate_user_array=[];
+        foreach($allocated_user->toArray() as $value)
+        {
+            $allocate_user_array[]=$value['user_id'];
+        }
+        $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
+        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
+        $gradingExam = GradingExam::where('status', 1)->get();
+		$page = get_page_by_slug($slug);
+
+		if (!$page) {
+			return abort(404);
+		}
+
+		//dd($user);
+
+		return view('account.register-grading-examination', compact("page", "user","students","mental_grades","abacus_grades","gradingExam"));
+	}
+
+    public function delete_grading($id)
+    {
+        GradingStudent::where('id', $id)->delete();
+        return redirect()->back()->with('success', __('constant.ALLOCATE_DELETED'));
+    }
 
     public function allocation()
 	{
@@ -233,7 +271,25 @@ class ProfileController extends Controller
         if($qId == 5){
             return view('account.gradingMultipleDivision', compact("paper","grading_exam_id","listing_id","gradingExam"));
         }
+        elseif($qId == 6){
+            return view('account.gradingChallenge', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+        elseif($qId == 8){
+            return view('account.gradingAbacus', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+        elseif($qId == 7){
+            return view('account.gradingMix', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+        elseif($qId == 4){
+            return view('account.gradingAddSubQuestion', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+        elseif($qId == 3){
+            return view('account.gradingNumber', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
         elseif($qId == 1){
+            return view('account.gradingAudio', compact("paper","grading_exam_id","listing_id","gradingExam"));
+        }
+        elseif($qId == 2){
             return view('account.gradingAudio', compact("paper","grading_exam_id","listing_id","gradingExam"));
         }
     }
@@ -308,14 +364,39 @@ class ProfileController extends Controller
 
         $allocation = new Allocation();
         $allocation->student_id  = $request->student_id ?? NULL;
-        $allocation->assigned_by  = $this->user->id;
-        $allocation->assigned_id  = $id;
+        $allocation->assigned_by  = $this->user->id; // Instructor
+        $allocation->assigned_id  = $id;   //Test /Survey
         $allocation->start_date  = $request->start_date ?? NULL;
         $allocation->end_date  = $request->end_date ?? NULL;
         $allocation->type  = 1;
         $allocation->save();
 
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
+	}
+
+    public function grading_register_store(Request $request)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'user_id' => 'required',
+            'mental_grade' => 'required',
+            'abacus_grade' => 'required',
+            'grading_exam_id' => 'required',
+        ]);
+
+
+        $gradingStudent = new GradingStudent();
+        $gradingStudent->user_id   = $request->user_id ?? NULL;
+        $gradingStudent->grading_exam_id   = $request->grading_exam_id ?? NULL;
+        $gradingStudent->instructor_id  = $this->user->id;   //Test /Survey
+        $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
+        $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
+        $gradingStudent->remarks  = $request->remarks ?? NULL;
+        $gradingStudent->save();
+
+		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
 	}
 
     public function cal_store(Request $request)
