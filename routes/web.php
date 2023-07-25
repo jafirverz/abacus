@@ -103,6 +103,8 @@ Route::get('grading-overview', 'ProfileController@grading_overview')->name('grad
 Route::post('grading-overview/result', 'GradingSubmitController@resultpage')->name('grading_answer.submit');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('grading-examination/delete/{id?}', 'ProfileController@delete_grading')->name('grading-examination.delete');
+Route::get('grading-examination/edit/{id?}', 'ProfileController@edit_grading')->name('grading-examination.edit');
+Route::post('grading-examination/edit/{id?}', 'ProfileController@update_grading')->name('grading-examination.update');
 Route::get('grading-examination/view/{id?}', 'ProfileController@view_grading')->name('grading-examination.view');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('register-grading-examination', 'ProfileController@register_grading_examination')->name('register-grading-examination');
