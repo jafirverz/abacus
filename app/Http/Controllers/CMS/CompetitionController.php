@@ -303,4 +303,27 @@ class CompetitionController extends Controller
 
         return view('admin.competition.index', compact('title', 'competition'));
     }
+
+    public function studentList($id){
+        $title = 'Student List';
+        $studentList = CompetitionStudent::where('competition_controller_id', $id)->paginate($this->pagination);
+        return view('admin.competition.studentList', compact('title', 'studentList'));
+    }
+
+    public function rejectstudentList($id){
+        //dd($id);
+        $title = 'Student List';
+        $compStudent = CompetitionStudent::where('id', $id)->first();
+        $compStudent->approve_status = 2;
+        $compStudent->save();
+        return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
+    }
+
+    public function approvestudentList($id){
+        $title = 'Student List';
+        $compStudent = CompetitionStudent::where('id', $id)->first();
+        $compStudent->approve_status = 1;
+        $compStudent->save();
+        return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
+    }
 }
