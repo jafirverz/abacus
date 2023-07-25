@@ -302,6 +302,10 @@ Route::group(['prefix' => 'admin'], function () {
     // COMPETITION
     Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');
     Route::resource('competition', 'CMS\CompetitionController');
+    Route::get('competition/student-list/{id?}', 'CMS\CompetitionController@studentList')->name('competition.studentlist');
+    Route::get('competition/student-list/{id?}/edit', 'CMS\CompetitionController@editstudentList')->name('competition.student.edit');
+    Route::post('competition/student/list/{id?}/reject', 'CMS\CompetitionController@rejectstudentList')->name('competition.student.reject');
+    Route::post('competition/student/list/{id?}/approve', 'CMS\CompetitionController@approvestudentList')->name('competition.student.approve');
 
 
     // COMPETITION PAPERS

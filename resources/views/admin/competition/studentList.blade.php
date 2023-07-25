@@ -6,9 +6,7 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-            <div class="section-header-button">
-                <a href="{{ route('competition.create') }}" class="btn btn-primary">Add New</a>
-            </div>
+            
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
         </div>
@@ -53,7 +51,7 @@
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <!-- <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -61,39 +59,56 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
-                                            <th>Action</th>
-                                            <th>Title</th>
-                                            <th>Date of Competition</th>
+                                            </th> -->
+                                            <th>Account ID</th>
+                                            <th>Student Name</th>
+                                            <th>Email</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
+                                            <th>Approve Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($competition->count())
-                                        @foreach ($competition as $key => $item)
+                                        @if($studentList->count())
+                                        @foreach ($studentList as $key => $item)
                                         <tr>
-                                            <td scope="row">
+                                            <!-- <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
                                                         data-checkboxes="mygroup" class="custom-control-input"
                                                         id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('competition.show', $item->id) }}"
-                                                    class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('competition.edit', $item->id) }}"
-                                                    class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="Edit"><i class="fas fa-edit"></i></a>
-                                                <a href="{{ route('competition.studentlist', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
-                                            </td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->date_of_competition }}</td>
-                                           
+                                            </td> -->
+                                            
+                                            <td>{{ $item->userlist->account_id }}</td>
+                                            <td>{{ $item->userlist->name }}</td>
+                                            <td>{{ $item->userlist->email }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                            <td>
+                                              @if($item->approve_status == 1)
+                                              <div class="btn mr-1 mt-1">Approved</div>
+                                              @elseif($item->approve_status == 2)
+                                                <div class="btn btn-danger mr-1 mt-1">Rejected</div>
+                                              @else
+                                                <a href="{{ route('competition.student.edit', $item->id) }}"
+                                                  class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
+                                                  data-original-title="Approve" data-confirm="Do you want to continue?"
+                                                  data-confirm-yes="event.preventDefault();document.getElementById('approve').submit();">Approve</a>
+                                                  <form id="approve" action="{{ route('competition.student.approve', $item->id) }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="reject_user" value="{{ $item->id }}">
+                                                </form>
+                                                <a href="{{ route('competition.student.edit', $item->id) }}"
+                                                    class="btn btn-danger mr-1 mt-1" data-toggle="tooltip"
+                                                    data-original-title="Reject" data-confirm="Do you want to continue?"
+                                                    data-confirm-yes="event.preventDefault();document.getElementById('reject').submit();">Reject</a>
+                                                <form id="reject" action="{{ route('competition.student.reject', $item->id) }}" method="post">
+                                                      @csrf
+                                                      <input type="hidden" name="reject_user" value="{{ $item->id }}">
+                                                  </form>
+                                              @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                         @else
@@ -106,7 +121,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ $competition->links() }}
+                            {{ $studentList->links() }}
                         </div>
                     </div>
                 </div>
