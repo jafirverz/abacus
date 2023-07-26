@@ -74,7 +74,7 @@ Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name
 Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')->name('feedback.submit');
 Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->name('my-course');
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
-
+Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
 Route::get('/instructor-students', 'ProfileController@studentlist');
 Route::get('/instructor-competition', 'ProfileController@competition');
 

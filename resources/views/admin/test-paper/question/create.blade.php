@@ -2,7 +2,7 @@
 
 @section('content')
 @php
-  $question_template_id = getPaperDetail($paper_id)->question_template_id;
+  echo $question_template_id = getPaperDetail($paper_id)->question_template_id;
 @endphp
 <!-- Main Content -->
 <div class="main-content">
@@ -53,78 +53,137 @@
                                     </span>
                                     @endif
                                 </div>
-
-
-
-                                @if(isset($question_template_id) && $question_template_id==9 || $question_template_id==5)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    <div class="row after-add-more" style="margin-bottom:30px;">
-                                        <div class="col-md-3">
-                                            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <select name="input_3[]" class="form-control">
-                                                <option value="multiply">Multiply</option>
-                                                <option value="divide">Divide</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
-                                        </div>
-                                    </div>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                    </div>
-
-
-                            @elseif(isset($question_template_id) && $question_template_id==4)
-
+                                @if(isset($question_template_id) && $question_template_id==5)
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
-
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="input_3[]" class="form-control">
+                                            <option value="add">Add</option>
+                                            <option value="subtract">Subtract </option>
+                                            <option value="multiply">Multiply</option>
+                                            <option value="divide">Divide</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                    </div>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                                @elseif(isset($question_template_id) && $question_template_id==4)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                                <div class="row after-add-more" style="margin-bottom:30px;">
                                     <div class="col-md-6">
-                                        <textarea class="form-control" required  name="input_1[]" placeholder="Variable 1" required></textarea>
+                                        <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                     </div>
-
-
                                     <div class="col-md-3">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
                                     </div>
-
                                     <div class="col-md-3">
-                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
                                     </div>
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
-                                @elseif(isset($question_template_id) && $question_template_id==6)
+                                @elseif(isset($question_template_id) && $question_template_id==8)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
                                     <div class="col-md-6">
-                                        <input class="form-control" required value="" name="input_1[]"  type="file" placeholder="Upload File">
+                                        <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                     </div>
-
-                                    <div class="col-md-3">
-                                        <input class="form-control" required value="" name="answer[]"  type="text" placeholder="Answer">
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
                                     </div>
-                                    <div class="col-md-3">
-                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
                                     </div>
                                 </div>
-
                                 <div class="input-group-btn">
-                                    <button class="btn btn-success add-more4" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    <button class="btn btn-success add-more5" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                                @elseif(isset($question_template_id) && ($question_template_id==2 || $question_template_id==3) )
+
+                            <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                            <div class="row after-add-more" style="margin-bottom:30px;">
+                                <div class="col-md-6">
+                                    <input class="form-control" required value="" name="input_1[]"  type="file">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
                                 </div>
 
-                            @endif
+                            </div>
+                            <div class="input-group-btn">
+                                <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
 
+                            @elseif(isset($question_template_id) && $question_template_id==1)
 
+                            <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                            <div class="row after-add-more" style="margin-bottom:30px;">
+                                <div class="col-md-6">
+                                    <input class="form-control" required value="" name="input_1[]"  type="file">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                </div>
+                                <div class="col-md-2">
+                                    <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+                                </div>
+                            </div>
+                            <div class="input-group-btn">
+                                <button class="btn btn-success add-more4" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
+                            @elseif(isset($question_template_id) && ($question_template_id==6 || $question_template_id==7 || $question_template_id==8 || $question_template_id==9))
+
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                                <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="input_3[]" class="form-control">
+                                            <option value="add">Add</option>
+                                            <option value="subtract">Subtract </option>
+                                            <option value="multiply">Multiply</option>
+                                            <option value="divide">Divide</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                    </div>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                        @endif
                             </div>
                             <input type="hidden" name="paper_id" value="<?=$paper_id?>">
                             <input type="hidden" name="type" value="<?=$question_template_id?>">
@@ -141,28 +200,31 @@
 </div>
 
 
+
 <!-- Copy Fields -->
 <div class="copy" style="display:none;">
     <div class="form-group">
         <div class="row">
-        <div class="col-md-3">
-            <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-        </div>
-        <div class="col-md-3">
-            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-        </div>
-        <div class="col-md-2">
-            <select name="input_3[]" class="form-control">
-                <option value="multiply">Multiply</option>
-                <option value="divide">Divide</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
-        </div>
-        <div class="col-md-2">
-            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
-        </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+            </div>
+            <div class="col-md-2">
+                <select name="input_3[]" class="form-control">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract </option>
+                    <option value="multiply">Multiply</option>
+                    <option value="divide">Divide</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -177,11 +239,12 @@
             <input class="form-control" required name="input_1[]"  type="file">
         </div>
         <div class="col-md-3">
-            <input class="form-control" required value="" name="input_2[]" placeholder="Answer" type="text">
+            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
         </div>
         <div class="col-md-3">
-            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
         </div>
+
        </div>
        <div class="input-group-btn">
         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -193,17 +256,15 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-6">
-                <textarea class="form-control" required value="" name="input_1[]" placeholder="Variable 1" required></textarea>
-            </div>
-
-
-
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
             <div class="col-md-3">
-                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
+
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
@@ -216,44 +277,91 @@
             <div class="col-md-6">
                 <input class="form-control" required value="" name="input_1[]"  type="file">
             </div>
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="answer[]"  type="text" placeholder="Answer">
+
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
             </div>
-       </div>
-       <div class="input-group-btn">
-        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-      </div>
+            <div class="col-md-2">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+            </div>
+        </div>
     </div>
 </div>
+<div class="copy5" style="display:none;">
+    <div class="form-group">
+     <div class="row">
+           <div class="col-md-6">
+               <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+           </div>
+           <div class="col-md-2">
+               <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+           </div>
+           <div class="col-md-2">
+               <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+           </div>
+           <div class="col-md-2">
+               <input class="form-control" required value="" name="input_2[]" placeholder="Block" type="text">
+           </div>
+        </div>
+    </div>
+   </div>
 <script>
 
     $(document).ready(function () {
 
-        $(".add-more").click(function(){
+        $('body').on('change','#worksheet', function() {
+             alert(this.value);
+             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var worksheet_id= this.value;
+                //alert(make);
+                //alert(id);
+                $.ajax({
+                    url:"<?php echo url('/'); ?>/admin/question/find-worksheet",
+                    method:"POST",
+                    data:{_token: CSRF_TOKEN,worksheet_id:worksheet_id},
+                    success:function(data){
+                        //$("#model_header_list").html(data);
+                        //$('.selectpicker').selectpicker('refresh');
+                    }
+                });
+        });
+
+
+
+          $(".add-more").click(function(){
               var html = $(".copy").html();
               $(".after-add-more").after(html);
           });
 
           $(".add-more2").click(function(){
-              var html = $(".copy2").html();
-              $(".after-add-more").after(html);
+          var html = $(".copy2").html();
+          $(".after-add-more").after(html);
           });
 
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
             $(".after-add-more").after(html);
         });
+
         $(".add-more4").click(function(){
             var html = $(".copy4").html();
             $(".after-add-more").after(html);
         });
 
+        $(".add-more5").click(function(){
+        var html = $(".copy5").html();
+        $(".after-add-more").after(html);
+        });
 
           $("body").on("click",".remove",function(){
               $(this).parents(".form-group").remove();
+          });
+
+          $("body").on("click",".remove2",function(){
+              $(this).parents(".row").remove();
           });
 
         });
