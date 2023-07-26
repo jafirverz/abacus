@@ -43,7 +43,7 @@ class OnlineStudentController extends Controller
         $course = Course::find($id);
         $paper_detail=TestPaperDetail::where('paper_id',$course->paper->id)->first();
         $qId=$course->paper->question_template_id;
-        //dd($qId);
+        ///dd($qId);
         if($qId == 5){
             return view('account.courseMultipleDivision', compact("course","paper_detail"));
         }
