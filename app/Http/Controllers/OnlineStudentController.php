@@ -54,7 +54,7 @@ class OnlineStudentController extends Controller
             return view('account.courseAbacus', compact("course","paper_detail"));
         }
         elseif($qId == 7){
-            return view('account.coursegMix', compact("course","paper_detail"));
+            return view('account.courseMix', compact("course","paper_detail"));
         }
         elseif($qId == 4){
             return view('account.courseAddSubQuestion', compact("course","paper_detail"));
@@ -66,7 +66,7 @@ class OnlineStudentController extends Controller
             return view('account.courseAudio', compact("course","paper_detail"));
         }
         elseif($qId == 2){
-            return view('account.courseAudio', compact("course","paper_detail"));
+            return view('account.courseVideo', compact("course","paper_detail"));
         }
         //return view('account.online-my-course-detail', compact('course'));
     }
