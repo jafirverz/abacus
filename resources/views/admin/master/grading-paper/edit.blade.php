@@ -276,7 +276,7 @@
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
                                     @elseif((isset($_GET['question-type']) && $_GET['question-type']==3) || $paper->question_type==3)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate(2) }}</label>
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(3) }}</label>
                                     @php
                                     $detail=getPaperQuestions($paper->id);
                                     if($detail)
@@ -349,7 +349,7 @@
                                     @php }} @endphp
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
-                                        <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
                                     @endif
 

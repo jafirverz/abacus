@@ -14,7 +14,7 @@
             </div>
             <ul class="breadcrumb bctype">
                 <li><a href="{{ url('online-student/my-course')}}">My Courses</a></li>
-                <li><strong>{{ $course->level->title}}</strong></li> 
+                <li><strong>{{ $course->level->title}}</strong></li>
             </ul>
             <div class="box-1">
                 <h2 class="title-2">{{ $course->title}}</h2>

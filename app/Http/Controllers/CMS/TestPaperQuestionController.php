@@ -52,7 +52,7 @@ class TestPaperQuestionController extends Controller
     public function create($paper_id)
     {
         $title = $this->title;
-        $questions = QuestionTemplate::whereIn('id',[3,4,5,6,7,8,9])->orderBy('id','desc')->get();
+        $questions = QuestionTemplate::orderBy('id','desc')->get();
         return view('admin.test-paper.question.create', compact('title','paper_id','questions'));
     }
 
@@ -73,7 +73,7 @@ class TestPaperQuestionController extends Controller
         $testPaperDetail->question = $request->question ?? NULL;
         $testPaperDetail->paper_id  = $request->paper_id;
         $testPaperDetail->save();
-        if($request->type==5)
+        if($request->type==5 || $request->type==7  || $request->type==6)
         {
             for($k=0;$k<count($request->input_1);$k++)
             {
@@ -101,7 +101,22 @@ class TestPaperQuestionController extends Controller
 
 
         }
-        elseif($request->type==6)
+        elseif($request->type==8)
+        {
+            for($k=0;$k<count($request->input_1);$k++)
+            {
+                $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                $testPaperQuestionDetail->input_1   = $request->input_1[$k];
+                $testPaperQuestionDetail->input_2   = $request->input_2[$k];
+                $testPaperQuestionDetail->answer   = $request->answer[$k];
+                $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
+                $testPaperQuestionDetail->marks   = $request->marks[$k];
+                $testPaperQuestionDetail->save();
+            }
+
+
+        }
+        elseif($request->type==2 || $request->type==3)
         {
 
 
@@ -130,18 +145,30 @@ class TestPaperQuestionController extends Controller
 
 
         }
-        else
+        elseif($request->type==1)
         {
 
-            for($k=0;$k<count($request->input_1);$k++)
+            if ($request->hasfile('input_1'))
             {
-                $testPaperQuestionDetail = new TestPaperQuestionDetail();
-                $testPaperQuestionDetail->input_1   = $request->input_1[$k];
-                $testPaperQuestionDetail->input_2   = $request->input_2[$k];
-                $testPaperQuestionDetail->answer   = $request->answer[$k];
-                $testPaperQuestionDetail->marks   = $request->marks[$k];
-                $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
-                $testPaperQuestionDetail->save();
+                $i=0;
+                foreach ($request->file('input_1') as $file) {
+
+                    if(isset($request->answer[$i]))
+                    {
+                    $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                    $testPaperQuestionDetail->input_1 = uploadPicture($file, 'upload-file');
+                    $testPaperQuestionDetail->test_paper_question_id   = $testPaperDetail->id;
+                    $testPaperQuestionDetail->answer   = $request->answer[$i];
+                    $testPaperQuestionDetail->marks   = $request->marks[$i];
+                    $testPaperQuestionDetail->input_2   = $request->input_2[$i];
+                    $testPaperQuestionDetail->save();
+                    }
+
+                    $i++;
+
+
+                }
+
             }
 
 
@@ -176,7 +203,7 @@ class TestPaperQuestionController extends Controller
     {
         $title = $this->title;
         $list = TestPaperDetail::findorfail($id);
-        $questions = QuestionTemplate::whereIn('id',[3,4,5,6,7,8,9])->orderBy('id','desc')->get();
+        $questions = QuestionTemplate::orderBy('id','desc')->get();
         return view('admin.test-paper.question.edit', compact('title', 'list','paper_id','questions'));
     }
 
@@ -198,7 +225,7 @@ class TestPaperQuestionController extends Controller
         $testPaperDetail->question = $request->question ?? NULL;
         $testPaperDetail->save();
 
-        if($request->type==5)
+        if($request->type==5 || $request->type==7  || $request->type==6)
         {
 
                     for($m=0;$m<count($request->listing_detail_id);$m++)
@@ -252,7 +279,7 @@ class TestPaperQuestionController extends Controller
 
 
         }
-        elseif($request->type==6)
+        elseif($request->type==2 || $request->type==3)
         {
 
 
@@ -278,7 +305,9 @@ class TestPaperQuestionController extends Controller
                             }
 
                     }
+
                      $n=0;
+
                      if($request->hasFile('input_1'))
                      {
 
@@ -317,7 +346,7 @@ class TestPaperQuestionController extends Controller
                                     $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
                                     $testPaperQuestionDetail->answer   = $request->old_answer[$m];
                                     $testPaperQuestionDetail->marks   = $request->old_marks[$m];
-                                    
+
                                     $testPaperQuestionDetail->save();
                                 }
                                 else
@@ -353,7 +382,7 @@ class TestPaperQuestionController extends Controller
 
 
         }
-        else
+        elseif($request->type==1)
         {
 
 
@@ -363,12 +392,11 @@ class TestPaperQuestionController extends Controller
                         {
                             if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
                             {
-                                $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
-                                $testPaperQuestionDetail->title   = $request->old_input_1[$m];
-                                $testPaperQuestionDetail->price   = $request->old_input_2[$m];
-                                $testPaperQuestionDetail->paper_id   = $request->old_input_3[$m];
-                                $testPaperQuestionDetail->marks   = $request->old_marks[$m];
-                                $testPaperQuestionDetail->save();
+                                    $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
+                                    $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
+                                    $testPaperQuestionDetail->input_2   = $request->old_input_2[$m];
+                                    $testPaperQuestionDetail->save();
                             }
                             else
                             {
@@ -380,26 +408,29 @@ class TestPaperQuestionController extends Controller
                     }
 
 
+                    if ($request->hasfile('input_1'))
+                    {
+                        $i=0;
+                        foreach ($request->file('input_1') as $file) {
 
-                     if($request->input_1)
-                     {
-
-                        for($z=0;$z<count($request->input_1);$z++)
-                        {
-                            if(isset($request->input_1[$z]))
+                            if(isset($request->answer[$i]))
                             {
-                                $testPaperQuestionDetail = new TestPaperQuestionDetail();
-                                $testPaperQuestionDetail->grading_listing_id   = $id;
-                                $testPaperQuestionDetail->paper_id = $request->input_3[$z];
-                                $testPaperQuestionDetail->title   = $request->input_1[$z];
-                                $testPaperQuestionDetail->price   = $request->input_2[$z];
-                                $testPaperQuestionDetail->marks   = $request->marks[$z];
-                                $testPaperQuestionDetail->save();
+                            $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                            $testPaperQuestionDetail->input_1 = uploadPicture($file, 'upload-file');
+                            $testPaperQuestionDetail->test_paper_question_id   = $testPaperDetail->id;
+                            $testPaperQuestionDetail->answer   = $request->answer[$i];
+                            $testPaperQuestionDetail->marks   = $request->marks[$i];
+                            $testPaperQuestionDetail->input_2   = $request->input_2[$i];
+                            $testPaperQuestionDetail->save();
                             }
+
+                            $i++;
+
 
                         }
 
-                     }
+                    }
+
 
         }
         $testPaperDetail->save();
