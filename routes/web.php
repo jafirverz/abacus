@@ -93,6 +93,14 @@ Route::post('/standalone-page/result', 'StandalonePageController@result');
 
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
 
+Route::get('/cart/{id?}', 'ProfileController@cartList')->name('cartlist');
+Route::get('/cart/delete/all', 'ProfileController@cartListDelete')->name('delete.cart');
+Route::post('/cart', 'ProfileController@cart')->name('cart');
+
+
+Route::get('/checkout', 'ProfileController@checkout');
+
+
 // ************ ACCOUNT/PROFILE *******************/
 Route::get('instructor-overview', 'ProfileController@instructor_overview')->name('instructor.overview');
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');

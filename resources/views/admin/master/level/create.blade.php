@@ -45,6 +45,27 @@
                                     
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="title">Premium Months</label>
+                                    <input type="text" name="months" class="form-control" id=""
+                                        value="{{ old('months') }}">
+                                    @if ($errors->has('months'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('months') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Premium Amount</label>
+                                    <input type="text" name="amount" class="form-control" id=""
+                                        value="{{ old('amount') }}">
+                                    @if ($errors->has('amount'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('amount') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
 
                                 <div class="form-group">
                                     <label for="status">Status</label>
