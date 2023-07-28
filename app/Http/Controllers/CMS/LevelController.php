@@ -88,6 +88,8 @@ class LevelController extends Controller
         $level->slug = str_slug($request->title);
         $level->description = $request->description;
         $level->status = $request->status;
+        $level->premium_months = $request->months;
+        $level->premium_amount = $request->amount;
         $level->save();
 
         return redirect()->route('level.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
@@ -158,6 +160,8 @@ class LevelController extends Controller
         $level->title = $request->title;
         $level->slug = str_slug($request->title);
         $level->description = $request->description;
+        $level->premium_months = $request->months;
+        $level->premium_amount = $request->amount;
         $level->status = $request->status;
         $level->save();
 

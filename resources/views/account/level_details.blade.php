@@ -26,12 +26,17 @@
                     {!! $checkSlug->description !!}
                   </div>
                 </div>
-                <div class="col-lg-12 sp-col gincol-2">
-                  <a class="btn-1" href="#">Upgrade to Premium Member for 9 months (SGD$9.90) <i
-                      class="fa-solid fa-arrow-right-long"></i></a>
-                  <div class="note-2"><i class="icon-info"></i> Sign-up as premium member to get access to all the
-                    exercises and unlock all features in the worksheets</div>
-                </div>
+                <form method="post" action="{{ route('cart') }}">
+                  @csrf
+                  <input type="hidden" name="levelId" value="{{ $checkSlug->id }}">
+                  <input type="hidden" name="type" value="level">
+                  <div class="col-lg-12 sp-col gincol-2">
+                    <button type="submit" class="btn-1" >Upgrade to Premium Member for 9 months (SGD$9.90) <i
+                        class="fa-solid fa-arrow-right-long"></i></button>
+                    <div class="note-2"><i class="icon-info"></i> Sign-up as premium member to get access to all the
+                      exercises and unlock all features in the worksheets</div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
