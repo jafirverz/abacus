@@ -41,7 +41,7 @@
                                     <td><em>{{ $i }}</em></td>
                                     <td>
                                         <em>{{ $grade->student->name  ?? ''}}</em>
-                                        <div class="tbactions"><a href="{{ route('grading-examination.edit',$grade->id) }}">Edit</a> <a href="{{ route('grading-examination.view',$grade->id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}">Delete</a></div>
+                                        <div class="tbactions"><a href="{{ route('grading-examination.edit',$grade->id) }}">Edit</a> <a href="{{ route('grading-examination.view',$grade->id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
                                     </td>
                                     <td><em>{{ $grade->mental->title ?? '' }}</em></td>
                                     <td><em>{{ $grade->abacus->title ?? '' }}</em></td>

@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+$calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->get();
+@endphp
 <main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">

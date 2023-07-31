@@ -10,14 +10,19 @@ use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
 use App\GradingStudent;
+use App\LearningLocation;
 use App\TeachingMaterials;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
 use App\TestManagement;
+use App\TestQuestionSubmission;
+use App\TestPaperQuestionDetail;
+use App\TestSubmission;
 use App\Survey;
 use App\User;
 use App\Allocation;
+use App\TestPaperDetail;
 use App\Admin;
 use App\CategoryCompetition;
 use App\Competition;
@@ -283,6 +288,89 @@ class ProfileController extends Controller
 		return view('account.grading-overview', compact("page", "gradingExam","gradingExamList"));
 	}
 
+    public function detail_test($id){
+        $test = TestManagement::find($id);
+        $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
+        $qId=$test->paper->question_template_id;
+        //dd($qId);
+        if($qId == 5){
+            return view('account.testMultipleDivision', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 6){
+            return view('account.testChallenge', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 8){
+            return view('account.testAbacus', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 7){
+            return view('account.testMix', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 4){
+            return view('account.testAddSubQuestion', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 3){
+            return view('account.testNumber', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 1){
+            return view('account.testAudio', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 2){
+            return view('account.testVideo', compact("test","all_paper_detail"));
+        }
+        //return view('account.online-my-course-detail', compact('course'));
+    }
+
+    public function submit_test(Request $request){
+
+        $test_id = $request->test_id;
+        $questionTypeId = $request->question_type;
+        $userId = Auth::user()->id;
+        $questTem = array(1,2,3,4,5,6,7,8);
+        $resultpage = array(1,2,3,4,5,6,7,8);
+
+        foreach($request->test_paper_question_id as $test_paper_question_id)
+        {
+            if(in_array($questionTypeId, $questTem)){
+                $courseSub = new TestSubmission();
+                $courseSub->test_paper_question_id   = $test_paper_question_id;
+                $courseSub->test_id  = $test_id;
+                $courseSub->question_template_id = $questionTypeId;
+                $courseSub->user_id = $userId;
+                $courseSub->save();
+                $totalMarks = 0;
+                $userMarks = 0;
+
+                foreach($request->answer as $key=>$value){
+                    $quesSub = new TestQuestionSubmission();
+                    $testPaperQuestion = TestPaperQuestionDetail::where('id', $key)->first();
+                    $quesSub->test_submitted_id    = $courseSub->id;
+                    $quesSub->question_id = $key;
+                    $quesSub->question_answer = $testPaperQuestion->answer;
+                    //dd($testPaperQuestion);
+                    $quesSub->user_answer = $value;
+                    $quesSub->marks = $testPaperQuestion->marks;
+                    if($value == $testPaperQuestion->answer){
+                        $quesSub->user_marks = $testPaperQuestion->marks;
+                        $userMarks+= $testPaperQuestion->marks;
+                    }else{
+                        $quesSub->user_marks = null;
+                    }
+                    $totalMarks+= $testPaperQuestion->marks;
+                    $quesSub->save();
+                }
+                $saveResult = TestSubmission::where('id', $courseSub->id)->first();
+                $saveResult->total_marks = $totalMarks;
+                $saveResult->user_marks = $userMarks;
+                $saveResult->save();
+            }
+        }
+        if(in_array($questionTypeId, $resultpage)){
+            return view('result-course', compact('totalMarks', 'userMarks'));
+        }
+
+
+    }
+
     public function grading_paper($grading_exam_id,$listing_id,$paper_id)
     {
         $paper=GradingPaper::find($paper_id);
@@ -515,7 +603,7 @@ class ProfileController extends Controller
 	 */
 	public function store(Request $request)
 	{
-//        dd($request->all());
+         //        dd($request->all());
         $users = User::find($this->user->id);
         if($request->updateimage == 1 && $request->updateprofile == 0){
             if ($request->hasFile('profile_picture')) {
@@ -554,17 +642,17 @@ class ProfileController extends Controller
                     'gender' => 'required',
                     // 'instructor' => 'required',
                     'country_code' => 'required',
-//                'password'  =>  'nullable|min:8',
-//			'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
+                    //                'password'  =>  'nullable|min:8',
+                    //			'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
 
 
-                ], $messages); //dd($request);
-            }
-//            $checkPendingRequest = UserProfileUpdate::where('user_id', $users->id)->where('approve_status', '!=', 1)->first();
-//            if($checkPendingRequest){
-//                //throw ValidationException::withMessages(['Profile Update request already pending']);
-//                return back()->withErrors('Profile Update request already pending');
-//            }
+                                    ], $messages); //dd($request);
+                                }
+                    //            $checkPendingRequest = UserProfileUpdate::where('user_id', $users->id)->where('approve_status', '!=', 1)->first();
+                    //            if($checkPendingRequest){
+                    //                //throw ValidationException::withMessages(['Profile Update request already pending']);
+                    //                return back()->withErrors('Profile Update request already pending');
+                    //            }
 						$var = $request->dob;
 						$date = str_replace('/', '-', $var);
 						$dob = date('Y-m-d', strtotime($date));
@@ -700,7 +788,7 @@ class ProfileController extends Controller
 
     public function instructor_store(Request $request)
 	{
-//        dd($request->all());
+              //dd($request->all());
         $users = User::find($this->user->id);
 
             $messages = [
@@ -822,12 +910,143 @@ class ProfileController extends Controller
 
 	public function competition()
 	{
-		$instructor_id = User::where('id', Auth::user()->id)->first();
-		$competition = Competition::where('status', 1)->orderBy('id', 'desc')->first();
-		$students = User::has('userlist')->where('instructor_id', $instructor_id->id)->paginate(5);
-		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $instructor_id->id)->paginate(5);
+		$user = $this->user;
+        $instructor_id = User::where('id', Auth::user()->id)->first();
+        $allocated_competition = CompetitionStudent::where('instructor_id', $user->id)->pluck('competition_controller_id');
+        $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
+		$competition = Competition::where('status', 1)->whereNotIn('id',$allocated_competition)->orderBy('id', 'desc')->first();
+
+		$students = User::whereNotIn('id',$allocated_competition)->get();
+
+        $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+
+
 		return view('account.competition-students', compact('competition', 'compStudents', 'competition'));
 	}
+
+    public function delete_instructor_competition($id)
+    {
+        CompetitionStudent::where('id', $id)->delete();
+        return redirect()->back()->with('success', __('constant.ALLOCATE_DELETED'));
+    }
+
+    public function edit_instructor_competition($id)
+	{
+
+
+        $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('id','desc')->get();
+        $categories = CompetitionCategory::orderBy('id','desc')->get();
+		$competition_student = CompetitionStudent::find($id);
+        $competition = Competition::where('status', 1)->where('id', $competition_student->competition_controller_id)->first();
+        $user = User::find($competition_student->user_id);
+		//dd($user);
+		return view('account.edit-competition-registration', compact('competition', 'students', 'competition_student','locations','categories','user'));
+	}
+
+    public function update_instructor_competition(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'learning_location' => 'required',
+            'category_id' => 'required',
+        ]);
+
+
+        $competitionStudent = CompetitionStudent::find($id);
+        $competitionStudent->learning_location  = $request->learning_location ?? NULL;
+        $competitionStudent->category_id  = $request->category_id ?? NULL;
+        $competitionStudent->remarks  = $request->remarks ?? NULL;
+        $competitionStudent->save();
+
+		return redirect()->route('instructor-competition')->with('success', __('constant.GRADING_UPDATED'));
+	}
+
+    public function competition_register_instructor($competition_id)
+	{
+        $user = $this->user;
+		$competition = Competition::where('status', 1)->where('id', $competition_id)->first();
+        $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('id','desc')->get();
+        $categories = CompetitionCategory::orderBy('id','desc')->get();
+		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $user->id)->paginate($this->pagination);
+		//dd($user);
+		return view('account.competition-registration', compact('competition', 'students', 'compStudents','locations','categories'));
+	}
+
+    public function competition_register_instructor_store(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'user_id' => 'required',
+            'learning_location' => 'required',
+            'category_id' => 'required',
+        ]);
+
+
+        $competitionStudent = new CompetitionStudent();
+        $competitionStudent->user_id   = $request->user_id ?? NULL;
+        $competitionStudent->competition_controller_id    = $id ?? NULL;
+        $competitionStudent->instructor_id  = $this->user->id;   //Test /Survey
+        $competitionStudent->learning_location  = $request->learning_location ?? NULL;
+        $competitionStudent->category_id  = $request->category_id ?? NULL;
+        $competitionStudent->remarks  = $request->remarks ?? NULL;
+        $competitionStudent->save();
+
+		return redirect()->route('instructor-competition')->with('success', __('constant.GRADING_UPDATED'));
+	}
+
+    public function update_competition(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'mental_grade' => 'required',
+            'abacus_grade' => 'required',
+        ]);
+
+
+        $gradingStudent = GradingStudent::find($id);
+        $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
+        $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
+        $gradingStudent->remarks  = $request->remarks ?? NULL;
+        $gradingStudent->save();
+
+		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
+	}
+
+    public function register_instructor_store(Request $request)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'user_id' => 'required',
+            'mental_grade' => 'required',
+            'abacus_grade' => 'required',
+            'grading_exam_id' => 'required',
+        ]);
+
+
+        $gradingStudent = new GradingStudent();
+        $gradingStudent->user_id   = $request->user_id ?? NULL;
+        $gradingStudent->grading_exam_id   = $request->grading_exam_id ?? NULL;
+        $gradingStudent->instructor_id  = $this->user->id;   //Test /Survey
+        $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
+        $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
+        $gradingStudent->remarks  = $request->remarks ?? NULL;
+        $gradingStudent->save();
+
+		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
+	}
+
+
+
 
 	/**
 	 * Display the specified resource.
@@ -914,12 +1133,6 @@ class ProfileController extends Controller
 	}
 
 
-
-
-
-
-
-
 	public function change_password($slug = 'my-profile')
 	{
 		$title = __('constant.CHANGE_PASSWORD');
@@ -987,247 +1200,7 @@ class ProfileController extends Controller
 		return abort(404);
 	}
 
-	public function insurance_applications($slug = 'insurance-applications')
-	{
-		$page = get_page_by_slug($slug);
-		$title = __('constant.INSURANCE_APPLICATION');
-		//dd($page);
-		if (!$page) {
-			return abort(404);
-		}
-// 		$insurance = Insurance::join('insurance_information', 'insurance_information.insurance_id', 'insurances.id')->join('insurance_vehicles', 'insurance_vehicles.insurance_id', 'insurances.id')->where('insurances.user_id', $this->user->id)->orderBy('insurances.id', 'desc')->paginate($this->pagination);
-        $insurance = Insurance::has('insurance_information')->has('insurance_vehicle')->where('user_id', $this->user->id)->orderBy('id', 'desc')->where('form_archived', 0)->paginate($this->pagination);
-		return view("account.insurance-applications", compact("page", "title", "insurance"));
-	}
 
-	public function insurance_applications_detail($id, Request $request)
-	{
-		$slug = 'insurance-applications';
-		$page = get_page_by_slug($slug);
-		if (!$page) {
-			return abort(404);
-		}
-		$title = __('constant.INSURANCE_APPLICATION');
-		$slug = 'insurance';
-		$page2 = get_page_by_slug($slug);
-		if (!Auth::check()) {
-			$request->session()->put('previous_url', url()->current());
-			return $this->loginRedirect();
-		}
-// 		$insurance = Insurance::join('insurance_information', 'insurance_information.insurance_id', 'insurances.id')->join('insurance_vehicles', 'insurance_vehicles.insurance_id', 'insurances.id')->where('insurances.user_id', Auth::user()->id)->where('insurances.id', $id)->first();
-
-		$insurance = Insurance::has('insurance_information')->has('insurance_vehicle')->where('user_id', $this->user->id)->orderBy('id', 'desc')->where('id', $id)->first();
-		if (!$insurance) {
-			return abort(403, "Unauthorized access.");
-		}
-
-
-
-		if ($insurance->quotation_id == null) {
-			$partners =  InsuranceQuotation::join('admins', 'admins.id', '=', 'insurance_quotations.partner_id')->where('insurance_quotations.insurance_id', $id)->select('insurance_quotations.*')->groupBy('insurance_quotations.partner_id')->get();
-		} else {
-			$partners =  InsuranceQuotation::join('admins', 'admins.id', '=', 'insurance_quotations.partner_id')->where('insurance_quotations.insurance_id', $id)->where('insurance_quotations.id', $insurance->quotation_id)->select('insurance_quotations.*')->groupBy('insurance_quotations.partner_id')->get();
-		}
-		//dd($partners);
-		return view("account.insurance-applications-detail", compact("page", "title", "insurance", "partners", "page2"));
-	}
-
-	public function insurance_customer_sign(Request $request)
-	{
-
-		$insuranceQuotation = InsuranceQuotation::find($request->quotation_id);
-		$request->validate([
-			'customer_sign' => 'required',
-		]);
-
-
-		$slug = 'insurance';
-		$page = get_page_by_slug($slug);
-		if ($request->customer_sign) {
-			$encoded_image = explode(",", $request->customer_sign)[1];
-			$decoded_image = base64_decode($encoded_image);
-			$customer_sign = $decoded_image;
-			$filename = Carbon::now()->format('Y-m-d H-i-s') . '__' . guid() . '__signature.jpg';
-			$filepath = 'storage/signature/';
-
-			$path_signature = $filepath . $filename;
-			file_put_contents($path_signature, $customer_sign);
-			$insuranceQuotation->customer_sign = $path_signature;
-		}
-
-
-		$insuranceQuotation->save();
-		$insurance = Insurance::join('insurance_information', 'insurance_information.insurance_id', 'insurances.id')->join('insurance_vehicles', 'insurance_vehicles.insurance_id', 'insurances.id')->where('insurances.id', $insuranceQuotation->insurance_id)->first();
-		$quote = getQuotation($insurance->quotation_id);
-		$info = pathinfo($quote->insurance_proposal_form);
-		// dd($insurance);
-		$quotations =  InsuranceQuotation::where('insurance_id', $insuranceQuotation->insurance_id)->where('partner_id', $insurance->partner_id)->get();
-		$content = [];
-		$termandcondition = null;
-		if ($page->json_content) {
-			$content = json_decode($page->json_content, true);
-			$termandcondition = isset($content['section_1']) ? $content['section_1'] : '';
-		}
-		//return View('pdf.insurance', compact("insurance", "quotations", 'termandcondition'));
-
-		if (isset($info['extension']) && $info['extension'] == 'pdf') {
-
-
-			/****************PDF to pdf generation**************************/
-			$content = View::make('pdf.insurance', compact("insurance", "quotations", "termandcondition"));
-			$insurancePDF = $this->generatePDF($content, "insurance.pdf");
-
-
-
-			/*****************PDF SIGNATURE**************************/
-			$content = View::make('pdf.signature', compact("insurance", "quotations", 'termandcondition'));
-			$signaturePDF = $this->generatePDF($content, "signature.pdf");
-
-
-			/****************PDF generation**************************/
-			$pdfFile1Path = public_path() . '/' . $insurancePDF;
-			$pdfFile2Path = public_path() . '/' . $quote->insurance_proposal_form;
-			$pdfFile3Path = public_path() . '/' . $signaturePDF;
-
-			// Create an instance of PDFMerger
-			$merger = new PDFMerger();
-
-			// Add 2 PDFs to the final PDF
-			$merger->addPDF($pdfFile1Path, 'all');
-			$merger->addPDF($pdfFile2Path, 'all');
-			$merger->addPDF($pdfFile3Path, 'all');
-
-			// Merge the files into a file in some directory
-			$fullfilename =  $filepath . Carbon::now()->timestamp . "__result.pdf";
-
-			// Merge PDFs into a file
-			$merger->merge('file', $fullfilename);
-		} else {
-			/****************PDF generation from html and image**************************/
-			$content = View::make('pdf.insurance-all', compact("insurance", "quotations", 'termandcondition'));
-			$fullfilename = $this->generatePDF($content, "insurance.pdf");
-
-
-
-			/****************PDF generation**************************/
-		}
-		$insurance = Insurance::find($insuranceQuotation->insurance_id);
-		$insurance->insurance_pdf = isset($fullfilename) ? $fullfilename : NULL;
-		$insurance->save();
-
-		// EMAIL TO PARTNER
-		$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_PARTNER_SIGN_SUBMIT'));
-		//dd($email_template);
-		if ($email_template) {
-			$data = [];
-
-			$data['email_sender_name'] = $this->systemSetting()->email_sender_name;
-			$data['from_email'] = $this->systemSetting()->from_email;
-			$data['cc_to_email'] = [];
-			$data['subject'] = $email_template->subject;
-			$partner =  Admin::find($insurance->partner_id);
-			//dd($partners);
-			if ($partner) {
-
-				$url = url('admin/insurance/' . $insurance->id . '/edit');
-				$link = '<a href="' . $url . '">' . $url . '</a>';
-				$message = $insurance->main_driver_full_name . ' has signed the Insurance application form.';
-				$notification = new Notification();
-				$notification->insurance_id = isset($insurance->id) ? $insurance->id : NULL;
-				$notification->quotaton_id = isset($request->quotation) ? $request->quotation : NULL;
-				$notification->partner_id = $partner->id;
-				$notification->message = $message;
-				$notification->link = $url;
-				$notification->status = 1;
-				$notification->save();
-
-
-
-				$data['email'] = [$partner->email];
-
-				$name = $partner->firstname . ' ' . $partner->lastname;
-				$key = ['{{name}}', '{{customer}}', '{{link}}'];
-				$value = [$name, $insurance->main_driver_full_name, $link];
-				$newContent = str_replace($key, $value, $email_template->content);
-				$data['contents'] = $newContent;
-				//dd($data);
-
-				try {
-					SendEmail::dispatch($data);
-				} catch (Exception $exception) {
-					//dd($exception);
-				}
-			}
-		}
-
-		return redirect()->back()->with('success', __('constant.QUOTATION_SIGNED_USER'));
-	}
-
-	public function quotation_submit(Request $request)
-	{
-		//dd($request);
-		$quote = getQuotation($request->quotation);
-		$insurance = Insurance::find($request->insurance_id);
-		if (!$quote) {
-			return redirect('insurance-applications/' . $insurance->id)->with('error', __('constant.QUOTATION_DELETED'));
-		}
-
-		$insurance->quotation_id = isset($request->quotation) ? $request->quotation : NULL;
-		$insurance->partner_id = $quote->partner_id;
-		$insurance->save();
-
-		// EMAIL TO USER
-		$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_QUOTATION_ACCEPTED'));
-
-		if ($email_template) {
-			$data = [];
-
-			$data['email_sender_name'] = $this->systemSetting()->email_sender_name;
-			$data['from_email'] = $this->systemSetting()->from_email;
-			$data['cc_to_email'] = [];
-
-			$key1 = ['{{customer}}'];
-			$value1 = [$insurance->main_driver_full_name];
-			$data['subject'] = str_replace($key1, $value1, $email_template->subject);
-// 			$data['subject'] = $email_template->subject;
-
-			//dd($data);
-
-			$partner =  Admin::find($quote->partner_id);
-			//dd($partners);
-			if ($partner) {
-				$url = url('admin/insurance/' . $insurance->id . '/edit');
-				$link = '<a href="' . $url . '">' . $url . '</a>';
-				$message = $insurance->main_driver_full_name . ' has accepted the quotation.';
-				$notification = new Notification();
-				$notification->insurance_id = isset($request->insurance_id) ? $request->insurance_id : NULL;
-				$notification->quotaton_id = isset($request->quotation) ? $request->quotation : NULL;
-				$notification->partner_id = $partner->id;
-				$notification->message = $message;
-				$notification->link = $url;
-				$notification->status = 1;
-				$notification->save();
-
-
-
-				$name = $partner->firstname . ' ' . $partner->lastname;
-				$key = ['{{name}}', '{{url}}', '{{customer}}'];
-				$value = [$name, $link, $insurance->main_driver_full_name];
-				$newContent = str_replace($key, $value, $email_template->content);
-				$data['contents'] = $newContent;
-				$data['email'] = [$partner->email];
-				try {
-					SendEmail::dispatchNow($data);
-				} catch (Exception $exception) {
-					//dd($exception);
-				}
-			}
-		}
-
-
-		return redirect('insurance-applications/'.$insurance->id)->with('success', __('constant.QUOTATION_ACCEPTED'));
-
-	}
 
 
 	public function generatePDF($content, $filename)
@@ -1341,565 +1314,7 @@ class ProfileController extends Controller
 		$pdf->save($fullfilename);
 	}
 
-	public function myChat(Request $request, $carId = null, $buyerId = null)
-	{
-		$title = __('constant.MY_PROFILE');
-		$slug =  __('constant.SLUG_MY_PROFILE');
-		$user = $this->user;
-		$current_user_id = $buyerId;
-		$page = get_page_by_slug($slug);
-		if ($carId) {
-			$chkCar = VehicleMain::where('id', $carId)->first();
-			if (!$chkCar) {
-				return abort(404);
-			}
-		}
-		if ($buyerId) {
-			$chkUser = User::where('id', $buyerId)->first();
-			if (!$chkUser) {
-				return abort(404);
-			}
-		}
-		// if (!$page) {
-		// 	return abort(404);
-		// }
-		$userId = Auth::user()->id;
-		$carId = $carId;
-		// $allChat = Chat::where('vehicle_main_id', $carId)->where('block_user', 0)->where('buyer_id', Auth::user()->id)->orWhere('seller_id', Auth::user()->id)->get();
-		// $allChat = Chat::where(function ($query) use ($carId) {
-		//     // $query->where('vehicle_main_id', $carId);
-		//     $query->where('block_user', 0);
-		// })->where(function ($query) use ($userId) {
-		//     $query->where('buyer_id', $userId)
-		//         ->orWhere('seller_id', $userId);
-		// })->get();
 
-		$searchMessage = $request->searchMessage;
-		$filterData = $request->tabMessage;
-		if (!empty($searchMessage)) {
-			$allChat = Chat::with('allChat')
-				->whereHas('vehicledetail', function ($query) use ($searchMessage) {
-					$query->where('vehicle_make', 'like', '%' .  $searchMessage . '%');
-					$query->orWhere('vehicle_model', 'like', '%' .  $searchMessage . '%');
-				})
-				// ->orWhereHas('vehiclemain', function ($query) use ($searchMessage) {
-				// 	$query->where('full_name', 'like', '%' .  $searchMessage . '%');
-				// })
-				->where(function ($query) use ($carId) {
-					// $query->where('vehicle_main_id', $carId);
-					$query->where('block_user', 0);
-				})
-				->where(function ($query) use ($userId) {
-					$query->where('buyer_id', $userId)
-						->orWhere('seller_id', $userId);
-				})->get();
-			if (sizeof($allChat) <= 0) {
-			    $allChat = '';
-			    $userids[] = '';
-			    $vehicleId[] = '';
-				$authUserId = Chat::where('buyer_id', $userId)->orWhere('seller_id', $userId)->get();
-				foreach($authUserId as $ids){
-					if($userId == $ids->buyer_id){
-						$userids[] = $ids->seller_id;
-						$vehicleId[] = $ids->id;
-					}else{
-						$userids[] = $ids->buyer_id;
-						$vehicleId[] = $ids->id;
-					}
-				}
-				$userName = User::where('name', 'like', '%' .  $searchMessage . '%')->whereIn('id', $userids)->pluck('id')->toArray();
-				$allChat = Chat::with('allChat')
-					->where(function ($query) use ($carId) {
-						// $query->where('vehicle_main_id', $carId);
-						$query->where('block_user', 0);
-					})
-					->whereIn('id', $vehicleId)
-					->where(function ($query) use ($userName) {
-						$query->whereIn('buyer_id', $userName)
-							->orWhereIn('seller_id', $userName);
-					})->get();
-			}
-
-			// ->searchTab($_REQUEST)->get();
-		} else {
-			if (!empty($filterData)) {
-				$allChat = Chat::with('allChat')->where(function ($query) use ($carId) {
-					// $query->where('vehicle_main_id', $carId);
-					$query->where('block_user', 0);
-				})->where(function ($query) use ($userId) {
-					$query->where('buyer_id', $userId)
-						->orWhere('seller_id', $userId);
-				})
-					->searchTab($_REQUEST)->get();
-			} else {
-				$allChat = Chat::with('allChat')->where(function ($query) use ($carId) {
-					// $query->where('vehicle_main_id', $carId);
-					$query->where('block_user', 0);
-				})->where(function ($query) use ($userId) {
-					$query->where('buyer_id', $userId)
-						->orWhere('seller_id', $userId);
-				})->get();
-			}
-		}
-
-		if (!empty($carId)) {
-			$carDetails = VehicleMain::with('vehicleDetail')->where('id', $carId)->first();
-			$chatDetails = Chat::with('allChat')->where(function ($query) use ($carId, $buyerId) {
-				$query->where('vehicle_main_id', $carId);
-				$query->where('buyer_id', $buyerId);
-			})->where(function ($query) use ($userId) {
-				$query->where('buyer_id', $userId)
-					->orWhere('seller_id', $userId);
-			})->first();
-			// $allChat = Chat::where(function ($query) use ($carId, $buyerId) {
-			// 	$query->where('vehicle_main_id', $carId);
-			// 	$query->where('buyer_id', $buyerId);
-			// })->where(function ($query) use ($userId) {
-			// 	$query->where('buyer_id', $userId)
-			// 		->orWhere('seller_id', $userId);
-			// })->get();
-			$allChat = Chat::where(function ($query) {
-				$query->where('block_user', 0);
-			})->where(function ($query) use ($userId) {
-				$query->where('buyer_id', $userId)
-					->orWhere('seller_id', $userId);
-			})->get();
-		} else {
-			$carDetails = '';
-			$chatDetails = '';
-		}
-		return view('account.my-chat', compact("page", "user", "carDetails", "allChat", "chatDetails", "current_user_id", "carId"));
-	}
-
-  public function saveChat(Request $request)
-	{
-		$chatSender = $request->buyer;
-		$receiverId = $request->seller;
-		$sender = $request->sender;
-		$carId = $request->carDetail;
-		$sellerDetails = VehicleMain::where('id', $carId)->first();
-		$message = $request->chatText;
-		$chkIfExistChat = Chat::where(function ($query) use ($carId) {
-			$query->where('vehicle_main_id', $carId);
-		})->where(function ($query) use ($chatSender, $receiverId) {
-			$query->where('buyer_id', $chatSender)
-				->orWhere('seller_id', $receiverId);
-		})->first();
-		if ($chkIfExistChat) {
-			$chatMessage = new ChatMessage();
-			$chatMessage->chat_id = $chkIfExistChat->id;
-			$chatMessage->buyer_id = $chatSender;
-			$chatMessage->seller_id = $sellerDetails->seller_id;
-			$chatMessage->messages = $message;
-			$chatMessage->sender_id = $sender;
-			$chatMessage->new_chat = 1;
-			$chatMessage->save();
-			return response()->json(['success' => '200']);
-		} else {
-			$insertChat = new Chat();
-			$insertChat->vehicle_main_id  = $carId;
-			$insertChat->buyer_id  = $chatSender;
-			$insertChat->seller_id  = $sellerDetails->seller_id;
-			$insertChat->chat_notification  = 1;
-			if ($insertChat->save()) {
-				$chatMessage = new ChatMessage();
-				$chatMessage->chat_id = $insertChat->id;
-				$chatMessage->buyer_id = $chatSender;
-				$chatMessage->seller_id = $sellerDetails->seller_id;
-				$chatMessage->messages = $message;
-				$chatMessage->new_chat = 1;
-				$chatMessage->sender_id = $sender;
-				$chatMessage->save();
-				return response()->json(['success' => '200']);
-			} else {
-				return response()->json(['success' => '401']);
-			}
-		}
-	}
-
-
-    public function makeOffer($carId = null)
-	{
-		$title = __('constant.MY_PROFILE');
-		$slug =  __('constant.SLUG_MY_PROFILE');
-		$user = $this->user;
-		$page = get_page_by_slug($slug);
-		$userId = Auth::user()->id;
-		if (!$page) {
-			return abort(404);
-		}
-		if (!empty($carId)) {
-			$carDetails = VehicleMain::with('vehicleDetail')->where('id', $carId)->first();
-			// $chatDetails = Chat::with('allChat')->where('buyer_id', $userId)->orWhere('seller_id', $userId)->where('vehicle_main_id', $carId)->first();
-			$chatDetails = Chat::with('allChat')->where(function ($query) use ($carId) {
-				$query->where('vehicle_main_id', $carId);
-			})->where(function ($query) use ($userId) {
-				$query->where('buyer_id', $userId)
-					->orWhere('seller_id', $userId);
-			})->first();
-		} else {
-			$carDetails = '';
-			$chatDetails = '';
-		}
-		$allChats = Chat::where('buyer_id', $userId)->orWhere('seller_id', $userId)->get();
-		return view('account.car-offer', compact("page", "user", "carDetails", "chatDetails", "allChats"));
-	}
-
-	public function chatDetails($id = null, $buyerId = null)
-	{
-		$title = __('constant.MY_PROFILE');
-		$slug =  __('constant.SLUG_MY_PROFILE');
-		$user = $this->user;
-		$page = get_page_by_slug($slug);
-		if($id){
-			$chkCar = VehicleMain::where('id', $id)->first();
-			if(!$chkCar){
-				return abort(404);
-			}
-		}
-		if($buyerId){
-			$chkUser = User::where('id', $buyerId)->first();
-			if(!$chkUser){
-				return abort(404);
-			}
-		}
-		$userId = Auth::user()->id;
-		$carId = $id;
-        $buyerId = $buyerId;
-        $seller_particular = '';
-        $buyerEmail = Auth::user()->email;
-
-		$chkSellerEmail = Chat::where('vehicle_main_id', $carId)->where('seller_id', $userId)->first();
-		if($chkSellerEmail){
-			$sellerEmail = User::where('id', $buyerId)->first();
-			$buyerEmail = $sellerEmail->email;
-		}
-
-        $chatDeatials = Chat::where('vehicle_main_id', $carId)->where('buyer_id', $userId)->orWhere('seller_id', $userId)->first();
-        if($chatDeatials){
-
-        }else{
-            $checkVehicle = VehicleMain::where('id', $carId)->first();
-            if(Auth::user()->id != $checkVehicle->seller_id){
-                $buyerId = Auth::user()->id;
-                $sellerId = $checkVehicle->seller_id;
-            }
-            $newChat = new Chat();
-            $newChat->vehicle_main_id = $carId;
-            $newChat->buyer_id = $buyerId;
-            $newChat->seller_id = $sellerId;
-            $newChat->offer_amount = 0;
-            $newChat->save();
-        }
-
-        // $allChat = Chat::where('buyer_id', Auth::user()->id)->orWhere('seller_id', Auth::user()->id)->get();
-        $allChat = Chat::where(function ($query) use ($buyerId) {
-            // $query->where('vehicle_main_id', $carId);
-            $query->where('block_user', 0);
-            // $query->where('buyer_id', $buyerId);
-        })->where(function ($query) use ($userId) {
-            $query->where('buyer_id', $userId)
-                ->orWhere('seller_id', $userId);
-        })->get();
-		if (!empty($carId)) {
-			$carDetails = VehicleMain::with('vehicleDetail')->where('id', $carId)->first();
-			$chatDetails = Chat::with('allChat')->where(function ($query) use ($carId, $buyerId) {
-				$query->where('vehicle_main_id', $carId);
-                $query->where('buyer_id', $buyerId);
-            })->where(function ($query) use ($userId) {
-                $query->where('buyer_id', $userId)
-                    ->orWhere('seller_id', $userId);
-            })->first();
-
-            // For chat notification
-			$chatNotification = '';
-            $chatNotification = Chat::where('vehicle_main_id', $carId)->where(function ($query) use ($userId) {
-                $query->where('buyer_id', $userId)
-                    ->orWhere('seller_id', $userId);
-            })->first();
-            if($chatNotification){
-                $chatMessages = ChatMessage::where('chat_id', $chatNotification->id)->where('sender_id', '!=', $userId)->update(['new_chat' => 0]);
-            }
-
-            $sellerDetail = VehicleMain::where('id', $carId)->first();
-            $sellerId = $sellerDetail->seller_id;
-            $seller_particular = SellerParticular::whereHas('vehicleparticular')->where(function($query) use($buyerEmail, $sellerId, $carId) {
-                $query->where('user_id', $sellerId)
-				->Where('buyer_email', $buyerEmail)
-				->Where('vehicle_main_id', $carId);
-            })->where(function($query) {
-                $query->whereNotIn('seller_archive', [Auth::user()->id])->whereNotIn('buyer_archive', [Auth::user()->id]);
-            })->first();
-
-        } else {
-            $carDetails = '';
-        }
-        // if (!$page) {
-        // 	return abort(404);
-        // }
-        return view('account.chat-details', compact("page", "user", "carDetails", "chatDetails", "allChat", "seller_particular"));
-    }
-
-	public function likeVehicle($id, Request $request){
-		if(Auth::check()){
-			$user_id = Auth::user()->id;
-			$vehicle_liked = LikeCount::where('user_id', '=', $user_id)
-						->where('vehicle_id', '=', $id)
-						->first();
-			if(isset($vehicle_liked)){
-				if($vehicle_liked->is_liked == 1){
-					$vehicle_liked->is_liked = 0;
-				}else{
-					$vehicle_liked->is_liked = 1;
-				}
-				$vehicle_liked->save();
-			}else{
-				$vehicle_like = new LikeCount;
-				$vehicle_like->user_id = $user_id;
-				$vehicle_like->vehicle_id = $id;
-				$vehicle_like->is_liked = 1;
-				$vehicle_like->save();
-			}
-			return redirect()->back()->with('success',  __('constant.SUCCESS', ['module' => 'Like']));
-		}else{
-			$request->session()->put('previous_url', url()->previous());
-			return $this->loginRedirect();
-		}
-	}
-
-	public function reportVehicle($id, Request $request){
-		if(Auth::check()){
-			$user_id = Auth::user()->id;
-			$vehicle_reported = ReportVehicle::where('user_id', '=', $user_id)
-								->where('vehicle_id', '=', $id)
-								->first();
-			if(isset($vehicle_reported)){
-				if($vehicle_reported->is_reported == 1){
-					$vehicle_reported->is_reported = 0;
-				}else{
-					$vehicle_reported->is_reported = 1;
-				}
-				$vehicle_reported->save();
-			}else{
-				$vehicle_report = new ReportVehicle;
-				$vehicle_report->user_id = $user_id;
-				$vehicle_report->vehicle_id = $id;
-				$vehicle_report->is_reported = 1;
-				$vehicle_report->save();
-			}
-			return redirect()->back()->with('success',  __('constant.SUCCESS', ['module' => 'Report']));
-		}else{
-			$request->session()->put('previous_url', url()->previous());
-			return $this->loginRedirect();
-		}
-    }
-
-	public function saveOffer(Request $request){
-        // $offerAmount = $request->offeramount;
-        $offerAmount = str_replace(',','', $request->offeramount);
-        $vechileId = $request->offerAmtCarId;
-        $chatId  = $request->chatId;
-        $vechileDetail = Chat::where('vehicle_main_id', $vechileId)->where('id', $chatId)->first();
-        if($vechileDetail){
-            $vechileDetail->offer_amount = $offerAmount;
-            $vechileDetail->cancel_offer_buyer = 0;
-            $vechileDetail->save();
-        }else{
-            return abort(404);
-        }
-        return redirect()->back();
-
-	}
-
-    public function approveOffer(Request $request)
-    {
-        $status = $request->val;
-        $chatId = $request->chatId;
-        $chatDetail = Chat::where('id', $chatId)->first();
-        if($chatDetail){
-            $chatDetail->accept_reject_offer = $status;
-            $chatDetail->save();
-            return response()->json(['success' => '200']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function approveOfferRevised(Request $request)
-    {
-        $status = $request->val;
-        $chatId = $request->chatId;
-        $chatDetail = Chat::where('id', $chatId)->first();
-        if($chatDetail){
-            if($status == 1){
-                $chatDetail->offer_amount = $chatDetail->revise_offer_amount;
-                $chatDetail->accept_reject_offer = 1;
-            }
-            $chatDetail->revise_offer_status = $status;
-            $chatDetail->save();
-            return response()->json(['success' => '200']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function cancelOffer(Request $request)
-    {
-        $chatId = $request->chatId;
-        $chatDetail = Chat::where('id', $chatId)->first();
-        if($chatDetail){
-            $chatDetail->cancel_offer_buyer = 1;
-            $chatDetail->offer_amount = null;
-            $chatDetail->accept_reject_offer = 0;
-            $chatDetail->save();
-            return response()->json(['success' => '200', 'message'=>'Offer cancelled']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function reviseOffer(Request $request)
-    {
-        $chatId = $request->chatId;
-        $reviseAmount = $request->reviseAmount;
-        $chatDetail = Chat::where('id', $chatId)->first();
-        if($chatDetail){
-            $chatDetail->revise_offer_amount = $reviseAmount;
-            $chatDetail->revise_offer_buyer = 1;
-            $chatDetail->revise_offer_notification = 1;
-            $chatDetail->save();
-            return response()->json(['success' => '200', 'message'=>'Offer revised']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function blockUser(Request $request)
-    {
-        $userId = $request->userId;
-        $chatId = $request->chatId;
-        $chat = Chat::where('id', $chatId)->first();
-        if($chat){
-            $chat->block_user = 1;
-            $chat->save();
-            return response()->json(['success' => '200', 'message'=>'User revised']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function deleteChat(Request $request)
-    {
-        $userId = $request->userId;
-        $chatId = $request->chatId;
-        // $deleteChat = ChatMessage::where('chat_id', $chatId)->delete();
-        $deleteChat = ChatMessage::where('chat_id', $chatId)->where('sender_id', $userId)->delete();
-        if($deleteChat){
-            // $chatDetail = Chat::where('id', $chatId)->first();
-            // $chatDetail->offer_amount = null;
-            // $chatDetail->accept_reject_offer = 0;
-            // $chatDetail->revise_offer_buyer = 0;
-            // $chatDetail->revise_offer_status = 0;
-            // $chatDetail->revise_offer_amount = '';
-            // $chatDetail->save();
-            return response()->json(['success' => '200', 'message'=>'Chat deleted']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-    public function staInspection(Request $request)
-    {
-        $chatId = $request->chatId;
-        $staChat = Chat::where('id', $chatId)->first();
-        if($staChat){
-            $staChat->sta_inspection = 1;
-            $staChat->save();
-            return response()->json(['success' => '200', 'message'=>'STA Inspection']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function buyerInfo(Request $request)
-    {
-        $chatId = $request->chatId;
-        $status = $request->status;
-        $staChat = Chat::where('id', $chatId)->first();
-        if($staChat){
-            $staChat->buyer_info = $status;
-            $staChat->sp_agreement = 1;
-            $staChat->save();
-            return response()->json(['success' => '200', 'message'=>'Success']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function confirmBooking(Request $request)
-    {
-        $chatId = $request->chatId;
-        // $datebooking = $request->datebooking;
-        $datebooking = date('Y-m-d', strtotime($request->datebooking));
-        $timebooking = explode(" ", $request->timebooking);
-        $bookingDateTime = $datebooking . ' ' . $timebooking[0];
-        $staChat = Chat::where('id', $chatId)->first();
-        if ($staChat) {
-            $staChat->sta_inspection_date = $bookingDateTime;
-            $staChat->save();
-            return response()->json(['success' => '200', 'message' => 'Success']);
-        } else {
-            return response()->json(['success' => '401']);
-        }
-
-    }
-
-    public function reportUser(Request $request)
-    {
-        $userId = $request->userId;
-        $chatId = $request->chatId;
-        $chat = Chat::where('id', $chatId)->first();
-        if($chat){
-            $chat->report_user_id = 1;
-            $chat->save();
-            return response()->json(['success' => '200', 'message'=>'User revised']);
-        }else{
-            return response()->json(['success' => '401']);
-        }
-    }
-
-    public function viewQuote($id, Request $request)
-	{
-		if (Auth::check()) {
-			$user_id = Auth::user()->id;
-			$quote_request = QuoteRequest::where('id', '=', $id)->first();
-			return view('account.view-quote', compact('quote_request'));
-
-		} else {
-			$request->session()->put('previous_url', url()->previous());
-			return $this->loginRedirect();
-		}
-	}
-
-	public function archivedInsurance(Request $request){
-		$id = $request->multiple_archive;
-		$expId = explode(',', $id);
-		foreach($expId as $id){
-				$chkId = Insurance::where('id', $id)->first();
-				if($chkId){
-						$chkId->form_archived = 1;
-						$chkId->save();
-				}
-		}
-		return redirect()->back()->with('success', 'Application archived.');
-}
-
-	public function archivedInsuranceShow()
-    {
-        $title = 'Insurance Archived';
-        $insurance = Insurance::has('insurance_information')->has('insurance_vehicle')->where('user_id', $this->user->id)->orderBy('id', 'desc')->where('form_archived', 1)->paginate($this->pagination);
-
-			return view("account.insurance-applications_show", compact("title", "insurance"));
-    }
 
 	public function achievements(){
 		$userId = Auth::user()->id;
