@@ -27,7 +27,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ url('/') }}">
+        <a href="{{ url('grading-examination') }}">
             <span><img src="{{ asset('images/tempt/ico-grading.png') }}" alt="Grading icon" /></span>
             <strong>Grading Examinations</strong>
         </a>

@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Response;
@@ -76,8 +75,16 @@ Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->na
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
 Route::get('/instructor-students', 'ProfileController@studentlist');
-Route::get('/instructor-competition', 'ProfileController@competition');
+Route::get('/instructor-competition', 'ProfileController@competition')->name('instructor-competition');
+Route::get('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor')->name('instructor.register');
+Route::post('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor_store')->name('competition.instructor.register.submit');
+Route::get('/instructor-competition/register/delete/{id?}', 'ProfileController@delete_instructor_competition')->name('competition.instructor.register.delete');
+Route::get('/instructor-competition/register/edit/{id?}', 'ProfileController@edit_instructor_competition')->name('competition.instructor.register.edit');
+Route::post('/instructor-competition/register/edit/{id?}', 'ProfileController@update_instructor_competition')->name('competition.instructor.register.update');
 
+//TEST
+Route::get('/my-test/detail/{id?}', 'ProfileController@detail_test')->name('test.detail');
+Route::post('/my-test/result', 'ProfileController@submit_test')->name('test.answer.submit');
 
 Route::get('/survey-form', 'SurveyController@index');
 
@@ -468,6 +475,3 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('notification/search', 'CMS\NotificationController@search')->name('notification.search');
     Route::resource('notification', 'CMS\NotificationController');
 });
-
-
-

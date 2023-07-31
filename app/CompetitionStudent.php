@@ -14,4 +14,8 @@ class CompetitionStudent extends Model
     public function categorycomp(){
         return $this->belongsTo('App\CategoryCompetition', 'competition_id', 'competition_controller_id');
     }
+
+    public function category(){
+        return $this->belongsTo('App\CompetitionCategory', 'category_id', 'id');
+    }
 }
