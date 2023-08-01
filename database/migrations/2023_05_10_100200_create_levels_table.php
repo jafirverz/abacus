@@ -19,6 +19,8 @@ class CreateLevelsTable extends Migration
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
+            $table->string('premium_amount')->nullable();
+            $table->integer('premium_months')->nullable();
             $table->smallInteger('status')->default(1)->comment('1=>active, 2=>inactive');
             $table->timestamps();
         });

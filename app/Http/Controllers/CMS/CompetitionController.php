@@ -5,14 +5,17 @@ namespace App\Http\Controllers\CMS;
 use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
+use App\CompetitionResultUpload;
 use App\CompetitionStudent;
 use App\Http\Controllers\Controller;
+use App\Imports\ImportCompetitionResult;
 use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Excel;
 
 class CompetitionController extends Controller
 {
@@ -302,5 +305,86 @@ class CompetitionController extends Controller
         }
 
         return view('admin.competition.index', compact('title', 'competition'));
+    }
+
+    public function studentList($id){
+        $title = 'Student List';
+        $studentList = CompetitionStudent::where('competition_controller_id', $id)->paginate($this->pagination);
+        return view('admin.competition.studentList', compact('title', 'studentList'));
+    }
+
+    public function rejectstudentList($id){
+        //dd($id);
+        $title = 'Student List';
+        $compStudent = CompetitionStudent::where('id', $id)->first();
+        $compStudent->approve_status = 2;
+        $compStudent->save();
+        return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
+    }
+
+    public function approvestudentList($id){
+        $title = 'Student List';
+        $compStudent = CompetitionStudent::where('id', $id)->first();
+        $compStudent->approve_status = 1;
+        $compStudent->save();
+        return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
+    }
+
+    public function uploadCompResult(){
+        $title = 'Upload Result';
+        $competition = Competition::where('competition_type', 'online')->get();
+        return view('admin.competition.result-upload', compact('title', 'competition'));
+    }
+
+    public function compResultUpload(Request $request){
+        $title = 'Upload Result';
+        $messages = [
+            // 'amount.required_if' => 'This field is required',
+        ];
+        $request->validate([
+            'competition'  =>  'required',
+            'category' => 'required',
+            'fileupload'  =>  'required',
+        ], $messages);
+
+        $compResultUpload = new CompetitionResultUpload();
+        if ($request->hasFile('fileupload')) {
+
+            $file = $request->file('fileupload');
+            $result = Excel::import(new ImportCompetitionResult($request->competition, $request->category), $file);
+
+            $imported_files[] = "Competition Result Upload";
+
+            if(count($imported_files))
+            {
+                $implode_files = implode(', ', $imported_files);
+
+                $fileupload = $request->file('fileupload');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $fileupload->getClientOriginalName();
+
+                $filepath = 'storage/competition/result';
+
+                Storage::putFileAs(
+
+                    'public/competition/result',
+                    $fileupload,
+                    $filename
+
+                );
+
+                $fileupload_path = $filepath . $filename;
+
+                $compResultUpload->uploaded_file =  $fileupload_path;
+                $compResultUpload->competition_id =  $request->competition;
+                $compResultUpload->category_id =  $request->category;
+                $compResultUpload->save();
+
+                return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $implode_files]));
+            }
+
+            return redirect()->back()->with('error',  'Upload files to import data.');
+
+        }
     }
 }

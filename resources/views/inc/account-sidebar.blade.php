@@ -19,5 +19,13 @@
                 <strong>My Profile</strong>
             </a>
         </li>
+        @if(Auth::user()->user_type_id == 2)
+        <li>
+            <a href="{{url('my-profile')}}">
+                <span><img src="{{ asset('images/tempt/ico-profile.png') }}" alt="Profile icon" /></span>
+                <strong>Membership</strong>
+            </a>
+        </li>
+        @endif
     </ul>
 </div>

@@ -20,10 +20,18 @@
         <div class="box-1">
           {{-- $worksheet->description --}}
         </div>
-        <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
-        </div>
-        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
+        @if($compPaper->time)
+          @php
+          $timeinSec = $compPaper->time * 60 + 2;
+          $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $dateTime = strtotime($today);
+          $getDateTime = date("F d, Y H:i:s", $dateTime); 
+          @endphp
+          <div class="timer-wrap">
+            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
+          </div>
+        @endif
+        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}" id="submitform">
           @csrf
           <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
           <input type="hidden" name="categoryId" value="{{ $compPaper->category_id }}">
@@ -75,40 +83,57 @@
   </div>
 </main>
 
+@if($compPaper->paper_type == 'actual')
+
 <script>
-  
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var current = new Date().getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  // initAudioPlayer();
-
-    function initAudioPlayer(val){
-      var audio = new Audio();
-      // audio.pause();
-      var aContainer = document.getElementById("audio-"+val);
-      // assign the audio src
-      audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
-      audio.load();
-      audio.loop = false;
-      audio.play();
-
-      // Set object references
-      var playbtn = document.getElementById("play_btn"+val);
-
-        // Add Event Handling
-        playbtn.addEventListener("click", playPause(audio, playbtn));
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
       }
+  }, 1000);
+</script>
+@else
 
-      // Functions
-      function playPause(audio, playbtn){
-          return function () {
-             if(audio.paused){
-               audio.play();
-               $('.link-2').html('<i class="bi bi-pause"></i>')
-             } else {
-               audio.pause();
-               $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
-             } 
-          }
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var current = new Date().getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
       }
-  
-  </script>
+  }, 1000);
+</script>
+
+@endif
 @endsection

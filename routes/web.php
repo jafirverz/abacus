@@ -100,6 +100,14 @@ Route::post('/standalone-page/result', 'StandalonePageController@result');
 
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
 
+Route::get('/cart/{id?}', 'ProfileController@cartList')->name('cartlist');
+Route::get('/cart/delete/all', 'ProfileController@cartListDelete')->name('delete.cart');
+Route::post('/cart', 'ProfileController@cart')->name('cart');
+
+
+Route::get('/checkout', 'ProfileController@checkout');
+
+
 // ************ ACCOUNT/PROFILE *******************/
 Route::get('instructor-overview', 'ProfileController@instructor_overview')->name('instructor.overview');
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
@@ -332,6 +340,14 @@ Route::group(['prefix' => 'admin'], function () {
     // COMPETITION
     Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');
     Route::resource('competition', 'CMS\CompetitionController');
+    Route::get('competition/student-list/{id?}', 'CMS\CompetitionController@studentList')->name('competition.studentlist');
+    Route::get('competition/student-list/{id?}/edit', 'CMS\CompetitionController@editstudentList')->name('competition.student.edit');
+    Route::post('competition/student/list/{id?}/reject', 'CMS\CompetitionController@rejectstudentList')->name('competition.student.reject');
+    Route::post('competition/student/list/{id?}/approve', 'CMS\CompetitionController@approvestudentList')->name('competition.student.approve');
+
+    Route::get('comp-result', 'CMS\CompetitionController@uploadCompResult');
+    Route::post('comp-result', 'CMS\CompetitionController@compResultUpload')->name('comp.result.store');
+
 
 
     // COMPETITION PAPERS

@@ -64,6 +64,7 @@ return [
     'STANDALONE_PAGE' => 'Standalone Page',
     'STANDALONE_QUESTIONS' => 'Standalone Questions',
     'COMPETITION_RESULT' => 'Competition Results',
+    'COMPETITION_RESULT_UPLOAD' => 'Competition Results Upload',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',

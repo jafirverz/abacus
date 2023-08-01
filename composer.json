@@ -13,6 +13,7 @@
         "barryvdh/laravel-dompdf": "^0.8.5",
         "browner12/helpers": "^3.0",
         "cedextech/trait-generator": "^1.0",
+        "darryldecode/cart": "^4.2",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
         "fideloper/proxy": "^4.0",
         "hesto/multi-auth": "^2.0",

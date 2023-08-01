@@ -10,6 +10,9 @@
                 @if(Auth::user()->user_type_id == 3)
                     @include('inc.account-sidebar-online')
                 @endif
+                @if(Auth::user()->user_type_id == 4)
+                    @include('inc.account-sidebar-event-student')
+                @endif
                 @if(Auth::user()->user_type_id == 6)
                     @include('inc.account-sidebar-external')
                 @endif

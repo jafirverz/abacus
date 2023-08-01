@@ -42,9 +42,11 @@ use App\Traits\PageTrait;
 use Illuminate\Support\Str;
 use App\Jobs\SendEmail;
 use App\Level;
+use App\TempCart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\ValidationException;
+use Cart;
 
 use Illuminate\Support\Facades\Session;
 
@@ -1324,6 +1326,7 @@ class ProfileController extends Controller
 		//$competitionId =
 	}
 
+
     public function view_grading($id){
 		$userId = $id;
 		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
@@ -1331,4 +1334,61 @@ class ProfileController extends Controller
 		return view("account.achievements", compact('actualCompetitionPaperSubted'));
 		//$competitionId =
 	}
+
+	public function cart(Request $request){
+		$levelId = $request->levelId;
+		$level = Level::where('id', $levelId)->first();
+		$levelName = $level->title;
+		$levelDescription = $level->description;
+		$levelImage = $level->image;
+		$premium_amount = $level->premium_amount;
+		$premium_months = $level->premium_months;
+		//$levelDetails[$levelId] = array();
+		$levelDetails = array();
+		$levelDetails['type'] = 'level';
+		$levelDetails['id'] = $levelId;
+		$levelDetails['name'] = $levelName;
+		$levelDetails['description'] = $levelDescription;
+		$levelDetails['image'] = $levelImage;
+		$levelDetails['amount'] = $premium_amount;
+		$levelDetails['months'] = $premium_months;
+
+		$tempCart = new TempCart();
+		$jsonEncode = json_encode($levelDetails);
+		$tempCart->user_id = Auth::user()->id;
+		$tempCart->type = $request->type;
+		$tempCart->cart = $jsonEncode;
+		$tempCart->save();
+
+		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
+
+		return view('account.cart', compact("cartDetails"));
+	}
+
+	public function cartList($id = null){
+		$cartDetailsDelete = TempCart::where('user_id', Auth::user()->id)->where('id', $id)->first();
+		if($cartDetailsDelete){
+			$cartDetailsDelete->delete();
+			return redirect()->to('/cart');
+		}
+		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
+
+		return view('account.cart', compact("cartDetails"));
+	}
+
+	public function cartListDelete(){
+		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
+		foreach($cartDetails as $cart){
+			$cart->delete();
+		}
+		return redirect()->to('/cart');
+		//return view('account.cart', compact("cartDetails"));
+	}
+
+	public function checkout(){
+		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
+
+		return view('account.checkout', compact("cartDetails"));
+	}
+
 }
