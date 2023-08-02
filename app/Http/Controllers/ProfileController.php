@@ -1390,5 +1390,4 @@ class ProfileController extends Controller
 
 		return view('account.checkout', compact("cartDetails"));
 	}
-
 }
