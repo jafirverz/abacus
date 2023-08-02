@@ -1326,6 +1326,15 @@ class ProfileController extends Controller
 		//$competitionId =
 	}
 
+
+    public function view_grading($id){
+		$userId = $id;
+		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		//dd($actualCompetitionPaperSubted);
+		return view("account.achievements", compact('actualCompetitionPaperSubted'));
+		//$competitionId =
+	}
+
 	public function cart(Request $request){
 		$levelId = $request->levelId;
 		$level = Level::where('id', $levelId)->first();
@@ -1381,6 +1390,4 @@ class ProfileController extends Controller
 
 		return view('account.checkout', compact("cartDetails"));
 	}
-
-	
 }

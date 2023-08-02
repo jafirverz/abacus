@@ -329,6 +329,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
     //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
 
+    // GRADING RESULTS
+    Route::get('results/grading/search', 'CMS\GradingResultController@search')->name('results.grading.search');
+    Route::resource('results/grading', 'CMS\GradingResultController');
+    Route::get('results/grading/{id?}', 'CMS\GradingResultController@studentList')->name('results.grading.list');
+    Route::get('results/grading/{id?}/edit', 'CMS\GradingResultController@edit')->name('results.grading.edit');
+    //Route::post('results/grading/update/{id?}', 'CMS\GradingResultController@update')->name('results.grading.update');
+
 
     // COMPETITION
     Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');

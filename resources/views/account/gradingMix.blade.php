@@ -51,7 +51,7 @@
                   elseif($ques->input_3 == 'add'){
                     $symbol='+';
                   }
-                  elseif($ques->input_3 == 'add'){
+                  elseif($ques->input_3 == 'subtract'){
                     $symbol='-';
                   }
                   else{
