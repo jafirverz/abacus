@@ -101,6 +101,22 @@ Route::post('/cart', 'ProfileController@cart')->name('cart');
 Route::get('/checkout', 'ProfileController@checkout');
 
 
+// Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'ProfileController@payWithPaypal',));
+// Route::post('paypal', array('as' => 'paypal','uses' => 'ProfileController@postPaymentWithpaypal',));
+// Route::get('paypal', array('as' => 'status','uses' => 'ProfileController@getPaymentStatus',));
+
+// Route::get('payment', 'PayPalController@payment')->name('payment');
+// Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
+// Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+
+Route::get('payament/error', 'PayPalController@errorPayment')->name('errorTransaction');
+Route::get('payament/success', 'PayPalController@successPayment')->name('successTransactionn');
+Route::get('create-transaction', 'PayPalController@createTransaction')->name('createTransaction');
+Route::post('process-transaction', 'PayPalController@processTransaction')->name('processTransaction');
+Route::get('success-transaction', 'PayPalController@successTransaction')->name('successTransaction');
+Route::get('cancel-transaction', 'PayPalController@cancelTransaction')->name('cancelTransaction');
+
+
 // ************ ACCOUNT/PROFILE *******************/
 Route::get('instructor-overview', 'ProfileController@instructor_overview')->name('instructor.overview');
 Route::get('my-profile', 'ProfileController@index')->name('my-profile');
@@ -467,6 +483,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('notification/redirect/{id}', 'CMS\NotificationController@showRedirect')->name('notification.show-redirect');
     Route::get('notification/search', 'CMS\NotificationController@search')->name('notification.search');
     Route::resource('notification', 'CMS\NotificationController');
+
+
+    Route::post('reports-student/search', 'CMS\ReportController@search')->name('reports-student.search');
+    Route::get('reports-student', 'CMS\ReportController@index');
 });
 
 
