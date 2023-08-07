@@ -20,9 +20,9 @@
             </div>
             <div class="col-xl-auto sp-col">
                 <ul class="socials">
-                    <li><a href="https://www.facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                    <li><a href="https://www.twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a></li>
-                    <li><a href="https://www.instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="{{ config('system_settings')->facebook_url ?? ''}}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
+                    <li><a href="{{ config('system_settings')->twitter_url ?? ''}}" target="_blank"><i class="fa-brands fa-twitter"></i></a></li>
+                    <li><a href="{{ config('system_settings')->instagram_url ?? ''}}" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -32,21 +32,21 @@
                 <div class="icon icomap">
                     <i class="icon-map"></i>
                     <h4>Location</h4>
-                    <address>134 Jurong Gateway Road #04-307A Singapore 600134</address>
+                    <address>{{ config('system_settings')->contact_address ?? ''}}</address>
                 </div>
             </div>
             <div class="col-md-6 sp-col fcol-2">
                 <div class="icon">
                     <i class="icon-phone"></i>
                     <h4>Contact US/ FEEDBACK</h4>
-                    Tel: <a href="tel:+65 9643 9754">+65 9643 9754</a>
+                    Tel: <a href="tel:+{{ config('system_settings')->contact_number ?? ''}}">+{{ config('system_settings')->contact_number ?? ''}}</a>
                 </div>
             </div>
             <div class="col-lg-6 sp-col fcol-3">
                 <div class="icon icomail">
                     <i class="icon-email"></i>
                     <h4>Email</h4>
-                    <a class="lnktype" href="mailto:3gabacusmktg@gmail.com">3gabacusmktg@gmail.com</a>
+                    <a class="lnktype" href="mailto:{{ config('system_settings')->contact_email ?? ''}}">{{ config('system_settings')->contact_email ?? ''}}</a>
                 </div>
             </div>
         </div>
