@@ -12,6 +12,10 @@ class GradingStudent extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
+    public function teacher(){
+        return $this->belongsTo('App\User', 'instructor_id', 'id');
+    }
+
     public function mental(){
         return $this->belongsTo('App\Grade', 'mental_grade', 'id');
     }

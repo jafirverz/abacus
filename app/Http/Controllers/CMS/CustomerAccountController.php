@@ -236,7 +236,6 @@ class CustomerAccountController extends Controller
             'user_type_id' => 'required',
             'level' => 'required',
             'dob' => 'required',
-            'instructor_id' => 'required',
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
             'gender' => 'required|string',
@@ -252,7 +251,6 @@ class CustomerAccountController extends Controller
         $messages['user_type_id.required'] = 'User type field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
-        $messages['instructor_id.required'] = 'The instructor field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
 
@@ -311,6 +309,6 @@ class CustomerAccountController extends Controller
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
 
-    
+
 
 }

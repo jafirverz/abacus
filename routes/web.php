@@ -330,11 +330,11 @@ Route::group(['prefix' => 'admin'], function () {
     //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
 
     // GRADING RESULTS
-    Route::get('results/grading/search', 'CMS\GradingResultController@search')->name('results.grading.search');
-    Route::resource('results/grading', 'CMS\GradingResultController');
-    Route::get('results/grading/{id?}', 'CMS\GradingResultController@studentList')->name('results.grading.list');
-    Route::get('results/grading/{id?}/edit', 'CMS\GradingResultController@edit')->name('results.grading.edit');
-    //Route::post('results/grading/update/{id?}', 'CMS\GradingResultController@update')->name('results.grading.update');
+    Route::get('grading-students/search', 'CMS\GradingResultController@search')->name('grading-students.search');
+    Route::resource('grading-students', 'CMS\GradingResultController');
+
+    Route::get('grading-result-upload', 'CMS\GradingResultController@uploadCompResult');
+    Route::post('grading-result-upload', 'CMS\GradingResultController@compResultUpload')->name('grading.result.upload');
 
 
     // COMPETITION
