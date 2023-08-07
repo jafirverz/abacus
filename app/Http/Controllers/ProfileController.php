@@ -133,7 +133,7 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		$grading = GradingStudent::where('instructor_id',$user->id)->paginate($this->pagination);;
+		$grading = GradingStudent::where('instructor_id',$user->id)->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {

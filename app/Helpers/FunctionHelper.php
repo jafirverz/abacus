@@ -655,6 +655,16 @@ if (!function_exists('getPageList')) {
         }
         return $array_list;
     }
+
+    function getRegisterStatus($id = null)
+    {
+        $array_list = ['1' => 'Approved', '2' => 'Not Approved'];
+        if ($id) {
+            return $array_list[$id];
+        }
+        return $array_list;
+    }
+
     function getLinkTarget($id = null)
     {
         $array_list = ['_self'  =>  'Same Tab', '_blank'  =>  'New Tab'];

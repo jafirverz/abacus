@@ -167,6 +167,7 @@ return [
         // Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class
+
     ],
 
     /*
@@ -222,7 +223,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         // 'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
-        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        //'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
     ],
 
 ];
