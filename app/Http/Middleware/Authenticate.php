@@ -14,8 +14,21 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
+        // dd($request->url());
         $request->session()->put('previous_urlforseo', $request->fullUrl());
         $redirectTo = 'login';
+        if (strpos($request->url(), 'privacy-policy') !== false) {
+            $redirectTo = 'privacy-policy';
+        }
+        if (strpos($request->url(), 'faqs') !== false) {
+            $redirectTo = 'faqs';
+        }
+        if (strpos($request->url(), 'terms-of-use') !== false) {
+            $redirectTo = 'terms-of-use';
+        }
+        if (strpos($request->url(), 'about-us') !== false) {
+            $redirectTo = 'about-us';
+        }
         if (strpos($request->url(), 'safelogin') !== false || strpos($request->url(), 'admin') !== false) {
             $redirectTo = 'admin_login';
         }

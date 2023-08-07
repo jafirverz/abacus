@@ -2,7 +2,7 @@
 @section('content')
 <main class="main-wrap">	
   <div class="container main-inner">
-    Content here...
+    {!! $page->content !!}
   </div>	
 </main>
 @endsection

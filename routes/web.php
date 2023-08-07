@@ -110,6 +110,11 @@ Route::post('/cart', 'ProfileController@cart')->name('cart');
 
 Route::get('/checkout', 'ProfileController@checkout');
 
+Route::get('about-us', 'GuestUserController@aboutUs')->name('about-us');
+Route::get('privacy-policy', 'GuestUserController@privacy')->name('privacy-policy');
+Route::get('faqs', 'GuestUserController@faq')->name('faqs');
+Route::get('terms-of-use', 'GuestUserController@termsofuse')->name('terms-of-use');
+
 
 // Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'ProfileController@payWithPaypal',));
 // Route::post('paypal', array('as' => 'paypal','uses' => 'ProfileController@postPaymentWithpaypal',));
@@ -506,4 +511,4 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-student', 'CMS\ReportController@index');
 });
 
-Route::get('{slug}', 'PagesFrontController@pages');
+
