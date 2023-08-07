@@ -100,6 +100,9 @@ Route::post('/standalone-page/result', 'StandalonePageController@result');
 
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
 
+
+Route::get('/membership', 'ProfileController@membership')->name('membership');
+
 Route::get('/cart/{id?}', 'ProfileController@cartList')->name('cartlist');
 Route::get('/cart/delete/all', 'ProfileController@cartListDelete')->name('delete.cart');
 Route::post('/cart', 'ProfileController@cart')->name('cart');

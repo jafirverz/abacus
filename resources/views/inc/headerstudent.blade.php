@@ -24,7 +24,7 @@
             <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-regular fa-user"></i></a>
             <ul class="dropdown-menu">
                 <li class="active"><a href="be-overview.html">Overview</a></li>
-                <li><a href="be-achievements.html">My Achievements</a></li>
+                <li><a href="{{ url('achievements') }}">My Achievements</a></li>
                 <li><a href="{{url('my-profile')}}">My Profile</a></li>
                 <li><a href="{{url('logout')}}">Logout</a></li>
             </ul>

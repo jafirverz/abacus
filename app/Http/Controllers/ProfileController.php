@@ -42,6 +42,8 @@ use App\Traits\PageTrait;
 use Illuminate\Support\Str;
 use App\Jobs\SendEmail;
 use App\Level;
+use App\Order;
+use App\OrderDetail;
 use App\TempCart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
@@ -1407,4 +1409,13 @@ class ProfileController extends Controller
 
 		return view('account.checkout', compact("cartDetails"));
 	}
+
+    public function membership(){
+        $orderDetails = array();
+        $orders = Order::where('user_id', Auth::user()->id)->where('payment_status', 'COMPLETED')->pluck('id')->toArray();
+        if($orders){
+            $orderDetails = OrderDetail::whereIn('order_id', $orders)->paginate(10);
+        }
+        return view('account.membership', compact('orderDetails'));
+    }
 }
