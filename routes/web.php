@@ -505,3 +505,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('reports-student/search', 'CMS\ReportController@search')->name('reports-student.search');
     Route::get('reports-student', 'CMS\ReportController@index');
 });
+
+Route::get('{slug}', 'PagesFrontController@pages');
