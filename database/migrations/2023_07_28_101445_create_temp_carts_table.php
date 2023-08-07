@@ -18,6 +18,7 @@ class CreateTempCartsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('type')->nullable();
+            $table->smallInteger('level_id')->nullable();
             $table->text('cart')->nullable();
             $table->timestamps();
         });

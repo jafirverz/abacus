@@ -5,7 +5,18 @@
         </a>
     </div>
     <div class="actions">
-        <a class="cart" href="checkout-step-1.html"><i class="icon-cart"></i><strong>+99</strong></a>
+        <a class="cart" href="{{ url('cart') }}"><i class="icon-cart"></i>
+            @php
+            $userId = Auth::user()->id;
+            $checkTempCart = \App\TempCart::where('user_id', $userId)->get();
+            if($checkTempCart){
+                $cartN = count($checkTempCart);
+            }else{
+                $cartN = 0;
+            }
+            @endphp
+            <strong>+{{ $cartN }}</strong>
+        </a>
         <div class="headuser hide-991"><span class="welcome">Welcome back {{ Auth::user()->name }},</span>
             <a href="{{url('logout')}}">Logout</a>
         </div>

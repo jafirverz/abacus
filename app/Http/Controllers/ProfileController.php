@@ -1373,6 +1373,7 @@ class ProfileController extends Controller
 		$jsonEncode = json_encode($levelDetails);
 		$tempCart->user_id = Auth::user()->id;
 		$tempCart->type = $request->type;
+		$tempCart->level_id = $levelId;
 		$tempCart->cart = $jsonEncode;
 		$tempCart->save();
 
@@ -1388,7 +1389,7 @@ class ProfileController extends Controller
 			return redirect()->to('/cart');
 		}
 		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
-
+		
 		return view('account.cart', compact("cartDetails"));
 	}
 

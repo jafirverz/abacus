@@ -30,12 +30,18 @@
                   @csrf
                   <input type="hidden" name="levelId" value="{{ $checkSlug->id }}">
                   <input type="hidden" name="type" value="level">
+                  @if(empty($premium))
                   <div class="col-lg-12 sp-col gincol-2">
-                    <button type="submit" class="btn-1" >Upgrade to Premium Member for 9 months (SGD$9.90) <i
+                    @if(empty($addedToCart))
+                    <button type="submit" class="btn-1" >Upgrade to Premium Member for 9 months (SGD${{ $checkSlug->premium_amount }}) <i
                         class="fa-solid fa-arrow-right-long"></i></button>
+                    @else 
+                    <a href="javascript::void(0);"  class="btn-1" >Added to Cart (SGD${{ $checkSlug->premium_amount }}) </a>
+                    @endif
                     <div class="note-2"><i class="icon-info"></i> Sign-up as premium member to get access to all the
                       exercises and unlock all features in the worksheets</div>
                   </div>
+                  @endif
                 </form>
               </div>
             </div>
@@ -88,14 +94,25 @@
                       <h4 class="title-5">Premium Contents</h4>
                       <div class="row">															
                         <div class="col-sm-6">
-                          <ul class="list-1 disabled">
+                          @php 
+                          if(empty($premium)){
+                            $disableClass = 'disabled';
+                          }else{
+                            $disableClass = '';
+                          }
+                          @endphp
+                          <ul class="list-1 {{ $disableClass }}">
                             @foreach($worksheets as $worksheet)
                               @if(!empty($worksheet->amount))
                                 @php
                                 $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
                                 @endphp
                                 @if($worksheet->question_template_id == $questions->id && $checkQuestions)
-                                  <li>{{ $worksheet->title }}</li>
+                                  @if(empty($premium))
+                                    <li>{{ $worksheet->title }}</li>
+                                  @else 
+                                    <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
+                                  @endif
                                 @endif
                               @endif
                             @endforeach

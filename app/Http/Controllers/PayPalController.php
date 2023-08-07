@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Level;
 use App\Order;
 use App\OrderDetail;
 use App\Payment;
@@ -145,9 +146,14 @@ class PayPalController extends Controller
                     if($cart->type == 'level'){
                         $orderDetails->level_id = $cartt->id;
                     }
+                    $levels = Level::where('id', $cartt->id)->first();
+                    $months = $levels->premium_months;
+                    $todayDate = date('Y-m-d');
+                    $expiryDate = date('Y-m-d', strtotime("+$months months", strtotime($todayDate)));
                     $orderDetails->order_type = $cart->type;
                     $orderDetails->name = $cartt->name;
                     $orderDetails->amount = $cartt->amount;
+                    $orderDetails->expiry_date = $expiryDate;
                     $orderDetails->save();
                 }
             }
