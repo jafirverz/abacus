@@ -19,9 +19,13 @@
                 <strong>My Profile</strong>
             </a>
         </li>
-        @if(Auth::user()->user_type_id == 2)
+        @php 
+        $checkUserOrder = \App\Order::where('user_id', Auth::user()->id)->where('payment_status', 'COMPLETED')->pluck('id')->toArray();
+        $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkUserOrder)->where('order_type', 'level')->get();
+        @endphp
+        @if($checkOrderDetails)
         <li>
-            <a href="{{url('my-profile')}}">
+            <a href="{{url('membership')}}">
                 <span><img src="{{ asset('images/tempt/ico-profile.png') }}" alt="Profile icon" /></span>
                 <strong>Membership</strong>
             </a>

@@ -22,6 +22,7 @@ class CreateOrderDetailsTable extends Migration
             $table->string('order_type')->nullable()->comment('level, physical');
             $table->string('name')->nullable();
             $table->string('amount')->nullable();
+            $table->string('expiry_date')->nullable();
             $table->timestamps();
         });
     }
