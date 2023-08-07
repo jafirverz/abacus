@@ -160,19 +160,18 @@ return [
 
     //PAGE ID
     "HOME_PAGE_ID" => "1",
-    "ABOUT_PAGE_ID" => "2",
-    "CONTACT_PAGE_ID" => "6",
-    "FAQ_PAGE_ID" => "8",
-    "ONE_MOTORING_PAGE_ID" => "9",
-    'LOAN_PAGE_ID' => '10',
-    'FORMS_PAGE_ID' => '11',
-    'FORMS_DETAIL_PAGE_ID' => '12',
-	'INSURANCE_PAGE_ID' => '18',
-
+    "FAQ_PAGE_ID" => "5",
+    "TERMS_OF_USE" => "6",
+    "PRIVACY_POLICY" => "7",
+    "ABOUT_PAGE_ID" => "8",
+    
+    
+    
+    
 
     //Menu Type
     "TOP_MENU" => "1",
-    "SITEMAP_MENU" => "2",
+    "FOOTER" => "2",
     "USEFUL_INFO_MENU" => "3",
 
     /* -------------------------------------------------------------------------- */

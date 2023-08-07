@@ -105,8 +105,9 @@ class PagesFrontController extends Controller
         if (!$page) {
             return abort(404);
         }
-
-
+        if (in_array($page->id, [__('constant.FAQ_PAGE_ID'), __('constant.TERMS_OF_USE'), __('constant.PRIVACY_POLICY'), __('constant.ABOUT_PAGE_ID')])) {
+            return view('about', compact('page', 'system_settings', 'smart_blocks'));
+        } 
 
         return view('pages', compact('page', 'system_settings', 'smart_blocks'));
     }

@@ -11,12 +11,12 @@
                 </div>
             </div>
             <div class="col-xl sp-col">
-                <ul class="links">
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">About Us</a></li>
-                </ul>
+                    @if(isset($page->id) && $page->id>0)
+                    {!! get_footer_menu(__('constant.FOOTER'),$page->id, true, 'links') !!}
+                    @else
+                    {!! get_footer_menu(__('constant.FOOTER'),3, true, 'links') !!}
+                    @endif
+                    
             </div>
             <div class="col-xl-auto sp-col">
                 <ul class="socials">
