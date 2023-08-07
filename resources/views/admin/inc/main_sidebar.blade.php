@@ -266,6 +266,16 @@
                 ],
             ],
         ],
+        [
+            'menu_header'   =>  __('constant.REPORTS'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.STUDENT_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-student',
+                ],
+            ],
+        ],
     ];
 
     $sidebar = json_decode(json_encode($sidebar));

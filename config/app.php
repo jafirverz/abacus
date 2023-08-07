@@ -165,7 +165,9 @@ return [
         // LaravelDocusign\DocusignServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         // Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-       // Darryldecode\Cart\CartServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class
+
     ],
 
     /*
