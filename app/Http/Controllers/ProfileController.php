@@ -27,6 +27,7 @@ use App\Admin;
 use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
+use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
 use App\Country;
@@ -1354,30 +1355,56 @@ class ProfileController extends Controller
 	}
 
 	public function cart(Request $request){
-		$levelId = $request->levelId;
-		$level = Level::where('id', $levelId)->first();
-		$levelName = $level->title;
-		$levelDescription = $level->description;
-		$levelImage = $level->image;
-		$premium_amount = $level->premium_amount;
-		$premium_months = $level->premium_months;
-		//$levelDetails[$levelId] = array();
-		$levelDetails = array();
-		$levelDetails['type'] = 'level';
-		$levelDetails['id'] = $levelId;
-		$levelDetails['name'] = $levelName;
-		$levelDetails['description'] = $levelDescription;
-		$levelDetails['image'] = $levelImage;
-		$levelDetails['amount'] = $premium_amount;
-		$levelDetails['months'] = $premium_months;
+        //dd($request->all());
+        if($request->type == 'physicalcompetition'){
+            foreach($request->paper as $value){
+                $paper = CompetitionPaper::where('id', $value)->first();
+                $levelDetails = array();
+                $levelDetails['type'] = 'physicalcompetition';
+                $levelDetails['id'] = $value;
+                $levelDetails['name'] = $paper->title;
+                $levelDetails['description'] = $paper->description;
+                $levelDetails['image'] = '';
+                $levelDetails['amount'] = $paper->price;
+                $levelDetails['months'] = '';
 
-		$tempCart = new TempCart();
-		$jsonEncode = json_encode($levelDetails);
-		$tempCart->user_id = Auth::user()->id;
-		$tempCart->type = $request->type;
-		$tempCart->level_id = $levelId;
-		$tempCart->cart = $jsonEncode;
-		$tempCart->save();
+                $tempCart = new TempCart();
+                $jsonEncode = json_encode($levelDetails);
+                $tempCart->user_id = Auth::user()->id;
+                $tempCart->type = $request->type;
+                $tempCart->level_id = null;
+                $tempCart->cart = $jsonEncode;
+                $tempCart->save();
+            }
+        }else{
+            $levelId = $request->levelId ?? null;
+            $level = Level::where('id', $levelId)->first();
+            $levelName = $level->title;
+            $levelDescription = $level->description;
+            $levelImage = $level->image;
+            $premium_amount = $level->premium_amount;
+            $premium_months = $level->premium_months;
+            //$levelDetails[$levelId] = array();
+            $levelDetails = array();
+            $levelDetails['type'] = 'level';
+            $levelDetails['id'] = $levelId;
+            $levelDetails['name'] = $levelName;
+            $levelDetails['description'] = $levelDescription;
+            $levelDetails['image'] = $levelImage;
+            $levelDetails['amount'] = $premium_amount;
+            $levelDetails['months'] = $premium_months;
+
+            $tempCart = new TempCart();
+            $jsonEncode = json_encode($levelDetails);
+            $tempCart->user_id = Auth::user()->id;
+            $tempCart->type = $request->type;
+            $tempCart->level_id = $levelId ?? null;
+            $tempCart->cart = $jsonEncode;
+            $tempCart->save();
+        }
+		
+
+		
 
 		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
 

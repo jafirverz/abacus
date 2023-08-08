@@ -97,6 +97,9 @@
 
                                     <div id="faq-{{ $i }}" class="accordion-collapse collapse {{ $show }}">
                                         <div class="accordion-body">
+                                            <form method="post" action="{{ route('cart') }}">
+                                            @csrf
+                                            <input type="hidden" name="type" value="physicalcompetition">
                                             <div class="row break-1500">
                                                 @php 
                                                 $papers = \App\PaperCategory::where('competition_id', $compId)->where('category_id', $cat)->get();
@@ -107,16 +110,25 @@
                                                     @foreach($papers as $paper)
                                                     @php 
                                                         $pape = \App\CompetitionPaper::where('id', $paper->competition_paper_id)->first();
-                                                        @endphp
+                                                        $userId = Auth::user()->id;
+                                                        $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalcompetition')->pluck('comp_paper_id')->toArray();
+                                                    @endphp
                                                         
                                                         <div class="bxrow">
+                                                            @if(empty($pape->price) || in_array($pape->id,$orderDetails))
+                                                            <label><span>{{ $pape->title }}</span></label>
+                                                            @else
                                                             <div class="checkbxtype">
+                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
                                                                 <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
+                                                                @endif
                                                                 <label><span>{{ $pape->title }}</span>
                                                                     <strong>${{ $pape->price ?? 0 }}</strong>
                                                                 </label>
                                                             </div>
-                                                            @if(empty($pape->price))
+                                                            @endif
+
+                                                            @if(empty($pape->price) || in_array($pape->id,$orderDetails))
                                                             <a class="lnk btn-2" href="{{ asset('upload-file/'.$pape->pdf_file) }}" target="_blank">Download</a>
                                                             
                                                             @endif
@@ -132,8 +144,9 @@
 
                                             </div>
                                             <div class="output-2 mt-0">
-                                                <a class="btn-1" href="#">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></a>
+                                                <button class="btn-1" type="submit">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></button>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

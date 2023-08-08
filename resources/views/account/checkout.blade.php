@@ -32,19 +32,24 @@
             @foreach($cartDetails as $cart)
               @php
               $cartt = json_decode($cart->cart);
-              if($cartt->type == 'level'){
                 $totalAmount+= $cartt->amount;
               @endphp
             <div class="grid-11 noaction">
               <div class="ginner">
+                @if($cartt->image)
                 <div class="bg">
                   <img class="bgimg" src="{{ asset( $cartt->image) }}" alt="" />
                 </div>
+                @endif
                 <div class="gcontent">
                   <div class="gcol-1">
+                    @if($cart->type == 'level')
                     <h4>Premium</h4>
+                    @endif
                     <h5>{{ $cartt->name }}</h5>
+                    @if($cart->type == 'level')
                     {{ $cartt->months }} months premium membership
+                    @endif
                   </div>
                   <div class="gcol-3 gprice">
                     <strong>$ {{ $cartt->amount ?? '' }}</strong>
@@ -52,9 +57,7 @@
                 </div>
               </div>
             </div>
-            @php 
-          }
-          @endphp
+            
         @endforeach
       @endif
             <hr class="bdrtype-1"/>
