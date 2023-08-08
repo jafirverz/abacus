@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CompetitionPaper;
 use App\Level;
 use App\Order;
 use App\OrderDetail;
@@ -140,21 +141,40 @@ class PayPalController extends Controller
             $tempCart  = TempCart::where('user_id', $userId)->get();
             if($tempCart){
                 foreach($tempCart as $cart){
-                    $orderDetails = new OrderDetail();
-                    $cartt = json_decode($cart->cart);
-                    $orderDetails->order_id = $order->id;
                     if($cart->type == 'level'){
-                        $orderDetails->level_id = $cartt->id;
+                        $orderDetails = new OrderDetail();
+                        $cartt = json_decode($cart->cart);
+                        $orderDetails->order_id = $order->id;
+                        $orderDetails->user_id = Auth::user()->id;
+                        if($cart->type == 'level'){
+                            $orderDetails->level_id = $cartt->id;
+                        }
+                        $levels = Level::where('id', $cartt->id)->first();
+                        $months = $levels->premium_months;
+                        $todayDate = date('Y-m-d');
+                        $expiryDate = date('Y-m-d', strtotime("+$months months", strtotime($todayDate)));
+                        $orderDetails->order_type = $cart->type;
+                        $orderDetails->name = $cartt->name;
+                        $orderDetails->amount = $cartt->amount;
+                        $orderDetails->expiry_date = $expiryDate;
+                        $orderDetails->save();
+                    }elseif($cart->type == 'physicalcompetition'){
+                        $orderDetails = new OrderDetail();
+                        $cartt = json_decode($cart->cart);
+                        $orderDetails->order_id = $order->id;
+                        $orderDetails->user_id = Auth::user()->id;
+                        $paper = CompetitionPaper::where('id', $cartt->id)->first();
+                        // $months = $paper->premium_months;
+                        // $todayDate = date('Y-m-d');
+                        // $expiryDate = date('Y-m-d', strtotime("+$months months", strtotime($todayDate)));
+                        $orderDetails->order_type = $cart->type;
+                        $orderDetails->comp_paper_id = $cartt->id;
+                        $orderDetails->name = $cartt->name;
+                        $orderDetails->amount = $cartt->amount;
+                        // $orderDetails->expiry_date = $expiryDate;
+                        $orderDetails->save();
                     }
-                    $levels = Level::where('id', $cartt->id)->first();
-                    $months = $levels->premium_months;
-                    $todayDate = date('Y-m-d');
-                    $expiryDate = date('Y-m-d', strtotime("+$months months", strtotime($todayDate)));
-                    $orderDetails->order_type = $cart->type;
-                    $orderDetails->name = $cartt->name;
-                    $orderDetails->amount = $cartt->amount;
-                    $orderDetails->expiry_date = $expiryDate;
-                    $orderDetails->save();
+                    
                 }
             }
             
