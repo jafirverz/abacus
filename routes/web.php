@@ -163,8 +163,12 @@ Route::get('teaching-materials', 'ProfileController@teaching_materials')->name('
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
 
 Route::post('external-profile', 'ExternalAccountController@external_store')->name('external-profile.update');
-
-
+Route::get('external-profile/my-students', 'ExternalAccountController@my_students')->name('external-profile.my-students');
+Route::get('external-profile/add-students', 'ExternalAccountController@add_students')->name('external-profile.add-students');
+Route::post('external-profile/add-students', 'ExternalAccountController@store_add_students')->name('external-profile.add-students');
+Route::get('external-profile/add-students/edit/{id?}', 'ExternalAccountController@edit_students')->name('external-profile.add-students.edit');
+Route::post('external-profile/add-students/edit/{id?}', 'ExternalAccountController@update_students')->name('external-profile.add-students.update');
+Route::get('external-profile/add-students/delete/{id?}', 'ExternalAccountController@delete_students')->name('external-profile.add-students.delete');
 Route::get('logout', 'Auth\LoginController@logout');
 
 
