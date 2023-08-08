@@ -117,4 +117,8 @@ class User extends Authenticatable
         return $this->hasMany('App\CompetitionStudent', 'user_id', 'id');
     }
 
+    public function level(){
+        return $this->belongsTo('App\Level', 'level_id', 'id');
+    }
+
 }
