@@ -274,6 +274,11 @@
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-student',
                 ],
+                [
+                    'title' =>  __('constant.INSTRUCTOR_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-instructor',
+                ],
             ],
         ],
     ];

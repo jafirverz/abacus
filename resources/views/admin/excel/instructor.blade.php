@@ -10,9 +10,6 @@
             <th>DOB</th>
             <th>Address</th>
             <th>Approval</th>
-            <th>User Type</th>
-            <th>Instructor</th>
-            <th>Allocated Level</th>
             <th>Created At</th>
             <th>Updated At</th>
         </tr>
@@ -30,17 +27,6 @@
             <td>{{ $item->dob }}</td>
             <td>{{ $item->address }}</td>
             <td>@if($item->approve_status == 1) Approved @elseif($item->approve_status == 2) Rejected @else Pending @endif</td>
-            <td>@if($item->user_type_id == 1) Normal Student @elseif($item->user_type_id == 2) Premium Student @elseif($item->user_type_id == 3) Online Student @elseif($item->user_type_id == 4) Event Only Student @endif</td>
-            <td>{{ getInstructor($item->instructor_id)->name ?? '-' }} </td>
-            @php 
-            $allocatedLevel = $item->level_id;
-            if($allocatedLevel){
-                $decoded = json_decode($item->level_id);
-                $level = \App\Level::whereIn('id', $decoded)->pluck('title')->toArray();
-                $allLevel = implode(',', $level);
-            }
-            @endphp
-            <td>{{ $allLevel ?? '' }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>
         </tr>

@@ -67,6 +67,7 @@ return [
     'COMPETITION_RESULT_UPLOAD' => 'Competition Results Upload',
     'REPORTS' => 'Reports',
     'STUDENT_REPORTS' => 'Student Reports',
+    'INSTRUCTOR_REPORTS' => 'Instructor Reports',
 
     // CONTENT
     'NO_DATA_FOUND' =>  'No data found.',

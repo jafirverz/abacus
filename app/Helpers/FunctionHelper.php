@@ -964,5 +964,14 @@ if (!function_exists('getPageList')) {
         return ucFirst($full_text);
     }
 
-
+    function getInstructor($instructor_id)
+    {
+        if ($instructor_id) {
+            $result = User::where('id', $instructor_id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
+    }
 }
