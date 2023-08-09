@@ -172,6 +172,12 @@ class ExternalAccountController extends Controller
         return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_CREATED'));
     }
 
+    public function delete_students($id)
+    {
+        User::where('id', $id)->delete();
+        return redirect()->back()->with('success', __('constant.ALLOCATE_DELETED'));
+    }
+
     public function update_students (Request $request,$id)
     {
 

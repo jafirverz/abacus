@@ -19,7 +19,7 @@
         </a>
     </li>
     <li>
-        <a href="">
+        <a href="{{ url('instructor-competition') }}">
             <span><img src="{{ url('/') }}/images/tempt/ico-competitions.png" alt="Competitions icon" /></span>
             <strong>Competitions</strong>
         </a>

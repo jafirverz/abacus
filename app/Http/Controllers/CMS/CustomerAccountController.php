@@ -6,6 +6,7 @@ use App\Country;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
+use App\Admin;
 use App\Level;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

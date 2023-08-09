@@ -146,7 +146,7 @@ Route::get('grading-examination/edit/{id?}', 'ProfileController@edit_grading')->
 Route::post('grading-examination/edit/{id?}', 'ProfileController@update_grading')->name('grading-examination.update');
 Route::get('grading-examination/view/{id?}', 'ProfileController@view_grading')->name('grading-examination.view');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
-Route::get('register-grading-examination', 'ProfileController@register_grading_examination')->name('register-grading-examination');
+Route::get('register-grading-examination/{id?}', 'ProfileController@register_grading_examination')->name('register-grading-examination');
 Route::post('register-grading-examination/submit', 'ProfileController@grading_register_store')->name('register-grading-examination.submit');
 Route::get('grading-overview/{grading_exam_id?}/{listing_id?}/{paper_id?}', 'ProfileController@grading_paper');
 Route::get('competition-overview', 'ProfileController@competition_overview')->name('competition-overview');
