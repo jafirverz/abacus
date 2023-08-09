@@ -69,6 +69,7 @@ return [
     'GRADING_RESULT_UPLOAD' => 'Grading Results Upload',
     'REPORTS' => 'Reports',
     'STUDENT_REPORTS' => 'Student Reports',
+    'INSTRUCTOR_REPORTS' => 'Instructor Reports',
 
 
     // CONTENT
