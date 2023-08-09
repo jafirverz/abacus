@@ -270,6 +270,11 @@
             'menu_header'   =>  __('constant.REPORTS'),
             'main_menu' =>  [
                 [
+                    'title' =>  __('constant.SALES_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-sales',
+                ],
+                [
                     'title' =>  __('constant.STUDENT_REPORTS'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-student',

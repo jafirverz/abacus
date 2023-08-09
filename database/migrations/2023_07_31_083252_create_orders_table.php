@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->string('total_amount')->nullable();
             $table->string('payment_status')->nullable();
             $table->timestamps();

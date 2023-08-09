@@ -134,6 +134,7 @@ class PayPalController extends Controller
             $userId = Auth::user()->id;
             $order = new Order();
             $order->user_id = $userId;
+            $order->country_id =  Auth::user()->country_code;
             $order->total_amount = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
             $order->payment_status = $response['status'];
             $order->save();
