@@ -3,13 +3,19 @@
 <main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
-            @include('inc.account-sidebar')
+            @if(Auth::user()->user_type_id == 6)
+            <div class="menu-aside">
+             @include('inc.account-sidebar-external')
+            </div>
+            @else
+             @include('inc.account-sidebar')
+            @endif
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="row title-wrap-1">
                     <div class="col-md-6 order-md-last mt-0 lastcol">
-                        <a class="btn-1" href="{{ url('register-grading-examination') }}">Register for Grading Exam <i class="fa-solid fa-arrow-right-long"></i></a>
+                        <a class="btn-1" href="{{ url('register-grading-examination',$gradingExam->id) }}">Register for Grading Exam <i class="fa-solid fa-arrow-right-long"></i></a>
                     </div>
                     <div class="col-md-6 order-md-first mt-767-20">
                         <h1 class="title-3">Grading Examinations</h1>
@@ -18,7 +24,7 @@
                 </div>
                 <div class="box-1">
                     <h2 class="title-4">Registered Student's List</h2>
-                    <div><strong>Exam Title: 15th 3G Abacus Mental- Arithmetic Internation Grading Examination</strong></div>
+                    <div><strong>Exam Title: {{ $gradingExam->title ?? '' }}</strong></div>
                     <div class="xscrollbar mt-30 mCustomScrollbar _mCS_1 mCS_no_scrollbar" style="width: 959px;"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_horizontal mCSB_inside" style="max-height: none;" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr">
                         <table class="tb-2 tbtype-4">
                             <thead>

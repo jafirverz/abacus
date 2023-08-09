@@ -50,9 +50,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\ValidationException;
 use Cart;
-
-
-
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Amount;
@@ -142,13 +139,13 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-
+        $gradingExam = GradingExam::where('status', 1)->orderBy('id','desc')->first();
 		//dd($user);
 
-		return view('account.grading-examination', compact("page", "user","grading"));
+		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
 	}
 
-    public function register_grading_examination()
+    public function register_grading_examination($id)
 	{
 		//
 
@@ -165,7 +162,8 @@ class ProfileController extends Controller
         $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
         $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
-        $gradingExam = GradingExam::where('status', 1)->get();
+        $gradingExam = GradingExam::find($id);
+        //dd($gradingExam);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -523,7 +521,7 @@ class ProfileController extends Controller
         $gradingStudent = new GradingStudent();
         $gradingStudent->user_id   = $request->user_id ?? NULL;
         $gradingStudent->grading_exam_id   = $request->grading_exam_id ?? NULL;
-        $gradingStudent->instructor_id  = $this->user->id;   //Test /Survey
+        $gradingStudent->instructor_id  = $this->user->id;
         $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
@@ -935,9 +933,8 @@ class ProfileController extends Controller
         $instructor_id = User::where('id', Auth::user()->id)->first();
         $allocated_competition = CompetitionStudent::where('instructor_id', $user->id)->pluck('competition_controller_id');
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
-		$competition = Competition::where('status', 1)->whereNotIn('id',$allocated_competition)->orderBy('id', 'desc')->first();
-
-		$students = User::whereNotIn('id',$allocated_competition)->get();
+		$competition = Competition::where('status', 1)->orderBy('id', 'desc')->first();
+		$students = User::whereNotIn('id',$allocated_user)->get();
 
         $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
 
@@ -989,7 +986,8 @@ class ProfileController extends Controller
 	{
         $user = $this->user;
 		$competition = Competition::where('status', 1)->where('id', $competition_id)->first();
-        $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
+        $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
+        $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
         $locations = LearningLocation::orderBy('id','desc')->get();
         $categories = CompetitionCategory::orderBy('id','desc')->get();
 		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $user->id)->paginate($this->pagination);
@@ -1402,9 +1400,9 @@ class ProfileController extends Controller
             $tempCart->cart = $jsonEncode;
             $tempCart->save();
         }
-		
 
-		
+
+
 
 		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
 
@@ -1418,7 +1416,7 @@ class ProfileController extends Controller
 			return redirect()->to('/cart');
 		}
 		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
-		
+
 		return view('account.cart', compact("cartDetails"));
 	}
 
