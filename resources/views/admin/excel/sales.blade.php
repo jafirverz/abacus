@@ -2,33 +2,30 @@
     <thead>
         <tr>
             <th>S no.</th>
-            <th>Account Id</th>
             <th>Name</th>
-            <th>Gender</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>DOB</th>
-            <th>Address</th>
-            <th>User Type</th>
-            <th>Instructor</th>
+            <th>Order Name</th>
+            <th>Amount</th>
+            <th>Expiry Date</th>
             <th>Created At</th>
             <th>Updated At</th>
         </tr>
     </thead>
     <tbody>
-        @if($allUsers->count())
-        @foreach ($allUsers as $key => $item)
+        @if($allOrders->count())
+        @foreach ($allOrders as $key => $item)
+        @php 
+        $user = \App\User::where('id', $item->user_id)->first();
+        @endphp
         <tr>
             <td>{{ ($key+1) }}</td>
-            <td>{{ $item->account_id ?? '' }}</td>
+            <td>{{ $user->name ?? '' }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->mobile }}</td>
             <td>{{ $item->name }}</td>
-            <td>@if($item->gender == 1) Male @else Female @endif</td>
-            <td>{{ $item->email }}</td>
-            <td>{{ $item->mobile }}</td>
-            <td>{{ $item->dob }}</td>
-            <td>{{ $item->address }}</td>
-            <td>@if($item->user_type_id == 1) Normal Student @elseif($item->user_type_id == 2) Premium Student @elseif($item->user_type_id == 3) Online Student @elseif($item->user_type_id == 4) Event Only Student @endif</td>
-            <td>{{ getInstructor($item->instructor_id)->name ?? '-' }} </td>
+            <td>{{ $item->amount }}</td>
+            <td>{{ $item->expiry_date ?? '' }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>
         </tr>

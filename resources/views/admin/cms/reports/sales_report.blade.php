@@ -10,7 +10,7 @@
 
 
     </div>
-    <form action="{{ route('reports-sales.search') }}" method="post">
+    <form action="{{ route('reports-sales.search') }}" method="get">
       @csrf
       <div class="section-body">
 
@@ -50,6 +50,9 @@
             @endif
 
           </div>
+
+          
+
         </div>
 
 
@@ -64,7 +67,17 @@
           <div class="card">
 
             <div class="card-header">
-              <a href="{{ route('pages.destroy', 'pages') }}" class="btn btn-danger d-none destroy"
+              <a href="javascript:void(0);" class="btn btn-info mr-1 d-none excel" onclick="event.preventDefault();document.getElementById('excel').submit();"><i class="fas fa-file-download"></i> Excel</a>
+          
+              <form id="excel" action="{{ route('salesexcel') }}" method="post">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="excel_id">
+                <input type="hidden" name="country" value="{{ $_GET['country'] ?? '' }}">
+                <input type="hidden" name="start_date" value="{{ $_GET['start_date'] ?? '' }}">
+                <input type="hidden" name="end_date" value="{{ $_GET['end_date'] ?? '' }}">
+              </form>
+              <!-- <a href="{{ route('pages.destroy', 'pages') }}" class="btn btn-danger d-none destroy"
                 data-confirm="Do you want to continue?"
                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
@@ -73,7 +86,7 @@
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="multiple_delete">
-              </form>
+              </form> -->
               <h4></h4>
 
             </div>
@@ -90,17 +103,50 @@
                         </div>
                       </th>
                       <th>S/N</th>
-                      <th>Action</th>
-                      <th>Title</th>
-                      <th>View Order</th>
-                      <th>Status</th>
-                      <th>Created At</th>
-                      <th>Updated At</th>
+                      <th>Student Name</th>
+                      <th>Amount</th>
+                      <th>Order Date</th>
                     </tr>
                   </thead>
                   <tbody>
+                    @if(isset($allUsers) && count($allUsers) > 0)
+                    @php 
+                    $i = 1;
+                    @endphp
+                    @foreach($allUsers as $value)
+                    
+                    @php 
+                    $orders = \App\Order::where('user_id', $value->id)->sum('total_amount');
+                    if($orders){
+                      $amount = $orders;
+                    }
+                    @endphp
+                    <tr>
+                        <td>
+                          <div class="custom-checkbox custom-control"> <input type="checkbox"
+                                  data-checkboxes="mygroup" class="custom-control-input"
+                                  id="checkbox-{{ ($i) }}" value="{{ $value->id }}">
+                              <label for="checkbox-{{ ($i) }}"
+                                  class="custom-control-label">&nbsp;</label></div>
+                        </td>
+                        <td>{{ ($i) }}</td>
+                        <td>{{ $value->name }}</td>
+                        <td>{{ $amount ?? '' }}</td>
+                        <td>{{ $value->created_at ?? '-' }}</td>
 
-                  </tbody>
+                        
+                    </tr>
+                    @php
+                        $i++;
+                    @endphp
+                    
+                    @endforeach
+                    @else
+                    <tr>
+                        <td colspan="27" class="text-center">{{ __('constant.NO_DATA_FOUND') }}</td>
+                    </tr>
+                    @endif
+                </tbody>
                 </table>
               </div>
 

@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Order;
+use App\OrderDetail;
 use App\User;
 //use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\View\View;
@@ -22,7 +23,7 @@ class SalesExport implements FromView
     }
     public function view(): View
     {
-        $allUsers = User::whereIn('id', $this->allOrders)->get();
-        return view('admin.excel.sales', compact('allUsers'));
+        $allOrders = OrderDetail::whereIn('order_id', $this->allOrders)->get();
+        return view('admin.excel.sales', compact('allOrders'));
     }
 }
