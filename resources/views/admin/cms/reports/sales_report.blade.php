@@ -109,17 +109,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @if(isset($allUsers) && count($allUsers) > 0)
+                    @if(isset($allOrders) && count($allOrders) > 0)
                     @php 
                     $i = 1;
                     @endphp
-                    @foreach($allUsers as $value)
+                    @foreach($allOrders as $value)
                     
                     @php 
-                    $orders = \App\Order::where('user_id', $value->id)->sum('total_amount');
-                    if($orders){
-                      $amount = $orders;
-                    }
+                    
+                    $users = \App\User::where('id', $value->user_id)->first();
+                    
                     @endphp
                     <tr>
                         <td>
@@ -130,8 +129,8 @@
                                   class="custom-control-label">&nbsp;</label></div>
                         </td>
                         <td>{{ ($i) }}</td>
-                        <td>{{ $value->name }}</td>
-                        <td>{{ $amount ?? '' }}</td>
+                        <td>{{ $users->name }}</td>
+                        <td>{{ $value->total_amount ?? '' }}</td>
                         <td>{{ $value->created_at ?? '-' }}</td>
 
                         

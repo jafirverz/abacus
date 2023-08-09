@@ -23,7 +23,7 @@ class SalesExport implements FromView
     }
     public function view(): View
     {
-        $allOrders = OrderDetail::whereIn('order_id', $this->allOrders)->get();
+        $allOrders = $this->allOrders;
         return view('admin.excel.sales', compact('allOrders'));
     }
 }

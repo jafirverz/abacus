@@ -7,6 +7,7 @@
             <th>Phone</th>
             <th>Order Name</th>
             <th>Amount</th>
+            <th>Transaction ID</th>
             <th>Expiry Date</th>
             <th>Created At</th>
             <th>Updated At</th>
@@ -17,6 +18,7 @@
         @foreach ($allOrders as $key => $item)
         @php 
         $user = \App\User::where('id', $item->user_id)->first();
+        $payment = \App\Payment::where('order_id', $item->order_id)->first();
         @endphp
         <tr>
             <td>{{ ($key+1) }}</td>
@@ -25,6 +27,7 @@
             <td>{{ $user->mobile }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->amount }}</td>
+            <td>{{ $payment->transaction_id }}</td>
             <td>{{ $item->expiry_date ?? '' }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>

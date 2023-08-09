@@ -8,6 +8,7 @@ use App\Exports\SalesExport;
 use App\Exports\StudentExport;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\OrderDetail;
 use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
 use App\User;
@@ -119,13 +120,13 @@ class ReportController extends Controller
     public function sales()
     {
         $title = 'Sales Report';
-        $allUsers = array();
+        $allOrders = array();
         //$pages = Page::orderBy('view_order', 'asc')->get();
         //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
         $instructor = User::where('user_type_id', 5)->get();
         //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
         $countries = Country::get();
-        return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allUsers'));
+        return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
     }
 
     public function searchInSales(Request $request)
@@ -159,13 +160,13 @@ class ReportController extends Controller
         //     $q->whereIn('instructor_id', $instructor);
         // }
         
-        $allOrders = $q->pluck('user_id')->toArray();
-        $allOrders = array_unique($allOrders);
-        $allUsers = User::whereIn('id', $allOrders)->get();
+        $allOrders = $q->get();
+        //$allOrders = array_unique($allOrders);
+        //$allUsers = User::whereIn('id', $allOrders)->get();
         $title = 'Sales Report';
         $instructor = User::where('user_type_id', 5)->get();
         $countries = Country::get();
-        return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allUsers'));
+        return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
 
         // ob_end_clean();
         // ob_start();
@@ -179,31 +180,31 @@ class ReportController extends Controller
         $start_date = $request->start_date  ?? '';
         $end_date = $request->end_date ?? '';
         $country = $request->country ?? '';
-        $userId = explode(',', $request->excel_id);
+        $orderId = explode(',', $request->excel_id);
         //dd($userId);
-        $q = Order::query();
+        $q = OrderDetail::query();
+        $q->whereIn('order_id', $orderId);
+        // if ($request->country) {
+        //     // simple where here or another scope, whatever you like
+        //     $q->where('country_id', $country);
+        // }
 
-        if ($request->country) {
-            // simple where here or another scope, whatever you like
-            $q->where('country_id', $country);
-        }
+        // if ($request->start_date) {
+        //     // simple where here or another scope, whatever you like
+        //     $q->where('created_at', '>=', $start_date);
+        // }
 
-        if ($request->start_date) {
-            // simple where here or another scope, whatever you like
-            $q->where('created_at', '>=', $start_date);
-        }
+        // if ($request->end_date) {
+        //     $q->where('created_at', '<=', $end_date);
+        // }
 
-        if ($request->end_date) {
-            $q->where('created_at', '<=', $end_date);
-        }
-
-        if ($userId) {
-            $q->whereIn('user_id', $userId);
-        }
+        // if ($userId) {
+        //     $q->whereIn('user_id', $userId);
+        // }
 
 
 
-        $allOrders = $q->pluck('id')->toArray();
+        $allOrders = $q->get();
         ob_end_clean();
         ob_start();
         return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
