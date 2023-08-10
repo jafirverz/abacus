@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use App\CompetitionPaper;
 use App\Level;
 use App\Order;
@@ -12,9 +13,16 @@ use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\EmailNotification;
+use App\Traits\GetEmailTemplate;
+use App\Traits\SystemSettingTrait;
+use Illuminate\Validation\ValidationException;
+use Exception;
+use Illuminate\Support\Facades\Mail;
 
 class PayPalController extends Controller
 {
+    use GetEmailTemplate, SystemSettingTrait;
     //
     //public function payment()
     // {
@@ -179,7 +187,6 @@ class PayPalController extends Controller
                 }
             }
             
-
             $payment = new Payment();
             $payment->user_id = $userId;
             $payment->order_id = $order->id;
@@ -192,6 +199,64 @@ class PayPalController extends Controller
                 foreach($tempCart as $cart){
                     $cart->delete();
                 }
+            }
+            $toEmail = Auth::user()->email;
+            $userName = Auth::user()->name;
+            $userEmail = Auth::user()->email;
+            // Admin email for New Order
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_NEW_ORDER'));
+            $admins = Admin::get();
+            if ($email_template) {
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+
+                    $key = ['{{full_name}}','{{email}}','{{order_id}}','{{order_amount}}','{{order_status}}'];
+                    $value = [$request->name, $userEmail, $order->id, $order->total_amount, $order->payment_status];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
+
+            // Admin email for New Order
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_USER_NEW_ORDER'));
+            //$admins = Admin::get();
+            if ($email_template) {
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$toEmail];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+
+                    $key = ['{{full_name}}','{{email}}','{{order_id}}','{{order_amount}}','{{order_status}}'];
+                    $value = [$request->name, $userEmail, $order->id, $order->total_amount, $order->payment_status];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
             }
 
             // return view('account.success', compact("cartDetails"));
