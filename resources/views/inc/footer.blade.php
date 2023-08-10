@@ -7,7 +7,7 @@
         <div class="row sp-col-30 align-items-center footer-info">
             <div class="col-xl-auto sp-col">
                 <div class="logo">
-                    <a href="index.html"><img src="{{asset('images/3g-abacus-logo-2.png')}}" alt="3G Abacus" /></a>
+                    <a href="{{url('/')}}"><img src="{{asset('images/3g-abacus-logo-2.png')}}" alt="3G Abacus" /></a>
                 </div>
             </div>
             <div class="col-xl sp-col">
