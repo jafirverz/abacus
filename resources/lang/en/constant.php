@@ -72,6 +72,7 @@ return [
     'INSTRUCTOR_REPORTS' => 'Instructor Reports',
     'SALES_REPORTS' => 'Sales Reports',
     'WORKSHEET_REPORTS' => 'Worksheet Reports',
+    'ORDERS' => 'Orders',
 
 
     // CONTENT

@@ -267,6 +267,16 @@
             ],
         ],
         [
+            'menu_header'   =>  __('constant.ORDERS'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.ORDERS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/orders',
+                ],
+            ],
+        ],
+        [
             'menu_header'   =>  __('constant.REPORTS'),
             'main_menu' =>  [
                 [

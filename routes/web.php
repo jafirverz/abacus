@@ -526,6 +526,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-worksheet/search', 'CMS\ReportController@searchInWorksheet')->name('reports-worksheet.search');
     Route::get('reports-worksheet', 'CMS\ReportController@worksheet');
     //Route::post('reports-worksheet', 'CMS\ReportController@searchWorksheet')->name('salesexcel');
+
+    Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
+    Route::get('orders', 'CMS\OrderController@index');
 });
 
 
