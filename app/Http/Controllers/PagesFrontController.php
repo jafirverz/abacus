@@ -21,7 +21,8 @@ use App\Competition;
 use App\Country;
 use App\Partner;
 use App\SystemSetting;
-use App\Testimonial;
+use App\GradingExam;
+use App\GradingStudent;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -75,13 +76,15 @@ class PagesFrontController extends Controller
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
         $todayDate = date('Y-m-d');
         $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
+        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();
+        //dd($grading_exam);
         $surveys = Survey::where('status', 1)->first();
         $user = User::where('id', Auth::user()->id)->first();
         $country = Country::orderBy('phonecode', 'asc')->get();
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam'));
     }
 
     public function instructor($slug = null){
@@ -91,7 +94,7 @@ class PagesFrontController extends Controller
         if (!$page || in_array(Auth::user()->user_type_id,$userType) ) {
             return abort(404);
         }else{
-            
+
         }
 
     }
@@ -107,7 +110,7 @@ class PagesFrontController extends Controller
         }
         if (in_array($page->id, [__('constant.FAQ_PAGE_ID'), __('constant.TERMS_OF_USE'), __('constant.PRIVACY_POLICY'), __('constant.ABOUT_PAGE_ID')])) {
             return view('about', compact('page', 'system_settings', 'smart_blocks'));
-        } 
+        }
 
         return view('pages', compact('page', 'system_settings', 'smart_blocks'));
     }

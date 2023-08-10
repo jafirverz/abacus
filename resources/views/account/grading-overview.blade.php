@@ -3,18 +3,22 @@
 <main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
-            @include('inc.account-sidebar')
+            @if(Auth::user()->user_type_id == 4)
+              @include('inc.account-sidebar-event-student')
+            @else
+              @include('inc.account-sidebar')
+            @endif
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="mb-20">
-                    <a class="link-1 lico" href="be-overview.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+                    <a class="link-1 lico" onclick="window.history.go(-1); return false;" href="javascript::void(0)"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
                 </div>
                 <h1 class="title-3">My Overview</h1>
                 <div class="box-1">
                     <div class="row grid-2 sp-col-15">
                         <div class="col-xl-3 col-sm-5 sp-col gcol-1">
-                            <img class="image" src="images/tempt/img-level-6-big.jpg" alt="" />
+                            <img class="image" src="{{Auth::user()->profile_picture ?? asset('images/tempt/img-user.jpg')}}" alt="" />
                         </div>
                         <div class="col-xl-9 col-sm-7 sp-col gcol-2 mt-574-30">
                             <h2 class="title-4">Grading Examination</h2>
@@ -36,8 +40,8 @@
                                     </div>
                                     <div class="inrow">
                                         <strong>My Registered Grades:</strong> <br/>
-                                        <div class="mt-5px">Mental Grade: XXXX</div>
-                                        <div class="mt-5px">Abacus Grade: XXXX</div>
+                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->title ?? '' }}</div>
+                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->title ?? '' }}</div>
                                     </div>
                                 </div>
                             </div>
