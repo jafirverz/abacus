@@ -282,7 +282,7 @@ class ProfileController extends Controller
 		return view('account.allocation-survey', compact("page", "user","survey","list","students","survey_id"));
 	}
 
-    public function grading_overview()
+    public function grading_overview($id)
 	{
 		//
 
@@ -291,7 +291,9 @@ class ProfileController extends Controller
 
 		$user = $this->user;
         $today=date('Y-m-d');
-		$gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','=',$today)->first();
+		$gradingExam = GradingExam::find($id);
+		$gradingStu = GradingStudent::where('grading_exam_id',$id)->where('user_id',$user->id)->first();
+
         if (!$gradingExam) {
 			return abort(404);
 		}
@@ -304,7 +306,7 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.grading-overview', compact("page", "gradingExam","gradingExamList"));
+		return view('account.grading-overview', compact("page", "gradingExam","gradingExamList","gradingStu"));
 	}
 
     public function detail_test($id){

@@ -138,7 +138,7 @@ Route::get('my-profile', 'ProfileController@index')->name('my-profile');
 Route::get('instructor-profile', 'ProfileController@instructor')->name('instructor-profile');
 Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
 Route::post('instructor-profile-cal', 'ProfileController@cal_store')->name('instructor-profile.cal_update');
-Route::get('grading-overview', 'ProfileController@grading_overview')->name('grading-overview');
+Route::get('grading-overview/{id?}', 'ProfileController@grading_overview')->name('grading-overview');
 Route::post('grading-overview/result', 'GradingSubmitController@resultpage')->name('grading_answer.submit');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('grading-examination/delete/{id?}', 'ProfileController@delete_grading')->name('grading-examination.delete');

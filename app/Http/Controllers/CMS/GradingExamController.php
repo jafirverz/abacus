@@ -67,17 +67,17 @@ class GradingExamController extends Controller
             'layout'  =>  'required',
             'exam_date'  =>  'required',
             'exam_venue'  =>  'required',
-            'student_id.*'  =>  'required',
+            'exam_type'  =>  'required',
             'status'  =>  'required',
         ]);
 
         $gradingExam = new GradingExam();
         $gradingExam->title = $request->title ?? NULL;
         $gradingExam->type = $request->type ?? NULL;
+        $gradingExam->exam_type = $request->exam_type ?? NULL;
         $gradingExam->layout = $request->layout ?? NULL;
         $gradingExam->exam_date = $request->exam_date ?? NULL;
         $gradingExam->exam_venue = $request->exam_venue ?? NULL;
-        $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
         $gradingExam->layout = $request->layout ?? NULL;
         $gradingExam->important_note = $request->important_note ?? NULL;
         $gradingExam->status = $request->status ?? NULL;
@@ -128,18 +128,18 @@ class GradingExamController extends Controller
             'type'  =>  'required',
             'layout'  =>  'required',
             'exam_date'  =>  'required',
+            'exam_type'  =>  'required',
             'exam_venue'  =>  'required',
-            'student_id.*'  =>  'required',
             'status'  =>  'required',
         ]);
 
         $gradingExam = GradingExam::findorfail($id);
         $gradingExam->title = $request->title ?? NULL;
         $gradingExam->type = $request->type ?? NULL;
+        $gradingExam->exam_type = $request->exam_type ?? NULL;
         $gradingExam->layout = $request->layout ?? NULL;
         $gradingExam->exam_date = $request->exam_date ?? NULL;
-        $gradingExam->student_id = $request->student_id?json_encode($request->student_id): NULL;
-        $gradingExam->exam_venue = $request->exam_venue ?? NULL;
+ $gradingExam->exam_venue = $request->exam_venue ?? NULL;
         $gradingExam->layout = $request->layout ?? NULL;
         $gradingExam->important_note = $request->important_note ?? NULL;
         $gradingExam->status = $request->status ?? NULL;

@@ -91,25 +91,21 @@
                                 @php
                                  $student_id=json_decode($exam->student_id);
                                 @endphp
-                                
+
                                 <div class="form-group">
-                                    <label for="student_id">Student</label>
-                                    <select multiple name="student_id[]" class="form-control">
+                                    <label for="exam_type">Exam Type</label>
+                                    <select name="exam_type" class="form-control">
                                         <option value="">-- Select --</option>
-                                        @if ($students)
-                                        @foreach ($students as $item)
-                                        <option value="{{ $item->id }}" @if(in_array($item->id,$student_id)==$item->id)
-                                            selected
-                                            @endif>{{ $item->name }}</option>
-                                        @endforeach
-                                        @endif
+                                        <option @if(old('exam_type', $exam->exam_type)==1) selected @endif value="1">Actual</option>
+                                        <option @if(old('exam_type', $exam->exam_type)==2) selected @endif value="2">Practice</option>
                                     </select>
-                                    @if ($errors->has('student_id'))
+                                    @if ($errors->has('exam_type'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('student_id') }}</strong>
+                                        <strong>{{ $errors->first('exam_type') }}</strong>
                                     </span>
                                     @endif
                                 </div>
+
                                 <div class="form-group">
                                     <label for="important_note">Notes</label>
                                     <textarea name="important_note" class="form-control my-editor" id="" cols="30"
