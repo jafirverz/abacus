@@ -6,13 +6,17 @@ use App\Country;
 use App\Exports\InstructorExport;
 use App\Exports\SalesExport;
 use App\Exports\StudentExport;
+use App\Exports\WorksheetExport;
 use App\Http\Controllers\Controller;
+use App\Level;
+use App\LevelTopic;
 use App\Order;
 use App\OrderDetail;
 use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
 use App\User;
 use App\UserType;
+use App\WorksheetSubmitted;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -210,4 +214,98 @@ class ReportController extends Controller
         return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
         //dd($allUsers);
     }
+
+
+    public function worksheet()
+    {
+        $title = 'Worksheet Report';
+        $allOrders = array();
+        $levels = Level::get();
+        $students = User::whereIn('user_type_id', [1,2])->where('approve_status', 1)->get();
+        return view('admin.cms.reports.worksheet_reports', compact('title', 'levels', 'students'));
+    }
+
+    public function searchInWorksheet(Request $request)
+    {
+        // dd($request->all());
+        $level = $request->level  ?? '';
+        $start_date = $request->start_date ?? '';
+        $end_date = $request->end_date ?? '';
+        $student = $request->student ?? '';
+        
+        
+        $q = WorksheetSubmitted::query();
+
+        if ($request->level) {
+            // simple where here or another scope, whatever you like
+            $q->where('level_id', $level);
+        }
+
+        if ($request->start_date) {
+            // simple where here or another scope, whatever you like
+            $q->where('created_at', '>=', $start_date);
+        }
+
+        if ($request->end_date) {
+            $q->where('created_at', '<=', $end_date);
+        }
+
+        if ($request->student) {
+            $q->where('user_id', $student);
+        }
+
+        // if ($request->instructor) {
+        //     $q->whereIn('instructor_id', $instructor);
+        // }
+        
+        $allOrders = $q->get();
+        //$allOrders = array_unique($allOrders);
+        //$allUsers = User::whereIn('id', $allOrders)->get();
+        // $title = 'Sales Report';
+        // $instructor = User::where('user_type_id', 5)->get();
+        // $countries = Country::get();
+        // return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
+
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new WorksheetExport($allOrders), 'WorksheetReport.xlsx');
+        //dd($allUsers);
+    }
+
+
+    // public function searchWorksheet(Request $request)
+    // {
+    //     $start_date = $request->start_date  ?? '';
+    //     $end_date = $request->end_date ?? '';
+    //     $country = $request->country ?? '';
+    //     $orderId = explode(',', $request->excel_id);
+    //     //dd($userId);
+    //     $q = OrderDetail::query();
+    //     $q->whereIn('order_id', $orderId);
+    //     // if ($request->country) {
+    //     //     // simple where here or another scope, whatever you like
+    //     //     $q->where('country_id', $country);
+    //     // }
+
+    //     // if ($request->start_date) {
+    //     //     // simple where here or another scope, whatever you like
+    //     //     $q->where('created_at', '>=', $start_date);
+    //     // }
+
+    //     // if ($request->end_date) {
+    //     //     $q->where('created_at', '<=', $end_date);
+    //     // }
+
+    //     // if ($userId) {
+    //     //     $q->whereIn('user_id', $userId);
+    //     // }
+
+
+
+    //     $allOrders = $q->get();
+    //     ob_end_clean();
+    //     ob_start();
+    //     return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
+    //     //dd($allUsers);
+    // }
 }

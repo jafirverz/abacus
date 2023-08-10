@@ -284,6 +284,11 @@
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-instructor',
                 ],
+                [
+                    'title' =>  __('constant.WORKSHEET_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-worksheet',
+                ],
             ],
         ],
     ];
