@@ -119,7 +119,7 @@
                                                             <label><span>{{ $pape->title }}</span></label>
                                                             @else
                                                             <div class="checkbxtype">
-                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
+                                                                @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
                                                                 <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
                                                                 @endif
                                                                 <label><span>{{ $pape->title }}</span>
