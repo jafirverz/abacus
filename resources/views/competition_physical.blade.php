@@ -73,7 +73,7 @@
                             @php
                             //$checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
 
-                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->count();
+                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->get();
                             @endphp
 
 
@@ -101,39 +101,74 @@
                                             @csrf
                                             <input type="hidden" name="type" value="physicalcompetition">
                                             <div class="row break-1500">
-                                                @php 
-                                                $papers = \App\PaperCategory::where('competition_id', $compId)->where('category_id', $cat)->get();
-                                                $countP = count($papers);
-                                                @endphp
+                                                
                                                 <div class="col-xl-6 sp-col">
                                                     <div class="box-2">
-                                                    @foreach($papers as $paper)
+                                                    @foreach($checkPaperCategory as $pape)
                                                     @php 
-                                                        $pape = \App\CompetitionPaper::where('id', $paper->competition_paper_id)->first();
-                                                        $userId = Auth::user()->id;
-                                                        $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalcompetition')->pluck('comp_paper_id')->toArray();
+                                                    $userId = Auth::user()->id;
+                                                    $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalcompetition')->pluck('comp_paper_id')->toArray();
                                                     @endphp
                                                         
-                                                        <div class="bxrow">
-                                                            @if(empty($pape->price) || in_array($pape->id,$orderDetails))
-                                                            <label><span>{{ $pape->title }}</span></label>
-                                                            @else
-                                                            <div class="checkbxtype">
-                                                                @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
-                                                                <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
+                                                        @php
+                                                        $todayDate = date('Y-m-d'); 
+                                                        if($competition->date_of_competition > $todayDate ){
+                                                            if($pape->paper_type == 'practice'){
+                                                        @endphp
+                                                            <div class="bxrow">
+                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
+                                                                <label><span>{{ $pape->title }}</span></label>
+                                                                @else
+                                                                <div class="checkbxtype">
+                                                                    @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
+                                                                    <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
+                                                                    @endif
+                                                                    <label><span>{{ $pape->title }}</span>
+                                                                        <strong>${{ $pape->price ?? 0 }}</strong>
+                                                                    </label>
+                                                                </div>
                                                                 @endif
-                                                                <label><span>{{ $pape->title }}</span>
-                                                                    <strong>${{ $pape->price ?? 0 }}</strong>
-                                                                </label>
-                                                            </div>
-                                                            @endif
 
-                                                            @if(empty($pape->price) || in_array($pape->id,$orderDetails))
-                                                            <a class="lnk btn-2" href="{{ asset('upload-file/'.$pape->pdf_file) }}" target="_blank">Download</a>
-                                                            
-                                                            @endif
-                                                        </div>
-                                                        @endforeach
+                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
+                                                                <a class="lnk btn-2" href="{{ asset('upload-file/'.$pape->pdf_file) }}" target="_blank">Download</a>
+                                                                
+                                                                @endif
+                                                            </div>
+                                                        @php
+                                                            }
+                                                        }elseif($competition->date_of_competition == $todayDate){
+                                                            if($pape->paper_type == 'actual'){
+                                                        @endphp
+                                                            <div class="bxrow">
+                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
+                                                                <label><span>{{ $pape->title }}</span></label>
+                                                                @else
+                                                                <div class="checkbxtype">
+                                                                    @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
+                                                                    <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
+                                                                    @endif
+                                                                    <label><span>{{ $pape->title }}</span>
+                                                                        <strong>${{ $pape->price ?? 0 }}</strong>
+                                                                    </label>
+                                                                </div>
+                                                                @endif
+
+                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
+                                                                <a class="lnk btn-2" href="{{ asset('upload-file/'.$pape->pdf_file) }}" target="_blank">Download</a>
+                                                                
+                                                                @endif
+                                                            </div>
+                                                        @php
+                                                            }
+
+                                                        }
+                                                        @endphp
+
+                                                        
+
+
+
+                                                    @endforeach
                                                         
                                                     </div>
                                                 </div>

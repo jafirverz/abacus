@@ -72,7 +72,7 @@
 
                             @php
                             //$checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
-                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->count();
+                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->get();
                             @endphp
 
 
@@ -96,27 +96,50 @@
                                     <div id="faq-{{ $i }}" class="accordion-collapse collapse {{ $show }}">
                                         <div class="accordion-body">
                                             <div class="row break-1500">
-                                                @php 
-                                                $papers = \App\PaperCategory::where('competition_id', $compId)->where('category_id', $cat)->get();
-                                                $countP = count($papers);
-                                                @endphp
+                                                
+                                                
                                                 <div class="col-xl-6 sp-col">
                                                     <div class="box-2">
-                                                    @foreach($papers as $paper)
-                                                    @php 
-                                                        $pape = \App\CompetitionPaper::where('id', $paper->competition_paper_id)->first();
-                                                        @endphp
-                                                        
-                                                        <div class="bxrow">
-                                                            <div class="checkbxtype">
-                                                                <input type="checkbox" id="practice-7">
-                                                                <label><span>{{ $pape->title }}</span>
-                                                                    <strong>${{ $pape->price ?? 0 }}</strong>
-                                                                </label>
+                                                    @foreach($checkPaperCategory as $paper)
+                                                   
+                                                    @php
+                                                    $todayDate = date('Y-m-d'); 
+                                                    if($competition->date_of_competition > $todayDate ){
+                                                        if($paper->paper_type == 'practice'){
+                                                    @endphp
+                                                            <div class="bxrow">
+                                                                <div class="checkbxtype">
+                                                                    <input type="checkbox" id="practice-7">
+                                                                    <label><span>{{ $paper->title }}</span>
+                                                                        <strong>${{ $paper->price ?? 0 }}</strong>
+                                                                    </label>
+                                                                </div>
+                                                                <a class="lnk btn-2" href="{{ url('competition-paper/'.$paper->id) }}" >View</a>
                                                             </div>
-                                                            <a class="lnk btn-2" href="{{ url('competition-paper/'.$pape->id) }}" >View</a>
-                                                        </div>
-                                                        @endforeach
+                                                    
+                                                    @php
+                                                        }
+                                                    }elseif($competition->date_of_competition == $todayDate){
+                                                        if($paper->paper_type == 'actual'){
+                                                    @endphp
+                                                            <div class="bxrow">
+                                                                <div class="checkbxtype">
+                                                                    <input type="checkbox" id="practice-7">
+                                                                    <label><span>{{ $paper->title }}</span>
+                                                                        <strong>${{ $paper->price ?? 0 }}</strong>
+                                                                    </label>
+                                                                </div>
+                                                                <a class="lnk btn-2" href="{{ url('competition-paper/'.$paper->id) }}" >View</a>
+                                                            </div>
+                                                    @php
+                                                        }
+
+                                                    }
+                                                    @endphp 
+                                                        
+
+
+                                                    @endforeach
                                                         
                                                     </div>
                                                 </div>

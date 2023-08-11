@@ -67,6 +67,17 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group" >
+                                    <label for="title">Price</label>
+                                    <input type="text" name="price" class="form-control" id=""
+                                        value="{{ old('price', $competitionPaper->price) ?? '' }}">
+                                    @if ($errors->has('price'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 
                                 <div class="form-group">
                                     <label for="title">Competition</label>
