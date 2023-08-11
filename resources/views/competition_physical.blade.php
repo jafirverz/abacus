@@ -31,10 +31,11 @@
                                     <div class="inrow">
                                         <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
                                     </div>
-                                    {{-- 
+                                    
                                     <div class="inrow">
                                         <strong>Registered Category:</strong> _Category a (5 &amp; 6 year old)
-                                    </div>	
+                                    </div>
+                                    {{-- 	
                                     <div class="inrow">
                                         <strong>Venu:</strong> XXXX
                                     </div>
