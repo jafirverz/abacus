@@ -322,7 +322,8 @@ class CompetitionController extends Controller
         return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
     }
 
-    public function approvestudentList($id){
+    public function approvestudentList(Request $request, $id){
+        //dd($id);
         $title = 'Student List';
         $compStudent = CompetitionStudent::where('id', $id)->first();
         $compStudent->approve_status = 1;

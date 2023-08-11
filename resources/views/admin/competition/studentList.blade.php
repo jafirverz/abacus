@@ -94,16 +94,16 @@
                                                 <a href="{{ route('competition.student.edit', $item->id) }}"
                                                   class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                   data-original-title="Approve" data-confirm="Do you want to continue?"
-                                                  data-confirm-yes="event.preventDefault();document.getElementById('approve').submit();">Approve</a>
-                                                  <form id="approve" action="{{ route('competition.student.approve', $item->id) }}" method="post">
+                                                  data-confirm-yes="event.preventDefault();document.getElementById('approve{{$item->id}}').submit();">Approve</a>
+                                                  <form id="approve{{ $item->id }}" action="{{ route('competition.student.approve', $item->id) }}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="reject_user" value="{{ $item->id }}">
+                                                    <input type="hidden" name="approve_user" value="{{ $item->id }}">
                                                 </form>
                                                 <a href="{{ route('competition.student.edit', $item->id) }}"
                                                     class="btn btn-danger mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Reject" data-confirm="Do you want to continue?"
-                                                    data-confirm-yes="event.preventDefault();document.getElementById('reject').submit();">Reject</a>
-                                                <form id="reject" action="{{ route('competition.student.reject', $item->id) }}" method="post">
+                                                    data-confirm-yes="event.preventDefault();document.getElementById('reject{{$item->id}}').submit();">Reject</a>
+                                                <form id="reject{{$item->id}}" action="{{ route('competition.student.reject', $item->id) }}" method="post">
                                                       @csrf
                                                       <input type="hidden" name="reject_user" value="{{ $item->id }}">
                                                   </form>

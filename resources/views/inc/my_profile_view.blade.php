@@ -49,10 +49,11 @@
                     <div class="descripts">
                         <h3>Competition</h3>
                         <div class="gactions">
+                           
                             @php
                             if(isset($competition) && !empty($competition)){
                                 $competitionId = $competition->id;
-                                $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->first();
+                                $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->where('approve_status', 1)->first();
                                 if($compStu){
                                     $url = 1; 
                                 }else{
