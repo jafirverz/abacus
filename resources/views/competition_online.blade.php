@@ -103,18 +103,31 @@
                                                     @foreach($checkPaperCategory as $paper)
                                                    
                                                     @php
+                                                    $orderDetails = array();
+                                                    $userId = Auth::user()->id;
+                                                    $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'onlinecompetition')->pluck('comp_paper_id')->toArray();
                                                     $todayDate = date('Y-m-d'); 
                                                     if($competition->date_of_competition > $todayDate ){
                                                         if($paper->paper_type == 'practice'){
                                                     @endphp
                                                             <div class="bxrow">
-                                                                <div class="checkbxtype">
-                                                                    <input type="checkbox" id="practice-7">
+                                                                <div class="checkbxtype nocheck">
+                                                                    <input type="checkbox" id="practice-7" name="onlinepracticepaper[]">
                                                                     <label><span>{{ $paper->title }}</span>
                                                                         <strong>${{ $paper->price ?? 0 }}</strong>
                                                                     </label>
                                                                 </div>
+                                                                
+                                                                @if(!empty($paper->price) && !in_array($paper->id,$orderDetails))
+                                                                <form method="post" action="{{ route('cart') }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="type" value="onlinecompetition">
+                                                                    <input type="hidden" name="paper" value="{{ $paper->id }}">
+                                                                <button class="lnk btn-2" type="submit" >Add to Cart</button>
+                                                                </form>
+                                                                @else
                                                                 <a class="lnk btn-2" href="{{ url('competition-paper/'.$paper->id) }}" >View</a>
+                                                                @endif
                                                             </div>
                                                     
                                                     @php

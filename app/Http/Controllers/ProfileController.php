@@ -1374,6 +1374,24 @@ class ProfileController extends Controller
                 $tempCart->cart = $jsonEncode;
                 $tempCart->save();
             }
+        }elseif($request->type == 'onlinecompetition'){
+                $paper = CompetitionPaper::where('id', $request->paper)->first();
+                $levelDetails = array();
+                $levelDetails['type'] = 'onlinecompetition';
+                $levelDetails['id'] = $request->paper;
+                $levelDetails['name'] = $paper->title;
+                $levelDetails['description'] = $paper->description;
+                $levelDetails['image'] = '';
+                $levelDetails['amount'] = $paper->price;
+                $levelDetails['months'] = '';
+
+                $tempCart = new TempCart();
+                $jsonEncode = json_encode($levelDetails);
+                $tempCart->user_id = Auth::user()->id;
+                $tempCart->type = $request->type;
+                $tempCart->level_id = null;
+                $tempCart->cart = $jsonEncode;
+                $tempCart->save();
         }else{
             $levelId = $request->levelId ?? null;
             $level = Level::where('id', $levelId)->first();
