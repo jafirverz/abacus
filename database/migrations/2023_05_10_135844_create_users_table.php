@@ -37,6 +37,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('country_code')->nullable();
             $table->text('address')->nullable();
+            $table->text('year_attained_qualified_instructor')->nullable();
+            $table->text('year_attained_senior_instructor')->nullable();
+            $table->text('highest_abacus_grade')->nullable();
+            $table->text('highest_mental_grade')->nullable();
+            $table->text('awards')->nullable();
             $table->boolean('subscription')->default(0);
             $table->string('profile_picture')->nullable();
             $table->smallInteger('approve_status')->default(0)->comment('1=>approved, 2=>not approved');
