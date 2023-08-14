@@ -134,7 +134,7 @@
                                                                 @else
                                                                 <div class="checkbxtype">
                                                                     @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
-                                                                    <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
+                                                                    <input type="checkbox" onclick="checkchecked();" id="practice-{{ $pape->id }}" name="paper[]" value="{{ $pape->id }}">
                                                                     @endif
                                                                     <label><span>{{ $pape->title }}</span>
                                                                         <strong>${{ $pape->price ?? 0 }}</strong>
@@ -158,7 +158,7 @@
                                                                 @else
                                                                 <div class="checkbxtype">
                                                                     @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
-                                                                    <input type="checkbox" id="practice-7" name="paper[]" value="{{ $pape->id }}">
+                                                                    <input type="checkbox" onclick="checkchecked();" id="practice-{{ $pape->id }}" name="paper[]" value="{{ $pape->id }}">
                                                                     @endif
                                                                     <label><span>{{ $pape->title }}</span>
                                                                         <strong>${{ $pape->price ?? 0 }}</strong>
@@ -192,7 +192,7 @@
 
                                             </div>
                                             <div class="output-2 mt-0">
-                                                <button class="btn-1" type="submit">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></button>
+                                                <button class="btn-1 addtocart" type="submit" style="display: none;">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></button>
                                             </div>
                                             </form>
                                         </div>
@@ -214,4 +214,15 @@
         </div>
     </div>	
 </main>
+
+<script>
+    function checkchecked(){
+        var atLeastOneIsChecked = $('input[name="paper[]"]:checked').length > 0;
+        if(atLeastOneIsChecked){
+            $('.addtocart').show();
+        }else{
+            $('.addtocart').hide();
+        }
+    }
+</script>
 @endsection
