@@ -71,10 +71,16 @@
 
                         @php 
                         $compId = $competition->id;
-                        $catComp = \App\CategoryCompetition::where('competition_id', $compId)->pluck('category_id')->toArray();
+                        $userCategory = json_decode(Auth::user()->category_id);
+                        if($userCategory){
+                            $catComp = \App\CategoryCompetition::where('competition_id', $compId)->whereIn('category_id', $userCategory)->pluck('category_id')->toArray();
+                        }else{
+                            $catComp = array();
+                        }
                         $i = 1;
                         @endphp
 
+                        @if(isset($catComp) && count($catComp) > 0)
                         @foreach($catComp as $key=>$cat)
 
                             @php
@@ -197,7 +203,7 @@
                                 @endphp
                             @endif
                         @endforeach
-
+                        @endif
                         
 
 
