@@ -36,7 +36,11 @@
                     <div class="descripts">
                         <h3>Grading Examination</h3>
                         <div class="gactions">
-                            <a href="{{ url('grading-exam') }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                           @if(isset($grading_exam->id))
+                            <a href="{{ url('grading-overview/'.$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                           @else
+                            <a href="javascript::void(0)">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                           @endif
                         </div>
                     </div>
                 </div>
