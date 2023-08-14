@@ -51,9 +51,11 @@ class CompetitionResultController extends Controller
 
     public function update(Request $request, $id){
         $result = $request->result;
+        $prize = $request->prize;
         $title = $this->title;
         $compPaperResult = CompetitionPaperSubmitted::where('id', $id)->first();
         $compPaperResult->result = $result;
+        $compPaperResult->result = $prize;
         $compPaperResult->save();
         $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
         return view('admin.competition_result.index', compact('title', 'competition'));

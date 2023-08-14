@@ -31,9 +31,15 @@
                                     <div class="inrow">
                                         <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
                                     </div>
-                                    
+                                    @php 
+                                    $userCategory = json_decode(Auth::user()->category_id);
+                                    if($userCategory){
+                                        $catComp1 = \App\CompetitionCategory::whereIn('id', $userCategory)->pluck('category_name')->toArray();
+                                        $categories = implode(',', $catComp1);
+                                    }
+                                    @endphp
                                     <div class="inrow">
-                                        <strong>Registered Category:</strong> _Category a (5 &amp; 6 year old)
+                                        <strong>Registered Category:</strong> {{ $categories ?? '' }}
                                     </div>
                                     {{-- 	
                                     <div class="inrow">
