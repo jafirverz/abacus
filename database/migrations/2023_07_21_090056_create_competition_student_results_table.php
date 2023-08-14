@@ -26,6 +26,7 @@ class CreateCompetitionStudentResultsTable extends Migration
             $table->string('rank')->nullable();
             $table->string('abacus_grade')->nullable();
             $table->string('mental_grade')->nullable();
+            $table->string('prize')->nullable();
             $table->timestamps();
         });
     }

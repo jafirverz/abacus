@@ -27,6 +27,7 @@ class CreateCompetitionPaperSubmittedsTable extends Migration
             $table->string('total_marks')->nullable();
             $table->string('user_marks')->nullable();
             $table->string('result')->nullable();
+            $table->string('prize')->nullable();
             $table->timestamps();
         });
     }

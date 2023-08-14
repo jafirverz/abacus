@@ -29,14 +29,16 @@
                   $levelId = $order->level_id;
                   $levelDetails = \App\Level::where('id', $levelId)->first();
                   @endphp
+                @if($levelId)
                 <tr>
                   <td><em>{{ $order->order_id }}</em></td>
                   <td><em><a href="be-premium-elementary-level.html">{{ $order->name }}</a></em></td>
-                  <td><em>{{ $levelDetails->premium_months }} months</em></td>
+                  <td><em>{{ $levelDetails->premium_months ?? '' }} </em></td>
                   <td><em>{{ date('Y-m-d', strtotime($order->created_at)) }}</em></td>
                   <td><em>{{ $order->expiry_date }}</em></td>
                   <td>${{ $order->amount }}</td>
                 </tr>
+                @endif
                 @endforeach
                 
               </tbody>

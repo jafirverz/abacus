@@ -31,9 +31,15 @@
                                     <div class="inrow">
                                         <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
                                     </div>
-                                    
+                                    @php 
+                                    $userCategory = json_decode(Auth::user()->category_id);
+                                    if($userCategory){
+                                        $catComp1 = \App\CompetitionCategory::whereIn('id', $userCategory)->pluck('category_name')->toArray();
+                                        $categories = implode(',', $catComp1);
+                                    }
+                                    @endphp
                                     <div class="inrow">
-                                        <strong>Registered Category:</strong> _Category a (5 &amp; 6 year old)
+                                        <strong>Registered Category:</strong> {{ $categories ?? '' }}
                                     </div>
                                     {{-- 	
                                     <div class="inrow">
@@ -65,10 +71,16 @@
 
                         @php 
                         $compId = $competition->id;
-                        $catComp = \App\CategoryCompetition::where('competition_id', $compId)->pluck('category_id')->toArray();
+                        $userCategory = json_decode(Auth::user()->category_id);
+                        if($userCategory){
+                            $catComp = \App\CategoryCompetition::where('competition_id', $compId)->whereIn('category_id', $userCategory)->pluck('category_id')->toArray();
+                        }else{
+                            $catComp = array();
+                        }
                         $i = 1;
                         @endphp
 
+                        @if(isset($catComp) && count($catComp) > 0)
                         @foreach($catComp as $key=>$cat)
 
                             @php
@@ -191,7 +203,7 @@
                                 @endphp
                             @endif
                         @endforeach
-
+                        @endif
                         
 
 

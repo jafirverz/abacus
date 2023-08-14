@@ -333,7 +333,7 @@ class CompetitionController extends Controller
 
     public function uploadCompResult(){
         $title = 'Upload Result';
-        $competition = Competition::where('competition_type', 'online')->get();
+        $competition = Competition::get();
         return view('admin.competition.result-upload', compact('title', 'competition'));
     }
 
