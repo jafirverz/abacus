@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\Traits\SystemSettingTrait;
+use App\UserSurvey;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -141,5 +142,19 @@ class SurveyController extends Controller
     public function destroy(Survey $survey)
     {
         //
+    }
+
+    public function getlist(){
+        $title = 'Survey Completed';
+        $surveys = UserSurvey::orderBy('id','desc')->paginate($this->pagination);
+
+        return view('admin.survey.survey_completed', compact('title', 'surveys'));
+    }
+
+    public function viewDetails($id){
+        $title = 'Survey Details View';
+        $survey = UserSurvey::where('id', $id)->first();
+        $data = json_decode($survey->survey_data);
+        return view('admin.survey.survey_show', compact('title', 'data'));
     }
 }

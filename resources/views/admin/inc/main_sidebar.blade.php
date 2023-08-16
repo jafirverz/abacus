@@ -276,6 +276,19 @@
                 ],
             ],
         ],
+
+        // For Certificate
+
+        [
+            'menu_header'   =>  __('constant.USERSURVEY'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.USERSURVEY'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/survey-completed',
+                ],
+            ],
+        ],
         [
             'menu_header'   =>  __('constant.REPORTS'),
             'main_menu' =>  [
