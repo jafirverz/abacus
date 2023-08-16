@@ -85,24 +85,13 @@ Route::post('/instructor-competition/register/edit/{id?}', 'ProfileController@up
 //TEST
 Route::get('/my-test/detail/{id?}', 'ProfileController@detail_test')->name('test.detail');
 Route::post('/my-test/result', 'ProfileController@submit_test')->name('test.answer.submit');
-
 Route::get('/survey-form', 'SurveyController@index');
-
 Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');
-
-
 Route::get('/standalone-page', 'StandalonePageController@index');
-
 //Route::post('/standalone-page', 'StandalonePageController@checkanswer');
-
 Route::post('/standalone-page/result', 'StandalonePageController@result');
-
-
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
-
-
 Route::get('/membership', 'ProfileController@membership')->name('membership');
-
 Route::get('/cart/{id?}', 'ProfileController@cartList')->name('cartlist');
 Route::get('/cart/delete/all', 'ProfileController@cartListDelete')->name('delete.cart');
 Route::post('/cart', 'ProfileController@cart')->name('cart');
@@ -115,14 +104,6 @@ Route::get('privacy-policy', 'GuestUserController@privacy')->name('privacy-polic
 Route::get('faqs', 'GuestUserController@faq')->name('faqs');
 Route::get('terms-of-use', 'GuestUserController@termsofuse')->name('terms-of-use');
 
-
-// Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'ProfileController@payWithPaypal',));
-// Route::post('paypal', array('as' => 'paypal','uses' => 'ProfileController@postPaymentWithpaypal',));
-// Route::get('paypal', array('as' => 'status','uses' => 'ProfileController@getPaymentStatus',));
-
-// Route::get('payment', 'PayPalController@payment')->name('payment');
-// Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
-// Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 
 Route::get('payament/error', 'PayPalController@errorPayment')->name('errorTransaction');
 Route::get('payament/success', 'PayPalController@successPayment')->name('successTransactionn');

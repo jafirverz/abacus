@@ -9,6 +9,7 @@ use App\Grade;
 use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
+use App\GradingListingDetail;
 use App\GradingStudent;
 use App\LearningLocation;
 use App\TeachingMaterials;
@@ -1394,7 +1395,48 @@ class ProfileController extends Controller
                 $tempCart->level_id = null;
                 $tempCart->cart = $jsonEncode;
                 $tempCart->save();
-        }else{
+        }
+        elseif($request->type == 'onlinegrading'){
+            $paper = GradingListingDetail::where('id', $request->paper)->first();
+            $levelDetails = array();
+            $levelDetails['type'] = 'onlinegrading';
+            $levelDetails['id'] = $request->paper;
+            $levelDetails['name'] = $paper->title;
+            $levelDetails['description'] = '';
+            $levelDetails['image'] = '';
+            $levelDetails['amount'] = $paper->price;
+            $levelDetails['months'] = '';
+
+            $tempCart = new TempCart();
+            $jsonEncode = json_encode($levelDetails);
+            $tempCart->user_id = Auth::user()->id;
+            $tempCart->type = $request->type;
+            $tempCart->level_id = null;
+            $tempCart->cart = $jsonEncode;
+            $tempCart->save();
+    }
+    if($request->type == 'physicalgrading'){
+        foreach($request->paper as $value){
+            $paper = GradingListingDetail::where('id', $value)->first();
+            $levelDetails = array();
+            $levelDetails['type'] = 'physicalgrading';
+            $levelDetails['id'] = $value;
+            $levelDetails['name'] = $paper->title;
+            $levelDetails['description'] = $paper->description;
+            $levelDetails['image'] = '';
+            $levelDetails['amount'] = $paper->price;
+            $levelDetails['months'] = '';
+
+            $tempCart = new TempCart();
+            $jsonEncode = json_encode($levelDetails);
+            $tempCart->user_id = Auth::user()->id;
+            $tempCart->type = $request->type;
+            $tempCart->level_id = null;
+            $tempCart->cart = $jsonEncode;
+            $tempCart->save();
+        }
+    }
+        else{
             $levelId = $request->levelId ?? null;
             $level = Level::where('id', $levelId)->first();
             $levelName = $level->title;

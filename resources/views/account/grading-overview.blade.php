@@ -62,14 +62,35 @@
                     <div class="accordion mt-30">
                         @if($gradingExamList->count())
                           @php $i=0; @endphp
+                            @if($gradingExam->type==1)
+                                <form method="post" action="{{ route('cart') }}">
+                                @csrf
+                                <input type="hidden" name="type" value="physicalgrading">
+                            @endif
+                            
                             @foreach ($gradingExamList as $key => $item)
                             @php $i++;@endphp
+                            
+                            
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
                                     <button class="accordion-button @if($i!=1) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#faq-<?=$i?>" aria-expanded="false" aria-controls="faq-<?=$i?>">{{ $item->heading }}</button>
                                 </h3>
                                 <div id="faq-<?=$i?>" class="accordion-collapse collapse @if($i==1) show @endif">
                                     <div class="accordion-body">
+                                    
+
+                                    @if($gradingExam->type==1)
+                                    @php 
+                                        $userId = Auth::user()->id;
+                                        $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalgrading')->pluck('comp_paper_id')->toArray();
+                                    @endphp
+                                    @else
+                                    @php 
+                                        $userId = Auth::user()->id;
+                                        $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'onlinegrading')->pluck('comp_paper_id')->toArray();
+                                    @endphp
+                                    @endif
                                         <div class="row break-1500">
 
                                             <div class="col-xl-6 sp-col">
@@ -78,29 +99,54 @@
                                                         @php $k=0;@endphp
                                                         @foreach(getAllGradingExamListDetail($item->id) as $key => $val)
                                                         @php $k++;@endphp
-                                                        <div class="bxrow">
+                                                        
 
                                                           @if($gradingExam->type==1)
-                                                            @if($val->price>0)
-                                                            <div class="checkbxtype">
-                                                                <input type="checkbox" name="grade_pay[]" value="" id="exercise-{{ $i.$k }}">
-                                                                <label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
-                                                            </div>
-                                                            @else
-                                                            <div class="checkbxtype nocheck">
-                                                                <label><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
-                                                            </div>
-                                                            <a class="lnk btn-2" href="{{ url() }}/{{ $val->uploaded_file }}">Download</a>
-                                                            @endif
-                                                          @else
-                                                            @if($val->price>0)
                                                             <div class="bxrow">
-																<div class="checkbxtype">
+                                                                @if($val->price>0 && $gradingExam->exam_type==1)
+
+                                                                    @if(isset($orderDetails) && in_array($val->id,$orderDetails))
+                                                                    <div class="checkbxtype nocheck">
+                                                                    <label><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                    </div>
+                                                                     <a class="lnk btn-2" href="{{ url() }}/{{ $val->uploaded_file }}">Download</a>
+                                                                    @else
+                                                                    <div class="checkbxtype">
+                                                                        <input type="checkbox"  onclick="checkchecked();" id="practice-{{ $val->id }}" name="paper[]" value="{{ $val->id }}" id="exercise-{{ $i.$k }}">
+                                                                        <label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                    </div>
+                                                                    @endif
+                                                                @else
+                                                                <div class="checkbxtype nocheck">
+                                                                    <label><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                </div>
+                                                                <a class="lnk btn-2" href="{{ url('/') }}/{{ $val->uploaded_file ?? '' }}">Download</a>
+                                                                @endif
+                                                            </div>
+                                                          @else
+                                                            @if($val->price>0 && $gradingExam->exam_type==1)
+
+                                                             @if(isset($orderDetails) && in_array($val->id,$orderDetails))
+                                                             <div class="bxrow">
+																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+
+																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->paper_id.'') }}">View</a>
+
+															</div>
+                                                             @else
+                                                            <div class="bxrow">
+																<div class="checkbxtype nocheck">
 																	<input name="grade_pay[]" type="checkbox" id="exercise-{{ $i.$k }}" />
 																	<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
 																</div>
-																<a class="lnk btn-2" href="#">Add to Cart</a>
+                                                                <form method="post" action="{{ route('cart') }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="type" value="onlinegrading">
+                                                                    <input type="hidden" name="paper" value="{{ $val->id }}">
+                                                                <button class="lnk btn-2" type="submit" >Add to Cart</button>
+                                                                </form>
 															</div>
+                                                            @endif
                                                             @else
                                                             <div class="bxrow">
 																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
@@ -110,21 +156,25 @@
 															</div>
                                                             @endif
                                                           @endif
-                                                        </div>
                                                         @endforeach
                                                     @endif
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="output-2 mt-0">
-                                            <a class="btn-1" href="#">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
 
                             @endforeach
+
+                            @if($gradingExam->type==1)
+                            <div class="output-2 mt-0">
+                                    <button class="btn-1 addtocart" type="submit" style="display: none;">Add to Cart <i class="fa-solid fa-arrow-right-long"></i></button>
+                            </div>
+                            </form>
+                            @endif
                         @else
                                     {{ __('constant.NO_DATA_FOUND') }}
                         @endif
@@ -134,4 +184,14 @@
         </div>
     </div>
 </main>
+<script>
+    function checkchecked(){
+        var atLeastOneIsChecked = $('input[name="paper[]"]:checked').length > 0;
+        if(atLeastOneIsChecked){
+            $('.addtocart').show();
+        }else{
+            $('.addtocart').hide();
+        }
+    }
+</script>
 @endsection
