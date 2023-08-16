@@ -290,6 +290,16 @@
             ],
         ],
         [
+            'menu_header'   =>  __('constant.CERTIFICATE'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.CERTIFICATE'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/certificate',
+                ],
+            ],
+        ],
+        [
             'menu_header'   =>  __('constant.REPORTS'),
             'main_menu' =>  [
                 [

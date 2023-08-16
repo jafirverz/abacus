@@ -74,6 +74,7 @@ return [
     'WORKSHEET_REPORTS' => 'Worksheet Reports',
     'ORDERS' => 'Orders',
     'USERSURVEY' => 'Survey Completed',
+    'CERTIFICATE' => 'Certificate',
 
 
     // CONTENT
