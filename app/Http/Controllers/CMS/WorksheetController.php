@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\LevelTopic;
@@ -11,6 +12,7 @@ use App\Worksheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\QuestionTemplate;
+use App\User;
 
 class WorksheetController extends Controller
 {
@@ -54,8 +56,10 @@ class WorksheetController extends Controller
         $worksheet = Worksheet::get();
         $levels = Level::get();
         $topics = Topic::get();
+        $users = User::get();
+        $franchiseAccounts = Admin::where('admin_role', 2)->get();
         $questionTempleates = QuestionTemplate::get();
-        return view('admin.master.worksheet.create', compact('title','worksheet', 'levels', 'topics', 'questionTempleates'));
+        return view('admin.master.worksheet.create', compact('title','worksheet', 'levels', 'topics', 'questionTempleates', 'users', 'franchiseAccounts'));
     }
 
     /**
@@ -92,6 +96,8 @@ class WorksheetController extends Controller
         $worksheet->description = $request->description;
         $worksheet->question_type = $request->questiontype;
         $worksheet->status = $request->status;
+        $worksheet->timing = $request->timing;
+        $worksheet->account_accessibility = $request->account_accessibility;
         $worksheet->save();
 
         $worksheetId = $worksheet->id;
@@ -177,6 +183,8 @@ class WorksheetController extends Controller
         $worksheet->description = $request->description;
         $worksheet->question_type = $request->questiontype;
         $worksheet->status = $request->status;
+        $worksheet->account_accessibility = $request->account_accessibility;
+        $worksheet->timing = $request->timing;
         $worksheet->save();
 
         $worksheetId = $worksheet->id;

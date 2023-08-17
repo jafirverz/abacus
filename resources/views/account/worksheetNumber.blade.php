@@ -21,6 +21,25 @@
         <div class="box-1">
           {{ $worksheet->description }}
         </div>
+        @php
+        $checkOrderDetails = '';
+        $checkOrder = \App\Order::where('user_id', Auth::user()->id)->pluck('id')->toArray();
+        if($checkOrder){
+          $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkOrder)->where('level_id', $level->id)->first();
+          if($checkOrderDetails){
+            $url = '?s=1';
+          }else{
+            $url = 'javascript::void(0)';
+          }
+          
+        }else{
+          $url = 'javascript::void(0)';
+        }
+        
+        @endphp
+        <div class="shuffle-wrap">
+          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="{{ $url }}">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
+        </div>
         <form method="post" action="{{ route('answer.submit') }}">
           @csrf
           <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
@@ -28,7 +47,12 @@
           <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
         <div class="row grid-3">
           @php 
-          $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          if(isset($_GET['s']) && $_GET['s'] == 1){
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
+          }else{
+            $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+          }
+          
           $k=0;
           //$count = count($questionns->input_1);
           foreach($questionns as $question){

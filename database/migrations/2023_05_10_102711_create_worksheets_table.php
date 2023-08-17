@@ -30,8 +30,10 @@ class CreateWorksheetsTable extends Migration
 
             $table->smallInteger('stopwatch_timing')->nullable()->comment('1 -> yes, 2 -> no');
             $table->smallInteger('preset_timing')->nullable()->comment('1 -> yes, 2 -> no');
+            $table->smallInteger('timing')->nullable();
             $table->string('question_type')->nullable()->comment('1 -> vertical, 2 -> horizontal');
             $table->text('description')->nullable();
+            $table->smallInteger('account_accessibility')->nullable()->comment('1 -> Normal/Premium student, 3 -> Online Student, 5 -> Instructor, 8 -> Franchise/Sub Admin');
             $table->smallInteger('status')->nullable()->comment('1 -> active, 2 -> inactive');
             $table->timestamps();
         });
