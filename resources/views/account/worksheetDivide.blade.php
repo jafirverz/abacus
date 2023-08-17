@@ -21,8 +21,24 @@
         <div class="box-1">
           {{ $worksheet->description }}
         </div>
+        @php
+        $checkOrderDetails = '';
+        $checkOrder = \App\Order::where('user_id', Auth::user()->id)->pluck('id')->toArray();
+        if($checkOrder){
+          $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkOrder)->where('level_id', $level->id)->first();
+          if($checkOrderDetails){
+            $url = '?s=1';
+          }else{
+            $url = 'javascript::void(0)';
+          }
+          
+        }else{
+          $url = 'javascript::void(0)';
+        }
+        
+        @endphp
         <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
+          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="{{ $url }}">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <form method="post" action="{{ route('answer.submit') }}" id="submitform">
           @csrf
