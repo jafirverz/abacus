@@ -263,11 +263,14 @@
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $ques->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-1">
                                                 <input class="form-control" required value="{{ $ques->marks }}" name="marks[]" placeholder="Marks" type="text" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" required value="{{ $ques->block }}" name="block[]" placeholder="Block Multiplication Only" type="text" required>
                                             </div>
                                         </div>
                                         <div class="input-group-btn">
@@ -468,11 +471,14 @@
             <div class="col-md-2">
                 <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="block[]" placeholder="Block Multiplication Only" type="text" required>
             </div>
 
         </div>

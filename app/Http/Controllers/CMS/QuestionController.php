@@ -195,6 +195,7 @@ class QuestionController extends Controller
                 $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
                 $storQues->marks = $request->marks[$i];
+                $storQues->block = $request->block[$i];
                 $storQues->save();
             }
         }
@@ -478,6 +479,7 @@ class QuestionController extends Controller
                 $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
                 $storQues->marks = $request->marks[$i];
+                $storQues->block = $request->block[$i];
                 $storQues->save();
             }
         }elseif($request->question_type==8)

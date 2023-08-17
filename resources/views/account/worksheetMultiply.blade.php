@@ -24,7 +24,12 @@
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
-        <form action="post">
+        <form method="post" action="{{ route('answer.submit') }}" id="submitform">
+          @csrf
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
+          @foreach($allQuestions as $questionss)
           <div class="box-1">
             <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
@@ -38,17 +43,14 @@
                 <tbody>
                   @php
                   $i=1;
+                  $questionnss = \App\MiscQuestion::where('question_id', $questions->id)->where('block', $questionss->block)->get();
                   @endphp
-                  @foreach($allQuestions as $ques)
-                  @php
-                  if($i > 5){
-                    break;
-                  }
-                  @endphp
+                  @foreach($questionnss as $ques)
+                  
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} x {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" /></td>
+                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php
                   $i++;
@@ -59,40 +61,7 @@
               </table>
             </div>
           </div>
-          <div class="box-1">
-            <div class="xscrollbar">
-              <table class="tb-2 tbtype-1">
-                <thead>
-                  <tr>
-                    <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Multiplication</th>
-                    <th>Answer</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @php
-                  $i=1;
-                  @endphp
-                  @foreach($allQuestions as $ques)
-                  @php
-                  if($i <= 5){
-                  }else{
-                  @endphp
-                  <tr>
-                    <td class="colnumber">{{ $i }}</td>
-                    <td class="text-center">{{ $ques->question_1 }} x {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" /></td>
-                  </tr>
-                  @php
-                  }
-                  $i++;
-                  @endphp
-                  @endforeach
-
-                </tbody>
-              </table>
-            </div>
-          </div>
+          @endforeach
           <div class="output-1">
             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
           </div>
