@@ -41,6 +41,7 @@ class ImportCompetitionResult implements ToCollection, WithHeadingRow
                     $compStudentResult->total_marks =  $row['total_marks'];
                     $compStudentResult->rank =  $row['rank'];
                     $compStudentResult->prize =  $row['prize'];
+                    $compStudentResult->certificate_id =  $row['certificate_id'];
                     $compStudentResult->save();
                 }
             }
