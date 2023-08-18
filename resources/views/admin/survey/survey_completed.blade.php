@@ -80,11 +80,11 @@
                                         <a href="{{ route('surveyslist.show', $item->id) }}"
                                             class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View"><i class="fas fa-eye"></i></a>
-                                        <!-- <a href="{{ route('surveys.edit', $item->id) }}"
+                                        <a href="{{ route('surveyslist.edit', $item->id) }}"
                                             class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View">
                                             <i aria-hidden="true" class="fa fa-edit"></i>
-                                        </a> -->
+                                        </a>
                                     </td>
                                     <td>
                                         {{ $item->survey->title ?? '' }}

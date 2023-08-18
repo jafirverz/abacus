@@ -533,6 +533,8 @@ Route::group(['prefix' => 'admin'], function () {
     //Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
     Route::get('survey-completed', 'CMS\SurveyController@getlist')->name('survey-completed.getlist');
     Route::get('survey-view/{id?}', 'CMS\SurveyController@viewDetails')->name('surveyslist.show');
+    Route::get('survey-edit/{id?}/edit', 'CMS\SurveyController@editSurvey')->name('surveyslist.edit');
+    Route::post('survey-edit/{id?}/update', 'CMS\SurveyController@updateSurvey')->name('survey-completed.update');
 
     Route::get('certificate/search', 'CMS\CertificateController@search')->name('certificate.search');
     Route::resource('certificate', 'CMS\CertificateController');
