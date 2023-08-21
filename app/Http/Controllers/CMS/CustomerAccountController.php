@@ -110,6 +110,7 @@ class CustomerAccountController extends Controller
         $customer = new User();
         $customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
+        $customer->role_id = 3;
         $customer->account_id = $accountId;
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;

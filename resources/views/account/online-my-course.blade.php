@@ -26,7 +26,26 @@
                                     <ul class="list-2">
                                         
                                         @foreach($item->courses as $val)
-                                        <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}}</a></li>
+                                        @php
+                                        $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->first();
+                                        @endphp
+                                            @if(isset($is_course_submitted))
+                                            @php
+                                            $test = \App\TestManagement::where('course_id', $val->id)->first();
+                                            @endphp
+                                             @if($test)
+                                             @php
+                                                $is_test_submitted = \App\TestSubmission::where('user_id', Auth::user()->id)->where('test_id', $test->id)->first();
+                                             @endphp
+                                              @if($is_test_submitted)
+                                                <li>{{ $test->title}} Submitted</li>
+                                              @else
+                                              <li><a href="{{ url('my-test/detail/'.$test->id)}}">{{ $test->title}}</a></li>
+                                              @endif
+                                             @endif
+                                            @else
+                                            <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}}</a></li>
+                                            @endif
                                         @endforeach
                                     
                                         

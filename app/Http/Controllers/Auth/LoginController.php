@@ -107,7 +107,7 @@ class LoginController extends Controller
                 }
                 
             }else{
-                return redirect()->intended('instructor/overview')
+                return redirect()->intended('instructor-overview')
                 ->withSuccess('Signed in');
             }
             
