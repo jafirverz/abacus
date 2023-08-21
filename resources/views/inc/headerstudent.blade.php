@@ -7,17 +7,22 @@
     <div class="actions">
         <a class="cart" href="{{ url('cart') }}"><i class="icon-cart"></i>
             @php
-            $userId = Auth::user()->id;
-            $checkTempCart = \App\TempCart::where('user_id', $userId)->get();
-            if($checkTempCart){
-                $cartN = count($checkTempCart);
+            $userId = Auth::user()->id ?? '';
+            if($userId){
+                $checkTempCart = \App\TempCart::where('user_id', $userId)->get();
+                if($checkTempCart){
+                    $cartN = count($checkTempCart);
+                }else{
+                    $cartN = 0;
+                }
             }else{
                 $cartN = 0;
             }
+            
             @endphp
             <strong>+{{ $cartN }}</strong>
         </a>
-        <div class="headuser hide-991"><span class="welcome">Welcome back {{ Auth::user()->name }},</span>
+        <div class="headuser hide-991"><span class="welcome">Welcome back {{ Auth::user()->name ?? '' }},</span>
             <a href="{{url('logout')}}">Logout</a>
         </div>
         <div class="dropdown show-991">
