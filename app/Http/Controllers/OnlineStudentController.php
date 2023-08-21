@@ -117,4 +117,12 @@ class OnlineStudentController extends Controller
 
 
     }
+    public function aboutPage(){
+        $slug = 'about-3g-abacus';
+        $page = get_page_by_slug($slug);
+        if (!$page) {
+            return abort(404);
+        }
+        return view('account.about', compact('page'));
+    }
 }

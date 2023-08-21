@@ -19,6 +19,8 @@ class CreateUserSurveysTable extends Migration
             $table->foreign('survey_id')->references('id')->on('surveys');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('certificate_id')->nullable();
+            $table->foreign('certificate_id')->references('id')->on('certificates');
             $table->text('survey_data');
             $table->timestamps();
         });

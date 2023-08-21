@@ -81,14 +81,14 @@
             'menu_header'   =>  __('constant.TEST_MANAGEMENT'),
             'main_menu' =>  [
                 [
-                    'title' =>  __('constant.TEST_MANAGEMENT'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/test-management',
-                ],
-                [
                     'title' =>  __('constant.TEST_PAPER'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/test-paper',
+                ],
+                [
+                    'title' =>  __('constant.TEST_MANAGEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/test-management',
                 ],
                 [
                     'title' =>  __('constant.TEST_ALLOCATION'),
@@ -193,6 +193,11 @@
                     'url'   =>  'admin/pages',
                 ],
                 [
+                    'title' =>  __('Image Upload'),
+                    'icon'  =>  '<i class="fas fa-file-invoice"></i>',
+                    'url'   =>  'admin/image/upload',
+                ],
+                [
                 'title' => __('constant.MENUS'),
                 'icon' => '<i class="fas fa-bars"></i>',
                 'url' => '#',
@@ -273,6 +278,29 @@
                     'title' =>  __('constant.ORDERS'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/orders',
+                ],
+            ],
+        ],
+
+        // For Certificate
+
+        [
+            'menu_header'   =>  __('constant.USERSURVEY'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.USERSURVEY'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/survey-completed',
+                ],
+            ],
+        ],
+        [
+            'menu_header'   =>  __('constant.CERTIFICATE'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.CERTIFICATE'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/certificate',
                 ],
             ],
         ],

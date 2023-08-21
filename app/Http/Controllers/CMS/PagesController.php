@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Faq;
 use App\Http\Controllers\Controller;
+use App\ImagesUpload;
 use App\Page;
 use App\Testimonial;
 use App\Traits\SystemSettingTrait;
@@ -153,16 +154,13 @@ class PagesController extends Controller
             $fields['marketplace_title'] = 'required';
             $fields['marketplace_link'] = 'required|url';
             $fields['marketplace_content'] = 'required';
-
-
         }
         if (in_array($id, [__('constant.ABOUT_PAGE_ID')])) {
             $fields['section_1'] = 'required';
             $fields['section_2'] = 'required';
             $fields['section_3'] = 'required';
-
         }
-		if (in_array($id, [__('constant.INSURANCE_PAGE_ID')])) {
+        if (in_array($id, [__('constant.INSURANCE_PAGE_ID')])) {
             $fields['section_1'] = 'required';
         }
 
@@ -200,34 +198,28 @@ class PagesController extends Controller
             $content['marketplace_content'] =  $request->marketplace_content;
 
             $pages->json_content = json_encode($content);
-        }
-        elseif (in_array($id, [__('constant.ABOUT_PAGE_ID')])) {
+        } elseif (in_array($id, [__('constant.ABOUT_PAGE_ID')])) {
 
             $content['section_1'] =  $request->section_1;
             $content['section_2'] =  $request->section_2;
             $content['section_3'] =  $request->section_3;
             $content['section_4'] =  $request->section_4;
             $pages->json_content = json_encode($content);
-        }
-		elseif (in_array($id, [__('constant.INSURANCE_PAGE_ID')])) {
+        } elseif (in_array($id, [__('constant.INSURANCE_PAGE_ID')])) {
 
             $content['section_1'] =  $request->section_1;
             $content['section_2'] =  $request->section_2;
             $pages->json_content = json_encode($content);
-        }
-        elseif (in_array($id, [__('constant.LOAN_PAGE_ID')])) {
+        } elseif (in_array($id, [__('constant.LOAN_PAGE_ID')])) {
 
             $content['section_1'] =  $request->section_1;
             $content['section_2'] =  $request->section_2;
             $content['section_3'] =  $request->section_3;
 
             $pages->json_content = json_encode($content);
+        } else {
+            $pages->status = $request->status;
         }
-		else
-		{
-		        $pages->status = $request->status;
-
-		}
 
         /* End Home page attribute */
         $pages->save();
@@ -256,5 +248,49 @@ class PagesController extends Controller
         $pages = Page::orderBy('title', 'asc')->search($request)->orderBy('view_order', 'asc')->paginate($this->systemSetting()->pagination);
         //dd(DB::getQueryLog());
         return view('admin.cms.pages.index', compact('title', 'pages'));
+    }
+
+    public function imageUpload()
+    {
+        $title = 'Image Upload';
+        $images = ImagesUpload::orderBy('id', 'desc')->paginate(10);
+
+        return view('admin.cms.pages.image_upload', compact('title', 'images'));
+    }
+
+    public function imageCreate()
+    {
+        $title = 'Image Upload';
+        return view('admin.cms.pages.create_image', compact('title'));
+    }
+
+    public function imageStore(Request $request)
+    {
+        $request->validate([
+            'image' => 'required',
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            $image = $request->file('image');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $image->getClientOriginalName();
+
+            $filepath = 'storage/images/';
+
+            Storage::putFileAs(
+
+                'public/images',
+                $image,
+                $filename
+
+            );
+
+            $image_path = $filepath . $filename;
+            $imageUpload = new ImagesUpload();
+            $imageUpload->image = $image_path;
+            $imageUpload->save();
+        }
+        return redirect()->route('image-upload')->with('success',  __('constant.CREATED', ['module'    =>  'Image Upload']));
     }
 }
