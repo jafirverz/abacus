@@ -4,7 +4,7 @@
 <main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      @if(Auth::user()->user_type_id == 1)
+      @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
         @include('inc.account-sidebar')
       @endif
     </div>
@@ -15,7 +15,7 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
+          <li><a href="{{ URL::previous() }}">{{ $level->title }}</a></li>
           <li><strong>{{ $worksheet->title }}</strong></li>
         </ul>
         <div class="box-1">

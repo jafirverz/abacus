@@ -15,7 +15,7 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
+          <li><a href="{{ URL::previous() }}">{{ $level->title }}</a></li>
           <li><strong>{{ $worksheet->title }}</strong></li> 
         </ul>
         <div class="box-1">
