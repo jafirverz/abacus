@@ -110,9 +110,12 @@ class RegisterController extends Controller
             ], $messages);
 
         $usersCheck = User::where('email', $request->email)->first();
-        if($usersCheck->approve_status == 1 || $usersCheck->approve_status == 0){
-            throw ValidationException::withMessages(['email' => 'Email Id already exist']);
+        if($usersCheck){
+            if($usersCheck->approve_status == 1 || $usersCheck->approve_status == 0){
+                throw ValidationException::withMessages(['email' => 'Email Id already exist']);
+            }
         }
+        
 
 //        if (!$responseData->success) {
 //            return redirect()->back()->withInput()->with('error', __('constant.CAPTCHA_ERROR'));
