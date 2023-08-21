@@ -74,6 +74,8 @@ Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')
 Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->name('my-course');
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
+Route::get('/online-student/about-3g-abacus', 'OnlineStudentController@aboutPage')->name('about-page-online');
+
 Route::get('/instructor-students', 'ProfileController@studentlist');
 Route::get('/instructor-competition', 'ProfileController@competition')->name('instructor-competition');
 Route::get('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor')->name('instructor.register');
@@ -222,6 +224,11 @@ Route::group(['prefix' => 'admin'], function () {
     // PAGES
     Route::get('pages/search', 'CMS\PagesController@search')->name('pages.search');
     Route::resource('pages', 'CMS\PagesController');
+    Route::get('image/upload', 'CMS\PagesController@imageUpload')->name('image-upload');
+    Route::get('image/create', 'CMS\PagesController@imageCreate')->name('images.create');
+    Route::post('image/upload', 'CMS\PagesController@imageStore')->name('image.store');
+
+
 
     // USERS ACCOUNT
     Route::get('users/search', 'CMS\UsersAccountController@search')->name('users.search');

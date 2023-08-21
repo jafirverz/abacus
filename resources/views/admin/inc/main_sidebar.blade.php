@@ -81,14 +81,14 @@
             'menu_header'   =>  __('constant.TEST_MANAGEMENT'),
             'main_menu' =>  [
                 [
-                    'title' =>  __('constant.TEST_MANAGEMENT'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/test-management',
-                ],
-                [
                     'title' =>  __('constant.TEST_PAPER'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/test-paper',
+                ],
+                [
+                    'title' =>  __('constant.TEST_MANAGEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/test-management',
                 ],
                 [
                     'title' =>  __('constant.TEST_ALLOCATION'),
@@ -191,6 +191,11 @@
                     'title' =>  __('constant.PAGES'),
                     'icon'  =>  '<i class="fas fa-file-invoice"></i>',
                     'url'   =>  'admin/pages',
+                ],
+                [
+                    'title' =>  __('Image Upload'),
+                    'icon'  =>  '<i class="fas fa-file-invoice"></i>',
+                    'url'   =>  'admin/image/upload',
                 ],
                 [
                 'title' => __('constant.MENUS'),
