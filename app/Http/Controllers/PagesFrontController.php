@@ -75,7 +75,12 @@ class PagesFrontController extends Controller
         $levels = Level::get();
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
         $todayDate = date('Y-m-d');
+
+        $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
+        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
         $competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
+
+
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();

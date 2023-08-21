@@ -32,7 +32,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto col-sm-auto mt-767-15">
-                                <a class="btn-1" href="#">Add New Student <i class="fa-solid fa-arrow-right-long"></i></a>
+                                <a class="btn-1" href="{{ route('instructor.add-students') }}">Add New Student <i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                     <td>
                                         <div class="hasaction">
                                             <em>{{ $levelarry }}</em>
-                                            <a class="link-1" href="#"><i class="icon-edit"></i></a>
+                                            <a class="link-1" href="{{route('instructor.add-students.edit', $student->id)}}"><i class="icon-edit"></i></a>
                                         </div>
                                     </td>
                                     <td><em class="status-6">@if($student->approve_status == 1) Approved @else Not Approved @endif</em> <br/></td>

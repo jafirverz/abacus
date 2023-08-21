@@ -74,9 +74,19 @@ Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')
 Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->name('my-course');
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
+
+Route::get('/instructor-students', 'ProfileController@studentlist')->name('instructor.my-students');
+Route::get('/add-students', 'ProfileController@add_students')->name('instructor.add-students');
+Route::post('/add-students', 'ProfileController@store_add_students')->name('instructor.add-students');
+Route::get('/add-students/edit/{id?}', 'ProfileController@edit_students')->name('instructor.add-students.edit');
+Route::post('/add-students/edit/{id?}', 'ProfileController@update_students')->name('instructor.add-students.update');
+Route::get('/add-students/delete/{id?}', 'ProfileController@delete_students')->name('instructor.add-students.delete');
+
+
 Route::get('/online-student/about-3g-abacus', 'OnlineStudentController@aboutPage')->name('about-page-online');
 
 Route::get('/instructor-students', 'ProfileController@studentlist');
+
 Route::get('/instructor-competition', 'ProfileController@competition')->name('instructor-competition');
 Route::get('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor')->name('instructor.register');
 Route::post('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor_store')->name('competition.instructor.register.submit');
@@ -87,18 +97,11 @@ Route::post('/instructor-competition/register/edit/{id?}', 'ProfileController@up
 //TEST
 Route::get('/my-test/detail/{id?}', 'ProfileController@detail_test')->name('test.detail');
 Route::post('/my-test/result', 'ProfileController@submit_test')->name('test.answer.submit');
-
 Route::get('/survey-form', 'SurveyController@index');
-
 Route::post('/survey-form/submit', 'SurveyController@store')->name('survey.submit');
-
-
 Route::get('/standalone-page', 'StandalonePageController@index');
-
 //Route::post('/standalone-page', 'StandalonePageController@checkanswer');
-
 Route::post('/standalone-page/result', 'StandalonePageController@result');
-
 
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
 
@@ -108,6 +111,7 @@ Route::get('/membership', 'ProfileController@membership')->name('membership');
 Route::get('/cart/{id?}', 'ProfileController@cartList')->name('cartlist');
 Route::get('/cart/delete/all', 'ProfileController@cartListDelete')->name('delete.cart');
 Route::post('/cart', 'ProfileController@cart')->name('cart');
+Route::get('/cart', 'ProfileController@cart')->name('cart');
 
 
 Route::get('/checkout', 'ProfileController@checkout');
@@ -117,14 +121,6 @@ Route::get('privacy-policy', 'GuestUserController@privacy')->name('privacy-polic
 Route::get('faqs', 'GuestUserController@faq')->name('faqs');
 Route::get('terms-of-use', 'GuestUserController@termsofuse')->name('terms-of-use');
 
-
-// Route::get('paywithpaypal', array('as' => 'paywithpaypal','uses' => 'ProfileController@payWithPaypal',));
-// Route::post('paypal', array('as' => 'paypal','uses' => 'ProfileController@postPaymentWithpaypal',));
-// Route::get('paypal', array('as' => 'status','uses' => 'ProfileController@getPaymentStatus',));
-
-// Route::get('payment', 'PayPalController@payment')->name('payment');
-// Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
-// Route::get('payment/success', 'PayPalController@success')->name('payment.success');
 
 Route::get('payament/error', 'PayPalController@errorPayment')->name('errorTransaction');
 Route::get('payament/success', 'PayPalController@successPayment')->name('successTransactionn');

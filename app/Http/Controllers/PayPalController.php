@@ -197,7 +197,39 @@ class PayPalController extends Controller
                         $orderDetails->amount = $cartt->amount;
                         // $orderDetails->expiry_date = $expiryDate;
                         $orderDetails->save();
+                    }elseif($cart->type == 'onlinegrading'){
+                        $orderDetails = new OrderDetail();
+                        $cartt = json_decode($cart->cart);
+                        $orderDetails->order_id = $order->id;
+                        $orderDetails->user_id = Auth::user()->id;
+                        //$paper = CompetitionPaper::where('id', $cartt->id)->first();
+                        // $months = $paper->premium_months;
+                        // $todayDate = date('Y-m-d');
+                        // $expiryDate = date('Y-m-d', strtotime("+$months months", strtotime($todayDate)));
+                        $orderDetails->order_type = $cart->type;
+                        $orderDetails->comp_paper_id = $cartt->id;
+                        $orderDetails->name = $cartt->name;
+                        $orderDetails->amount = $cartt->amount;
+                        // $orderDetails->expiry_date = $expiryDate;
+                        $orderDetails->save();
+                    }elseif($cart->type == 'physicalgrading'){
+                        $orderDetails = new OrderDetail();
+                        $cartt = json_decode($cart->cart);
+                        $orderDetails->order_id = $order->id;
+                        $orderDetails->user_id = Auth::user()->id;
+                        //$paper = CompetitionPaper::where('id', $cartt->id)->first();
+                        // $months = $paper->premium_months;
+                        // $todayDate = date('Y-m-d');
+                        // $expiryDate = date('Y-m-d', strtotime("+$months months", strtotime($todayDate)));
+                        $orderDetails->order_type = $cart->type;
+                        $orderDetails->comp_paper_id = $cartt->id;
+                        $orderDetails->name = $cartt->name;
+                        $orderDetails->amount = $cartt->amount;
+                        // $orderDetails->expiry_date = $expiryDate;
+                        $orderDetails->save();
                     }
+
+
                     
                 }
             }

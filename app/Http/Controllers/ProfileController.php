@@ -9,6 +9,7 @@ use App\Grade;
 use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
+use App\GradingListingDetail;
 use App\GradingStudent;
 use App\LearningLocation;
 use App\TeachingMaterials;
@@ -831,7 +832,7 @@ class ProfileController extends Controller
 
             $dob = date('Y-m-d', strtotime($request->dob));
             $updateUserProfile = new User();
-            $updateUserProfile->user_id  = $users->id;
+            //$updateUserProfile->user_id  = $users->id;
             $updateUserProfile->name = $request->name;
             $updateUserProfile->email = $request->email;
             //$users->email = $request->email;
@@ -927,7 +928,192 @@ class ProfileController extends Controller
 		$students = User::where('instructor_id', $instructor_id->id)->paginate(5);
 		$levels = Level::get();
 		return view('account.teaching-students', compact('students', 'levels'));
-	}
+    }
+    
+    public function add_students()
+    {
+        $country = Country::orderBy('phonecode')->get();
+        $levels = Level::get();
+        return view('account.external-add-students', compact('levels', 'country'));
+    }
+
+    public function edit_students($id)
+    {
+        $country = Country::orderBy('phonecode')->get();
+        $levels = Level::get();
+        $customer = User::find($id);
+        return view('account.external-edit-students', compact('levels', 'country','customer'));
+    }
+
+
+    public function store_add_students(Request $request)
+    {
+        $fields = [
+            'email' =>  'required|email|unique:users,email',
+            'name' => 'required|string',
+            'password'  =>  'required|min:8',
+            'country_code' => 'required',
+            'dob' => 'required',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
+            'gender' => 'required|string',
+        ];
+        //dd($request);
+        $messages = [];
+        $messages['email.required'] = 'The email address field is required.';
+        $messages['name.required'] = 'The name field is required.';
+        $messages['password.required'] = 'The password field is required.';
+        $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
+        $messages['country_code.required'] = 'The country code field is required.';
+        $messages['dob.required'] = 'Date of Birth is required.';
+        $messages['mobile.required'] = 'The contact number field is required.';
+        $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
+        $request->validate($fields, $messages);
+        $acName = '';
+        $dob = date('Y-m-d', strtotime($request->dob));
+        $dob1 = date('dmy', strtotime($dob));
+        $fullnameEx = explode(' ', $request->name);
+        foreach($fullnameEx as $funame){
+            $acName .= strtoupper(substr($funame, 0, 1));
+        }
+        $accountId = 'SUD-'.$dob1.$acName;
+        $customer = new User();
+        $customer->level_id = json_encode($request->level);
+        $customer->name = $request->name;
+        $customer->account_id = $accountId;
+        $customer->user_type_id = 7;
+        $customer->instructor_id = $this->user->id;
+        $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
+        $customer->email = $request->email??NULL;
+        $customer->address = $request->address??NULL;
+        $customer->gender = $request->gender??NULL;
+        $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
+        $customer->mobile = $request->mobile??NULL;
+		$customer->approve_status = 1;
+        if (!is_null($request->password)) {
+            $customer->password = Hash::make($request->password);
+        }
+        $customer->created_at = Carbon::now();
+        $customer->save();
+
+        if($request->gender == 1){
+            $gender = 'Male';
+        }else{
+            $gender = 'Female';
+        }
+
+
+        //			Admin email for new student registration
+			// $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
+            // $admins = Admin::get();
+
+            // if ($email_template) {
+            //     $data = [];
+            //     foreach($admins as $admin){
+            //         $data['email_sender_name'] = systemSetting()->email_sender_name;
+            //         $data['from_email'] = systemSetting()->from_email;
+            //         $data['to_email'] = [$admin->email];
+            //         $data['cc_to_email'] = [];
+            //         $data['subject'] = $email_template->subject;
+
+            //         $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+            //         $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+
+            //         $newContents = str_replace($key, $value, $email_template->content);
+
+            //         $data['contents'] = $newContents;
+            //         try {
+            //             $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+            //         } catch (Exception $exception) {
+            //             dd($exception);
+            //         }
+            //     }
+
+            // }
+
+            //			Instructor email for new student registration
+        // $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REGISTRATION'));
+
+        // if ($email_template) {
+        //     $data = [];
+        //         $data['email_sender_name'] = systemSetting()->email_sender_name;
+        //         $data['from_email'] = systemSetting()->from_email;
+        //         $data['to_email'] = [$instructor->email];
+        //         $data['cc_to_email'] = [];
+        //         $data['subject'] = $email_template->subject;
+
+        //         $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+        //         $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+
+        //         $newContents = str_replace($key, $value, $email_template->content);
+
+        //         $data['contents'] = $newContents;
+        //         try {
+        //             $mail = Mail::to($instructor->email)->send(new EmailNotification($data));
+        //         } catch (Exception $exception) {
+        //             dd($exception);
+        //         }
+
+        // }
+
+        return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_CREATED'));
+    }
+
+    public function delete_students($id)
+    {
+        User::where('id', $id)->delete();
+        return redirect()->back()->with('success', __('constant.ALLOCATE_DELETED'));
+    }
+
+    public function update_students (Request $request,$id)
+    {
+
+        $fields = [
+            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'name' => 'required|string',
+            'password'  =>  'nullable|min:8',
+            'country_code' => 'required',
+            'level' => 'required',
+            'dob' => 'required',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
+            'gender' => 'required|string',
+        ];
+
+        //dd($request);
+        $messages = [];
+        $messages['email.required'] = 'The email address field is required.';
+        $messages['name.required'] = 'The name field is required.';
+        $messages['password.required'] = 'The password field is required.';
+        $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
+        $messages['country_code.required'] = 'The country code field is required.';
+        $messages['dob.required'] = 'Date of Birth is required.';
+        $messages['mobile.required'] = 'The contact number field is required.';
+        $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
+        $request->validate($fields, $messages);
+
+        $customer = User::find($id);
+        $customer->level_id = json_encode($request->level);
+        $customer->name = $request->name;
+        $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
+        $customer->email = $request->email??NULL;
+        $customer->address = $request->address??NULL;
+        $customer->gender = $request->gender??NULL;
+        $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
+        $customer->mobile = $request->mobile??NULL;
+        if (!is_null($request->password)) {
+            $customer->password = Hash::make($request->password);
+        }
+        $customer->updated_at = Carbon::now();
+        $customer->save();
+        return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+
+    }
+
 
 	public function competition()
 	{
@@ -1394,7 +1580,48 @@ class ProfileController extends Controller
                 $tempCart->level_id = null;
                 $tempCart->cart = $jsonEncode;
                 $tempCart->save();
-        }else{
+        }
+        elseif($request->type == 'onlinegrading'){
+            $paper = GradingListingDetail::where('id', $request->paper)->first();
+            $levelDetails = array();
+            $levelDetails['type'] = 'onlinegrading';
+            $levelDetails['id'] = $request->paper;
+            $levelDetails['name'] = $paper->title;
+            $levelDetails['description'] = '';
+            $levelDetails['image'] = '';
+            $levelDetails['amount'] = $paper->price;
+            $levelDetails['months'] = '';
+
+            $tempCart = new TempCart();
+            $jsonEncode = json_encode($levelDetails);
+            $tempCart->user_id = Auth::user()->id;
+            $tempCart->type = $request->type;
+            $tempCart->level_id = null;
+            $tempCart->cart = $jsonEncode;
+            $tempCart->save();
+    }
+    if($request->type == 'physicalgrading'){
+        foreach($request->paper as $value){
+            $paper = GradingListingDetail::where('id', $value)->first();
+            $levelDetails = array();
+            $levelDetails['type'] = 'physicalgrading';
+            $levelDetails['id'] = $value;
+            $levelDetails['name'] = $paper->title;
+            $levelDetails['description'] = $paper->description;
+            $levelDetails['image'] = '';
+            $levelDetails['amount'] = $paper->price;
+            $levelDetails['months'] = '';
+
+            $tempCart = new TempCart();
+            $jsonEncode = json_encode($levelDetails);
+            $tempCart->user_id = Auth::user()->id;
+            $tempCart->type = $request->type;
+            $tempCart->level_id = null;
+            $tempCart->cart = $jsonEncode;
+            $tempCart->save();
+        }
+    }
+        else{
             $levelId = $request->levelId ?? null;
             $level = Level::where('id', $levelId)->first();
             $levelName = $level->title;
