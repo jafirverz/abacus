@@ -54,7 +54,7 @@
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Questions</th>
+                    <th class="wcol-2 text-center">Multiplication</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
