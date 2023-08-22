@@ -110,6 +110,7 @@ Route::get('/membership', 'ProfileController@membership')->name('membership');
 
 Route::get('/cart/{id?}', 'ProfileController@cartList')->name('cartlist');
 Route::get('/cart/delete/all', 'ProfileController@cartListDelete')->name('delete.cart');
+Route::post('/cart/delete', 'ProfileController@cartListClear')->name('clear.cart');
 Route::post('/cart', 'ProfileController@cart')->name('cart');
 Route::get('/cart', 'ProfileController@cart')->name('cart');
 

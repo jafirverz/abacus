@@ -1676,6 +1676,14 @@ class ProfileController extends Controller
 		//return view('account.cart', compact("cartDetails"));
 	}
 
+    public function cartListClear(Request $request){
+        $cartDetails = TempCart::whereIn('id', $request->deletecart)->where('user_id', Auth::user()->id)->get();
+		foreach($cartDetails as $cart){
+			$cart->delete();
+		}
+		return redirect()->to('/cart');
+    }
+
 	public function checkout(){
 		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
 

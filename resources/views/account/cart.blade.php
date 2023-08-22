@@ -25,7 +25,7 @@
             <div>You have {{ count($cartDetails) }} items in your cart</div>
           </div>
           <div class="col-md-auto sp-col">
-            <!-- <a class="link-4 rico" href=""><strong>Clear Cart</strong> <i class="fa-solid fa-xmark"></i></a> -->
+            <a class="link-4 rico" href="javascript::void(0);" onclick="submitform('clearcart');"><strong>Clear Cart</strong> <i class="fa-solid fa-xmark"></i></a>
             <a class="link-4 rico" href="{{ route('delete.cart') }}"><strong>Delete All</strong> <i class="fa-regular fa-trash-can"></i></a>
           </div>
         </div>
@@ -39,10 +39,13 @@
               $totalAmount+= $cartt->amount;
             @endphp
               <div class="grid-11">
-                <!-- <div class="checkbxtype nolb">
-                  <input id="check-1" type="checkbox" name="deletecart[]" value="{{ $cart->id }}" />
-                  <label for="check-1"></label>
-                </div> -->
+                <form method="post" action="{{ route('clear.cart') }}" id="clearcart">
+                  @csrf
+                  <div class="checkbxtype nolb">
+                    <input id="check-1" type="checkbox" name="deletecart[]" value="{{ $cart->id }}" />
+                    <label for="check-1"></label>
+                  </div>
+                </form>
                 <div class="ginner">
                   @if($cartt->image)
                   <div class="bg">
@@ -88,4 +91,15 @@
     </div>
   </div>	
 </main>
+
+<script>
+  function submitform(id){
+    var atLeastOneIsChecked = $('input[name="deletecart[]"]:checked').length > 0;
+    if(atLeastOneIsChecked){
+      $("#"+id).submit();
+    }else{
+      alert("Please select atleast one item");
+    }
+  }
+</script>
 @endsection
