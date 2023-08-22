@@ -55,11 +55,12 @@
           
           $k=0;
           //$count = count($questionns->input_1);
-          foreach($questionns as $question){
+          foreach($questionns as $key=>$question){
           @endphp
           <div class="col-md-4 col-6 sp-col">
             <div class="item">
               <div class="inner">
+                <div class="number">Q{{ $key+1 }}</div>
                 <figure>
                   <img src="{{ url('/upload-file/'.$question->question_1) }}" alt="" />
                 </figure>

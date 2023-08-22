@@ -31,10 +31,11 @@
             @php
             $k = 1;
             @endphp
-            @foreach($questions as $question)
+            @foreach($questions as $key=>$question)
             <div class="col-md-4 col-6 sp-col">
               <div class="item">
                 <div class="inner">
+                  <div class="number">Q{{ $key+1 }}</div>
                   <figure>
                     <img src="{{ url('/upload-file/'.$question->question_1) }}" alt="" />
                   </figure>
