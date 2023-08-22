@@ -44,7 +44,20 @@
                                     <input type="file" name="image" class="form-control" >
                                     
                                 </div> -->
-
+                                <div class="form-group">
+                                    <label for="title">Student List</label>
+                                    <select name="student" class="form-control" multiple>
+                                        <option value="">--Please Select</option>
+                                        @foreach($onlinestudents as $student)
+                                        <option value="{{ $student->id }}">{{ $student->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('student'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('student') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
                                 <div class="form-group">
                                     <label for="status">Status</label>

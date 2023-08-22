@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\LessonManagement;
 use App\QuestionTemplate;
+use App\User;
 use Illuminate\Http\Request;
 
 class LessonManagementController extends Controller
@@ -52,7 +53,8 @@ class LessonManagementController extends Controller
         //
         $title = $this->title;
         $questionTempleates = QuestionTemplate::where('id', 9)->get();
-        return view('admin.master.lesson.create', compact('title', 'questionTempleates'));
+        $onlinestudents = User::where('user_type_id', 3)->get();
+        return view('admin.master.lesson.create', compact('title', 'questionTempleates', 'onlinestudents'));
     }
 
     /**
