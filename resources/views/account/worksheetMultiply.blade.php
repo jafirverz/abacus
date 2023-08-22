@@ -46,6 +46,7 @@
           <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
           <input type="hidden" name="levelId" value="{{ $level->id }}">
           <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
+          @php $i=1; @endphp
           @foreach($allQuestions as $questionss)
           <div class="box-1">
             <div class="xscrollbar">
@@ -53,13 +54,12 @@
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Multiplication</th>
+                    <th class="wcol-2 text-center">Questions</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
                 <tbody>
                   @php
-                  $i=1;
                   if(isset($_GET['s']) && $_GET['s'] == 1){
                     $questionnss =\App\MiscQuestion::where('question_id', $questions->id)->where('block', $questionss->block)->inRandomOrder()->get();
                   }else{
