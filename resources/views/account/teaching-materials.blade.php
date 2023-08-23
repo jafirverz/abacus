@@ -24,30 +24,32 @@
                     <div class="col-lg-4 mt-20">
                         <h1 class="title-3">Material List</h1>
                     </div>
+                    <form method="get" name="material_search" id="material_search" enctype="multipart/form-data" action="">
+                    @csrf    
                     <div class="col-lg-8 mt-20 lastcol">
                         <div class="row input-group">
                             <div class="col-md">
-                                <input class="form-control" type="text" placeholder="Search By" />
+                                <input class="form-control" name="keyword" type="text" placeholder="Search By" />
                             </div>
                             <div class="col-md-auto col-sm mt-767-15">
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
-                                        <select class="selectpicker">
+                                        <select name="file_type" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                             <option>File Type</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Option 3</option>
-                                            <option>Option 4</option>
+                                            <option value="{{ url('teaching-materials?file_type=pdf') }}">Pdf</option>
+                                            <option value="{{ url('teaching-materials?file_type=docx') }}">Docx</option>
+                                            <option value="{{ url('teaching-materials?file_type=doc') }}">Doc</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-auto col-sm-auto mt-767-15">
-                                <a class="btn-1" href="#">Upload New Material <i class="fa-solid fa-arrow-right-long"></i></a>
+                                <a class="btn-1" href="{{ url('add-material') }}">Upload New Material <i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="box-1">
                     <div class="xscrollbar">
@@ -64,16 +66,17 @@
                                 @if($materials->count())
                                         @foreach ($materials as $material)
                                         @php
-                                        $uploaded_files = end(preg_split('/-/', $material->uploaded_files));
+                                        $uploaded_files = explode('.', $material->uploaded_files);
+                                        $extension=end($uploaded_files);
                                         @endphp
                                 <tr>
                                     <td>
                                         <em>{{ $material->title }}</em>
-                                        <div class="tbactions"><a href="{{ asset($material->uploaded_files) }}">View</a> <a href="{{ asset($material->uploaded_files) }}">Download</a></div>
+                                        <div class="tbactions"><a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a> <a target="_blank" href="{{ asset($material->uploaded_files) }}">Download</a></div>
                                     </td>
-                                    <td><em>pdf</em></td>
+                                    <td><em>{{ $extension ?? ''}}</em></td>
                                     <td><em>{{ $material->description }}</em></td>
-                                    <td><em>{{  $uploaded_files }}</em></td>
+                                    <td><em>{{ asset($material->uploaded_files) }}</em></td>
                                 </tr>
                                         @endforeach
                                 @endif
@@ -81,11 +84,7 @@
                         </table>
                     </div>
                     <ul class="page-numbers mt-30">
-                        <li><a class="prev" href="#">prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a class="current" href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a class="next" href="#">next</a></li>
+                        {{ $materials->links() }}
                     </ul>
                 </div>
             </div>

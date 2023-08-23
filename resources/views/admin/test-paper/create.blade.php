@@ -66,9 +66,52 @@
                                     </span>
                                     @endif
                                 </div>
+                                @if(isset($_GET['paper-type']) && $_GET['paper-type']==2)
+                                <div class="form-group">
+                                    <label for="title">Video Upload</label>
+                                    <input type="file" name="video_file" class="form-control" id="">
+                                    @if ($errors->has('video_file'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('video_file') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="title">PDF Upload</label>
+                                    <input type="file" name="pdf_file" class="form-control" id="">
+                                    @if ($errors->has('pdf_file'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('pdf_file') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="title">Powerpoint Upload</label>
+                                    <input type="file" name="powerpoint_file" class="form-control" id="">
+                                    @if ($errors->has('powerpoint_file'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('powerpoint_file') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="title">Abacus Simulator Link</label>
+                                    <input type="text" name="simulator_link" class="form-control" id="">
+                                    @if ($errors->has('simulator_link'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('simulator_link') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">Description</label>
+                                    <textarea class="form-control my-editor" name="description">{{ old('description') }}</textarea>
+                                </div>
+                               @endif
 
                             </div>
                             <div class="card-footer text-right">

@@ -176,7 +176,7 @@ if (!function_exists('getPageList')) {
 
     function getPaperType($id = null)
     {
-        $array_list = ['1'  =>  'Test', '2'  =>  'Course'];
+        $array_list = ['1'  =>  'Test', '2'  =>  'Lesson'];
         if ($id) {
             return $array_list[$id];
         }

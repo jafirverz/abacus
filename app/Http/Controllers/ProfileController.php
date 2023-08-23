@@ -802,7 +802,21 @@ class ProfileController extends Controller
 			return abort(404);
 		}
 
-        $materials = TeachingMaterials::orderBy('id', 'asc')->paginate($this->pagination);
+        if(isset($_GET['keyword']) && $_GET['keyword']!='')
+        {
+            $materials = TeachingMaterials::where('title','like','%' .$_GET['keyword'].'%')->orderBy('id', 'asc')->paginate($this->pagination);
+        }
+        else if(isset($_GET['file_type']) && $_GET['file_type']!='')
+        {
+            
+            $materials = TeachingMaterials::where('file_type',$_GET['file_type'])->orderBy('id', 'asc')->paginate($this->pagination);
+            //dd($materials);
+        }
+        else
+        {
+            $materials = TeachingMaterials::orderBy('id', 'asc')->paginate($this->pagination);
+        }
+        
 		return view('account.teaching-materials', compact("page", "user","materials"));
     }
 
@@ -812,7 +826,7 @@ class ProfileController extends Controller
 	{
               //dd($request->all());
         $users = User::find($this->user->id);
-
+        $instructorDetail = User::where('id', $this->user->id)->first();
             $messages = [
                 'country_code.regex' => 'The Country code entered is invalid.',
             ];
@@ -831,7 +845,7 @@ class ProfileController extends Controller
 
 
             $dob = date('Y-m-d', strtotime($request->dob));
-            $updateUserProfile = new User();
+            $updateUserProfile = User::find($this->user->id);
             //$updateUserProfile->user_id  = $users->id;
             $updateUserProfile->name = $request->name;
             $updateUserProfile->email = $request->email;
@@ -880,7 +894,7 @@ class ProfileController extends Controller
 
                     $data['contents'] = $newContents;
                     try {
-                        $mail = Mail::to($this->user->email)->send(new EmailNotification($data));
+                        //$mail = Mail::to($this->user->email)->send(new EmailNotification($data));
                     } catch (Exception $exception) {
                         dd($exception);
                     }
@@ -909,7 +923,7 @@ class ProfileController extends Controller
 
                     $data['contents'] = $newContents;
                     try {
-                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                       // $mail = Mail::to($admin->email)->send(new EmailNotification($data));
                     } catch (Exception $exception) {
                         dd($exception);
                     }
@@ -917,10 +931,7 @@ class ProfileController extends Controller
 
             }
 
-
-
-
-		return redirect()->back()->with('success', __('constant.ACOUNT_UPDATED'));
+		return redirect()->back()->with('success', __('constant.PROFILE_UPDATED'));
 	}
 
 	public function studentlist(){
@@ -928,6 +939,34 @@ class ProfileController extends Controller
 		$students = User::where('instructor_id', $instructor_id->id)->paginate(5);
 		$levels = Level::get();
 		return view('account.teaching-students', compact('students', 'levels'));
+    }
+
+    public function add_material()
+    {
+        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        return view('account.add-material', compact('instructors'));
+    }
+
+    public function store_add_material(Request $request)
+    {
+        $request->validate([
+            'title'  =>  'required',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+        ]);
+
+        $material = new TeachingMaterials;
+        $material->title = $request->title ?? '';
+        if ($request->hasFile('uploaded_files')) {
+            $material->uploaded_files=$uploaded_file = uploadPicture($request->file('uploaded_files'), __('constant.TEACHING_MATERIALS'));
+            $ext = pathinfo($uploaded_file, PATHINFO_EXTENSION);
+            $material->file_type = $ext;
+        }
+        $material->description = $request->description ?? '';
+        $material->teacher_id = $this->user->id;
+        $material->created_at = Carbon::now();
+        $material->save();
+
+        return redirect()->route('teaching-materials')->with('success', __('constant.ACOUNT_CREATED'));
     }
     
     public function add_students()

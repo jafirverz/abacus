@@ -75,6 +75,8 @@ Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->na
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
 Route::get('/instructor-students', 'ProfileController@studentlist')->name('instructor.my-students');
+Route::get('/add-material', 'ProfileController@add_material')->name('instructor.add-material');
+Route::post('/add-material', 'ProfileController@store_add_material');
 Route::get('/add-students', 'ProfileController@add_students')->name('instructor.add-students');
 Route::post('/add-students', 'ProfileController@store_add_students')->name('instructor.add-students');
 Route::get('/add-students/edit/{id?}', 'ProfileController@edit_students')->name('instructor.add-students.edit');

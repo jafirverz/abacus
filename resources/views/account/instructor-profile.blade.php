@@ -11,6 +11,7 @@
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <h1 class="title-3">My Profile</h1>
+                @include('inc.messages')
                 <div class="box-1">
                     <div class="row align-items-center title-type">
                         <div class="col-md">
@@ -164,7 +165,7 @@
                         </div>
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Highest Abacus Grade Attained</label>
-                            <input class="form-control" type="text" name="highest_abacus_grade" placeholder="{{ $user->highest_abacus_grade  }}" disabled />
+                            <input class="form-control" type="text" name="highest_abacus_grade" value="{{ $user->highest_abacus_grade  }}" disabled />
                         </div>
                     </div>
                     <div class="row sp-col-xl-30">
