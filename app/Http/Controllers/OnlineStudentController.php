@@ -44,32 +44,33 @@ class OnlineStudentController extends Controller
 
     public function detail_course($id){
         $course = Course::find($id);
+        $test_paper=TestPaper::where('id',$course->paper->id)->first();
         $paper_detail=TestPaperDetail::where('paper_id',$course->paper->id)->first();
         $qId=$course->paper->question_template_id;
         ///dd($qId);
         if($qId == 5){
-            return view('account.courseMultipleDivision', compact("course","paper_detail"));
+            return view('account.courseMultipleDivision', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 6){
-            return view('account.courseChallenge', compact("course","paper_detail"));
+            return view('account.courseChallenge', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 8){
-            return view('account.courseAbacus', compact("course","paper_detail"));
+            return view('account.courseAbacus', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 7){
-            return view('account.courseMix', compact("course","paper_detail"));
+            return view('account.courseMix', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 4){
-            return view('account.courseAddSubQuestion', compact("course","paper_detail"));
+            return view('account.courseAddSubQuestion', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 3){
-            return view('account.courseNumber', compact("course","paper_detail"));
+            return view('account.courseNumber', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 1){
-            return view('account.courseAudio', compact("course","paper_detail"));
+            return view('account.courseAudio', compact("course","paper_detail","test_paper"));
         }
         elseif($qId == 2){
-            return view('account.courseVideo', compact("course","paper_detail"));
+            return view('account.courseVideo', compact("course","paper_detail","test_paper"));
         }
         //return view('account.online-my-course-detail', compact('course'));
     }

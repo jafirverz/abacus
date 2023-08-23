@@ -3,10 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class GradingStudent extends Model
 {
     //
+
+    use LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    protected static $logOnlyDirty = true;
 
     public function student(){
         return $this->belongsTo('App\User', 'user_id', 'id');
@@ -23,4 +30,6 @@ class GradingStudent extends Model
     public function abacus(){
         return $this->belongsTo('App\Grade', 'abacus_grade', 'id');
     }
+
+    
 }

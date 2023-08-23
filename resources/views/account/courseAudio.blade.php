@@ -4,49 +4,54 @@
 <main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      @if(Auth::user()->user_type_id == 1)
-        @include('inc.account-sidebar')
-      @endif
+    @include('inc.account-sidebar-online')
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="be-overview-preparatory.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="javascript: history.go(1)"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
-            <li><a href="{{ url('grading-overview') }}">Grading Overview</a></li>
-            <li><strong>{{ $gradingExam->title }}</strong></li>
-        </ul>
-        <div class="box-1">
-            {!! $gradingExam->important_note !!}
-        </div>
-        <form method="post" action="{{ route('grading_answer.submit') }}">
+                <li><a href="{{ url('online-student/my-course')}}">My Courses</a></li>
+                <li><strong>{{ $test_paper->title ?? ''}}</strong></li>
+         </ul>
+         <div class="box-1">
+                <h2 class="title-2">{{ $test_paper->title ?? ''}}</h2>
+                <article class="document mt-20">
+                    {!! $test_paper->description ?? '' !!}
+                </article>
+            </div>
+            <div class="row sp-col-30 grid-7">
+                <div class="col-lg-6 sp-col videowrap">
+                    <video width="400" controls>
+                        <source src="{{asset($test_paper->video_file)}}" type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>
+                </div>
+                <div class="col-lg-6 sp-col countwrap">
+                    <img src="{{asset($test_paper->powerpoint_file)}}" alt="" />
+                </div>
+            </div>   
+            <form method="post" action="{{ route('course.answer.submit') }}">
             @csrf
-            <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
-            <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
-            <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
+
+            <input type="hidden" name="test_paper_question_id" value="{{ $paper_detail->id }}">
+            <input type="hidden" name="course_id" value="{{ $course->id }}">
+            <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
         <div class="row grid-4">
 
-          @php
-          $k=1;
-          if(isset($_GET['s']) && $_GET['s'] == 1){
-            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->inRandomOrder()->get();
-          }else{
-            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->get();
-          }
-          foreach($questionns as $questionn){
-          @endphp
+          
             <div class="col-xl-4 col-sm-6">
               <div class="inner">
-                @php
-                $questionnss = \App\GradingPaperQuestion::where('grading_paper_question_id', $questionn->grading_paper_question_id)->where('input_2', $questionn->input_2)->get();
+              @php
 
-                foreach($questionnss as $question){
-                @endphp
+              $k=0;
+              $i = 1;
+              foreach($paper_detail->questionsCourse as $question){
+              @endphp
                 <div class="row sp-col-10 grow">
                   <input type="hidden" value="{{ $question->id }}">
                   <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
@@ -70,9 +75,7 @@
               @endphp
               </div>
             </div>
-          @php
-          }
-          @endphp
+          
 
         </div>
     <div class="output-1">

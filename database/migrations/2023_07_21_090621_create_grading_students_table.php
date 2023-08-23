@@ -20,7 +20,9 @@ class CreateGradingStudentsTable extends Migration
             $table->unsignedBigInteger('grading_exam_id');
             $table->foreign('grading_exam_id')->references('id')->on('grading_exams');
             $table->unsignedBigInteger('instructor_id');
-            $table->string('marks');
+            $table->integer('mental_grade');
+            $table->integer('abacus_grade');
+            $table->string('remarks');
             $table->smallInteger('approve_status')->nullable()->comment('1=> approved, 2=>notapproved');
 
             $table->timestamps();
