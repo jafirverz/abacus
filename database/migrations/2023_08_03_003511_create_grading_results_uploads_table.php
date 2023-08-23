@@ -16,7 +16,7 @@ class CreateGradingResultsUploadsTable extends Migration
         Schema::create('grading_results_uploads', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('grading_id')->nullable();
-            $table->foreign('grading_id')->references('id')->on('competition_controllers');
+            $table->foreign('grading_id')->references('id')->on('grading_exams');
             $table->string('uploaded_file')->nullable();
             $table->timestamps();
         });
