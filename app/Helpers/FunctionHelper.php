@@ -9,6 +9,7 @@ use App\Slider;
 use App\GradingExam;
 use App\GradingPaper;
 use App\GradingPaperQuestion;
+use App\GradingStudentResults;
 use App\TestPaper;
 use App\PaperCategory;
 use App\TestPaperDetail;
@@ -471,6 +472,16 @@ if (!function_exists('getPageList')) {
         }
          return NULL;
     }
+
+    function getGradingStudentResult($grading_id,$user_id)
+    {
+        $result = GradingStudentResults::where('grading_id',$grading_id)->where('user_id',$user_id)->first();
+        if ($result) {
+            return $result;
+        }
+         return NULL;
+    }
+
     function getAllQuestions($id)
     {
         $result = TestPaperQuestionDetail::where('test_paper_question_id',$id)->get();

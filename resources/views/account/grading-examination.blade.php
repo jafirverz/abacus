@@ -3,13 +3,15 @@
 <main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
-            @if(Auth::user()->user_type_id == 6)
             <div class="menu-aside">
+            @if(Auth::user()->user_type_id == 6)
+            
              @include('inc.account-sidebar-external')
-            </div>
+            
             @else
-             @include('inc.account-sidebar')
+            @include('inc.intructor-account-sidebar')
             @endif
+            </div>
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
@@ -20,8 +22,9 @@
                     <div class="col-md-6 order-md-first mt-767-20">
                         <h1 class="title-3">Grading Examinations</h1>
                     </div>
-                    @include('inc.messages')
-                </div>
+                   
+                </div> 
+                @include('inc.messages')
                 <div class="box-1">
                     <h2 class="title-4">Registered Student's List</h2>
                     <div><strong>Exam Title: {{ $gradingExam->title ?? '' }}</strong></div>
@@ -51,9 +54,9 @@
                                     </td>
                                     <td><em>{{ $grade->mental->title ?? '' }}</em></td>
                                     <td><em>{{ $grade->abacus->title ?? '' }}</em></td>
-                                    <td><em class="status-3">Pending</em></td>
+                                    <td><em class="status-3">{{ ($grade->approve_status==1)?'Approved':'Pending' }}</em></td>
                                     <td><em>{{ $grade->remarks ?? ''}}</em></td>
-                                    <td><em>-- </em></td>
+                                    <td><em>{{ getGradingStudentResult($grade->grading_exam_id,$grade->user_id )->result ?? '-'}} </em></td>
                                 </tr>
                                 @endforeach
                                 @endif

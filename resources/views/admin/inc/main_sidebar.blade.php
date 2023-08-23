@@ -76,6 +76,11 @@
                     'url'   =>  'admin/grading-paper',
                 ],
                 [
+                    'title' =>  __('constant.GRADING_RESULT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/grading-students',
+                ],
+                [
                     'title' =>  __('constant.GRADING_RESULT_UPLOAD'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/grading-result-upload',

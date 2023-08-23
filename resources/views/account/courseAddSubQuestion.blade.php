@@ -9,27 +9,27 @@
     <div class="col-lg-9 sp-col tempt-2-inner">
         <div class="tempt-2-content">
             <div class="mb-20">
-                <a class="link-1 lico" href="#"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+                <a class="link-1 lico" href="javascript: history.go(1)"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
             </div>
             <ul class="breadcrumb bctype">
                 <li><a href="{{ url('online-student/my-course')}}">My Courses</a></li>
-                <li><strong>{{ $course->level->title}}</strong></li>
+                <li><strong>{{ $test_paper->title ?? ''}}</strong></li>
             </ul>
             <div class="box-1">
-                <h2 class="title-2">{{ $course->title}}</h2>
+                <h2 class="title-2">{{ $test_paper->title ?? ''}}</h2>
                 <article class="document mt-20">
-                    {!! $course->content !!}
+                    {!! $test_paper->description ?? '' !!}
                 </article>
             </div>
             <div class="row sp-col-30 grid-7">
                 <div class="col-lg-6 sp-col videowrap">
                     <video width="400" controls>
-                        <source src="video/mov.mp4" type="video/mp4">
+                        <source src="{{asset($test_paper->video_file)}}" type="video/mp4">
                         Your browser does not support HTML video.
                     </video>
                 </div>
                 <div class="col-lg-6 sp-col countwrap">
-                    <img src="images/tempt/count.jpg" alt="" />
+                    <img src="{{asset($test_paper->powerpoint_file)}}" alt="" />
                 </div>
             </div>
             <form method="post" action="{{ route('course.answer.submit') }}">
