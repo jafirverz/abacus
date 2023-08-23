@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Certificate;
 use App\Country;
 use App\Course;
 use App\TestPaper;
@@ -13,6 +14,7 @@ use App\TestPaperQuestionDetail;
 use App\UserFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class OnlineStudentController extends Controller
 {
@@ -36,7 +38,8 @@ class OnlineStudentController extends Controller
 
     public function my_course(){
         $level = Level::get();
-        return view('account.online-my-course', compact('level'));
+        $courseCertificate = CourseSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
+        return view('account.online-my-course', compact('level', 'courseCertificate'));
     }
 
     public function detail_course($id){
@@ -124,5 +127,15 @@ class OnlineStudentController extends Controller
             return abort(404);
         }
         return view('account.about', compact('page'));
+    }
+
+    public function downloadCertificate( $id = null){
+        $courseSubmitted = CourseSubmitted::where('id', $id)->first();
+        $certificate = Certificate::where('id', $courseSubmitted->certificate_id)->first();
+        $key = ['{{course_name}}','{{full_name}}','{{email}}','{{dob}}','{{contact_number}}','{{address}}'];
+        $value = [$courseSubmitted->course->title, Auth::user()->name, Auth::user()->email, Auth::user()->dob, Auth::user()->mobile, Auth::user()->address];
+        $newContents = str_replace($key, $value, $certificate->content);
+        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
+        return $pdf->download('certificate.pdf');
     }
 }
