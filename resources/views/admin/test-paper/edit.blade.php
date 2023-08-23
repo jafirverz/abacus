@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="paper_type">Paper Type</label>
-                                    <select disabled name="paper_type" class="form-control">
+                                    <select disabled  class="form-control">
                                         <option value="">-- Select --</option>
                                         @if(getPaperType())
                                         @foreach (getPaperType() as $key => $item)
@@ -64,6 +64,7 @@
                                         <strong>{{ $errors->first('paper_type') }}</strong>
                                     </span>
                                     @endif
+                                    <input type="hidden" name="paper_type" value="{{ $paper->paper_type }}">
                                 </div>
 
                                 @if($paper->paper_type==2)
