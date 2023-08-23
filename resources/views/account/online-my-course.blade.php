@@ -61,24 +61,13 @@
             <h2 class="title-1 mt-30">My Certificates</h2>
             <div class="box-1">
                 <div class="row grid-6">
+                    @if($courseCertificate)
+                    @foreach($courseCertificate as $certificate)
                     <div class="col-md-6">
-                        <a class="item" href="#">Certificate of Completion (Online Elementary)</a>
+                        <a class="item" href="{{ url('download-certificate', $certificate->id) }}">{{ $certificate->certificate->title ?? '' }}</a>
                     </div>
-                    <div class="col-md-6">
-                        <a class="item" href="#">Certificate of Completion (Online Elementary)</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a class="item" href="#">Certificate of Completion (Online Elementary)</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a class="item" href="#">Certificate of Completion (Online Elementary)</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a class="item" href="#">Certificate of Completion (Online Elementary)</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a class="item" href="#">Certificate of Completion (Online Elementary)</a>
-                    </div>
+                    @endforeach
+                    @endif
                 </div>
             </div>
         </div>
