@@ -80,7 +80,7 @@ class WorksheetController extends Controller
             'amount' => 'required_if:fee,2',
            'questiontemplate'  =>  'required',
             'stopwatch'  =>  'required',
-            'presettiming'  =>  'required',
+            //'presettiming'  =>  'required',
             'questiontype' => 'required',
         ], $messages);
 
@@ -94,7 +94,7 @@ class WorksheetController extends Controller
         $worksheet->stopwatch_timing = $request->stopwatch;
         $worksheet->preset_timing = $request->presettiming;
         $worksheet->description = $request->description;
-        $worksheet->question_type = $request->questiontype;
+        $worksheet->question_type = $request->questiontype ?? null;
         $worksheet->status = $request->status;
         $worksheet->timing = $request->timing;
         $worksheet->account_accessibility = $request->account_accessibility;
@@ -168,7 +168,7 @@ class WorksheetController extends Controller
             'questiontemplate'  =>  'required',
             'stopwatch'  =>  'required',
             'presettiming'  =>  'required',
-            'questiontype' => 'required',
+            //'questiontype' => 'required',
         ], $messages);
 
         //dd($request->all());
@@ -181,7 +181,7 @@ class WorksheetController extends Controller
         $worksheet->stopwatch_timing = $request->stopwatch;
         $worksheet->preset_timing = $request->presettiming;
         $worksheet->description = $request->description;
-        $worksheet->question_type = $request->questiontype;
+        $worksheet->question_type = $request->questiontype ?? null;
         $worksheet->status = $request->status;
         $worksheet->account_accessibility = $request->account_accessibility;
         $worksheet->timing = $request->timing;

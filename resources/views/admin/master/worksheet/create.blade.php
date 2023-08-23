@@ -98,7 +98,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="title">Question Type</label>
                                     <select name="questiontype" class="form-control">
                                         <option value="">-- Select --</option>
@@ -110,7 +110,7 @@
                                         <strong>{{ $errors->first('questiontype') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label for="title">Stopwatch timing</label>
