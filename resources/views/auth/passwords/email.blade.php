@@ -1,45 +1,47 @@
 @extends('layouts.appLogin')
 
 @section('content')
-<div class="main-wrap">
-				<div class="bn-inner bg-get-image">
-					<img class="bgimg" src="/images/tempt/bn-sign-up.jpg" alt="Sign Up" />
-				</div>
-				<div class="container main-inner">
-					<h1 class="title-1 text-center">Password Reset</h1>
-                    <ul class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Password Reset</li>
-                    </ul>
-					<div class="maxw-750 ml-auto mr-auto">
-                    @include('inc.messages')
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-					@include('inc.messages')
-                   <form method="POST" action="{{ url('password/email') }}"  class="form-ani">
-                        @csrf
-                         <div class="form-group row">
-                            <div class="col-md-12">
-                            <div class="inrow mt-0">
-                                 <label>Email:</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                           </div>
-                                @error('email')
-                                <span class="text-danger d-block">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
+<main class="main-wrap">
+    <div class="row sp-col-0 tempt-1">
+        <div class="col-lg-6 col-md-7 col-sm-9 sp-col order-sm-last">
+            <div class="tempt-1-content">
+                <div class="intro-1">
+                    <h1 class="title-1">Forgot Password</h1>
+                    <p>Please enter the details to reset password</p>
+                </div>
+                <hr />
+                @include('inc.messages')
+                @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+                @endif
+                <form method="POST" action="{{ url('password/email') }}" class="form-ani">
+                    @csrf
+                    <label class="lb-1">Full Name <span class="required">*</span></label>
+                    <input class="form-control" type="text" required name="name" placeholder="Enter Full Name" />
+                    <label class="lb-1">Email Address <span class="required">*</span></label>
+                    <input class="form-control  @error('email') is-invalid @enderror" type="text"
+                        placeholder="Enter Email Address" id="email" type="email" name="email"
+                        value="{{ old('email') }}" />
+                    @error('email')
+                    <span class="text-danger d-block">{{ $message }}</span>
+                    @enderror
+                    <label class="lb-1">Date of Birth <span class="required">*</span></label>
+                    <div class="date-wrap">
+                        <i class="fa-solid fa-calendar-days ico"></i>
+                        <input class="form-control" name="dob" required type="text" placeholder="dd/mm/yyyy" />
+                    </div>
+                    <div class="output-1">
+                        <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-5 col-sm-3 sp-col order-sm-first bg image">
+            <img class="bgimg" src="{{ asset('images/tempt/forgot-password.jpg') }}" alt="Forgot Password" />
+        </div>
+    </div>
+</main>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn-1 minw-190"> {{ __('Request') }}</button>
-                            </div>
-                        </div>
-                    </form>
-					</div>
-				</div>
-			</div>
 @endsection

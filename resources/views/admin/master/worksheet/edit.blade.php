@@ -141,9 +141,38 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="title">Timing</label>
+                                    <input type="text" name="timing" value="{{ old('timing', $worksheet->timing) ?? '' }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    @if ($errors->has('timing'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('timing') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                     <label for="title">Description</label>
                                     <textarea name="description" class="form-control my-editor" cols="30"
                                               rows="5">{{old('description') ?? $worksheet->description}}</textarea>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="status">Account Accessibility</label>
+                                    <select name="account_accessibility" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option value="8"  @if(old('account_accessibility', $worksheet->account_accessibility) == 8) selected @endif>Franchise</option>
+                                        <option value="5" @if(old('account_accessibility', $worksheet->account_accessibility) == 5) selected @endif>Instructor</option>
+                                        <option value="1" @if(old('account_accessibility', $worksheet->account_accessibility) == 1) selected @endif>Student</option>
+                                        <option value="3" @if(old('account_accessibility', $worksheet->account_accessibility) == 3) selected @endif>Online Student</option>
+                                        <option value="10" @if(old('account_accessibility', $worksheet->account_accessibility) == 10) selected @endif>Public</option>
+                                        
+                                    </select>
+                                    @if ($errors->has('account_accessibility'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('account_accessibility') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
 

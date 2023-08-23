@@ -73,6 +73,8 @@ return [
     'SALES_REPORTS' => 'Sales Reports',
     'WORKSHEET_REPORTS' => 'Worksheet Reports',
     'ORDERS' => 'Orders',
+    'USERSURVEY' => 'Survey Completed',
+    'CERTIFICATE' => 'Certificate',
 
 
     // CONTENT
@@ -113,6 +115,7 @@ return [
     'EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE' => '6',
     'EMAIL_TEMPLATE_TO_ADMIN_NEW_ORDER' => '7',
     'EMAIL_TEMPLATE_TO_USER_NEW_ORDER' => '7',
+    'EMAIL_TEMPLATE_TO_ADMIN_SURVEY' => '9',
 
     // SLUG
     'SLUG_LOGIN' => 'login',

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Certificate;
 use App\CompetitionPaperSubmitted;
+use App\CompetitionStudentResult;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -38,14 +40,15 @@ class CompetitionResultController extends Controller
 
     public function studentList($id){
         $title = $this->title;
-        $userList = CompetitionPaperSubmitted::where('competition_id', $id)->where('paper_type', 'actual')->paginate($this->pagination);
+        $userList = CompetitionPaperSubmitted::where('competition_id', $id)->paginate($this->pagination);
         return view('admin.competition_result.userList', compact('title', 'userList'));
     }
 
     public function edit($id){
         $title = $this->title;
         $competitionPaperSubmitted = CompetitionPaperSubmitted::where('id', $id)->first();
-        return view('admin.competition_result.edit', compact('title', 'competitionPaperSubmitted'));
+        $certificate = Certificate::get();
+        return view('admin.competition_result.edit', compact('title', 'competitionPaperSubmitted', 'certificate'));
 
     }
 
@@ -57,6 +60,14 @@ class CompetitionResultController extends Controller
         $compPaperResult->result = $result;
         $compPaperResult->result = $prize;
         $compPaperResult->save();
+
+        // if Competition result uploaded by admin then add certificate
+        // $compStuResult = CompetitionStudentResult::where('competition_id', $compPaperResult->competition_id)->where('category_id', $compPaperResult->category_id)->where('user_id', $compPaperResult->user_id)->first();
+        // if($compStuResult){
+        //     dd("found");
+        // }else{
+        //     dd("not found");
+        // }
         $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
         return view('admin.competition_result.index', compact('title', 'competition'));
 

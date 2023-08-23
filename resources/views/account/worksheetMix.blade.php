@@ -4,18 +4,18 @@
 <main class="main-wrap">	
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      @if(Auth::user()->user_type_id == 1)
+      @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
         @include('inc.account-sidebar')
       @endif
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="be-overview-preparatory.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="{{ URL::previous() }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
+          <li><a href="{{ URL::previous() }}">{{ $level->title }}</a></li>
           <li><strong>{{ $worksheet->title }}</strong></li> 
         </ul>
         <div class="box-1">
@@ -24,7 +24,11 @@
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
-        <form action="post">
+        <form method="post" action="{{ route('answer.submit') }}" id="submitform">
+          @csrf
+          <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
+          <input type="hidden" name="levelId" value="{{ $level->id }}">
+          <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
           <div class="box-1">
             <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
@@ -50,7 +54,7 @@
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" /></td>
+                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php 
                   $i++;

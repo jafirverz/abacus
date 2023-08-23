@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Certificate;
 use App\Survey;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\Traits\SystemSettingTrait;
+use App\UserSurvey;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -101,7 +103,7 @@ class SurveyController extends Controller
         //
         $title = $this->title;
         $surveys = Survey::find($id);
-
+        //dd($id);
         return view('admin.survey.edit', compact('title', 'surveys'));
     }
 
@@ -141,5 +143,35 @@ class SurveyController extends Controller
     public function destroy(Survey $survey)
     {
         //
+    }
+
+    public function getlist(){
+        $title = 'Survey Completed';
+        $surveys = UserSurvey::orderBy('id','desc')->paginate($this->pagination);
+
+        return view('admin.survey.survey_completed', compact('title', 'surveys'));
+    }
+
+    public function viewDetails($id){
+        $title = 'Survey Details View';
+        $survey = UserSurvey::where('id', $id)->first();
+        $data = json_decode($survey->survey_data);
+        return view('admin.survey.survey_show', compact('title', 'data'));
+    }
+
+    public function editSurvey($id){
+        $title = 'Survey Edit';
+        $survey = UserSurvey::where('id', $id)->first();
+        $data = json_decode($survey->survey_data);
+        $certificate = Certificate::get();
+        return view('admin.survey.survey_edit', compact('title', 'data', 'survey', 'certificate'));
+    }
+
+    public function updateSurvey(Request $request, $id){
+        $certificateId = $request->certificate;
+        $userSurvey = UserSurvey::where('id', $id)->first();
+        $userSurvey->certificate_id = $certificateId;
+        $userSurvey->save();
+        return redirect()->route('survey-completed.getlist')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
 }

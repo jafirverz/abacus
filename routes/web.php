@@ -74,6 +74,7 @@ Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')
 Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->name('my-course');
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
+
 Route::get('/instructor-students', 'ProfileController@studentlist')->name('instructor.my-students');
 Route::get('/add-material', 'ProfileController@add_material')->name('instructor.add-material');
 Route::post('/add-material', 'ProfileController@store_add_material');
@@ -82,6 +83,11 @@ Route::post('/add-students', 'ProfileController@store_add_students')->name('inst
 Route::get('/add-students/edit/{id?}', 'ProfileController@edit_students')->name('instructor.add-students.edit');
 Route::post('/add-students/edit/{id?}', 'ProfileController@update_students')->name('instructor.add-students.update');
 Route::get('/add-students/delete/{id?}', 'ProfileController@delete_students')->name('instructor.add-students.delete');
+
+
+Route::get('/online-student/about-3g-abacus', 'OnlineStudentController@aboutPage')->name('about-page-online');
+
+Route::get('/instructor-students', 'ProfileController@studentlist');
 
 Route::get('/instructor-competition', 'ProfileController@competition')->name('instructor-competition');
 Route::get('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor')->name('instructor.register');
@@ -216,6 +222,11 @@ Route::group(['prefix' => 'admin'], function () {
     // PAGES
     Route::get('pages/search', 'CMS\PagesController@search')->name('pages.search');
     Route::resource('pages', 'CMS\PagesController');
+    Route::get('image/upload', 'CMS\PagesController@imageUpload')->name('image-upload');
+    Route::get('image/create', 'CMS\PagesController@imageCreate')->name('images.create');
+    Route::post('image/upload', 'CMS\PagesController@imageStore')->name('image.store');
+
+
 
     // USERS ACCOUNT
     Route::get('users/search', 'CMS\UsersAccountController@search')->name('users.search');
@@ -523,6 +534,15 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
     Route::get('orders', 'CMS\OrderController@index');
+
+    //Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
+    Route::get('survey-completed', 'CMS\SurveyController@getlist')->name('survey-completed.getlist');
+    Route::get('survey-view/{id?}', 'CMS\SurveyController@viewDetails')->name('surveyslist.show');
+    Route::get('survey-edit/{id?}/edit', 'CMS\SurveyController@editSurvey')->name('surveyslist.edit');
+    Route::post('survey-edit/{id?}/update', 'CMS\SurveyController@updateSurvey')->name('survey-completed.update');
+
+    Route::get('certificate/search', 'CMS\CertificateController@search')->name('certificate.search');
+    Route::resource('certificate', 'CMS\CertificateController');
 });
 
 

@@ -85,7 +85,7 @@ class WorksheetController extends Controller
             $miscQuestion = array_unique($miscQuestion);
             if(count($miscQuestion) == 1){
                 if($miscQuestion[0] == 'multiply'){
-                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->groupBy('block')->paginate(2);
                     return view('account.worksheetMultiply', compact("worksheet", 'level', 'questions', 'allQuestions'));
                 }else{
                     $allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
