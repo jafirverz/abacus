@@ -65,6 +65,62 @@
                                     </span>
                                     @endif
                                 </div>
+
+                                @if($paper->paper_type==2)
+                                <div class="form-group">
+                                    <label for="title">Video Upload</label>
+                                    <input type="file" name="video_file" class="form-control" id="">
+                                    @if ($errors->has('video_file'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('video_file') }}</strong>
+                                    </span>
+                                    @endif
+                                    @if($paper->video_file)
+                                    <a href="{{ asset($paper->video_file) }}" target="_blank">Video</a>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">PDF Upload</label>
+                                    <input type="file" name="pdf_file" class="form-control" id="">
+                                    @if ($errors->has('pdf_file'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('pdf_file') }}</strong>
+                                    </span>
+                                    @endif
+                                    @if($paper->pdf_file)
+                                    <a href="{{ asset($paper->pdf_file) }}" target="_blank">PDF</a>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">Powerpoint Upload</label>
+                                    <input type="file" name="powerpoint_file" class="form-control" id="">
+                                    @if ($errors->has('powerpoint_file'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('powerpoint_file') }}</strong>
+                                    </span>
+                                    @endif
+                                    @if($paper->powerpoint_file)
+                                    <a href="{{ asset($paper->powerpoint_file) }}" target="_blank">Powerpoint</a>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">Abacus Simulator Link</label>
+                                    <input type="text" name="simulator_link" class="form-control" value="{{ old('simulator_link',$paper->simulator_link) }}" id="">
+                                    @if ($errors->has('simulator_link'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('simulator_link') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">Description</label>
+                                    <textarea class="form-control my-editor" name="description">{{ old('description',$paper->description) }}</textarea>
+                                </div>
+                               @endif
                             </div>
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>

@@ -73,6 +73,72 @@ class TestPaperController extends Controller
         $testPaper->title = $request->title ?? NULL;
         $testPaper->paper_type = $request->paper_type ?? NULL;
         $testPaper->question_template_id = $request->question_template_id ?? NULL;
+
+        if( $request->paper_type==2)
+        {
+
+            if ($request->hasFile('video_file')) {
+
+                $videofile = $request->file('video_file');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $videofile->getClientOriginalName();
+
+                $filepath = 'storage/video/';
+
+                Storage::putFileAs(
+
+                    'public/video',
+                    $videofile,
+                    $filename
+
+                );
+
+                $path_profile_picture = $filepath . $filename;
+                $testPaper->video_file = $path_profile_picture;
+            }
+            if ($request->hasFile('pdf_file')) {
+
+                $pdf = $request->file('pdf_file');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $pdf->getClientOriginalName();
+
+                $filepath = 'storage/pdf/';
+
+                Storage::putFileAs(
+
+                    'public/pdf',
+                    $pdf,
+                    $filename
+
+                );
+
+                $pdf_path = $filepath . $filename;
+                $testPaper->pdf_file = $pdf_path;
+            }
+            if ($request->hasFile('powerpoint_file')) {
+
+                $powerpoint = $request->file('powerpoint_file');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $powerpoint->getClientOriginalName();
+
+                $filepath = 'storage/powerpoint/';
+
+                Storage::putFileAs(
+
+                    'public/powerpoint',
+                    $powerpoint,
+                    $filename
+
+                );
+
+                $powerpoint_path = $filepath . $filename;
+                $testPaper->powerpoint_file = $powerpoint_path;
+            }
+        
+        $testPaper->simulator_link = $request->simulator_link;
+        $testPaper->description = $request->description;
+        }
+
         $testPaper->save();
 
         return redirect()->route('test-paper.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
@@ -122,6 +188,72 @@ class TestPaperController extends Controller
         $testPaper = TestPaper::findorfail($id);
         $testPaper->title = $request->title ?? NULL;
         $testPaper->question_template_id = $request->question_template_id ?? NULL;
+
+        if( $request->paper_type==2)
+        {
+
+            if ($request->hasFile('video_file')) {
+
+                $videofile = $request->file('video_file');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $videofile->getClientOriginalName();
+
+                $filepath = 'storage/video/';
+
+                Storage::putFileAs(
+
+                    'public/video',
+                    $videofile,
+                    $filename
+
+                );
+
+                $path_profile_picture = $filepath . $filename;
+                $testPaper->video_file = $path_profile_picture;
+            }
+            if ($request->hasFile('pdf_file')) {
+
+                $pdf = $request->file('pdf_file');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $pdf->getClientOriginalName();
+
+                $filepath = 'storage/pdf/';
+
+                Storage::putFileAs(
+
+                    'public/pdf',
+                    $pdf,
+                    $filename
+
+                );
+
+                $pdf_path = $filepath . $filename;
+                $testPaper->pdf_file = $pdf_path;
+            }
+            if ($request->hasFile('powerpoint_file')) {
+
+                $powerpoint = $request->file('powerpoint_file');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $powerpoint->getClientOriginalName();
+
+                $filepath = 'storage/powerpoint/';
+
+                Storage::putFileAs(
+
+                    'public/powerpoint',
+                    $powerpoint,
+                    $filename
+
+                );
+
+                $powerpoint_path = $filepath . $filename;
+                $testPaper->powerpoint_file = $powerpoint_path;
+            }
+        
+        $testPaper->simulator_link = $request->simulator_link;
+        $testPaper->description = $request->description;
+        }
+
         $testPaper->save();
 
         return redirect()->route('test-paper.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));

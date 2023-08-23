@@ -93,6 +93,7 @@ return [
     'DUPLICATED' => ':Module has been duplicated successfully!',
     'UPDATED' => ':Module has been updated succesfully.',
     'ACOUNT_UPDATED' => 'Your profile update request has been sent.',
+    'PROFILE_UPDATED' => 'Your profile updated successfully.',
     'SAVED' =>  ':Module has been saved.',
     'NO_DATA_FOUND' => 'Oops! No data found.',
     'FOREIGN' => 'Foreign key constraint violation.',
