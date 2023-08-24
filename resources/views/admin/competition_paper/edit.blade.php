@@ -147,7 +147,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="title">Question Type</label>
                                     <select name="question_type" class="form-control" >
                                         <option value="">-- Select --</option>
@@ -159,7 +159,7 @@
                                         <strong>{{ $errors->first('question_type') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
 
                                
 
@@ -167,8 +167,8 @@
                                     <label for="title">Timer</label>
                                     <select name="timer" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="yes" @if(old('question_type', $competitionPaper->timer) == 'yes') selected @endif>Yes</option>
-                                        <option value="no" @if(old('question_type', $competitionPaper->timer) == 'no') selected @endif>No</option>
+                                        <option value="yes" @if(old('timer', $competitionPaper->timer) == 'yes') selected @endif>Yes</option>
+                                        <option value="no" @if(old('timer', $competitionPaper->timer) == 'no') selected @endif>No</option>
                                     </select>
                                     @if ($errors->has('timer'))
                                         <span class="text-danger d-block">

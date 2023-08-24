@@ -156,7 +156,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group onlineclass">
+                                <!-- <div class="form-group onlineclass">
                                     <label for="title">Question Type</label>
                                     <select name="question_type" class="form-control" >
                                         <option value="">-- Select --</option>
@@ -168,7 +168,7 @@
                                         <strong>{{ $errors->first('question_type') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
 
                                 <div class="form-group onlineclass" >
                                     <label for="title">Price</label>

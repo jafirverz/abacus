@@ -81,7 +81,7 @@ class CompetitionPaperController extends Controller
             'pdf_upload'  =>  'required_if:competionT,2',
             'questiontemplate'  =>  'required_if:competionT,1',
             'time'  =>  'required_if:competionT,1',
-            'question_type'  =>  'required_if:competionT,1',
+            //'question_type'  =>  'required_if:competionT,1',
             'paper_type'  =>  'required',
         ], $messages);
 
@@ -102,7 +102,7 @@ class CompetitionPaperController extends Controller
         $competitionPaper->time = $request->time;
         $competitionPaper->price = $request->price;
         $competitionPaper->pdf_file = $name??null;
-        $competitionPaper->type = $request->question_type;
+        $competitionPaper->type = $request->question_type ?? null;
         $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->category_id = $request->category;
@@ -191,7 +191,7 @@ class CompetitionPaperController extends Controller
             // 'pdf_upload'  =>  'required_if:competionT,2',
             'questiontemplate'  =>  'required_if:competionT,1',
             'time'  =>  'required_if:competionT,1',
-            'question_type'  =>  'required_if:competionT,1',
+            //'question_type'  =>  'required_if:competionT,1',
             'paper_type'  =>  'required',
         ], $messages);
 
@@ -215,7 +215,7 @@ class CompetitionPaperController extends Controller
             // $json['input_2']=$request->input_2;
         }
         
-        $competitionPaper->type = $request->question_type;
+        $competitionPaper->type = $request->question_type ?? null;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->save();
 
