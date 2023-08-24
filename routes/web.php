@@ -229,6 +229,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('image/upload', 'CMS\PagesController@imageUpload')->name('image-upload');
     Route::get('image/create', 'CMS\PagesController@imageCreate')->name('images.create');
     Route::post('image/upload', 'CMS\PagesController@imageStore')->name('image.store');
+    Route::post('image/delete', 'CMS\PagesController@imageDelete')->name('images.destroy');
 
 
 

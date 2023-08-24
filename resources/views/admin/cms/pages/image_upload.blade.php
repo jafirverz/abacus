@@ -21,14 +21,14 @@
           <div class="card">
 
             <div class="card-header">
-              <a href="{{ route('pages.destroy', 'pages') }}" class="btn btn-danger d-none destroy"
+              <a href="{{ route('images.destroy') }}" class="btn btn-danger d-none destroy"
                 data-confirm="Do you want to continue?"
                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                   class="badge badge-transparent">0</span></a>
-              <form id="destroy" action="{{ route('pages.destroy', 'pages') }}" method="post">
+              <form id="destroy" action="{{ route('images.destroy') }}" method="post">
                 @csrf
-                @method('DELETE')
+                <!-- @method('DELETE') -->
                 <input type="hidden" name="multiple_delete">
               </form>
               <h4></h4>
@@ -60,6 +60,13 @@
                     $image = url(asset($data->image));
                     @endphp
                     <tr>
+                      <td scope="row">
+                        <div class="custom-checkbox custom-control"> <input type="checkbox"
+                                data-checkboxes="mygroup" class="custom-control-input"
+                                id="checkbox-{{ ($key+1) }}" value="{{ $data->id }}"> <label
+                                for="checkbox-{{ ($key+1) }}"
+                                class="custom-control-label">&nbsp;</label></div>
+                    </td>
                       <td class="text-center">{{ $key + 1 }}</td>
                       <td class="text-center"><img src="{{ asset($data->image) }}" width="100px"></td>
                       <td class="text-center">{{ $image }}</td>

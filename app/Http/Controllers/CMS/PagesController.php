@@ -293,4 +293,13 @@ class PagesController extends Controller
         }
         return redirect()->route('image-upload')->with('success',  __('constant.CREATED', ['module'    =>  'Image Upload']));
     }
+
+    public function imageDelete(Request $request){
+        $deleteId = explode(',',$request->multiple_delete);
+        foreach($deleteId as $item){
+            $image = ImagesUpload::where('id', $item)->first();
+            $image->delete();
+        }
+        return redirect()->route('image-upload')->with('success',  __('constant.DELETED', ['module'    =>  'Image']));
+    }
 }
