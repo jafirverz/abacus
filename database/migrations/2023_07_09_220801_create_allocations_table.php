@@ -18,6 +18,7 @@ class CreateAllocationsTable extends Migration
             $table->unsignedBigInteger('student_id')->nullable();
             $table->foreign('student_id')->references('id')->on('users');
             $table->integer('assigned_id')->nullable();
+            $table->integer('assigned_by')->nullable();
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->smallInteger('type')->nullable()->comment('1=>Test, 2=>Survey');

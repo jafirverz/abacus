@@ -50,6 +50,7 @@ return [
     'FOOTER_MENU_TITLE' => 'Footer',
     'CUSTOMER_ACCOUNT' => 'Student',
     'INSTRUCTOR_ACCOUNT' => 'Instructor',
+    'EXTERNAL_CENTRE_ACCOUNT' => 'External Centre',
     'FEEDBACK' => 'Student Feedback',
     'SURVEY' => 'Surveys',
     'SURVEY_QUESTIONS' => 'Survey Questions',
@@ -174,10 +175,10 @@ return [
     "TERMS_OF_USE" => "6",
     "PRIVACY_POLICY" => "7",
     "ABOUT_PAGE_ID" => "8",
-    
-    
-    
-    
+
+
+
+
 
     //Menu Type
     "TOP_MENU" => "1",
