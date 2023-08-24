@@ -271,6 +271,11 @@
                     'url'   =>  'admin/instructor-account',
                 ],
                 [
+                    'title' =>  __('constant.EXTERNAL_CENTRE_ACCOUNT'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/external-centre-account',
+                ],
+                [
                     'title' =>  __('constant.FEEDBACK'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/student-feedback',

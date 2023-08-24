@@ -501,8 +501,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('instructor-calendar', 'CMS\InstructorCalendarController');
 
 
+    // EXTERNAL CENTRE
+    Route::get('external-centre-account/search', 'CMS\ExternalCentreAccountController@search')->name('external-centre-account.search');
+    Route::resource('external-centre-account', 'CMS\ExternalCentreAccountController');
 
-    // RECRUITER
+
+    // INSTRUCTOR
     Route::get('instructor-account/search', 'CMS\InstructorAccountController@search')->name('instructor-account.search');
     Route::resource('instructor-account', 'CMS\InstructorAccountController');
 
@@ -531,6 +535,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-sales/search', 'CMS\ReportController@searchInSales')->name('reports-sales.search');
     Route::get('reports-sales', 'CMS\ReportController@sales');
     Route::post('reports-sales', 'CMS\ReportController@searchSales')->name('salesexcel');
+
+    Route::get('reports-external-centre/search', 'CMS\ReportController@search_external_centre')->name('reports-external-centre.search');
+    Route::get('reports-external-centre', 'CMS\ReportController@external_centre');
 
 
     Route::get('reports-worksheet/search', 'CMS\ReportController@searchInWorksheet')->name('reports-worksheet.search');

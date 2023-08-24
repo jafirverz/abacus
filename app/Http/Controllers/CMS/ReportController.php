@@ -57,7 +57,7 @@ class ReportController extends Controller
         $status = $request->status ?? '';
         $user_type = $request->user_type ?? '';
         $instructor = $request->instructor ?? array();
-        
+
         $q = User::query();
 
         if ($request->name) {
@@ -139,7 +139,7 @@ class ReportController extends Controller
         $start_date = $request->start_date  ?? '';
         $end_date = $request->end_date ?? '';
         $country = $request->country ?? '';
-        
+
         $q = Order::query();
 
         if ($request->country) {
@@ -163,7 +163,7 @@ class ReportController extends Controller
         // if ($request->instructor) {
         //     $q->whereIn('instructor_id', $instructor);
         // }
-        
+
         $allOrders = $q->get();
         //$allOrders = array_unique($allOrders);
         //$allUsers = User::whereIn('id', $allOrders)->get();
@@ -178,6 +178,17 @@ class ReportController extends Controller
         //dd($allUsers);
     }
 
+    public function external_centre()
+    {
+        $title = 'Sales Report';
+        $allOrders = array();
+        //$pages = Page::orderBy('view_order', 'asc')->get();
+        //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
+        $external_centre = User::where('user_type_id', 8)->get();
+        //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
+        $countries = Country::get();
+        return view('admin.cms.reports.external_centre', compact('title', 'external_centre', 'countries', 'allOrders'));
+    }
 
     public function searchSales(Request $request)
     {
@@ -232,8 +243,8 @@ class ReportController extends Controller
         $start_date = $request->start_date ?? '';
         $end_date = $request->end_date ?? '';
         $student = $request->student ?? '';
-        
-        
+
+
         $q = WorksheetSubmitted::query();
 
         if ($request->level) {
@@ -257,7 +268,7 @@ class ReportController extends Controller
         // if ($request->instructor) {
         //     $q->whereIn('instructor_id', $instructor);
         // }
-        
+
         $allOrders = $q->get();
         //$allOrders = array_unique($allOrders);
         //$allUsers = User::whereIn('id', $allOrders)->get();

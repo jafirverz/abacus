@@ -259,6 +259,16 @@ Breadcrumbs::for('instructor_account_crud', function ($trail, $title, $url = '#'
     $trail->parent('instructor_account');
     $trail->push($title, $url);
 });
+//EXTERNAL_CENTRE_ACCOUNT
+Breadcrumbs::for('external_centre_account', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.EXTERNAL_CENTRE_ACCOUNT'), route('external-centre-account.index'));
+});
+
+Breadcrumbs::for('external_centre_account_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('external_centre_account');
+    $trail->push($title, $url);
+});
 // CATEGORY COMPETITION
 Breadcrumbs::for('category_competition', function ($trail) {
     $trail->parent('admin_home');
