@@ -50,7 +50,7 @@ return [
     'FOOTER_MENU_TITLE' => 'Footer',
     'CUSTOMER_ACCOUNT' => 'Student',
     'INSTRUCTOR_ACCOUNT' => 'Instructor',
-    'EXTERNAL_CENTRE_ACCOUNT' => 'External Centre',
+    'EXTERNAL_CENTRE_ACCOUNT' => 'External Centre Reports',
     'FEEDBACK' => 'Student Feedback',
     'SURVEY' => 'Surveys',
     'SURVEY_QUESTIONS' => 'Survey Questions',
