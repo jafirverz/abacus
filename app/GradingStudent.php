@@ -23,6 +23,8 @@ class GradingStudent extends Model
         return $this->belongsTo('App\User', 'instructor_id', 'id');
     }
 
+
+
     public function mental(){
         return $this->belongsTo('App\Grade', 'mental_grade', 'id');
     }
@@ -33,6 +35,10 @@ class GradingStudent extends Model
 
     public function event(){
         return $this->belongsTo('App\GradingExam', 'grading_exam_id', 'id');
+    }
+
+    public function location(){
+        return $this->belongsTo('App\LearningLocation', 'learning_location', 'id');
     }
 
 

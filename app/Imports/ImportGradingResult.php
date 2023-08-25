@@ -24,7 +24,7 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function collection(Collection $rows)
-    {       //dd($rows->all());
+    {      dd($rows->all());
         foreach($rows->all() as $row)
         {
 
@@ -33,17 +33,18 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
             $checkUserName = User::where('account_id', $account_id)->first();
             if($checkUserName)
             {
-                
+
                     $gradingStudentResults = new GradingStudentResults();
                     $gradingStudentResults->grading_id  =  $this->grading_id;
                     $gradingStudentResults->user_id =  $checkUserName->id;
                     $gradingStudentResults->total_marks =  $row['marks'];
                     $gradingStudentResults->rank =  $row['rank'];
                     $gradingStudentResults->result =  $row['result'];
+                    $gradingStudentResults->remark_grade =  $row['passfail'];
                     $gradingStudentResults->abacus_grade =  $row['abacus_grade'];
                     $gradingStudentResults->mental_grade =  $row['mental_grade'];
                     $gradingStudentResults->save();
-                
+
             }
         }
     }
