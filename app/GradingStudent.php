@@ -31,5 +31,9 @@ class GradingStudent extends Model
         return $this->belongsTo('App\Grade', 'abacus_grade', 'id');
     }
 
-    
+    public function event(){
+        return $this->belongsTo('App\GradingExam', 'grading_exam_id', 'id');
+    }
+
+
 }

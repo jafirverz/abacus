@@ -130,7 +130,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/worksheet',
                 ],
-                
+
                 [
                     'title' =>  __('constant.QUESTION_MANAGEMENT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
@@ -342,6 +342,16 @@
                     'title' =>  __('constant.EXTERNAL_CENTRE_ACCOUNT'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-external-centre',
+                ],
+                [
+                    'title' =>  __('constant.GRADING_EXAMINATION_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-grading-examination',
+                ],
+                [
+                    'title' =>  __('constant.COMPETITION_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-competition',
                 ],
             ],
         ],

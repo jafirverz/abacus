@@ -73,6 +73,8 @@ return [
     'INSTRUCTOR_REPORTS' => 'Instructor Reports',
     'SALES_REPORTS' => 'Sales Reports',
     'WORKSHEET_REPORTS' => 'Worksheet Reports',
+    'GRADING_EXAMINATION_REPORTS' => 'Grading Examination Reports',
+    'COMPETITION_REPORTS' => 'Competition Reports',
     'ORDERS' => 'Orders',
     'USERSURVEY' => 'Survey Completed',
     'CERTIFICATE' => 'Certificate',
