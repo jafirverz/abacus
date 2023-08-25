@@ -10,6 +10,8 @@ use App\Exports\WorksheetExport;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\LevelTopic;
+use App\CompetitionStudent;
+use App\GradingStudent;
 use App\Order;
 use App\OrderDetail;
 use Illuminate\Http\Request;
@@ -188,6 +190,26 @@ class ReportController extends Controller
         //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
         $countries = Country::get();
         return view('admin.cms.reports.external_centre_report', compact('title', 'external_centre', 'countries', 'allOrders'));
+    }
+
+    public function grading_examination()
+    {
+        $title = 'Grading Examination Report';
+        $allOrders = array();
+
+        $grading_students = GradingStudent::paginate($this->pagination);
+        $countries = Country::get();
+        return view('admin.cms.reports.grading_students', compact('title', 'grading_students', 'countries', 'allOrders'));
+    }
+
+    public function competition()
+    {
+        $title = 'Competition Report';
+        $allOrders = array();
+
+        $compStudents = CompetitionStudent::paginate($this->pagination);
+        $countries = Country::get();
+        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders'));
     }
 
     public function external_centre_students_list($id)
