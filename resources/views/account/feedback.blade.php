@@ -40,9 +40,10 @@
             <div class="col-xl-6 sp-col">
               <label class="lb-1">Your Enquiry</label>
               <select class="selectpicker" name="enquiry">
-                <option selected>Course Enquiry</option>
-                <option>Option 1</option>
-                <option>Option 2</option>
+                <option value="">Course Enquiry</option>
+                 @foreach($courses as $course)
+                <option value="{{ $course->title }}">{{ $course->title }}</option>
+                @endforeach
               </select>
               <label class="lb-1">Your Message</label>
               <textarea cols="30" rows="6" name="message" class="form-control" placeholder="Your Enquiry"></textarea>

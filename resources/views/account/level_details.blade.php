@@ -26,23 +26,24 @@
                     {!! $checkSlug->description !!}
                   </div>
                 </div>
+                <div class="col-lg-12 sp-col gincol-2">
                 <form method="post" action="{{ route('cart') }}">
                   @csrf
                   <input type="hidden" name="levelId" value="{{ $checkSlug->id }}">
                   <input type="hidden" name="type" value="level">
                   @if(empty($premium))
-                  <div class="col-lg-12 sp-col gincol-2">
+                  
                     @if(empty($addedToCart))
-                    <button type="submit" class="btn-1" >Upgrade to Premium Member for 9 months (SGD${{ $checkSlug->premium_amount }}) <i
+                    <button type="submit" class="btn-1" >Upgrade to Premium Member for {{ $checkSlug->premium_months }} months (SGD${{ $checkSlug->premium_amount }}) <i
                         class="fa-solid fa-arrow-right-long"></i></button>
                     @else 
                     <a href="javascript::void(0);"  class="btn-1" >Added to Cart (SGD${{ $checkSlug->premium_amount }}) </a>
                     @endif
                     <div class="note-2"><i class="icon-info"></i> Sign-up as premium member to get access to all the
                       exercises and unlock all features in the worksheets</div>
-                  </div>
                   @endif
                 </form>
+              </div>
               </div>
             </div>
           </div>
