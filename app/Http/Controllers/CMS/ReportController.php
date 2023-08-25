@@ -180,14 +180,22 @@ class ReportController extends Controller
 
     public function external_centre()
     {
-        $title = 'Sales Report';
+        $title = 'External Centre Report';
         $allOrders = array();
         //$pages = Page::orderBy('view_order', 'asc')->get();
         //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
-        $external_centre = User::where('user_type_id', 8)->get();
+        $external_centre = User::where('user_type_id', 6)->paginate($this->pagination);
         //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
         $countries = Country::get();
-        return view('admin.cms.reports.external_centre', compact('title', 'external_centre', 'countries', 'allOrders'));
+        return view('admin.cms.reports.external_centre_report', compact('title', 'external_centre', 'countries', 'allOrders'));
+    }
+
+    public function external_centre_students_list($id)
+    {
+        $title = 'Student List';
+        $users = User::whereIn('user_type_id', [4])->where('instructor_id',$id)->paginate($this->pagination);
+        $countries = Country::get();
+        return view('admin.cms.reports.external-centre-students-list', compact('title', 'users', 'countries'));
     }
 
     public function searchSales(Request $request)

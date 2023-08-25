@@ -338,6 +338,11 @@
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-worksheet',
                 ],
+                [
+                    'title' =>  __('constant.EXTERNAL_CENTRE_ACCOUNT'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-external-centre',
+                ],
             ],
         ],
     ];
