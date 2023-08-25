@@ -23,7 +23,7 @@
         $checkUserOrder = \App\Order::where('user_id', Auth::user()->id)->where('payment_status', 'COMPLETED')->pluck('id')->toArray();
         $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkUserOrder)->where('order_type', 'level')->get();
         @endphp
-        @if($checkOrderDetails)
+        @if(isset($checkOrderDetails) && count($checkOrderDetails) > 0)
         <li @if(Request::segment(1) == 'membership') class="active" @endif>
             <a href="{{url('membership')}}">
                 <span><img src="{{ asset('images/tempt/ico-profile.png') }}" alt="Profile icon" /></span>

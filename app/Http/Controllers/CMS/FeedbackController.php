@@ -29,7 +29,7 @@ class FeedbackController extends Controller
     }
     public function index(){
         $title = 'Student Feedback';
-        $feedback = UserFeedback::paginate($this->pagination);
+        $feedback = UserFeedback::orderBy('id', 'desc')->paginate($this->pagination);
         return view('admin.account.customer.studentfeedback', compact('title', 'feedback'));
     }
 }

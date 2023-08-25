@@ -21,7 +21,8 @@ class OnlineStudentController extends Controller
     //
     public function feedback(){
         $country = Country::get();
-        return view('account.feedback', compact('country'));
+        $courses = Course::get();
+        return view('account.feedback', compact('country', 'courses'));
     }
 
     public function feedbackstore(Request $request){
