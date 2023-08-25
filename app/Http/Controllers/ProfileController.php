@@ -164,6 +164,7 @@ class ProfileController extends Controller
         $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
         $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
         $gradingExam = GradingExam::find($id);
+        $locations = LearningLocation::orderBy('id','desc')->get();
         //dd($gradingExam);
 		$page = get_page_by_slug($slug);
 
@@ -173,7 +174,7 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.register-grading-examination', compact("page", "user","students","mental_grades","abacus_grades","gradingExam"));
+		return view('account.register-grading-examination', compact("page", "user","students","locations","mental_grades","abacus_grades","gradingExam"));
 	}
 
     public function edit_grading($id)
@@ -188,6 +189,7 @@ class ProfileController extends Controller
         $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
         $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
         $gradingExam = GradingExam::where('status', 1)->get();
+        $locations = LearningLocation::orderBy('id','desc')->get();
 		$page = get_page_by_slug($slug);
         $grading=GradingStudent::where('id', $id)->first();
 
@@ -197,7 +199,7 @@ class ProfileController extends Controller
 
 		//dd($user);
 
-		return view('account.edit-grading-examination', compact("page", "user","students","mental_grades","abacus_grades","gradingExam","grading"));
+		return view('account.edit-grading-examination', compact("page", "user","students","mental_grades","abacus_grades","gradingExam","locations","grading"));
 	}
 
     public function delete_grading($id)
@@ -517,7 +519,7 @@ class ProfileController extends Controller
             'user_id' => 'required',
             'mental_grade' => 'required',
             'abacus_grade' => 'required',
-            'grading_exam_id' => 'required',
+            'learning_location' => 'required',
         ]);
 
 
@@ -526,6 +528,7 @@ class ProfileController extends Controller
         $gradingStudent->grading_exam_id   = $request->grading_exam_id ?? NULL;
         $gradingStudent->instructor_id  = $this->user->id;
         $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
+        $gradingStudent->learning_location  = $request->learning_location ?? NULL;
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
@@ -541,12 +544,14 @@ class ProfileController extends Controller
         $request->validate([
             'mental_grade' => 'required',
             'abacus_grade' => 'required',
+            'learning_location' => 'required',
         ]);
 
 
         $gradingStudent = GradingStudent::find($id);
         $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
+        $gradingStudent->learning_location  = $request->learning_location ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
 
@@ -808,7 +813,7 @@ class ProfileController extends Controller
         }
         else if(isset($_GET['file_type']) && $_GET['file_type']!='')
         {
-            
+
             $materials = TeachingMaterials::where('file_type',$_GET['file_type'])->orderBy('id', 'asc')->paginate($this->pagination);
             //dd($materials);
         }
@@ -816,7 +821,7 @@ class ProfileController extends Controller
         {
             $materials = TeachingMaterials::orderBy('id', 'asc')->paginate($this->pagination);
         }
-        
+
 		return view('account.teaching-materials', compact("page", "user","materials"));
     }
 
@@ -968,7 +973,7 @@ class ProfileController extends Controller
 
         return redirect()->route('teaching-materials')->with('success', __('constant.ACOUNT_CREATED'));
     }
-    
+
     public function add_students()
     {
         $country = Country::orderBy('phonecode')->get();

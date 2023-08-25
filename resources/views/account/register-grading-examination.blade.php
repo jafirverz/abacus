@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="row sp-col-xl-30">
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-3 sp-col">
                             <label class="lb-1">Email
                                 <span class="required">*</span>
                             </label>
@@ -83,7 +83,7 @@
                                 disabled
                             >
                         </div>
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-3 sp-col">
                             <label class="lb-1">Mental Grade
                                 <span class="required">*</span>
                             </label>
@@ -100,7 +100,7 @@
                                         </span>
                                     @endif
                         </div>
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-3 sp-col">
                             <label class="lb-1">Abacus Grade
                                 <span class="required">*</span>
                             </label>
@@ -112,7 +112,18 @@
                                 @endif
                             </select>
                         </div>
-
+                        <div class="col-xl-3 sp-col">
+                            <label class="lb-1">Learning Location
+                                <span class="required">*</span>
+                            </label>
+                            <select name="learning_location" class="selectpicker" data-title="Select Option">
+                                @if($locations)
+                                @foreach($locations as $item)
+                                <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
                     <label class="lb-1">Remarks</label>
                     <textarea name="remarks"
