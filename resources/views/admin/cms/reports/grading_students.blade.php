@@ -10,7 +10,7 @@
 
 
         </div>
-        <form action="{{ route('reports-student.search') }}" method="post">
+        <form action="{{ route('reports-grading-examination.search') }}" method="post">
             @csrf
             <div class="section-body">
 
@@ -23,15 +23,21 @@
                         <label>Instructor</label>
                         <select name="instructor[]" class="form-control" multiple>
                             <option value="">-- Select --</option>
-
+                            @foreach ($instructor as $key => $value)
+                            <option @if(isset($_GET['instructor_id']) && $_GET['instructor_id']==$value->id) selected="selected"
+                                @endif value="{{$value->id}}">{{$value->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg-4">
-                      <label>Student Type</label>
-                      <select name="user_type" class="form-control">
-                          <option value="">-- Select --</option>
-
-                      </select>
+                      <label>Event</label>
+                      <select name="event" class="form-control">
+                        <option value="">-- Select --</option>
+                        @foreach ($grading_exam as $key => $value)
+                        <option @if(isset($_GET['event']) && $_GET['event']==$value->id) selected="selected"
+                            @endif value="{{$value->id}}">{{$value->title}}</option>
+                        @endforeach
+                    </select>
                   </div>
 
                 </div>
@@ -40,11 +46,10 @@
                       <select name="status" class="form-control">
                         <option value="">-- Select --</option>
                         <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
-                            @endif value="1">Active</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
-                            @endif value="0">In Active</option>
+                            @endif value="1">Approved</option>
                         <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                            @endif value="2">Rejected</option>
+                            @endif value="2">Pending</option>
+
                     </select>
                     </div>
                     <!-- <div class="col-lg-4"><label>End Date:</label>
@@ -56,7 +61,7 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else

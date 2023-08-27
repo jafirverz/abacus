@@ -24,7 +24,7 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     public function collection(Collection $rows)
-    {      dd($rows->all());
+    {   //dd($rows->all());
         foreach($rows->all() as $row)
         {
 

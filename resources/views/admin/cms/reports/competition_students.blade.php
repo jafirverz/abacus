@@ -10,7 +10,7 @@
 
 
         </div>
-        <form action="{{ route('reports-student.search') }}" method="post">
+        <form action="{{ route('reports-competition.search') }}" method="post">
             @csrf
             <div class="section-body">
 
@@ -23,14 +23,20 @@
                         <label>Instructor</label>
                         <select name="instructor[]" class="form-control" multiple>
                             <option value="">-- Select --</option>
-
+                            @foreach ($instructor as $key => $value)
+                            <option @if(isset($_GET['instructor_id']) && $_GET['instructor_id']==$value->id) selected="selected"
+                                @endif value="{{$value->id}}">{{$value->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg-4">
-                      <label>Student Type</label>
-                      <select name="user_type" class="form-control">
+                        <label>Event</label>
+                        <select name="event" class="form-control">
                           <option value="">-- Select --</option>
-
+                          @foreach ($competitions as $key => $value)
+                          <option @if(isset($_GET['event']) && $_GET['event']==$value->id) selected="selected"
+                              @endif value="{{$value->id}}">{{$value->title}}</option>
+                          @endforeach
                       </select>
                   </div>
 
@@ -56,7 +62,7 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
@@ -108,10 +114,16 @@
                                             <th>S/N</th>
                                             <th>Event Name</th>
                                             <th>Student Name</th>
-                                            <th>Registered <br/>Category</th>
+                                            <th>Student Email</th>
+                                            <th>Student DOB</th>
+                                            <th>Student Number</th>
+                                            <th>Instructor Name</th>
+                                            <th>Franchise Country Name</th>
+                                            <th>Learning Location </th>
                                             <th>Status </th>
                                             <th>Remark </th>
                                             <th>Result</th>
+                                            <th>Pass/Fail</th>
 
                                         </tr>
                                     </thead>
@@ -141,11 +153,27 @@
                                             <td>
                                                 {{ $item->student->name  ?? ''}}
                                             </td>
-                                            <td>{{ $item->category->category_name }}</td>
+                                            <td>
+                                                {{ $item->student->email  ?? ''}}
+                                            </td>
+                                            <td>
+                                                {{ $item->student->dob  ?? ''}}
+                                            </td>
+                                            <td>
+                                                {{ $item->student->country_code_phone.$item->student->mobile  ?? ''}}
+                                            </td>
+                                            <td>
+                                                {{ $item->teacher->name  ?? ''}}
+                                            </td>
+                                            <td>
+                                                {{ getCountry($item->teacher->country_code) ?? '' }}
+                                            </td>
+                                            <td>{{ $item->location->title ?? '' }}</td>
                                             <td>
                                                 {{ ($item->approve_status==1)?'Approved':'Pending' }}
                                             </td>
                                             <td>{{ $item->remarks ?? ''}}</td>
+                                            <td>--</td>
                                             <td>--</td>
                                         </tr>
                                         @endforeach

@@ -26,4 +26,10 @@ class CompetitionStudent extends Model
     public function student(){
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
+    public function teacher(){
+        return $this->belongsTo('App\User', 'instructor_id', 'id');
+    }
+    public function location(){
+        return $this->belongsTo('App\LearningLocation', 'learning_location', 'id');
+    }
 }

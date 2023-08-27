@@ -7,9 +7,13 @@ use App\Exports\InstructorExport;
 use App\Exports\SalesExport;
 use App\Exports\StudentExport;
 use App\Exports\WorksheetExport;
+use App\Exports\GradingStudentExport;
+use App\Exports\CompetetitionStudentExport;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\LevelTopic;
+use App\Competition;
+use App\GradingExam;
 use App\CompetitionStudent;
 use App\GradingStudent;
 use App\Order;
@@ -196,20 +200,93 @@ class ReportController extends Controller
     {
         $title = 'Grading Examination Report';
         $allOrders = array();
-
+        $instructor = User::where('user_type_id', 5)->get();
+        $grading_exam = GradingExam::where('status', 1)->get();
         $grading_students = GradingStudent::paginate($this->pagination);
         $countries = Country::get();
-        return view('admin.cms.reports.grading_students', compact('title', 'grading_students', 'countries', 'allOrders'));
+        return view('admin.cms.reports.grading_students', compact('title',"instructor","grading_exam", 'grading_students', 'countries', 'allOrders'));
+    }
+
+
+    public function grading_examination_search(Request $request)
+    {
+        // dd($request->all());
+        $name = $request->name  ?? '';
+        $status = $request->status ?? '';
+
+        $q = GradingStudent::query();
+        $q->join('users','grading_students.user_id','users.id');
+        $q->select('grading_students.*');
+        if ($request->name) {
+            $q->where('users.name', 'like', $request->name);
+        }
+
+        if ($request->event) {
+            $q->where('grading_students.grading_exam_id', $request->event);
+        }
+
+        if ($request->status) {
+            $q->where('grading_students.approve_status', $request->status);
+        }
+
+        if ($request->instructor) {
+            $q->whereIn('grading_students.instructor_id', $request->instructor);
+        }
+
+
+
+
+        $allItems = $q->get();
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new GradingStudentExport($allItems), 'GradingStudentReport.xlsx');
+        //dd($allUsers);
     }
 
     public function competition()
     {
         $title = 'Competition Report';
         $allOrders = array();
-
+        $instructor = User::where('user_type_id', 5)->get();
+        $competitions = Competition::where('status', 1)->get();
         $compStudents = CompetitionStudent::paginate($this->pagination);
         $countries = Country::get();
-        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders'));
+        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders','instructor','competitions'));
+    }
+
+    public function competition_search(Request $request)
+    {
+        // dd($request->all());
+        $name = $request->name  ?? '';
+        $status = $request->status ?? '';
+
+        $q = CompetitionStudent::query();
+        $q->join('users','competition_students.user_id','users.id');
+        $q->select('competition_students.*');
+        if ($request->name) {
+            $q->where('users.name', 'like', $request->name);
+        }
+
+        if ($request->event) {
+            $q->where('competition_students.competition_controller_id', $request->event);
+        }
+
+        if ($request->status) {
+            $q->where('competition_students.approve_status', $request->status);
+        }
+
+        if ($request->instructor) {
+            $q->whereIn('competition_students.instructor_id', $request->instructor);
+        }
+
+
+
+
+        $allItems = $q->get();
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new CompetetitionStudentExport($allItems), 'CompetetitionStudentExport.xlsx');
+        //dd($allUsers);
     }
 
     public function external_centre_students_list($id)
