@@ -147,6 +147,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/announcement',
                 ],
+                /*
                 [
                     'title' =>  __('constant.LESSON_MANAGEMENT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
@@ -157,6 +158,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/lesson-questions',
                 ],
+                */
                 [
                     'title' =>  __('constant.SURVEY'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
@@ -173,15 +175,16 @@
                     'url'   =>  'admin/options-survey-questions',
                 ],
                 [
-                    'title' =>  __('constant.SURVEY_ALLOCATION'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/survey-allocation',
-                ],
-                [
                     'title' =>  __('constant.OPTIONS_CHOICES'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/option-choices',
                 ],
+                [
+                    'title' =>  __('constant.SURVEY_ALLOCATION'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/survey-allocation',
+                ],
+                
                 [
                     'title' =>  __('constant.STANDALONE_PAGE'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
@@ -225,12 +228,13 @@
                     'icon'  =>  '<i class="fas fa-images"></i>',
                     'url'   =>  'admin/banner-management',
                 ],
-
+                /*
                 [
                     'title' =>  __('constant.CONTACT'),
                     'icon'  =>  '<i class="fas fa-phone"></i>',
                     'url'   =>  'admin/contact',
                 ],
+                */
 
                 [
                     'title' =>  __('constant.EMAIL_TEMPLATE'),

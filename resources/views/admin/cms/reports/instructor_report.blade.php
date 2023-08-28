@@ -54,7 +54,7 @@
     <div class="section-body">
       @include('admin.inc.messages')
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-12">
           <div class="card">
 
@@ -102,7 +102,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </div>

@@ -62,7 +62,7 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Download</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
@@ -79,7 +79,7 @@
         <div class="section-body">
             @include('admin.inc.messages')
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-12">
                     <div class="card">
 
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </div>

@@ -77,7 +77,7 @@
     <div class="section-body">
       @include('admin.inc.messages')
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-12">
           <div class="card">
 
@@ -92,16 +92,7 @@
                 <input type="hidden" name="start_date" value="{{ $_GET['start_date'] ?? '' }}">
                 <input type="hidden" name="end_date" value="{{ $_GET['end_date'] ?? '' }}">
               </form>
-              <!-- <a href="{{ route('pages.destroy', 'pages') }}" class="btn btn-danger d-none destroy"
-                data-confirm="Do you want to continue?"
-                data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
-                data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
-                  class="badge badge-transparent">0</span></a>
-              <form id="destroy" action="{{ route('pages.destroy', 'pages') }}" method="post">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="multiple_delete">
-              </form> -->
+              
               <h4></h4>
 
             </div>
@@ -167,7 +158,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </div>
