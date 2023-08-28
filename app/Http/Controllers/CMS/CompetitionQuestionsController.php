@@ -281,4 +281,17 @@ class CompetitionQuestionsController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        $search_term = $request->search;
+        $title = $this->title;
+        $competitionPaper = CompetitionPaper::whereHas('comp_ques')->search($search_term)->paginate($this->pagination);
+        if ($search_term) {
+            $competitionPaper->appends('search', $search_term);
+        }
+
+        // $competitionPaper = CompetitionPaper::whereHas('comp_ques')->paginate($this->pagination);
+        return view('admin.competition_question.index', compact('title', 'competitionPaper'));
+    }
 }

@@ -34,7 +34,7 @@
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('competition.search') }}" method="get">
+                                <form action="{{ route('papers.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search"

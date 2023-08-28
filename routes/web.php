@@ -389,7 +389,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     // COMPETITION PAPERS
-    Route::get('papers/search', 'CMS\CompetitionController@search')->name('competition.search');
+    Route::get('papers/search', 'CMS\CompetitionPaperController@search')->name('papers.search');
     Route::resource('papers', 'CMS\CompetitionPaperController');
 
 
