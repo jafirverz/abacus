@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Certificate;
+use App\Competition;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionStudentResult;
 use App\Http\Controllers\Controller;
@@ -71,5 +72,19 @@ class CompetitionResultController extends Controller
         $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
         return view('admin.competition_result.index', compact('title', 'competition'));
 
+    }
+
+    public function search(Request $request)
+    {
+        $search_term = $request->search;
+        $title = $this->title;
+        $checkCompetition = Competition::where('title', 'like', '%'.$search_term.'%')->pluck('id')->toArray();
+        $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->whereIn('competition_id', $checkCompetition)->paginate($this->pagination);
+        // if ($search_term) {
+        //     $competition->appends('search', $search_term);
+        // }
+
+        // $competitionPaper = CompetitionPaper::whereHas('comp_ques')->paginate($this->pagination);
+        return view('admin.competition_result.index', compact('title', 'competition'));
     }
 }

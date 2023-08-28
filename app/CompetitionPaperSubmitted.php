@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CompetitionPaperSubmitted extends Model
 {
@@ -26,4 +27,5 @@ class CompetitionPaperSubmitted extends Model
     {
         return $this->belongsTo('App\CompetitionCategory', 'category_id', 'id');
     }
+
 }
