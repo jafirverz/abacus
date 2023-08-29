@@ -28,14 +28,8 @@
                             <div class="form-group">
                                 <label for="exam_date">Exam Date</label>: {{ $exam->exam_date ?? '' }}
                             </div>
-                            @php
-                            $student_id=json_decode($exam->student_id);
-                            @endphp
                             <div class="form-group">
-                                <label for="layout">Student</label>:
-                                @foreach($student_id as $id)
-                                {{ get_user_detail($id)->name ?? '' }}<br>
-                                @endforeach
+                                <label for="exam_type">Exam Type</label>: {{ ($exam->exam_type==1) ?'Actual': 'Practice' }}
                             </div>
                             <div class="form-group">
                                 <label for="title">Notes</label>: {{ $exam->important_note ?? '' }}
