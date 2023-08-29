@@ -111,24 +111,3 @@
 	}
 	&-4 { margin: 0 auto; max-width: 1800px; }
 }
-
-.ifrcal { height: 600px !important; margin-top: -30px;	
-	@include maxmedia(1799px) {
-		height: 500px !important; 	
-	}
-	@include maxmedia(1499px) {
-		height: 400px !important; 	
-	}
-	@include maxmedia(1299px) {
-		height: 300px !important; 	
-	}
-	@include maxmedia(767px) {
-		height: 500px !important; 	
-	}
-	@include maxmedia(474px) {
-		height: 300px !important; 	
-	}
-	@include maxmedia(374px) {
-		height: 250px !important; 	
-	}
-}
