@@ -3,9 +3,7 @@
 <main class="main-wrap">	
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      <div class="menu-aside">
         @include('inc.account-sidebar-online')
-      </div>
     </div>
     @php
     $user = \App\User::where('id', Auth::user()->id)->first();
