@@ -51,8 +51,9 @@
                 <div class="row sp-col-10 grow">
                   <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
                   <div class="col-auto sp-col">
-                    <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}"
-                      onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
+                    <button class="link-2 play-wrap" id="play_btn{{ $k }}" type="button" value="{{ $k }}">
+                      <i class="fa-solid fa-volume-high play" id="audio{{ $k }}" data-music_id="audio-{{ $k }}"></i>
+                    </button>
                     <audio id="audio-{{ $k }}">
                       <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/mp3">
                       <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/ogg">
@@ -137,39 +138,53 @@
 @endif
 
 <script>
-
+jQuery(document).ready(function ($) {
+    $(".play").click(function () {
+      var music_id = $(this).data('music_id');
+      var audio = document.getElementById(music_id);
+      var test = music_id.split("-");
+      var iclass = 'audio'+test[1];
+      //alert(music_id);
+      if (audio.paused) {
+        audio.play();
+        $(this).removeClass('fa-solid fa-volume-high')
+        $(this).addClass('fa fa-pause')
+      } else {
+        audio.pause();
+        //audio.currentTime = 0
+        $(this).removeClass('fa fa-pause')
+        $(this).addClass('fa-solid fa-volume-high')
+      }
+    });
+  });
 
   // initAudioPlayer();
 
-  function initAudioPlayer(val) {
-    var audio = new Audio();
-    // audio.pause();
-    var aContainer = document.getElementById("audio-" + val);
-    // assign the audio src
-    audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
-    audio.load();
-    audio.loop = false;
-    audio.play();
+  // function initAudioPlayer(val) {
+  //   var audio = new Audio();
+  //   var aContainer = document.getElementById("audio-" + val);
+  //   // assign the audio src
+  //   audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
+  //   audio.load();
+  //   audio.loop = false;
+  //   audio.play();
 
-    // Set object references
-    var playbtn = document.getElementById("play_btn" + val);
+  //   var playbtn = document.getElementById("play_btn" + val);
 
-    // Add Event Handling
-    playbtn.addEventListener("click", playPause(audio, playbtn));
-  }
+  //   playbtn.addEventListener("click", playPause(audio, playbtn));
+  // }
 
-  // Functions
-  function playPause(audio, playbtn) {
-    return function () {
-      if (audio.paused) {
-        audio.play();
-        $('.link-2').html('<i class="bi bi-pause"></i>')
-      } else {
-        audio.pause();
-        $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
-      }
-    }
-  }
+  // function playPause(audio, playbtn) {
+  //   return function () {
+  //     if (audio.paused) {
+  //       audio.play();
+  //       $('.link-2').html('<i class="bi bi-pause"></i>')
+  //     } else {
+  //       audio.pause();
+  //       $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
+  //     }
+  //   }
+  // }
 
 </script>
 
