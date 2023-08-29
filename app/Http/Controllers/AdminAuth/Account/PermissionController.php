@@ -168,7 +168,7 @@ class PermissionController extends Controller
     {
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $roles = Role::all();
-        $title = "Create Role";
+        $title = "Create Admin User";
 
         return view('admin.account.create_admin', compact('roles', 'title'));
     }
@@ -203,7 +203,7 @@ class PermissionController extends Controller
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $roles = Role::all();
         $admin = Admin::find($id);
-        $title = "Create Role";
+        $title = "Edit Admin User";
 
         return view('admin.account.edit_admin', compact('roles', 'title', 'admin'));
     }
