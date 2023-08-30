@@ -4,7 +4,11 @@
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
             <div class="menu-aside">
+                @if(Auth::user()->user_type_id == 6)
                 @include('inc.account-sidebar-external')
+                @else
+                @include('inc.intructor-account-sidebar')
+                @endif
             </div>
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">

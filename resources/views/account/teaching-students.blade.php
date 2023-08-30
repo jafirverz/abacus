@@ -16,17 +16,23 @@
                     </div>
                     <div class="col-lg-8 mt-20 lastcol">
                         <div class="row input-group">
+                            
                             <div class="col-md">
-                                <input class="form-control" type="text" placeholder="Search By" />
+                                <form action="" method="get">
+                            @csrf
+                                <input name="keyword" class="form-control" @if(isset($_GET['keyword']) && $_GET['keyword']!='') value="{{ $_GET['keyword'] }}" @endif type="text" placeholder="Search By" />
+                            </form>
                             </div>
+                           
                             <div class="col-md-auto col-sm mt-767-15">
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
-                                        <select class="selectpicker">
-                                            @foreach($levels as $level)
-                                                <option>{{ $level->title }}</option>
-                                           @endforeach
+                                        <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                                <option value="">--Select--</option>
+                                                @foreach($levels as $level)
+                                                <option @if(isset($_GET['keyword']) && $_GET['keyword']==$level->id) selected @endif value="?level_id={{ $level->id }}">{{ $level->title }}</option>
+                                                @endforeach
                                         </select>
                                     </div>
                                 </div>

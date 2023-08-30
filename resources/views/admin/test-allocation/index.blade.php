@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-            
+
             @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('test_allocation')])
 
         </div>
