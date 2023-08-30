@@ -24,9 +24,9 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
                          @php $i++;@endphp
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
-                                    <button class="accordion-button @if($i==0)  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#course-{{ $i }}" aria-expanded="false" aria-controls="course-{{ $i }}"><strong>{{ $item->title }}</strong> <span>{!! $item->description !!}...</span><em>{{ Str::limit($item->announcement_date, 50) }}</em></button>
+                                    <button class="accordion-button @if($i==1)  @else collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#course-{{ $i }}" aria-expanded="false" aria-controls="course-{{ $i }}"><strong>{{ $item->title }}</strong> <span>{!! Str::limit($item->description, 50) !!}...</span><em>{{ date('d/m/Y',strtotime($item->announcement_date)) }}</em></button>
                                 </h3>
-                                <div id="course-{{ $i }}" class="accordion-collapse collapse @if($i==0) show @else  @endif">
+                                <div id="course-{{ $i }}" class="accordion-collapse collapse @if($i==1) show @else  @endif">
                                     <div class="accordion-body">
                                         @if(isset($item->image))
                                         <figure class="imgwrap-2">
@@ -52,7 +52,7 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
                                         </ul>
 
                                         <div class="mt-15">
-                                            <a class="link-3" href="#">Download All Attachements</a>
+                                            <a class="link-3" href="{{ route('instructor.download_all_announcements',$item->id) }}">Download All Attachements</a>
                                         </div>
                                         @endif
                                     </div>

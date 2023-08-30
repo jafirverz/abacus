@@ -102,7 +102,7 @@ class ExternalAccountController extends Controller
         $customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
-		$customer->approve_status = 1;
+		//$customer->approve_status = 1;
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
@@ -169,7 +169,14 @@ class ExternalAccountController extends Controller
 
         // }
 
-        return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_CREATED'));
+        if(Auth::user()->user_type_id==5)
+        {
+            return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_CREATED'));
+        }
+        else
+        {
+            return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_CREATED'));
+        }
     }
 
     public function delete_students($id)
@@ -219,9 +226,11 @@ class ExternalAccountController extends Controller
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
+        $customer->approve_status = $request->status;
         $customer->updated_at = Carbon::now();
         $customer->save();
-        return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+        return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+
 
     }
 

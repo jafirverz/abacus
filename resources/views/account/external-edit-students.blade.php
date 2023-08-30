@@ -4,7 +4,11 @@
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
             <div class="menu-aside">
+                @if(Auth::user()->user_type_id == 6)
                 @include('inc.account-sidebar-external')
+                @else
+                @include('inc.intructor-account-sidebar')
+                @endif
             </div>
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
@@ -121,7 +125,7 @@
                             <label class="lb-1">Level <span class="required">*</span></label>
                             <select class="selectpicker"  name="level[]" multiple>
                                 @foreach($levels as $level)
-                                <option value="{{ $level->id }}" @if(in_array($level->id,$level_ids)) selected @endif>{{ $level->title }}
+                                <option value="{{ $level->id }}" @if(isset($level_ids) && in_array($level->id,$level_ids)) selected @endif>{{ $level->title }}
                                 </option>
                                 @endforeach
                             </select>
@@ -134,10 +138,29 @@
                         </div>
                     </div>
                     <div class="row sp-col-xl-30">
-                        <div class="col-xl-12 sp-col">
+                        <div class="col-xl-6 sp-col">
+                            <label class="lb-1" for="status">Status</label>
+                            <select name="status" class="selectpicker" id="">
+                                <option value="">-- Select --</option>
+                                @if(getActiveStatus())
+                                @foreach (getActiveStatus() as $key => $item)
+                                <option value="{{ $key }}" @if(old('status', $customer->approve_status)==$key) selected @endif>{{ $item }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                            @if ($errors->has('status'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('status') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <div class="col-xl-6 sp-col">
                             <label class="lb-1">Address</label>
                             <input name="address" class="form-control" type="text" value="{{ old('address', $customer->address) }}"  />
                         </div>
+
+
                     </div>
 
 

@@ -22,6 +22,7 @@ use App\TestPaperQuestionDetail;
 use App\TestSubmission;
 use App\Survey;
 use App\User;
+use ZipArchive;
 use App\Allocation;
 use App\TestPaperDetail;
 use App\Admin;
@@ -477,6 +478,35 @@ class ProfileController extends Controller
 		return view('account.my-profile', compact("page", "user", "instructors", 'country'));
 	}
 
+    public function download_all_announcements($id)
+    {
+               $file= public_path(). "/upload-file/";
+               $today=date('Y-m-d H:i:s');
+               $zipFileName = strtotime($today).'.zip';
+               $zip = new ZipArchive;
+               $announcement = Announcement::find($id);
+               $json=json_decode($announcement->attachments);
+               for($i=0;$i<count($json);$i++)
+               {
+
+                    if ($zip->open($file . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
+                        $zip->addFile($file.$json[$i]);
+                        $zip->close();
+                       // dd($file.$json[$i]);
+                    }
+                }
+            // Set Header
+            $headers = array(
+                'Content-Type' => 'application/octet-stream',
+            );
+            $filetopath=$file.$zipFileName;
+
+            // Create Download Response
+            if(file_exists($filetopath)){
+                return response()->download($filetopath,$zipFileName,$headers);
+            }
+    }
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -576,12 +606,12 @@ class ProfileController extends Controller
         $instructorCalendar->full_name  = $request->full_name ?? NULL;
         $instructorCalendar->teacher_id  = $this->user->id;
         $instructorCalendar->start_date  = $request->start_date ?? NULL;
-        $instructorCalendar->start_time  = $request->start_time ?? NULL;
+        $instructorCalendar->start_time  = ($request->start_time)?date('H:i:s',strtotime($request->start_time)):NULL;
         $instructorCalendar->note  = $request->note ?? NULL;
-        $instructorCalendar->reminder  = 1;
+        $instructorCalendar->reminder  = $request->reminder;
         $instructorCalendar->save();
 
-		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
+		return redirect()->back()->with('success', __('constant.CALENDAR_UPDATED'));
 	}
 
 
@@ -809,17 +839,17 @@ class ProfileController extends Controller
 
         if(isset($_GET['keyword']) && $_GET['keyword']!='')
         {
-            $materials = TeachingMaterials::where('title','like','%' .$_GET['keyword'].'%')->orderBy('id', 'asc')->paginate($this->pagination);
+            $materials = TeachingMaterials::where('title','like','%' .$_GET['keyword'].'%')->where('teacher_id',$this->user->id)->orderBy('id', 'asc')->paginate($this->pagination);
         }
         else if(isset($_GET['file_type']) && $_GET['file_type']!='')
         {
 
-            $materials = TeachingMaterials::where('file_type',$_GET['file_type'])->orderBy('id', 'asc')->paginate($this->pagination);
+            $materials = TeachingMaterials::where('file_type',$_GET['file_type'])->where('teacher_id',$this->user->id)->orderBy('id', 'asc')->paginate($this->pagination);
             //dd($materials);
         }
         else
         {
-            $materials = TeachingMaterials::orderBy('id', 'asc')->paginate($this->pagination);
+            $materials = TeachingMaterials::orderBy('id', 'asc')->where('teacher_id',$this->user->id)->paginate($this->pagination);
         }
 
 		return view('account.teaching-materials', compact("page", "user","materials"));
@@ -941,7 +971,19 @@ class ProfileController extends Controller
 
 	public function studentlist(){
 		$instructor_id = User::where('id', Auth::user()->id)->first();
-		$students = User::where('instructor_id', $instructor_id->id)->paginate(5);
+        if(isset($_GET['level_id']) && $_GET['level_id']!='')
+        {
+            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        }
+        elseif(isset($_GET['keyword']) && $_GET['keyword']!='')
+        {
+            $students = User::where('name','like','%' .$_GET['keyword'].'%')->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        }
+        else
+        {
+            $students = User::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        }
+		
 		$levels = Level::get();
 		return view('account.teaching-students', compact('students', 'levels'));
     }
@@ -987,6 +1029,14 @@ class ProfileController extends Controller
         $levels = Level::get();
         $customer = User::find($id);
         return view('account.external-edit-students', compact('levels', 'country','customer'));
+    }
+
+    public function view_students($id)
+    {
+        $country = Country::orderBy('phonecode')->get();
+        $levels = Level::get();
+        $customer = User::find($id);
+        return view('account.external-view-students', compact('levels', 'country','customer'));
     }
 
 

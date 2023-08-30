@@ -60,6 +60,7 @@ return [
     'ALLOCATE_UPDATED' => 'Student allocated successfully.',
     'GRADING_UPDATED' => 'Student register successfully.',
     'SURVEY_UPDATED' => 'Survey assigned successfully.',
+    'CALENDAR_UPDATED' => 'Your calendar updated successfully.',
     'LESSON_MANAGEMENT' => 'Lesson Management',
     'LESSON_QUESTION_MANAGEMENT' => 'Lesson Questions Management',
     'STANDALONE_PAGE' => 'Standalone Page',
