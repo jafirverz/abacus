@@ -199,15 +199,15 @@
                     </div>
                     <div class="col-sm-6 sp-col">
                         <div class="inner">
-                            <h4>My Students' Best Competition Achievement</h4>
+                            <h4>{{ $highest_competetion_grade->comp_title ?? ''}}</h4>
                             <h5>Student Name</h5>
-                            <p>Jonathan Lee Than</p>
+                            <p>{{ get_user_detail($highest_competetion_grade->user_id)->name ?? ''}}</p>
                             <h5>Year</h5>
                             <p>Grade 7</p>
                             <h5>Competition</h5>
                             <p>Super Degree</p>
-                            <h5>Price</h5>
-                            <p>1st</p>
+                            <h5>Prize</h5>
+                            <p>{{ $highest_competetion_grade->prize ?? ''}}</p>
                         </div>
                     </div>
                 </div>

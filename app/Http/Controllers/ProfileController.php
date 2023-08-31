@@ -27,6 +27,7 @@ use App\Allocation;
 use App\TestPaperDetail;
 use App\Admin;
 use App\CategoryCompetition;
+use App\CompetitionStudentResult;
 use App\Competition;
 use App\CompetitionCategory;
 use App\CompetitionPaper;
@@ -101,9 +102,10 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-
-
-		return view('account.instructor-profile', compact("page", "user"));
+        $today=date('Y-m-d');
+        $highest_competetion_grade = CompetitionStudentResult::join('competition_controllers','competition_student_results.competition_id','competition_controllers.id')->join('competition_students','competition_students.competition_controller_id','competition_controllers.id')->select('competition_student_results.*','competition_controllers.title as comp_title')->where('competition_students.instructor_id', $user->id)->where('competition_controllers.date_of_competition','<',$today)->orderBy('competition_student_results.total_marks','desc')->orderBy('competition_controllers.date_of_competition','desc')->first();
+		//dd($highest_competetion_grade);
+        return view('account.instructor-profile', compact("page", "user","highest_competetion_grade"));
 	}
 
     public function instructor_overview()
@@ -1321,6 +1323,14 @@ class ProfileController extends Controller
 		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
 	}
 
+    public function instructor_content_update(Request $request)
+    {
+        $user = User::find($this->user->id);
+        $user->instructor_content  = $request->instructor_content ?? NULL;
+        $user->save();
+        return redirect()->route('teaching-materials')->with('success', 'Content updated successfully.');
+    }
+
     public function register_instructor_store(Request $request)
 	{
         //dd($request->all());
@@ -1625,6 +1635,14 @@ class ProfileController extends Controller
 		//$competitionId =
 	}
 
+    public function my_achievements($id){
+		$userId = $id;
+		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		//dd($actualCompetitionPaperSubted);
+		return view("account.achievements", compact('actualCompetitionPaperSubted'));
+		//$competitionId =
+	}
+
 
     public function view_grading($id){
 		$userId = $id;
@@ -1633,6 +1651,8 @@ class ProfileController extends Controller
 		return view("account.achievements", compact('actualCompetitionPaperSubted'));
 		//$competitionId =
 	}
+
+    
 
 	public function cart(Request $request){
         //dd($request->all());

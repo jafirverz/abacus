@@ -63,7 +63,7 @@
                                 <tr>
                                     <td>
                                         <em>{{ $student->account_id }}</em>
-                                        <div class="tbactions"><a href="#">Profile</a> <a href="#">Achievements</a></div>
+                                        <div class="tbactions"><a href="{{route('instructor.students.view', $student->id)}}">Profile</a> <a href="{{route('normal.my-achievements', $student->id)}}">Achievements</a></div>
                                     </td>
                                     <td class="text-nowrap"><em>{{ $student->name }}</em></td>
                                     <td class="text-nowrap"><em>{{ $student->country_code_phone }} {{ $student->mobile }}</em></td>

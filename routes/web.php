@@ -75,9 +75,10 @@ Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->na
 Route::get('/online-student/my-course/detail/{id?}', 'OnlineStudentController@detail_course')->name('my-course.detail');
 Route::post('/online-student/my-course/result', 'OnlineStudentController@submit_course')->name('course.answer.submit');
 
-Route::get('instructor-students', 'ProfileController@studentlist')->name('instructor.my-students');
+Route::get('/instructor-students', 'ProfileController@studentlist')->name('instructor.my-students');
 Route::get('/announcements/{id?}', 'ProfileController@download_all_announcements')->name('instructor.download_all_announcements');
 Route::get('/add-material', 'ProfileController@add_material')->name('instructor.add-material');
+Route::post('instructor-content-update', 'ProfileController@instructor_content_update')->name('instructor-content.update');
 Route::post('/add-material', 'ProfileController@store_add_material');
 Route::get('/add-students', 'ProfileController@add_students')->name('instructor.add-students');
 Route::post('/add-students', 'ProfileController@store_add_students')->name('instructor.add-students');
@@ -88,9 +89,6 @@ Route::get('/add-students/delete/{id?}', 'ProfileController@delete_students')->n
 
 
 Route::get('/online-student/about-3g-abacus', 'OnlineStudentController@aboutPage')->name('about-page-online');
-
-Route::get('/instructor-students', 'ProfileController@studentlist');
-
 Route::get('/instructor-competition', 'ProfileController@competition')->name('instructor-competition');
 Route::get('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor')->name('instructor.register');
 Route::post('/instructor-competition/register/{competition_id?}', 'ProfileController@competition_register_instructor_store')->name('competition.instructor.register.submit');
@@ -108,7 +106,7 @@ Route::get('/standalone-page', 'StandalonePageController@index');
 Route::post('/standalone-page/result', 'StandalonePageController@result');
 
 Route::get('/achievements', 'ProfileController@achievements')->name('normal.achievements');
-
+Route::get('/achievements/{id?}', 'ProfileController@my_achievements')->name('normal.my-achievements');
 
 Route::get('/membership', 'ProfileController@membership')->name('membership');
 
@@ -170,6 +168,7 @@ Route::get('external-profile/my-students', 'ExternalAccountController@my_student
 Route::get('external-profile/add-students', 'ExternalAccountController@add_students')->name('external-profile.add-students');
 Route::post('external-profile/add-students', 'ExternalAccountController@store_add_students')->name('external-profile.add-students');
 Route::get('external-profile/add-students/edit/{id?}', 'ExternalAccountController@edit_students')->name('external-profile.add-students.edit');
+Route::get('external-profile/students/view/{id?}', 'ExternalAccountController@view_students')->name('external-profile.students.view');
 Route::post('external-profile/add-students/edit/{id?}', 'ExternalAccountController@update_students')->name('external-profile.add-students.update');
 Route::get('external-profile/add-students/delete/{id?}', 'ExternalAccountController@delete_students')->name('external-profile.add-students.delete');
 Route::get('logout', 'Auth\LoginController@logout');
