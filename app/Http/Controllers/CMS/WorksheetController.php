@@ -70,6 +70,7 @@ class WorksheetController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $messages = [
             'amount.required_if' => 'This field is required',
         ];
@@ -79,9 +80,9 @@ class WorksheetController extends Controller
             'fee'  =>  'required',
             'amount' => 'required_if:fee,2',
            'questiontemplate'  =>  'required',
-            'stopwatch'  =>  'required',
+            //'stopwatch'  =>  'required',
             //'presettiming'  =>  'required',
-            'questiontype' => 'required',
+            //'questiontype' => 'required',
         ], $messages);
 
         //dd($request->all());
