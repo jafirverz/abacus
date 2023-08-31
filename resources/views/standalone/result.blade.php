@@ -5,9 +5,15 @@
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
       <div class="menu-aside">
+        @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
+          @include('inc.account-sidebar')
+        @endif
         @if(Auth::user()->user_type_id == 3)
-        @include('inc.account-sidebar-online')
-      @endif
+            @include('inc.account-sidebar-online')
+        @endif
+        @if(Auth::user()->user_type_id == 4)
+            @include('inc.account-sidebar-event-student')
+        @endif
       </div>
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
@@ -20,7 +26,7 @@
        
         <div class="row sp-col-20">
           <div class="col-xl-6 col-md-5 sp-col mt-30 order-md-last">
-            <iframe src="https://3gabacus.com/interactive_abacus_frame/" width="500px"></iframe>
+            <iframe src="https://3gabacus.com/interactive_abacus_frame/" class="ifrcal" style="width: 100%; height: 100%; margin-top: 0%;"></iframe>
           </div>
           <div class="col-xl-6 col-md-7 sp-col order-md-first">
             
