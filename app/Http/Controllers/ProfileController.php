@@ -32,7 +32,9 @@ use App\CompetitionCategory;
 use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
+use App\CompetitionStudentResult;
 use App\Country;
+use App\GradingStudentResults;
 use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Exception;
@@ -1619,9 +1621,17 @@ class ProfileController extends Controller
 
 	public function achievements(){
 		$userId = Auth::user()->id;
-		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		// $actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
 		//dd($actualCompetitionPaperSubted);
-		return view("account.achievements", compact('actualCompetitionPaperSubted'));
+        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        //dd($actualCompetitionPaperSubted);
+        $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
+
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult);
+
+        $result = $merged->all()->paginate(1);
+        
+		return view("account.achievements", compact('actualCompetitionPaperSubted', 'gradingExamResult', 'result'));
 		//$competitionId =
 	}
 

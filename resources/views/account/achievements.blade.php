@@ -27,9 +27,34 @@
                     <tr>
                       <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
                       <td><strong class="type-1">{{ $paperSubmited->competition->date_of_competition }}</strong></td>
-                      <td>{{ $paperSubmited->category->category_name }}</td>
-                      <td>Mental Grade 70:  <strong class="type-1"></strong><br/>
+                      <td>{{ $paperSubmited->competition->title }}</td>
+                      <td>
+                        {{ $paperSubmited->category->category_name }} : {{ $paperSubmited->rank ?? '' }}
+                        @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
+                        Mental Grade 70:  <strong class="type-1"></strong><br/>
                         Abacus Grade 80:  <strong class="type-1"></strong></td>
+                        @endif
+
+                    </tr>
+                    @endforeach
+
+                    @foreach($gradingExamResult as $grading)
+                    <tr>
+                      <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
+                      @php 
+                      $aa = explode(" ", $grading->grading->exam_date);
+                      @endphp
+                      <td><strong class="type-1">{{ $aa[0] }}</strong></td>
+                      <td>{{ $grading->grading->title }}</td>
+                      <td>
+                        
+                        @if(!empty($grading->abacus_grade && $grading->mental_grade))
+                        Mental Grade 70:  <strong class="type-1">{{ $grading->mental_grade }}</strong><br/>
+                        Abacus Grade 80:  <strong class="type-1">{{ $grading->abacus_grade }}</strong></td>
+                        @else
+                        {{ $grading->category->category_name ?? '' }} : {{ $grading->rank ?? '' }}
+                        @endif
+
                     </tr>
                     @endforeach
                     
