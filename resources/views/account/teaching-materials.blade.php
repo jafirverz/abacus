@@ -11,13 +11,23 @@
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <h1 class="title-3">Teaching Materials</h1>
+                @include('inc.messages')
                 <div class="box-1">
                     <div class="d-flex mb-20 justify-content-end">
-                        <a class="link-1 lico" href="#"><i class="icon-edit"></i> Edit</a>
+                        <a class="link-1 lico" href="?edit=1"><i class="icon-edit"></i> Edit</a>
                     </div>
                     <article class="document">
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est</p>
+                        @if(isset($_GET['edit']) && $_GET['edit']==1)
+                        <form action="{{ route('instructor-content.update') }}" method="post">
+                        @csrf
+                        <textarea name="instructor_content" class="form-control">{{ Auth::user()->instructor_content ?? '' }}</textarea>
+                        <div class="output-2">
+                            <button class="btn-1" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
+                        </div>
+                       </form>
+                        @else
+                        {{ Auth::user()->instructor_content ?? '' }}
+                        @endif
                     </article>
                 </div>
                 <div class="row title-wrap-2 mt-30">

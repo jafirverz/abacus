@@ -188,26 +188,28 @@
                         <div class="inner">
                             <h4>My Students' Best Grading Examination Achievement</h4>
                             <h5>Student Name</h5>
-                            <p>Jonathan Lee Than</p>
+                            <p>{{ get_user_detail($highest_grading_grade->user_id)->name ?? ''}}</p>
                             <h5>Year</h5>
-                            <p>Grade 7</p>
+                            <p>{{ date('Y',strtotime($highest_grading_grade->exam_date))}}</p>
+                            <h5>Grading Examination</h5>
+                            <p>{{ $highest_grading_grade->grade_title ?? ''}}</p>
                             <h5>Highest Grade (mental)</h5>
-                            <p>Super Degree</p>
+                            <p>{{ $highest_grading_grade->mental_grade ?? ''}}</p>
                             <h5>Highest Grade (Abacus)</h5>
-                            <p>Grade 1</p>
+                            <p>{{ $highest_grading_grade->abacus_grade ?? ''}}</p>
                         </div>
                     </div>
                     <div class="col-sm-6 sp-col">
                         <div class="inner">
                             <h4>My Students' Best Competition Achievement</h4>
                             <h5>Student Name</h5>
-                            <p>Jonathan Lee Than</p>
+                            <p>{{ get_user_detail($highest_competetion_grade->user_id)->name ?? ''}}</p>
                             <h5>Year</h5>
-                            <p>Grade 7</p>
+                            <p>{{ date('Y',strtotime($highest_competetion_grade->date_of_competition))}}</p>
                             <h5>Competition</h5>
-                            <p>Super Degree</p>
-                            <h5>Price</h5>
-                            <p>1st</p>
+                            <p>{{ $highest_competetion_grade->comp_title ?? ''}}</p>
+                            <h5>Prize</h5>
+                            <p>{{ $highest_competetion_grade->prize ?? ''}}</p>
                         </div>
                     </div>
                 </div>

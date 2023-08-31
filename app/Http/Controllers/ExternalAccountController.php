@@ -57,6 +57,14 @@ class ExternalAccountController extends Controller
     }
 
 
+    public function view_students($id)
+    {
+        $country = Country::orderBy('phonecode')->get();
+        $levels = Level::get();
+        $customer = User::find($id);
+        return view('account.external-view-students', compact('levels', 'country','customer'));
+    }
+
     public function store_add_students(Request $request)
     {
         $fields = [
@@ -229,7 +237,16 @@ class ExternalAccountController extends Controller
         $customer->approve_status = $request->status;
         $customer->updated_at = Carbon::now();
         $customer->save();
-        return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+        if(Auth::user()->user_type_id==5)
+        {
+            return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+           
+        }
+        else
+        {
+            return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+
+        }
 
 
     }
