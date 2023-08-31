@@ -96,7 +96,7 @@ class LoginController extends Controller
 
         $credentials = $request->only('account_id', 'password');
         if (Auth::attempt($credentials)) {
-            $userType = array(1,2,3,4,5);
+            $userType = array(1,2,3,4,5,6);
             if(in_array(Auth::user()->user_type_id,$userType)){
                 if(Auth::user()->approve_status == 1){
                     return redirect()->intended('home')

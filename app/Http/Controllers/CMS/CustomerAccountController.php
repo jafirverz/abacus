@@ -107,6 +107,8 @@ class CustomerAccountController extends Controller
             $acName .= strtoupper(substr($funame, 0, 1));
         }
         $accountId = 'SUD-'.$dob1.$acName;
+        $instructor = User::find($request->instructor_id);
+        //dd( $instructor);
         $customer = new User();
         $customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
@@ -134,7 +136,7 @@ class CustomerAccountController extends Controller
             $gender = 'Female';
         }
 
-
+        
         //			Admin email for new student registration
 			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
             $admins = Admin::get();

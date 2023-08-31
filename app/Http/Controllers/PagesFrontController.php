@@ -77,7 +77,7 @@ class PagesFrontController extends Controller
         $todayDate = date('Y-m-d');
 
         $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
-        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
+        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
         $competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
 
 

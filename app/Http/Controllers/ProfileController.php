@@ -107,7 +107,7 @@ class ProfileController extends Controller
         $highest_competetion_grade = CompetitionStudentResult::join('competition_controllers','competition_student_results.competition_id','competition_controllers.id')->join('competition_students','competition_students.competition_controller_id','competition_controllers.id')->select('competition_student_results.*','competition_controllers.title as comp_title','competition_controllers.date_of_competition')->where('competition_students.instructor_id', $user->id)->where('competition_controllers.date_of_competition','<',$today)->orderBy('competition_student_results.total_marks','desc')->orderBy('competition_controllers.date_of_competition','desc')->first();
         $highest_grading_grade = GradingStudentResults::join('grading_exams','grading_student_results.grading_id','grading_exams.id')->join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_student_results.*','grading_exams.title as grade_title','grading_exams.exam_date')->where('grading_students.instructor_id', $user->id)->where('grading_exams.exam_date','<',$today)->orderBy('grading_student_results.total_marks','desc')->orderBy('grading_exams.exam_date','desc')->first();
 
-		
+
         //dd($highest_grading_grade);
         return view('account.instructor-profile', compact("page", "user","highest_competetion_grade","highest_grading_grade"));
 	}
@@ -167,7 +167,15 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['user_id'];
         }
-        $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        if($user->user_type_id==6)
+        {
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        }
+        else
+        {
+            $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        }
+
         $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
         $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
         $gradingExam = GradingExam::find($id);
@@ -481,7 +489,16 @@ class ProfileController extends Controller
 
 		//dd($user);
 		$country = Country::orderBy('country', 'asc')->get();
-		return view('account.my-profile', compact("page", "user", "instructors", 'country'));
+        //dd($this->user->user_type_id);
+        if($this->user->user_type_id==4)
+        {
+            return view('account.event-online-profile', compact("page", "instructors", 'country'));
+        }
+        else
+        {
+            return view('account.my-profile', compact("page", "user", "instructors", 'country'));
+        }
+
 	}
 
     public function download_all_announcements($id)
@@ -989,7 +1006,7 @@ class ProfileController extends Controller
         {
             $students = User::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
-		
+
 		$levels = Level::get();
 		return view('account.teaching-students', compact('students', 'levels'));
     }
@@ -1222,8 +1239,15 @@ class ProfileController extends Controller
         $allocated_competition = CompetitionStudent::where('instructor_id', $user->id)->pluck('competition_controller_id');
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
 		$competition = Competition::where('status', 1)->orderBy('id', 'desc')->first();
-		$students = User::whereNotIn('id',$allocated_user)->get();
-
+        
+        if($user->user_type_id==6)
+        {
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();        
+        }
+        else
+        {
+            $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
+        }
         $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
 
 
@@ -1275,7 +1299,14 @@ class ProfileController extends Controller
         $user = $this->user;
 		$competition = Competition::where('status', 1)->where('id', $competition_id)->first();
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
-        $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
+        if($user->user_type_id==6)
+        {
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();        
+        }
+        else
+        {
+            $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
+        }
         $locations = LearningLocation::orderBy('id','desc')->get();
         $categories = CompetitionCategory::orderBy('id','desc')->get();
 		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $user->id)->paginate($this->pagination);
@@ -1666,7 +1697,7 @@ class ProfileController extends Controller
 		//$competitionId =
 	}
 
-    
+
 
 	public function cart(Request $request){
         //dd($request->all());

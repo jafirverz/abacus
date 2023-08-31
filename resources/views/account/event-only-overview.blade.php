@@ -14,7 +14,7 @@
                             @if($grading_exam)
                             <a href="{{ route('grading-overview',$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @else
-                            <a href="{{ url('grading-exam') }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @endif
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             @php
                             if(isset($competition) && !empty($competition)){
                                 $competitionId = $competition->id;
-                                $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->first();
+                                $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->where('competition_students.approve_status', 1)->first();
                                 if($compStu){
                                     $url = 1;
                                 }else{

@@ -101,7 +101,7 @@ class ExternalAccountController extends Controller
         $customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
         $customer->account_id = $accountId;
-        $customer->user_type_id = 7;
+        $customer->user_type_id = 4;
         $customer->instructor_id = $this->user->id;
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
