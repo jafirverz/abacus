@@ -23,51 +23,39 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($actualCompetitionPaperSubted as $paperSubmited)
+                    
+                    @foreach($merged as $paperSubmited)
                     <tr>
                       <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
-                      <td><strong class="type-1">{{ $paperSubmited->competition->date_of_competition }}</strong></td>
-                      <td>{{ $paperSubmited->competition->title }}</td>
+                      <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date }} @else {{ $paperSubmited->competition->date_of_competition }} @endif
+
+                      </strong></td>
+                      <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title }} @else {{ $paperSubmited->competition->title }} @endif</td>
                       <td>
+                        @if(isset($paperSubmited->grading_id)) 
+                          @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
+                          Mental Grade 70:  <strong class="type-1"></strong><br/>
+                          Abacus Grade 80:  <strong class="type-1"></strong></td>
+                          @endif
+                        @else 
                         {{ $paperSubmited->category->category_name }} : {{ $paperSubmited->rank ?? '' }}
-                        @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
-                        Mental Grade 70:  <strong class="type-1"></strong><br/>
-                        Abacus Grade 80:  <strong class="type-1"></strong></td>
+                          @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
+                          Mental Grade 70:  <strong class="type-1"></strong><br/>
+                          Abacus Grade 80:  <strong class="type-1"></strong></td>
+                          @endif
                         @endif
 
                     </tr>
                     @endforeach
 
-                    @foreach($gradingExamResult as $grading)
-                    <tr>
-                      <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
-                      @php 
-                      $aa = explode(" ", $grading->grading->exam_date);
-                      @endphp
-                      <td><strong class="type-1">{{ $aa[0] }}</strong></td>
-                      <td>{{ $grading->grading->title }}</td>
-                      <td>
-                        
-                        @if(!empty($grading->abacus_grade && $grading->mental_grade))
-                        Mental Grade 70:  <strong class="type-1">{{ $grading->mental_grade }}</strong><br/>
-                        Abacus Grade 80:  <strong class="type-1">{{ $grading->abacus_grade }}</strong></td>
-                        @else
-                        {{ $grading->category->category_name ?? '' }} : {{ $grading->rank ?? '' }}
-                        @endif
-
-                    </tr>
-                    @endforeach
+                    
                     
                   </tbody>
                 </table>
               </div>
-              <!-- <ul class="page-numbers mt-30">
-                <li><a class="prev" href="#">prev</a></li>
-                <li><a href="#">1</a></li>
-                <li><a class="current" href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a class="next" href="#">next</a></li>
-              </ul> -->
+              <ul class="page-numbers mt-30">
+               {{ $merged->links() }}
+              </ul>
             </div>
           </div>
         </div>

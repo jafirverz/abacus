@@ -34,9 +34,7 @@ use App\CompetitionCategory;
 use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
-use App\CompetitionStudentResult;
 use App\Country;
-use App\GradingStudentResults;
 use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Exception;
@@ -1641,11 +1639,13 @@ class ProfileController extends Controller
         //dd($actualCompetitionPaperSubted);
         $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
 
-        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult);
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        //dd($merged);
 
-        $result = $merged->all()->paginate(1);
+
+        //$result = $merged->all()->get()->paginate(1);
         
-		return view("account.achievements", compact('actualCompetitionPaperSubted', 'gradingExamResult', 'result'));
+		return view("account.achievements", compact('actualCompetitionPaperSubted', 'gradingExamResult', 'merged'));
 		//$competitionId =
 	}
 
