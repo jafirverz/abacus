@@ -183,7 +183,9 @@
                     </div>
                     </form>
                 </div>
+                
                 <div class="row sp-col-20 grid-9">
+                    @if(isset($highest_grading_grade))
                     <div class="col-sm-6 sp-col">
                         <div class="inner">
                             <h4>My Students' Best Grading Examination Achievement</h4>
@@ -199,6 +201,8 @@
                             <p>{{ $highest_grading_grade->abacus_grade ?? ''}}</p>
                         </div>
                     </div>
+                    @endif
+                    @if(isset($highest_competetion_grade))
                     <div class="col-sm-6 sp-col">
                         <div class="inner">
                             <h4>My Students' Best Competition Achievement</h4>
@@ -212,6 +216,7 @@
                             <p>{{ $highest_competetion_grade->prize ?? ''}}</p>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
