@@ -1654,7 +1654,7 @@ class ProfileController extends Controller
             $tempCart->cart = $jsonEncode;
             $tempCart->save();
     }
-    if($request->type == 'physicalgrading'){
+    elseif($request->type == 'physicalgrading'){
         foreach($request->paper as $value){
             $paper = GradingListingDetail::where('id', $value)->first();
             $levelDetails = array();
