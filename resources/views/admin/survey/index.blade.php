@@ -6,9 +6,9 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-           <div class="section-header-button">
+           <!-- <div class="section-header-button">
                 <a href="{{ route('surveys.create') }}" class="btn btn-primary">Add New</a>
-        </div>
+        </div> -->
         {{-- @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('survey')]) --}}
 </div>
 

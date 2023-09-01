@@ -12,6 +12,7 @@ use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Mail;
 use App\Admin;
+use App\Allocation;
 use Exception;
 
 class SurveyController extends Controller
@@ -24,6 +25,10 @@ class SurveyController extends Controller
             $surveyQuestions = SurveyQuestion::where('survey_id', $surveys->id)->get();
         }else{
             $surveyQuestions = '';
+        }
+        $allocation = Allocation::where('student_id', Auth::user()->id)->where('type', 2)->where('is_finished', null)->orderBy('id', 'desc')->first();
+        if(!$allocation){
+            return abort(404);
         }
         return view('account.surveyForm', compact('surveyQuestions', 'surveys'));
     }
@@ -38,6 +43,13 @@ class SurveyController extends Controller
         $user_survey->user_id = $userId;
         $user_survey->survey_data = $surveyData;
         $user_survey->save();
+
+        $allocation = Allocation::where('student_id', Auth::user()->id)->where('type', 2)->where('is_finished', null)->orderBy('id', 'desc')->first();
+        if($allocation){
+            $allocation->is_finished = 1;
+            $allocation->certificate_id = 1;
+            $allocation->save();
+        }
 
         // Admin email for new student registration
         $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_SURVEY'));
