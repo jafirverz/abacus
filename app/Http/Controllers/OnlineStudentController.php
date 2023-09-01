@@ -15,10 +15,17 @@ use App\UserFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Admin;
+use App\Traits\GetEmailTemplate;
+use App\Traits\SystemSettingTrait;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailNotification;
+use Exception;
 
 class OnlineStudentController extends Controller
 {
     //
+    use GetEmailTemplate, SystemSettingTrait;
     public function feedback(){
         $country = Country::get();
         $courses = Course::get();
@@ -34,6 +41,33 @@ class OnlineStudentController extends Controller
         $userfeedback->email = Auth::user()->email;
         $userfeedback->phone = Auth::user()->mobile;
         $userfeedback->save();
+
+        //			Admin email for new student registration
+        $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_FEEBACK'));
+        $admins = Admin::get();
+
+        if ($email_template) {
+            $data = [];
+            foreach ($admins as $admin) {
+                $data['email_sender_name'] = systemSetting()->email_sender_name;
+                $data['from_email'] = systemSetting()->from_email;
+                $data['to_email'] = [$admin->email];
+                $data['cc_to_email'] = [];
+                $data['subject'] = $email_template->subject;
+
+                $key = ['{{full_name}}', '{{email}}', '{{contact_number}}', '{{enquiry}}', '{{message}}'];
+                $value = [Auth::user()->name, Auth::user()->email, Auth::user()->mobile, $request->enquiry, $request->message];
+
+                $newContents = str_replace($key, $value, $email_template->content);
+
+                $data['contents'] = $newContents;
+                try {
+                    $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                } catch (Exception $exception) {
+                    dd($exception);
+                }
+            }
+        }
         return redirect()->route('feedback')->with('success', 'Submitted Successfully');
     }
 
