@@ -79,6 +79,7 @@ return [
     'ORDERS' => 'Orders',
     'USERSURVEY' => 'Survey Completed',
     'CERTIFICATE' => 'Certificate',
+    'QUESTIONS_ATTEMPT' => 'Questions Attempt',
 
 
     // CONTENT

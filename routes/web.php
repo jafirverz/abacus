@@ -565,6 +565,11 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('certificate/search', 'CMS\CertificateController@search')->name('certificate.search');
     Route::resource('certificate', 'CMS\CertificateController');
+
+
+    Route::get('question-attempt/search', 'CMS\QuestionAttempt@search')->name('question-attempt.search');
+    Route::resource('question-attempt', 'CMS\QuestionAttempt');
+
 });
 
 

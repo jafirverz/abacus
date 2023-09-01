@@ -190,6 +190,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/standalone',
                 ],
+                [
+                    'title' =>  __('constant.QUESTIONS_ATTEMPT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/question-attempt',
+                ],
 
             ],
         ],
