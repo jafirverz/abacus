@@ -55,7 +55,7 @@ class NotifyUser extends Command
         $orders = Order::where('payment_status', 'COMPLETED')->get();
         if($orders){
             foreach($orders as $order){
-                $user = User::where('id', $orders->user_id)->first();
+                $user = User::where('id', $order->user_id)->first();
                 $orderDetails = OrderDetail::where('order_id', $order->id)->where('order_type', 'level')->where('expiry_date', $daysAhead)->get();
                 if($orderDetails){
                     
@@ -72,8 +72,8 @@ class NotifyUser extends Command
                             $data['cc_to_email'] = [];
                             $data['subject'] = $email_template->subject;
 
-                            $key = ['{{full_name}}', '{{level}}'];
-                            $value = [$user->name, $level->title];
+                            $key = ['{{full_name}}', '{{level}}', '{{expirty_date}}'];
+                            $value = [$user->name, $level->title, $order->expiry_date];
 
                             $newContents = str_replace($key, $value, $email_template->content);
 

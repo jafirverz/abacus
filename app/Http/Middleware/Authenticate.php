@@ -29,9 +29,6 @@ class Authenticate extends Middleware
         if (strpos($request->url(), 'about-us') !== false) {
             $redirectTo = 'about-us';
         }
-        if (strpos($request->url(), 'notification') !== false) {
-            $redirectTo = 'notification';
-        }
         if (strpos($request->url(), 'safelogin') !== false || strpos($request->url(), 'admin') !== false) {
             $redirectTo = 'admin_login';
         }
