@@ -117,6 +117,10 @@ class PagesFrontController extends Controller
             return view('about', compact('page', 'system_settings', 'smart_blocks'));
         }
 
+        if (in_array($page->id, [__('constant.STANDALONE_PAGE_ID')])) {
+            return view('standalone', compact('page', 'system_settings', 'smart_blocks'));
+        }
+
         return view('pages', compact('page', 'system_settings', 'smart_blocks'));
     }
 

@@ -180,6 +180,7 @@ return [
     "TERMS_OF_USE" => "6",
     "PRIVACY_POLICY" => "7",
     "ABOUT_PAGE_ID" => "8",
+    "STANDALONE_PAGE_ID" => "10",
 
 
 

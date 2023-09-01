@@ -123,6 +123,8 @@ Route::get('about-us', 'GuestUserController@aboutUs')->name('about-us');
 Route::get('privacy-policy', 'GuestUserController@privacy')->name('privacy-policy');
 Route::get('faqs', 'GuestUserController@faq')->name('faqs');
 Route::get('terms-of-use', 'GuestUserController@termsofuse')->name('terms-of-use');
+Route::get('standalonepage', 'GuestUserController@standalonepage')->name('standalonepage');
+Route::post('standalonepage/result', 'GuestUserController@standalonepageresult')->name('standalonepageresult');
 
 
 Route::get('payament/error', 'PayPalController@errorPayment')->name('errorTransaction');
