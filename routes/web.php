@@ -27,10 +27,10 @@ Route::get('/updateapp', function()
 });
 
 
-// Route::get('/chat-email', function () {
-//     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('chat:notification');
-//     return $exitCode2;
-// });
+Route::get('/notification', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('notify:users');
+    return $exitCode2;
+});
 
 
 Route::get('/storage-link', function () {

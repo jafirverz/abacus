@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //
-        $schedule->command('chat:notification')->hourly();
+        //$schedule->command('chat:notification')->hourly();
+        $schedule->command('notify:users')->dailyAt('9:00');
     }
 
     /**
