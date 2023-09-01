@@ -52,8 +52,8 @@ class SurveyController extends Controller
                 $data['cc_to_email'] = [];
                 $data['subject'] = $email_template->subject;
 
-                $key = ['{{full_name}}','{{email}}','{{survey_id}}'];
-                $value = [$request->name ?? Auth::user()->name, Auth::user()->email, $user_survey->id];
+                $key = ['{{full_name}}','{{email}}'];
+                $value = [$request->name ?? Auth::user()->name, Auth::user()->email];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 

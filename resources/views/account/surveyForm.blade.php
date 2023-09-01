@@ -100,6 +100,8 @@
                 $surveyQuesOptionChoices =  \App\SurveyQuestionOptionChoices::where('survey_question_option_id', $options->id)->get();
                 @endphp
                 @foreach($surveyQuesOptionChoices as $quesChoices)
+                @if(Auth::user()->user_type_id == 3 && ($quesChoices->title == 'Intermediate Level' || $quesChoices->title == 'Advanced Level'))
+                @else
                   <tr class="subcontent">
                     <td><strong class="sublb">{{ $quesChoices->title }}</strong></td>
                     @foreach($optionChoices as $choices)
@@ -112,6 +114,7 @@
                     @endforeach
                     
                   </tr>
+                @endif
                 @endforeach
 
               </tbody>
