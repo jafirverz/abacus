@@ -63,6 +63,8 @@
                                             <select name="input_2[]" class="form-control">
                                                 <option value="multiply">Multiply</option>
                                                 <option value="divide">Divide</option>
+                                                <option value="add">Add</option>
+                                                <option value="subtract">Subtract</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2">
@@ -280,6 +282,8 @@
                 <select name="input_2[]" class="form-control">
                     <option value="multiply">Multiply</option>
                     <option value="divide">Divide</option>
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
                 </select>
             </div>
             <div class="col-md-2">

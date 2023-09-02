@@ -243,7 +243,7 @@
 
 
                                 @elseif((isset($_GET['question-type']) && $_GET['question-type']==7) || $question->question_type==7)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate(6) }}</label>
+                                    <label for="" class=" control-label">{{ getQuestionTemplate(7) }}</label>
                                     @php
                                         $getQues = \App\MiscQuestion::where('question_id', $question->id)->where('symbol', '!=', 'vertical')->get();
                                         foreach($getQues as $ques)
@@ -335,6 +335,8 @@
                                                    
                                                     <option value="multiply" @if($ques->symbol == 'multiply') selected @endif>Multiply</option>
                                                     <option value="divide" @if($ques->symbol == 'divide') selected @endif>Divide</option>
+                                                    <option value="add" @if($ques->symbol == 'add') selected @endif>Add</option>
+                                                    <option value="subtract" @if($ques->symbol == 'subtract') selected @endif>Subtract</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -543,6 +545,8 @@
                 <select name="input_2[]" class="form-control">
                     <option value="multiply">Multiply</option>
                     <option value="divide">Divide</option>
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
                 </select>
             </div>
             <div class="col-md-2">

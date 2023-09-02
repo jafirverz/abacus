@@ -47,6 +47,10 @@
                   @php
                   if($ques->symbol == 'multiply'){
                     $symbol='*';
+                  }elseif($ques->symbol == 'add'){
+                    $symbol='+';
+                  }elseif($ques->symbol == 'subtract'){
+                    $symbol='-';
                   }else{
                     $symbol='÷';
                   }
