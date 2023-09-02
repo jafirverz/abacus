@@ -64,6 +64,15 @@ class WorksheetController extends Controller
             $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
             return view('account.worksheetChallenge', compact("worksheet", 'level', 'questions'));
         }
+        if($qId == 7) {
+            if(empty($worksheetId)){
+                return abort(404);
+            }
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $lId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
+            return view('account.worksheetMixed', compact("worksheet", 'level', 'questions'));
+        }
         if($qId == 8) {
             if(empty($worksheetId)){
                 return abort(404);
@@ -100,12 +109,13 @@ class WorksheetController extends Controller
     }
 
     public function resultpage(Request $request){
+        // dd($request->all());
         $worksheetId = $request->worksheetId;
         $levelId = $request->levelId;
         $questionTypeId = $request->questionTypeId;
         $userId = Auth::user()->id;
-        $questTem = array(1,2,3,4,5,6,8);
-        $resultpage = array(1,2,4,5,6,8);
+        $questTem = array(1,2,3,4,5,6,7,8);
+        $resultpage = array(1,2,4,5,6,7,8);
         if(in_array($questionTypeId, $questTem)){
             $workshSub = new WorksheetSubmitted();
             $workshSub->worksheet_id = $worksheetId;

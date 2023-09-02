@@ -156,6 +156,43 @@ class QuestionController extends Controller
                 $storQues->save();
             }
         }
+        elseif($request->question_type==7)
+        {
+            //dd($request->all());
+            // $json['input_1']=$request->input_1;
+            // $json['input_2']=$request->input_2;
+            $question = new Question();
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            //$question->json_question = json_encode($json);
+            $question->created_at = Carbon::now();
+            $question->save();
+
+            $count = count($request->vertical_1);
+            for($i=0; $i<$count; $i++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $request->vertical_1[$i];
+                //$storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = 'vertical';
+                $storQues->answer = $request->vertical_2[$i];
+                $storQues->marks = $request->vertical_3[$i];
+                $storQues->save();
+            }
+
+            $count1 = count($request->input_1);
+            for($i=0; $i<$count1; $i++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $request->input_1[$i];
+                $storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
+        }
         elseif($request->question_type==6){
             $count = count($request->input_1);
             $question = new Question();
@@ -427,6 +464,48 @@ class QuestionController extends Controller
                 $storQues->question_1 = $request->input_1[$i];
                 //$storQues->question_2 = $request->input_3[$i];
                 //$storQues->symbol = $request->input_2[$i];
+                $storQues->answer = $request->answer[$i];
+                $storQues->marks = $request->marks[$i];
+                $storQues->save();
+            }
+        }
+        elseif($request->question_type==7)
+        {
+            // dd($request->all());
+            // $json['input_1']=$request->input_1;
+            // $json['input_2']=$request->input_2;
+            $question = Question::find($id);
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            //$question->question_type = $request->question_type;
+            //$question->json_question = json_encode($json);
+            $question->updated_at = Carbon::now();
+            $question->save();
+
+            $storQues = MiscQuestion::where('question_id', $id)->get();
+            foreach($storQues as $quess){
+                $quess->delete();
+            }
+
+            $count = count($request->vertical_1);
+            for($i=0; $i<$count; $i++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $request->vertical_1[$i];
+                //$storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = 'vertical';
+                $storQues->answer = $request->vertical_2[$i];
+                $storQues->marks = $request->vertical_3[$i];
+                $storQues->save();
+            }
+
+            $count1 = count($request->input_1);
+            for($i=0; $i<$count1; $i++){
+                $storQues = new MiscQuestion();
+                $storQues->question_id = $question->id;
+                $storQues->question_1 = $request->input_1[$i];
+                $storQues->question_2 = $request->input_3[$i];
+                $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
                 $storQues->marks = $request->marks[$i];
                 $storQues->save();
