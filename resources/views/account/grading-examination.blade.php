@@ -5,9 +5,9 @@
         <div class="col-lg-3 sp-col tempt-2-aside">
             <div class="menu-aside">
             @if(Auth::user()->user_type_id == 6)
-            
+
              @include('inc.account-sidebar-external')
-            
+
             @else
             @include('inc.intructor-account-sidebar')
             @endif
@@ -22,8 +22,8 @@
                     <div class="col-md-6 order-md-first mt-767-20">
                         <h1 class="title-3">Grading Examinations</h1>
                     </div>
-                   
-                </div> 
+
+                </div>
                 @include('inc.messages')
                 <div class="box-1">
                     <h2 class="title-4">Registered Student's List</h2>
@@ -50,7 +50,11 @@
                                     <td><em>{{ $i }}</em></td>
                                     <td>
                                         <em>{{ $grade->student->name  ?? ''}}</em>
+                                        @if($grade->approve_status==1)
+                                        <div class="tbactions"><a href="{{ route('grading-examination.view',$grade->id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
+                                        @else
                                         <div class="tbactions"><a href="{{ route('grading-examination.edit',$grade->id) }}">Edit</a> <a href="{{ route('grading-examination.view',$grade->id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
+                                        @endif
                                     </td>
                                     <td><em>{{ $grade->mental->title ?? '' }}</em></td>
                                     <td><em>{{ $grade->abacus->title ?? '' }}</em></td>

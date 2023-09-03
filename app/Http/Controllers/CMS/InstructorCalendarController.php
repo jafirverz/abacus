@@ -71,14 +71,14 @@ class InstructorCalendarController extends Controller
 
         $instructorCalendar = new InstructorCalendar();
         $instructorCalendar->full_name  = $request->full_name ?? NULL;
-        $instructorCalendar->teacher_id  = $this->user->id;
+        $instructorCalendar->teacher_id  = $request->teacher_id ?? NULL;
         $instructorCalendar->start_date  = $request->start_date ?? NULL;
         $instructorCalendar->start_time  = $request->start_time ?? NULL;
         $instructorCalendar->note  = $request->note ?? NULL;
-        $instructorCalendar->reminder  = 1;
+        $instructorCalendar->reminder  = $request->reminder ?? NULL;
         $instructorCalendar->save();
 
-        return redirect()->route('teaching-materials.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+        return redirect()->route('instructor-calendar.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
 
     /**
@@ -128,14 +128,14 @@ class InstructorCalendarController extends Controller
 
         $instructorCalendar = InstructorCalendar::findorfail($id);
         $instructorCalendar->full_name  = $request->full_name ?? NULL;
-        $instructorCalendar->teacher_id  = $this->user->id;
+        $instructorCalendar->teacher_id  = $request->teacher_id ?? NULL;
         $instructorCalendar->start_date  = $request->start_date ?? NULL;
         $instructorCalendar->start_time  = $request->start_time ?? NULL;
         $instructorCalendar->note  = $request->note ?? NULL;
-        $instructorCalendar->reminder  = 1;
+        $instructorCalendar->reminder  = $request->reminder ?? NULL;
         $instructorCalendar->save();
 
-        return redirect()->route('teaching-materials.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
+        return redirect()->route('instructor-calendar.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
 
     /**
@@ -156,7 +156,7 @@ class InstructorCalendarController extends Controller
     {
         //DB::enableQueryLog();
 		$title = $this->title;
-        $calendar = InstructorCalendar::join('users','users.id','instructor_calendars.teacher_id')->search($request->search)->select('teaching_instructor-calendar.*')->orderBy('teaching_materials.id', 'asc')->paginate($this->systemSetting()->pagination);
+        $calendar = InstructorCalendar::join('users','users.id','instructor_calendars.teacher_id')->search($request->search)->select('instructor_calendars.*')->orderBy('instructor_calendars.id', 'asc')->paginate($this->systemSetting()->pagination);
        //dd(DB::getQueryLog());
         return view('admin.instructor-calendar.index', compact('title', 'calendar'));
     }

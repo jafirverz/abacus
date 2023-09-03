@@ -8,7 +8,9 @@
              @include('inc.account-sidebar-external')
             </div>
             @else
-             @include('inc.account-sidebar')
+            <div class="menu-aside">
+             @include('inc.intructor-account-sidebar')
+            </div>
             @endif
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
@@ -114,12 +116,12 @@
                         </div>
                         <div class="col-xl-3 sp-col">
                             <label class="lb-1">Learning Location
-                                <span class="required">*</span>
+                                
                             </label>
-                            <select name="learning_location" class="selectpicker" data-title="Select Option">
+                            <select name="learning_locations" class="selectpicker" data-title="Select Option">
                                 @if($locations)
                                 @foreach($locations as $item)
-                                <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                <option @if(isset($_GET['student_id']) && get_user_detail($_GET['student_id'])->learning_locations==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
                                 @endforeach
                                 @endif
                             </select>

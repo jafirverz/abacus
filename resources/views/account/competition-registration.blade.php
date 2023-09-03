@@ -89,11 +89,13 @@
                                     @endif
                                 </div>
                                 <div class="col-xl-4 sp-col">
-                                    <label class="lb-1">Learning Location <span class="required">*</span></label>
-                                    <select name="learning_location" class="selectpicker" data-title="Select">
-                                        @foreach ($locations as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                    <label class="lb-1">Learning Location </label>
+                                    <select name="learning_locations" class="selectpicker" data-title="Select Option">
+                                        @if($locations)
+                                        @foreach($locations as $item)
+                                        <option @if(isset($_GET['student_id']) && get_user_detail($_GET['student_id'])->learning_locations==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
                                         @endforeach
+                                        @endif
                                     </select>
                                     @if ($errors->has('learning_location'))
                                         <span class="text-danger d-block">

@@ -74,6 +74,23 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    <label for="students">Students</label>
+                                    <select name="students[0]" class="form-control" multiple>
+                                        @if ($students)
+                                        @foreach ($students as $item)
+                                        <option value="{{ $item->id }}" @if(in_array($item->id,$courseAssignToUser))
+                                            selected
+                                            @endif>{{ $item->name }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('students.0'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('students.0') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>

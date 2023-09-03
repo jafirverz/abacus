@@ -4,7 +4,9 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Level;
+use App\CourseAssignToUser;
 use App\Course;
+use App\User;
 use App\TestPaper;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
@@ -49,7 +51,8 @@ class CourseController extends Controller
         $title = $this->title;
         $levels = Level::get();
         $papers = TestPaper::orderBy('id','desc')->get();
-        return view('admin.master.course.create', compact('title','levels','papers'));
+        $students = User::where('user_type_id', 3)->orderBy('id','desc')->get();
+        return view('admin.master.course.create', compact('title','students','levels','papers'));
     }
 
     /**
@@ -64,8 +67,9 @@ class CourseController extends Controller
             'level'  =>  'required',
             'content'  =>  'required',
             'paper_id'  =>  'required',
+            'students.0'  =>  'required',
             'title'  =>  'required|unique:courses,title|max:191',
-        ]);
+        ],['students.0.required'    => 'Student field is required.']);
 
         $course = new Course();
         $course->level_id = $request->level;
@@ -74,6 +78,15 @@ class CourseController extends Controller
         $course->content = $request->content;
         $course->status = $request->status;
         $course->save();
+
+        foreach($request->students as $student)
+        {
+            $courseAssignToUser = new CourseAssignToUser();
+            $courseAssignToUser->course_id =$course->id;
+            $courseAssignToUser->user_id =$student;
+            $courseAssignToUser->save();
+        }
+
 
         return redirect()->route('course.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
@@ -88,8 +101,9 @@ class CourseController extends Controller
     {
         $title = $this->title;
         $course = Course::find($id);
+        $courseAssignToUser = CourseAssignToUser::where('course_id',$id)->pluck('user_id')->toArray();
 
-        return view('admin.master.course.show', compact('title', 'course'));
+        return view('admin.master.course.show', compact('title', 'course','courseAssignToUser'));
     }
 
     /**
@@ -104,7 +118,11 @@ class CourseController extends Controller
         $course = Course::findorfail($id);
         $levels = Level::get();
         $papers = TestPaper::orderBy('id','desc')->get();
-        return view('admin.master.course.edit', compact('title', 'course', 'levels','papers'));
+        $students = User::where('user_type_id', 3)->orderBy('id','desc')->get();
+        $courseAssignToUser = CourseAssignToUser::where('course_id',$id)->pluck('user_id')->toArray();
+        //dd($courseAssignToUser);
+
+        return view('admin.master.course.edit', compact('title', 'course','students', 'levels','papers','courseAssignToUser'));
     }
 
     /**
@@ -120,9 +138,16 @@ class CourseController extends Controller
             'level'  =>  'required',
             'content'  =>  'required',
             'paper_id'  =>  'required',
+            'students.0'  =>  'required',
             'title'  =>  'required|unique:courses,title,'.$id.',id|max:191',
         ]);
-
+        $request->validate([
+            'level'  =>  'required',
+            'content'  =>  'required',
+            'paper_id'  =>  'required',
+            'students.0'  =>  'required',
+            'title'  =>  'required|unique:courses,title|max:191',
+        ],['students.0.required'    => 'Student field is required.']);
         $course = Course::findorfail($id);
         $course->level_id = $request->level;
         $course->title = $request->title;
@@ -130,6 +155,16 @@ class CourseController extends Controller
         $course->content = $request->content;
         $course->status = $request->status;
         $course->save();
+
+        CourseAssignToUser::where('course_id', $id)->delete();
+
+        foreach($request->students as $student)
+        {
+            $courseAssignToUser = new CourseAssignToUser();
+            $courseAssignToUser->course_id =$course->id;
+            $courseAssignToUser->user_id =$student;
+            $courseAssignToUser->save();
+        }
 
         return redirect()->route('course.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }

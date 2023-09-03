@@ -39,7 +39,7 @@ class OnlineStudentController extends Controller
 
     public function my_course(){
         $level = Level::get();
-        $courseCertificate = CourseSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
+        $courseCertificate = CourseSubmitted::where('user_id', Auth::user()->id)->where('is_submitted',1)->where('certificate_id', '!=', null)->get();
         return view('account.online-my-course', compact('level', 'courseCertificate'));
     }
 
@@ -48,35 +48,50 @@ class OnlineStudentController extends Controller
         $test_paper=TestPaper::where('id',$course->paper->id)->first();
         $paper_detail=TestPaperDetail::where('paper_id',$course->paper->id)->first();
         $qId=$course->paper->question_template_id;
-        ///dd($qId);
+        $courseSubmitted = CourseSubmitted::where('course_id',$id)->where('course_submitteds.user_id', Auth::user()->id)->first();
+        //dd($courseSubmitted);
         if($qId == 5){
-            return view('account.courseMultipleDivision', compact("course","paper_detail","test_paper"));
+            return view('account.courseMultipleDivision', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 6){
-            return view('account.courseChallenge', compact("course","paper_detail","test_paper"));
+            return view('account.courseChallenge', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 8){
-            return view('account.courseAbacus', compact("course","paper_detail","test_paper"));
+            return view('account.courseAbacus', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 7){
-            return view('account.courseMix', compact("course","paper_detail","test_paper"));
+            return view('account.courseMix', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 4){
-            return view('account.courseAddSubQuestion', compact("course","paper_detail","test_paper"));
+            return view('account.courseAddSubQuestion', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 3){
-            return view('account.courseNumber', compact("course","paper_detail","test_paper"));
+            return view('account.courseNumber', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 1){
-            return view('account.courseAudio', compact("course","paper_detail","test_paper"));
+            return view('account.courseAudio', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 2){
-            return view('account.courseVideo', compact("course","paper_detail","test_paper"));
+            return view('account.courseVideo', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         //return view('account.online-my-course-detail', compact('course'));
     }
 
     public function submit_course(Request $request){
+
+        //dd($request);
+        $course_sub=CourseSubmitted::find($request->course_submitted_id);
+        if(isset($course_sub) &&  $request->is_submitted==1)
+        {
+
+            CourseQuestionSubmitted::where('course_submitted_id',$course_sub->id)->delete();
+            CourseSubmitted::where('id',$request->course_submitted_id)->delete();
+
+        }
+        else
+        {
+            abort(404);
+        }
         $test_paper_question_id = $request->test_paper_question_id;
         $course_id = $request->course_id;
         $questionTypeId = $request->question_type;
@@ -89,6 +104,8 @@ class OnlineStudentController extends Controller
             $courseSub->course_id  = $course_id;
             $courseSub->question_template_id = $questionTypeId;
             $courseSub->user_id = $userId;
+            $courseSub->certificate_id = 3;
+            $courseSub->is_submitted = $request->is_submitted;
             $courseSub->save();
             $totalMarks = 0;
             $userMarks = 0;
@@ -117,7 +134,7 @@ class OnlineStudentController extends Controller
             $saveResult->save();
         }
         if(in_array($questionTypeId, $resultpage)){
-            return view('result-course', compact('totalMarks', 'userMarks'));
+            return view('result-course', compact('totalMarks', 'userMarks','courseSub'));
         }
 
 

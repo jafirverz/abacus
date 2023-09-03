@@ -13,15 +13,20 @@
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="javascript::void(0)" onclick="window.history.go(-1); return false;"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="{{ route('my-course') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
+        @if(isset($courseSub) && $courseSub->is_submitted && $courseSub->is_submitted==2)
+        <div class="box-msg-2 mt-50">
+            <h4>Thank you for your submission. You records has been saved successfully.</h4>
+          </div>
+        @else
         <h1 class="title-3">Result</h1>
 
         <div class="box-msg-2 mt-50">
           <h4>Thank you for your submission.</h4>
           <h2>Here is your marks {{ $userMarks }} out of {{ $totalMarks }}.</h2>
         </div>
-
+        @endif
       </div>
     </div>
   </div>

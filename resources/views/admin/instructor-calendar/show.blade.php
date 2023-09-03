@@ -24,13 +24,16 @@
                                     <strong>Full Name</strong>: {{ $calendar->full_name ?? '' }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>start_date</strong>: {{ $calendar->start_date ?? '' }}
+                                    <strong>Start Date</strong>: {{ $calendar->start_date ?? '' }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Note</strong>: {{ $calendar->note ?? '' }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Teacher</strong>: {{ $calendar->teacher->name }}
+                                </div>
+                                <div class="form-group">
+                                    <strong>Set Reminder ?</strong>: {{ $calendar->reminder==1?'Yes':'No' }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Created At</strong>: {{ $calendar->created_at->format('d M, Y h:i A') }}

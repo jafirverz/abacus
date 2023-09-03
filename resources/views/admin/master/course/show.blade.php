@@ -33,7 +33,14 @@
                             <div class="form-group">
                                 <label for="title">Paper</label>: {{ $course->paper->title ?? '' }}
                             </div>
-
+                            <div class="form-group">
+                                <label for="title">Students</label>:
+                                <ol>
+                                @foreach($courseAssignToUser as $user)
+                                <li>{{  get_user_detail($user)->name ?? '' }}</li>
+                                @endforeach
+                                </ol>
+                            </div>
                             <div class="form-group">
                                 <label for="status">Status</label>: {{ getActiveStatus($course->status) }}
                             </div>

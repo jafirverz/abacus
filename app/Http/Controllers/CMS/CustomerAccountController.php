@@ -56,7 +56,15 @@ class CustomerAccountController extends Controller
     public function create()
     {
         $title = $this->title;
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        if(isset($_GET['user_type']) && $_GET['user_type']==4)
+        {
+            $instructors = User::where('user_type_id', 6)->orderBy('id','desc')->get();
+        }
+        else
+        {
+            $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        }
+
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
         return view('admin.account.customer.create', compact('title','instructors','levels', 'country'));
@@ -136,7 +144,7 @@ class CustomerAccountController extends Controller
             $gender = 'Female';
         }
 
-        
+
         //			Admin email for new student registration
 			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
             $admins = Admin::get();
@@ -218,7 +226,16 @@ class CustomerAccountController extends Controller
         $title = $this->title;
         $customer = User::findorfail($id);
         $country = Country::orderBy('phonecode')->get();
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+
+        if($customer->user_type_id==4)
+        {
+            $instructors = User::where('user_type_id', 6)->orderBy('id','desc')->get();
+        }
+        else
+        {
+            $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        }
+
         $levels = Level::get();
         return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels', 'country'));
     }
@@ -237,7 +254,6 @@ class CustomerAccountController extends Controller
             'name' => 'required|string',
             'password'  =>  'nullable|min:8',
             'country_code' => 'required',
-            'user_type_id' => 'required',
             'level' => 'required',
             'dob' => 'required',
             'country_code_phone' => 'required',
@@ -266,7 +282,7 @@ class CustomerAccountController extends Controller
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
-        $customer->user_type_id = $request->user_type_id??NULL;
+        //$customer->user_type_id = $request->user_type_id??NULL;
         $customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
