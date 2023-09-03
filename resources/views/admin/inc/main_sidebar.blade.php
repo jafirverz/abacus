@@ -184,7 +184,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/survey-allocation',
                 ],
-                
+
                 [
                     'title' =>  __('constant.STANDALONE_PAGE'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
@@ -301,7 +301,16 @@
                 ],
             ],
         ],
-
+        [
+            'menu_header'   =>  __('constant.INSTRUCTOR_CALENDAR'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.INSTRUCTOR_CALENDAR'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/instructor-calendar',
+                ],
+            ],
+        ],
         // For Certificate
 
         [
@@ -348,7 +357,7 @@
                     'url'   =>  'admin/reports-worksheet',
                 ],
                 [
-                    'title' =>  __('constant.EXTERNAL_CENTRE_ACCOUNT'),
+                    'title' =>  __('constant.EXTERNAL_CENTRE_REPORT'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-external-centre',
                 ],

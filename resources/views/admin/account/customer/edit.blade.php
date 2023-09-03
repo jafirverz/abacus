@@ -56,7 +56,7 @@
                                     <label for="">Phone</label>
                                     <div class="row">
                                             <div class="col-md-3">
-                                                
+
                                                 <select name="country_code_phone" class="form-control">
                                                     @foreach($country as $phonecode)
                                                     <option value="{{ $phonecode->phonecode }}" @if($phonecode->phonecode == $customer->country_code_phone) selected @endif>+ {{ $phonecode->phonecode }}</option>
@@ -140,7 +140,25 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="instructor_id">Instructor</label>
+                                    <label for="user_type_id">User Type</label>
+                                    <select disabled  class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if (getUserTypes())
+                                        @foreach (getUserTypes()  as $key => $item)
+                                        <option value="{{ $key }}" @if(old('user_type_id', $customer->user_type_id)==$key)
+                                            selected
+                                            @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('user_type_id'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('user_type_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="instructor_id">@if($customer->user_type_id==4) External Centre Account @else Instructor @endif</label>
                                     <select name="instructor_id" class="form-control">
                                         <option value="">-- Select --</option>
                                         @if ($instructors)
@@ -157,24 +175,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="user_type_id">User Type</label>
-                                    <select name="user_type_id" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (getUserTypes())
-                                        @foreach (getUserTypes()  as $key => $item)
-                                        <option value="{{ $key }}" @if(old('user_type_id', $customer->user_type_id)==$key)
-                                            selected
-                                            @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('user_type_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('user_type_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
                                 <div class="form-group">
                                     <label for="">Password</label>
                                     <input type="password" name="password" class="form-control">

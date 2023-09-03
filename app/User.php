@@ -121,4 +121,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Level', 'level_id', 'id');
     }
 
+    public function location(){
+        return $this->belongsTo('App\LearningLocation', 'learning_locations', 'id');
+    }
+
 }

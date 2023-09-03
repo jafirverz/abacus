@@ -107,6 +107,8 @@ class ExternalAccountController extends Controller
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
+        $customer->learning_locations = $request->learning_locations??NULL;
+        $customer->learning_updates = $request->learning_updates??NULL;
         $customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
@@ -228,6 +230,8 @@ class ExternalAccountController extends Controller
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
+        $customer->learning_locations = $request->learning_locations??NULL;
+        $customer->learning_updates = $request->learning_updates??NULL;
         $customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
@@ -239,7 +243,7 @@ class ExternalAccountController extends Controller
         $customer->save();
         if(Auth::user()->user_type_id==5)
         {
-            return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+            return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
            
         }
         else

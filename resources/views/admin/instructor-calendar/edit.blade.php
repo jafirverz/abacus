@@ -64,10 +64,10 @@
                                 <div class="form-group">
                                     <label for="reminder">Set Reminder ?</label>
                                     <div class="radiotype">
-                                        <input id="yes" type="radio" value="1" name="reminder" @if($calendar->reminder==1) checked @elseif />
+                                        <input id="yes" type="radio" value="1" name="reminder" @if($calendar->reminder==1) checked @endif />
                                         <label for="yes">Yes</label>
 
-                                        <input id="no" type="radio" value="2" name="reminder" @if($calendar->reminder==2) checked @elseif />
+                                        <input id="no" type="radio" value="2" name="reminder" @if($calendar->reminder==2) checked @endif />
                                         <label for="no">No</label>
                                     </div>
                                 </div>

@@ -15,8 +15,15 @@
                     @if($level)
                     @php $i=0; @endphp
                      @foreach($level as $item)
-                     @php $i++; @endphp
-                     @if($item->courses)
+                     @php
+
+                     $courses = \App\Course::join('course_assign_to_users','course_assign_to_users.course_id','courses.id')->where('course_assign_to_users.user_id', Auth::user()->id)->where('courses.level_id', $item->id)->select('courses.*')->get();
+
+                     @endphp
+                     @if(isset($courses) && $courses->count() > 0)
+                       @php
+                        //dd($courses);
+                       @endphp
                         <div class="accordion-item">
                             <h3 class="accordion-header">
                                 <button class="accordion-button @if($i!=1) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#course-{{ $i }}" aria-expanded="false" aria-controls="course-{{ $i }}">{{ $item->title }}</button>
@@ -24,10 +31,11 @@
                             <div id="course-{{ $i }}" class="accordion-collapse collapse @if($i==1) show @endif">
                                 <div class="accordion-body">
                                     <ul class="list-2">
-                                        
-                                        @foreach($item->courses as $val)
+                                        @php $j=0; @endphp
+                                        @foreach($courses as $val)
                                         @php
-                                        $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->first();
+
+                                        $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->where('is_submitted',1)->first();
                                         @endphp
                                             @if(isset($is_course_submitted))
                                             @php
@@ -44,15 +52,21 @@
                                               @endif
                                              @endif
                                             @else
-                                            <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}}</a></li>
+                                            @php $i++; @endphp
+                                            @php  $j++; @endphp
+                                                @if($i.$j==11)
+                                                <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}}</a></li>
+                                                @else
+                                                <li><a href="javascript::void(0)">{{ $val->title}}</a></li>
+                                                @endif
                                             @endif
                                         @endforeach
-                                    
-                                        
+
+
                                     </ul>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     @endif
                     @endforeach
                     @endif
@@ -64,7 +78,7 @@
                     @if($courseCertificate)
                     @foreach($courseCertificate as $certificate)
                     <div class="col-md-6">
-                        <a class="item" href="{{ url('download-certificate', $certificate->id) }}">{{ $certificate->certificate->title ?? '' }}</a>
+                        <a class="item" href="{{ url('download-certificate', $certificate->id) }}">{{ $certificate->course->title ?? '' }}</a>
                     </div>
                     @endforeach
                     @endif

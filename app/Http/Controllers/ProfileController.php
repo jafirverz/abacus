@@ -208,7 +208,7 @@ class ProfileController extends Controller
 		$page = get_page_by_slug($slug);
         $grading=GradingStudent::where('id', $id)->first();
 
-		if (!$page) {
+		if ($grading->approve_status==1) {
 			return abort(404);
 		}
 
@@ -572,7 +572,6 @@ class ProfileController extends Controller
             'user_id' => 'required',
             'mental_grade' => 'required',
             'abacus_grade' => 'required',
-            'learning_location' => 'required',
         ]);
 
 
@@ -581,7 +580,7 @@ class ProfileController extends Controller
         $gradingStudent->grading_exam_id   = $request->grading_exam_id ?? NULL;
         $gradingStudent->instructor_id  = $this->user->id;
         $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
-        $gradingStudent->learning_location  = $request->learning_location ?? NULL;
+        //$gradingStudent->learning_location  = $request->learning_location ?? NULL;
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
@@ -597,14 +596,13 @@ class ProfileController extends Controller
         $request->validate([
             'mental_grade' => 'required',
             'abacus_grade' => 'required',
-            'learning_location' => 'required',
         ]);
 
 
         $gradingStudent = GradingStudent::find($id);
         $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
-        $gradingStudent->learning_location  = $request->learning_location ?? NULL;
+        //$gradingStudent->learning_location  = $request->learning_location ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
 
@@ -998,17 +996,19 @@ class ProfileController extends Controller
         {
             $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
-        elseif(isset($_GET['keyword']) && $_GET['keyword']!='')
-        {
-            $students = User::where('name','like','%' .$_GET['keyword'].'%')->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        elseif(isset($_GET['learning_locations']) && $_GET['learning_locations']!='')
+        {   $students = User::where('learning_locations',$_GET['learning_locations'])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        }
+        elseif(isset($_GET['status']) && $_GET['status']!='')
+        {   $students = User::where('approve_status', $_GET['status'])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         else
         {
             $students = User::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
-
+        $locations = LearningLocation::orderBy('id','desc')->get();
 		$levels = Level::get();
-		return view('account.teaching-students', compact('students', 'levels'));
+		return view('account.teaching-students', compact('students', 'levels','locations'));
     }
 
     public function add_material()
@@ -1043,7 +1043,8 @@ class ProfileController extends Controller
     {
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
-        return view('account.external-add-students', compact('levels', 'country'));
+        $locations = LearningLocation::orderBy('id','desc')->get();
+        return view('account.external-add-students', compact('levels', 'country','locations'));
     }
 
     public function edit_students($id)
@@ -1051,7 +1052,8 @@ class ProfileController extends Controller
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
         $customer = User::find($id);
-        return view('account.external-edit-students', compact('levels', 'country','customer'));
+        $locations = LearningLocation::orderBy('id','desc')->get();
+        return view('account.external-edit-students', compact('levels', 'country','customer','locations'));
     }
 
     public function view_students($id)
@@ -1239,10 +1241,10 @@ class ProfileController extends Controller
         $allocated_competition = CompetitionStudent::where('instructor_id', $user->id)->pluck('competition_controller_id');
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
 		$competition = Competition::where('status', 1)->orderBy('id', 'desc')->first();
-        
+
         if($user->user_type_id==6)
         {
-            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();        
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();
         }
         else
         {
@@ -1301,7 +1303,7 @@ class ProfileController extends Controller
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
         if($user->user_type_id==6)
         {
-            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();        
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();
         }
         else
         {
@@ -1321,7 +1323,6 @@ class ProfileController extends Controller
 
         $request->validate([
             'user_id' => 'required',
-            'learning_location' => 'required',
             'category_id' => 'required',
         ]);
 
@@ -1330,7 +1331,7 @@ class ProfileController extends Controller
         $competitionStudent->user_id   = $request->user_id ?? NULL;
         $competitionStudent->competition_controller_id    = $id ?? NULL;
         $competitionStudent->instructor_id  = $this->user->id;   //Test /Survey
-        $competitionStudent->learning_location  = $request->learning_location ?? NULL;
+        //$competitionStudent->learning_location  = $request->learning_location ?? NULL;
         $competitionStudent->category_id  = $request->category_id ?? NULL;
         $competitionStudent->remarks  = $request->remarks ?? NULL;
         $competitionStudent->save();
@@ -1675,16 +1676,26 @@ class ProfileController extends Controller
 
 
         //$result = $merged->all()->get()->paginate(1);
-        
+
 		return view("account.achievements", compact('actualCompetitionPaperSubted', 'gradingExamResult', 'merged'));
 		//$competitionId =
 	}
 
     public function my_achievements($id){
-		$userId = $id;
-		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		$userId = Auth::user()->id;
+		// $actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
 		//dd($actualCompetitionPaperSubted);
-		return view("account.achievements", compact('actualCompetitionPaperSubted'));
+        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        //dd($actualCompetitionPaperSubted);
+        $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
+
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        //dd($merged);
+
+
+        //$result = $merged->all()->get()->paginate(1);
+
+		return view("account.achievements", compact('actualCompetitionPaperSubted', 'gradingExamResult', 'merged'));
 		//$competitionId =
 	}
 

@@ -47,9 +47,11 @@
                                     <div class="selectwrap">
                                         <select name="file_type" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                             <option>File Type</option>
-                                            <option value="{{ url('teaching-materials?file_type=pdf') }}">Pdf</option>
-                                            <option value="{{ url('teaching-materials?file_type=docx') }}">Docx</option>
-                                            <option value="{{ url('teaching-materials?file_type=doc') }}">Doc</option>
+                                            <option value="{{ url('teaching-materials?file_type=pdf') }}">PDF</option>
+                                            <option value="{{ url('teaching-materials?file_type=docx') }}">DOCX</option>
+                                            <option value="{{ url('teaching-materials?file_type=doc') }}">DOC</option>
+                                            <option value="{{ url('teaching-materials?file_type=doc') }}">PPT</option>
+                                            <option value="{{ url('teaching-materials?file_type=doc') }}">MP4</option>
                                         </select>
                                     </div>
                                 </div>

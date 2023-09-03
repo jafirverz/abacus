@@ -5,6 +5,8 @@ use App\PermissionAccess;
 use Yadahan\AuthenticationLog\AuthenticationLog;
 use App\Announcement;
 use App\Page;
+use App\Course;
+use App\CourseAssignToUser;
 use App\Slider;
 use App\GradingExam;
 use App\GradingPaper;
@@ -450,6 +452,7 @@ if (!function_exists('getPageList')) {
             return $result;
         }
     }
+
     function getExamDetail($exam)
     {
         $result = GradingExam::find($exam);

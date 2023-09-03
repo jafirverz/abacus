@@ -18,10 +18,18 @@
                         <div class="row input-group">
                             
                             <div class="col-md">
-                                <form action="" method="get">
-                            @csrf
-                                <input name="keyword" class="form-control" @if(isset($_GET['keyword']) && $_GET['keyword']!='') value="{{ $_GET['keyword'] }}" @endif type="text" placeholder="Search By" />
-                            </form>
+                                <div class="ggroup">
+                                    <label for="filter">Filter By:</label>
+                                    <div class="selectwrap">
+                                    <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"> @if($locations)
+                                        <option value="">--Select--</option>
+                                    @foreach($locations as $item)
+                                    <option @if(isset($_GET['learning_locations']) && $_GET['learning_locations']==$item->id) selected @endif  value="?learning_locations={{ $item->id }}">{{ $item->title }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                              </div>
+                            </div>
                             </div>
                            
                             <div class="col-md-auto col-sm mt-767-15">
@@ -31,8 +39,22 @@
                                         <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                                 <option value="">--Select--</option>
                                                 @foreach($levels as $level)
-                                                <option @if(isset($_GET['keyword']) && $_GET['keyword']==$level->id) selected @endif value="?level_id={{ $level->id }}">{{ $level->title }}</option>
+                                                <option @if(isset($_GET['level_id']) && $_GET['level_id']==$level->id) selected @endif value="?level_id={{ $level->id }}">{{ $level->title }}</option>
                                                 @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-auto col-sm mt-767-15">
+                                <div class="ggroup">
+                                    <label for="filter">Status:</label>
+                                    <div class="selectwrap">
+                                        <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                                <option value="">--Select--</option>
+                                                
+                                                <option @if(isset($_GET['status']) && $_GET['status']==1) selected @endif value="?status=1">Activated</option>
+                                                <option @if(isset($_GET['status']) && $_GET['status']==2) selected @endif value="?status=2">Pending</option>
                                         </select>
                                     </div>
                                 </div>
@@ -68,7 +90,7 @@
                                     <td class="text-nowrap"><em>{{ $student->name }}</em></td>
                                     <td class="text-nowrap"><em>{{ $student->country_code_phone }} {{ $student->mobile }}</em></td>
                                     <td><em>{{ $student->dob }}</em></td>
-                                    <td><em></em></td>
+                                    <td><em>{{ $student->location->title }}</em></td>
                                     <!-- <td>
                                         <div class="hasaction bot">
                                             <em>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</em>

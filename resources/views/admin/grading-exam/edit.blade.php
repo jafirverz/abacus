@@ -93,7 +93,7 @@
                                 @endphp
 
                                 <div class="form-group">
-                                    <label for="exam_type">Exam Type</label>
+                                    <label for="exam_type">Paper Type</label>
                                     <select name="exam_type" class="form-control">
                                         <option value="">-- Select --</option>
                                         <option @if(old('exam_type', $exam->exam_type)==1) selected @endif value="1">Actual</option>
