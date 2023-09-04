@@ -68,6 +68,21 @@
               </select>
             </div>
           </div>
+
+          <div class="row sp-col-xl-30" >
+            <div class="col-xl-4 sp-col">
+                <label class="lb-1">Learning Location </label>
+                <input class="form-control" id="learning_locations" type="text" value="{{$user->location->title ?? ''}}" disabled />
+                
+            </div>
+            <div class="col-xl-4 sp-col" >
+                <label class="lb-1">Learning Updates </label>
+                <input class="form-control" id="learning_updates" type="text"  value="{{$user->learning_updates ?? ''}}" disabled />
+                
+            </div>
+            
+        </div>
+
           <div class="row sp-col-xl-30">
             <div class="col-xl-8 sp-col">
               <label class="lb-1">Address</label>
@@ -130,6 +145,8 @@
           $('#updateprofile').val(1);
           // $('#profileform').hide();
           // $('#profileformedit').show();
+          $('#learning_locations').attr('disabled', true);
+          $('#learning_updates').attr('disabled', true);
 
   </script>
 @endif
@@ -147,6 +164,9 @@
         $('#updateprofile').val(1);
         // $('#profileform').hide();
         // $('#profileformedit').show();
+
+        $('#learning_locations').attr('disabled', true);
+        $('#learning_updates').attr('disabled', true);
 
     });
 </script>
