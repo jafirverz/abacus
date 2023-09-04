@@ -166,11 +166,11 @@ class GradingExamController extends Controller
     {
         $search_term = $request->search;
         $title = $this->title;
-        $category = GradingExam::search($search_term)->paginate($this->pagination);
+        $exam = GradingExam::search($search_term)->paginate($this->pagination);
         if ($search_term) {
-            $category->appends('search', $search_term);
+            $exam->appends('search', $search_term);
         }
 
-        return view('admin.grading-exam.index', compact('title', 'category'));
+        return view('admin.grading-exam.index', compact('title', 'exam'));
     }
 }

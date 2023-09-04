@@ -241,7 +241,12 @@ class ExternalAccountController extends Controller
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
-        $customer->approve_status = $request->status;
+        $customer->approve_status=$request->status??NULL;
+        if($request->status==2)
+        {
+            $customer->instructor_id=null;
+            $customer->learning_locations=null;
+        }
         $customer->updated_at = Carbon::now();
         $customer->save();
         if(Auth::user()->user_type_id==5)
