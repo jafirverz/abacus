@@ -9,7 +9,7 @@
     <div class="col-lg-9 sp-col tempt-2-inner">
         <div class="tempt-2-content">
             <div class="mb-20">
-                <a class="link-1 lico" href="javascript: history.go(1)"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+                <a class="link-1 lico" href="{{ route('my-course') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
             </div>
             <ul class="breadcrumb bctype">
                 <li><a href="{{ url('online-student/my-course')}}">My Courses</a></li>
@@ -60,7 +60,7 @@
                     </video>
                     <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$question->input_1) }}"><i class="fa-solid fa-play"></i></a>
                     </div>
-                    <textarea class="form-control" rows="3" cols="30" name="answer[{{ $question->id }}]" placeholder="Answer"></textarea>
+                    <textarea @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control" rows="3" cols="30" name="answer[{{ $question->id }}]" placeholder="Answer">@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$question->id)->question_answer ?? '' }} @endif</textarea>
                 </div>
                 </div>
                 @php
@@ -69,14 +69,16 @@
                 }
                 @endphp
           </div>
-            <div class="output-1">
-                @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
-                <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-                @else
-                <button class="btn-2" name="is_submitted" value="2" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
-                <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-                @endif
-            </div>
+          <div class="output-1">
+            @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
+            <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+            @elseif(isset($courseSubmitted) && $courseSubmitted->is_submitted==1)
+            <button class="btn-1" name="is_submitted" value="1" disabled>Submitted <i class="fa-solid fa-arrow-right-long"></i></button>
+            @else
+            <button class="btn-2" name="is_submitted" value="2" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
+            <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+            @endif
+        </div>
             </form>
         </div>
   </div>

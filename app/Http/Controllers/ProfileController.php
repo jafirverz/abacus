@@ -258,7 +258,7 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::where('user_type_id','!=', 5)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 
         $test = TestManagement::findorfail($test_id);
         $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.type',1)->paginate($this->pagination);
@@ -287,7 +287,7 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::where('user_type_id','!=', 5)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 		$survey = Survey::findorfail($survey_id);
 		$page = get_page_by_slug($slug);
         $list = Allocation::where('allocations.assigned_id',$survey_id)->where('allocations.type',2)->paginate($this->pagination);
@@ -328,7 +328,8 @@ class ProfileController extends Controller
 	}
 
     public function detail_test($id){
-        $test = TestManagement::find($id);
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$this->user->id)->select('test_management.*','allocations.id as allocation_id')->first();
+        //$test = TestManagement::find($id);
         $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
         $qId=$test->paper->question_template_id;
         //dd($qId);
@@ -376,6 +377,10 @@ class ProfileController extends Controller
                 $courseSub->question_template_id = $questionTypeId;
                 $courseSub->user_id = $userId;
                 $courseSub->save();
+                $allocation =Allocation::find($request->allocation_id);
+                $allocation->is_finished =1;
+                $allocation->save();
+
                 $totalMarks = 0;
                 $userMarks = 0;
 
@@ -404,7 +409,7 @@ class ProfileController extends Controller
             }
         }
         if(in_array($questionTypeId, $resultpage)){
-            return view('result-course', compact('totalMarks', 'userMarks'));
+            return view('result-test', compact('totalMarks', 'userMarks'));
         }
 
 
@@ -989,6 +994,12 @@ class ProfileController extends Controller
 
 		return redirect()->back()->with('success', __('constant.PROFILE_UPDATED'));
 	}
+
+    public function approve_students($user_id)
+    {
+        $customer=UserProfileUpdate::find($user_id);
+        return view('account.edit-approved-students', compact('customer'));
+    }
 
 	public function studentlist(){
 		$instructor_id = User::where('id', Auth::user()->id)->first();

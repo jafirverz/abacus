@@ -50,10 +50,10 @@
                     <em>{{ $student->userlist->name }}</em>
                     <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">Edit</a> <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a></div>
                   </td>
-                  <td><em>{{ $student->category->category_name }}</em></td>
+                  <td><em>{{ $student->category->category_name ?? '' }}</em></td>
                   <td><em class="status-2">@if($student->approve_status == 1) Approved @else Not Apporved @endif</em></td>
                   <td><em>{{ $student->remarks ?? '' }} </em></td>
-                  <td><em>--</em></td>
+                  <td><em>{{ getCompetetionStudentResult($student->competition_controller_id,$student->id )->result ?? '-'}}</em></td>
                 </tr>
                 @endforeach
               </tbody>

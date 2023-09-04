@@ -53,7 +53,7 @@ class TestManagementController extends Controller
         $title = $this->title;
         $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         $courses = Course::orderBy('id','desc')->get();
-        $papers = TestPaper::orderBy('id','desc')->get();
+        $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
         return view('admin.test-management.create', compact('title','courses','papers','students'));
     }
 
@@ -110,7 +110,7 @@ class TestManagementController extends Controller
         $test = TestManagement::findorfail($id);
         $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         $courses = Course::orderBy('id','desc')->get();
-        $papers = TestPaper::orderBy('id','desc')->get();
+        $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
         return view('admin.test-management.edit', compact('title', 'test','courses','papers','students'));
     }
 

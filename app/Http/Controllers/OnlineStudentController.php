@@ -114,18 +114,17 @@ class OnlineStudentController extends Controller
     public function submit_course(Request $request){
 
         //dd($request);
-        $course_sub=CourseSubmitted::find($request->course_submitted_id);
-        if(isset($course_sub) &&  $request->is_submitted==1)
+
+
+        if(isset($request->course_submitted_id) &&  $request->is_submitted==1)
         {
+            $course_sub=CourseSubmitted::find($request->course_submitted_id);
 
             CourseQuestionSubmitted::where('course_submitted_id',$course_sub->id)->delete();
             CourseSubmitted::where('id',$request->course_submitted_id)->delete();
 
         }
-        else
-        {
-            abort(404);
-        }
+
         $test_paper_question_id = $request->test_paper_question_id;
         $course_id = $request->course_id;
         $questionTypeId = $request->question_type;

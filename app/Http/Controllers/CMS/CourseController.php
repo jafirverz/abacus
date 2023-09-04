@@ -50,7 +50,7 @@ class CourseController extends Controller
     {
         $title = $this->title;
         $levels = Level::get();
-        $papers = TestPaper::orderBy('id','desc')->get();
+        $papers = TestPaper::where('paper_type',2)->orderBy('id','desc')->get();
         $students = User::where('user_type_id', 3)->orderBy('id','desc')->get();
         return view('admin.master.course.create', compact('title','students','levels','papers'));
     }
@@ -117,7 +117,7 @@ class CourseController extends Controller
         $title = $this->title;
         $course = Course::findorfail($id);
         $levels = Level::get();
-        $papers = TestPaper::orderBy('id','desc')->get();
+        $papers = TestPaper::where('paper_type',2)->orderBy('id','desc')->get();
         $students = User::where('user_type_id', 3)->orderBy('id','desc')->get();
         $courseAssignToUser = CourseAssignToUser::where('course_id',$id)->pluck('user_id')->toArray();
         //dd($courseAssignToUser);
@@ -140,14 +140,8 @@ class CourseController extends Controller
             'paper_id'  =>  'required',
             'students.0'  =>  'required',
             'title'  =>  'required|unique:courses,title,'.$id.',id|max:191',
-        ]);
-        $request->validate([
-            'level'  =>  'required',
-            'content'  =>  'required',
-            'paper_id'  =>  'required',
-            'students.0'  =>  'required',
-            'title'  =>  'required|unique:courses,title|max:191',
         ],['students.0.required'    => 'Student field is required.']);
+
         $course = Course::findorfail($id);
         $course->level_id = $request->level;
         $course->title = $request->title;

@@ -87,7 +87,7 @@
                                     </td>
                                     <td><em>{{ $item->start_date }}</em></td>
                                     <td><em>{{ $item->end_date }}</em></td>
-                                    <td><em>3hrs, 15mins</em></td>
+                                    <td><em>{{ diff_between_dates($item->start_date,$item->end_date) }}</em></td>
                                     <td><em class="status-5">FAILED</em></td>
                                 </tr>
                                 @endforeach

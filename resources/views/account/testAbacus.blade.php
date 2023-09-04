@@ -7,7 +7,7 @@
             <a class="link-1 lico" href="javascript::void(0)" onclick="window.history.go(-1); return false;"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <h1 class="title-3 mb-20">{{ $test->title }}</h1>
-        <div class="title-11">Elementary I - Test</div>
+        {{-- <div class="title-11">Elementary I - Test</div> --}}
         <div class="box-1">
             <div class="row sp-col-20">
                 <div class="col-xl-5 col-lg-6 col-sm-7 sp-col">
@@ -18,14 +18,14 @@
                     <label class="lb-1 mt-0">Date</label>
                     <div class="date-wrap">
                         <i class="fa-solid fa-calendar-days ico"></i>
-                        <input class="form-control inptype-1" type="text" placeholder="01/03/2023" disabled />
+                        <input class="form-control inptype-1" type="text" placeholder="{{ date('Y-m-d') }}" disabled />
                     </div>
                 </div>
             </div>
         </div>
         <form method="post" action="{{ route('test.answer.submit') }}">
             @csrf
-
+            <input type="hidden" name="allocation_id" value="{{ $test->allocation_id }}">
             <input type="hidden" name="test_id" value="{{ $test->id }}">
             <input type="hidden" name="question_type" value="{{ $test->paper->question_template_id }}">
             @if($all_paper_detail)
