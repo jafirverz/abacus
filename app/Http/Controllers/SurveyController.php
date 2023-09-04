@@ -26,7 +26,7 @@ class SurveyController extends Controller
         }else{
             $surveyQuestions = '';
         }
-        $allocation = Allocation::where('student_id', Auth::user()->id)->where('type', 2)->where('is_finished', null)->orderBy('id', 'desc')->first();
+        $allocation = Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
         if(!$allocation){
             return abort(404);
         }
