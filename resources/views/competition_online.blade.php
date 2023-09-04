@@ -38,7 +38,8 @@
                                         <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
                                     </div>
                                     @php 
-                                    $userCategory = json_decode(Auth::user()->category_id);
+                                    //$userCategory = json_decode(Auth::user()->category_id);
+                                    $userCategory = \App\CompetitionStudent::where('user_id',Auth::user()->id)->where('competition_controller_id', $competition->id)->pluck('category_id')->toArray();
                                     if($userCategory){
                                         $catComp1 = \App\CompetitionCategory::whereIn('id', $userCategory)->pluck('category_name')->toArray();
                                         $categories = implode(',', $catComp1);
@@ -77,7 +78,10 @@
 
                         @php 
                         $compId = $competition->id;
-                        $userCategory = json_decode(Auth::user()->category_id);
+                        //$userCategory = json_decode(Auth::user()->category_id);
+                        $userCategory = \App\CompetitionStudent::where('user_id',Auth::user()->id)->where('competition_controller_id', $compId)->pluck('category_id')->toArray();
+                        //dd($compId);
+                        //$userCategory = $userCategory->category_id;
                         if($userCategory){
                             $catComp = \App\CategoryCompetition::where('competition_id', $compId)->whereIn('category_id', $userCategory)->pluck('category_id')->toArray();
                         }else{
