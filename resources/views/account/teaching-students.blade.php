@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<main class="main-wrap">	
+<main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
             <div class="menu-aside">
@@ -9,14 +9,14 @@
             </div>
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
-            <div class="tempt-2-content">	
+            <div class="tempt-2-content">
                 <div class="row title-wrap-2 mt-30">
                     <div class="col-lg-4 mt-20">
                         <h1 class="title-3">My Students</h1>
                     </div>
                     <div class="col-lg-8 mt-20 lastcol">
                         <div class="row input-group">
-                            
+
                             <div class="col-md">
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
@@ -31,7 +31,7 @@
                               </div>
                             </div>
                             </div>
-                           
+
                             <div class="col-md-auto col-sm mt-767-15">
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
@@ -52,7 +52,7 @@
                                     <div class="selectwrap">
                                         <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                                 <option value="">--Select--</option>
-                                                
+
                                                 <option @if(isset($_GET['status']) && $_GET['status']==1) selected @endif value="?status=1">Activated</option>
                                                 <option @if(isset($_GET['status']) && $_GET['status']==2) selected @endif value="?status=2">Pending</option>
                                         </select>
@@ -81,6 +81,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($students->count() > 0)
                                 @foreach($students as $student)
                                 <tr>
                                     <td>
@@ -90,14 +91,14 @@
                                     <td class="text-nowrap"><em>{{ $student->name }}</em></td>
                                     <td class="text-nowrap"><em>{{ $student->country_code_phone }} {{ $student->mobile }}</em></td>
                                     <td><em>{{ $student->dob }}</em></td>
-                                    <td><em>{{ $student->location->title }}</em></td>
+                                    <td><em>{{ $student->location->title ?? '' }}</em></td>
                                     <!-- <td>
                                         <div class="hasaction bot">
                                             <em>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</em>
                                             <a class="link-1" href="#"><i class="icon-edit"></i></a>
                                         </div>
                                     </td> -->
-                                    @php 
+                                    @php
                                     $level = json_decode($student->level_id);
                                     $levelarry = array();
                                     if(!empty($level) && sizeof($level) > 0){
@@ -105,7 +106,7 @@
                                             $levelsdetails = \App\Level::where('id', $levelname)->first();
                                             $title = $levelsdetails->title;
                                             array_push($levelarry, $title);
-                                            
+
                                         }
                                     }else{
                                         $levelarry = '';
@@ -124,7 +125,9 @@
                                     </td>
                                     <td><em class="status-6">@if($student->approve_status == 1) Approved @else Not Approved @endif</em> <br/></td>
                                 </tr>
+
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -134,7 +137,7 @@
                 </div>
             </div>
         </div>
-    </div>	
+    </div>
 </main>
 
 @endsection

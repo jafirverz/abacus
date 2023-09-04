@@ -20,12 +20,12 @@
                             <h2 class="title-2">Personal Information</h2>
                         </div>
                     </div>
-                <form method="post" name="student" id="student" enctype="multipart/form-data" action="{{route('external-profile.add-students')}}">
+                <form method="post" name="student" id="student" enctype="multipart/form-data" action="{{route('external-profile.add-students.edit', $customer->id)}}">
                     @csrf
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Full Name <span class="required">*</span></label>
-                            <input class="form-control" name="name" type="text" value="{{ old('name') }}"  />
+                            <input class="form-control" name="name" type="text" value="{{ old('name', $customer->name) }}"  />
                             @if ($errors->has('name'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Email <span class="required">*</span></label>
-                            <input name="email"  class="form-control" type="text" value="{{ old('email') }}"  />
+                            <input name="email"  class="form-control" type="text" value="{{ old('email', $customer->email) }}"  />
                             @if ($errors->has('email'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -56,7 +56,7 @@
                             <label class="lb-1">Date of Birth <span class="required">*</span></label>
                             <div class="date-wrap ">
                                 <i class="fa-solid fa-calendar-days ico"></i>
-                                <input name="dob" class="form-control" type="text" value="{{ old('dob') }}"  />
+                                <input name="dob" class="form-control" type="text" value="{{ old('dob', $customer->dob) }}"  />
                                 @if ($errors->has('dob'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('dob') }}</strong>
@@ -80,7 +80,7 @@
                                                 @endif
                                 </div>
                                 <div class="col sp-col">
-                                    <input class="form-control" name="mobile" type="text" value=""  />
+                                    <input class="form-control" name="mobile" type="text" value="{{ old('mobile', $customer->mobile) }}"  />
                                     @if ($errors->has('mobile'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('mobile') }}</strong>
@@ -93,9 +93,9 @@
                             <label class="lb-1">Gender <span class="required">*</span></label>
                             <select name="gender" class="selectpicker" >
                                 <option>Please Select</option>
-                                <option value="1" @if(old('gender')=="1") selected @endif>Male
+                                <option value="1" @if(old('gender', $customer->gender)=="1") selected @endif>Male
                                 </option>
-                                <option value="2" @if(old('gender')=="2") selected @endif>Female
+                                <option value="2" @if(old('gender', $customer->gender)=="2") selected @endif>Female
                                 </option>
                             </select>
                         </div>
@@ -106,7 +106,7 @@
                             <select class="selectpicker"  name="country_code">
                                 @if(getCountry())
                                 @foreach (getCountry() as $key => $item)
-                                <option value="{{ $key }}" @if(old('country_code')==$key) selected @endif>{{ $item }}
+                                <option value="{{ $key }}" @if(old('country_code', $customer->country_code)==$key) selected @endif>{{ $item }}
                                 </option>
                                 @endforeach
                                 @endif
@@ -117,11 +117,15 @@
                                     </span>
                             @endif
                         </div>
+                            @php
+                                $level_ids=json_decode($customer->level_id,true);
+                                //dd( $level_ids);
+                            @endphp
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Level <span class="required">*</span></label>
                             <select class="selectpicker"  name="level[]" multiple>
                                 @foreach($levels as $level)
-                                <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @endif>{{ $level->title }}
+                                <option value="{{ $level->id }}" @if(isset($level_ids) && in_array($level->id,$level_ids)) selected @endif>{{ $level->title }}
                                 </option>
                                 @endforeach
                             </select>
@@ -133,38 +137,27 @@
                             @endif
                         </div>
                     </div>
-                    <div class="row sp-col-xl-30">
-                        <div class="col-xl-12 sp-col">
-                            <label class="lb-1">Address</label>
-                            <input name="address" class="form-control" type="text" value="{{ old('address') }}"  />
-                        </div>
-                    </div>
+
+
 
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Learning Locations </label>
-                            <select name="learning_locations" class="selectpicker" data-title="Select Option">
-                                @if($locations)
-                                @foreach($locations as $item)
-                                <option @if(old('learning_locations')==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
-                                @endforeach
-                                @endif
+                            <label class="lb-1" for="approved_status">Status</label>
+                            <select name="approved_status" class="selectpicker" id="">
+                                <option value="1">Approved</option>
                             </select>
-                            @if ($errors->has('learning_locations'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('learning_locations') }}</strong>
-                                    </span>
-                           @endif
+                            @if ($errors->has('approved_status'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('approved_status') }}</strong>
+                            </span>
+                            @endif
                         </div>
                         <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Learning Updates </label>
-                            <textarea class="form-control" name="learning_updates">{{ old('learning_updates') }}</textarea>
-                            @if ($errors->has(' learning_updates'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('learning_updates') }}</strong>
-                                    </span>
-                           @endif
+                            <label class="lb-1">Address</label>
+                            <input name="address" class="form-control" type="text" value="{{ old('address', $customer->address) }}"  />
                         </div>
+
+
                     </div>
 
 

@@ -6,7 +6,7 @@ use Yadahan\AuthenticationLog\AuthenticationLog;
 use App\Announcement;
 use App\Page;
 use App\Course;
-use App\CourseAssignToUser;
+use App\CourseQuestionSubmitted;
 use App\Slider;
 use App\GradingExam;
 use App\GradingPaper;
@@ -17,6 +17,8 @@ use App\PaperCategory;
 use App\TestPaperDetail;
 use App\TestPaperQuestionDetail;
 use App\GradingListingDetail;
+use App\CompetitionStudentResult;
+use App\Competition;
 use App\Role;
 use App\User;
 use App\Menu;
@@ -371,6 +373,24 @@ if (!function_exists('getPageList')) {
         }
     }
 
+    function diff_between_dates($date1,$date2)
+    {
+
+        $diff = abs(strtotime($date2) - strtotime($date1));
+
+        $years   = floor($diff / (365*60*60*24));
+        $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+        $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+        $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60));
+
+        $minuts  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+
+        $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minuts*60));
+
+        printf(" %d days, %d hours, %d minuts\n",  $days, $hours, $minuts);
+    }
+
 	function get_active_modules($role_id = null)
     {
         //DB::enableQueryLog();
@@ -453,6 +473,14 @@ if (!function_exists('getPageList')) {
         }
     }
 
+    function getCourseAnswer($course_submitted_id,$question_id)
+    {
+        $result = CourseQuestionSubmitted::where('course_submitted_id',$course_submitted_id)->where('question_id',$question_id)->first();
+        if ($result) {
+            return $result;
+        }
+    }
+
     function getExamDetail($exam)
     {
         $result = GradingExam::find($exam);
@@ -479,6 +507,15 @@ if (!function_exists('getPageList')) {
     function getGradingStudentResult($grading_id,$user_id)
     {
         $result = GradingStudentResults::where('grading_id',$grading_id)->where('user_id',$user_id)->first();
+        if ($result) {
+            return $result;
+        }
+         return NULL;
+    }
+
+    function getCompetetionStudentResult($competition_id,$user_id)
+    {
+        $result = CompetitionStudentResult::where('competition_id',$competition_id)->where('user_id',$user_id)->first();
         if ($result) {
             return $result;
         }
