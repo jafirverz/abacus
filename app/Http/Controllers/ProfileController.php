@@ -997,25 +997,28 @@ class ProfileController extends Controller
 
     public function approve_students($user_id)
     {
-        $customer=UserProfileUpdate::find($user_id);
-        return view('account.edit-approved-students', compact('customer'));
+        $customer=UserProfileUpdate::where('user_id',$user_id)->first();
+        $levels = Level::get();
+        $country = Country::orderBy('phonecode')->get();
+        //dd($customer);
+        return view('account.edit-approved-students', compact('customer','levels','country'));
     }
 
 	public function studentlist(){
 		$instructor_id = User::where('id', Auth::user()->id)->first();
         if(isset($_GET['level_id']) && $_GET['level_id']!='')
         {
-            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         elseif(isset($_GET['learning_locations']) && $_GET['learning_locations']!='')
-        {   $students = User::where('learning_locations',$_GET['learning_locations'])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        {   $students = User::where('learning_locations',$_GET['learning_locations'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         elseif(isset($_GET['status']) && $_GET['status']!='')
-        {   $students = User::where('approve_status', $_GET['status'])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        {   $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         else
         {
-            $students = User::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+            $students = User::where('instructor_id', $instructor_id->id)->whereIn('approve_status',[1,0])->paginate($this->pagination);
         }
         $locations = LearningLocation::orderBy('id','desc')->get();
 		$levels = Level::get();
@@ -1238,9 +1241,58 @@ class ProfileController extends Controller
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
+        $customer->approve_status=$request->status??NULL;
+        if($request->status==2)
+        {
+            $customer->instructor_id=null;
+            $customer->learning_locations=null;
+        }
         $customer->updated_at = Carbon::now();
         $customer->save();
         return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+
+    }
+
+    public function update_approved_students (Request $request,$id)
+    {
+
+        $fields = [
+            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'name' => 'required|string',
+            'country_code' => 'required',
+            'dob' => 'required',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
+            'gender' => 'required|string',
+        ];
+
+        //dd($request);
+        $messages = [];
+        $messages['email.required'] = 'The email address field is required.';
+        $messages['name.required'] = 'The name field is required.';
+        $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
+        $messages['country_code.required'] = 'The country code field is required.';
+        $messages['dob.required'] = 'Date of Birth is required.';
+        $messages['mobile.required'] = 'The contact number field is required.';
+        $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
+        $request->validate($fields, $messages);
+
+        $userProfileUpdate = UserProfileUpdate::find($request->user_profile_update_id);
+        $userProfileUpdate->approve_status  = 1;
+        $userProfileUpdate->save();
+        $customer = User::find($id);
+        $customer->name = $request->name;
+        $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
+        $customer->email = $request->email??NULL;
+        $customer->address = $request->address??NULL;
+        $customer->gender = $request->gender??NULL;
+        $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
+        $customer->mobile = $request->mobile??NULL;
+        $customer->updated_at = Carbon::now();
+        $customer->save();
+        return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
 
     }
 

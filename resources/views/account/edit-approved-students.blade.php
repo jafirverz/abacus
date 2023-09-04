@@ -20,10 +20,10 @@
                             <h2 class="title-2">Personal Information</h2>
                         </div>
                     </div>
-                <form method="post" name="student" id="student" enctype="multipart/form-data" action="{{route('external-profile.add-students.edit', $customer->id)}}">
+                <form method="post" name="student" id="student" enctype="multipart/form-data" action="{{route('instructor.students.approve.update', $customer->user_id)}}">
                     @csrf
                     <div class="row sp-col-xl-30">
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-6 sp-col">
                             <label class="lb-1">Full Name <span class="required">*</span></label>
                             <input class="form-control" name="name" type="text" value="{{ old('name', $customer->name) }}"  />
                             @if ($errors->has('name'))
@@ -32,7 +32,7 @@
                                     </span>
                            @endif
                         </div>
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-6 sp-col">
                             <label class="lb-1">Email <span class="required">*</span></label>
                             <input name="email"  class="form-control" type="text" value="{{ old('email', $customer->email) }}"  />
                             @if ($errors->has('email'))
@@ -41,15 +41,7 @@
                                     </span>
                             @endif
                         </div>
-                        <div class="col-xl-4 sp-col">
-                            <label class="lb-1">Password <span class="required">*</span></label>
-                            <input name="password" class="form-control" type="password" placeholder="*****"  />
-                            @if ($errors->has('password'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
+
                     </div>
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-4 sp-col">
@@ -117,52 +109,17 @@
                                     </span>
                             @endif
                         </div>
-                            @php
-                                $level_ids=json_decode($customer->level_id,true);
-                                //dd( $level_ids);
-                            @endphp
-                        <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Level <span class="required">*</span></label>
-                            <select class="selectpicker"  name="level[]" multiple>
-                                @foreach($levels as $level)
-                                <option value="{{ $level->id }}" @if(isset($level_ids) && in_array($level->id,$level_ids)) selected @endif>{{ $level->title }}
-                                </option>
-                                @endforeach
-                            </select>
-
-                            @if ($errors->has('level'))
-                            <span class="text-danger d-block">
-                                <strong>{{ $errors->first('level') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
-
-
-                    <div class="row sp-col-xl-30">
-                        <div class="col-xl-6 sp-col">
-                            <label class="lb-1" for="approved_status">Status</label>
-                            <select name="approved_status" class="selectpicker" id="">
-                                <option value="1">Approved</option>
-                            </select>
-                            @if ($errors->has('approved_status'))
-                            <span class="text-danger d-block">
-                                <strong>{{ $errors->first('approved_status') }}</strong>
-                            </span>
-                            @endif
-                        </div>
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Address</label>
                             <input name="address" class="form-control" type="text" value="{{ old('address', $customer->address) }}"  />
                         </div>
 
-
                     </div>
 
+                    <input type="hidden" name="user_profile_update_id" value="{{ $customer->id}}">
 
                     <div class="output-2">
-                        <button class="btn-1" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
+                        <button class="btn-1" name="approved_status" value=1 type="submit">Approve <i class="fa-solid fa-arrow-right-long"></i></button>
                     </div>
                 </form>
                 </div>

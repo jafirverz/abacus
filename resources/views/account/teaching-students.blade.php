@@ -65,6 +65,7 @@
                         </div>
                     </div>
                 </div>
+                @include('inc.messages')
                 <div class="box-1">
                     <div class="xscrollbar">
                         <table class="tb-2 tbtype-4">
@@ -86,7 +87,13 @@
                                 <tr>
                                     <td>
                                         <em>{{ $student->account_id }}</em>
-                                        <div class="tbactions"><a href="{{route('instructor.students.view', $student->id)}}">Profile</a> <a href="{{route('normal.my-achievements', $student->id)}}">Achievements</a></div>
+                                        <div class="tbactions">
+                                            <a href="{{route('instructor.students.view', $student->id)}}">Profile</a>
+                                            <a href="{{route('normal.my-achievements', $student->id)}}">Achievements</a>
+                                            @if(check_approve_changes($student->id)!=Null)
+                                            <a href="{{route('instructor.students.approve', $student->id)}}">Approve Changes</a>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="text-nowrap"><em>{{ $student->name }}</em></td>
                                     <td class="text-nowrap"><em>{{ $student->country_code_phone }} {{ $student->mobile }}</em></td>
@@ -123,7 +130,7 @@
                                             <a class="link-1" href="{{route('instructor.add-students.edit', $student->id)}}"><i class="icon-edit"></i></a>
                                         </div>
                                     </td>
-                                    <td><em class="status-6">@if($student->approve_status == 1) Approved @else Not Approved @endif</em> <br/></td>
+                                    <td><em class="status-6">@if($student->approve_status == 1) Active @else Not Active @endif</em> <br/></td>
                                 </tr>
 
                                 @endforeach

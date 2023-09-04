@@ -4,6 +4,7 @@ use App\Admin;
 use App\PermissionAccess;
 use Yadahan\AuthenticationLog\AuthenticationLog;
 use App\Announcement;
+use App\UserProfileUpdate;
 use App\Page;
 use App\Course;
 use App\CourseQuestionSubmitted;
@@ -292,7 +293,7 @@ if (!function_exists('getPageList')) {
 
     function getActiveStatus($id = null)
     {
-        $array_list = ['1'  =>  'Active', '2'  =>  'Inactive'];
+        $array_list = ['1'  =>  'Active', '2'  =>  'Deactivate'];
         if ($id) {
             return $array_list[$id];
         }
@@ -732,6 +733,15 @@ if (!function_exists('getPageList')) {
 	function get_user_detail_by_email($email)
     {
         $user = User::where('email', $email)->first();
+        if ($user)
+            return $user;
+        else
+            return NULL;
+    }
+
+    function check_approve_changes($user_id)
+    {
+        $user = UserProfileUpdate::where('user_id', $user_id)->where('instructor_id',Auth::user()->id)->where('approve_status',0)->first();
         if ($user)
             return $user;
         else
