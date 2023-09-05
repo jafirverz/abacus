@@ -86,12 +86,18 @@
                         <div class="gactions">
                             @php
                             if($surveys){
-                                $url = '/survey-form';
+                                $allocation = \App\Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
+                                if(!$allocation){
+                                    $url = 'javascript::void(0)'; 
+                                }else{
+                                    $url = url('/survey-form');
+                                }
+                                
                             }else{
-                                $url = 'javascript::void(0);'; 
+                                $url = 'javascript::void(0)'; 
                             }
                             @endphp
-                            <a href="{{ url($url) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <a href="{{ $url }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
                 </div>
