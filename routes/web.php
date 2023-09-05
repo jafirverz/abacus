@@ -84,6 +84,8 @@ Route::get('/add-students', 'ProfileController@add_students')->name('instructor.
 Route::post('/add-students', 'ProfileController@store_add_students')->name('instructor.add-students');
 Route::get('/students/edit/{id?}', 'ProfileController@edit_students')->name('instructor.add-students.edit');
 Route::get('/students/view/{id?}', 'ProfileController@view_students')->name('instructor.students.view');
+Route::get('/students/approve/{id?}', 'ProfileController@approve_students')->name('instructor.students.approve');
+Route::post('/students/approve/{id?}', 'ProfileController@update_approved_students')->name('instructor.students.approve.update');
 Route::post('/add-students/edit/{id?}', 'ProfileController@update_students')->name('instructor.add-students.update');
 Route::get('/add-students/delete/{id?}', 'ProfileController@delete_students')->name('instructor.add-students.delete');
 

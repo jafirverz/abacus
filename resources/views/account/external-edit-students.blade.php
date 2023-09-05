@@ -137,7 +137,7 @@
                             @endif
                         </div>
                     </div>
-                    @if(Auth::user()->user_type_id == 5)
+
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
@@ -164,7 +164,7 @@
                            @endif
                         </div>
                     </div>
-                    @endif
+
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1" for="status">Status</label>

@@ -10,6 +10,7 @@ use App\Traits\PageTrait;
 use App\User;
 use App\Level;
 use App\Country;
+use App\LearningLocation;
 use Carbon\Carbon;
 use Exception;
 use App\Mail\EmailNotification;
@@ -45,7 +46,8 @@ class ExternalAccountController extends Controller
     {
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
-        return view('account.external-add-students', compact('levels', 'country'));
+        $locations = LearningLocation::orderBy('id','desc')->get();
+        return view('account.external-add-students', compact('levels', 'country','locations'));
     }
 
     public function edit_students($id)
@@ -53,7 +55,8 @@ class ExternalAccountController extends Controller
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
         $customer = User::find($id);
-        return view('account.external-edit-students', compact('levels', 'country','customer'));
+        $locations = LearningLocation::orderBy('id','desc')->get();
+        return view('account.external-edit-students', compact('levels', 'country','customer','locations'));
     }
 
 
@@ -238,13 +241,18 @@ class ExternalAccountController extends Controller
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
-        $customer->approve_status = $request->status;
+        $customer->approve_status=$request->status??NULL;
+        if($request->status==2)
+        {
+            $customer->instructor_id=null;
+            $customer->learning_locations=null;
+        }
         $customer->updated_at = Carbon::now();
         $customer->save();
         if(Auth::user()->user_type_id==5)
         {
             return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
-           
+
         }
         else
         {

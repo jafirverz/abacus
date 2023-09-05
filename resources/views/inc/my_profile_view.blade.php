@@ -23,7 +23,7 @@
                 </div>
             </div>
             @endforeach
-            
+
 
 
         </div>
@@ -53,13 +53,13 @@
                     <div class="descripts">
                         <h3>Competition</h3>
                         <div class="gactions">
-                           
+
                             @php
                             if(isset($competition) && !empty($competition)){
                                 $competitionId = $competition->id;
                                 $compStu = \App\CompetitionStudent::where('user_id', Auth::user()->id)->where('competition_controller_id', $competition->id)->where('approve_status', 1)->first();
                                 if($compStu){
-                                    $url = 1; 
+                                    $url = 1;
                                 }else{
                                     $url = '0';
                                 }
@@ -84,19 +84,27 @@
                     <div class="descripts">
                         <h3>Test/Survey</h3>
                         <div class="gactions">
-                            @php
-                            if($surveys){
-                                $allocation = \App\Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
-                                if(!$allocation){
-                                    $url = 'javascript::void(0)'; 
+                            @if(isset($test))
+                                @php
+                                //dd($test);
+                                $url=route('test.detail',$test->id);
+                                @endphp
+                            @else
+                                @php
+                                //dd($test);
+                                if($surveys){
+                                    $allocation = \App\Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
+                                    if(!$allocation){
+                                        $url = 'javascript::void(0)'; 
+                                    }else{
+                                        $url = url('/survey-form');
+                                    }
+                                    
                                 }else{
-                                    $url = url('/survey-form');
+                                    $url = 'javascript::void(0)'; 
                                 }
-                                
-                            }else{
-                                $url = 'javascript::void(0)'; 
-                            }
-                            @endphp
+                                @endphp
+                            @endif
                             <a href="{{ $url }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>

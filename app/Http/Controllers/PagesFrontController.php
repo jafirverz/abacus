@@ -17,6 +17,8 @@ use App\Contact;
 use App\Menu;
 use App\Slider;
 use App\Category;
+use App\TestManagement;
+use App\Allocation;
 use App\Competition;
 use App\Country;
 use App\Partner;
@@ -76,8 +78,10 @@ class PagesFrontController extends Controller
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
         $todayDate = date('Y-m-d');
 
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.is_finished',NULL)->where('allocations.start_date','<=',$todayDate)->where('allocations.end_date','>=',$todayDate)->where('allocations.student_id',Auth::user()->id)->select('test_management.*','allocations.id as allocation_id')->first();
+        //dd($test);
         $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
-        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
+        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
         $competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
 
 
@@ -85,11 +89,11 @@ class PagesFrontController extends Controller
 //		$partners = Partner::where('status', 1)->orderBy('view_order', 'asc')->get();
 //		$testimonials = Testimonial::where('status', 1)->get();
         //dd($grading_exam);
-        $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
+        //$grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
         $surveys = Survey::where('status', 1)->first();
         $user = User::where('id', Auth::user()->id)->first();
         $country = Country::orderBy('phonecode', 'asc')->get();
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test'));
     }
 
     public function instructor($slug = null){

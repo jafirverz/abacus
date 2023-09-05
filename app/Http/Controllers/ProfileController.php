@@ -258,7 +258,7 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::where('user_type_id','!=', 5)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 
         $test = TestManagement::findorfail($test_id);
         $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.type',1)->paginate($this->pagination);
@@ -287,7 +287,7 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::where('user_type_id','!=', 5)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 		$survey = Survey::findorfail($survey_id);
 		$page = get_page_by_slug($slug);
         $list = Allocation::where('allocations.assigned_id',$survey_id)->where('allocations.type',2)->paginate($this->pagination);
@@ -328,7 +328,8 @@ class ProfileController extends Controller
 	}
 
     public function detail_test($id){
-        $test = TestManagement::find($id);
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$this->user->id)->select('test_management.*','allocations.id as allocation_id')->first();
+        //$test = TestManagement::find($id);
         $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
         $qId=$test->paper->question_template_id;
         //dd($qId);
@@ -376,6 +377,10 @@ class ProfileController extends Controller
                 $courseSub->question_template_id = $questionTypeId;
                 $courseSub->user_id = $userId;
                 $courseSub->save();
+                $allocation =Allocation::find($request->allocation_id);
+                $allocation->is_finished =1;
+                $allocation->save();
+
                 $totalMarks = 0;
                 $userMarks = 0;
 
@@ -404,7 +409,7 @@ class ProfileController extends Controller
             }
         }
         if(in_array($questionTypeId, $resultpage)){
-            return view('result-course', compact('totalMarks', 'userMarks'));
+            return view('result-test', compact('totalMarks', 'userMarks'));
         }
 
 
@@ -990,21 +995,30 @@ class ProfileController extends Controller
 		return redirect()->back()->with('success', __('constant.PROFILE_UPDATED'));
 	}
 
+    public function approve_students($user_id)
+    {
+        $customer=UserProfileUpdate::where('user_id',$user_id)->first();
+        $levels = Level::get();
+        $country = Country::orderBy('phonecode')->get();
+        //dd($customer);
+        return view('account.edit-approved-students', compact('customer','levels','country'));
+    }
+
 	public function studentlist(){
 		$instructor_id = User::where('id', Auth::user()->id)->first();
         if(isset($_GET['level_id']) && $_GET['level_id']!='')
         {
-            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         elseif(isset($_GET['learning_locations']) && $_GET['learning_locations']!='')
-        {   $students = User::where('learning_locations',$_GET['learning_locations'])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        {   $students = User::where('learning_locations',$_GET['learning_locations'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         elseif(isset($_GET['status']) && $_GET['status']!='')
-        {   $students = User::where('approve_status', $_GET['status'])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        {   $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
         }
         else
         {
-            $students = User::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+            $students = User::where('instructor_id', $instructor_id->id)->whereIn('approve_status',[1,0])->paginate($this->pagination);
         }
         $locations = LearningLocation::orderBy('id','desc')->get();
 		$levels = Level::get();
@@ -1227,9 +1241,58 @@ class ProfileController extends Controller
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
+        $customer->approve_status=$request->status??NULL;
+        if($request->status==2)
+        {
+            $customer->instructor_id=null;
+            $customer->learning_locations=null;
+        }
         $customer->updated_at = Carbon::now();
         $customer->save();
         return redirect()->route('external-profile.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
+
+    }
+
+    public function update_approved_students (Request $request,$id)
+    {
+
+        $fields = [
+            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'name' => 'required|string',
+            'country_code' => 'required',
+            'dob' => 'required',
+            'country_code_phone' => 'required',
+            'mobile' => 'required|integer|min:8',
+            'gender' => 'required|string',
+        ];
+
+        //dd($request);
+        $messages = [];
+        $messages['email.required'] = 'The email address field is required.';
+        $messages['name.required'] = 'The name field is required.';
+        $messages['email.email'] = 'The email address must be a valid email address.';
+        $messages['country_code_phone.required'] = 'The country code is required.';
+        $messages['country_code.required'] = 'The country code field is required.';
+        $messages['dob.required'] = 'Date of Birth is required.';
+        $messages['mobile.required'] = 'The contact number field is required.';
+        $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
+        $request->validate($fields, $messages);
+
+        $userProfileUpdate = UserProfileUpdate::find($request->user_profile_update_id);
+        $userProfileUpdate->approve_status  = 1;
+        $userProfileUpdate->save();
+        $customer = User::find($id);
+        $customer->name = $request->name;
+        $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
+        $customer->email = $request->email??NULL;
+        $customer->address = $request->address??NULL;
+        $customer->gender = $request->gender??NULL;
+        $customer->country_code = $request->country_code??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
+        $customer->mobile = $request->mobile??NULL;
+        $customer->updated_at = Carbon::now();
+        $customer->save();
+        return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));
 
     }
 

@@ -1,52 +1,43 @@
 @extends('layouts.app')
 @section('content')
-
 <main class="main-wrap">
-  <div class="row sp-col-0 tempt-2">
-    <div class="col-lg-3 sp-col tempt-2-aside">
-      @if(Auth::user()->user_type_id == 1)
-        @include('inc.account-sidebar')
-      @endif
-    </div>
-    <div class="col-lg-9 sp-col tempt-2-inner">
-      <div class="tempt-2-content">
-        <div class="mb-20">
-          <a class="link-1 lico" href="be-overview-preparatory.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+    <div class="tempt-3">
+    <div class="mb-20">
+            <a class="link-1 lico" href="javascript::void(0)" onclick="window.history.go(-1); return false;"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
-        <ul class="breadcrumb bctype">
-            <li><a href="{{ url('grading-overview') }}">Grading Overview</a></li>
-            <li><strong>{{ $gradingExam->title }}</strong></li>
-        </ul>
+        <h1 class="title-3 mb-20">{{ $test->title }}</h1>
+        {{-- <div class="title-11">Elementary I - Test</div> --}}
         <div class="box-1">
-            {!! $gradingExam->important_note !!}
+            <div class="row sp-col-20">
+                <div class="col-xl-5 col-lg-6 col-sm-7 sp-col">
+                    <label class="lb-1 mt-0">Name</label>
+                    <input class="form-control inptype-1" type="text" value="{{ Auth::user()->name }}"  disabled placeholder="Michelle Tan"  />
+                </div>
+                <div class="col-lg-4 col-sm-5 sp-col">
+                    <label class="lb-1 mt-0">Date</label>
+                    <div class="date-wrap">
+                        <i class="fa-solid fa-calendar-days ico"></i>
+                        <input class="form-control inptype-1" type="text" placeholder="{{ date('Y-m-d') }}" disabled />
+                    </div>
+                </div>
+            </div>
         </div>
-        <form method="post" action="{{ route('grading_answer.submit') }}">
+        <form method="post" action="{{ route('test.answer.submit') }}">
             @csrf
-            <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
-            <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
-            <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
-        <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
-        </div>
-        <div class="row grid-4">
 
-          @php
-          $k=1;
-          if(isset($_GET['s']) && $_GET['s'] == 1){
-            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->inRandomOrder()->get();
-          }else{
-            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->get();
-          }
-          foreach($questionns as $questionn){
-          @endphp
-            <div class="col-xl-4 col-sm-6">
-              <div class="inner">
-                @php
-                $questionnss = \App\GradingPaperQuestion::where('grading_paper_question_id', $questionn->grading_paper_question_id)->where('input_2', $questionn->input_2)->get();
+            <input type="hidden" name="test_id" value="{{ $test->id }}">
+            <input type="hidden" name="allocation_id" value="{{ $test->allocation_id }}">
+            <input type="hidden" name="question_type" value="{{ $test->paper->question_template_id }}">
+            @if($all_paper_detail)
+            @foreach($all_paper_detail as $paper_detail)
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
+            <div class="row grid-5">
+            @php
 
-                foreach($questionnss as $question){
-                @endphp
+            $k=0;
+            $i = 1;
+            foreach($paper_detail->questionsCourse as $question){
+            @endphp
                 <div class="row sp-col-10 grow">
                   <input type="hidden" value="{{ $question->id }}">
                   <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
@@ -62,26 +53,22 @@
                     <input class="form-control" type="text" name="answer[{{ $question->id }}]" required placeholder="Answer" />
                   </div>
                 </div>
-
-                @php
-                $k++;
-                }
-
-              @endphp
-              </div>
+            @php
+            $i++;
+            $k++;
+            }
+            @endphp
             </div>
-          @php
-          }
-          @endphp
+            @endforeach
+            @endif
 
-        </div>
-    <div class="output-1">
-      <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+            <div class="output-1">
+                <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+            </div>
+        </form>
     </div>
-  </form>
-
-  </div>
 </main>
+
 
 <script>
 

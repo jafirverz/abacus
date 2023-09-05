@@ -13,7 +13,7 @@
             <div class="box-1">
                 <div class="accordion">
                     @if($level)
-                    @php $i=0; @endphp
+                    @php $i=$k=0; @endphp
                      @foreach($level as $item)
                      @php
 
@@ -23,22 +23,23 @@
                      @if(isset($courses) && $courses->count() > 0)
                        @php
                         //dd($courses);
+                        $k++;
                        @endphp
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button class="accordion-button @if($i!=1) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#course-{{ $i }}" aria-expanded="false" aria-controls="course-{{ $i }}">{{ $item->title }}</button>
+                                <button class="accordion-button @if($k!=1) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#course-{{ $k }}" aria-expanded="false" aria-controls="course-{{ $k }}">{{ $item->title }}</button>
                             </h3>
-                            <div id="course-{{ $i }}" class="accordion-collapse collapse @if($i==1) show @endif">
+                            <div id="course-{{ $k }}" class="accordion-collapse collapse @if($k==1) show @endif">
                                 <div class="accordion-body">
                                     <ul class="list-2">
                                         @php $j=0; @endphp
                                         @foreach($courses as $val)
                                         @php
 
-                                        $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->where('is_submitted',1)->first();
+                                        $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->first();
                                         @endphp
-                                            @if(isset($is_course_submitted))
-                                            @php
+                                            @if(isset($is_course_submitted) && $is_course_submitted->is_submitted==1)
+                                            {{-- @php
                                             $test = \App\TestManagement::where('course_id', $val->id)->first();
                                             @endphp
                                              @if($test)
@@ -50,12 +51,14 @@
                                               @else
                                               <li><a href="{{ url('my-test/detail/'.$test->id)}}">{{ $test->title}}</a></li>
                                               @endif
-                                             @endif
+                                             @endif --}}
+                                             <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}} </a></li>
                                             @else
                                             @php $i++; @endphp
                                             @php  $j++; @endphp
                                                 @if($i.$j==11)
-                                                <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}}</a></li>
+
+                                                <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}} @if(isset($is_course_submitted) && $is_course_submitted->is_submitted==2) (In-Progress) @endif</a></li>
                                                 @else
                                                 <li><a href="javascript::void(0)">{{ $val->title}}</a></li>
                                                 @endif
