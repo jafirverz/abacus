@@ -19,6 +19,7 @@ use App\Traits\SystemSettingTrait;
 use Illuminate\Validation\ValidationException;
 use Exception;
 use Illuminate\Support\Facades\Mail;
+use Session;
 
 class PayPalController extends Controller
 {
@@ -91,6 +92,8 @@ class PayPalController extends Controller
 
     public function processTransaction(Request $request)
     {
+        Session::put('changedEmail', $request->email);
+        Session::put('changedPhone', $request->phone);
         $totalAmount = $request->totalAmount;
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
@@ -145,6 +148,8 @@ class PayPalController extends Controller
             $order->country_id =  Auth::user()->country_code;
             $order->total_amount = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
             $order->payment_status = $response['status'];
+            $order->email = Session::get('changedEmail');
+            $order->phone = Session::get('changedPhone');
             $order->save();
 
             $tempCart  = TempCart::where('user_id', $userId)->get();

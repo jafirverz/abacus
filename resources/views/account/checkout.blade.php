@@ -65,11 +65,13 @@
               <div class="row">
                 <div class="col-lg-7">
                   <h4 class="title-4">Email</h4>
-                  <span class="txt-1">{{ Auth::user()->email }}</span> <a class="link-5" href="#">Change email</a>
+                  <span class="txt-1">{{ Auth::user()->email }}</span> <a class="link-5" href="javascript::void(0);" onclick="showFields('email')">Change email</a>
+                  <input class="txt-1" type="text" name="email" value="" id="email" style="display: none;" required>
                 </div>
                 <div class="col-lg-5">
                   <h4 class="title-4">Contact Number</h4>
-                  <span class="txt-1">{{ Auth::user()->mobile }}</span> <a class="link-5" href="#">Change contact number</a>
+                  <span class="txt-1">{{ Auth::user()->mobile }}</span> <a class="link-5" href="javascript::void(0);" onclick="showFields('phone')">Change contact number</a>
+                  <input class="txt-1" type="text" name="phone" value="" id="phone" style="display: none;" required>
                 </div>
               </div>
             </div>
@@ -125,6 +127,8 @@
                 <form method="post" action="{{ route('processTransaction') }}">
                   @csrf
                   <input type="hidden" name="totalAmount" value="{{ $totalAmount }}" >
+                  <input type="hidden" name="email" value="" id="changeemail" >
+                  <input type="hidden" name="phone" value="" id="changephone">
                 <div class="col-auto order-last">
                   <button class="btn-1" type="submit">Checkout <i class="fa-solid fa-arrow-right-long"></i></button>
                 </div>
@@ -174,5 +178,18 @@
     </div>
   </div>	
 </main>
+
+<script>
+  function showFields(id){
+    $('#'+id).show();
+  }
+  $("#email").keyup(function(){
+    //alert($('#email').val());
+    $("#changeemail").val($('#email').val());
+  });
+  $("#phone").keyup(function(){
+    $("#changephone").val($('#phone').val());
+  });
+</script>
 
 @endsection
