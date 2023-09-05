@@ -47,7 +47,7 @@
                                 </div>
 
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="title">Select Student</label>
                                     <select name="students[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
@@ -60,7 +60,7 @@
                                         <strong>{{ $errors->first('students') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
 
                                
 

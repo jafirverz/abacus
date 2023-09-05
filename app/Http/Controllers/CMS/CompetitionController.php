@@ -143,12 +143,12 @@ class CompetitionController extends Controller
             $catCompt->save();
         }
 
-        foreach($request->students as $student){
-            $comptStu = new CompetitionStudent();
-            $comptStu->competition_controller_id = $competitionId;
-            $comptStu->user_id = $student;
-            $comptStu->save();
-        }
+        // foreach($request->students as $student){
+        //     $comptStu = new CompetitionStudent();
+        //     $comptStu->competition_controller_id = $competitionId;
+        //     $comptStu->user_id = $student;
+        //     $comptStu->save();
+        // }
 
         return redirect()->route('competition.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
@@ -269,17 +269,17 @@ class CompetitionController extends Controller
             $catCompt->save();
         }
 
-        $studentCompetition = CompetitionStudent::where('competition_controller_id', $id)->get();
+        // $studentCompetition = CompetitionStudent::where('competition_controller_id', $id)->get();
         
-        foreach($studentCompetition as $deleteStudent){
-            $deleteStudent->delete();
-        }
-        foreach($request->students as $key=>$studenttt){
-            $student = new CompetitionStudent();
-            $student->competition_controller_id = $id;
-            $student->user_id = $studenttt;
-            $student->save();
-        }
+        // foreach($studentCompetition as $deleteStudent){
+        //     $deleteStudent->delete();
+        // }
+        // foreach($request->students as $key=>$studenttt){
+        //     $student = new CompetitionStudent();
+        //     $student->competition_controller_id = $id;
+        //     $student->user_id = $studenttt;
+        //     $student->save();
+        // }
 
         return redirect()->route('competition.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
