@@ -370,6 +370,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('results', 'CMS\CompetitionResultController');
     Route::get('results/competition/{id?}', 'CMS\CompetitionResultController@studentList')->name('results.competition');
     Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
+
+    Route::get('results/download/excel/{id?}', 'CMS\CompetitionResultController@excelDownload')->name('studentResultDownload');
     //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
 
     // GRADING RESULTS
