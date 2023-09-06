@@ -557,15 +557,17 @@ class ProfileController extends Controller
             'end_date' => 'required',
         ]);
 
-
+        foreach($request->student_id as $student)
+        {
         $allocation = new Allocation();
-        $allocation->student_id  = $request->student_id ?? NULL;
+        $allocation->student_id  = $student ?? NULL;
         $allocation->assigned_by  = $this->user->id; // Instructor
         $allocation->assigned_id  = $id;   //Test /Survey
         $allocation->start_date  = $request->start_date ?? NULL;
         $allocation->end_date  = $request->end_date ?? NULL;
         $allocation->type  = 1;
         $allocation->save();
+        }
 
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
 	}
