@@ -44,16 +44,18 @@ class CompetitionResultController extends Controller
 
     public function studentList($id){
         $title = $this->title;
-        $userList = CompetitionPaperSubmitted::where('competition_id', $id)->paginate($this->pagination);
+        //$userList = CompetitionPaperSubmitted::where('competition_id', $id)->paginate($this->pagination);
+        $userList = CompetitionStudentResult::where('competition_id', $id)->paginate($this->pagination);
         $competitionId = $id;
         return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId'));
     }
 
     public function edit($id){
         $title = $this->title;
-        $competitionPaperSubmitted = CompetitionPaperSubmitted::where('id', $id)->first();
-        $certificate = Certificate::get();
-        return view('admin.competition_result.edit', compact('title', 'competitionPaperSubmitted', 'certificate'));
+        //$competitionPaperSubmitted = CompetitionPaperSubmitted::where('id', $id)->first();
+        $competitionPaperSubmitted = CompetitionStudentResult::where('id', $id)->first();
+        $certificates = Certificate::get();
+        return view('admin.competition_result.edit', compact('title', 'competitionPaperSubmitted', 'certificates'));
 
     }
 
@@ -61,9 +63,11 @@ class CompetitionResultController extends Controller
         $result = $request->result;
         $prize = $request->prize;
         $title = $this->title;
-        $compPaperResult = CompetitionPaperSubmitted::where('id', $id)->first();
+        //$compPaperResult = CompetitionPaperSubmitted::where('id', $id)->first();
+        $compPaperResult = CompetitionStudentResult::where('id', $id)->first();
         $compPaperResult->result = $result;
-        $compPaperResult->result = $prize;
+        $compPaperResult->prize = $prize;
+        $compPaperResult->certificate_id = $request->certificate;
         $compPaperResult->save();
 
         // if Competition result uploaded by admin then add certificate
