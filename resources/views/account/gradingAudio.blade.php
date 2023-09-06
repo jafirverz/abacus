@@ -24,7 +24,7 @@
             @csrf
             <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
             <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
+            <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
             <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>

@@ -65,6 +65,7 @@ class GradingPaperController extends Controller
         $fields=[
             'title'  =>  'required',
             'question_type'  =>  'required',
+            'time' => 'required_if:timer,==,Yes',
         ];
 
         $messages = [];
@@ -74,6 +75,8 @@ class GradingPaperController extends Controller
 
         $paper = new GradingPaper();
         $paper->title = $request->title;
+        $paper->timer = $request->timer ?? '';
+        $paper->time = $request->time ?? '';
         $paper->question_type = $request->question_type;
         $paper->created_at = Carbon::now();
         $paper->save();
@@ -227,6 +230,7 @@ class GradingPaperController extends Controller
         $fields=[
             'title'  =>  'required',
             'question_type'  =>  'required',
+            'time' => 'required_if:timer,==,Yes',
         ];
 
         $messages = [];
@@ -237,6 +241,8 @@ class GradingPaperController extends Controller
         $paper = GradingPaper::findorfail($id);
         $paper->title = $request->title;
         $paper->question_type = $request->question_type;
+        $paper->timer = $request->timer ?? '';
+        $paper->time = $request->time ?? '';
         $paper->updated_at = Carbon::now();
         $paper->save();
 

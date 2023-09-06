@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<main class="main-wrap">	
+<main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
         @include('inc.account-sidebar-online')
@@ -73,14 +73,14 @@
             <div class="col-xl-4 sp-col">
                 <label class="lb-1">Learning Location </label>
                 <input class="form-control" id="learning_locations" type="text" value="{{$user->location->title ?? ''}}" disabled />
-                
+
             </div>
             <div class="col-xl-4 sp-col" >
                 <label class="lb-1">Learning Updates </label>
                 <input class="form-control" id="learning_updates" type="text"  value="{{$user->learning_updates ?? ''}}" disabled />
-                
+
             </div>
-            
+
         </div>
 
           <div class="row sp-col-xl-30">
@@ -96,40 +96,36 @@
         </div>
 
 
-
+        @if(Auth::user()->user_type_id ==3)
         <div class="box-1">
-          <div class="xscrollbar">
-            <table class="tb-2 tbtype-4">
-              <thead>
-                <tr class="text-uppercase">
-                  <th>Lesson Title</th>
-                  <th>Completed/Incomplete</th>
-                  <th>Completion Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><em>Lorem ipsum dolor sit amet</em></td>
-                  <td><em class="status-2">Completed</em></td>
-                  <td><em>31/02/2018</em></td>
-                </tr>
-                <tr>
-                  <td><em>Lorem ipsum dolor sit amet</em></td>
-                  <td><em class="status-3">Incomplete</em></td>
-                  <td><em>31/02/2018</em></td>
-                </tr>
-                <tr>
-                  <td><em>Lorem ipsum dolor sit amet</em></td>
-                  <td><em class="status-2">Completed</em></td>
-                  <td><em>31/02/2018</em></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="xscrollbar">
+                <table class="tb-2 tbtype-4">
+                    <thead>
+                        <tr class="text-uppercase">
+                            <th>Lesson Title</th>
+                            <th>Completed/Incomplete</th>
+                            <th>Completion Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($lesson)
+                        @foreach($lesson as $key => $value)
+                        <tr>
+                            <td><em>{{ $value->title ?? '' }}</em></td>
+                            <td><em class="status-2">{{ ( $value->submitted->is_submitted==1)?'Completed':'Pending' }}</em></td>
+                            <td><em>{{ date('d/m/Y',strtotime($value->submitted->created_at)) }}</em></td>
+                        </tr>
+                        @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
+        @endif
+
       </div>
     </div>
-  </div>	
+  </div>
 </main>
 @if($errors->any())
   <script>

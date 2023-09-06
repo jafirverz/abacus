@@ -26,7 +26,7 @@
           @csrf
           <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
             <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
+            <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
             <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
         <div class="row sp-col-20">
           <div class="col-xl-6 col-md-5 sp-col mt-30 order-md-last">

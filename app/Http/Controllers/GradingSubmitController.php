@@ -33,6 +33,7 @@ class GradingSubmitController extends Controller
             $gradeSub->paper_id = $paper_id;
             $gradeSub->question_template_id = $questionTypeId;
             $gradeSub->user_id = $userId;
+            $gradeSub->certificate_id = __('constant.CERTIFICATE_GRADING_ID');
             $gradeSub->save();
             $totalMarks = 0;
             $userMarks = 0;

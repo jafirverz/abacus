@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="title">Paper</label>: {{ $course->paper->title ?? '' }}
+                                <label for="title">Lesson</label>: {{ $course->paper->title ?? '' }}
                             </div>
                             <div class="form-group">
                                 <label for="title">Students</label>:

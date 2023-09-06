@@ -11,7 +11,7 @@
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="be-overview-preparatory.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="{{ route('grading-overview',$grading_exam_id) }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
             <li><a href="{{ url('home') }}">Overview</a></li>
@@ -27,7 +27,7 @@
             @csrf
             <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
               <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-              <input type="hidden" name="paper_id" value="{{ $paper->id }}">
+              <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
               <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
           <div class="box-1">
             <div class="xscrollbar">

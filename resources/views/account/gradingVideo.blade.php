@@ -28,7 +28,7 @@
         <div class="row grid-5">
             <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
             <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
+            <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
             <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
           @php
 
