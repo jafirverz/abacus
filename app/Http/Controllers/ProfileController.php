@@ -417,7 +417,8 @@ class ProfileController extends Controller
 
     public function grading_paper($grading_exam_id,$listing_id,$paper_id)
     {
-        $paper=GradingPaper::find($paper_id);
+        $paper=GradingPaper::join('grading_listing_details','grading_listing_details.paper_id','grading_papers.id')->where('grading_listing_details.id',$paper_id)->select('grading_papers.*','grading_listing_details.id as listing_paper_id')->first();
+        //dd($paper);
         $gradingExam = GradingExam::find($grading_exam_id);
         $qId=$paper->question_type;
         if(empty($qId)){
@@ -493,7 +494,8 @@ class ProfileController extends Controller
 		}
 
 		//dd($user);
-		$country = Country::orderBy('country', 'asc')->get();
+
+        $country = Country::orderBy('country', 'asc')->get();
         //dd($this->user->user_type_id);
         if($this->user->user_type_id==4)
         {

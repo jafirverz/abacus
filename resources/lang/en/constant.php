@@ -151,6 +151,10 @@ return [
     'SOCIAL_GOOGLE_ID' => '1',
     'SOCIAL_FACEBOOK_ID' => '2',
 
+    // CERTIFICATE
+    'CERTIFICATE_COURSE_ID' => '3',
+    'CERTIFICATE_GRADING_ID' => '4',
+
     //TAB STATUS
     'TAB_NEGOTIATE' => '1',
     'TAB_OFFERS' => '2',

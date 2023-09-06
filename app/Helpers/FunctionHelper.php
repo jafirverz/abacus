@@ -6,7 +6,9 @@ use Yadahan\AuthenticationLog\AuthenticationLog;
 use App\Announcement;
 use App\UserProfileUpdate;
 use App\Page;
+use App\OrderDetail;
 use App\Course;
+use App\CourseSubmitted;
 use App\CourseQuestionSubmitted;
 use App\Slider;
 use App\GradingExam;
@@ -477,9 +479,22 @@ if (!function_exists('getPageList')) {
     function getCourseAnswer($course_submitted_id,$question_id)
     {
         $result = CourseQuestionSubmitted::where('course_submitted_id',$course_submitted_id)->where('question_id',$question_id)->first();
+
         if ($result) {
             return $result;
         }
+        return NULL;
+    }
+
+    function getCourseSubmitted($course_id)
+    {
+        $result = CourseSubmitted::where('course_id',$course_id)->where('user_id',Auth::user()->id)->first();
+        //dd($result);
+        if ($result) {
+            return $result;
+        }
+
+            return NULL;
     }
 
     function getExamDetail($exam)
@@ -496,6 +511,15 @@ if (!function_exists('getPageList')) {
             return $result;
         }
     }
+    function is_grading_paper_submitted($paper_id)
+    {
+        $result = OrderDetail::where('comp_paper_id', $paper_id)->where('user_id',Auth::user()->id)->first();
+        if ($result) {
+            return $result;
+        }
+            return NULL;
+    }
+
     function getAllGradingExamListDetail($id)
     {
         $result = GradingListingDetail::where('grading_listing_id',$id)->get();

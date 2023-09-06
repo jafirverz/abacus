@@ -157,8 +157,8 @@
 
                             </div>
                             <input type="hidden" name="oldInstructorId" value="{{ $user->instructor_id }}">
-                            
-                            {{-- 
+
+                            {{--
                             @php
                                 $instructor_id = $user->instructor_id;
                                 if(old("instructor")){
@@ -201,7 +201,7 @@
                                     @foreach($country as $countr)
                                     <option value="{{ $countr->id }}" @if($country_code == $countr->id && !$errors->has('country_code')) selected @endif>{{ $countr->country}}</option>
                                     @endforeach
-                                    
+
                                 </select>
                                 @if ($errors->has('country_code'))
                                     <span class="text-danger">&nbsp;{{ $errors->first('country_code') }}</span>
@@ -220,14 +220,14 @@
                             <div class="col-xl-4 sp-col">
                                 <label class="lb-1">Learning Location </label>
                                 <input class="form-control" id="learning_locations" type="text" value="{{$user->location->title ?? ''}}" disabled />
-                                
+
                             </div>
                             <div class="col-xl-4 sp-col" >
                                 <label class="lb-1">Learning Updates </label>
                                 <input class="form-control" id="learning_updates" type="text"  value="{{$user->learning_updates ?? ''}}" disabled />
-                                
+
                             </div>
-                            
+
                         </div>
 
                         <div class="output-2">
@@ -237,6 +237,7 @@
 
 
                     </div>
+
                 </div>
             </div>
         </div>

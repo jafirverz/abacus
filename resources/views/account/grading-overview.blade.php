@@ -67,26 +67,26 @@
                                 @csrf
                                 <input type="hidden" name="type" value="physicalgrading">
                             @endif
-                            
+
                             @foreach ($gradingExamList as $key => $item)
                             @php $i++;@endphp
-                            
-                            
+
+
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
                                     <button class="accordion-button @if($i!=1) collapsed @endif" type="button" data-bs-toggle="collapse" data-bs-target="#faq-<?=$i?>" aria-expanded="false" aria-controls="faq-<?=$i?>">{{ $item->heading }}</button>
                                 </h3>
                                 <div id="faq-<?=$i?>" class="accordion-collapse collapse @if($i==1) show @endif">
                                     <div class="accordion-body">
-                                    
+
 
                                     @if($gradingExam->type==1)
-                                    @php 
+                                    @php
                                         $userId = Auth::user()->id;
                                         $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalgrading')->pluck('comp_paper_id')->toArray();
                                     @endphp
                                     @else
-                                    @php 
+                                    @php
                                         $userId = Auth::user()->id;
                                         $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'onlinegrading')->pluck('comp_paper_id')->toArray();
                                     @endphp
@@ -99,7 +99,7 @@
                                                         @php $k=0;@endphp
                                                         @foreach(getAllGradingExamListDetail($item->id) as $key => $val)
                                                         @php $k++;@endphp
-                                                        
+
 
                                                           @if($gradingExam->type==1)
                                                             <div class="bxrow">
@@ -109,7 +109,7 @@
                                                                     <div class="checkbxtype nocheck">
                                                                     <label><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
                                                                     </div>
-                                                                     <a class="lnk btn-2" href="{{ url() }}/{{ $val->uploaded_file }}">Download</a>
+                                                                     <a class="lnk btn-2" href="{{ url('/') }}/{{ $val->uploaded_file }}">Download</a>
                                                                     @else
                                                                     <div class="checkbxtype">
                                                                         <input type="checkbox"  onclick="checkchecked();" id="practice-{{ $val->id }}" name="paper[]" value="{{ $val->id }}" id="exercise-{{ $i.$k }}">
@@ -130,7 +130,11 @@
                                                              <div class="bxrow">
 																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
 
-																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->paper_id.'') }}">View</a>
+																@if(is_grading_paper_submitted($val->id))
+                                                                <a class="lnk btn-2" href="jquery::void()">Submitted</a>
+                                                                @else
+																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->id.'') }}">View</a>
+                                                                @endif
 
 															</div>
                                                              @else
@@ -150,8 +154,11 @@
                                                             @else
                                                             <div class="bxrow">
 																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
-
-																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->paper_id.'') }}">View</a>
+                                                                @if(is_grading_paper_submitted($val->id))
+                                                                <a class="lnk btn-2" href="jquery::void()">Submitted</a>
+                                                                @else
+																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->id.'') }}">View</a>
+                                                                @endif
 
 															</div>
                                                             @endif
@@ -162,7 +169,7 @@
                                             </div>
 
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>

@@ -32,7 +32,28 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="timer">Timer</label>
+                                    <select  id="timer" name="timer"  class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option @if(old('timer', $paper->timer)=="Yes") selected @endif value="Yes">Yes</option>
+                                        <option @if(old('timer', $paper->timer)=="No") selected @endif value="No">No</option>
+                                    </select>
+                                    @if ($errors->has('timer'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('timer') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Time</label>
+                                    <input type="number"  name="time" class="form-control" value="{{ old('time',$paper->time) }}">
+                                    @if ($errors->has('time'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('time') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="question_type">Type</label>
                                     <select disabled="disabled"  id="question_type" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">

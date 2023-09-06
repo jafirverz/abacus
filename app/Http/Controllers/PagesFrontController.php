@@ -17,6 +17,7 @@ use App\Contact;
 use App\Menu;
 use App\Slider;
 use App\Category;
+use App\CourseAssignToUser;
 use App\TestManagement;
 use App\Allocation;
 use App\Competition;
@@ -77,7 +78,8 @@ class PagesFrontController extends Controller
         $levels = Level::get();
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
         $todayDate = date('Y-m-d');
-
+        $lesson=CourseAssignToUser::join('courses','courses.id','course_assign_to_users.course_id')->join('test_papers','test_papers.id','courses.paper_id')->select('test_papers.*','course_assign_to_users.course_id')->get();
+		//dd($lesson);
         $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.is_finished',NULL)->where('allocations.start_date','<=',$todayDate)->where('allocations.end_date','>=',$todayDate)->where('allocations.student_id',Auth::user()->id)->select('test_management.*','allocations.id as allocation_id')->first();
         //dd($test);
         $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
@@ -93,7 +95,7 @@ class PagesFrontController extends Controller
         $surveys = Survey::where('status', 1)->first();
         $user = User::where('id', Auth::user()->id)->first();
         $country = Country::orderBy('phonecode', 'asc')->get();
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test','lesson'));
     }
 
     public function instructor($slug = null){

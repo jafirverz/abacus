@@ -58,7 +58,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="paper_id">Paper</label>
+                                    <label for="paper_id">Lesson</label>
                                     <select name="paper_id" class="form-control">
                                         <option value="">-- Select --</option>
                                         @if ($papers)
