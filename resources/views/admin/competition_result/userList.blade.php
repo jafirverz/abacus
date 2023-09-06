@@ -14,6 +14,17 @@
 
         <div class="section-body">
             @include('admin.inc.messages')
+            
+            <div class="row">
+                <form method="get" action="{{ route('studentResultDownload', $competitionId) }}">
+                    @csrf
+                    <input type="hidden" name="competitionId" value="{{ $competitionId }}">
+                    <button type="submit" class="btn btn-primary"> Download Result</button>
+                </form>
+                
+                </div>
+            </div>
+
 
             <div class="row">
                 <div class="col-12">

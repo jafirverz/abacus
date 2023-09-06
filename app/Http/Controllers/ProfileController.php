@@ -1765,9 +1765,14 @@ class ProfileController extends Controller
 
     public function view_grading($id){
 		$userId = $id;
-		$actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
+		// $actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
 		//dd($actualCompetitionPaperSubted);
-		return view("account.achievements", compact('actualCompetitionPaperSubted'));
+        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        //dd($actualCompetitionPaperSubted);
+        $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
+
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+		return view("account.achievements", compact('actualCompetitionPaperSubted', 'merged'));
 		//$competitionId =
 	}
 

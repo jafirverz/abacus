@@ -4,14 +4,17 @@ namespace App\Http\Controllers\CMS;
 
 use App\Certificate;
 use App\Competition;
+use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionStudentResult;
+use App\Exports\CompetetitionResultExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompetitionResultController extends Controller
 {
@@ -42,7 +45,8 @@ class CompetitionResultController extends Controller
     public function studentList($id){
         $title = $this->title;
         $userList = CompetitionPaperSubmitted::where('competition_id', $id)->paginate($this->pagination);
-        return view('admin.competition_result.userList', compact('title', 'userList'));
+        $competitionId = $id;
+        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId'));
     }
 
     public function edit($id){
@@ -86,5 +90,12 @@ class CompetitionResultController extends Controller
 
         // $competitionPaper = CompetitionPaper::whereHas('comp_ques')->paginate($this->pagination);
         return view('admin.competition_result.index', compact('title', 'competition'));
+    }
+
+    public function excelDownload(Request $request, $id){
+        $allItems = CompetitionPaperSubmitted::where('competition_id', $request->competitionId)->orderBy('competition_id', 'desc')->orderBy('user_id', 'asc')->get();
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new CompetetitionResultExport($allItems), 'CompetitionStudentReport.xlsx');
     }
 }
