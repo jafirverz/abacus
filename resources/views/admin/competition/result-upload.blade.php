@@ -81,6 +81,16 @@
                                 @endif
 
                                 <div class="form-group">
+                                    <label for="title">Result Publish Date</label>
+                                    <input type="text" name="result_publish_date" class="form-control datepicker1">
+                                    @if ($errors->has('result_publish_date'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('result_publish_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                   <label for="title">Upload</label>
                                   <input type="file" name="fileupload" class="form-control">
                                   @if ($errors->has('fileupload'))

@@ -9,6 +9,7 @@ use App\CompetitionResultUpload;
 use App\CompetitionStudent;
 use App\Http\Controllers\Controller;
 use App\Imports\ImportCompetitionResult;
+use App\Imports\TempImportCompetitionResult;
 use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
 use App\User;
@@ -352,8 +353,7 @@ class CompetitionController extends Controller
         if ($request->hasFile('fileupload')) {
 
             $file = $request->file('fileupload');
-            $result = Excel::import(new ImportCompetitionResult($request->competition, $request->category), $file);
-
+            
             $imported_files[] = "Competition Result Upload";
 
             if(count($imported_files))
@@ -376,10 +376,24 @@ class CompetitionController extends Controller
 
                 $fileupload_path = $filepath . $filename;
 
+                if($request->result_publish_date == date('Y-m-d')){
+                    $is_published = 1;
+                }else{
+                    $is_published = 0;
+                }
+
                 $compResultUpload->uploaded_file =  $fileupload_path;
                 $compResultUpload->competition_id =  $request->competition;
                 $compResultUpload->category_id =  $request->category;
+                $compResultUpload->result_publish_date =  $request->result_publish_date;
+                $compResultUpload->is_published =  $is_published;
                 $compResultUpload->save();
+
+                if($request->result_publish_date == date('Y-m-d')){
+                    $result = Excel::import(new ImportCompetitionResult($request->competition, $request->category), $file);
+                }else{
+                    $result = Excel::import(new TempImportCompetitionResult($request->competition, $request->category, $compResultUpload->id), $file);
+                }
 
                 return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $implode_files]));
             }

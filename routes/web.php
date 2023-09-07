@@ -32,6 +32,11 @@ Route::get('/notification', function () {
     return $exitCode2;
 });
 
+Route::get('/cron/competiton-result', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('competition:results');
+    return $exitCode2;
+});
+
 
 Route::get('/storage-link', function () {
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('storage:link');
