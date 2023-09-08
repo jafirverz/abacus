@@ -202,7 +202,7 @@ class CompetitionController extends Controller
         ];
         $request->validate([
             'title'  =>  'required',
-            'competition_type'  =>  'required',
+            //'competition_type'  =>  'required',
             'category' => 'required',
             'date_of_competition'  =>  'required',
             'start_time_of_competition'  =>  'required',
@@ -255,7 +255,7 @@ class CompetitionController extends Controller
         $competition->start_time_of_competition = $request->start_time_of_competition;
         $competition->end_time_of_competition = $request->end_time_of_competition;
         $competition->description = $request->description;
-        $competition->competition_type = $request->competition_type;
+        //$competition->competition_type = $request->competition_type;
         $competition->status = $request->status ?? null;
         $competition->save();
 
