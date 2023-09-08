@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 class WorksheetController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+        $this->middleware(function ($request, $next) {
+            $this->student_id = Auth::user()->id;
+            $this->previous = url()->previous();
+            return $next($request);
+
+        });
+    }
     public function index($worksheetId = null, $qId = null, $lId = null){
         if($qId == 4){
             if(empty($worksheetId)){
