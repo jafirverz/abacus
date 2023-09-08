@@ -104,7 +104,8 @@
                           @endphp
                           <ul class="list-1 {{ $disableClass }}">
                             @foreach($worksheets as $worksheet)
-                              @if(!empty($worksheet->amount))
+                              {{-- @if(!empty($worksheet->amount)) --}}
+                              @if($worksheet->type == 2)
                                 @php
                                 $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
                                 @endphp
