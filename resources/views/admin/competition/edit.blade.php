@@ -36,7 +36,7 @@
 
                                 <div class="form-group">
                                     <label for="title">Competition Type</label>
-                                    <select name="competition_type" class="form-control" >
+                                    <select name="competition_type" class="form-control" disabled>
                                         <option value="">-- Select --</option>
                                         <option value="online" @if(old('competition_type', $competition->competition_type) == 'online') selected @endif>Online</option>
                                         <option value="physical" @if(old('competition_type', $competition->competition_type) == 'physical') selected @endif>Physical</option>
