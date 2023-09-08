@@ -310,7 +310,7 @@ class CompetitionController extends Controller
 
     public function studentList($id){
         $title = 'Student List';
-        $studentList = CompetitionStudent::where('competition_controller_id', $id)->paginate($this->pagination);
+        $studentList = CompetitionStudent::where('competition_controller_id', $id)->orderBy('id', 'desc')->paginate($this->pagination);
         return view('admin.competition.studentList', compact('title', 'studentList'));
     }
 
