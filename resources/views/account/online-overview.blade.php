@@ -23,6 +23,8 @@
           <div class="mt-20"><label>Account ID:</label> {{Auth::user()->account_id}}</div>
           <form method="post" name="profile" id="profileform" enctype="multipart/form-data" action="{{route('my-profile.update')}}">
             @csrf
+            <input type="hidden" name="updateimage" value="1">
+            <input type="hidden" name="updateprofile" id="updateprofile" value="0">
           <div class="row sp-col-xl-30">
             <div class="col-xl-4 sp-col">
               <label class="lb-1">Full Name <span class="required">*</span></label>
@@ -55,18 +57,43 @@
                   </select>
                 </div>
                 <div class="col sp-col">
-                  <input class="form-control" type="text" value="+65 1234 5678" disabled />
+                  <input class="form-control" type="text" name="mobile" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{old('mobile', $user->mobile) ?? ''}}" disabled />
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 sp-col">
+            <!-- <div class="col-xl-4 sp-col">
               <label class="lb-1">Gender <span class="required">*</span></label>
               <select class="selectpicker" disabled>
                 <option>Please Select</option>
                 <option selected>Female</option>
                 <option>Male</option>
               </select>
-            </div>
+            </div> -->
+            <div class="col-xl-4 sp-col" id="disablegender">
+              <label class="lb-1">Gender <span class="required">*</span></label>
+              <select class="selectpicker" disabled>
+                  <option value="">Please Select</option>
+                  <option value="1" @if($user->gender == '1') selected @endif>Male</option>
+                  <option value="2" @if($user->gender == '2') selected @endif>Female</option>
+              </select>
+          </div>
+          @php
+              $gender = $user->gender;
+              if(old("gender")){
+                  $gender = old("gender");
+              }
+          @endphp
+          <div class="col-xl-4 sp-col" id="enablegender" style="display: none">
+              <label class="lb-1">Gender <span class="required">*</span></label>
+              <select class="selectpicker" name="gender" >
+                  <option value="" selected>Please Select</option>
+                  <option value="1" @if($gender == '1' && !$errors->has('gender')) selected @endif>Male</option>
+                  <option value="2" @if($gender == '2' && !$errors->has('gender')) selected @endif>Female</option>
+              </select>
+              @if ($errors->has('gender'))
+                  <span class="text-danger">&nbsp;{{ $errors->first('gender') }}</span>
+              @endif
+          </div>
           </div>
 
           <div class="row sp-col-xl-30" >
