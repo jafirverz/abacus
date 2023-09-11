@@ -690,7 +690,7 @@ class ProfileController extends Controller
 	 */
 	public function store(Request $request)
 	{
-         //        dd($request->all());
+        // dd($request->all());
         $users = User::find($this->user->id);
         if($request->updateimage == 1 && $request->updateprofile == 0){
             if ($request->hasFile('profile_picture')) {
@@ -720,29 +720,43 @@ class ProfileController extends Controller
                 'country_code.regex' => 'The Country code entered is invalid.',
             ];
             if($request->updateprofile == 1){
-                $request->validate([
-                    'name' => 'required',
-                    'email' => 'required|unique:users,email,'.$users->id,
-                    'dob' => 'required',
-                    'country_code_phone' => 'required',
-                    'mobile' => 'required',
-                    'gender' => 'required',
-                    // 'instructor' => 'required',
-                    'country_code' => 'required',
-                    //                'password'  =>  'nullable|min:8',
-                    //			'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
-
-
-                                    ], $messages); //dd($request);
-                                }
-                    //            $checkPendingRequest = UserProfileUpdate::where('user_id', $users->id)->where('approve_status', '!=', 1)->first();
-                    //            if($checkPendingRequest){
-                    //                //throw ValidationException::withMessages(['Profile Update request already pending']);
-                    //                return back()->withErrors('Profile Update request already pending');
-                    //            }
-						$var = $request->dob;
-						$date = str_replace('/', '-', $var);
-						$dob = date('Y-m-d', strtotime($date));
+                if($users->user_type_id == 3){
+                    $request->validate([
+                        'name' => 'required',
+                        'email' => 'required|unique:users,email,'.$users->id,
+                        'dob' => 'required',
+                        //'country_code_phone' => 'required',
+                        'mobile' => 'required',
+                        'gender' => 'required',
+                        // 'instructor' => 'required',
+                        //'country_code' => 'required',
+                        //'password'  =>  'nullable|min:8',
+                        //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
+                        ], $messages); //dd($request);
+                }
+                else{
+                    $request->validate([
+                        'name' => 'required',
+                        'email' => 'required|unique:users,email,'.$users->id,
+                        'dob' => 'required',
+                        'country_code_phone' => 'required',
+                        'mobile' => 'required',
+                        'gender' => 'required',
+                        // 'instructor' => 'required',
+                        'country_code' => 'required',
+                        //'password'  =>  'nullable|min:8',
+                        //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
+                        ], $messages); //dd($request);
+                }
+            }
+            //            $checkPendingRequest = UserProfileUpdate::where('user_id', $users->id)->where('approve_status', '!=', 1)->first();
+            //            if($checkPendingRequest){
+            //                //throw ValidationException::withMessages(['Profile Update request already pending']);
+            //                return back()->withErrors('Profile Update request already pending');
+            //            }
+            $var = $request->dob;
+            $date = str_replace('/', '-', $var);
+            $dob = date('Y-m-d', strtotime($date));
             // $dob = date('Y-m-d', strtotime($request->dob));
             $updateUserProfile = new UserProfileUpdate();
             $updateUserProfile->user_id  = $users->id;
@@ -792,7 +806,8 @@ class ProfileController extends Controller
                 $gender = 'Female';
             }
 
-            $instructorDetail = User::where('id', $request->oldInstructorId)->first();
+            //$instructorDetail = User::where('id', $request->oldInstructorId)->first();
+            $instructorDetail = User::where('id', $users->instructor_id)->first();
             $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_PROFILE_UPDATE'));
 
             if ($email_template) {
@@ -819,6 +834,7 @@ class ProfileController extends Controller
 
 
             }
+            // dd("aa");
             //			Admin email for new student registration
             $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE'));
             $admins = Admin::get();
@@ -831,10 +847,10 @@ class ProfileController extends Controller
                     $data['to_email'] = [$admin->email];
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
-
+                    
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                    //dd($instructorDetail);
                     $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructorDetail->name];
-
                     $newContents = str_replace($key, $value, $email_template->content);
 
                     $data['contents'] = $newContents;
