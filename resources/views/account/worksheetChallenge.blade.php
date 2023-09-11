@@ -54,7 +54,7 @@
                 <tbody>
                   @php 
                   //$questionns = json_decode($questions->json_question);
-                  $getQues = \App\MiscQuestion::where('question_id', $questions->id)->get();
+                  $getQues = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
                   $i = 1;
                   @endphp
                   
