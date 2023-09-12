@@ -88,6 +88,8 @@
                                 @if(isset($announcement->attachments) && $announcement->attachments!='')
                                 @php
                                     $json=json_decode($announcement->attachments);
+                                    if(isset($json))
+                                    {
                                     for($i=0;$i<count($json);$i++)
                                     {
                                 @endphp
@@ -99,7 +101,7 @@
                                                     <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                                 </div>
                                             </div>
-                                @php } @endphp
+                                @php } } @endphp
                                 @endif
                                 <div class="form-group">
                                     <label for="teacher_id">Teacher</label>

@@ -48,7 +48,7 @@ class TestAllocationController extends Controller
      */
     public function create()
     {
-
+        return view('admin.test-allocation.create', compact('title', 'allocations'));
     }
 
     /**

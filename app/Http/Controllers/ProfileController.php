@@ -139,7 +139,7 @@ class ProfileController extends Controller
 
 		$title = __('constant.MY_PROFILE');
 		$slug =  __('constant.SLUG_MY_PROFILE');
-
+        $todayDate = date('Y-m-d');
 		$user = $this->user;
 		$grading = GradingStudent::where('instructor_id',$user->id)->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
@@ -147,7 +147,7 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-        $gradingExam = GradingExam::where('status', 1)->orderBy('id','desc')->first();
+        $gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','<',$todayDate)->orderBy('id','desc')->first();
 		//dd($user);
 
 		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
@@ -176,8 +176,8 @@ class ProfileController extends Controller
             $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
 
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
+        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','asc')->get();
+        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','asc')->get();
         $gradingExam = GradingExam::find($id);
         $locations = LearningLocation::orderBy('id','desc')->get();
         //dd($gradingExam);
@@ -201,8 +201,8 @@ class ProfileController extends Controller
 
 		$user = $this->user;
         $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
+        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','asc')->get();
+        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','asc')->get();
         $gradingExam = GradingExam::where('status', 1)->get();
         $locations = LearningLocation::orderBy('id','desc')->get();
 		$page = get_page_by_slug($slug);
