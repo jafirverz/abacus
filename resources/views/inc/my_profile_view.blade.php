@@ -3,7 +3,10 @@
     <div class="box-1">
         <h2 class="title-4">Allocated Level</h2>
         <div class="row grid-1 sp-col-xl-25">
-
+            @php 
+            $levelIdActive = '';
+            $levelIdActive = Session::get('levelIdActive');
+            @endphp
             @foreach($levels as $level)
             <div class="col-xl-4 col-sm-6 sp-col">
                 <div class="inner" style="background: #2D44B6;">
@@ -13,10 +16,16 @@
                     <div class="descripts">
                         <h3>{{ $level->title }}</h3>
                         <div class="gactions">
-                            @if(in_array($level->id, $levelArray))
+                            @if(Auth::user()->approve_status == 1)
+                                @if(in_array($level->id, $levelArray))
+                                <a href="{{ url('level/'.$level->slug) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @else
+                                <a href="javascript::void(0);"><i class="icon-lock"></i></a>
+                                @endif
+                            @elseif(isset($levelIdActive) && in_array($level->id, $levelIdActive))
                             <a href="{{ url('level/'.$level->slug) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @else
-                            <a href="javascript::void(0);"><i class="icon-lock"></i></a>
+                                <a href="javascript::void(0);"><i class="icon-lock"></i></a>
                             @endif
                         </div>
                     </div>
@@ -37,7 +46,11 @@
                         <h3>Grading Examination</h3>
                         <div class="gactions">
                            @if(isset($grading_exam->id))
-                            <a href="{{ url('grading-overview/'.$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @if(Auth::user()->approve_status == 1)
+                                <a href="{{ url('grading-overview/'.$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @else 
+                                <a href="javascript::void(0)">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @endif
                            @else
                             <a href="javascript::void(0)">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                            @endif
@@ -68,7 +81,11 @@
                             }
                             @endphp
                             @if(!empty($url))
-                            <a href="{{ url('competition/'.$competitionId) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @if(Auth::user()->approve_status == 1)
+                                <a href="{{ url('competition/'.$competitionId) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @else
+                                <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @endif
                             @else
                             <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @endif
@@ -105,7 +122,11 @@
                                 }
                                 @endphp
                             @endif
+                            @if(Auth::user()->approve_status == 1)
                             <a href="{{ $url }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @else
+                            <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>
