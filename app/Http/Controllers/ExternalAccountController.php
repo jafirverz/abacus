@@ -37,7 +37,7 @@ class ExternalAccountController extends Controller
     {
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
-        $students=User::where('user_type_id',7)->where('instructor_id',$this->user->id)->paginate($this->pagination);
+        $students=User::where('user_type_id',4)->where('instructor_id',$this->user->id)->paginate($this->pagination);
         return view('account.external-my-students', compact('levels', 'country','students'));
     }
 
