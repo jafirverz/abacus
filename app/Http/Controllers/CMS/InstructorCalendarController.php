@@ -36,7 +36,7 @@ class InstructorCalendarController extends Controller
     public function index()
     {
         $title = $this->title;
-        $calendar = InstructorCalendar::orderBy('id', 'asc')->paginate($this->pagination);
+        $calendar = InstructorCalendar::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.instructor-calendar.index', compact('title', 'calendar'));
     }
