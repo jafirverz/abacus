@@ -37,23 +37,28 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
                                             <h3>{{ $item->title }}</h3>
                                             {!! $item->description !!}
                                         </article>
-                                        @if(isset($item->attachments)  && $item->attachments!='')
+                                        @php
+                                            $json=json_decode($item->attachments);
+                                        @endphp
+                                        @if(isset($json))
                                         <hr/>
                                         <div>Attachments:</div>
                                         <ul class="list-3">
                                             @php
                                             $json=json_decode($item->attachments);
+
                                             for($i=0;$i<count($json);$i++)
                                             {
                                             @endphp
                                             <li><a href="{{ url('/') }}/upload-file/{{ $json[$i] }}" target="_blank">{{ $json[$i] }}</a></li>
-                                            @php } @endphp
+                                            @php }  @endphp
 
                                         </ul>
 
                                         <div class="mt-15">
                                             <a class="link-3" href="{{ route('instructor.download_all_announcements',$item->id) }}">Download All Attachements</a>
                                         </div>
+
                                         @endif
                                     </div>
                                 </div>

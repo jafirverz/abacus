@@ -77,9 +77,11 @@ class AnnouncementController extends Controller
             $announcement->image = uploadPicture($request->file('image'), $this->title);
         }
         if ($request->hasfile('attachments')) {
+            $i=0;
             foreach ($request->file('attachments') as $file) {
-
-                $name = $file->getClientOriginalName();
+                $i++;
+                $today=strtotime(date('Y-m-d H:i:s'));
+                $name = $today.$i.'_'.$file->getClientOriginalName();
                 $file->move(public_path() . '/upload-file/', $name);
                 $data[] = $name;
             }
@@ -147,9 +149,11 @@ class AnnouncementController extends Controller
         }
         if ($request->hasfile('attachments')) {
             $input_1_old=$request->input_1_old;
+            $i=0;
             foreach ($request->file('attachments') as $file) {
-
-                $name = $file->getClientOriginalName();
+                $i++;
+                $today=strtotime(date('Y-m-d H:i:s'));
+                $name = $today.$i.'_'.$file->getClientOriginalName();
                 $file->move(public_path() . '/upload-file/', $name);
                 if(isset($input_1_old))
                 {
