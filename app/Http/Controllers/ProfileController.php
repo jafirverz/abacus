@@ -147,7 +147,7 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-        $gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','<',$todayDate)->orderBy('id','desc')->first();
+        $gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','>=',$todayDate)->orderBy('id','desc')->first();
 		//dd($user);
 
 		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
