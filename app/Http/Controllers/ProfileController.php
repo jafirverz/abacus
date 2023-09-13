@@ -572,6 +572,32 @@ class ProfileController extends Controller
 		return redirect()->back()->with('success', __('constant.ALLOCATE_UPDATED'));
 	}
 
+    public function survey_store(Request $request,$id)
+	{
+        //dd($request->all());
+        $users = User::find($this->user->id);
+
+        $request->validate([
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
+
+
+        foreach($request->student_id as $student)
+        {
+            $allocation = new Allocation();
+            $allocation->student_id  = $student ?? NULL;
+            $allocation->assigned_id  = $id;
+            $allocation->assigned_by  = $this->user->id;
+            $allocation->start_date  = $request->start_date ?? NULL;
+            $allocation->end_date  = $request->end_date ?? NULL;
+            $allocation->type  = 2;
+            $allocation->save();
+        }
+
+		return redirect()->back()->with('success', __('constant.SURVEY_UPDATED'));
+	}
+
     public function grading_register_store(Request $request)
 	{
         //dd($request->all());
@@ -646,28 +672,7 @@ class ProfileController extends Controller
 
 
 
-    public function survey_store(Request $request,$id)
-	{
-        //dd($request->all());
-        $users = User::find($this->user->id);
 
-        $request->validate([
-            'start_date' => 'required',
-            'end_date' => 'required',
-        ]);
-
-
-        $allocation = new Allocation();
-        $allocation->student_id  = $request->student_id ?? NULL;
-        $allocation->assigned_id  = $id;
-        $allocation->assigned_by  = $this->user->id;
-        $allocation->start_date  = $request->start_date ?? NULL;
-        $allocation->end_date  = $request->end_date ?? NULL;
-        $allocation->type  = 2;
-        $allocation->save();
-
-		return redirect()->back()->with('success', __('constant.SURVEY_UPDATED'));
-	}
 
 
     public function allocation_test_delete($id)
@@ -847,7 +852,7 @@ class ProfileController extends Controller
                     $data['to_email'] = [$admin->email];
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
-                    
+
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
                     //dd($instructorDetail);
                     $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructorDetail->name];
