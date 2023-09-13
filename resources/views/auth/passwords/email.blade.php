@@ -32,6 +32,9 @@
                         <i class="fa-solid fa-calendar-days ico"></i>
                         <input class="form-control" name="dob" required type="text" placeholder="dd/mm/yyyy" value="{{ old('dob') }}" />
                     </div>
+                    @error('dob')
+                    <span class="text-danger d-block">{{ $message }}</span>
+                    @enderror
                     <div class="output-1">
                         <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
                     </div>
