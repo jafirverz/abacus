@@ -91,16 +91,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="title">Paper Name</label>
-                                    <input type="text" name="" class="form-control" id="" disabled
-                                        value="{{ $competitionPaperSubmitted->paper->title }}">
-                                    @if ($errors->has('date_of_competition'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('date_of_competition') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                
 
                                 <div class="form-group">
                                     <label for="title">Total Marks</label>
@@ -113,16 +104,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="title">User Marks</label>
-                                    <input type="text" name="" class="form-control" id="" disabled
-                                        value="{{ $competitionPaperSubmitted->user_marks }}">
-                                    @if ($errors->has('date_of_competition'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('date_of_competition') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                               
 
                                 <div class="form-group">
                                     <label for="title">Prize</label>
@@ -145,6 +127,21 @@
                                     @if ($errors->has('result'))
                                         <span class="text-danger d-block">
                                         <strong>{{ $errors->first('result') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="title">Certificate</label>
+                                    <select class="form-control" name="certificate">
+                                        <option value="">Please select</option>
+                                        @foreach($certificates as $certificate)
+                                        <option value="{{ $certificate->id }}" @if($competitionPaperSubmitted->certificate_id == $certificate->id) selected @endif>{{ $certificate->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('certificate'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('certificate') }}</strong>
                                     </span>
                                     @endif
                                 </div>

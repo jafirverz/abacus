@@ -22,6 +22,8 @@ use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendEmail;
+use App\Order;
+use App\OrderDetail;
 use Carbon\Carbon;
 
 //use Socialite;
@@ -101,7 +103,24 @@ class LoginController extends Controller
                 if(Auth::user()->approve_status == 1){
                     return redirect()->intended('home')
                 ->withSuccess('Signed in');
-                }else{
+                }elseif(Auth::user()->approve_status == 2){
+                    $checkOrder = Order::where('user_id', Auth::user()->id)->pluck('id')->toArray();
+                    if($checkOrder) {
+                        $checkOrderDetails = OrderDetail::whereIn('order_id', $checkOrder)->where('level_id', '!=', null)->where('expiry_date', '>=', date('Y-m-d'))->get();
+                        if(isset($checkOrderDetails) && count($checkOrderDetails) > 0) {
+                            $levelActive= array();
+                            foreach($checkOrderDetails as $levell){
+                                array_push($levelActive, $levell->level_id);
+                            }
+                            Session::put('levelIdActive', $levelActive);
+                            return redirect()->intended('home')->withSuccess('Signed in');
+                        }else{
+                            Auth::logout();
+                            return redirect("login")->withError('User not approved');
+                        }
+                    }
+                }
+                else{
                     Auth::logout();
                     return redirect("login")->withError('User not approved');
                 }

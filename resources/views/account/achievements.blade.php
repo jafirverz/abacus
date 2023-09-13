@@ -23,7 +23,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
+                    @if(isset($merged) && count($merged)>0)
                     @foreach($merged as $paperSubmited)
                     <tr>
                       <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
@@ -47,15 +47,17 @@
 
                     </tr>
                     @endforeach
-
+                    @endif
                     
                     
                   </tbody>
                 </table>
               </div>
+              @if(isset($merged) && count($merged)>0)
               <ul class="page-numbers mt-30">
-               {{ $merged->links() }}
+               {{ $merged->links() ?? '' }}
               </ul>
+              @endif
             </div>
           </div>
         </div>

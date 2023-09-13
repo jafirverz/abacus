@@ -6,9 +6,21 @@ use App\StandalonePage;
 use App\StandaloneQuestions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class StandalonePageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+        $this->middleware(function ($request, $next) {
+            $this->student_id = Auth::user()->id;
+            $this->previous = url()->previous();
+            return $next($request);
+
+        });
+    }
     /**
      * Display a listing of the resource.
      *

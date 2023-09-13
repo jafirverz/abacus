@@ -34,6 +34,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\MenuList;
 use App\Banner;
+use App\CompetitionCategory;
+use App\CompetitionPaper;
 
 if (!function_exists('getPageList')) {
 
@@ -1065,6 +1067,50 @@ if (!function_exists('getPageList')) {
     {
         if ($instructor_id) {
             $result = User::where('id', $instructor_id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
+    }
+
+    function getCompetition($competition_id)
+    {
+        if ($competition_id) {
+            $result = Competition::where('id', $competition_id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
+    }
+
+    function getCompetitionPaperName($paper_id)
+    {
+        if ($paper_id) {
+            $result = CompetitionPaper::where('id', $paper_id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
+    }
+
+    function getCategory($category_id)
+    {
+        if ($category_id) {
+            $result = CompetitionCategory::where('id', $category_id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
+    }
+
+    function getStudent($user_id)
+    {
+        if ($user_id) {
+            $result = User::where('id', $user_id)->first();
             if ($result) {
                 return $result;
             }
