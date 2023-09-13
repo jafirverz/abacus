@@ -104,13 +104,13 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="instructor_id">Instructor</label>
                                     <select name="instructor_id" class="form-control">
                                         <option value="">-- Select --</option>
                                         @if ($instructors)
                                         @foreach ($instructors as $item)
-                                        <option value="{{ $item->id }}" @if(old('instructor_id', $customer->instructor_id)==$item->id)
+                                        <option value="{{ $item->id }}" @if(old('instructor_id', $user->instructor_id)==$item->id)
                                             selected
                                             @endif>{{ $item->name }}</option>
                                         @endforeach
@@ -121,7 +121,7 @@
                                         <strong>{{ $errors->first('instructor_id') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
 
 
                                 <div class="form-group">

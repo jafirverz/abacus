@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 class WorksheetController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+        $this->middleware(function ($request, $next) {
+            $this->student_id = Auth::user()->id;
+            $this->previous = url()->previous();
+            return $next($request);
+
+        });
+    }
     public function index($worksheetId = null, $qId = null, $lId = null){
         if($qId == 4){
             if(empty($worksheetId)){
@@ -87,6 +97,7 @@ class WorksheetController extends Controller
             if(empty($worksheetId)){
                 return abort(404);
             }
+            
             $worksheet = Worksheet::where('id', $worksheetId)->first();
             $level = Level::where('id', $lId)->first();
             $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
@@ -101,7 +112,12 @@ class WorksheetController extends Controller
                     return view('account.worksheetDivide', compact("worksheet", 'level', 'questions', 'allQuestions'));
                 }
             }else{
-                $allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
+                if(isset($_REQUEST['s'])){
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->paginate(10);
+                }else{
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
+                }
+                //$allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
                 return view('account.worksheetMix', compact("worksheet", 'level', 'questions', 'allQuestions'));
             }
             // return view('account.worksheetChallenge', compact("worksheet", 'level', 'questions'));

@@ -19,7 +19,7 @@
                 <form method="POST" action="{{ url('password/email') }}" class="form-ani">
                     @csrf
                     <label class="lb-1">Full Name <span class="required">*</span></label>
-                    <input class="form-control" type="text" required name="name" placeholder="Enter Full Name" />
+                    <input class="form-control" type="text" required name="name" placeholder="Enter Full Name" value="{{ old('name') }}" />
                     <label class="lb-1">Email Address <span class="required">*</span></label>
                     <input class="form-control  @error('email') is-invalid @enderror" type="text"
                         placeholder="Enter Email Address" id="email" type="email" name="email"
@@ -30,7 +30,7 @@
                     <label class="lb-1">Date of Birth <span class="required">*</span></label>
                     <div class="date-wrap">
                         <i class="fa-solid fa-calendar-days ico"></i>
-                        <input class="form-control" name="dob" required type="text" placeholder="dd/mm/yyyy" />
+                        <input class="form-control" name="dob" required type="text" placeholder="dd/mm/yyyy" value="{{ old('dob') }}" />
                     </div>
                     <div class="output-1">
                         <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>

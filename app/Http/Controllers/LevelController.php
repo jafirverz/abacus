@@ -15,6 +15,17 @@ use Illuminate\Support\Facades\Auth;
 class LevelController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth:web');
+        $this->middleware(function ($request, $next) {
+            $this->student_id = Auth::user()->id;
+            $this->previous = url()->previous();
+            return $next($request);
+
+        });
+    }
+
     public function index($slug = null){
         $checkSlug = Level::where('slug', $slug)->first();
         if($checkSlug){

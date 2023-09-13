@@ -68,10 +68,10 @@ class UserProfileUpdateController extends Controller
             'email' =>  'required|email|unique:users,email,' . $userprofileupdate->user_id . ',id',
             'name' => 'required|string',
 //            'password'  =>  'nullable|min:8',
-            'country_code' => 'required',
+            //'country_code' => 'required',
 //            'user_type_id' => 'required',
             'dob' => 'required',
-            'instructor_id' => 'required',
+            //'instructor_id' => 'required',
             'mobile' => 'required',
             'gender' => 'required',
         ];
@@ -92,7 +92,7 @@ class UserProfileUpdateController extends Controller
 
         $customer = User::find($userprofileupdate->user_id);
         $customer->name = $request->name;
-        $customer->instructor_id = $request->instructor_id??NULL;
+        //$customer->instructor_id = $request->instructor_id??NULL;
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;

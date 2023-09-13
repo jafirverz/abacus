@@ -4,19 +4,22 @@ namespace App\Imports;
 
 use App\CompetitionStudent;
 use App\CompetitionStudentResult;
+use App\TempStudentCompetitionResult;
 use App\User;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportCompetitionResult implements ToCollection, WithHeadingRow
+class TempImportCompetitionResult implements ToCollection, WithHeadingRow
 {
     private $category;
     private $competition;
-    public function __construct(int $competition, int $category) 
+    private $uploadId;
+    public function __construct(int $competition, int $category, int $uploadId) 
     {
         $this->category = $category;
         $this->competition = $competition;
+        $this->uploadId = $uploadId;
     }
     
     /**
@@ -33,7 +36,8 @@ class ImportCompetitionResult implements ToCollection, WithHeadingRow
             if($checkInstructorName){
                 $checkUserName = User::where('name', $studentName)->where('instructor_id', $checkInstructorName->id)->first();
                 if($checkUserName){
-                    $compStudentResult = new CompetitionStudentResult();
+                    $compStudentResult = new TempStudentCompetitionResult();
+                    $compStudentResult->cru_id =  $this->uploadId;
                     $compStudentResult->competition_id =  $this->competition;
                     $compStudentResult->category_id =  $this->category;
                     $compStudentResult->user_id =  $checkUserName->id;

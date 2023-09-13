@@ -14,6 +14,17 @@
 
         <div class="section-body">
             @include('admin.inc.messages')
+            
+            <div class="row">
+                <form method="get" action="{{ route('studentResultDownload', $competitionId) }}">
+                    @csrf
+                    <input type="hidden" name="competitionId" value="{{ $competitionId }}">
+                    <button type="submit" class="btn btn-primary"> Download Result</button>
+                </form>
+                
+                </div>
+            </div>
+
 
             <div class="row">
                 <div class="col-12">
@@ -63,9 +74,7 @@
                                             <th>Action</th>
                                             <th>User Name</th>
                                             <th>Category</th>
-                                            <th>Paper</th>
                                             <th>Total Marks</th>
-                                            <th>User Marks</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -82,9 +91,7 @@
                                             </td>
                                             <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->category->category_name }}</td>
-                                            <td>{{ $item->paper->title }}</td>
                                             <td>{{ $item->total_marks }}</td>
-                                            <td>{{ $item->user_marks }}</td>
                                            
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
