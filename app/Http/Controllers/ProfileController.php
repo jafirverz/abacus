@@ -728,6 +728,7 @@ class ProfileController extends Controller
                         //'country_code_phone' => 'required',
                         'mobile' => 'required',
                         'gender' => 'required',
+                        'country_code_phone' => 'required',
                         // 'instructor' => 'required',
                         //'country_code' => 'required',
                         //'password'  =>  'nullable|min:8',

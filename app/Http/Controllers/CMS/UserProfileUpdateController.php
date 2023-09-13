@@ -97,13 +97,13 @@ class UserProfileUpdateController extends Controller
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
-//        $customer->user_type_id = $request->user_type_id??NULL;
+        $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->country_code = $request->country_code??NULL;
         $customer->mobile = $request->mobile??NULL;
 //        $customer->approve_status = $request->status??NULL;
-//        if (!is_null($request->password)) {
-//            $customer->password = Hash::make($request->password);
-//        }
+        if (!empty($userprofileupdate->password)) {
+            $customer->password = $userprofileupdate->password;
+        }
         $customer->updated_at = Carbon::now();
         $customer->save();
 
