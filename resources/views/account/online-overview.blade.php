@@ -47,7 +47,8 @@
                 <input class="form-control" name="dob" type="text" value="{{old('dob', date('d/m/Y', strtotime($user->dob))) ?? ''}}" disabled />
               </div>
             </div>
-            <div class="col-xl-4 sp-col">
+
+            <!-- <div class="col-xl-4 sp-col">
               <label class="lb-1">Phone <span class="required">*</span></label>
               <div class="row sp-col-10">
                 <div class="col-auto sp-col">
@@ -60,7 +61,56 @@
                   <input class="form-control" type="text" name="mobile" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="{{old('mobile', $user->mobile) ?? ''}}" disabled />
                 </div>
               </div>
+            </div> -->
+
+            <div class="col-xl-4 sp-col" id="disablephone">
+              <label class="lb-1">Phone <span class="required">*</span></label>
+              <div class="row sp-col-10">
+                <div class="col-auto sp-col">
+                  <select class="selectpicker" disabled>
+                    @foreach($country as $countr)
+                    <option value="{{ $countr->phonecode}}" @if($user->country_code_phone == $countr->phonecode) selected @endif>+{{
+                      $countr->phonecode}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col sp-col">
+                  <input class="form-control" type="text" value="{{$user->mobile}}" disabled />
+                </div>
+              </div>
             </div>
+
+            @php
+            $country_code_phone = $user->country_code_phone;
+            if(old("country_code_phone")){
+            $country_code_phone = old("country_code_phone");
+            }
+            @endphp
+            <div class="col-xl-4 sp-col" id="enablephone" style="display: none">
+              <label class="lb-1">Phone <span class="required">*</span></label>
+              <div class="row sp-col-10">
+                <div class="col-auto sp-col">
+                  <select class="selectpicker" name="country_code_phone">
+                    @foreach($country as $countr)
+                    <option value="{{ $countr->phonecode}}" @if($country_code_phone==$countr->phonecode) selected @endif>+{{
+                      $countr->phonecode}}</option>
+                    @endforeach
+                  </select>
+                  @if ($errors->has('country_code_phone'))
+                  <span class="text-danger">&nbsp;{{ $errors->first('country_code_phone') }}</span>
+                  @endif
+                </div>
+                <div class="col sp-col">
+                  <input class="form-control" type="text" name="mobile"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    value="{{old('mobile', $user->mobile) ?? ''}}" disabled />
+                </div>
+                @if ($errors->has('mobile'))
+                <span class="text-danger">&nbsp;{{ $errors->first('mobile') }}</span>
+                @endif
+              </div>
+            </div>
+                            
             <!-- <div class="col-xl-4 sp-col">
               <label class="lb-1">Gender <span class="required">*</span></label>
               <select class="selectpicker" disabled>

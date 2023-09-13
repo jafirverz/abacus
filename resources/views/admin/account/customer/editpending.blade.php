@@ -51,6 +51,16 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    <label for="">Phone Code</label>
+                                    <input type="text" name="country_code_phone" class="form-control"
+                                        value="{{ old('country_code_phone', $customer->country_code_phone) }}">
+                                    @if ($errors->has('country_code_phone'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('country_code_phone') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label for="">Phone</label>
                                     <input type="text" name="mobile" class="form-control"
                                         value="{{ old('mobile', $customer->mobile) }}">
@@ -104,24 +114,8 @@
                                     </span>
                                     @endif
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label for="instructor_id">Instructor</label>
-                                    <select name="instructor_id" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if ($instructors)
-                                        @foreach ($instructors as $item)
-                                        <option value="{{ $item->id }}" @if(old('instructor_id', $user->instructor_id)==$item->id)
-                                            selected
-                                            @endif>{{ $item->name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('instructor_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('instructor_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div> -->
+
+                                
 
 
                                 <div class="form-group">
