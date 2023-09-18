@@ -17,7 +17,9 @@
             <div class="tempt-2-content">
                 <div class="row title-wrap-1">
                     <div class="col-md-6 order-md-last mt-0 lastcol">
+                        @if(isset($gradingExam->id))
                         <a class="btn-1" href="{{ url('register-grading-examination',$gradingExam->id) }}">Register for Grading Exam <i class="fa-solid fa-arrow-right-long"></i></a>
+                        @endif
                     </div>
                     <div class="col-md-6 order-md-first mt-767-20">
                         <h1 class="title-3">Grading Examinations</h1>
