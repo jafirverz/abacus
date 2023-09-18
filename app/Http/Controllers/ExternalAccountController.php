@@ -104,7 +104,7 @@ class ExternalAccountController extends Controller
         $customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
         $customer->account_id = $accountId;
-        $customer->user_type_id = 4;
+
         $customer->instructor_id = $this->user->id;
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
@@ -115,7 +115,16 @@ class ExternalAccountController extends Controller
         $customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
-		//$customer->approve_status = 1;
+        if(Auth::user()->user_type_id==6)
+        {
+		$customer->approve_status = 1;
+        $customer->user_type_id = 4;
+        }
+        else
+        {
+        $customer->user_type_id = 1;
+        }
+
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
         }
