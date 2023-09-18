@@ -18,7 +18,7 @@
           <li><a href="{{ url('') }}">Preparatory Level</a></li>
         </ul>
         <div class="box-1">
-          {{ $worksheet->description }}
+          {{ $worksheet->description ?? '' }}
         </div>
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
