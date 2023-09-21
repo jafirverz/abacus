@@ -171,6 +171,8 @@ class RegisterController extends Controller
             }
             $instructor = User::where('id', $request->instructor)->first();
 
+            $country = Country::where('id', $request->country_code)->first();
+
 //			Admin email for new student registration
 			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
             $admins = Admin::get();
@@ -185,7 +187,7 @@ class RegisterController extends Controller
                     $data['subject'] = $email_template->subject;
 
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $country->nicename, $instructor->name];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -211,7 +213,7 @@ class RegisterController extends Controller
                 $data['subject'] = $email_template->subject;
 
                 $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $country->nicename, $instructor->name];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 
