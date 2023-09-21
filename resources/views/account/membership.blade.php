@@ -32,7 +32,7 @@
                 @if($levelId)
                 <tr>
                   <td><em>{{ $order->order_id }}</em></td>
-                  <td><em><a href="be-premium-elementary-level.html">{{ $order->name }}</a></em></td>
+                  <td><em><a href="/level/{{ $order->level->slug ?? '' }}">{{ $order->name }} {{ $order->level_id }}</a></em></td>
                   <td><em>{{ $levelDetails->premium_months ?? '' }} </em></td>
                   <td><em>{{ date('Y-m-d', strtotime($order->created_at)) }}</em></td>
                   <td><em>{{ $order->expiry_date }}</em></td>
