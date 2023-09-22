@@ -254,6 +254,22 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more8" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+
+
+
+                                @elseif(isset($_GET['question-type']) && $_GET['question-type']==10)
+                                    <div class="form-group">
+                                        <label for="">Upload PDF</label>
+                                        <input type="file" required name="pdf" class="form-control" >
+                                        @if ($errors->has('file'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('file') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+
+                                    
+
                             @endif
 
                             </div>

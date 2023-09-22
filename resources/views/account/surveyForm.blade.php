@@ -61,12 +61,38 @@
                       @endphp
                       @if($optionChoices)
                         @foreach($optionChoices as $choices)
+                        @if($choices->title == 'Others:')
+                        <div class="gitem hastxt">
+                          <div class="input-group">
+                            <div class="input-group-addon">
+                              <div class="radiotype">
+                                <input name="{{ strtolower($options->title) }}" type="radio" id="race-4" value="{{ $choices->title }}" />
+                                <label for="race-4">{{ $choices->title }}</label>
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" />
+                          </div>
+                        </div>
+                        @elseif($choices->title == 'Employed')
+                        <div class="gitem hastxt">
+                          <div class="input-group">
+                            <div class="input-group-addon">
+                              <div class="radiotype">
+                                <input name="{{ strtolower($options->title) }}" type="radio" id="occ-4" value="{{ $choices->title }}" />
+                                <label for="occ-4">{{ $choices->title }}</label>
+                              </div>
+                            </div>
+                            <input class="form-control" type="text" />
+                          </div>
+                        </div>
+                        @else
                           <div class="gitem">
                             <div class="radiotype">
                               <input name="{{ strtolower($options->title) }}" required type="radio" id="male" value="{{ $choices->title }}" />
                               <label for="male">{{ $choices->title }}</label>
                             </div>
                           </div>
+                        @endif
                         @endforeach
                       @endif
 

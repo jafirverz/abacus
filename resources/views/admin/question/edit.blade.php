@@ -396,6 +396,18 @@
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more8" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
+
+
+                                @elseif((isset($_GET['question-type']) && $_GET['question-type']==10) || $question->question_type==10)
+                                    <label for="" class=" control-label">Grading Sample Questions</label>
+                                    
+
+                                    <div class="form-group">
+                                        <label for="">Upload PDF</label>
+                                        <input type="file"  name="pdf" class="form-control" >
+                                   </div>
+                                   <p><a href="{{ asset($question->link) ?? '' }}" target="_blank">PDF</a></p>
+                                    
                                 @endif
 
 

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller
 {
@@ -261,6 +262,38 @@ class QuestionController extends Controller
                 $storQues->block = $request->blocks[$i];
                 $storQues->save();
             }
+        }elseif($request->question_type==10)
+        {
+            // dd($request->all());
+            $question = new Question();
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            
+            
+            if ($request->hasFile('pdf')) {
+
+                $pdf = $request->file('pdf');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $pdf->getClientOriginalName();
+
+                $filepath = 'storage/pdf/';
+
+                Storage::putFileAs(
+
+                    'public/pdf',
+                    $pdf,
+                    $filename
+
+                );
+
+                $path_profile_picture = $filepath . $filename;
+
+                $question->link = $path_profile_picture;
+            }
+            $question->created_at = Carbon::now();
+            $question->save();
+            
         }
         // elseif($request->question_type==1){
         //     if ($request->hasfile('input_1')) {
@@ -590,6 +623,37 @@ class QuestionController extends Controller
                 $storQues->block = $request->blocks[$i];
                 $storQues->save();
             }
+        }elseif($request->question_type==10)
+        {
+            $question = Question::find($id);
+            $question->title = $request->title;
+            $question->worksheet_id = $request->worksheet_id;
+            $question->question_type = $request->question_type;
+            
+            
+            if ($request->hasFile('pdf')) {
+
+                $pdf = $request->file('pdf');
+
+                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $pdf->getClientOriginalName();
+
+                $filepath = 'storage/pdf/';
+
+                Storage::putFileAs(
+
+                    'public/pdf',
+                    $pdf,
+                    $filename
+
+                );
+
+                $path_profile_picture = $filepath . $filename;
+
+                $question->link = $path_profile_picture;
+            }
+            $question->created_at = Carbon::now();
+            $question->save();
+            
         }
 
         //dd($question);
