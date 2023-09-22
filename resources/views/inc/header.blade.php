@@ -5,6 +5,6 @@
         </a>
     </div>
     <div class="actions">
-        <div class="headuser"><a  href="{{url('login')}}">Login</a> / <a href="{{url('register')}}">Register</a></div>
+        <div class="headuser"><a  href="{{url('login')}}">Login</a>/ <a href="{{url('register')}}">Register</a></div>
     </div>
 </header>

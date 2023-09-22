@@ -66,7 +66,7 @@
                       {{ $cartt->description }}
                     </div>
                     <div class="gcol-3 gprice">
-                      <strong>$ {{ $cartt->amount ?? '' }}</strong>
+                      <strong>$ {{ number_format($cartt->amount, 2) ?? '' }}</strong>
                     </div>
                   </div>
                 </div>
@@ -81,7 +81,7 @@
         <hr class="bdrtype-1"/>
         <div class="row total-wrap">
           <div class="col-md-6">
-            <span>Total:</span> <strong>$ {{ $totalAmount }}</strong>
+            <span>Total:</span> <strong>$ {{ number_format($totalAmount, 2) }}</strong>
           </div>
           <div class="col-md-6 lastcol">
             <a class="btn-1" href="{{ url('checkout') }}">Proceed <i class="fa-solid fa-arrow-right-long"></i></a>

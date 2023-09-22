@@ -52,7 +52,7 @@
                     @endif
                   </div>
                   <div class="gcol-3 gprice">
-                    <strong>$ {{ $cartt->amount ?? '' }}</strong>
+                    <strong>$ {{ number_format($cartt->amount, 2) ?? '' }}</strong>
                   </div>
                 </div>
               </div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-lg-5">
                   <h4 class="title-4">Contact Number</h4>
-                  <span class="txt-1">{{ Auth::user()->mobile }}</span> <a class="link-5" href="javascript::void(0);" onclick="showFields('phone')">Change contact number</a>
+                  <span class="txt-1">({{ Auth::user()->country_code_phone }}) {{ Auth::user()->mobile }}</span> <a class="link-5" href="javascript::void(0);" onclick="showFields('phone')">Change contact number</a>
                   <input class="txt-1" type="text" name="phone" value="" id="phone" style="display: none;" required>
                 </div>
               </div>
@@ -114,13 +114,13 @@
               </div> -->
               <hr class="bdrtype-1"/>
               <div class="row total-row">
-                <span class="col-5">Subtotal</span> <strong class="col-7 lastcol">$ {{ $totalAmount }}</strong>
+                <span class="col-5">Subtotal</span> <strong class="col-7 lastcol">$ {{ number_format($totalAmount, 2) }}</strong>
               </div>
               <!-- <div class="row total-row">
                 <span class="col-5">Shipping</span> <strong class="col-7 lastcol">$ 50.00</strong>
               </div> -->
               <div class="row total-row">
-                <span class="col-5">Total <span class="d-inline-block">(tax incl.)</span></span> <strong class="col-7 lastcol total">$ {{ $totalAmount }}</strong>
+                <span class="col-5">Total <span class="d-inline-block">(tax incl.)</span></span> <strong class="col-7 lastcol total">$ {{ number_format($totalAmount, 2) }}</strong>
               </div>
 
               <div class="row output-3">
