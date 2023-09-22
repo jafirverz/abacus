@@ -166,15 +166,17 @@
                                                 {{ $item->teacher->name  ?? ''}}
                                             </td>
                                             <td>
+                                                @if(isset($item->teacher->country_code))
                                                 {{ getCountry($item->teacher->country_code) ?? '' }}
+                                                @endif
                                             </td>
                                             <td>{{ $item->location->title ?? '' }}</td>
                                             <td>
                                                 {{ ($item->approve_status==1)?'Approved':'Pending' }}
                                             </td>
                                             <td>{{ $item->remarks ?? ''}}</td>
-                                            <td>--</td>
-                                            <td>--</td>
+                                            <td>{{ getCompetetionStudentResult($item->event->id,$item->student->id)->rank ?? '-'}}</td>
+                                            <td>{{ getCompetetionStudentResult($item->event->id,$item->student->id)->result ?? '-'}}</td>
                                         </tr>
                                         @endforeach
                                         @else

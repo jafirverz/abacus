@@ -6,7 +6,7 @@
                 @if(Auth::user()->user_type_id == 6)
                 <div class="menu-aside">@include('inc.account-sidebar-external')</div>
                 @else
-                @include('inc.intructor-account-sidebar')
+                <div class="menu-aside">@include('inc.intructor-account-sidebar')</div>
                 @endif
             </div>
             <div class="col-lg-9 sp-col tempt-2-inner">

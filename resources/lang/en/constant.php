@@ -42,6 +42,7 @@ return [
     'SLIDER'   =>  'Homepage Banner',
     'USER_ACCOUNT'  =>  'User Account',
     'ACCOUNT_VERIFICATION'  =>  'Account Verification',
+    'ACOUNT_CREATED'  =>  'Account created successfully.',
     'MODULES' => 'Modules',
     'LEVEL' => 'Level',
     'TOPIC' => 'Topics',

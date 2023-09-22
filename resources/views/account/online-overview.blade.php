@@ -110,7 +110,7 @@
                 @endif
               </div>
             </div>
-                            
+
             <!-- <div class="col-xl-4 sp-col">
               <label class="lb-1">Gender <span class="required">*</span></label>
               <select class="selectpicker" disabled>
@@ -189,8 +189,8 @@
                         @foreach($lesson as $key => $value)
                         <tr>
                             <td><em>{{ $value->title ?? '' }}</em></td>
-                            <td><em class="status-2">{{ ( $value->submitted->is_submitted==1)?'Completed':'Pending' }}</em></td>
-                            <td><em>{{ date('d/m/Y',strtotime($value->submitted->created_at)) }}</em></td>
+                            <td><em class="status-2">{{ ( isset($value->submitted->is_submitted) && $value->submitted->is_submitted==1)?'Completed':'Pending' }}</em></td>
+                            <td><em> @if(isset($value->submitted->created_at)) {{ date('d/m/Y',strtotime($value->submitted->created_at)) }} @endif</em></td>
                         </tr>
                         @endforeach
                         @endif
