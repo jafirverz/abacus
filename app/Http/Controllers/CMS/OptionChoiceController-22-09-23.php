@@ -65,7 +65,6 @@ class OptionChoiceController extends Controller
     public function store(Request $request)
     {
         //
-        //dd($request->all());
         $fields = [
             'question_option' => 'required',
         ];
@@ -82,16 +81,13 @@ class OptionChoiceController extends Controller
         }
 
         $j = 0;
-        if(isset($request->options)){
-            $count = count($request->options);
-            for($j=0; $j<$count; $j++){
-                $choices = new SurveyQuestionOptionChoices();
-                $choices->survey_question_option_id = $request->question_option_id;
-                $choices->title = $request->options[$j];
-                $choices->save();
-            }
+        $count = count($request->options);
+        for($j=0; $j<$count; $j++){
+            $choices = new SurveyQuestionOptionChoices();
+            $choices->survey_question_option_id = $request->question_option_id;
+            $choices->title = $request->options[$j];
+            $choices->save();
         }
-        
         
 
         return redirect()->route('option-choices.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
@@ -141,52 +137,34 @@ class OptionChoiceController extends Controller
         // $messages['title.required'] = 'The title field is required.';
         // $request->validate($fields, $messages);
         $i = 0;
-        // dd($request->options);
-        if(isset($request->input_1)){
-            $count = count($request->input_1);
-            if($count > 0){
-                $optionChoices = OptionChoice::where('survey_question_option_id', $id)->get();
-                foreach($optionChoices as $choicc){
-                    $choicc->delete();
-                }
-            }
-            for($i=0; $i<$count; $i++){
-                $choices = new OptionChoice();
-                $choices->survey_question_option_id = $request->question_option_id;
-                $choices->title = $request->input_1[$i];
-                $choices->save();
-            }
-        }else{
+        $count = count($request->input_1);
+        if($count > 0){
             $optionChoices = OptionChoice::where('survey_question_option_id', $id)->get();
-                foreach($optionChoices as $choicc){
-                    $choicc->delete();
-                }
+            foreach($optionChoices as $choicc){
+                $choicc->delete();
+            }
         }
-        
+        for($i=0; $i<$count; $i++){
+            $choices = new OptionChoice();
+            $choices->survey_question_option_id = $request->question_option_id;
+            $choices->title = $request->input_1[$i];
+            $choices->save();
+        }
 
         $j = 0;
-        
-        if(isset($request->options)) {
-            $count = count($request->options);
-                if($count > 0){
-                    $optionChoices = SurveyQuestionOptionChoices::where('survey_question_option_id', $id)->get();
-                    foreach($optionChoices as $choicc){
-                        $choicc->delete();
-                    }
-                }
-                for($j=0; $j<$count; $j++){
-                    $choices = new SurveyQuestionOptionChoices();
-                    $choices->survey_question_option_id = $request->question_option_id;
-                    $choices->title = $request->options[$j];
-                    $choices->save();
-                }
-        }else{
+        $count = count($request->options);
+        if($count > 0){
             $optionChoices = SurveyQuestionOptionChoices::where('survey_question_option_id', $id)->get();
-                    foreach($optionChoices as $choicc){
-                        $choicc->delete();
-                    }
+            foreach($optionChoices as $choicc){
+                $choicc->delete();
+            }
         }
-        
+        for($j=0; $j<$count; $j++){
+            $choices = new SurveyQuestionOptionChoices();
+            $choices->survey_question_option_id = $request->question_option_id;
+            $choices->title = $request->options[$j];
+            $choices->save();
+        }
         
 
         return redirect()->route('option-choices.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));

@@ -77,25 +77,15 @@
             @endforeach
           
 
-           @if($options->title == 'Level')
-            <hr class="bdrtype-3" />
-          @endif
+
           
+          <hr class="bdrtype-3" />
           @if($options->option_type == 'with_title')
-          @php
-          if($options->title == 'Level'){
-            $widd = "width: 25%";
-            $class = "gtb-2 gtbw-1";
-          }else{
-            $widd = "width: 45%";
-            $class = "gtb-2";
-          }
-          @endphp
           <div class="xscrollbar">
-            <table class="{{ $class }}">
+            <table class="gtb-2">
               <thead>
                 <tr>
-                  <th style="{{ $widd }}"><!--This course...--></th>
+                  <th style="width: 25%;"></th>
                   @php 
                   $optionChoices =  \App\OptionChoice::where('survey_question_option_id', $options->id)->get();
                   @endphp
@@ -112,17 +102,8 @@
                 @foreach($surveyQuesOptionChoices as $quesChoices)
                 @if(Auth::user()->user_type_id == 3 && ($quesChoices->title == 'Intermediate Level' || $quesChoices->title == 'Advanced Level'))
                 @else
-                @php
-                if($quesChoices->title == 'Intermediate Level' || $quesChoices->title == 'Advanced Level'){
-                  $choiCl = 'subcontent';
-                  $tdclass = 'sublb';
-                }else{
-                  $choiCl = '';
-                  $tdclass = '';
-                }
-                @endphp
-                  <tr class="{{ $choiCl }}">
-                    <td><strong class="{{ $tdclass }}">{{ $quesChoices->title }}</strong></td>
+                  <tr class="subcontent">
+                    <td><strong class="sublb">{{ $quesChoices->title }}</strong></td>
                     @foreach($optionChoices as $choices)
                     <td>	
                       <div class="radiotype">
@@ -137,17 +118,6 @@
                 @endforeach
 
               </tbody>
-              @if($options->title != 'Level')
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td>< 1 year</td>
-                  <td>1-2 years</td>
-                  <td>2-3 years</td>
-                  <td>> 3 years</td>
-                </tr>
-              </tfoot>
-              @endif
             </table>
           </div>
           @endif

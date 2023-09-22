@@ -6,9 +6,9 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-           <div class="section-header-button">
-                <a href="{{ route('option-choices.create') }}" class="btn btn-primary">Add New</a>
-        </div>
+           <!-- <div class="section-header-button">
+                <a href="{{ route('surveys.create') }}" class="btn btn-primary">Add New</a>
+        </div> -->
         {{-- @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('survey')]) --}}
 </div>
 
@@ -18,12 +18,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('option-choices.destroy', 'option-choices') }}"
+                    <a href="{{ route('surveys.destroy', 'surveys') }}"
                         class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?"
                         data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                         data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                             class="badge badge-transparent">0</span></a>
-                    <form id="destroy" action="{{ route('option-choices.destroy', 'option-choices') }}"
+                    <form id="destroy" action="{{ route('surveys.destroy', 'surveys') }}"
                         method="post">
                         @csrf
                         @method('DELETE')
@@ -31,7 +31,7 @@
                     </form>
                     <h4></h4>
                     <div class="card-header-form form-inline">
-                        <form action="{{ route('option-choices.search') }}" method="get">
+                        <form action="{{ route('surveys.search') }}" method="get">
                             @csrf
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" placeholder="Search"
@@ -54,34 +54,34 @@
                         <table class="table table-md">
                             <thead>
                                 <tr>
-                                    <!-- <th>
+                                    <th>
                                         <div class="custom-checkbox custom-control">
                                             <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
                                                 class="custom-control-input" id="checkbox-all">
                                             <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                         </div>
-                                    </th> -->
+                                    </th>
                                     <th>Action</th>
                                     <th>Title</th>
                                     <th>Last Updated</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($surveysQuestionsOptions->count())
-                                @foreach($surveysQuestionsOptions as $key => $item)
+                                @if($surveys->count())
+                                @foreach($surveys as $key => $item)
                                 <tr>
-                                    <!-- <td scope="row">
+                                    <td scope="row">
                                         <div class="custom-checkbox custom-control"> <input type="checkbox"
                                                 data-checkboxes="mygroup" class="custom-control-input"
                                                 id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                                                 for="checkbox-{{ ($key+1) }}"
                                                 class="custom-control-label">&nbsp;</label></div>
-                                    </td> -->
+                                    </td>
                                     <td>
-                                        <!-- <a href="{{ route('option-choices.show', $item->id) }}"
+                                        <a href="{{ route('surveys.show', $item->id) }}"
                                             class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
-                                            data-original-title="View"><i class="fas fa-eye"></i></a> -->
-                                        <a href="{{ route('option-choices.edit', $item->id) }}"
+                                            data-original-title="View"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('surveys.edit', $item->id) }}"
                                             class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                             data-original-title="View">
                                             <i aria-hidden="true" class="fa fa-edit"></i>
@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    {{ $surveysQuestionsOptions->links() }}
+                    {{ $surveys->links() }}
                 </div>
             </div>
         </div>

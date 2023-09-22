@@ -47,9 +47,9 @@
                                 @endforeach
 
                                 <div class="after-add-more"></div>
-                                <!-- <div class="input-group-btn">
+                                <div class="input-group-btn">
                                     <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                </div> -->
+                                </div>
 
                                 
                                 @if(count($surveyQuestionOptionChoices)>0)
@@ -69,9 +69,9 @@
                                     @endforeach
 
                                     <div class="after-add-more1"></div>
-                                    <!-- <div class="input-group-btn">
+                                    <div class="input-group-btn">
                                         <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                    </div> -->
+                                    </div>
                                 @endif
                                 
 

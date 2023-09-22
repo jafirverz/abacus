@@ -5,10 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\SurveyQuestion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\OptionChoice;
 use App\Survey;
-use App\SurveyQuestionOption;
-use App\SurveyQuestionOptionChoices;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Auth;
 
@@ -148,28 +145,8 @@ class SurveyQuestionController extends Controller
      * @param  \App\SurveyQuestion  $surveyQuestion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(SurveyQuestion $surveyQuestion)
     {
         //
-        // dd($request->all());
-        $ids = explode(',', $request->multiple_delete);
-        $sq = SurveyQuestion::whereIn('id', $ids)->get();
-        $sqp = SurveyQuestionOption::whereIn('survey_question_id', $ids)->get();
-        foreach($sqp as $options){
-            
-            $questionOptions = OptionChoice::where('survey_question_option_id',  $options->id)->get();
-            foreach($questionOptions as $optionChoices) {
-                $optionChoices->delete();
-            }
-            $surveyQuesOptionChoices = SurveyQuestionOptionChoices::where('survey_question_option_id', $options->id)->get();
-            foreach($surveyQuesOptionChoices as $optionChoicess) {
-                $optionChoicess->delete();
-            }
-            $options->delete();
-        }
-        foreach($sq as $deleteQ){
-            $deleteQ->delete();
-        }
-        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
 }

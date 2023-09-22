@@ -54,9 +54,9 @@
                                         </div>
                                     @endforeach
                                     <div class="after-add-more"></div>
-                                    <div class="input-group-btn">
+                                    <!-- <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                    </div>
+                                    </div> -->
                                 @elseif($surveysQuestions->type == 'textarea')
                                     @foreach($surveysQuestionOptions as $surveysQuestionOption)
                                         <div class="form-group">
@@ -73,9 +73,9 @@
                                         </div>
                                         @endforeach
                                     <div class="after-add-more"></div>
-                                    <div class="input-group-btn">
+                                    <!-- <div class="input-group-btn">
                                     <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                    </div>
+                                    </div> -->
                                 @endif
 
                                 

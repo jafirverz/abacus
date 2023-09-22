@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\OptionChoice;
 use App\SurveyQuestion;
-use App\SurveyQuestionOptionChoices;
 
 class SurveyQuestionOptionController extends Controller
 {
@@ -134,15 +132,6 @@ class SurveyQuestionOptionController extends Controller
         $survey_question_id = $request->survey_question_id;
         $questionOptions = SurveyQuestionOption::where('survey_question_id', $survey_question_id)->get();
         foreach($questionOptions as $question){
-            $questionOptions = OptionChoice::where('survey_question_option_id',  $question->id)->get();
-            foreach($questionOptions as $optionChoices) {
-                $optionChoices->delete();
-            }
-            $surveyQuesOptionChoices = SurveyQuestionOptionChoices::where('survey_question_option_id', $question->id)->get();
-            foreach($surveyQuesOptionChoices as $optionChoicess) {
-                $optionChoicess->delete();
-            }
-           
             $question->delete();
         }
 
@@ -172,25 +161,8 @@ class SurveyQuestionOptionController extends Controller
      * @param  \App\SurveyQuestionOption  $surveyQuestionOption
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(SurveyQuestionOption $surveyQuestionOption)
     {
         //
-        $ids = explode(',', $request->multiple_delete);
-        $sqp = SurveyQuestionOption::whereIn('survey_question_id', $ids)->get();
-        foreach($sqp as $options){
-            
-            $questionOptions = OptionChoice::where('survey_question_option_id',  $options->id)->get();
-            foreach($questionOptions as $optionChoices) {
-                $optionChoices->delete();
-            }
-            $surveyQuesOptionChoices = SurveyQuestionOptionChoices::where('survey_question_option_id', $options->id)->get();
-            foreach($surveyQuesOptionChoices as $optionChoicess) {
-                $optionChoicess->delete();
-            }
-            $options->delete();
-        }
-        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
-
-    
 }
