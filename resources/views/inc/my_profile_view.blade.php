@@ -6,10 +6,29 @@
             @php 
             $levelIdActive = '';
             $levelIdActive = Session::get('levelIdActive');
+            $i = 1;
             @endphp
             @foreach($levels as $level)
+            @php
+            if($i == 1){
+                $backColor = '#2D44B6';
+                $lockClass = '';
+            }elseif($i == 2){
+                $backColor = '#3AB9C0';
+                $lockClass = '';
+            }elseif($i == 3){
+                $backColor = '#FD728A';
+                $lockClass = 'lock';
+            }elseif($i == 4){
+                $backColor = '#F2996F';
+                $lockClass = 'lock';
+            }elseif($i == 5){
+                $backColor = '#F1BACD';
+                $lockClass = 'lock';
+            }
+            @endphp
             <div class="col-xl-4 col-sm-6 sp-col">
-                <div class="inner" style="background: #2D44B6;">
+                <div class="inner {{ $lockClass }}" style="background: {{ $backColor }}">
                     <figure>
                         <img src="{{ asset($level->image) }}" alt="" />
                     </figure>
@@ -31,6 +50,9 @@
                     </div>
                 </div>
             </div>
+            @php
+            $i++;
+            @endphp
             @endforeach
 
 
