@@ -115,7 +115,7 @@
                         </div>
                     </div>
                     <div class="row sp-col-xl-30">
-                        <div class="col-xl-3 sp-col" id="disablecountry">
+                        <div class="col-xl-4 sp-col" id="disablecountry">
                             <label class="lb-1">Country <span class="required">*</span></label>
                             <select class="selectpicker"  disabled>
                                 <option>Please Select</option>
@@ -133,7 +133,7 @@
                                 $country_code = old("country_code");
                             }
                         @endphp
-                        <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
+                        <div class="col-xl-4 sp-col" id="enablecountry" style="display: none">
                             <label class="lb-1">Country <span class="required">*</span></label>
                             <select class="selectpicker" name="country_code">
                                 <option value="">Please Select</option>
@@ -183,7 +183,7 @@
                     </div>
                     </form>
                 </div>
-                
+
                 <div class="row sp-col-20 grid-9">
                     @if(isset($highest_grading_grade))
                     <div class="col-sm-6 sp-col">

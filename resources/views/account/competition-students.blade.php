@@ -28,6 +28,7 @@
         <div class="box-1">
           <h2 class="title-4">Registered Student's List</h2>
           <div><strong>Exam Title: {{ $competition->title ?? '' }}</strong></div>
+          <div class="dateinfo mt-10"><i class="fa-solid fa-calendar-days ico"></i> {{ date('d/m/Y',strtotime( $competition->date_of_competition)) }}</div>
           <div class="xscrollbar mt-30">
             <table class="tb-2 tbtype-4">
               <thead>
@@ -51,7 +52,7 @@
                     <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">Edit</a> <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a></div>
                   </td>
                   <td><em>{{ $student->category->category_name ?? '' }}</em></td>
-                  <td><em class="status-2">@if($student->approve_status == 1) Approved @else Not Apporved @endif</em></td>
+                  <td>@if($student->approve_status == 1) <em class="status-2">Approved</em> @else <em class="status-3">Not Apporved</em> @endif</td>
                   <td><em>{{ $student->remarks ?? '' }} </em></td>
                   <td><em>{{ getCompetetionStudentResult($student->competition_controller_id,$student->id )->result ?? '-'}}</em></td>
                 </tr>

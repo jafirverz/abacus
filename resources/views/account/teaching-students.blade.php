@@ -16,28 +16,25 @@
                     </div>
                     <div class="col-lg-8 mt-20 lastcol">
                         <div class="row input-group">
-
-                            <div class="col-md">
+                            <div class="col-md-3 col-sm mt-767-15">
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
-                                    <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"> @if($locations)
-                                        <option value="">--Select--</option>
-                                    @foreach($locations as $item)
-                                    <option @if(isset($_GET['learning_locations']) && $_GET['learning_locations']==$item->id) selected @endif  value="?learning_locations={{ $item->id }}">{{ $item->title }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                              </div>
+                                        <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"> @if($locations)
+                                            <option value="">Select Location</option>
+                                        @foreach($locations as $item)
+                                        <option @if(isset($_GET['learning_locations']) && $_GET['learning_locations']==$item->id) selected @endif  value="?learning_locations={{ $item->id }}">{{ $item->title }}</option>
+                                        @endforeach
+                                        @endif
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            </div>
-
-                            <div class="col-md-auto col-sm mt-767-15">
+                            <div class="col-md-3 col-sm mt-767-15">
                                 <div class="ggroup">
-                                    <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
                                         <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                                                <option value="">--Select--</option>
+                                                <option value="">Select Level</option>
                                                 @foreach($levels as $level)
                                                 <option @if(isset($_GET['level_id']) && $_GET['level_id']==$level->id) selected @endif value="?level_id={{ $level->id }}">{{ $level->title }}</option>
                                                 @endforeach
@@ -46,12 +43,11 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-auto col-sm mt-767-15">
+                            <div class="col-md-2 col-sm mt-767-15">
                                 <div class="ggroup">
-                                    <label for="filter">Status:</label>
                                     <div class="selectwrap">
                                         <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                                                <option value="">--Select--</option>
+                                                <option value="">Select Status</option>
 
                                                 <option @if(isset($_GET['status']) && $_GET['status']==1) selected @endif value="?status=1">Activated</option>
                                                 <option @if(isset($_GET['status']) && $_GET['status']==2) selected @endif value="?status=2">Pending</option>
@@ -59,7 +55,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-auto col-sm-auto mt-767-15">
+                            <div class="col-md-4 col-sm-auto mt-767-15">
                                 <a class="btn-1" href="{{ route('instructor.add-students') }}">Add New Student <i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
@@ -130,7 +126,7 @@
                                             <a class="link-1" href="{{route('instructor.add-students.edit', $student->id)}}"><i class="icon-edit"></i></a>
                                         </div>
                                     </td>
-                                    <td><em class="status-6">@if($student->approve_status == 1) Active @else Not Active @endif</em> <br/></td>
+                                    <td>@if($student->approve_status == 1) <em class="status-6">Approved</em><br><em class="status-7 mt-5px">Activated</em> @elseif($student->approve_status == 2) <em class="status-3">not approved</em> @else <em class="status-3">Pending</em> @endif</td>
                                 </tr>
 
                                 @endforeach

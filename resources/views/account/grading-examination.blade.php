@@ -49,7 +49,7 @@
                                 @foreach($grading as $grade)
                                 @php $i++; @endphp
                                 <tr>
-                                    <td><em>{{ $i }}</em></td>
+                                    <td><em>{{ sprintf("%03d", $i) }}</em></td>
                                     <td>
                                         <em>{{ $grade->student->name  ?? ''}}</em>
                                         @if($grade->approve_status==1)
@@ -60,7 +60,7 @@
                                     </td>
                                     <td><em>{{ $grade->mental->title ?? '' }}</em></td>
                                     <td><em>{{ $grade->abacus->title ?? '' }}</em></td>
-                                    <td><em class="status-3">{{ ($grade->approve_status==1)?'Approved':'Pending' }}</em></td>
+                                    <td>{!! ($grade->approve_status==1)?'<em class="status-2">Approved</em>':'<em class="status-3">Pending</em>' !!}</td>
                                     <td><em>{{ $grade->remarks ?? ''}}</em></td>
                                     <td><em>{{ getGradingStudentResult($grade->grading_exam_id,$grade->user_id )->result ?? '-'}} </em></td>
                                 </tr>

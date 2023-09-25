@@ -21,6 +21,7 @@
                         @csrf
                         <div class="box-1">
                             <h2 class="title-4">Title: {{ $competition->title }}</h2>
+                            <div class="dateinfo"><i class="fa-solid fa-calendar-days ico"></i> {{ date('d/m/Y',strtotime( $competition->date_of_competition)) }}</div>
                             <div class="row sp-col-xl-30">
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Student Name <span class="required">*</span></label>
