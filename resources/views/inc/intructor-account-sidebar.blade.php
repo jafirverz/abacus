@@ -26,7 +26,7 @@
             <strong>Teaching Materials</strong>
         </a>
     </li>
-    <li @if(Request::segment(1) == 'grading-examination') class="active" @endif>
+    <li @if(Request::segment(1) == 'grading-examination' || Request::segment(1) == 'register-grading-examination') class="active" @endif>
         <a href="{{ url('grading-examination') }}">
             <span><img src="{{ asset('images/tempt/ico-grading.png') }}" alt="Grading icon" /></span>
             <strong>Grading Examinations</strong>

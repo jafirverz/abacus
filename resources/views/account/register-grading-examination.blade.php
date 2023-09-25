@@ -16,7 +16,7 @@
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="mb-20">
-                    <a class="link-1 lico" href="be-teacher-dashboard-grading.html">
+                    <a class="link-1 lico" href="{{ url('grading-examination') }}">
                         <i class="fa-solid fa-arrow-left"></i> Go Back
                     </a>
                 </div>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="col-xl-3 sp-col">
                             <label class="lb-1">Learning Location
-                                
+
                             </label>
                             <select name="learning_locations" class="selectpicker" data-title="Select Option">
                                 @if($locations)

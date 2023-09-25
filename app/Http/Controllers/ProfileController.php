@@ -176,8 +176,8 @@ class ProfileController extends Controller
             $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
 
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','asc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','asc')->get();
+        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('title','asc')->get();
+        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('title','asc')->get();
         $gradingExam = GradingExam::find($id);
         $locations = LearningLocation::orderBy('id','desc')->get();
         //dd($gradingExam);
@@ -201,8 +201,8 @@ class ProfileController extends Controller
 
 		$user = $this->user;
         $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','asc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','asc')->get();
+        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('title','asc')->get();
+        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('title','asc')->get();
         $gradingExam = GradingExam::where('status', 1)->get();
         $locations = LearningLocation::orderBy('id','desc')->get();
 		$page = get_page_by_slug($slug);
