@@ -157,6 +157,18 @@
                                     @endif
                                 </div>
 
+
+                                <div class="form-group non-external">
+                                    <label for="content">Instruction</label>
+                                    <textarea name="instruction" class="form-control my-editor" id="" cols="30"
+                                        rows="10">{!! old('instruction', $page->instruction) !!}</textarea>
+                                    @if ($errors->has('instruction'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('instruction') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 {{-- Start fix content section  --}}
 
                                 @if(in_array($page->id,[ __('constant.HOME_PAGE_ID')]))

@@ -91,6 +91,7 @@ class PagesController extends Controller
             $pages->slug = $request->slug;
             $pages->content = $request->content;
         }
+        $pages->instruction = $request->instruction;
         $pages->parent = $request->parent;
         $pages->view_order = $request->view_order;
         $pages->status = $request->status;
@@ -182,6 +183,7 @@ class PagesController extends Controller
             $pages->slug = $request->slug;
             $pages->content = $request->content;
         }
+        $pages->instruction = $request->instruction;
         $pages->parent = $request->parent;
         $pages->view_order = $request->view_order;
         $pages->updated_at = Carbon::now();

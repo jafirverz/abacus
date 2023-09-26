@@ -140,6 +140,17 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group non-external">
+                                    <label for="content">Instruction</label>
+                                    <textarea name="instruction" class="form-control my-editor" id="" cols="30"
+                                        rows="10">{!! old('instruction') !!}</textarea>
+                                    @if ($errors->has('instruction'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('instruction') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 <div class="form-group">
                                     <label for="view_order">View Order</label>
                                     <input type="number" name="view_order" class="form-control" id=""
