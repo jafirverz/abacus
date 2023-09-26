@@ -140,7 +140,7 @@ class WorksheetController extends Controller
         $questionTypeId = $request->questionTypeId;
         $userId = Auth::user()->id;
         $questTem = array(1,2,3,4,5,6,7,8);
-        $resultpage = array(1,2,4,5,6,7,8);
+        $resultpage = array(1,2,4,5,7,8);
         if(in_array($questionTypeId, $questTem)){
             $workshSub = new WorksheetSubmitted();
             $workshSub->worksheet_id = $worksheetId;
@@ -181,6 +181,10 @@ class WorksheetController extends Controller
             $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
             //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
             return view('resultNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+        }
+        if($questionTypeId == 6){
+            $level = Level::where('id', $levelId)->first();
+            return view('resultChallenge', compact('totalMarks','level','userMarks'));
         }
         
     }
