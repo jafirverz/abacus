@@ -4,7 +4,7 @@
   <div class="tempt-3">
     <div class="container maxmain">
       <div class="mb-20">
-        <a class="link-1 lico" href="#"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+        <a class="link-1 lico" href="{{ url('/') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
       </div>
       <h1 class="title-3">Survey Form</h1>
       <form name="surveyform" method="post" action="{{ route('survey.submit') }}">

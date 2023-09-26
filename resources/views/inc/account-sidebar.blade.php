@@ -26,7 +26,7 @@
         @if(isset($checkOrderDetails) && count($checkOrderDetails) > 0)
         <li @if(Request::segment(1) == 'membership') class="active" @endif>
             <a href="{{url('membership')}}">
-                <span><img src="{{ asset('images/tempt/ico-profile.png') }}" alt="Profile icon" /></span>
+                <span><img src="{{ asset('images/tempt/ico-membership.png') }}" alt="Profile icon" /></span>
                 <strong>Membership</strong>
             </a>
         </li>

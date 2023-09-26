@@ -24,7 +24,7 @@
         <div class="col-xl-7 sp-col">
           <div class="box-6-col">
             <h1 class="title-1">Shopping Cart</h1>
-            <div class="mb-30">You have 3 items in your cart</div>
+            <div class="mb-30">You have {{ count($cartDetails) }} items in your cart</div>
             @php
             $totalAmount = 0;
             @endphp
@@ -112,7 +112,7 @@
                   <input class="form-control" type="number" placeholder="XXX" />
                 </div>
               </div> -->
-              <hr class="bdrtype-1"/>
+              <!-- <hr class="bdrtype-1"/> -->
               <div class="row total-row">
                 <span class="col-5">Subtotal</span> <strong class="col-7 lastcol">$ {{ number_format($totalAmount, 2) }}</strong>
               </div>

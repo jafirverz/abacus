@@ -1,7 +1,7 @@
 <div class="menu-aside">
     <h3>My Dashboard</h3>
     <ul>
-      <li @if(Request::segment(1) == '') class="active" @endif>
+      <li @if(Request::segment(1) == '' || Request::segment(1) == 'home') class="active" @endif>
         <a href="{{ url('/') }}">
           <span><img src="{{ asset('images/tempt/ico-profile.png') }}" alt="Profile icon" /></span>
           <strong>My Profile</strong>
