@@ -22,7 +22,7 @@
           <li><strong>Scores</strong></li>
         </ul>
         <div class="box-1">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+          {!! $page->content ?? '' !!}
         </div>
         <div class="box-1">
           <div class="row title-wrap-1">
@@ -91,7 +91,7 @@
         </div>
         <div class="box-4 mt-30">
           <h4>Instruction</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br /> Ut enim ad minim veniam, quis nostrud exercitation</p>
+          {!! $page->instruction ?? '' !!}
         </div>
 
       </div>

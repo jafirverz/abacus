@@ -192,8 +192,12 @@ class WorksheetController extends Controller
 
     public function leaderboard(Request $request, $levelid = null, $worksheetId = null){
         // dd($worksheetId);
+        $page = get_page_by_slug('leaderboard');
+        if (!$page) {
+            return abort(404);
+        }
         $level = Level::where('id', $levelid)->first();
         $worksheetSubmitted = WorksheetSubmitted::where('level_id', $levelid)->where('worksheet_id', $worksheetId)->where('question_template_id', 6)->orderBy('user_marks', 'desc')->get()->unique('user_id');
-        return view('leaderboard', compact('worksheetSubmitted', 'levelid', 'worksheetId', 'level'));
+        return view('leaderboard', compact('worksheetSubmitted', 'levelid', 'worksheetId', 'level', 'page'));
     }
 }
