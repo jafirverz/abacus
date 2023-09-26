@@ -84,7 +84,7 @@
                             <tr>
                               <td class="lbtb-1">Your<br/>Answer:</td>
                               @foreach($paper_detail->questionsCourse as $ques)
-                              <td class="colanswer text-center"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control minwinpt-1" type="number" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" name="answer[{{ $ques->id }}]" /></td>
+                              <td class="colanswer text-center"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control minwinpt-1" type="text" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" name="answer[{{ $ques->id }}]" /></td>
                               @endforeach
 
                             </tr>

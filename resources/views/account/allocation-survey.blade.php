@@ -82,8 +82,8 @@
                                         <em>{{ $item->student->name }}</em>
                                         <div class="tbactions"><a href="#">View</a> <a onclick="return confirm('Are you sure to delete this record?')" href="{{ url('allocation/survey/delete/'.$item->id) }}">Delete</a></div>
                                     </td>
-                                    <td><em>{{ $item->start_date }}</em></td>
-                                    <td><em>{{ $item->end_date }}</em></td>
+                                    <td><em>{{ date('d/m/Y',strtotime($item->start_date)) }}</em></td>
+                                    <td><em>{{ date('d/m/Y',strtotime($item->end_date)) }}</em></td>
                                 </tr>
                                 @endforeach
                                 @else
@@ -91,7 +91,7 @@
                                 @endif
                             </tbody>
                         </table>
-                    </div><div id="mCSB_1_scrollbar_horizontal" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 30px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div><div class="mCSB_draggerRail"></div></div></div></div></div></div>
+                    </div>
                     <ul class="page-numbers mt-30">
                         {{ $list->links() }}
                     </ul>

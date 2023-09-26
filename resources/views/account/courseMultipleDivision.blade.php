@@ -32,6 +32,7 @@
                     <img src="{{asset($test_paper->powerpoint_file)}}" alt="" />
                 </div>
             </div>
+
             <form method="post" action="{{ route('course.answer.submit') }}">
             @csrf
 
@@ -41,7 +42,7 @@
             @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
             <input type="hidden" name="course_submitted_id" value="{{ $courseSubmitted->id }}">
             @endif
-            <div class="box-1">
+
                 <div class="xscrollbar">
                     <table class="tb-2 tbtype-1">
                         <thead>
@@ -69,7 +70,7 @@
                                 <tr>
                                     <td class="colnumber">{{ $i }}</td>
                                     <td class="text-center">{{ $ques->input_1 }} {{ $operator }} {{ $ques->input_2 }}  =</td>
-                                    <td class="colanswer"><input value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
+                                    <td class="colanswer"><input value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" class="form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
                                     <td><input class="form-control" type="number" /></td>
                                 </tr>
                                 @php
@@ -80,7 +81,6 @@
                         </tbody>
                     </table>
                 </div>
-              </div>
 
               <div class="output-1">
                 @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1)

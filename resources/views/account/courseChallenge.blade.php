@@ -70,7 +70,7 @@
                       <tr>
                         <td class="colnumber">{{ $i }}</td>
                         <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
-                        <td class="colanswer"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" name="answer[{{ $ques->id }}]" type="number" /></td>
+                        <td class="colanswer"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" name="answer[{{ $ques->id }}]" type="text" /></td>
                       </tr>
                       @php
                       $i++;
