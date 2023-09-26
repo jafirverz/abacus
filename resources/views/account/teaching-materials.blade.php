@@ -35,7 +35,7 @@
                         <h1 class="title-3">Material List</h1>
                     </div>
                     <form method="get" name="material_search" id="material_search" enctype="multipart/form-data" action="">
-                    @csrf    
+                    @csrf
                     <div class="col-lg-8 mt-20 lastcol">
                         <div class="row input-group">
                             <div class="col-md">
@@ -50,8 +50,8 @@
                                             <option value="{{ url('teaching-materials?file_type=pdf') }}">PDF</option>
                                             <option value="{{ url('teaching-materials?file_type=docx') }}">DOCX</option>
                                             <option value="{{ url('teaching-materials?file_type=doc') }}">DOC</option>
-                                            <option value="{{ url('teaching-materials?file_type=doc') }}">PPT</option>
-                                            <option value="{{ url('teaching-materials?file_type=doc') }}">MP4</option>
+                                            <option value="{{ url('teaching-materials?file_type=ppt') }}">PPT</option>
+                                            <option value="{{ url('teaching-materials?file_type=mp4') }}">MP4</option>
                                         </select>
                                     </div>
                                 </div>
@@ -84,9 +84,13 @@
                                 <tr>
                                     <td>
                                         <em>{{ $material->title }}</em>
-                                        <div class="tbactions"><a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a> <a target="_blank" href="{{ asset($material->uploaded_files) }}">Download</a></div>
+                                        <div class="tbactions"><a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a>
+                                            @if(!in_array($material->file_type,['mp4','ppt']))
+                                            <a target="_blank" href="{{ asset($material->uploaded_files) }}">Download</a>
+                                            @endif
+                                        </div>
                                     </td>
-                                    <td><em>{{ $extension ?? ''}}</em></td>
+                                    <td><em>{{ $material->file_type ?? ''}}</em></td>
                                     <td><em>{{ $material->description }}</em></td>
                                     <td><em>{{ asset($material->uploaded_files) }}</em></td>
                                 </tr>
