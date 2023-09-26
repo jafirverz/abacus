@@ -3,9 +3,7 @@
 <main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      <div class="menu-aside">
         @include('inc.account-sidebar-online')
-      </div>
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
         <div class="tempt-2-content">
@@ -38,27 +36,14 @@
 
                                         $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->first();
                                         @endphp
-                                            @if(isset($is_course_submitted) && $is_course_submitted->is_submitted==1)
-                                            {{-- @php
-                                            $test = \App\TestManagement::where('course_id', $val->id)->first();
-                                            @endphp
-                                             @if($test)
-                                             @php
-                                                $is_test_submitted = \App\TestSubmission::where('user_id', Auth::user()->id)->where('test_id', $test->id)->first();
-                                             @endphp
-                                              @if($is_test_submitted)
-                                                <li>{{ $test->title}} Submitted</li>
-                                              @else
-                                              <li><a href="{{ url('my-test/detail/'.$test->id)}}">{{ $test->title}}</a></li>
-                                              @endif
-                                             @endif --}}
-                                             <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}} </a></li>
+                                            @if(isset($is_course_submitted))
+                                             <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}} @if(isset($is_course_submitted) && $is_course_submitted->is_submitted==2) (In-Progress) @endif</a></li>
                                             @else
                                             @php $i++; @endphp
                                             @php  $j++; @endphp
                                                 @if($i.$j==11)
 
-                                                <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}} @if(isset($is_course_submitted) && $is_course_submitted->is_submitted==2) (In-Progress) @endif</a></li>
+                                                <li><a href="{{ url('/online-student/my-course/detail/'.$val->id)}}">{{ $val->title}} </a></li>
                                                 @else
                                                 <li><a href="javascript::void(0)">{{ $val->title}}</a></li>
                                                 @endif

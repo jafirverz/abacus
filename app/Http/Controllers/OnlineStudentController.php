@@ -81,6 +81,10 @@ class OnlineStudentController extends Controller
         $course = Course::find($id);
         $test_paper=TestPaper::where('id',$course->paper->id)->first();
         $paper_detail=TestPaperDetail::where('paper_id',$course->paper->id)->first();
+        if(!isset($paper_detail))
+        {
+            abort(404);
+        }
         $qId=$course->paper->question_template_id;
         $courseSubmitted = CourseSubmitted::where('course_id',$id)->where('course_submitteds.user_id', Auth::user()->id)->first();
         //dd($courseSubmitted);

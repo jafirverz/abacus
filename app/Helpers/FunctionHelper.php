@@ -395,7 +395,7 @@ if (!function_exists('getPageList')) {
 
         $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minuts*60));
 
-        printf(" %d days, %d hours, %d minuts\n",  $days, $hours, $minuts);
+        printf(" %d days, %d hours, %d minutes\n",  $days, $hours, $minuts);
     }
 
 	function get_active_modules($role_id = null)
