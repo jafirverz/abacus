@@ -24,7 +24,7 @@
         <div class="box-1 box-msg-1">
           <h4>You have submitted the challenge</h4>
           <h2>Here are your scores <br/><strong>{{ $userMarks }}</strong></h2>
-          <a href="" class="btn-1">Back to Leaderboard <i class="fa-solid fa-arrow-right-long"></i></a>
+          <a href="{{ url('leaderboard/'.$level->id.'/'.$worksheet->id) }}" class="btn-1">Back to Leaderboard <i class="fa-solid fa-arrow-right-long"></i></a>
         </div>
 
       </div>

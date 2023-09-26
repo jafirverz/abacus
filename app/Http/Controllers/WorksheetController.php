@@ -184,8 +184,16 @@ class WorksheetController extends Controller
         }
         if($questionTypeId == 6){
             $level = Level::where('id', $levelId)->first();
-            return view('resultChallenge', compact('totalMarks','level','userMarks'));
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            return view('resultChallenge', compact('totalMarks','level','worksheet','userMarks'));
         }
         
+    }
+
+    public function leaderboard(Request $request, $levelid = null, $worksheetId = null){
+        // dd($worksheetId);
+        $level = Level::where('id', $levelid)->first();
+        $worksheetSubmitted = WorksheetSubmitted::where('level_id', $levelid)->where('worksheet_id', $worksheetId)->where('question_template_id', 6)->orderBy('user_marks', 'desc')->get()->unique('user_id');
+        return view('leaderboard', compact('worksheetSubmitted', 'levelid', 'worksheetId', 'level'));
     }
 }

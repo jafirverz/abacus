@@ -68,6 +68,9 @@ Route::get('/level/{slug?}', 'LevelController@index');
 Route::get('/worksheet/{worksheetId?}/qId/{qid?}/lId/{lId?}', 'WorksheetController@index');
 Route::post('/worksheet/result', 'WorksheetController@resultpage')->name('answer.submit');
 
+Route::get('/leaderboard/{levelid?}/{worksheetId?}', 'WorksheetController@leaderboard');
+
+
 Route::get('/competition/{id?}', 'CompetitionController@index');
 
 Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
