@@ -1,4 +1,4 @@
-@extends('layouts.appLogin')
+@extends('layouts.appAccountID')
 
 @section('content')
 
