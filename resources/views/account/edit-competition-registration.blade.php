@@ -3,7 +3,11 @@
     <main class="main-wrap">
         <div class="row sp-col-0 tempt-2">
             <div class="col-lg-3 sp-col tempt-2-aside">
-                @include('inc.account-sidebar')
+                @if(Auth::user()->user_type_id == 6)
+                <div class="menu-aside">@include('inc.account-sidebar-external')</div>
+                @else
+                <div class="menu-aside">@include('inc.intructor-account-sidebar')</div>
+                @endif
             </div>
             <div class="col-lg-9 sp-col tempt-2-inner">
                 <div class="tempt-2-content">

@@ -1359,7 +1359,12 @@ class ProfileController extends Controller
         $locations = LearningLocation::orderBy('id','desc')->get();
         $categories = CompetitionCategory::orderBy('id','desc')->get();
 		$competition_student = CompetitionStudent::find($id);
-        $competition = Competition::where('status', 1)->where('id', $competition_student->competition_controller_id)->first();
+
+        $competition = Competition::where('id', $competition_student->competition_controller_id)->first();
+        if(!isset($competition))
+        {
+            abort(404);
+        }
         $user = User::find($competition_student->user_id);
 		//dd($user);
 		return view('account.edit-competition-registration', compact('competition', 'students', 'competition_student','locations','categories','user'));
