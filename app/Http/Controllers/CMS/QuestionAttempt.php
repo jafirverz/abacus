@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\QuestionTemplate;
+use App\WorksheetQuestionSubmitted;
 use App\WorksheetSubmitted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,7 @@ class QuestionAttempt extends Controller
     {
         //
         $title = 'Question Attempted';
-        $quesTemp = QuestionTemplate::get();
+        $quesTemp = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         return view('admin.questionattempt', compact('title', 'quesTemp'));
     }
 
@@ -117,7 +118,7 @@ class QuestionAttempt extends Controller
         }
 
         $title = 'Question Attempted';
-        $quesTemp = QuestionTemplate::get();
+        $quesTemp = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         //dd($allWorksheetSubmitted);
         return view('admin.questionattempt', compact('title', 'allWorksheetSubmitted', 'quesTemp'));
 
@@ -125,5 +126,26 @@ class QuestionAttempt extends Controller
         // ob_start();
         //return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
         //dd($allUsers);
+    }
+
+    public function challenge(){
+        $title = 'Challenge Board';
+        return view('admin.challengeboard', compact('title'));
+    }
+
+    public function challengedelete(Request $request){
+        //dd($request->all());
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $worksheetSub = WorksheetSubmitted::where('created_at','>=', $start_date)->where('created_at','<=', $end_date)->where('question_template_id', 6)->get();
+        foreach($worksheetSub as $val){
+            $worksheetQuesSub = WorksheetQuestionSubmitted::where('worksheet_submitted_id', $val->id)->get();
+            foreach($worksheetQuesSub as $vall) {
+                $vall->delete();
+            }
+            $val->delete();
+        }
+        return redirect()->back()->with('success',  "Deleted successfully");
+        //dd($worksheetSub);
     }
 }

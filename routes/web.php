@@ -582,6 +582,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('question-attempt/search', 'CMS\QuestionAttempt@search')->name('question-attempt.search');
     Route::resource('question-attempt', 'CMS\QuestionAttempt');
 
+
+    Route::get('challenge', 'CMS\QuestionAttempt@challenge');
+    Route::get('challenge/delete', 'CMS\QuestionAttempt@challengedelete')->name('challenge.delete');
+
 });
 
 
