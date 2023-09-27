@@ -50,20 +50,26 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($worksheetSubmitted as $key=>$studend)
                 @php
-                if($key <= 11){
-                    break;
+                $i = 1;
+                @endphp
+                @foreach($worksheetSubmitted as $studend)
+                @php
+                if($i >= 11){
+                break;
                 }
                 @endphp
                 <tr>
-                  <td class="colnumber">{{ $key+1 }}</td>
+                  <td class="colnumber">{{ $i }}</td>
                   <td><em>{{ $studend->user->name }}</em></td>
                   <td class="text-center">{{ $studend->user_marks }}</td>
                   <td></td>
                 </tr>
+                @php 
+                 $i++;
+                 @endphp
                 @endforeach
-                
+
               </tbody>
             </table>
           </div>
@@ -72,12 +78,13 @@
           <div class="row">
             @php
             $loggedInUser = \App\WorksheetSubmitted::where('level_id', $levelid)->where('worksheet_id', $worksheetId)->where('question_template_id', 6)->where('user_id', Auth::user()->id)->orderBy('user_marks', 'desc')->first();
-
+            $i = 1;
             $loggedInUserr = \App\WorksheetSubmitted::where('level_id', $levelid)->where('worksheet_id', $worksheetId)->where('question_template_id', 6)->orderBy('user_marks', 'desc')->get()->unique('user_id');
-            foreach($loggedInUserr as $key=>$value){
+            foreach($loggedInUserr as $value){
               if($value->user_id == Auth::user()->id){
-                $rank = $key+1;
+                $rank = $i;
               }
+             $i++;
             }
             @endphp
             <div class="col-xl-3 col-lg-5 col-sm-6">
@@ -89,7 +96,8 @@
           </div>
         </div>
         <div class="output-1">
-          <a class="btn-1" href="{{ url('worksheet/'.$worksheetId.'/qId/6/lId/'.$levelid) }}">Start the Challenge <i class="fa-solid fa-arrow-right-long"></i></a>
+          <a class="btn-1" href="{{ url('worksheet/'.$worksheetId.'/qId/6/lId/'.$levelid) }}">Start the Challenge <i
+              class="fa-solid fa-arrow-right-long"></i></a>
         </div>
         <div class="box-4 mt-30">
           <h4>Instruction</h4>
@@ -125,7 +133,7 @@
 
   // Functions
   function playPause(audio, playbtn) {
-    return function() {
+    return function () {
       if (audio.paused) {
         audio.play();
         $('.link-2').html('<i class="bi bi-pause"></i>')
