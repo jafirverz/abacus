@@ -51,9 +51,11 @@
               </thead>
               <tbody>
                 @foreach($worksheetSubmitted as $key=>$studend)
-                @if($key <= 11)
-                  break;
-                @endif
+                @php
+                if($key <= 11){
+                    break;
+                }
+                @endphp
                 <tr>
                   <td class="colnumber">{{ $key+1 }}</td>
                   <td><em>{{ $studend->user->name }}</em></td>
