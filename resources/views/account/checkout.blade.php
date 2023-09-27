@@ -134,7 +134,7 @@
                 </div>
               </form>
                 <div class="col order-first">
-                  <a class="btn-2 rico" href="{{ url('cart') }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
+                  <a class="btn-2 rico" href="{{ URL::previous() }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
                 </div>
               </div>
 
