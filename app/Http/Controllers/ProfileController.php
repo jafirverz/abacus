@@ -328,7 +328,7 @@ class ProfileController extends Controller
 	}
 
     public function detail_test($id){
-        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$this->user->id)->select('test_management.*','allocations.id as allocation_id')->first();
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('test_management.id',$id)->select('test_management.*','allocations.id as allocation_id')->first();
         //$test = TestManagement::find($id);
         $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
         $qId=$test->paper->question_template_id;
