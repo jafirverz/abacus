@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 
-<main class="main-wrap">	
+<main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
       @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
-        @include('inc.account-sidebar')
+      @include('inc.account-sidebar')
       @endif
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
@@ -16,7 +16,7 @@
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
           <li><a href="{{ URL::previous() }}">{{ $level->title }}</a></li>
-          <li><strong>{{ $worksheet->title }}</strong></li> 
+          <li><strong>{{ $worksheet->title }}</strong></li>
         </ul>
         <div class="box-1">
           {{ $worksheet->description }}
@@ -26,21 +26,24 @@
         $checkOrderDetails = '';
         $checkOrder = \App\Order::where('user_id', Auth::user()->id)->pluck('id')->toArray();
         if($checkOrder){
-          $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkOrder)->where('level_id', $level->id)->first();
-          if($checkOrderDetails){
-            $url = '?s=1';
-          }else{
-            $url = 'javascript::void(0)';
-          }
-          
+        $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkOrder)->where('level_id', $level->id)->first();
+        if($checkOrderDetails){
+        $url = '?s=1';
         }else{
-          $url = 'javascript::void(0)';
+        $url = 'javascript::void(0)';
         }
-        
+
+        }else{
+        $url = 'javascript::void(0)';
+        }
+
         @endphp
 
         <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="{{ $url }}" disabled>Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
+          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i
+                class="icon-info"></i></button> <strong><a href="{{ $url }}" disabled>Shuffle the Questions <i
+                  class="icon-shuffle"></i></a></strong></div>
         </div>
         <form method="post" action="{{ route('answer.submit') }}">
           @csrf
@@ -53,13 +56,13 @@
                 <thead>
                   <tr>
                     <th class="wcol-2"></th>
-                    @php 
+                    @php
                     if(isset($_GET['s']) && $_GET['s'] == 1){
-                      $questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
+                    $questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
                     }else{
-                      $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+                    $questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
                     }
-                    
+
                     $count = count($questionns);
                     $i = 1;
                     foreach($questionns as $question){
@@ -69,51 +72,51 @@
                     $i++;
                     }
                     @endphp
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  
-                    <tr>
-                      <td></td>
-                      @php 
+
+                  <tr>
+                    <td></td>
+                    @php
                     foreach($questionns as $question){
                     @endphp
-                      <td>
-                        @php
-                        $arrVal = explode(',', $question->question_1);
-                        foreach($arrVal as $val){
-                        @endphp
-                        <div class="row sp-col-5 inrow-1">
-                          <div class="col-auto sp-col">$</div>
-                          <div class="col sp-col">{{ $val }}</div>
-                        </div>
-                        @php
-                      }
-                        @endphp
-                      </td>
+                    <td>
                       @php
+                      $arrVal = explode(',', $question->question_1);
+                      foreach($arrVal as $val){
+                      @endphp
+                      <div class="row sp-col-5 inrow-1">
+                        <div class="col-auto sp-col">$</div>
+                        <div class="col sp-col">{{ $val }}</div>
+                      </div>
+                      @php
+                      }
+                      @endphp
+                    </td>
+                    @php
                     }
                     @endphp
-                     
-                    </tr>
-                  
+
+                  </tr>
+
                 </tbody>
                 <tfoot>
                   <tr>
                     <td class="lb">Answer</td>
-                    @php 
+                    @php
                     foreach($questionns as $question){
-                      @endphp
+                    @endphp
                     <td class="coltype">
                       <div class="row sp-col-5 inrow-1">
                         <div class="col-auto sp-col">$</div>
-                        <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
+                        <div class="col colanswer sp-col"><input class="form-control" type="number"
+                            name="answer[{{ $question->id }}]" /></div>
                       </div>
                     </td>
                     @php
-                  }
-                  @endphp
+                    }
+                    @endphp
                   </tr>
                 </tfoot>
               </table>
@@ -125,6 +128,6 @@
         </form>
       </div>
     </div>
-  </div>	
+  </div>
 </main>
 @endsection
