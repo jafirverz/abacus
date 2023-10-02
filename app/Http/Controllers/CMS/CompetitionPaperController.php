@@ -6,6 +6,7 @@ use App\CategoryCompetition;
 use App\Competition;
 use App\CompetitionCategory;
 use App\CompetitionPaper;
+use App\CompetitionQuestions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PaperCategory;
@@ -242,9 +243,21 @@ class CompetitionPaperController extends Controller
      * @param  \App\CompetitionPaper  $competitionPaper
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionPaper $competitionPaper)
+    public function destroy(Request $request)
     {
-        //
+        //dd($request->all());
+        $ids = $request->multiple_delete;
+        $ids = explode(',', $ids);
+        //dd($ids);
+        $compPaper = CompetitionPaper::whereIn('id', $ids)->get();
+        foreach($compPaper as $paper){
+            $compQues = CompetitionQuestions::where('competition_paper_id', $paper->id)->get();
+            foreach($compQues as $ques){
+                $ques->delete();
+            }
+            $paper->delete();
+        }
+        return redirect()->back()->with('success',  "Deleted successfully");
     }
 
     public function search(Request $request)
