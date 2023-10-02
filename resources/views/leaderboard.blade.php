@@ -19,7 +19,7 @@
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('/') }}">Overview</a></li>
           <li><a href="{{ url('/level/'.$level->slug) }}">{{ $level->title }}</a></li>
-          <li><strong>Scores</strong></li>
+          <li><strong>Challenge Leaderboard</strong></li>
         </ul>
         <div class="box-1">
           {!! $page->content ?? '' !!}
