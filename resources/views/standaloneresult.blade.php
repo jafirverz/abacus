@@ -140,9 +140,9 @@
           <h4>Thank you for your submission.</h4>
           <h2>Here is your marks {{ $correctMarks }} out of {{ $totalMarks }}.</h2>
           <p>Thank you. Check out more on 3G Abacus courses and locations here!
-            <p>Courses Offered: https://3gabacus.com/about-3g-abacus/courses-offered/</p> 
-            <p>Locations: https://3gabacus.com/locations-contact-us/</p>
-            <p>FAQ: <a href="{{ url('/faqs') }}">{{ url('/faqs') }}</a></p>
+            <p>Courses Offered: <a href="https://3gabacus.com/about-3g-abacus/courses-offered/">https://3gabacus.com/about-3g-abacus/courses-offered/</a></p> 
+            <p>Locations: <a href="https://3gabacus.com/locations-contact-us/">https://3gabacus.com/locations-contact-us/</a></p>
+            <p>FAQ: <a href="https://3gabacus.com/about-3g-abacus/faq/">https://3gabacus.com/about-3g-abacus/faq/</a></p>
         </div>
 
       </div>
