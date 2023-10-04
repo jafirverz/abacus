@@ -5,9 +5,9 @@
         <div class="col-lg-3 sp-col tempt-2-aside">
         <div class="menu-aside">
             @if(Auth::user()->user_type_id == 6)
-            
+
              @include('inc.account-sidebar-external')
-            
+
             @else
             @include('inc.intructor-account-sidebar')
             @endif
@@ -16,7 +16,7 @@
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="mb-20">
-                    <a class="link-1 lico" href="be-teacher-dashboard-grading.html">
+                    <a class="link-1 lico" href="{{ url('grading-examination') }}">
                         <i class="fa-solid fa-arrow-left"></i> Go Back
                     </a>
                 </div>

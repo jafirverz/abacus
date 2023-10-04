@@ -28,7 +28,7 @@
                                         <strong>Title:</strong> {{$gradingExam->title ?? ''}}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Date:</strong> {{$gradingExam->exam_date ?? ''}}
+                                        <strong>Date:</strong> {{ date('j F Y',strtotime($gradingExam->exam_date)) }} | {{ date('H:i A',strtotime($gradingExam->exam_date)) }}
                                     </div>
                                     <div class="inrow">
                                         <strong>Exam Venue:</strong> {{$gradingExam->exam_venue ?? ''}}
@@ -118,7 +118,7 @@
                                                                     @endif
                                                                 @else
                                                                 <div class="checkbxtype nocheck">
-                                                                    <label><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                    <label><span>{{ $val->title ?? '' }}</span> <strong>Included</strong></label>
                                                                 </div>
                                                                 <a class="lnk btn-2" href="{{ url('/') }}/{{ $val->uploaded_file ?? '' }}">Download</a>
                                                                 @endif
@@ -126,42 +126,48 @@
                                                           @else
                                                             @if($val->price>0 && $gradingExam->exam_type==1)
 
-                                                             @if(isset($orderDetails) && in_array($val->id,$orderDetails))
-                                                             <div class="bxrow">
-																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                @if(isset($orderDetails) && in_array($val->id,$orderDetails))
+                                                                <div class="bxrow">
+                                                                    <label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
 
-																@if(is_grading_paper_submitted($val->id))
-                                                                <a class="lnk btn-2" href="jquery::void()">Submitted</a>
+                                                                    @if(is_grading_paper_submitted($val->id))
+                                                                    <a class="lnk btn-2" href="jquery::void()">Submitted</a>
+                                                                    @else
+                                                                    <a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->id.'') }}">View</a>
+                                                                    @endif
+
+                                                                </div>
                                                                 @else
-																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->id.'') }}">View</a>
+                                                                <div class="bxrow">
+                                                                    <div class="checkbxtype nocheck">
+                                                                        <input name="grade_pay[]" type="checkbox" id="exercise-{{ $i.$k }}" />
+                                                                        <label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                    </div>
+                                                                    <form method="post" action="{{ route('cart') }}">
+                                                                        @csrf
+                                                                        <input type="hidden" name="type" value="onlinegrading">
+                                                                        <input type="hidden" name="paper" value="{{ $val->id }}">
+                                                                    <button class="lnk btn-2" type="submit" >Add to Cart</button>
+                                                                    </form>
+                                                                </div>
                                                                 @endif
-
-															</div>
-                                                             @else
-                                                            <div class="bxrow">
-																<div class="checkbxtype nocheck">
-																	<input name="grade_pay[]" type="checkbox" id="exercise-{{ $i.$k }}" />
-																	<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
-																</div>
-                                                                <form method="post" action="{{ route('cart') }}">
-                                                                    @csrf
-                                                                    <input type="hidden" name="type" value="onlinegrading">
-                                                                    <input type="hidden" name="paper" value="{{ $val->id }}">
-                                                                <button class="lnk btn-2" type="submit" >Add to Cart</button>
-                                                                </form>
-															</div>
-                                                            @endif
                                                             @else
-                                                            <div class="bxrow">
-																<label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
-                                                                @if(is_grading_paper_submitted($val->id))
-                                                                <a class="lnk btn-2" href="jquery::void()">Submitted</a>
-                                                                @else
-																<a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->id.'') }}">View</a>
-                                                                @endif
+                                                                <div class="bxrow">
+                                                                    <label for="exercise-{{ $i.$k }}"><span>{{ $val->title ?? '' }}</span> <strong>${{ $val->price ?? '' }}</strong></label>
+                                                                    @if(is_grading_paper_submitted($val->id))
+                                                                    <a class="lnk btn-2" href="jquery::void()">Submitted</a>
+                                                                    @else
+                                                                    <a class="lnk btn-2" href="{{ url('grading-overview/'.$gradingExam->id.'/'.$val->grading_listing_id.'/'.$val->id.'') }}">View</a>
+                                                                    @endif
 
-															</div>
+                                                                </div>
                                                             @endif
+                                                          @endif
+                                                          @if($k%4==0)
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-xl-6 sp-col">
+                                                            <div class="box-2">
                                                           @endif
                                                         @endforeach
                                                     @endif

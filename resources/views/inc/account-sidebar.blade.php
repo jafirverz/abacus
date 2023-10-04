@@ -1,7 +1,9 @@
 <div class="menu-aside">
     <h3>My Dashboard</h3>
     <ul>
-        <li @if(Request::segment(1) == 'home' || Request::segment(1) == '' || Request::segment(1) == 'level' || Request::segment(1) == 'worksheet' || Request::segment(1) == 'competition' || Request::segment(1) == 'leaderboard') class="active" @endif>
+
+        <li @if(Request::segment(1) == 'home' || Request::segment(1) == '' || Request::segment(1) == 'level' || Request::segment(1) == 'worksheet' || Request::segment(1) == 'grading-overview' || Request::segment(1) == 'competition' || Request::segment(1) == 'leaderboard') class="active" @endif>
+
             <a href="{{ url('home') }}">
                 <span><img src="{{ asset('images/tempt/ico-overview.png') }}" alt="Overview icon" /></span>
                 <strong>Overview</strong>
@@ -19,7 +21,7 @@
                 <strong>My Profile</strong>
             </a>
         </li>
-        @php 
+        @php
         $checkUserOrder = \App\Order::where('user_id', Auth::user()->id)->where('payment_status', 'COMPLETED')->pluck('id')->toArray();
         $checkOrderDetails = \App\OrderDetail::whereIn('order_id', $checkUserOrder)->where('order_type', 'level')->get();
         @endphp

@@ -85,6 +85,7 @@ class PagesFrontController extends Controller
         $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
         $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
         $competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
+        $gradingCertificate = GradingSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
 
 
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
@@ -95,7 +96,7 @@ class PagesFrontController extends Controller
         $surveys = Survey::where('status', 1)->first();
         $user = User::where('id', Auth::user()->id)->first();
         $country = Country::orderBy('phonecode', 'asc')->get();
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test','lesson'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test','lesson','gradingCertificate'));
     }
 
     public function instructor($slug = null){
