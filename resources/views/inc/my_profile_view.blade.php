@@ -3,7 +3,7 @@
     <div class="box-1">
         <h2 class="title-4">Allocated Level</h2>
         <div class="row grid-1 sp-col-xl-25">
-            @php 
+            @php
             $levelIdActive = '';
             $levelIdActive = Session::get('levelIdActive');
             $i = 1;
@@ -70,7 +70,7 @@
                            @if(isset($grading_exam->id))
                                 @if(Auth::user()->approve_status == 1)
                                 <a href="{{ url('grading-overview/'.$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
-                                @else 
+                                @else
                                 <a href="javascript::void(0)">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                                 @endif
                            @else
@@ -134,13 +134,13 @@
                                 if($surveys){
                                     $allocation = \App\Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
                                     if(!$allocation){
-                                        $url = 'javascript::void(0)'; 
+                                        $url = 'javascript::void(0)';
                                     }else{
                                         $url = url('/survey-form');
                                     }
-                                    
+
                                 }else{
-                                    $url = 'javascript::void(0)'; 
+                                    $url = 'javascript::void(0)';
                                 }
                                 @endphp
                             @endif
@@ -155,4 +155,17 @@
             </div>
         </div>
     </div>
+
+    <h2 class="title-1 mt-30">My Certificates</h2>
+            <div class="box-1">
+                <div class="row grid-6">
+                    @if($gradingCertificate)
+                    @foreach($gradingCertificate as $certificate)
+                    <div class="col-md-6">
+                        <a class="item" href="{{ url('download-grading-certificate', $certificate->id) }}">{{ $certificate->course->title ?? '' }}</a>
+                    </div>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
 </div>

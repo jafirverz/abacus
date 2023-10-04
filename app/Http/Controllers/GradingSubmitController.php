@@ -6,6 +6,7 @@ use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
 use App\GradingSubmitted;
+use PDF;
 use App\GradingQuestionSubmitted;
 use App\GradingPaperQuestion;
 use Illuminate\Http\Request;
@@ -66,5 +67,15 @@ class GradingSubmitController extends Controller
         }
 
 
+    }
+
+    public function downloadCertificate( $id = null){
+        $GradingSubmitted = GradingSubmitted::where('id', $id)->first();
+        $certificate = Certificate::where('id', $GradingSubmitted->certificate_id)->first();
+        $key = ['{{grading_name}}','{{full_name}}','{{email}}','{{dob}}','{{contact_number}}','{{address}}'];
+        $value = [$GradingSubmitted->grade->title, Auth::user()->name, Auth::user()->email, Auth::user()->dob, Auth::user()->mobile, Auth::user()->address];
+        $newContents = str_replace($key, $value, $certificate->content);
+        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
+        return $pdf->download('certificate.pdf');
     }
 }

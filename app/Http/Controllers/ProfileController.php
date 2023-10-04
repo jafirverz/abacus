@@ -161,7 +161,7 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-        $allocated_user = GradingStudent::where('instructor_id',$user->id)->select('user_id')->get();
+        $allocated_user = GradingStudent::where('instructor_id',$user->id)->where('grading_exam_id',$id)->select('user_id')->get();
         $allocate_user_array=[];
         foreach($allocated_user->toArray() as $value)
         {
