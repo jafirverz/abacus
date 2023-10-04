@@ -106,6 +106,9 @@ class SystemSettingsController extends Controller
                     'contact_email' => [
                         'label' => 'Contact Email', 'input' => 'text', 'class' => 'form-control', 'required' => '',
                     ],
+                    'contact_link' => [
+                        'label' => 'Contact Link', 'input' => 'text', 'class' => 'form-control', 'required' => '',
+                    ],
                 ],
             ],
 

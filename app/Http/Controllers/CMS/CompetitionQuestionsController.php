@@ -277,9 +277,15 @@ class CompetitionQuestionsController extends Controller
      * @param  \App\CompetitionQuestions  $competitionQuestions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CompetitionQuestions $competitionQuestions)
+    public function destroy(Request $request)
     {
-        //
+        $ids = $request->multiple_delete;
+        $ids = explode(',', $ids);
+        $compQues = CompetitionQuestions::whereIn('competition_paper_id', $ids)->get();
+        foreach($compQues as $ques){
+            $ques->delete();
+        }
+        return redirect()->back()->with('success',  "Deleted successfully");
     }
 
     public function search(Request $request)

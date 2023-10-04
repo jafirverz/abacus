@@ -75,7 +75,16 @@
               <label class="lb-1">Address</label>
               <input class="form-control" type="text" value="134 Jurong Gateway Road #04-307A Singapore 600134" disabled />
             </div>
+
+            <div class="col-xl-4 sp-col">
+              <label class="lb-1">Learning Location </label>
+              <input class="form-control" id="learning_locations" type="text" value="{{$user->location->title ?? ''}}" disabled />
+
           </div>
+          </div>
+
+          
+
           <div class="output-2">
             <button class="btn-1" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
           </div>

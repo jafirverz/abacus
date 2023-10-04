@@ -82,6 +82,7 @@ return [
     'USERSURVEY' => 'Survey Completed',
     'CERTIFICATE' => 'Certificate',
     'QUESTIONS_ATTEMPT' => 'Questions Attempt',
+    'CHALLENGE_BOARD_CLEAR' => 'Challenge Board',
 
 
     // CONTENT

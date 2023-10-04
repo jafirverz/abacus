@@ -22,7 +22,7 @@
         <div class="row sp-col-20 title-wrap-3">
           <div class="col-md sp-col">
             <h1 class="title-1">Shopping Cart</h1>
-            <div>You have {{ count($cartDetails) }} items in your cart</div>
+            <div>You have {{ count($cartDetails) }} @if(count($cartDetails) > 1) items @else item @endif in your cart</div>
           </div>
           <div class="col-md-auto sp-col">
             <a class="link-4 rico" href="javascript::void(0);" onclick="submitform('clearcart');"><strong>Clear Cart</strong> <i class="fa-solid fa-xmark"></i></a>

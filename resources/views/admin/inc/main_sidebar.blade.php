@@ -195,6 +195,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question-attempt',
                 ],
+                [
+                    'title' =>  __('constant.CHALLENGE_BOARD_CLEAR'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/challenge',
+                ],
 
             ],
         ],

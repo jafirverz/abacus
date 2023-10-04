@@ -38,7 +38,7 @@
             <div class="col-md-6 sp-col fcol-2">
                 <div class="icon">
                     <i class="icon-phone"></i>
-                    <h4>Contact US/ FEEDBACK</h4>
+                    <h4><a href="{{ config('system_settings')->contact_link ?? ''}}" target="_blank">Contact US/ FEEDBACK</a></h4>
                     Tel: <a href="tel:+{{ config('system_settings')->contact_number ?? ''}}">+{{ config('system_settings')->contact_number ?? ''}}</a>
                 </div>
             </div>

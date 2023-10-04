@@ -32,7 +32,7 @@
                                         <strong>Title:</strong> {{ $competition->title }}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Date:</strong> {{ $competition->date_of_competition }}
+                                        <strong>Date:</strong> {{ date('j F Y', strtotime($competition->date_of_competition)) }}
                                     </div>	
                                     <div class="inrow">
                                         <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
@@ -59,7 +59,7 @@
                                         <strong>Result:</strong> <span class="status-1"></span>
                                     </div>		
                                     <div class="inrow">
-                                        <strong>Competition Type:</strong> <span class="status-1">{{ $competition->competition_type }}</span>
+                                        <strong>Competition Type:</strong> <span class="status-1">{{ ucwords($competition->competition_type) }}</span>
                                     </div>
                                     {{-- 	
                                     <div class="inrow">
@@ -122,9 +122,18 @@
                                             @csrf
                                             <input type="hidden" name="type" value="physicalcompetition">
                                             <div class="row break-1500">
-                                                
+                                                @php 
+                                                $countt = count($checkPaperCategory);
+                                                $modul = ceil($countt / 6);
+                                                $counttN = number_format($modul);
+                                                @endphp
+                                                @for($i=0; $i<$counttN; $i++)
                                                 <div class="col-xl-6 sp-col">
                                                     <div class="box-2">
+                                                    @php
+                                                    $skip = $i * 6;
+                                                    $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->skip($skip)->take(6)->get();
+                                                    @endphp
                                                     @foreach($checkPaperCategory as $pape)
                                                     @php 
                                                     $userId = Auth::user()->id;
@@ -184,16 +193,10 @@
 
                                                         }
                                                         @endphp
-
-                                                        
-
-
-
                                                     @endforeach
-                                                        
                                                     </div>
                                                 </div>
-
+                                                @endfor
                                                 
                                             
 

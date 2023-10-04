@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<main class="main-wrap">	
+<main class="main-wrap">
   <div class="tempt-4">
     <div class="container maxmain">
       <ul class="steps">
@@ -24,16 +24,17 @@
         <div class="col-xl-7 sp-col">
           <div class="box-6-col">
             <h1 class="title-1">Shopping Cart</h1>
-            <div class="mb-30">You have {{ count($cartDetails) }} items in your cart</div>
+            <div class="mb-30">You have {{ count($cartDetails) }} @if(count($cartDetails) > 1) items @else item @endif
+              in your cart</div>
             @php
             $totalAmount = 0;
             @endphp
             @if($cartDetails)
             @foreach($cartDetails as $cart)
-              @php
-              $cartt = json_decode($cart->cart);
-                $totalAmount+= $cartt->amount;
-              @endphp
+            @php
+            $cartt = json_decode($cart->cart);
+            $totalAmount+= $cartt->amount;
+            @endphp
             <div class="grid-11 noaction">
               <div class="ginner">
                 @if($cartt->image)
@@ -57,20 +58,22 @@
                 </div>
               </div>
             </div>
-            
-        @endforeach
-      @endif
-            <hr class="bdrtype-1"/>
+
+            @endforeach
+            @endif
+            <hr class="bdrtype-1" />
             <div class="box-3">
               <div class="row">
                 <div class="col-lg-7">
                   <h4 class="title-4">Email</h4>
-                  <span class="txt-1">{{ Auth::user()->email }}</span> <a class="link-5" href="javascript::void(0);" onclick="showFields('email')">Change email</a>
+                  <span class="txt-1">{{ Auth::user()->email }}</span> <a class="link-5" href="javascript::void(0);"
+                    onclick="showFields('email')">Change email</a>
                   <input class="txt-1" type="text" name="email" value="" id="email" style="display: none;" required>
                 </div>
                 <div class="col-lg-5">
                   <h4 class="title-4">Contact Number</h4>
-                  <span class="txt-1">({{ Auth::user()->country_code_phone }}) {{ Auth::user()->mobile }}</span> <a class="link-5" href="javascript::void(0);" onclick="showFields('phone')">Change contact number</a>
+                  <span class="txt-1">({{ Auth::user()->country_code_phone }}) {{ Auth::user()->mobile }}</span> <a
+                    class="link-5" href="javascript::void(0);" onclick="showFields('phone')">Change contact number</a>
                   <input class="txt-1" type="text" name="phone" value="" id="phone" style="display: none;" required>
                 </div>
               </div>
@@ -114,27 +117,32 @@
               </div> -->
               <!-- <hr class="bdrtype-1"/> -->
               <div class="row total-row">
-                <span class="col-5">Subtotal</span> <strong class="col-7 lastcol">$ {{ number_format($totalAmount, 2) }}</strong>
+                <span class="col-5">Subtotal</span> <strong class="col-7 lastcol">$ {{ number_format($totalAmount, 2)
+                  }}</strong>
               </div>
               <!-- <div class="row total-row">
                 <span class="col-5">Shipping</span> <strong class="col-7 lastcol">$ 50.00</strong>
               </div> -->
               <div class="row total-row">
-                <span class="col-5">Total <span class="d-inline-block">(tax incl.)</span></span> <strong class="col-7 lastcol total">$ {{ number_format($totalAmount, 2) }}</strong>
+                <span class="col-5">Total <span class="d-inline-block">(tax incl.)</span></span> <strong
+                  class="col-7 lastcol total">$ {{ number_format($totalAmount, 2) }}</strong>
               </div>
 
               <div class="row output-3">
-                <form method="post" action="{{ route('processTransaction') }}">
-                  @csrf
-                  <input type="hidden" name="totalAmount" value="{{ $totalAmount }}" >
-                  <input type="hidden" name="email" value="" id="changeemail" >
-                  <input type="hidden" name="phone" value="" id="changephone">
+
                 <div class="col-auto order-last">
-                  <button class="btn-1" type="submit">Checkout <i class="fa-solid fa-arrow-right-long"></i></button>
+                  <form method="post" action="{{ route('processTransaction') }}">
+                    @csrf
+                    <input type="hidden" name="totalAmount" value="{{ $totalAmount }}">
+                    <input type="hidden" name="email" value="" id="changeemail">
+                    <input type="hidden" name="phone" value="" id="changephone">
+                    <button class="btn-1" type="submit">Checkout <i class="fa-solid fa-arrow-right-long"></i></button>
+                  </form>
                 </div>
-              </form>
+
                 <div class="col order-first">
-                  <a class="btn-2 rico" href="{{ url('cart') }}"><i class="fa-solid fa-arrow-left-long"></i> Back</a>
+                  <a class="btn-2 rico" href="{{ URL::previous() }}"><i class="fa-solid fa-arrow-left-long"></i>
+                    Back</a>
                 </div>
               </div>
 
@@ -164,30 +172,30 @@
                 </div>
              </form> -->
 
-             <!-- <a href="{{ route('processTransaction') }}" class="btn btn-success">Pay $1 from Paypal</a> -->
+              <!-- <a href="{{ route('processTransaction') }}" class="btn btn-success">Pay $1 from Paypal</a> -->
 
 
 
 
 
-              
+
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>	
+  </div>
 </main>
 
 <script>
-  function showFields(id){
-    $('#'+id).show();
+  function showFields(id) {
+    $('#' + id).show();
   }
-  $("#email").keyup(function(){
+  $("#email").keyup(function () {
     //alert($('#email').val());
     $("#changeemail").val($('#email').val());
   });
-  $("#phone").keyup(function(){
+  $("#phone").keyup(function () {
     $("#changephone").val($('#phone').val());
   });
 </script>

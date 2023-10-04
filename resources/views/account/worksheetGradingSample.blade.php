@@ -18,14 +18,14 @@
           <li><a href="{{ URL::previous() }}">{{ $level->title }}</a></li>
           <li><strong>{{ $worksheet->title }}</strong></li> 
         </ul>
-        <div class="box-1">
+        <div class="box-1 mb-30">
           {{ $worksheet->description }}
         </div>
         
         <div class="box-3">
           <div class="row title-wrap-1">
             <div class="col-xl-8 col-md-7">
-              <h1 class="title-1">Sample Grading Exam Questions</h1>
+              <h1 class="title-1">{{ $worksheet->title }}</h1>
             </div>
             <div class="col-xl-4 col-md-5 lastcol">
               <a class="btn-2" href="{{ asset($questions->link ?? '') }}" target="_blank">Download Sample PDF</a>

@@ -74,9 +74,9 @@
                   <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
                   <div class="col-auto sp-col">
                     <button class="link-2 play-wrap" id="play_btn{{ $k }}" type="button" value="{{ $k }}">
-                      <i class="fa-solid fa-volume-high play" id="audio{{ $k }}" data-music_id="audio-{{ $k }}"></i>
+                      <!-- <i class="fa-solid fa-volume-high play" id="audio{{ $k }}" data-music_id="audio-{{ $k }}"></i> -->
                     </button>
-                    <audio id="audio-{{ $k }}">
+                    <audio id="audio-{{ $k }}" controls controlsList="nodownload" >
                       <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/mp3">
                       <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/ogg">
                       Your browser does not support the audio element.

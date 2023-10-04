@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{{ asset('favicon.png') }}">
 
-    <title>DIY Cars</title>
+    <title>UE3G Abacus</title>
 
     <link href="{{ asset('css/plugins.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
@@ -37,15 +37,10 @@
             
             <div class="container clearfix">
                 <a class="logo" href="{{ url('/') }}">
-                    <img src="{{ asset('images/diy-cars-logo.png') }}" alt="DIY Cars" />
+                    <img src="{{ asset('images/3g-abacus-logo.png') }}" alt="DIY Cars" />
                 </a>
                 
-                <nav id="menu" class="menu">
-                    <ul>
-                        <li><span>&emsp;</span></li>
-                        
-                    </ul>
-                </nav>
+               
             </div>
         </header>
        
@@ -69,7 +64,7 @@
                 <div class="col-lg-4 col-md-12 sp-col align-self-center">
                     <div class="logo">
                         <a href="index.html">
-                            <img src="images/diy-cars-logo-2.png" alt="DIY Cars" />
+                            <img src="{{ asset('images/3g-abacus-logo.png') }}" alt="DIY Cars" />
                         </a>
                     </div>
                 </div>
