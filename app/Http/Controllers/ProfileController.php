@@ -1461,6 +1461,35 @@ class ProfileController extends Controller
         $competitionStudent->remarks  = $request->remarks ?? NULL;
         $competitionStudent->save();
 
+        //			Admin email for new competition registration
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_COMPETITION_REGISTRATION'));
+            $admins = Admin::get();
+
+            if ($email_template) {
+                $competitionExamDetail = Competition::where('id', $id)->first();
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{competition_exam}}'];
+                    $value = [$competitionExamDetail->title ?? ''];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
+
 		return redirect()->route('instructor-competition')->with('success', __('constant.GRADING_UPDATED'));
 	}
 
