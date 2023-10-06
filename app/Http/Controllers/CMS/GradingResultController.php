@@ -38,7 +38,7 @@ class GradingResultController extends Controller
     {
 
         $title = $this->title;
-        $grading = GradingStudent::paginate($this->pagination);
+        $grading = GradingStudent::orderBy('id', 'desc')->paginate($this->pagination);
         //dd($grading);
         return view('admin.grading_result.index', compact('title', 'grading'));
     }
@@ -99,7 +99,7 @@ class GradingResultController extends Controller
         ];
         $request->validate([
             'grading_id'  =>  'required',
-            'fileupload'  =>  'required',
+            'fileupload'  =>  'required|mimes:xlsx',
         ], $messages);
 
         $gradingResultsUpload = new GradingResultsUpload();
