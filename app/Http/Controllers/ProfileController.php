@@ -620,6 +620,36 @@ class ProfileController extends Controller
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
 
+
+        //			Admin email for new grading registration
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_GRADING_REGISTRATION'));
+            $admins = Admin::get();
+
+            if ($email_template) {
+                $gradingExamDetail = GradingExam::where('id', $request->grading_exam_id)->first();
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{grading_exam}}'];
+                    $value = [$gradingExamDetail->title ?? ''];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
+
 		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
 	}
 
