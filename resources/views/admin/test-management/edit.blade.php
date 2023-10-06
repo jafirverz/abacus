@@ -53,7 +53,7 @@
                                 @endphp
 
                                 <div class="form-group">
-                                    <label for="student_id">Students</label>
+                                    <label for="student_id">Instructor</label>
                                     <select name="student_id[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($students)
@@ -70,6 +70,26 @@
                                     </span>
                                     @endif
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="student_id">Students</label>
+                                    <select name="student_idd[]" class="form-control" multiple>
+                                        <option value="">-- Select --</option>
+                                        @if ($userStudent)
+                                        @foreach ($userStudent as $item)
+                                        <option value="{{ $item->id }}" @if(is_array($allocationStudentList) && in_array($item->id,$allocationStudentList)) selected @elseif(old('student_idd')==$item->id)
+                                            selected
+                                            @endif>{{ $item->name }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('student_idd'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('student_idd') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 <div class="form-group">
                                     <label for="course_id">Course</label>
                                     <select name="course_id" class="form-control">

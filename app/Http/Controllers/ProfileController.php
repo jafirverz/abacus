@@ -1072,6 +1072,7 @@ class ProfileController extends Controller
             $material->file_type = $ext;
         }
         $material->description = $request->description ?? '';
+        $material->link = $request->abacus_simulator ?? '';
         $material->teacher_id = $this->user->id;
         $material->created_at = Carbon::now();
         $material->save();
