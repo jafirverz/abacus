@@ -222,11 +222,11 @@
                                 <input class="form-control" id="learning_locations" type="text" value="{{$user->location->title ?? ''}}" disabled />
 
                             </div>
-                            <div class="col-xl-4 sp-col" >
+                            <!-- <div class="col-xl-4 sp-col" >
                                 <label class="lb-1">Learning Updates </label>
                                 <input class="form-control" id="learning_updates" type="text"  value="{{$user->learning_updates ?? ''}}" disabled />
 
-                            </div>
+                            </div> -->
 
                         </div>
 
