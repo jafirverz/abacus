@@ -152,6 +152,9 @@
           <h4>Thank you for your submission.</h4>
           <h2>Here is your marks {{ $correctMarks }} out of {{ $totalMarks }}.</h2>
           <p>To find a learning location near you, please click here.</p>
+          <p>Courses Offered: <a href="https://3gabacus.com/about-3g-abacus/courses-offered/" target="_blank">https://3gabacus.com/about-3g-abacus/courses-offered/</a></p> 
+            <p>Locations: <a href="https://3gabacus.com/locations-contact-us/" target="_blank">https://3gabacus.com/locations-contact-us/</a></p>
+            <p>FAQ: <a href="https://3gabacus.com/about-3g-abacus/faq/" target="_blank">https://3gabacus.com/about-3g-abacus/faq/</a></p>
         </div>
 
       </div>
