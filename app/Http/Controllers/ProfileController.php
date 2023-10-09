@@ -1408,14 +1408,18 @@ class ProfileController extends Controller
 
     public function update_instructor_competition(Request $request,$id)
 	{
-        //dd($request->all());
+        // dd($request->all());
         $users = User::find($this->user->id);
-
+        
         $request->validate([
             'learning_location' => 'required',
             'category_id' => 'required',
         ]);
-
+        $user = User::where('id', $request->user_id)->first();
+        $user->mobile = $request->phone;
+        $user->dob = $request->dob;
+        $user->country_code_phone = $request->phone_code;
+        $user->save();
 
         $competitionStudent = CompetitionStudent::find($id);
         $competitionStudent->learning_location  = $request->learning_location ?? NULL;

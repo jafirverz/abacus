@@ -9,6 +9,13 @@
                 <div class="menu-aside">@include('inc.intructor-account-sidebar')</div>
                 @endif
             </div>
+            @php
+            if($competition_student->approve_status == 1){
+                $addclass = 'disabled';
+            }else{
+                $addclass = '';
+            }
+            @endphp
             <div class="col-lg-9 sp-col tempt-2-inner">
                 <div class="tempt-2-content">
                     <div class="mb-20">
@@ -24,7 +31,7 @@
                             <div class="row sp-col-xl-30">
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Student Name <span class="required">*</span></label>
-                                    <select disabled="disabled" class="selectpicker"
+                                    <select disabled class="selectpicker"
                                         onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value=''>--Select--</option>
                                         @foreach ($students as $key => $value)
@@ -42,28 +49,31 @@
                                 </div>
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Date of Birth <span class="required">*</span></label>
-                                    <div class="date-wrap disabled">
+                                    <div class="date-wrap {{ $addclass }}">
                                         <i class="fa-solid fa-calendar-days ico"></i>
-                                        <input disabled class="form-control" type="text"
-                                            value="@if (get_user_detail($user->id)) {{ get_user_detail($user->id)->dob }} @endif">
+                                        <input class="form-control" type="text" name="dob"
+                                            value="@if (get_user_detail($user->id)) {{ get_user_detail($user->id)->dob }} @endif" {{ $addclass }}>
                                     </div>
                                 </div>
+                                @php
+                                $countries = \App\Country::get();
+                                @endphp
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Contact No <span class="required">*</span></label>
                                     <div class="row sp-col-10">
                                         <div class="col-auto sp-col">
-                                            <select class="selectpicker" disabled>
-                                                <option selected>
-                                                    @if (get_user_detail($user->id))
-                                                        {{ get_user_detail($user->id)->country_code_phone }}
-                                                    @endif
+                                            <select class="selectpicker" {{ $addclass }} name="phone_code">
+                                                @foreach($countries as $country)
+                                                <option value="{{ $country->phonecode }}" @if($country->phonecode == get_user_detail($user->id)->country_code_phone) selected @endif>
+                                                    {{ $country->phonecode }}
                                                 </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col sp-col">
                                             <input class="form-control" type="text"
                                                 value="@if (get_user_detail($user->id)) {{ get_user_detail($user->id)->mobile }} @endif"
-                                                disabled>
+                                                {{ $addclass }} name="phone">
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +87,7 @@
                                 </div>
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Competition Category <span class="required">*</span></label>
-                                    <select class="selectpicker" name="category_id" data-title="Select">
+                                    <select class="selectpicker" name="category_id" data-title="Select" {{ $addclass }}>
                                         @foreach ($categories as $key => $value)
                                             <option @if ($competition_student->category_id== $value->id) selected @endif value="{{ $value->id }}">{{ $value->category_name }}</option>
                                         @endforeach
@@ -90,7 +100,7 @@
                                 </div>
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Learning Location <span class="required">*</span></label>
-                                    <select name="learning_location" class="selectpicker" data-title="Select">
+                                    <select name="learning_location" class="selectpicker" data-title="Select" {{ $addclass }}>
                                         @foreach ($locations as $key => $value)
                                             <option @if ($competition_student->learning_location == $value->id) selected @endif value="{{ $value->id }}">{{ $value->title }}</option>
                                         @endforeach
@@ -103,11 +113,13 @@
                                 </div>
                             </div>
                             <label class="lb-1">Remarks</label>
-                            <textarea name="remarks" cols="30" rows="5" class="form-control" placeholder="Your Remarks">{{ $competition_student->remarks ?? '' }}</textarea>
-                            <div class="output-2">
-                                <button class="btn-1" type="submit">Submit <i
-                                        class="fa-solid fa-arrow-right-long"></i></button>
-                            </div>
+                            <textarea name="remarks" cols="30" rows="5" class="form-control" placeholder="Your Remarks" {{ $addclass }}>{{ $competition_student->remarks ?? '' }}</textarea>
+                            @if($competition_student->approve_status != 1)
+                                <div class="output-2">
+                                    <button class="btn-1" type="submit">Submit <i
+                                            class="fa-solid fa-arrow-right-long"></i></button>
+                                </div>
+                            @endif
                         </div>
                     </form>
                 </div>
