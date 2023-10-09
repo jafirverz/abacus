@@ -420,7 +420,12 @@ class ProfileController extends Controller
         $paper=GradingPaper::join('grading_listing_details','grading_listing_details.paper_id','grading_papers.id')->where('grading_listing_details.id',$paper_id)->select('grading_papers.*','grading_listing_details.id as listing_paper_id')->first();
         //dd($paper);
         $gradingExam = GradingExam::find($grading_exam_id);
-        $qId=$paper->question_type;
+        if($paper){
+            $qId=$paper->question_type;
+        }else{
+            $qId='';
+        }
+        
         if(empty($qId)){
             return abort(404);
         }
