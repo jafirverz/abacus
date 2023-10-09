@@ -346,7 +346,7 @@ class CompetitionController extends Controller
         $request->validate([
             'competition'  =>  'required',
             'category' => 'required',
-            'fileupload'  =>  'required',
+            'fileupload'  =>  'required|mimes:xlsx',
         ], $messages);
 
         $compResultUpload = new CompetitionResultUpload();
