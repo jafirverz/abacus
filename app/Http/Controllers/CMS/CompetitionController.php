@@ -402,4 +402,42 @@ class CompetitionController extends Controller
 
         }
     }
+
+    public function assignCompetition(){
+        $title = 'Assign Competition';
+        $competition = Competition::paginate($this->pagination);
+        
+        return view('admin.competition.assign', compact('title', 'competition'));
+    }
+
+    public function assignCompetitionEdit($id = null){
+        $title = 'Assign Competition';
+        $competition = Competition::where('id', $id)->first();
+        $competitionCategory = CompetitionCategory::get();
+        $userType = array(1,2,3,4);
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
+        // $worksheets = Worksheet::orderBy('id','desc')->get();
+        return view('admin.competition.assignstudent', compact('title', 'competition', 'students', 'competitionCategory'));
+        
+    }
+
+    public function assignCompetitionStore(Request $request){
+        //dd($request->all());
+        $compId = $request->competitionId;
+        $category = $request->category;
+        $status = $request->status;
+        if($status != 1){
+            $status = 'null';
+        }
+        foreach($request->students as $student){
+            //dd($student);
+            $compStudent = new CompetitionStudent();
+            $compStudent->user_id = $student;
+            $compStudent->competition_controller_id = $compId;
+            $compStudent->category_id = $category;
+            $compStudent->approve_status = $status;
+            $compStudent->save();
+        }
+        return redirect()->back()->with('success',  'Assigned');
+    }
 }

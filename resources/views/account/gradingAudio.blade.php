@@ -23,6 +23,7 @@
         <form method="post" action="{{ route('grading_answer.submit') }}">
             @csrf
             <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
+
             <input type="hidden" name="listing_id" value="{{ $listing_id }}">
             <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
             <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
@@ -51,8 +52,10 @@
                   <input type="hidden" value="{{ $question->id }}">
                   <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
                   <div class="col-auto sp-col">
-                    <button class="link-2" id="play_btn{{ $k }}" type="button" value="{{ $k }}" onclick="initAudioPlayer(this.value);"><i class="fa-solid fa-volume-high"></i></button>
-                    <audio id="audio-{{ $k }}">
+                    <button class="link-2 play-wrap" id="play_btn{{ $k }}" type="button" value="{{ $k }}" >
+                      <!-- <i class="fa-solid fa-volume-high"></i> -->
+                    </button>
+                    <audio id="audio-{{ $k }}" controls controlsList="nodownload">
                       <source src="{{ url('/upload-file/'.$question->input_1) }}" type="audio/mp3">
                       <source src="{{ url('/upload-file/'.$question->input_1) }}" type="audio/ogg">
                       Your browser does not support the audio element.
@@ -84,39 +87,57 @@
 </main>
 
 <script>
-
+jQuery(document).ready(function ($) {
+    $(".play").click(function () {
+      var music_id = $(this).data('music_id');
+      var audio = document.getElementById(music_id);
+      var test = music_id.split("-");
+      var iclass = 'audio'+test[1];
+      //alert(music_id);
+      if (audio.paused) {
+        audio.play();
+        $(this).removeClass('fa-solid fa-volume-high')
+        $(this).addClass('fa fa-pause')
+      } else {
+        audio.pause();
+        //audio.currentTime = 0
+        $(this).removeClass('fa fa-pause')
+        $(this).addClass('fa-solid fa-volume-high')
+      }
+    });
+  });
 
   // initAudioPlayer();
 
-    function initAudioPlayer(val){
-      var audio = new Audio();
-      // audio.pause();
-      var aContainer = document.getElementById("audio-"+val);
-      // assign the audio src
-      audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
-      audio.load();
-      audio.loop = false;
-      audio.play();
+    // function initAudioPlayer(val){
+    //   var audio = new Audio();
+    //   // audio.pause();
+    //   var aContainer = document.getElementById("audio-"+val);
+    //   // assign the audio src
+    //   audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
+    //   audio.load();
+    //   audio.loop = false;
+    //   audio.play();
 
-      // Set object references
-      var playbtn = document.getElementById("play_btn"+val);
+    //   // Set object references
+    //   var playbtn = document.getElementById("play_btn"+val);
 
-        // Add Event Handling
-        playbtn.addEventListener("click", playPause(audio, playbtn));
-      }
+    //     // Add Event Handling
+    //     playbtn.addEventListener("click", playPause(audio, playbtn));
+    //   }
 
-      // Functions
-      function playPause(audio, playbtn){
-          return function () {
-             if(audio.paused){
-               audio.play();
-               $('.link-2').html('<i class="bi bi-pause"></i>')
-             } else {
-               audio.pause();
-               $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
-             }
-          }
-      }
+    //   // Functions
+    //   function playPause(audio, playbtn){
+    //       return function () {
+    //          if(audio.paused){
+    //            audio.play();
+    //            $('.link-2').html('<i class="bi bi-pause"></i>')
+    //          } else {
+    //            audio.pause();
+    //            $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
+    //          }
+    //       }
+    //   }
 
   </script>
 @endsection

@@ -46,6 +46,11 @@
                     'url'   =>  'admin/comp-questions',
                 ],
                 [
+                    'title' =>  __('constant.COMPETITION_ASSIGN'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/assign-competition',
+                ],
+                [
                     'title' =>  __('constant.COMPETITION_RESULT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/results',

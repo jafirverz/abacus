@@ -403,6 +403,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('comp-result', 'CMS\CompetitionController@compResultUpload')->name('comp.result.store');
 
 
+    Route::get('assign-competition', 'CMS\CompetitionController@assignCompetition');
+    Route::get('assign-competition/edit/{id?}', 'CMS\CompetitionController@assignCompetitionEdit')->name('assign-competition.edit');
+    Route::post('assign-competition/store', 'CMS\CompetitionController@assignCompetitionStore')->name('assign-competition.store');
+
+
 
     // COMPETITION PAPERS
     Route::get('papers/search', 'CMS\CompetitionPaperController@search')->name('papers.search');
