@@ -27,8 +27,8 @@ class ImportCompetitionResult implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach($rows->all() as $row) {
-            $studentName = $row['candidate_name'];
-            $instructorName = $row['instructor'];
+            $studentName = trim($row['candidate_name']);
+            $instructorName = trim($row['instructor']);
             $checkInstructorName = User::where('name', $instructorName)->where('user_type_id', 5)->first();
             if($checkInstructorName){
                 $checkUserName = User::where('name', $studentName)->where('instructor_id', $checkInstructorName->id)->first();
