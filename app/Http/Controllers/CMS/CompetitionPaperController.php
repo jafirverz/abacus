@@ -54,7 +54,7 @@ class CompetitionPaperController extends Controller
     {
         //
         $title = $this->title;
-        $questionTempleates = QuestionTemplate::get();
+        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8])->get();
         $competitionCategory = CompetitionCategory::get();
         $competition = Competition::get();
         // $competitionCategory = CompetitionPaper::get();
@@ -143,7 +143,7 @@ class CompetitionPaperController extends Controller
         //
         $title = $this->title;
         $competitionPaper = CompetitionPaper::with('comp_contro')->find($id);
-        $questionTempleates = QuestionTemplate::get();
+        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8])->get();
         $competition = Competition::get();
 
         $catComp = CategoryCompetition::where('competition_id', $competitionPaper->competition_controller_id)->get();
