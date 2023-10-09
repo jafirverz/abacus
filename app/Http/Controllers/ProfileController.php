@@ -1830,11 +1830,11 @@ class ProfileController extends Controller
 		$userId = Auth::user()->id;
 		// $actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
 		//dd($actualCompetitionPaperSubted);
-        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('total_marks', 'desc')->get();
         //dd($actualCompetitionPaperSubted);
-        $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('total_marks', 'desc')->get();
 
-        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(10);
         //dd($merged);
 
 
