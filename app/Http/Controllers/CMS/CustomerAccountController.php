@@ -287,8 +287,71 @@ class CustomerAccountController extends Controller
         $messages['mobile.required'] = 'The contact number field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
-
+        $dob = date('Y-m-d', strtotime($request->dob));
+            if($request->gender == 1){
+            $gender = 'Male';
+            }else{
+            $gender = 'Female';
+            }
         $customer = User::find($id);
+        if($request->instructor_id!='' && $request->status==1 && $customer->approve_status==2)
+        {
+          // REACTIVATED EMAIL
+          $instructor = User::find($request->instructor_id);
+
+           //			Admin email for new student registration
+                    $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REACTIVATED'));
+                    $admins = Admin::get();
+
+                    if ($email_template) {
+                        $data = [];
+                        foreach($admins as $admin){
+                            $data['email_sender_name'] = systemSetting()->email_sender_name;
+                            $data['from_email'] = systemSetting()->from_email;
+                            $data['to_email'] = [$admin->email];
+                            $data['cc_to_email'] = [];
+                            $data['subject'] = $email_template->subject;
+
+                            $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                            $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+
+                            $newContents = str_replace($key, $value, $email_template->content);
+
+                            $data['contents'] = $newContents;
+                            try {
+                                $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                            } catch (Exception $exception) {
+                                dd($exception);
+                            }
+                        }
+
+                    }
+
+                    //			Instructor email for new student registration
+                $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REACTIVATED'));
+
+                if ($email_template) {
+                    $data = [];
+                        $data['email_sender_name'] = systemSetting()->email_sender_name;
+                        $data['from_email'] = systemSetting()->from_email;
+                        $data['to_email'] = [$instructor->email];
+                        $data['cc_to_email'] = [];
+                        $data['subject'] = $email_template->subject;
+
+                        $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                        $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+
+                        $newContents = str_replace($key, $value, $email_template->content);
+
+                        $data['contents'] = $newContents;
+                        try {
+                            $mail = Mail::to($request->email)->send(new EmailNotification($data));
+                        } catch (Exception $exception) {
+                            dd($exception);
+                        }
+
+                }
+        }
         $customer->name = $request->name;
         $customer->level_id = json_encode($request->level);
         $customer->instructor_id = $request->instructor_id??NULL;

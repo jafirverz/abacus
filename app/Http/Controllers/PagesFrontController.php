@@ -13,6 +13,7 @@ use App\ViewCount;
 use App\LikeCount;
 use Illuminate\Http\Request;
 use App\Page;
+use App\GradingSubmitted;
 use App\Contact;
 use App\Menu;
 use App\Slider;

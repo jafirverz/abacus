@@ -6,6 +6,7 @@ use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
 use App\GradingSubmitted;
+use App\Certificate;
 use PDF;
 use App\GradingQuestionSubmitted;
 use App\GradingPaperQuestion;
