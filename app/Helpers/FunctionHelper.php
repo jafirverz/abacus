@@ -9,6 +9,7 @@ use App\Page;
 use App\OrderDetail;
 use App\Course;
 use App\CourseSubmitted;
+use App\CourseAssignToUser;
 use App\CourseQuestionSubmitted;
 use App\Slider;
 use App\GradingExam;
@@ -499,6 +500,22 @@ if (!function_exists('getPageList')) {
         }
 
             return NULL;
+    }
+
+    function checkAllLessonSubitted()
+    {
+        $result = CourseAssignToUser::where('user_id',Auth::user()->id)->pluck('course_id')->toArray();
+        $result2 = CourseSubmitted::where('user_id',Auth::user()->id)->pluck('course_id')->toArray();
+        $diff=array_diff($result,$result2);
+
+        if(count($diff)==0)
+        {
+            return NULL;
+        }
+        else
+        {
+            return count($diff);
+        }
     }
 
     function getExamDetail($exam)

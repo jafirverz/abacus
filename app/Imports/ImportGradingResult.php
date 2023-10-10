@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\GradingStudent;
-use App\GradingResultsUpload;
+use App\GradingListingDetail;
+use App\GradingSubmitted;
 use App\GradingStudentResults;
 use App\User;
 use Illuminate\Support\Collection;
@@ -13,9 +13,10 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ImportGradingResult implements ToCollection, WithHeadingRow
 {
     private $grading_id;
-    public function __construct(int $grading_id)
+    public function __construct(int $grading_id,int $paper_id)
     {
         $this->grading_id = $grading_id;
+        $this->paper_id = $paper_id;
     }
 
     /**
@@ -33,7 +34,7 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
             $checkUserName = User::where('account_id', $account_id)->first();
             if($checkUserName)
             {
-
+                    //dd($row);
                     $gradingStudentResults = new GradingStudentResults();
                     $gradingStudentResults->grading_id  =  $this->grading_id;
                     $gradingStudentResults->user_id =  $checkUserName->id;
@@ -43,7 +44,21 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
                     $gradingStudentResults->remark_grade =  $row['passfail'];
                     $gradingStudentResults->abacus_grade =  $row['abacus_grade'];
                     $gradingStudentResults->mental_grade =  $row['mental_grade'];
-                    $gradingStudentResults->certificate_id =  $row['certificate_id'];
+                    $gradingStudentResults->certificate_id =isset($row['certificate_id']) ?? NULL;
+
+                    if(isset($row['certificate_id']) && $row['certificate_id']!='')
+                    {
+                    //dd($row['certificate_id']);
+                    $gradingSub = GradingSubmitted::where('grading_exam_id',$this->grading_id)->where('user_id',$checkUserName->id)->where('paper_id',$this->paper_id)->first();
+                    //dd($this->paper_id);
+                        if(isset($gradingSub))
+                        {
+                            $gradingSub->certificate_id =  $row['certificate_id'];
+                            $gradingSub->save();
+                        }
+
+                    }
+
                     $gradingStudentResults->save();
 
             }

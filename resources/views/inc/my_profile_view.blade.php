@@ -162,7 +162,7 @@
                     @if($gradingCertificate)
                     @foreach($gradingCertificate as $certificate)
                     <div class="col-md-6">
-                        <a class="item" href="{{ url('download-grading-certificate', $certificate->id) }}">{{ $certificate->course->title ?? '' }}</a>
+                        <a class="item" href="{{ url('download-grading-certificate', $certificate->id) }}">{{ $certificate->grade->title ?? '' }}</a>
                     </div>
                     @endforeach
                     @endif

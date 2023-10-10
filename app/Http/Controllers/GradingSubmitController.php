@@ -6,6 +6,7 @@ use App\GradingExam;
 use App\GradingPaper;
 use App\GradingExamList;
 use App\GradingSubmitted;
+use App\Certificate;
 use PDF;
 use App\GradingQuestionSubmitted;
 use App\GradingPaperQuestion;
@@ -34,7 +35,7 @@ class GradingSubmitController extends Controller
             $gradeSub->paper_id = $paper_id;
             $gradeSub->question_template_id = $questionTypeId;
             $gradeSub->user_id = $userId;
-            $gradeSub->certificate_id = __('constant.CERTIFICATE_GRADING_ID');
+            //$gradeSub->certificate_id = __('constant.CERTIFICATE_GRADING_ID');
             $gradeSub->save();
             $totalMarks = 0;
             $userMarks = 0;

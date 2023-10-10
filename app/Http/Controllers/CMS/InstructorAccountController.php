@@ -90,7 +90,7 @@ class InstructorAccountController extends Controller
         foreach($fullnameEx as $funame){
             $acName .= strtoupper(substr($funame, 0, 1));
         }
-        $accountId = 'SUD-'.$dob1.$acName;
+        $accountId = 'INS-'.$dob1.$acName;
         $customer = new User();
         $customer->name = $request->name;
         $customer->account_id = $accountId;
