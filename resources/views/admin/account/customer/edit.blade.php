@@ -126,9 +126,9 @@
                                     <label for="country_code">Country</label>
                                     <select name="country_code" class="form-control" id="country_code">
                                         <option value="">-- Select --</option>
-                                        @if(getCountry())
-                                        @foreach (getCountry() as $key => $item)
-                                        <option value="{{ $key }}" @if(old('country_code', $customer->country_code)==$key) selected @endif>{{ $item }}
+                                        @if($country)
+                                        @foreach ($country as $item)
+                                        <option value="{{ $item->id }}" @if(old('country_code', $customer->country_code)==$item->id) selected @endif>{{ $item->nicename }}
                                         </option>
                                         @endforeach
                                         @endif
