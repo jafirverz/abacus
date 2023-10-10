@@ -442,23 +442,26 @@ class GradingPaperController extends Controller
                     }
 
                      $n=0;
-                     foreach ($request->file('input_1') as $file) {
+                     if($request->hasFile('input_1'))
+                     {
+                        foreach ($request->file('input_1') as $file) {
 
-                        if(isset($request->answer[$n]))
-                        {
-                        $gradingPaperQuestion = new GradingPaperQuestion();
-                        $gradingPaperQuestion->input_1 = uploadPicture($file, 'upload-file');
-                        $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
-                        $gradingPaperQuestion->answer   = $request->answer[$n];
-                        $gradingPaperQuestion->marks   = $request->marks[$n];
-                        $gradingPaperQuestion->save();
+                            if(isset($request->answer[$n]))
+                            {
+                            $gradingPaperQuestion = new GradingPaperQuestion();
+                            $gradingPaperQuestion->input_1 = uploadPicture($file, 'upload-file');
+                            $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                            $gradingPaperQuestion->answer   = $request->answer[$n];
+                            $gradingPaperQuestion->marks   = $request->marks[$n];
+                            $gradingPaperQuestion->save();
+
+                            }
+
+                            $n++;
+
 
                         }
-
-                        $n++;
-
-
-                    }
+                     }
         }
         elseif($request->question_type==1)
         {
@@ -487,24 +490,29 @@ class GradingPaperController extends Controller
                     }
 
                      $n=0;
-                     foreach ($request->file('input_1') as $file) {
+                     if($request->hasFile('input_1'))
+                     {
+                        foreach ($request->file('input_1') as $file) {
 
-                        if(isset($request->answer[$n]))
-                        {
-                        $gradingPaperQuestion = new GradingPaperQuestion();
-                        $gradingPaperQuestion->input_1 = uploadPicture($file, 'upload-file');
-                        $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
-                        $gradingPaperQuestion->answer   = $request->answer[$n];
-                        $gradingPaperQuestion->marks   = $request->marks[$n];
-                        $gradingPaperQuestion->input_2   = $request->input_2[$n];
-                        $gradingPaperQuestion->save();
+                            if(isset($request->answer[$n]))
+                            {
+                            $gradingPaperQuestion = new GradingPaperQuestion();
+                            $gradingPaperQuestion->input_1 = uploadPicture($file, 'upload-file');
+                            $gradingPaperQuestion->grading_paper_question_id    = $paper->id;
+                            $gradingPaperQuestion->answer   = $request->answer[$n];
+                            $gradingPaperQuestion->marks   = $request->marks[$n];
+                            $gradingPaperQuestion->input_2   = $request->input_2[$n];
+                            $gradingPaperQuestion->save();
+
+                            }
+
+                            $n++;
+
 
                         }
 
-                        $n++;
+                     }
 
-
-                    }
         }
 
 
