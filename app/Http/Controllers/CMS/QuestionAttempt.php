@@ -134,10 +134,12 @@ class QuestionAttempt extends Controller
     }
 
     public function challengedelete(Request $request){
-        //dd($request->all());
+        // dd($request->all());
         $start_date = $request->start_date;
-        $end_date = $request->end_date;
-        $worksheetSub = WorksheetSubmitted::where('created_at','>=', $start_date)->where('created_at','<=', $end_date)->where('question_template_id', 6)->get();
+        $end_date = date('Y-m-d H:i:s', strtotime($request->end_date . ' +1 day'));
+        // $end_date = $request->end_date;
+        $worksheetSub = WorksheetSubmitted::where('created_at','>=', $start_date)->where('updated_at','<=', $end_date)->where('question_template_id', 6)->get();
+        // dd($worksheetSub);
         foreach($worksheetSub as $val){
             $worksheetQuesSub = WorksheetQuestionSubmitted::where('worksheet_submitted_id', $val->id)->get();
             foreach($worksheetQuesSub as $vall) {
