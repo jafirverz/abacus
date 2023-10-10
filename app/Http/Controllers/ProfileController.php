@@ -420,7 +420,12 @@ class ProfileController extends Controller
         $paper=GradingPaper::join('grading_listing_details','grading_listing_details.paper_id','grading_papers.id')->where('grading_listing_details.id',$paper_id)->select('grading_papers.*','grading_listing_details.id as listing_paper_id')->first();
         //dd($paper);
         $gradingExam = GradingExam::find($grading_exam_id);
-        $qId=$paper->question_type;
+        if($paper){
+            $qId=$paper->question_type;
+        }else{
+            $qId='';
+        }
+        
         if(empty($qId)){
             return abort(404);
         }
@@ -619,6 +624,36 @@ class ProfileController extends Controller
         $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
+
+
+        //			Admin email for new grading registration
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_GRADING_REGISTRATION'));
+            $admins = Admin::get();
+
+            if ($email_template) {
+                $gradingExamDetail = GradingExam::where('id', $request->grading_exam_id)->first();
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{grading_exam}}'];
+                    $value = [$gradingExamDetail->title ?? ''];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
 
 		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
 	}
@@ -1072,6 +1107,7 @@ class ProfileController extends Controller
             $material->file_type = $ext;
         }
         $material->description = $request->description ?? '';
+        $material->link = $request->abacus_simulator ?? '';
         $material->teacher_id = $this->user->id;
         $material->created_at = Carbon::now();
         $material->save();
@@ -1429,6 +1465,35 @@ class ProfileController extends Controller
         $competitionStudent->category_id  = $request->category_id ?? NULL;
         $competitionStudent->remarks  = $request->remarks ?? NULL;
         $competitionStudent->save();
+
+        //			Admin email for new competition registration
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_COMPETITION_REGISTRATION'));
+            $admins = Admin::get();
+
+            if ($email_template) {
+                $competitionExamDetail = Competition::where('id', $id)->first();
+                $data = [];
+                foreach($admins as $admin){
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$admin->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
+
+                    $key = ['{{competition_exam}}'];
+                    $value = [$competitionExamDetail->title ?? ''];
+
+                    $newContents = str_replace($key, $value, $email_template->content);
+
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
+                }
+
+            }
 
 		return redirect()->route('instructor-competition')->with('success', __('constant.GRADING_UPDATED'));
 	}

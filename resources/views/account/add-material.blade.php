@@ -49,6 +49,13 @@
                         </div>
                     </div>
 
+                    <div class="row sp-col-xl-30">
+                        <div class="col-xl-12 sp-col">
+                            <label class="lb-1">Abacus Simulator link</label>
+                            <input name="abacus_simulator" class="form-control" type="text" value="{{ old('abacus_simulator') }}"  />
+                        </div>
+                    </div>
+
 
                     <div class="output-2">
                         <button class="btn-1" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>

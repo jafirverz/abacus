@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Allocation;
 use App\Http\Controllers\Controller;
 use App\TestManagement;
 use App\User;
@@ -54,7 +55,8 @@ class TestManagementController extends Controller
         $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         $courses = Course::orderBy('id','desc')->get();
         $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
-        return view('admin.test-management.create', compact('title','courses','papers','students'));
+        $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        return view('admin.test-management.create', compact('title','courses','papers','students', 'userStudent'));
     }
 
     /**
@@ -72,7 +74,7 @@ class TestManagementController extends Controller
             'student_id'  =>  'required',
             'template'  =>  'required',
         ]);
-
+        
         $testManagement = new TestManagement;
         $testManagement->title = $request->title ?? '';
         $testManagement->paper_id = $request->paper_id ?? '';
@@ -81,6 +83,17 @@ class TestManagementController extends Controller
         $testManagement->student_id = json_encode($request->student_id);
         $testManagement->created_at = Carbon::now();
         $testManagement->save();
+
+        foreach($request->student_idd as $id){
+            $allocation = new Allocation();
+            $allocation->student_id  = $id ?? NULL;
+            $allocation->assigned_by  = $this->user->id; // Instructor
+            $allocation->assigned_id  = $testManagement->id;   //Test /Survey
+            // $allocation->start_date  = $request->start_date ?? NULL;
+            // $allocation->end_date  = $request->end_date ?? NULL;
+            $allocation->type  = 1;
+            $allocation->save();
+        }
 
         return redirect()->route('test-management.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
@@ -111,7 +124,9 @@ class TestManagementController extends Controller
         $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
         $courses = Course::orderBy('id','desc')->get();
         $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
-        return view('admin.test-management.edit', compact('title', 'test','courses','papers','students'));
+        $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        $allocationStudentList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('student_id')->toArray();
+        return view('admin.test-management.edit', compact('title', 'test','courses','papers','students', 'userStudent', 'allocationStudentList'));
     }
 
     /**
@@ -138,6 +153,23 @@ class TestManagementController extends Controller
         $testManagement->student_id = json_encode($request->student_id);
         $testManagement->created_at = Carbon::now();
         $testManagement->save();
+
+        $allocationStudentList = Allocation::where('assigned_id', $id)->where('type', 1)->get();
+        foreach($allocationStudentList as $list){
+            $list->delete();
+        }
+
+        foreach($request->student_idd as $studentid){
+            $allocation = new Allocation();
+            $allocation->student_id  = $studentid ?? NULL;
+            $allocation->assigned_by  = $this->user->id; // Instructor
+            $allocation->assigned_id  = $id;   //Test /Survey
+            // $allocation->start_date  = $request->start_date ?? NULL;
+            // $allocation->end_date  = $request->end_date ?? NULL;
+            $allocation->type  = 1;
+            $allocation->save();
+        }
+
 
         return redirect()->route('test-management.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
