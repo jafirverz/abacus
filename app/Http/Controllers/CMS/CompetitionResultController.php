@@ -38,7 +38,8 @@ class CompetitionResultController extends Controller
     {
         //
         $title = $this->title;
-        $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
+        // $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
+        $competition = Competition::paginate(10);
         return view('admin.competition_result.index', compact('title', 'competition'));
     }
 
@@ -47,7 +48,8 @@ class CompetitionResultController extends Controller
         //$userList = CompetitionPaperSubmitted::where('competition_id', $id)->paginate($this->pagination);
         $userList = CompetitionStudentResult::where('competition_id', $id)->paginate($this->pagination);
         $competitionId = $id;
-        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId'));
+        $competition = Competition::where('id', $id)->first();
+        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
     }
 
     public function edit($id){

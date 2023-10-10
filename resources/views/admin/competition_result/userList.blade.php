@@ -12,6 +12,7 @@
         </div>
         <br />
 
+        @if($competition->competition_type == 'online')
         <div class="section-body">
             @include('admin.inc.messages')
             
@@ -24,7 +25,7 @@
                 
                 </div>
             </div>
-
+        @endif
 
             <div class="row">
                 <div class="col-12">

@@ -73,10 +73,10 @@
                                         <tr>
                                             
                                             <td>
-                                                <a href="{{ route('results.competition', $item->competition->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
+                                                <a href="{{ route('results.competition', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
                                             </td>
-                                            <td>{{ $item->competition->title }}</td>
-                                            <td>{{ $item->competition->date_of_competition }}</td>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->date_of_competition }}</td>
                                            
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
