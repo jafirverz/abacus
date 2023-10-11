@@ -1441,10 +1441,11 @@ class ProfileController extends Controller
         }
         else
         {
-            $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
+            $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocated_user)->get();
         }
         $locations = LearningLocation::orderBy('id','desc')->get();
-        $categories = CompetitionCategory::orderBy('id','desc')->get();
+        $categoryComp = CategoryCompetition::where('competition_id', $competition_id)->pluck('category_id')->toArray();
+        $categories = CompetitionCategory::whereIn('id', $categoryComp)->orderBy('id','desc')->get();
 		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $user->id)->paginate($this->pagination);
 		//dd($user);
 		return view('account.competition-registration', compact('competition', 'students', 'compStudents','locations','categories'));

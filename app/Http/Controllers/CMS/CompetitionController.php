@@ -415,7 +415,8 @@ class CompetitionController extends Controller
         $competition = Competition::where('id', $id)->first();
         $competitionCategory = CompetitionCategory::get();
         $userType = array(1,2,3,4);
-        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
+        $compStudents = CompetitionStudent::where('competition_controller_id', $id)->pluck('user_id')->toArray();
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->whereNotIn('id', $compStudents)->get();
         // $worksheets = Worksheet::orderBy('id','desc')->get();
         return view('admin.competition.assignstudent', compact('title', 'competition', 'students', 'competitionCategory'));
         
