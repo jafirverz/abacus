@@ -63,11 +63,14 @@
                                             </th>
                                             <th>Action</th>
                                             <th>Student Name</th>
+                                            <th>Grading Title</th>
                                             <th>Teacher Name</th>
                                             <th>Mental Grade</th>
                                             <th>Abacus Grades</th>
                                             <th>Status</th>
                                             <th>Result</th>
+                                            <th>Rank</th>
+                                            <th>Pass/Fail</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,12 +84,16 @@
                                             <td>
                                                 <a href="{{ route('grading-students.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
+
                                             <td>{{ $item->student->name  ?? ''}}</td>
+                                            <td>{{ $item->event->title  ?? ''}}</td>
                                             <td>{{ $item->teacher->name  ?? ''}}</td>
-                                            <td>{{ $item->mental->title ?? '' }}</td>
-                                            <td>{{ $item->abacus->title ?? '' }}</td>
+                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->mental_grade ?? '-'}}</td>
+                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->abacus_grade ?? '-'}}</td>
                                             <td>{{ ($item->approve_status==1)?'Approved':'Pending' }}</td>
-                                            <td>-- </td>
+                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->result ?? '-'}}</td>
+                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->rank ?? '-'}}</td>
+                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->remark_grade ?? '-'}}</td>
                                         </tr>
                                         @endforeach
                                         @else

@@ -99,14 +99,17 @@ class GradingResultController extends Controller
         ];
         $request->validate([
             'grading_id'  =>  'required',
-            'fileupload'  =>  'required|mimes:xlsx',
+            'list_id'  =>  'required',
+            'paper_id'  =>  'required',
+            'fileupload'  =>  'required',
+
         ], $messages);
 
         $gradingResultsUpload = new GradingResultsUpload();
         if ($request->hasFile('fileupload')) {
 
             $file = $request->file('fileupload');
-            $result = Excel::import(new ImportGradingResult($request->grading_id), $file);
+            $result = Excel::import(new ImportGradingResult($request->grading_id,$request->paper_id), $file);
 
             $imported_files[] = "Grading Result Upload";
 

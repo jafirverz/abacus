@@ -33,7 +33,6 @@
                                         @php $j=0; @endphp
                                         @foreach($courses as $val)
                                         @php
-
                                         $is_course_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $val->id)->first();
                                         @endphp
                                             @if(isset($is_course_submitted))
