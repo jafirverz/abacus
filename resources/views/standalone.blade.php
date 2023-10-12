@@ -1,8 +1,8 @@
 @extends('layouts.guestUser')
 @section('content')
 <main class="main-wrap">	
-  <div class="container main-inner">
-    {!! $page->content !!}
+  <div class="row sp-col-0 tempt-2">
+    
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <!-- <div class="mb-20">
@@ -125,6 +125,6 @@
       </form>
       </div>
     </div>
-  </div>	
+</div>
 </main>
 @endsection
