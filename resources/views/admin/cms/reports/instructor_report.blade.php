@@ -37,11 +37,11 @@
         <br />
         <div class="row">
           <div class="col-lg-4">
-            <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary"> Download</button>&nbsp;&nbsp;
             @if(request()->get('_token'))
             <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
             @else
-            <button type="reset" class="btn btn-primary">Clear All</button>
+            <!-- <button type="reset" class="btn btn-primary">Clear All</button> -->
             @endif
 
           </div>
