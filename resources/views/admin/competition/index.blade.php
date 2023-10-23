@@ -53,7 +53,7 @@
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <!-- <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -61,10 +61,11 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
+                                            </th> -->
                                             <th>Action</th>
                                             <th>Title</th>
                                             <th>Date of Competition</th>
+                                            <th>Stauts</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -73,13 +74,13 @@
                                         @if($competition->count())
                                         @foreach ($competition as $key => $item)
                                         <tr>
-                                            <td scope="row">
+                                            <!-- <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
                                                         data-checkboxes="mygroup" class="custom-control-input"
                                                         id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <a href="{{ route('competition.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
@@ -91,7 +92,7 @@
                                             </td>
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->date_of_competition }}</td>
-                                           
+                                            <td>@if($item->status == 1) Published @elseif($item->status == 2) Draft @endif</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
