@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\SystemSettingTrait;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -88,13 +89,14 @@ class CompetitionResultController extends Controller
     {
         $search_term = $request->search;
         $title = $this->title;
-        $checkCompetition = Competition::where('title', 'like', '%'.$search_term.'%')->pluck('id')->toArray();
-        $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->whereIn('competition_id', $checkCompetition)->paginate($this->pagination);
+        // $checkCompetition = Competition::where('title', 'like', '%'.$search_term.'%')->pluck('id')->toArray();
+        // $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->whereIn('competition_id', $checkCompetition)->paginate($this->pagination);
         // if ($search_term) {
         //     $competition->appends('search', $search_term);
         // }
 
         // $competitionPaper = CompetitionPaper::whereHas('comp_ques')->paginate($this->pagination);
+        $competition = Competition::where('title', 'like', '%'.$search_term.'%')->paginate($this->pagination);
         return view('admin.competition_result.index', compact('title', 'competition'));
     }
 
@@ -103,5 +105,18 @@ class CompetitionResultController extends Controller
         ob_end_clean();
         ob_start();
         return Excel::download(new CompetetitionResultExport($allItems), 'CompetitionStudentReport.xlsx');
+    }
+
+    public function userresultsearch(Request $request)
+    {
+        //dd($request->all());
+        $search_term = $request->search;
+        $title = $this->title;
+        $users = User::where('name', 'like', '%'.$search_term.'%')->pluck('id')->toArray();
+        // $competitionPaper = CompetitionPaper::whereHas('comp_ques')->paginate($this->pagination);
+        $userList = CompetitionStudentResult::where('competition_id', $request->competitionId)->whereIn('user_id', $users)->paginate($this->pagination);
+        $competitionId = $request->competitionId;
+        $competition = Competition::where('id', $request->competitionId)->first();
+        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
     }
 }

@@ -380,6 +380,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('results/competition/{id?}', 'CMS\CompetitionResultController@studentList')->name('results.competition');
     Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
 
+    Route::get('results/user/search', 'CMS\CompetitionResultController@userresultsearch')->name('userresults.search');
+
     Route::get('results/download/excel/{id?}', 'CMS\CompetitionResultController@excelDownload')->name('studentResultDownload');
     //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
 

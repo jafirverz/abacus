@@ -44,11 +44,12 @@
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('results.search') }}" method="get">
+                                <form action="{{ route('userresults.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Search"
+                                        <input type="text" name="search" class="form-control" placeholder="Search by user name"
                                             value="{{ $_GET['search'] ?? '' }}">
+                                        <input type="hidden" name="competitionId" value="{{ $competitionId }}">
                                         <div class="input-group-btn">
                                             <button type="submit" class="btn btn-primary"><i
                                                     class="fas fa-search"></i></button>
