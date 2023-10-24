@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\Traits\SystemSettingTrait;
+use App\User;
 use App\UserSurvey;
 use Illuminate\Support\Facades\Auth;
 
@@ -140,8 +141,15 @@ class SurveyController extends Controller
      * @param  \App\Survey  $survey
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Survey $survey)
+    public function destroy(Request $request)
     {
+        //dd($request->all());
+        $ids = explode(',',$request->multiple_delete );
+        $surveyUser = UserSurvey::whereIn('id', $ids)->get();
+        foreach($surveyUser as $val){
+            $val->delete();
+        }
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
         //
     }
 
@@ -173,5 +181,17 @@ class SurveyController extends Controller
         $userSurvey->certificate_id = $certificateId;
         $userSurvey->save();
         return redirect()->route('survey-completed.getlist')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
+    }
+
+    public function search(Request $request)
+    {
+        $search_term = $request->search;
+        //DB::enableQueryLog();
+        $title = 'Survey Completed';
+        $users = User::where('name', 'like', '%'.$search_term.'%')->pluck('id')->toArray();
+        $surveys = UserSurvey::whereIn('user_id', $users)->orderBy('id','desc')->paginate($this->pagination);
+        
+       // dd(DB::getQueryLog());
+       return view('admin.survey.survey_completed', compact('title', 'surveys'));
     }
 }

@@ -29,10 +29,10 @@
                     </form>
                     <h4></h4>
                     <div class="card-header-form form-inline">
-                        <form action="{{ route('surveys.search') }}" method="get">
+                        <form action="{{ route('surveys-completed.search') }}" method="get">
                             @csrf
                             <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search"
+                                <input type="text" name="search" class="form-control" placeholder="Search by user name"
                                     value="{{ $_GET['search'] ?? '' }}">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
@@ -60,8 +60,9 @@
                                         </div>
                                     </th>
                                     <th>Action</th>
-                                    <th>Survey Title</th>
+                                    
                                     <th>User Name</th>
+                                    <th>Survey Title</th>
                                     <th>Created at</th>
                                 </tr>
                             </thead>
@@ -87,11 +88,12 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{ $item->survey->title ?? '' }}
+                                        {{ $item->user->name ?? '' }}
                                     </td>
                                     <td>
-                                      {{ $item->user->name ?? '' }}
-                                  </td>
+                                        {{ $item->survey->title ?? '' }}
+                                    </td>
+                                    
                                     <td>
                                         {{ $item->created_at->format('d M, Y h:i A') }}
                                     </td>
