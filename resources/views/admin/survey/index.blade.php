@@ -29,7 +29,7 @@
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
-                            <div class="card-header-form form-inline">
+                            <!-- <div class="card-header-form form-inline">
                                 <form action="{{ route('surveys.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
@@ -47,7 +47,7 @@
                                         @endif
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

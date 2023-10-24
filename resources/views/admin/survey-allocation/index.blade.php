@@ -27,7 +27,7 @@
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
-                            <div class="card-header-form form-inline">
+                            <!-- <div class="card-header-form form-inline">
                                 <form action="{{ route('survey-allocation.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
@@ -43,7 +43,7 @@
                                             @endif
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -59,9 +59,9 @@
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
                                             </th>
-                                            <th>Title</th>
+                                            <!-- <th>Title</th> -->
                                             <th>Student</th>
-                                            <th>Instructor</th>
+                                            <!-- <th>Instructor</th> -->
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                         </tr>
@@ -74,9 +74,9 @@
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label for="checkbox-{{ ($key+1) }}" class="custom-control-label">&nbsp;</label></div>
                                             </td>
 
-                                            <td>{{ $item->survey->title ?? '' }}</td>
+                                            <!-- <td>{{ $item->survey->title ?? '' }}</td> -->
                                             <td>{{ $item->student->name ?? '' }}  </td>
-                                            <td>{{ $item->teacher->name ?? '' }}  </td>
+                                            <!-- <td>{{ $item->teacher->name ?? '' }}  </td> -->
                                             <td>{{ date('j F,Y',strtotime($item->start_date)) }}</td>
                                             <td>{{ date('j F,Y',strtotime($item->end_date)) }}</td>
                                         </tr>

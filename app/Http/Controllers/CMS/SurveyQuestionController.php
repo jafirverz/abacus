@@ -172,4 +172,20 @@ class SurveyQuestionController extends Controller
         }
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
+
+    public function search(Request $request)
+    {
+        // dd($request->all());
+        $search_term = $request->search;
+        $title = $this->title;
+        $surveys = SurveyQuestion::where('title', 'like', '%'.$search_term.'%')->orderBy('id','desc')->paginate($this->pagination);
+
+        return view('admin.survey_question.index', compact('title', 'surveys'));
+        // $topic = Topic::search($search_term)->paginate($this->pagination);
+        // if ($search_term) {
+        //     $topic->appends('search', $search_term);
+        // }
+
+        // return view('admin.master.topic.index', compact('title', 'topic'));
+    }
 }

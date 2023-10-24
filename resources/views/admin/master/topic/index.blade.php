@@ -37,7 +37,7 @@
                                 <form action="{{ route('topic.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Search"
+                                        <input type="text" name="search" class="form-control" placeholder="Search by topic name"
                                             value="{{ $_GET['search'] ?? '' }}">
                                         <div class="input-group-btn">
                                             <button type="submit" class="btn btn-primary"><i
@@ -63,8 +63,8 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
+                                            <th>Topic Name</th>
                                             <th>Level</th>
-                                            <th>Title</th>
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -89,8 +89,9 @@
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
-                                            <td>{{ $item->level->title }}</td>
+                                            
                                             <td>{{ $item->title }}</td>
+                                            <td>{{ $item->level->title }}</td>
 
                                             <td>
                                                 @if(getActiveStatus())
