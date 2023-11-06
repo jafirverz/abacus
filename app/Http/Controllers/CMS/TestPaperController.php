@@ -51,7 +51,7 @@ class TestPaperController extends Controller
     public function create()
     {
         $title = $this->title;
-        $questions = QuestionTemplate::orderBy('id','desc')->get();
+        $questions = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8])->orderBy('id','desc')->get();
         return view('admin.test-paper.create', compact('title','questions'));
     }
 
@@ -167,7 +167,7 @@ class TestPaperController extends Controller
     {
         $title = $this->title;
         $paper = TestPaper::findorfail($id);
-        $questions = QuestionTemplate::orderBy('id','desc')->get();
+        $questions = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8])->orderBy('id','desc')->get();
         return view('admin.test-paper.edit', compact('title', 'paper','questions'));
     }
 
