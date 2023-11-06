@@ -22,6 +22,27 @@
                             <div class="card-body">
 
                                 <div class="form-group">
+                                    <label for="user_type_id">User Type</label>
+                                    <select name="user_type_id" id="user_type_id" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if (getUserTypes())
+                                        @foreach (getUserTypes()  as $key => $item)
+                                         @if($key!=6)
+                                        <option value="{{ $key }}" @if(isset($_GET['user_type']) && $_GET['user_type']==$key) selected @elseif(old('user_type_id')==$key)
+                                            selected
+                                            @endif>{{ $item }}</option>
+                                        @endif
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('user_type_id'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('user_type_id') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                
+                                <div class="form-group">
                                     <label for="">Full Name</label>
                                     <input type="text" name="name" class="form-control"
                                         value="{{ old('name') }}">
@@ -136,26 +157,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="user_type_id">User Type</label>
-                                    <select name="user_type_id" id="user_type_id" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (getUserTypes())
-                                        @foreach (getUserTypes()  as $key => $item)
-                                         @if($key!=6)
-                                        <option value="{{ $key }}" @if(isset($_GET['user_type']) && $_GET['user_type']==$key) selected @elseif(old('user_type_id')==$key)
-                                            selected
-                                            @endif>{{ $item }}</option>
-                                        @endif
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('user_type_id'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('user_type_id') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                                
                                 <div class="form-group">
                                     <label for="instructor_id">@if(isset($_GET['user_type']) && $_GET['user_type']==4) External Centre Account @else Instructor @endif</label>
                                     <select name="instructor_id" class="form-control">
