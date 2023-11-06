@@ -16,7 +16,8 @@ class QuestionAttempt extends Controller
     {
         $this->middleware('auth:admin');
         $this->title = __('constant.QUESTIONS_ATTEMPT');
-        $this->module = 'QUESTIONS ATTEMPT';
+        // $this->module = 'QUESTIONS ATTEMPT';
+        $this->module = 'QUESTIONS_ATTEMPT';
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             return $next($request);

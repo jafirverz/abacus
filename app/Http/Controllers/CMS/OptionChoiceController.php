@@ -19,7 +19,8 @@ class OptionChoiceController extends Controller
     {
         $this->middleware('auth:admin');
         $this->title = __('constant.OPTIONS_CHOICES');
-        $this->module = 'OPTIONS_CHOICES';
+        //$this->module = 'OPTIONS_CHOICES';
+        $this->module = 'SURVEY';
         $this->middleware('grant.permission:' . $this->module);
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
