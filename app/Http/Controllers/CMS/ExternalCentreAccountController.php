@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
+use Illuminate\Support\Facades\Mail;
 
 class ExternalCentreAccountController extends Controller
 {
@@ -125,7 +126,7 @@ class ExternalCentreAccountController extends Controller
         }
 
         //			Admin email for new student registration
-			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_REGISTRATION'));
+			$email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_EXTERNAL_CENTER_REGISTRATION'));
             $admins = Admin::get();
 
             if ($email_template) {
@@ -137,8 +138,8 @@ class ExternalCentreAccountController extends Controller
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{Year_Attained_Qualified_Instructor_Certification}}','{{Year_Attained_Senior_Instructor_Certification}}','{{Highest_Abacus_Grade_Attained}}','{{Highest_Mental_Grade_Attained}}','{{Awards}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $request->year_attained_qualified_instructor, $request->year_attained_senior_instructor, $request->highest_abacus_grade, $request->highest_mental_grade, $request->awards];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -153,29 +154,28 @@ class ExternalCentreAccountController extends Controller
             }
 
             //			Instructor email for new student registration
-        $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REGISTRATION'));
+            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_USER_THANKS'));
 
-        if ($email_template) {
-            $data = [];
-                $data['email_sender_name'] = systemSetting()->email_sender_name;
-                $data['from_email'] = systemSetting()->from_email;
-                $data['to_email'] = [$instructor->email];
-                $data['cc_to_email'] = [];
-                $data['subject'] = $email_template->subject;
+            if ($email_template) {
+                $data = [];
+                    $data['email_sender_name'] = systemSetting()->email_sender_name;
+                    $data['from_email'] = systemSetting()->from_email;
+                    $data['to_email'] = [$request->email];
+                    $data['cc_to_email'] = [];
+                    $data['subject'] = $email_template->subject;
 
-                $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                    $key = ['{{full_name}}'];
+                    $value = [$request->name];
+                    $newContents = str_replace($key, $value, $email_template->content);
 
-                $newContents = str_replace($key, $value, $email_template->content);
+                    $data['contents'] = $newContents;
+                    try {
+                        $mail = Mail::to($request->email)->send(new EmailNotification($data));
+                    } catch (Exception $exception) {
+                        dd($exception);
+                    }
 
-                $data['contents'] = $newContents;
-                try {
-                    $mail = Mail::to($instructor->email)->send(new EmailNotification($data));
-                } catch (Exception $exception) {
-                    dd($exception);
-                }
-
-        }
+            }
 
 
         return redirect()->route('external-centre-account.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));

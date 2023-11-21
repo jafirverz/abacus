@@ -251,7 +251,8 @@ class RegisterController extends Controller
 		$page = get_page_by_slug($slug);
         $instructors = User::orderBy('name', 'asc')->where('user_type_id', 5)->get();
         $country = Country::orderBy('country', 'asc')->get();
-        return view('auth.register',compact("page","instructors", 'country'));
+        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        return view('auth.register',compact("page","instructors", 'country','country_phone'));
     }
 
 }
