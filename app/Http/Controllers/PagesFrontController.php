@@ -76,7 +76,7 @@ class PagesFrontController extends Controller
         if (!$page) {
             return abort(404);
         }
-        $levels = Level::get();
+        $levels = Level::where('status', 1)->get();
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
         $todayDate = date('Y-m-d');
         $lesson=CourseAssignToUser::join('courses','courses.id','course_assign_to_users.course_id')->join('test_papers','test_papers.id','courses.paper_id')->select('test_papers.*','course_assign_to_users.course_id')->get();

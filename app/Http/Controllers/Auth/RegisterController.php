@@ -115,7 +115,7 @@ class RegisterController extends Controller
                 throw ValidationException::withMessages(['email' => 'Email Id already exist']);
             }
         }
-        
+
 
 //        if (!$responseData->success) {
 //            return redirect()->back()->withInput()->with('error', __('constant.CAPTCHA_ERROR'));
@@ -144,7 +144,7 @@ class RegisterController extends Controller
             }else{
                 $accountId = 'SUD-'.$dob1.$acName;
             }
-            
+
             //dd($request->all());
 			$users = new User;
             $users->dob = $dob ?? null;
@@ -249,7 +249,7 @@ class RegisterController extends Controller
     {
         $slug = __('constant.SLUG_REGISTER');
 		$page = get_page_by_slug($slug);
-        $instructors = User::where('user_type_id', 5)->get();
+        $instructors = User::orderBy('name', 'asc')->where('user_type_id', 5)->get();
         $country = Country::orderBy('country', 'asc')->get();
         return view('auth.register',compact("page","instructors", 'country'));
     }
