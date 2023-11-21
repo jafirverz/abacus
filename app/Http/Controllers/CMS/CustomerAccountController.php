@@ -78,7 +78,7 @@ class CustomerAccountController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        dd($request);
         $fields = [
             'email' =>  'required|email',
             'name' => 'required|string',
