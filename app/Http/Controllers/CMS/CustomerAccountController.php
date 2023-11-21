@@ -80,7 +80,7 @@ class CustomerAccountController extends Controller
     {
         //dd($request);
         $fields = [
-            'email' =>  'required|email|unique:users,email',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'password'  =>  'required|min:8',
             'country_code' => 'required',
@@ -264,7 +264,7 @@ class CustomerAccountController extends Controller
     public function update(Request $request, $id)
     {
         $fields = [
-            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'password'  =>  'nullable|min:8',
             'country_code' => 'required',
