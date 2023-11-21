@@ -77,7 +77,7 @@
                         <div class="row sp-col-10">
                             <div class="col-auto sp-col">
                                 <select class="selectpicker" name="country_code_phone">
-                                    @foreach($country as $countr)
+                                    @foreach($country_phone as $countr)
                                     <option value="{{ $countr->phonecode }} " @if(old('country_code_phone') == $countr->phonecode) selected @elseif('65' == $countr->phonecode) selected @endif>+ {{ $countr->phonecode }}</option>
                                     @endforeach
                                 </select>
