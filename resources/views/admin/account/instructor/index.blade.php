@@ -62,11 +62,13 @@
                                         </div>
                                     </th>
                                     <th>Action</th>
-                                    <th>Full Name</th>
-                                    <th>Email Address</th>
-                                    <th>Customer Number</th>
-                                    <th>Account ID</th>
-                                    <th>Last Updated</th>
+                                    <th>Display Name</th>
+                                    <th>Instructor's Full Name</th>
+                                    <th>Country</th>
+                                    <th>Qualified in Year</th>
+                                    <th>Highest Mental</th>
+                                    <th>Highest Abacus</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,17 +96,21 @@
                                         {{ $item->name }}
                                     </td>
                                     <td>
-                                        {{ $item->email }}
+                                        {{ $item->instructor_full_name }}
                                     </td>
                                     <td>
-                                        {{ $item->mobile ?? '' }}
+
                                     </td>
                                     <td>
-                                        {{ $item->account_id ?? '' }}
+                                        {{  $item->year_attained_qualified_instructor }}
                                     </td>
                                     <td>
-                                        {{ $item->updated_at->format('d M, Y h:i A') }}
+                                        {{ $item->highest_mental_grade ?? '' }}
                                     </td>
+                                    <td>
+                                        {{ $item->highest_abacus_grade ?? '' }}
+                                    </td>
+
                                 </tr>
                                 @endforeach
                                 @else

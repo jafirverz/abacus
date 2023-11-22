@@ -109,12 +109,12 @@ class RegisterController extends Controller
                 'instructor' => 'required',
             ], $messages);
 
-        $usersCheck = User::where('email', $request->email)->first();
-        if($usersCheck){
-            if($usersCheck->approve_status == 1 || $usersCheck->approve_status == 0){
-                throw ValidationException::withMessages(['email' => 'Email Id already exist']);
-            }
-        }
+        // $usersCheck = User::where('email', $request->email)->first();
+        // if($usersCheck){
+        //     if($usersCheck->approve_status == 1 || $usersCheck->approve_status == 0){
+        //         throw ValidationException::withMessages(['email' => 'Email Id already exist']);
+        //     }
+        // }
 
 
 //        if (!$responseData->success) {

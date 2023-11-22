@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
@@ -53,7 +54,9 @@ class InstructorAccountController extends Controller
     {
         $title = $this->title;
         $instructors = User::orderBy('id','desc')->get();
-        return view('admin.account.instructor.create', compact('title', 'instructors'));
+        $country = Country::orderBy('country', 'asc')->get();
+        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        return view('admin.account.instructor.create', compact('title', 'instructors','country','country_phone'));
     }
 
     /**
@@ -97,6 +100,7 @@ class InstructorAccountController extends Controller
         $accountId = 'INS-'.$dob1.$acName;
         $customer = new User();
         $customer->name = $request->name;
+        $customer->instructor_full_name = $request->instructor_full_name??NULL;
         $customer->account_id = $accountId;
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->user_type_id = 5;
@@ -205,7 +209,9 @@ class InstructorAccountController extends Controller
         $title = $this->title;
         $customer = User::findorfail($id);
         $instructors = User::orderBy('id','desc')->get();
-        return view('admin.account.instructor.edit', compact('title', 'customer','instructors'));
+        $country = Country::orderBy('country', 'asc')->get();
+        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        return view('admin.account.instructor.edit', compact('title', 'customer','instructors','country','country_phone'));
     }
 
     /**
@@ -242,6 +248,7 @@ class InstructorAccountController extends Controller
 
         $customer = User::find($id);
         $customer->name = $request->name;
+        $customer->instructor_full_name = $request->instructor_full_name??NULL;
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->dob = $request->dob??NULL;
         $customer->email = $request->email??NULL;

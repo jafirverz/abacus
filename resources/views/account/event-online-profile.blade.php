@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<main class="main-wrap">	
+<main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
       @include('inc.account-sidebar-event-student')
@@ -44,7 +44,7 @@
               <label class="lb-1">Date of Birth <span class="required">*</span></label>
               <div class="date-wrap disabled">
                 <i class="fa-solid fa-calendar-days ico"></i>
-                <input class="form-control" name="dob" type="text" value="{{old('dob', date('d/m/Y', strtotime($user->dob))) ?? ''}}" disabled />
+                <input class="form-control" name="dob" type="text" value="{{old('dob',$user->dob) ?? ''}}" disabled />
               </div>
             </div>
             <div class="col-xl-4 sp-col">
@@ -83,7 +83,7 @@
           </div>
           </div>
 
-          
+
 
           <div class="output-2">
             <button class="btn-1" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
@@ -94,7 +94,7 @@
 
       </div>
     </div>
-  </div>	
+  </div>
 </main>
 @if($errors->any())
   <script>

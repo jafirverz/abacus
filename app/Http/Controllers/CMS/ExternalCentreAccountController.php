@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
@@ -53,7 +54,9 @@ class ExternalCentreAccountController extends Controller
     {
         $title = $this->title;
         $instructors = User::orderBy('id','desc')->get();
-        return view('admin.account.external-centre.create', compact('title', 'instructors'));
+        $country = Country::orderBy('country', 'asc')->get();
+        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        return view('admin.account.external-centre.create', compact('title', 'instructors','country','country_phone'));
     }
 
     /**
@@ -205,7 +208,9 @@ class ExternalCentreAccountController extends Controller
         $title = $this->title;
         $customer = User::findorfail($id);
         $instructors = User::orderBy('id','desc')->get();
-        return view('admin.account.external-centre.edit', compact('title', 'customer','instructors'));
+        $country = Country::orderBy('country', 'asc')->get();
+        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        return view('admin.account.external-centre.edit', compact('title', 'customer','instructors','country','country_phone'));
     }
 
     /**
