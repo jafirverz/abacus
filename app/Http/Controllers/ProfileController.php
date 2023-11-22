@@ -425,7 +425,7 @@ class ProfileController extends Controller
         }else{
             $qId='';
         }
-        
+
         if(empty($qId)){
             return abort(404);
         }
@@ -501,14 +501,15 @@ class ProfileController extends Controller
 		//dd($user);
 
         $country = Country::orderBy('country', 'asc')->get();
-        //dd($this->user->user_type_id);
+        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        //dd( $country_phone);
         if($this->user->user_type_id==4)
         {
-            return view('account.event-online-profile', compact("page", "instructors", 'country'));
+            return view('account.event-online-profile', compact("page", "instructors", 'country','country_phone'));
         }
         else
         {
-            return view('account.my-profile', compact("page", "user", "instructors", 'country'));
+            return view('account.my-profile', compact("page", "user", "instructors", 'country','country_phone'));
         }
 
 	}
@@ -1410,7 +1411,7 @@ class ProfileController extends Controller
 	{
         // dd($request->all());
         $users = User::find($this->user->id);
-        
+
         $request->validate([
             'learning_location' => 'required',
             'category_id' => 'required',

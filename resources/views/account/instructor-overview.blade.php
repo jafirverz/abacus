@@ -12,7 +12,7 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
-                <h1 class="title-3">Good Morning Teacher {{Auth::user()->name}},</h1>
+                <h1 class="title-3">Good Day Teacher {{Auth::user()->name}},</h1>
                 @include('inc.messages')
                 <div class="box-1">
                     <h2 class="title-2">Announcements</h2>

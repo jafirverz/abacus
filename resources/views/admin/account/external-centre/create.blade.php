@@ -55,8 +55,12 @@
                                     <label for="">Phone</label>
                                     <div class="row">
                                             <div class="col-md-3">
-                                                <input type="text" name="country_code_phone" class="form-control"
-                                                    value="{{ old('country_code_phone') }}">
+
+                                                <select class="form-control" name="country_code_phone">
+                                                    @foreach($country_phone as $countr)
+                                                    <option value="{{ $countr->phonecode }} " @if(old('country_code_phone') == $countr->phonecode) selected @elseif('65' == $countr->phonecode) selected @endif>+ {{ $countr->phonecode }}</option>
+                                                    @endforeach
+                                                </select>
                                                 @if ($errors->has('country_code_phone'))
                                                 <span class="text-danger d-block">
                                                     <strong>{{ $errors->first('country_code_phone') }}</strong>
