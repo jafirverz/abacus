@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="student_id">Students</label>
+                                    <label for="student_idd">Students</label>
                                     <select name="student_idd[]" class="form-control" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($userStudent)

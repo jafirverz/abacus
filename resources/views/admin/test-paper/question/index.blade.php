@@ -5,6 +5,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
+            <div class="section-header-back">
+                <a href="{{ route('test-paper.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i> Go Back</a>
+            </div>
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
                 <a href="{{ route('test-paper-question.create',$paper_id) }}" class="btn btn-primary">Add New</a>

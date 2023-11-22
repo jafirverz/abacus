@@ -39,7 +39,7 @@ class TestManagementController extends Controller
     public function index()
     {
         $title = $this->title;
-        $test = TestManagement::orderBy('id', 'asc')->paginate($this->pagination);
+        $test = TestManagement::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.test-management.index', compact('title', 'test'));
     }
@@ -71,29 +71,31 @@ class TestManagementController extends Controller
             'title'  =>  'required',
             'paper_id'  =>  'required',
             'course_id'  =>  'required',
-            'student_id'  =>  'required',
             'template'  =>  'required',
         ]);
-        
+
         $testManagement = new TestManagement;
         $testManagement->title = $request->title ?? '';
         $testManagement->paper_id = $request->paper_id ?? '';
         $testManagement->course_id = $request->course_id ?? '';
         $testManagement->template = $request->template ?? '';
-        $testManagement->student_id = json_encode($request->student_id);
+        $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
         $testManagement->created_at = Carbon::now();
         $testManagement->save();
 
-        foreach($request->student_idd as $id){
-            $allocation = new Allocation();
-            $allocation->student_id  = $id ?? NULL;
-            $allocation->assigned_by  = $this->user->id; // Instructor
-            $allocation->assigned_id  = $testManagement->id;   //Test /Survey
-            // $allocation->start_date  = $request->start_date ?? NULL;
-            // $allocation->end_date  = $request->end_date ?? NULL;
-            $allocation->type  = 1;
-            $allocation->save();
-        }
+        if(isset($request->student_idd))
+        {
+            foreach($request->student_idd as $id){
+                $allocation = new Allocation();
+                $allocation->student_id  = $id ?? NULL;
+                $allocation->assigned_by  = $this->user->id; // Instructor
+                $allocation->assigned_id  = $testManagement->id;   //Test /Survey
+                // $allocation->start_date  = $request->start_date ?? NULL;
+                // $allocation->end_date  = $request->end_date ?? NULL;
+                $allocation->type  = 1;
+                $allocation->save();
+            }
+       }
 
         return redirect()->route('test-management.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
@@ -142,7 +144,6 @@ class TestManagementController extends Controller
             'title'  =>  'required',
             'paper_id'  =>  'required',
             'course_id'  =>  'required',
-            'student_id'  =>  'required',
             'template'  =>  'required',
         ]);
 
@@ -150,7 +151,7 @@ class TestManagementController extends Controller
         $testManagement->title = $request->title ?? '';
         $testManagement->paper_id = $request->paper_id ?? '';
         $testManagement->course_id = $request->course_id ?? '';
-        $testManagement->student_id = json_encode($request->student_id);
+        $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
         $testManagement->created_at = Carbon::now();
         $testManagement->save();
 
@@ -159,15 +160,18 @@ class TestManagementController extends Controller
             $list->delete();
         }
 
-        foreach($request->student_idd as $studentid){
-            $allocation = new Allocation();
-            $allocation->student_id  = $studentid ?? NULL;
-            $allocation->assigned_by  = $this->user->id; // Instructor
-            $allocation->assigned_id  = $id;   //Test /Survey
-            // $allocation->start_date  = $request->start_date ?? NULL;
-            // $allocation->end_date  = $request->end_date ?? NULL;
-            $allocation->type  = 1;
-            $allocation->save();
+        if(isset($request->student_idd))
+        {
+            foreach($request->student_idd as $studentid){
+                $allocation = new Allocation();
+                $allocation->student_id  = $studentid ?? NULL;
+                $allocation->assigned_by  = $this->user->id; // Instructor
+                $allocation->assigned_id  = $id;   //Test /Survey
+                // $allocation->start_date  = $request->start_date ?? NULL;
+                // $allocation->end_date  = $request->end_date ?? NULL;
+                $allocation->type  = 1;
+                $allocation->save();
+            }
         }
 
 
