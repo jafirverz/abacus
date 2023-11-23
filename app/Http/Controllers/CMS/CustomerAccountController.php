@@ -12,6 +12,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\CompetitionStudentResult;
+use App\GradingStudentResults;
 use Illuminate\Support\Facades\DB;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
@@ -226,7 +228,10 @@ class CustomerAccountController extends Controller
         $title = $this->title;
         $customer = User::findorfail($id);
         $instructors = User::findorfail($customer->instructor_id);
-        return view('admin.account.customer.show', compact('title', 'customer','instructors'));
+        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $gradingExamResult = GradingStudentResults::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        return view('admin.account.customer.show', compact('title', 'customer','instructors','merged'));
     }
 
     /**

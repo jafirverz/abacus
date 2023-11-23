@@ -16,12 +16,12 @@
                     @else
                     {!! get_footer_menu(__('constant.FOOTER'),3, true, 'links') !!}
                     @endif
-                    
+
             </div>
             <div class="col-xl-auto sp-col">
                 <ul class="socials">
                     <li><a href="{{ config('system_settings')->facebook_url ?? ''}}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                    <li><a href="{{ config('system_settings')->twitter_url ?? ''}}" target="_blank"><i class="fa-brands fa-twitter"></i></a></li>
+                    {{-- <li><a href="{{ config('system_settings')->twitter_url ?? ''}}" target="_blank"><i class="fa-brands fa-twitter"></i></a></li> --}}
                     <li><a href="{{ config('system_settings')->instagram_url ?? ''}}" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
                 </ul>
             </div>

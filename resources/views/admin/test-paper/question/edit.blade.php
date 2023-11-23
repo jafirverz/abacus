@@ -26,7 +26,7 @@
                             <input type="hidden" name="previousUrll" value="{{ url()->previous() }}">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="question">Question</label>
+                                    <label for="question">Instruction</label>
                                     <input type="text" name="question" class="form-control" id=""
                                         value="{{ old('question', $list->question) }}">
                                     @if ($errors->has('question'))

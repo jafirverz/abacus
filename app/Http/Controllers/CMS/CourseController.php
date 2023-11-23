@@ -36,7 +36,7 @@ class CourseController extends Controller
     public function index()
     {
         $title = $this->title;
-        $course = Course::paginate($this->pagination);
+        $course = Course::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.master.course.index', compact('title', 'course'));
     }

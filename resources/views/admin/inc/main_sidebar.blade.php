@@ -110,11 +110,7 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/test-allocation',
                 ],
-                [
-                    'title' =>  __('constant.COURSE'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/course',
-                ],
+
             ],
         ],
         [
@@ -293,6 +289,11 @@
                     'title' =>  __('constant.EXTERNAL_CENTRE_ACCOUNT'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/external-centre-account',
+                ],
+                [
+                    'title' =>  __('constant.COURSE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/course',
                 ],
                 [
                     'title' =>  __('constant.FEEDBACK'),

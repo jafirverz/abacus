@@ -33,7 +33,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Instructor Display Name</label>
+                                    <label for="">Instructor Display Name <span class="required">*</span></label>
                                     <input type="text" name="name" class="form-control"
                                         value="{{ old('name', $customer->name) }}">
                                     @if ($errors->has('name'))
@@ -43,7 +43,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Email Address</label>
+                                    <label for="">Email Address <span class="required">*</span></label>
                                     <input type="text" name="email" class="form-control" value="{{ old('email', $customer->email) }}">
                                     @if ($errors->has('email'))
                                     <span class="text-danger d-block">
@@ -54,7 +54,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="">Date Of Birth</label>
+                                    <label for="">Date Of Birth <span class="required">*</span></label>
                                     <input type="text" name="dob" class="form-control datepicker1" value="{{ old('dob', $customer->dob) }}">
                                     @if ($errors->has('dob'))
                                     <span class="text-danger d-block">
@@ -64,7 +64,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Phone</label>
+                                    <label for="">Phone <span class="required">*</span></label>
                                     <div class="row">
                                             <div class="col-md-3">
                                                     <select class="form-control" name="country_code_phone">
@@ -91,7 +91,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Gender</label>
+                                    <label for="">Gender <span class="required">*</span></label>
                                     <select name="gender" class="form-control" tabindex="-98">
                                         <option value="1" @if(old('gender', $customer->gender)=="1") selected @endif>Male
                                         </option>
@@ -114,7 +114,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="country_code">Country</label>
+                                    <label for="country_code">Countr <span class="required">*</span>y</label>
                                     <select name="country_code" class="form-control" id="country_code">
                                         <option value="">-- Select --</option>
                                         @if(getCountry())
