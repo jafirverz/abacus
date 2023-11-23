@@ -5,6 +5,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
+            <div class="section-header-back">
+                <a href="{{ url('admin/reports-external-centre') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i> Go Back</a>
+            </div>
             <h1>{{ $title ?? '-' }}</h1>
 
 
@@ -137,7 +140,7 @@
                                             <td>
                                                 <a href="{{ route('customer-account.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="Listing"><i class="fas fa-bars"></i></a>
+                                                    data-original-title="Listing"><i class="fas fa-eye"></i></a>
 
                                             </td>
                                             <td>

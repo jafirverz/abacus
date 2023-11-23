@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('customer-account.index') }}" class="btn btn-icon"><i
+                <a onclick="window.history.go(-1); return false;" class="btn btn-icon"><i
                         class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>

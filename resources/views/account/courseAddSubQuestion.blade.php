@@ -41,77 +41,85 @@
             <input type="hidden" name="course_id" value="{{ $course->id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
 
+            @if($all_paper_detail)
+            @foreach($all_paper_detail as $paper_detail)
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <div class="box-1">
+                <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
-                  <table class="tb-2 tbtype-2">
-                    <thead>
-                      <tr>
-                        <th class="wcol-2"></th>
-                        @php
+                    <table class="tb-2 tbtype-1">
+                        <thead>
+                            <tr>
+                              <th class="wcol-2"></th>
+                              @php
 
-                        $questionns = \App\TestPaperQuestionDetail::where('test_paper_question_id', $paper_detail->id)->get();
+                              $questionns = \App\TestPaperQuestionDetail::where('test_paper_question_id', $paper_detail->id)->get();
 
-                        $count = count($questionns);
-                        $i = 1;
-                        foreach($questionns as $question){
-                        @endphp
-                        <th class="text-center">{{ $i }}</th>
-                        @php
-                        $i++;
-                        }
-                        @endphp
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                              $count = count($questionns);
+                              $i = 1;
+                              foreach($questionns as $question){
+                              @endphp
+                              <th class="text-center">{{ $i }}</th>
+                              @php
+                              $i++;
+                              }
+                              @endphp
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
 
-                        <tr>
-                          <td></td>
-                          @php
-                        foreach($questionns as $question){
-                        @endphp
-                          <td>
-                            @php
-                            $arrVal = explode(',', $question->input_1);
-                            foreach($arrVal as $val){
+                            <tr>
+                              <td></td>
+                              @php
+                            foreach($questionns as $question){
                             @endphp
-                            <div class="row sp-col-5 inrow-1">
-                              <div class="col-auto sp-col">$</div>
-                              <div class="col sp-col">{{ $val }}</div>
-                            </div>
-                            @php
-                          }
+                              <td>
+                                @php
+                                $arrVal = explode(',', $question->input_1);
+                                foreach($arrVal as $val){
+                                @endphp
+                                <div class="row sp-col-5 inrow-1">
+                                  <div class="col-auto sp-col">$</div>
+                                  <div class="col sp-col">{{ $val }}</div>
+                                </div>
+                                @php
+                              }
+                                @endphp
+                              </td>
+                              @php
+                            }
                             @endphp
-                          </td>
-                          @php
-                        }
-                        @endphp
 
-                        </tr>
+                            </tr>
 
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td class="lb">Answer</td>
-                        @php
-                        foreach($questionns as $question){
-                          @endphp
-                        <td class="coltype">
-                          <div class="row sp-col-5 inrow-1">
-                            <div class="col-auto sp-col">$</div>
-                            <div class="col colanswer sp-col"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$question->id)->question_answer ?? '' }} @endif" class="form-control" type="text" name="answer[{{ $question->id }}]" /></div>
-                          </div>
-                        </td>
-                        @php
-                      }
-                      @endphp
-                      </tr>
-                    </tfoot>
-                  </table>
+                        </tbody>
+                            <tfoot>
+                                <tr>
+                                <td class="lb">Answer</td>
+                                @php
+                                foreach($questionns as $question){
+                                    @endphp
+                                <td class="coltype">
+                                    <div class="row sp-col-5 inrow-1">
+                                    <div class="col-auto sp-col">$</div>
+                                    <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
+                                    </div>
+                                </td>
+                                @php
+                                }
+                                @endphp
+                                </tr>
+                          </tfoot>
+                    </table>
                 </div>
-              </div>
+            </div>
+            @endforeach
+            @endif
 
-            <div class="output-1">
+
+
+              <div class="output-1">
                 @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
                 <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
                 @elseif(isset($courseSubmitted) && $courseSubmitted->is_submitted==1)
