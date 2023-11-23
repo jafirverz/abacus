@@ -81,6 +81,7 @@ class OnlineStudentController extends Controller
         $course = Course::find($id);
         $test_paper=TestPaper::where('id',$course->paper->id)->first();
         $paper_detail=TestPaperDetail::where('paper_id',$course->paper->id)->first();
+        $all_paper_detail=TestPaperDetail::where('paper_id',$course->paper->id)->get();
         if(!isset($paper_detail))
         {
             abort(404);
@@ -101,7 +102,7 @@ class OnlineStudentController extends Controller
             return view('account.courseMix', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 4){
-            return view('account.courseAddSubQuestion', compact("course","paper_detail","test_paper","courseSubmitted"));
+            return view('account.courseAddSubQuestion', compact("course","all_paper_detail","test_paper","courseSubmitted","paper_detail"));
         }
         elseif($qId == 3){
             return view('account.courseNumber', compact("course","paper_detail","test_paper","courseSubmitted"));
