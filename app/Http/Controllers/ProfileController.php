@@ -1119,26 +1119,27 @@ class ProfileController extends Controller
     public function add_students()
     {
         $country = Country::orderBy('phonecode')->get();
-        $levels = Level::get();
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $levels = Level::orderBy('title','asc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
         return view('account.external-add-students', compact('levels', 'country','locations'));
     }
 
     public function edit_students($id)
     {
         $country = Country::orderBy('phonecode')->get();
-        $levels = Level::get();
+        $levels = Level::orderBy('title','asc')->get();
         $customer = User::find($id);
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
         return view('account.external-edit-students', compact('levels', 'country','customer','locations'));
     }
 
     public function view_students($id)
     {
         $country = Country::orderBy('phonecode')->get();
-        $levels = Level::get();
+        $levels = Level::orderBy('title','asc')->get();
         $customer = User::find($id);
-        return view('account.external-view-students', compact('levels', 'country','customer'));
+        $locations = LearningLocation::orderBy('title','asc')->get();
+        return view('account.external-view-students', compact('levels', 'country','customer','locations'));
     }
 
 

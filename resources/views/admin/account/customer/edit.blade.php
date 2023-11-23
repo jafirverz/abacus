@@ -23,7 +23,7 @@
                             <input type="hidden" name="previousUrll" value="{{ url()->previous() }}">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="">Full Name</label>
+                                    <label for="">Full Name <span class="required">*</span></label>
                                     <input type="text" name="name" class="form-control"
                                         value="{{ old('name', $customer->name) }}">
                                     @if ($errors->has('name'))
@@ -33,7 +33,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Email Address</label>
+                                    <label for="">Email Address <span class="required">*</span></label>
                                     <input type="text" name="email" class="form-control" value="{{ old('email', $customer->email) }}">
                                     @if ($errors->has('email'))
                                     <span class="text-danger d-block">
@@ -44,7 +44,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="">Date Of Birth</label>
+                                    <label for="">Date Of Birth <span class="required">*</span></label>
                                     <input type="text" name="dob" class="form-control datepicker1" value="{{ old('dob', $customer->dob) }}">
                                     @if ($errors->has('dob'))
                                     <span class="text-danger d-block">
@@ -53,7 +53,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Phone</label>
+                                    <label for="">Phone <span class="required">*</span></label>
                                     <div class="row">
                                             <div class="col-md-3">
 
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Gender</label>
+                                    <label for="">Gender <span class="required">*</span></label>
                                     <select name="gender" class="form-control" tabindex="-98">
                                         <option value="1" @if(old('gender', $customer->gender)=="1") selected @endif>Male
                                         </option>
@@ -108,7 +108,7 @@
                                 $levelDecode = json_decode($customer->level_id);
                                 @endphp
                                 <div class="form-group">
-                                    <label for="">Level</label>
+                                    <label for="">Level <span class="required">*</span></label>
                                     <select name="level[]" class="form-control" tabindex="-98" multiple>
                                         @foreach($levels as $level)
                                         <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @elseif(isset($levelDecode) && in_array($level->id, $levelDecode)) selected @endif>{{ $level->title }}
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="country_code">Country</label>
+                                    <label for="country_code">Country <span class="required">*</span></label>
                                     <select name="country_code" class="form-control" id="country_code">
                                         <option value="">-- Select --</option>
                                         @if($country)
@@ -140,7 +140,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="user_type_id">User Type</label>
+                                    <label for="user_type_id">User Type <span class="required">*</span></label>
                                     <select disabled  class="form-control">
                                         <option value="">-- Select --</option>
                                         @if (getUserTypes())
@@ -177,7 +177,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Password</label>
+                                    <label for="">Password <span class="required">*</span></label>
                                     <input type="password" name="password" class="form-control">
                                     @if ($errors->has('password'))
                                     <span class="text-danger d-block">
@@ -186,7 +186,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Status <span class="required">*</span></label>
                                     <select name="status" class="form-control" id="">
                                         <option value="">-- Select --</option>
                                         @if(getActiveStatus())

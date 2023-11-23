@@ -25,7 +25,7 @@
                             @method('POST')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="question">Question</label>
+                                    <label for="question">Instruction</label>
                                     <input type="text" name="question" class="form-control" id=""
                                         value="{{ old('question') }}">
                                     @if ($errors->has('question'))

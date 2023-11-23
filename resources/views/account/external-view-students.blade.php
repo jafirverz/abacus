@@ -20,22 +20,22 @@
                             <h2 class="title-2">Personal Information</h2>
                         </div>
                     </div>
-                
+
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Full Name <span class="required">*</span></label>
                             <input readonly class="form-control" name="name" type="text" value="{{ old('name', $customer->name) }}"  />
-                            
+
                         </div>
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Email <span class="required">*</span></label>
                             <input readonly name="email"  class="form-control" type="text" value="{{ old('email', $customer->email) }}"  />
-                            
+
                         </div>
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Password <span class="required">*</span></label>
                             <input readonly name="password" class="form-control" type="password" placeholder="*****"  />
-                            
+
                         </div>
                     </div>
                     <div class="row sp-col-xl-30">
@@ -44,7 +44,7 @@
                             <div class="date-wrap ">
                                 <i class="fa-solid fa-calendar-days ico"></i>
                                 <input readonly name="dob" class="form-control" type="text" value="{{ old('dob', $customer->dob) }}"  />
-                                
+
                             </div>
                         </div>
                         <div class="col-xl-4 sp-col">
@@ -56,11 +56,11 @@
                                             <option value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
                                         @endforeach
                                     </select>
-                                    
+
                                 </div>
                                 <div class="col sp-col">
                                     <input readonly class="form-control" name="mobile" type="text" value="{{ old('dob', $customer->mobile) }}"  />
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                                 @endforeach
                                 @endif
                             </select>
-                           
+
                         </div>
                             @php
                                 $level_ids=json_decode($customer->level_id,true);
@@ -101,7 +101,33 @@
                                 @endforeach
                             </select>
 
-                            
+
+                        </div>
+                    </div>
+                    <div class="row sp-col-xl-30">
+                        <div class="col-xl-6 sp-col">
+                            <label class="lb-1">Learning Locations </label>
+                            <select disabled name="learning_locations" class="selectpicker" data-title="Select Option">
+                                @if($locations)
+                                @foreach($locations as $item)
+                                <option @if(old('learning_locations',$customer->learning_locations)==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                            @if ($errors->has('learning_locations'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('learning_locations') }}</strong>
+                                    </span>
+                           @endif
+                        </div>
+                        <div class="col-xl-6 sp-col">
+                            <label class="lb-1">Learning Updates </label>
+                            <textarea disabled class="form-control" name="learning_updates">{{ old('learning_updates', $customer->learning_updates) }}</textarea>
+                            @if ($errors->has(' learning_updates'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('learning_updates') }}</strong>
+                                    </span>
+                           @endif
                         </div>
                     </div>
                     <div class="row sp-col-xl-30">
@@ -116,7 +142,7 @@
                                 @endforeach
                                 @endif
                             </select>
-                            
+
                         </div>
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Address</label>

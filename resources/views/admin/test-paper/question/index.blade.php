@@ -66,7 +66,7 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
-                                            <th>Question</th>
+                                            <th>Instruction</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>

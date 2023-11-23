@@ -228,6 +228,8 @@ class TestPaperQuestionController extends Controller
         if($request->type==5 || $request->type==7  || $request->type==6)
         {
 
+                if(isset($request->listing_detail_id))
+                {
                     for($m=0;$m<count($request->listing_detail_id);$m++)
                     {
 
@@ -253,6 +255,8 @@ class TestPaperQuestionController extends Controller
                             }
 
                     }
+                }
+
                     if($request->input_1)
                      {
 
@@ -282,7 +286,8 @@ class TestPaperQuestionController extends Controller
         elseif($request->type==2 || $request->type==3)
         {
 
-
+                if(isset($request->listing_detail_id))
+                {
                     for($m=0;$m<count($request->listing_detail_id);$m++)
                     {
 
@@ -305,6 +310,7 @@ class TestPaperQuestionController extends Controller
                             }
 
                     }
+                }
 
                      $n=0;
 
@@ -334,30 +340,34 @@ class TestPaperQuestionController extends Controller
         elseif($request->type==4)
         {
 
-                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    if(isset($request->listing_detail_id))
                     {
+                        for($m=0;$m<count($request->listing_detail_id);$m++)
+                        {
 
 
-                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
-                            {
-                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
                                 {
-                                    $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
-                                    $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
-                                    $testPaperQuestionDetail->answer   = $request->old_answer[$m];
-                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
+                                    if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                    {
+                                        $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
+                                        $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
+                                        $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                        $testPaperQuestionDetail->marks   = $request->old_marks[$m];
 
-                                    $testPaperQuestionDetail->save();
+                                        $testPaperQuestionDetail->save();
+                                    }
+                                    else
+                                    {
+                                        TestPaperQuestionDetail::where('id',$request->listing_detail_id[$m])->delete();
+                                    }
+
+
                                 }
-                                else
-                                {
-                                    TestPaperQuestionDetail::where('id',$request->listing_detail_id[$m])->delete();
-                                }
 
-
-                            }
-
+                        }
                     }
+
                     if($request->input_1)
                      {
 
@@ -385,7 +395,8 @@ class TestPaperQuestionController extends Controller
         elseif($request->type==1)
         {
 
-
+                if(isset($request->listing_detail_id))
+                {
                     for($m=0;$m<count($request->listing_detail_id);$m++)
                     {
                         if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
@@ -406,7 +417,7 @@ class TestPaperQuestionController extends Controller
 
                         }
                     }
-
+                }
 
                     if ($request->hasfile('input_1'))
                     {

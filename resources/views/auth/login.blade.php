@@ -45,7 +45,7 @@
                     </form>
                 </div>
             </div>
-            @php 
+            @php
             $pageId = 2;
             $bannerImage = \App\Banner::where('page_id', $pageId)->first();
             if($bannerImage){
@@ -55,7 +55,7 @@
             }
             @endphp
             <div class="col-lg-6 col-md-5 col-sm-3 sp-col order-sm-first bg image">
-                <img class="bgimg" src="{{$image}}" alt="login"/>
+                <img src="{{$image}}" alt="login"/>
             </div>
         </div>
     </main>

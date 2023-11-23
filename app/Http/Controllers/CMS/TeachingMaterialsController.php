@@ -36,7 +36,7 @@ class TeachingMaterialsController extends Controller
     public function index()
     {
         $title = $this->title;
-        $materials = TeachingMaterials::orderBy('id', 'asc')->paginate($this->pagination);
+        $materials = TeachingMaterials::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.materials.index', compact('title', 'materials'));
     }
@@ -64,7 +64,7 @@ class TeachingMaterialsController extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,ppt,pptx',
             'teacher_id'  =>  'required',
         ]);
 
@@ -120,7 +120,7 @@ class TeachingMaterialsController extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'uploaded_files'  =>  'nullable|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+            'uploaded_files'  =>  'nullable|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,ppt,pptx',
             'teacher_id'  =>  'required',
         ]);
 
