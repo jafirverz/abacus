@@ -29,7 +29,7 @@
                             @method('POST')
                             <div class="card-body">
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="type">Topics</label>
                                     @php
                                     $postTopic = old('topic') ?? [];
@@ -43,6 +43,24 @@
                                     @if ($errors->has('topic'))
                                         <span class="text-danger d-block">
                                         <strong>{{ $errors->first('topic') }}</strong>
+                                    </span>
+                                    @endif
+                                </div> -->
+
+                                <div class="form-group">
+                                    <label for="type">Level</label>
+                                    @php
+                                    $postLevel = old('level') ?? [];
+                                    @endphp
+                                    <select name="level[]" class="form-control" id="" style="height: 100px;" multiple>
+                                        <option value="">-- Select --</option>
+                                        @foreach($levels as $topic)
+                                            <option value="{{$topic->id}}" @if(in_array($topic->id, $postLevel)) selected @endif>{{$topic->title}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('level'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('level') }}</strong>
                                     </span>
                                     @endif
                                 </div>

@@ -40,7 +40,7 @@ class WorksheetController extends Controller
     public function index()
     {
         $title = $this->title;
-        $worksheet = Worksheet::paginate($this->pagination);
+        $worksheet = Worksheet::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.master.worksheet.index', compact('title', 'worksheet'));
     }
@@ -75,7 +75,7 @@ class WorksheetController extends Controller
             'amount.required_if' => 'This field is required',
         ];
         $request->validate([
-            'topic'  =>  'required|array|min:1',
+            'level'  =>  'required|array|min:1',
             'title'  =>  'required',
             'fee'  =>  'required',
             'amount' => 'required_if:fee,2',
@@ -104,13 +104,13 @@ class WorksheetController extends Controller
         $worksheetId = $worksheet->id;
 
 
-        foreach ($request->topic as $topic){
+        foreach ($request->level as $topic){
             $levelTopic = new LevelTopic();
-            $topicLevel = Topic::where('id', $topic)->first();
-            $level = Level::where('id', $topicLevel->level_id)->first();
+            // $topicLevel = Topic::where('id', $topic)->first();
+            // $level = Level::where('id', $topic->id)->first();
             $levelTopic->worksheet_id  = $worksheetId;
-            $levelTopic->level_id  = $level->id;
-            $levelTopic->topic_id  = $topic;
+            $levelTopic->level_id  = $topic;
+            // $levelTopic->topic_id  = $topic;
             $levelTopic->save();
         }
 
@@ -145,7 +145,7 @@ class WorksheetController extends Controller
         $levels = Level::get();
         $topics = Topic::get();
         $questionTempleates = QuestionTemplate::get();
-        $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('topic_id')->toArray();
+        $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('level_id')->toArray();
         return view('admin.master.worksheet.edit', compact('title', 'worksheet', 'levels', 'topics', 'levelTopic', 'questionTempleates'));
     }
 
@@ -162,7 +162,7 @@ class WorksheetController extends Controller
             'amount.required_if' => 'This field is required',
         ];
         $request->validate([
-            'topic'  =>  'required|array|min:1',
+            'level'  =>  'required|array|min:1',
             'title'  =>  'required',
             'fee'  =>  'required',
             'amount' => 'required_if:fee,2',
@@ -195,13 +195,13 @@ class WorksheetController extends Controller
         }
 
 
-        foreach ($request->topic as $topic){
+        foreach ($request->level as $topic){
             $levelTopic = new LevelTopic();
-            $topicLevel = Topic::where('id', $topic)->first();
-            $level = Level::where('id', $topicLevel->level_id)->first();
+            // $topicLevel = Topic::where('id', $topic)->first();
+            // $level = Level::where('id', $topicLevel->level_id)->first();
             $levelTopic->worksheet_id  = $worksheetId;
-            $levelTopic->level_id  = $level->id;
-            $levelTopic->topic_id  = $topic;
+            $levelTopic->level_id  = $topic;
+            // $levelTopic->topic_id  = $topic;
             $levelTopic->save();
         }
 
