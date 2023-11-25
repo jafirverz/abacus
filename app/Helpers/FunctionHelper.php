@@ -289,7 +289,8 @@ if (!function_exists('getPageList')) {
 
     function getQuestionTemplate($id = null)
     {
-        $array_list = ['1'  =>  'Listening Questions', '2'  =>  'Visual Flashing Questions' , '3' => 'Number Questions', '4' => 'Add and subtract Questions', '5' => 'Multiply and Divide Questions', '6' => 'Challenge Questions', '7' => 'Mixed Questions', '8' => 'Abacus simulator Questions', '9' => 'Online Lessons'];
+        // $array_list = ['1'  =>  'Listening Questions', '2'  =>  'Visual Flashing Questions' , '3' => 'Number Questions', '4' => 'Add and subtract Questions', '5' => 'Multiply and Divide Questions', '6' => 'Challenge Questions', '7' => 'Mixed Questions', '8' => 'Abacus simulator Questions', '9' => 'Online Lessons'];
+        $array_list = ['1'  =>  'Listening Questions', '2'  =>  'Visual Flashing Questions' , '3' => 'Number Questions', '4' => 'Add and subtract Questions', '5' => 'Multiply and Divide Questions', '6' => 'Challenge Questions', '7' => 'Mixed Questions', '8' => 'Abacus simulator Questions'];
         if ($id) {
             return $array_list[$id];
         }

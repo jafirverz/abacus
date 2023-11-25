@@ -128,8 +128,8 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::find($id);
-        $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('topic_id')->toArray();
-        $topics = Topic::whereIn('id', $levelTopic)->pluck('title')->toArray();
+        $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('level_id')->toArray();
+        $topics = Level::whereIn('id', $levelTopic)->pluck('title')->toArray();
         return view('admin.master.worksheet.show', compact('title', 'worksheet', 'topics'));
     }
 

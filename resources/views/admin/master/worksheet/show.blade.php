@@ -25,7 +25,7 @@
                             $topics = implode(', ', $topics);
                             @endphp
                             <div class="form-group">
-                                <label for="title">Topics</label>: {{ $topics }}
+                                <label for="title">Level</label>: {{ $topics }}
                             </div>
 
                             <div class="form-group">
@@ -35,10 +35,11 @@
                                 <label for="status">Amount</label>: {{ $worksheet->amount ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="status">Question Template</label>: {{ $worksheet->qestion_template_id }}
-                            </div><div class="form-group">
-                                <label for="status">Question Type</label>: @if($worksheet->question_type == 1) Vertical @else Horizontal @endif
+                                <label for="status">Question Template</label>: {{ getQuestionTemplate($worksheet->question_template_id) }}
                             </div>
+                            <!-- <div class="form-group">
+                                <label for="status">Question Type</label>: @if($worksheet->question_type == 1) Vertical @else Horizontal @endif
+                            </div> -->
                             <div class="form-group">
                                 <label for="status">Stopwatch Timing</label>: @if($worksheet->stopwatch_timing == 1) Yes @else No @endif
                             </div>
