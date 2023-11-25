@@ -6,6 +6,7 @@ use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\LevelTopic;
+use App\Question;
 use App\Topic;
 use App\Traits\SystemSettingTrait;
 use App\Worksheet;
@@ -229,5 +230,32 @@ class WorksheetController extends Controller
         }
 
         return view('admin.master.worksheet.index', compact('title', 'worksheet'));
+    }
+
+    public function questions($id)
+    {
+        $title = 'Worksheet Question';
+        $worksheet = Worksheet::where('id', $id)->first();
+        $worksheetId = $id;
+        $questionTemplateId = $worksheet->question_template_id;
+        $questions = Question::where('worksheet_id', $id)->orderBy('id','desc')->paginate($this->pagination);
+        return view('admin.master.worksheet.qestions', compact('title', 'questions', 'worksheetId', 'questionTemplateId'));
+    }
+
+    public function questionCreate($wId = null, $qId = null)
+    {
+        
+        $title = 'Worksheet Question Add';
+        return view('admin.master.worksheet.qestions_create', compact('title', 'wId', 'qId'));
+    }
+
+    public function questionsEdit($qid = null)
+    {
+        // dd($qid);
+        $title = 'Worksheet Question Edit';
+        $question = Question::findorfail($qid);
+        // $worksheets = Worksheet::orderBy('id','desc')->get();
+        return view('admin.master.worksheet.question_edit', compact('title', 'question', 'qid'));
+
     }
 }

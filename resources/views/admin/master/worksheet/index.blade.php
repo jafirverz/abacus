@@ -87,6 +87,7 @@
                                                 <a href="{{ route('worksheet.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('worksheet.questions', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="List"><i class="fas fa-bars"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
 

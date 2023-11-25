@@ -311,7 +311,9 @@ class QuestionController extends Controller
 
         //dd($question);
         
-        return redirect()->route('question.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+        // return redirect()->route('question.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+
+        return redirect()->route('worksheet.index')->with('success',  __('constant.CREATED', ['module'    =>  'Worksheet Questions']));
     }
 
     /**
@@ -661,7 +663,9 @@ class QuestionController extends Controller
 
         
 
-        return redirect()->route('question.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
+        // return redirect()->route('question.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
+
+        return redirect()->route('worksheet.index')->with('success',  __('constant.UPDATED', ['module'    =>  'Worksheet Questions']));
     }
 
     /**

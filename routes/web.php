@@ -357,6 +357,10 @@ Route::group(['prefix' => 'admin'], function () {
     // WORKSHEET MASTER
     Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
     Route::resource('worksheet', 'CMS\WorksheetController');
+    Route::get('worksheet/{id?}/questions', 'CMS\WorksheetController@questions')->name('worksheet.questions');
+    Route::get('worksheet/{wId?}/questions/{qId?}/create', 'CMS\WorksheetController@questionCreate')->name('worksheet.questions.create');
+    Route::get('worksheet/question/edit/{id?}', 'CMS\WorksheetController@questionsEdit')->name('worksheet.question.edit');
+    
 
 
     // LESSONS MASTER

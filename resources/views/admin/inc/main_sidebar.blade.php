@@ -132,13 +132,13 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/worksheet',
                 ],
-
+                /*
                 [
                     'title' =>  __('constant.QUESTION_MANAGEMENT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/question',
                 ],
-
+                */
                 [
                     'title' =>  __('constant.TEACHING_MATERIALS'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
