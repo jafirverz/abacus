@@ -249,13 +249,24 @@ class WorksheetController extends Controller
         return view('admin.master.worksheet.qestions_create', compact('title', 'wId', 'qId'));
     }
 
-    public function questionsEdit($qid = null)
+    public function questionsEdit($wId = null, $qid = null)
     {
         // dd($qid);
         $title = 'Worksheet Question Edit';
         $question = Question::findorfail($qid);
         // $worksheets = Worksheet::orderBy('id','desc')->get();
-        return view('admin.master.worksheet.question_edit', compact('title', 'question', 'qid'));
+        return view('admin.master.worksheet.question_edit', compact('title', 'question', 'qid', 'wId'));
+
+    }
+
+    public function questionsShow($wId = null, $qid = null)
+    {
+        // dd($qid);
+        $title = 'Worksheet Question Show';
+        $question = Question::findorfail($qid);
+        $worksheets = Worksheet::orderBy('id','desc')->get();
+        // $worksheets = Worksheet::orderBy('id','desc')->get();
+        return view('admin.master.worksheet.question_show', compact('title', 'question', 'qid', 'wId'));
 
     }
 }

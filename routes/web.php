@@ -358,8 +358,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');
     Route::resource('worksheet', 'CMS\WorksheetController');
     Route::get('worksheet/{id?}/questions', 'CMS\WorksheetController@questions')->name('worksheet.questions');
+    // Route::get('worksheet/{wId?}/questions/{qId?}/create', 'CMS\WorksheetController@questionCreate')->name('worksheet.questions.create');
+    // Route::get('worksheet/question/edit/{id?}', 'CMS\WorksheetController@questionsEdit')->name('worksheet.question.edit');
     Route::get('worksheet/{wId?}/questions/{qId?}/create', 'CMS\WorksheetController@questionCreate')->name('worksheet.questions.create');
-    Route::get('worksheet/question/edit/{id?}', 'CMS\WorksheetController@questionsEdit')->name('worksheet.question.edit');
+    Route::get('worksheet/{wId?}/question/{qid?}/edit', 'CMS\WorksheetController@questionsEdit')->name('worksheet.question.edit');
+    Route::get('worksheet/{wId?}/question/{qId?}/show', 'CMS\WorksheetController@questionsShow')->name('worksheet.question.show');
     
 
 

@@ -5,6 +5,9 @@
 <div class="main-content">
   <section class="section">
     <div class="section-header">
+      <div class="section-header-back">
+        <a href="{{ route('worksheet.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+    </div>
       <h1>{{ $title ?? '-' }}</h1>
       @if(sizeof($questions) > 0)
       @else
@@ -81,9 +84,9 @@
                             for="checkbox-{{ ($key+1) }}" class="custom-control-label">&nbsp;</label></div>
                       </td>
                       <td>
-                        <a href="{{ route('question.show', $item->id) }}" class="btn btn-info mr-1 mt-1"
+                        <a href="{{ route('worksheet.question.show', ['wId'=>$worksheetId, 'qId'=>$item->id]) }}" class="btn btn-info mr-1 mt-1"
                           data-toggle="tooltip" data-original-title="View"><i class="fas fa-eye"></i></a>
-                        <a href="{{ route('worksheet.question.edit', $item->id) }}" class="btn btn-light mr-1 mt-1"
+                        <a href="{{ route('worksheet.question.edit', ['wId'=>$worksheetId, 'qid'=>$item->id]) }}" class="btn btn-light mr-1 mt-1"
                           data-toggle="tooltip" data-original-title="View">
                           <i aria-hidden="true" class="fa fa-edit"></i>
                         </a>
