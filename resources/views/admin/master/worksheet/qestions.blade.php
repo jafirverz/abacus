@@ -61,13 +61,13 @@
                 <table class="table table-md">
                   <thead>
                     <tr>
-                      <th>
+                      <!-- <th>
                         <div class="custom-checkbox custom-control">
                           <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
                             class="custom-control-input" id="checkbox-all">
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
-                      </th>
+                      </th> -->
                       <th>Action</th>
                       <th>Title</th>
                       <th>Worksheet</th>
@@ -78,11 +78,11 @@
                     @if($questions->count())
                     @foreach($questions as $key => $item)
                     <tr>
-                      <td scope="row">
+                      <!-- <td scope="row">
                         <div class="custom-checkbox custom-control"> <input type="checkbox" data-checkboxes="mygroup"
                             class="custom-control-input" id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                             for="checkbox-{{ ($key+1) }}" class="custom-control-label">&nbsp;</label></div>
-                      </td>
+                      </td> -->
                       <td>
                         <a href="{{ route('worksheet.question.show', ['wId'=>$worksheetId, 'qId'=>$item->id]) }}" class="btn btn-info mr-1 mt-1"
                           data-toggle="tooltip" data-original-title="View"><i class="fas fa-eye"></i></a>
