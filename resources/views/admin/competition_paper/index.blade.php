@@ -64,6 +64,7 @@
                                             </th>
                                             <th>Action</th>
                                             <th>Title</th>
+                                            <th>Competition Type</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -93,7 +94,7 @@
                                                 @endif
                                             </td>
                                             <td>{{ $item->title }}</td>
-
+                                            <td>@if(!empty($item->question_template_id)) Online @else Physical @endif</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
