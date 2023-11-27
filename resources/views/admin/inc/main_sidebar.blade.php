@@ -40,11 +40,13 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/papers',
                 ],
+                /*
                 [
                     'title' =>  __('Online Competition Questions'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/comp-questions',
                 ],
+                */
                 [
                     'title' =>  __('constant.COMPETITION_ASSIGN'),
                     'icon'  =>  '<i class="fas fa-check"></i>',

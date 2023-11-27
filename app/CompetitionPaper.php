@@ -29,4 +29,8 @@ class CompetitionPaper extends Model
     public function comp_contro(){
         return $this->belongsTo('App\Competition', 'competition_controller_id', 'id');
     }
+
+    public function ques_template(){
+        return $this->belongsTo('App\QuestionTemplate', 'question_template_id', 'id');
+    }
 }

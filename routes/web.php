@@ -421,6 +421,10 @@ Route::group(['prefix' => 'admin'], function () {
     // COMPETITION PAPERS
     Route::get('papers/search', 'CMS\CompetitionPaperController@search')->name('papers.search');
     Route::resource('papers', 'CMS\CompetitionPaperController');
+    Route::get('papers/{id?}/questions', 'CMS\CompetitionPaperController@questions')->name('papers.questions');
+    Route::get('papers/{pId?}/questions/{qId?}/create', 'CMS\CompetitionPaperController@questionCreate')->name('papers.questions.create');
+    Route::get('papers/{pId?}/question/{qId?}/edit', 'CMS\CompetitionPaperController@questionsEdit')->name('papers.question.edit');
+    Route::get('papers/{pId?}/question/{qId?}/show', 'CMS\CompetitionPaperController@questionsShow')->name('papers.question.show');
 
 
     // COMPETITION QUESTIONS

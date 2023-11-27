@@ -150,7 +150,8 @@ class CompetitionQuestionsController extends Controller
                 // $json['input_2']=$request->input_2;
             }
         }
-        return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        // return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        return redirect()->route('papers.index')->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
 
     }
 
@@ -268,7 +269,8 @@ class CompetitionQuestionsController extends Controller
         }
         
 
-        return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        // return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
+        return redirect()->route('papers.index')->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
     }
 
     /**

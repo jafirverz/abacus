@@ -40,7 +40,7 @@ class CompetitionPaperController extends Controller
     {
         //
         $title = $this->title;
-        $competitionPaper = CompetitionPaper::paginate($this->pagination);
+        $competitionPaper = CompetitionPaper::orderBy('id', 'desc')->paginate($this->pagination);
         
         return view('admin.competition_paper.index', compact('title', 'competitionPaper'));
     }
@@ -54,7 +54,7 @@ class CompetitionPaperController extends Controller
     {
         //
         $title = $this->title;
-        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8])->get();
+        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         $competitionCategory = CompetitionCategory::get();
         $competition = Competition::get();
         // $competitionCategory = CompetitionPaper::get();
@@ -127,9 +127,16 @@ class CompetitionPaperController extends Controller
      * @param  \App\CompetitionPaper  $competitionPaper
      * @return \Illuminate\Http\Response
      */
-    public function show(CompetitionPaper $competitionPaper)
+    public function show($id)
     {
         //
+        $title = $this->title;
+        $competitionPaper = CompetitionPaper::with('comp_contro')->find($id);
+        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8])->get();
+        $competition = Competition::get();
+
+        $catComp = CategoryCompetition::where('competition_id', $competitionPaper->competition_controller_id)->get();
+        return view('admin.competition_paper.show', compact('title', 'competitionPaper', 'catComp', 'questionTempleates', 'competition'));
     }
 
     /**
@@ -270,5 +277,43 @@ class CompetitionPaperController extends Controller
         }
 
         return view('admin.competition_paper.index', compact('title', 'competitionPaper'));
+    }
+
+    public function questions($id){
+        // dd($id);
+        $title = 'Online Competition Paper Questions';
+        $pId = $id;
+        $papercheck = CompetitionPaper::where('id', $id)->first();
+        $questemplate = $papercheck->question_template_id;
+        // $competitionQuestions = CompetitionQuestions::with('comp_paper')->groupBy('competition_paper_id')->paginate($this->pagination);
+        $competitionPaper = CompetitionPaper::whereHas('comp_ques')->where('id', $id)->paginate($this->pagination);
+        return view('admin.competition_paper.question', compact('title', 'competitionPaper', 'pId', 'questemplate'));
+    }
+
+    public function questionCreate($pId = null, $qId = null)
+    {
+        $title = 'Online Competition Paper Question create';
+        $papers = CompetitionPaper::get();
+        return view('admin.competition_paper.question_create', compact('title', 'papers', 'pId', 'qId'));
+    }
+
+    public function questionsEdit($pId = null, $qId = null)
+    {
+        //
+        $title = 'Online Competition Paper Question edit';
+        $papers = CompetitionPaper::get();
+        $competitionPaper = CompetitionPaper::where('id', $pId)->first();
+        $compQues = CompetitionQuestions::where('competition_paper_id', $pId)->get();
+        return view('admin.competition_paper.question_edit', compact('title', 'competitionPaper', 'compQues', 'papers', 'pId'));
+    }
+
+    public function questionsShow($pId = null, $qId = null)
+    {
+        //
+        $title = 'Online Competition Paper Question show';
+        $papers = CompetitionPaper::get();
+        $competitionPaper = CompetitionPaper::where('id', $pId)->first();
+        $compQues = CompetitionQuestions::where('competition_paper_id', $pId)->get();
+        return view('admin.competition_paper.question_show', compact('title', 'competitionPaper', 'compQues', 'papers', 'pId'));
     }
 }
