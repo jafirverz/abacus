@@ -62,7 +62,8 @@
                                         </div>
                                     </th>
                                     <th>Action</th>
-                                    <th>Full Name</th>
+                                    <th>Centre Name</th>
+                                    <th>Person In-Charge Name</th>
                                     <th>Email Address</th>
                                     <th>Customer Number</th>
                                     <th>Account ID</th>
@@ -92,6 +93,9 @@
                                     </td>
                                     <td>
                                         {{ $item->name }}
+                                    </td>
+                                    <td>
+                                        {{ $item->in_charge_name }}
                                     </td>
                                     <td>
                                         {{ $item->email }}

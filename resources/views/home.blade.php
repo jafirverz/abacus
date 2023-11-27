@@ -20,7 +20,7 @@
             <div class="col-lg-9 sp-col tempt-2-inner">
                 @if(Auth::user()->user_type_id == 4)
                     @include('account.event-only-overview')
-                @elseif(Auth::user()->user_type_id == 1)
+                @elseif(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
                     @include('inc.my_profile_view')
                 @elseif(Auth::user()->user_type_id == 5)
                     @include('account.instructor-overview')

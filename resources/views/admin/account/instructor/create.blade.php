@@ -42,7 +42,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Email< <span class="required">*</span>/label>
+                                    <label for="">Email <span class="required">*</span></label>
                                     <input type="text" name="email" class="form-control" value="{{ old('email') }}">
                                     @if ($errors->has('email'))
                                     <span class="text-danger d-block">

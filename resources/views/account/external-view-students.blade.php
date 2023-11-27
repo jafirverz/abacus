@@ -75,45 +75,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row sp-col-xl-30">
-                        <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Country <span class="required">*</span></label>
-                            <select disabled class="selectpicker"  name="country_code">
-                                @if(getCountry())
-                                @foreach (getCountry() as $key => $item)
-                                <option value="{{ $key }}" @if(old('country_code', $customer->country_code)==$key) selected @endif>{{ $item }}
-                                </option>
-                                @endforeach
-                                @endif
-                            </select>
 
-                        </div>
-                            @php
-                                $level_ids=json_decode($customer->level_id,true);
-                                //dd( $level_ids);
-                            @endphp
-                        <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Level <span class="required">*</span></label>
-                            <select disabled class="selectpicker"  name="level[]" multiple>
-                                @foreach($levels as $level)
-                                <option value="{{ $level->id }}" @if(isset($level_ids) && in_array($level->id,$level_ids)) selected @endif>{{ $level->title }}
-                                </option>
-                                @endforeach
-                            </select>
-
-
-                        </div>
-                    </div>
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
-                            <select disabled name="learning_locations" class="selectpicker" data-title="Select Option">
-                                @if($locations)
-                                @foreach($locations as $item)
-                                <option @if(old('learning_locations',$customer->learning_locations)==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
-                                @endforeach
-                                @endif
-                            </select>
+                            <textarea disabled class="form-control" name="learning_locations">{{ old('learning_locations', $customer->learning_locations) }}</textarea>
                             @if ($errors->has('learning_locations'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('learning_locations') }}</strong>
@@ -121,11 +87,11 @@
                            @endif
                         </div>
                         <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Learning Updates </label>
-                            <textarea disabled class="form-control" name="learning_updates">{{ old('learning_updates', $customer->learning_updates) }}</textarea>
-                            @if ($errors->has(' learning_updates'))
+                            <label class="lb-1">Remarks </label>
+                            <textarea disabled class="form-control" name="remarks">{{ old('remarks', $customer->remarks) }}</textarea>
+                            @if ($errors->has(' remarks'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('learning_updates') }}</strong>
+                                        <strong>{{ $errors->first('remarks') }}</strong>
                                     </span>
                            @endif
                         </div>

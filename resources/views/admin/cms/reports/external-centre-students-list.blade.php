@@ -8,36 +8,16 @@
             <div class="section-header-back">
                 <a href="{{ url('admin/reports-external-centre') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i> Go Back</a>
             </div>
-            <h1>{{ $title ?? '-' }}</h1>
+            <h1>{{ $external_center->name ?? '-' }}</h1>
 
 
 
         </div>
-        <form action="{{ route('reports-student.search') }}" method="post">
+        <form action="{{ route('reports-external-centre.search') }}" method="get">
             @csrf
             <div class="section-body">
 
-                <div class="row">
 
-                    <div class="col-lg-4"><label>Student Name:</label><input type="text" name="name" class="form-control"
-                            id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}"
-                            @endif> </div>
-                    <div class="col-lg-4">
-                        <label>Instructor</label>
-                        <select name="instructor[]" class="form-control" multiple>
-                            <option value="">-- Select --</option>
-
-                        </select>
-                    </div>
-                    <div class="col-lg-4">
-                      <label>Student Type</label>
-                      <select name="user_type" class="form-control">
-                          <option value="">-- Select --</option>
-
-                      </select>
-                  </div>
-
-                </div>
                 <div class="row">
                     <div class="col-lg-4"><label>Status:</label>
                       <select name="status" class="form-control">
@@ -59,6 +39,7 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-4">
+                        <input type="hidden" name="user_id" value="{{ $external_center->id }}">
                         <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
@@ -111,10 +92,13 @@
                                             <th>S/N</th>
                                             <th>Action</th>
                                             <th>Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Gender</th>
                                             <th>Account Id</th>
                                             <th>Status</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
+                                            <th>Learning Location</th>
+                                            <th>Remarks</th>
+                                            <th>Last Login Date/Time </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -146,15 +130,25 @@
                                             <td>
                                                 {{ $item->name }}
                                             </td>
-
+                                            <td>
+                                                {{ $item->dob ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ ($item->gender==1) ?'Male':'Female' }}
+                                            </td>
                                             <td>
                                                 {{ $item->account_id ?? '' }}
                                             </td>
+                                            <td>@if($item->approve_status == 1) Active @elseif($item->approve_status == 2) Inactive @else Pending @endif</td>
                                             <td>
-                                                    @if($item->approve_status) Approved @else Pending @endif
+                                                {{ $item->learning_locations ?? '' }}
                                             </td>
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                            <td>
+                                                {{ $item->remarks ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $item->last_login ?? '' }}
+                                            </td>
                                         </tr>
                                         @endforeach
                                         @else

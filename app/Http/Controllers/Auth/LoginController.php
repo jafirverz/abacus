@@ -101,6 +101,9 @@ class LoginController extends Controller
             $userType = array(1,2,3,4,5,6);
             if(in_array(Auth::user()->user_type_id,$userType)){
                 if(Auth::user()->approve_status == 1){
+                    $user=User::find(Auth::user()->id);
+                    $user->last_login = date('Y-m-d H:i:s');
+                    $user->save();
                     return redirect()->intended('home')
                 ->withSuccess('Signed in');
                 }elseif(Auth::user()->approve_status == 2){
@@ -113,6 +116,9 @@ class LoginController extends Controller
                                 array_push($levelActive, $levell->level_id);
                             }
                             Session::put('levelIdActive', $levelActive);
+                            $user=User::find(Auth::user()->id);
+                            $user->last_login = date('Y-m-d H:i:s');
+                            $user->save();
                             return redirect()->intended('home')->withSuccess('Signed in');
                         }else{
                             Auth::logout();
@@ -124,12 +130,15 @@ class LoginController extends Controller
                     Auth::logout();
                     return redirect("login")->withError('User not approved');
                 }
-                
+
             }else{
+                    $user=User::find(Auth::user()->id);
+                    $user->last_login = date('Y-m-d H:i:s');
+                    $user->save();
                 return redirect()->intended('instructor-overview')
                 ->withSuccess('Signed in');
             }
-            
+
         }
 
         return redirect("login")->withError('Login details are not valid');
@@ -204,7 +213,7 @@ class LoginController extends Controller
             }elseif($user->email != $request->email){
                 throw ValidationException::withMessages(['email' => 'Invalid email']);
             }
-            
+
         }else{
             throw ValidationException::withMessages(['email' => 'Invalid email', 'dob' => 'Invalid DOB']);
         }
