@@ -25,7 +25,7 @@ use App\UserType;
 use App\WorksheetSubmitted;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-
+use DB;
 
 class ReportController extends Controller
 {
@@ -59,9 +59,7 @@ class ReportController extends Controller
     public function search(Request $request)
     {
         //dd($request->instructor);
-        $name = $request->name  ?? '';
-        $status = $request->status ?? '';
-        $user_type = $request->user_type ?? '';
+        DB::enableQueryLog();
         $instructor = $request->instructor ?? array();
 
         $q = User::query();
@@ -71,7 +69,7 @@ class ReportController extends Controller
             $q->where('name', 'like', $request->name);
         }
 
-        if (in_array($request->status, [0,1,2])) {
+        if ($request->status!='' && in_array($request->status, [0,1,2])) {
             $q->where('approve_status', $request->status);
         }
 
@@ -84,9 +82,38 @@ class ReportController extends Controller
         }
 
         $allUsers = $q->get();
+        //$query = DB::getQueryLog();
+        //dd($query);
         ob_end_clean();
         ob_start();
         return Excel::download(new StudentExport($allUsers), 'StudentReport.xlsx');
+        //dd($allUsers);
+    }
+
+    public function search_external_centre(Request $request)
+    {
+        DB::enableQueryLog();
+
+        $q = User::query();
+
+
+
+        if ($request->status!="" && in_array($request->status, [0,1,2])) {
+            $q->where('approve_status', $request->status);
+        }
+
+
+        $q->where('instructor_id',  $request->user_id);
+
+
+
+
+        $allUsers = $q->get();
+        //$query = DB::getQueryLog();
+        //dd($query);
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new StudentExport($allUsers), 'external-center.xlsx');
         //dd($allUsers);
     }
 
@@ -292,9 +319,10 @@ class ReportController extends Controller
     public function external_centre_students_list($id)
     {
         $title = 'Student List';
+        $external_center=User::find($id);
         $users = User::whereIn('user_type_id', [4])->where('instructor_id',$id)->paginate($this->pagination);
         $countries = Country::get();
-        return view('admin.cms.reports.external-centre-students-list', compact('title', 'users', 'countries'));
+        return view('admin.cms.reports.external-centre-students-list', compact('title', 'users', 'countries','external_center'));
     }
 
     public function searchSales(Request $request)

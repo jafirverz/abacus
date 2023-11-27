@@ -10,7 +10,7 @@
 
 
         </div>
-        <form action="{{ route('reports-student.search') }}" method="post">
+        {{-- <form action="{{ route('reports-student.search') }}" method="post">
             @csrf
             <div class="section-body">
 
@@ -68,7 +68,7 @@
 
 
             </div>
-        </form><br />
+        </form><br /> --}}
 
         <div class="section-body">
             @include('admin.inc.messages')
@@ -108,6 +108,7 @@
                                             <th>S/N</th>
                                             <th>Action</th>
                                             <th>Centre Name</th>
+                                            <th>Centre Location</th>
                                             <th>Account Id</th>
                                             <th>Status</th>
                                             <th>Created At</th>
@@ -143,7 +144,9 @@
                                             <td>
                                                 {{ $item->name }}
                                             </td>
-
+                                            <td>
+                                                --
+                                            </td>
                                             <td>
                                                 {{ $item->account_id ?? '' }}
                                             </td>

@@ -23,14 +23,15 @@
                                 <label for="">Account ID</label>: {{ $customer->account_id ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Name</label>: {{ $customer->name ?? '' }}
+                                <label for="">Centre Name</label>: {{ $customer->name ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="">Person In-Charge Name</label>: {{ $customer->in_charge_name ?? '' }}
                             </div>
                             <div class="form-group">
                                 <label for="">Email</label>: {{ $customer->email ?? '' }}
                             </div>
-                            <div class="form-group">
-                                <label for="">Date Of Birth</label>: {{ $customer->dob ?? '' }}
-                            </div>
+
                             <div class="form-group">
                                 <label for="">Phone</label>: {{ $customer->mobile ?? '' }}
                             </div>
@@ -45,31 +46,7 @@
                                 <label for="">Address</label>: {{ $customer->address ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Country</label>: {{ getCountry($customer->country_code) ?? '' }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Year Attained Qualified Instructor Certification</label>
-
-                                {{  $customer->year_attained_qualified_instructor }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Year Attained Senior Instructor Certification</label>
-                                {{  $customer->year_attained_senior_instructor }}
-
-                            </div>
-                            <div class="form-group">
-                                <label for="">Highest Abacus Grade Attained</label>
-
-                                {{  $customer->highest_abacus_grade }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Highest Mental Grade Attained</label>
-                                {{  $customer->highest_mental_grade }}
-                            </div>
-                            <div class="form-group">
-                                <label for="">Awards</label>
-
-                                {{  $customer->awards }}
+                                <label for="">Centre Location</label>: {{ $customer->centre_location ?? '' }}
                             </div>
 
                             <div class="form-group">

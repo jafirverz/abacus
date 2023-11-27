@@ -1,48 +1,63 @@
 <table class="table table-md">
     <thead>
         <tr>
-            <th>S no.</th>
-            <th>Account Id</th>
-            <th>Name</th>
-            <th>Gender</th>
+            <th>Account ID</th>
+            <th>Full Name</th>
+            <th>Date of Birth</th>
+            <th>Contact Number</th>
             <th>Email</th>
-            <th>Phone</th>
-            <th>DOB</th>
-            <th>Address</th>
-            <th>Approval</th>
-            <th>User Type</th>
-            <th>Instructor</th>
-            <th>Allocated Level</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+            <th>Student Type</th>
+            <th>Levels Allocated</th>
+            <th>Learning Location</th>
+            <th>Status </th>
+            <th>Last Updated</th>
+            <th>Last Login</th>
+
         </tr>
     </thead>
     <tbody>
         @if($allUsers->count())
         @foreach ($allUsers as $key => $item)
         <tr>
-            <td>{{ ($key+1) }}</td>
             <td>{{ $item->account_id ?? '' }}</td>
             <td>{{ $item->name }}</td>
-            <td>@if($item->gender == 1) Male @else Female @endif</td>
-            <td>{{ $item->email }}</td>
-            <td>{{ $item->mobile }}</td>
             <td>{{ $item->dob }}</td>
-            <td>{{ $item->address }}</td>
-            <td>@if($item->approve_status == 1) Approved @elseif($item->approve_status == 2) Rejected @else Pending @endif</td>
+            <td>{{ $item->mobile }}</td>
+            <td>{{ $item->email }}</td>
+
             <td>@if($item->user_type_id == 1) Normal Student @elseif($item->user_type_id == 2) Premium Student @elseif($item->user_type_id == 3) Online Student @elseif($item->user_type_id == 4) Event Only Student @endif</td>
-            <td>{{ getInstructor($item->instructor_id)->name ?? '-' }} </td>
-            @php 
+            @if(isset($item->level_id))
+            @php
             $allocatedLevel = $item->level_id;
             if($allocatedLevel){
                 $decoded = json_decode($item->level_id);
+                if(isset($decoded))
+                {
                 $level = \App\Level::whereIn('id', $decoded)->pluck('title')->toArray();
+
                 $allLevel = implode(',', $level);
+                //dd($allLevel);
+                }
+                else {
+                    $allLevel='';
+                }
             }
+            else
+            {
+                $allLevel='';
+            }
+
+
             @endphp
+            @endif
+
             <td>{{ $allLevel ?? '' }}</td>
-            <td>{{ $item->created_at }}</td>
+            <td>@if(is_numeric($item->learning_locations)){{ $item->location->title ?? ''}} @endif </td>
+            <td>@if($item->approve_status == 1) Active @elseif($item->approve_status == 2) Deactivated @else Pending @endif</td>
             <td>{{ $item->updated_at }}</td>
+            <td>
+                {{ $item->last_login ?? '' }}
+            </td>
         </tr>
         @endforeach
         @else

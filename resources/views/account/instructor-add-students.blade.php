@@ -13,7 +13,7 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
-                <h1 class="title-3">New Student Profile</h1>
+                <h1 class="title-3">My Profile</h1>
                 <div class="box-1">
                     <div class="row align-items-center title-type">
                         <div class="col-md">
@@ -100,7 +100,39 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row sp-col-xl-30">
+                        <div class="col-xl-6 sp-col">
+                            <label class="lb-1">Country <span class="required">*</span></label>
+                            <select class="selectpicker"  name="country_code">
+                                @if(getCountry())
+                                @foreach (getCountry() as $key => $item)
+                                <option value="{{ $key }}" @if(old('country_code')==$key) selected @endif>{{ $item }}
+                                </option>
+                                @endforeach
+                                @endif
+                            </select>
+                            @if ($errors->has('country_code'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('country_code') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                        <div class="col-xl-6 sp-col">
+                            <label class="lb-1">Level <span class="required">*</span></label>
+                            <select class="selectpicker"  name="level[]" multiple>
+                                @foreach($levels as $level)
+                                <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @endif>{{ $level->title }}
+                                </option>
+                                @endforeach
+                            </select>
 
+                            @if ($errors->has('level'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('level') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-12 sp-col">
                             <label class="lb-1">Address</label>
@@ -111,7 +143,13 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
-                            <textarea class="form-control" name="learning_locations">{{ old('learning_locations') }}</textarea>
+                            <select name="learning_locations" class="selectpicker" data-title="Select Option">
+                                @if($locations)
+                                @foreach($locations as $item)
+                                <option @if(old('learning_locations')==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
+                                @endforeach
+                                @endif
+                            </select>
                             @if ($errors->has('learning_locations'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('learning_locations') }}</strong>
@@ -119,11 +157,11 @@
                            @endif
                         </div>
                         <div class="col-xl-6 sp-col">
-                            <label class="lb-1">Remarks </label>
-                            <textarea class="form-control" name="remarks">{{ old('remarks') }}</textarea>
-                            @if ($errors->has(' remarks'))
+                            <label class="lb-1">Learning Updates </label>
+                            <textarea class="form-control" name="learning_updates">{{ old('learning_updates') }}</textarea>
+                            @if ($errors->has(' learning_updates'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('remarks') }}</strong>
+                                        <strong>{{ $errors->first('learning_updates') }}</strong>
                                     </span>
                            @endif
                         </div>

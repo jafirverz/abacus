@@ -46,7 +46,7 @@
                     <thead>
                       <tr>
                         <th class="wcol-1 text-center">NO</th>
-                        <th class="wcol-2 text-center">Division</th>
+                        <th class="wcol-2 text-center">Question</th>
                         <th>Answer</th>
                       </tr>
                     </thead>

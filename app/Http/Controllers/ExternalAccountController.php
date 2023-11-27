@@ -71,10 +71,9 @@ class ExternalAccountController extends Controller
     public function store_add_students(Request $request)
     {
         $fields = [
-            'email' =>  'required|email|unique:users,email',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'password'  =>  'required|min:8',
-            'country_code' => 'required',
             'dob' => 'required',
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
@@ -87,7 +86,7 @@ class ExternalAccountController extends Controller
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
         $messages['country_code_phone.required'] = 'The country code is required.';
-        $messages['country_code.required'] = 'The country code field is required.';
+        //$messages['country_code.required'] = 'The country code field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
@@ -101,7 +100,7 @@ class ExternalAccountController extends Controller
         }
         $accountId = 'SUD-'.$dob1.$acName;
         $customer = new User();
-        $customer->level_id = json_encode($request->level);
+        //$customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
         $customer->account_id = $accountId;
 
@@ -111,8 +110,8 @@ class ExternalAccountController extends Controller
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
         $customer->learning_locations = $request->learning_locations??NULL;
-        $customer->learning_updates = $request->learning_updates??NULL;
-        $customer->country_code = $request->country_code??NULL;
+        $customer->remarks = $request->remarks??NULL;
+        //$customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
         if(Auth::user()->user_type_id==6)
@@ -211,11 +210,9 @@ class ExternalAccountController extends Controller
     {
 
         $fields = [
-            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'password'  =>  'nullable|min:8',
-            'country_code' => 'required',
-            'level' => 'required',
             'dob' => 'required',
             'country_code_phone' => 'required',
             'mobile' => 'required|integer|min:8',
@@ -229,22 +226,22 @@ class ExternalAccountController extends Controller
         $messages['password.required'] = 'The password field is required.';
         $messages['email.email'] = 'The email address must be a valid email address.';
         $messages['country_code_phone.required'] = 'The country code is required.';
-        $messages['country_code.required'] = 'The country code field is required.';
+        //$messages['country_code.required'] = 'The country code field is required.';
         $messages['dob.required'] = 'Date of Birth is required.';
         $messages['mobile.required'] = 'The contact number field is required.';
         $messages['mobile.min'] = 'The contact number must be at least 8 characters.';
         $request->validate($fields, $messages);
 
         $customer = User::find($id);
-        $customer->level_id = json_encode($request->level);
+        //$customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
         $customer->gender = $request->gender??NULL;
         $customer->learning_locations = $request->learning_locations??NULL;
-        $customer->learning_updates = $request->learning_updates??NULL;
-        $customer->country_code = $request->country_code??NULL;
+        $customer->remarks = $request->remarks??NULL;
+        //$customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
         if (!is_null($request->password)) {

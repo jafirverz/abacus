@@ -22,12 +22,22 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label for="">Full Name <span class="required">*</span></label>
+                                    <label for="">Centre Name <span class="required">*</span></label>
                                     <input type="text" name="name" class="form-control"
                                         value="{{ old('name') }}">
                                     @if ($errors->has('name'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Person In-Charge Name <span class="required">*</span></label>
+                                    <input type="text" name="in_charge_name" class="form-control"
+                                        value="{{ old('in_charge_name') }}">
+                                    @if ($errors->has('in_charge_name'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('in_charge_name') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -40,15 +50,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Date Of Birth <span class="required">*</span></label>
-                                    <input type="text" name="dob" class="form-control datepicker1" value="{{ old('dob') }}">
-                                    @if ($errors->has('dob'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('dob') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
 
 
                                 <div class="form-group">
@@ -103,70 +105,18 @@
                                     @endif
                                 </div>
 
-
                                 <div class="form-group">
-                                    <label for="country_code">Country <span class="required">*</span></label>
-                                    <select name="country_code" class="form-control" id="country_code">
-                                        <option value="">-- Select --</option>
-                                        @if(getCountry())
-                                        @foreach (getCountry() as $key => $item)
-                                        <option value="{{ $key }}" @if(old('country_code')==$key) selected @endif>{{ $item }}
-                                        </option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('country_code'))
+                                    <label for="">Centre Location</label>
+                                    <input type="text" name="centre_location" class="form-control" value="{{ old('centre_location') }}">
+                                    @if ($errors->has('centre_location'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('country_code') }}</strong>
+                                        <strong>{{ $errors->first('centre_location') }}</strong>
                                     </span>
                                     @endif
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="">Year Attained Qualified Instructor Certification</label>
-                                    <input type="text" name="year_attained_qualified_instructor" class="form-control" value="{{ old('year_attained_qualified_instructor') }}">
-                                    @if ($errors->has('year_attained_qualified_instructor'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('year_attained_qualified_instructor') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Year Attained Senior Instructor Certification</label>
-                                    <input type="text" name="year_attained_senior_instructor" class="form-control" value="{{ old('year_attained_senior_instructor') }}">
-                                    @if ($errors->has('year_attained_senior_instructor'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('year_attained_senior_instructor') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Highest Abacus Grade Attained</label>
-                                    <input type="text" name="highest_abacus_grade" class="form-control" value="{{ old('highest_abacus_grade') }}">
-                                    @if ($errors->has('highest_abacus_grade'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('highest_abacus_grade') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Highest Mental Grade Attained</label>
-                                    <input type="text" name="highest_mental_grade" class="form-control" value="{{ old('highest_mental_grade') }}">
-                                    @if ($errors->has('highest_mental_grade'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('highest_mental_grade') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Awards</label>
-                                    <textarea name="awards" class="form-control">{{ old('awards') }}</textarea>
-                                    @if ($errors->has('awards'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('awards') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
+
                                 <div class="form-group">
                                     <label for="">Password <span class="required">*</span></label>
                                     <input type="password" name="password" class="form-control">
