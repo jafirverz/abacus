@@ -44,12 +44,17 @@
               <tbody>
                 @php $i=0; @endphp
                 @foreach($compStudents as $student)
-                @php $i++;@endphp
+                @php
+                $i++;
+
+
+
+                @endphp
                 <tr>
-                  <td><em>{{ sprintf('%03d', $i) }}</em></td>
+                  <td><em>{{ sprintf('%03d', 15*($_REQUEST['page']-1)+$i) }}</em></td>
                   <td>
                     <em>{{ $student->userlist->name }}</em>
-                    <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">View</a> <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a></div>
+                    <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">View</a> @if($student->approve_status != 1) <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a>@endif</div>
                   </td>
                   <td><em>{{ $student->category->category_name ?? '' }}</em></td>
                   <td>@if($student->approve_status == 1) <em class="status-2">Approved</em> @else <em class="status-3">Not Apporved</em> @endif</td>

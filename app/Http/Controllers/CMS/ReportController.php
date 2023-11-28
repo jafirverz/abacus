@@ -12,6 +12,8 @@ use App\Exports\CompetetitionStudentExport;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\LevelTopic;
+use App\LearningLocation;
+use App\Grade;
 use App\Competition;
 use App\GradingExam;
 use App\CompetitionStudent;
@@ -230,8 +232,10 @@ class ReportController extends Controller
         $instructor = User::where('user_type_id', 5)->get();
         $grading_exam = GradingExam::where('status', 1)->get();
         $grading_students = GradingStudent::paginate($this->pagination);
-        $countries = Country::get();
-        return view('admin.cms.reports.grading_students', compact('title',"instructor","grading_exam", 'grading_students', 'countries', 'allOrders'));
+        $countries = Country::orderBy('phonecode')->get();
+        $grades = Grade::get();
+        $locations = LearningLocation::get();
+        return view('admin.cms.reports.grading_students', compact('title',"grades","locations","instructor","grading_exam", 'grading_students', 'countries', 'allOrders'));
     }
 
 
