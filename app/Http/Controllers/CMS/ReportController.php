@@ -241,33 +241,35 @@ class ReportController extends Controller
 
     public function grading_examination_search(Request $request)
     {
-        // dd($request->all());
-        $name = $request->name  ?? '';
-        $status = $request->status ?? '';
+        DB::connection()->enableQueryLog();
 
         $q = GradingStudent::query();
         $q->join('users','grading_students.user_id','users.id');
         $q->select('grading_students.*');
         if ($request->name) {
-            $q->where('users.name', 'like', $request->name);
+            $q->where('users.name', 'like', '%'.$request->name.'%');
         }
 
-        if ($request->event) {
-            $q->where('grading_students.grading_exam_id', $request->event);
+        if ($request->country) {
+            $q->where('users.country_code', $request->country);
         }
 
-        if ($request->status) {
-            $q->where('grading_students.approve_status', $request->status);
+        if ($request->learning_Location) {
+            $q->where('users.learning_locations', $request->learning_Location);
         }
 
-        if ($request->instructor) {
-            $q->whereIn('grading_students.instructor_id', $request->instructor);
+        if ($request->grades) {
+           // dd($request->grades);
+            $q->where('grading_students.mental_grade', $request->grades)->orWhere('grading_students.abacus_grade', $request->grades);
         }
-
 
 
 
         $allItems = $q->get();
+        $query = DB::getQueryLog();
+
+        //dd($allItems);
+
         ob_end_clean();
         ob_start();
         return Excel::download(new GradingStudentExport($allItems), 'GradingStudentReport.xlsx');

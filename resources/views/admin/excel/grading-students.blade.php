@@ -1,21 +1,20 @@
 <table class="table table-md">
     <thead>
         <tr>
-            <th>S/N</th>
-                                            <th>Event Name</th>
-                                            <th>Student Name</th>
-                                            <th>Student Email</th>
-                                            <th>Student DOB</th>
-                                            <th>Student Number</th>
-                                            <th>Instructor Name</th>
-                                            <th>Franchise Country Name</th>
-                                            <th>Registered <br>Mental Grade</th>
-                                            <th>Registered <br>Abacus Grades</th>
-                                            <th>Learning Location </th>
-                                            <th>Status </th>
-                                            <th>Remark </th>
-                                            <th>Result</th>
-                                            <th>Pass/Fail</th>
+
+                                            <th>Student Full Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Contact Number</th>
+                                            <th>Instructor Display Name</th>
+                                            <th>Learning Location</th>
+                                            <th>Mental Grade</th>
+                                            <th>Mental Result</th>
+                                            <th>Mental Result Pass/Fail</th>
+                                            <th>Abacus Grade</th>
+                                            <th>Abacus Paper 1 Result </th>
+                                            <th>Abacus Paper 2 Result </th>
+                                            <th>Abacus Paper 3 Result </th>
+                                            <th>Abacus Result Pass/Fail</th>
         </tr>
     </thead>
     <tbody>
@@ -26,15 +25,9 @@
 //dd($item);
         @endphp
         <tr>
-            <td>{{ ($key+1) }}</td>
-            <td>
-                {{ $item->event->title ?? '' }}
-            </td>
+
             <td>
                 {{ $item->student->name  ?? ''}}
-            </td>
-            <td>
-                {{ $item->student->email  ?? ''}}
             </td>
             <td>
                 {{ $item->student->dob  ?? ''}}
@@ -46,23 +39,23 @@
                 {{ $item->teacher->name  ?? ''}}
             </td>
             <td>
-                {{ getCountry($item->teacher->country_code) ?? '' }}
+                {{ $item->student->email  ?? ''}}
             </td>
-            <td>
-                {{ $item->mental->title ?? '' }}
-            </td>
-            <td>
-                {{ $item->abacus->title ?? '' }}
-            </td>
+
             <td>
                 {{ $item->location->title ?? '' }}
             </td>
             <td>
-                {{ ($item->approve_status==1)?'Approved':'Pending' }}
+                {{ $item->mental->title ?? '' }}
             </td>
-            <td>{{ $item->remarks ?? ''}}</td>
+            <td></td>
+            <td></td>
+            <td>
+                {{ $item->abacus->title ?? '' }}
+            </td>
+            <td></td>
+            <td></td>
             <td>{{ getGradingStudentResult($item->grading_exam_id,$item->user_id )->result ?? '-'}}</td>
-            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->user_id )->remark_grade ?? '-'}}</td>
         </tr>
         @endforeach
         @else
