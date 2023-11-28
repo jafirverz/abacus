@@ -62,7 +62,7 @@
             <div class="col-xl-4 col-sm-6 sp-col">
                 <div class="inner" style="background: #879FF9;">
                     <figure>
-                        <img src="images/tempt/img-level-6.jpg" alt="" />
+                        <img src="{{ config('system_settings')->grading_icon ?? '' }}" alt="" />
                     </figure>
                     <div class="descripts">
                         <h3>Grading Examination</h3>
@@ -83,7 +83,7 @@
             <div class="col-xl-4 col-sm-6 sp-col">
                 <div class="inner" style="background: #F2BC00;">
                     <figure>
-                        <img src="images/tempt/img-level-7.jpg" alt="" />
+                        <img src="{{ config('system_settings')->competition_icon ?? '' }}" alt="" />
                     </figure>
                     <div class="descripts">
                         <h3>Competition</h3>
@@ -118,7 +118,7 @@
             <div class="col-xl-4 col-sm-6 sp-col">
                 <div class="inner" style="background: #8900FD;">
                     <figure>
-                        <img src="images/tempt/img-level-8.jpg" alt="" />
+                        <img src="{{ config('system_settings')->test_survey_icon ?? '' }}" alt="" />
                     </figure>
                     <div class="descripts">
                         <h3>Test/Survey</h3>

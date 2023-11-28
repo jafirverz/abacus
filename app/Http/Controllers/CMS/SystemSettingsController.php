@@ -79,6 +79,21 @@ class SystemSettingsController extends Controller
                     ]
                 ],
             ],
+            [
+                'title' => 'Icon',
+                'key' => [
+                    'grading_icon' => [
+                        'label' => 'Grading Examination', 'input' => 'file', 'class' => 'form-control', 'required' => '', 'size' => '1MB', 'pixel' => '220x35', 'format' => 'png, jpg, gif', 'accept' => '.jpeg, .gif, .jpg, .png',
+                    ],
+                    'competition_icon' => [
+                        'label' => 'Competition', 'input' => 'file', 'class' => 'form-control', 'required' => '', 'size' => '1MB', 'pixel' => '220x35', 'format' => 'png, jpg, gif', 'accept' => '.jpeg,.gif,.jpg,.png',
+                    ],
+                    'test_survey_icon' => [
+                        'label' => 'Test/Survey', 'input' => 'file', 'class' => 'form-control', 'required' => '', 'size' => '1MB', 'pixel' => '220x35',
+                        'format' => 'png, jpg, gif', 'accept' => '.jpeg, .gif, .jpg, .png',
+                    ]
+                ],
+            ],
 
             [
                 'title' => 'Email',
@@ -170,7 +185,7 @@ class SystemSettingsController extends Controller
             }
 
             $system_setting->key = $key;
-            if (in_array($key, ['site_logo', 'favicon', 'email_logo', 'backend_logo'])) {
+            if (in_array($key, ['site_logo', 'favicon', 'email_logo', 'backend_logo','grading_icon','competition_icon','test_survey_icon'])) {
                 if ($request->hasFile($key)) {
                     $logo = $request->file($key);
                     $filename = Carbon::now()->format('YmdHis') . '_' . $logo->getClientOriginalName();
