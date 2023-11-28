@@ -5,6 +5,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
+            <div class="section-header-back">
+                <a href="{{ route('competition.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            </div>
             <h1>{{ $title ?? '-' }}</h1>
             
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
@@ -60,11 +63,12 @@
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
                                             </th> -->
-                                            <th>Account ID</th>
                                             <th>Student Name</th>
-                                            <th>Email</th>
+                                            <th>Instructor</th>
+                                            <th>Learning Location</th>
+                                            <th>Category</th>
+                                            <th>Student Type</th>
                                             <th>Created At</th>
-                                            <th>Updated At</th>
                                             <th>Approve Status</th>
                                         </tr>
                                     </thead>
@@ -80,11 +84,12 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td> -->
                                             
-                                            <td>{{ $item->userlist->account_id }}</td>
                                             <td>{{ $item->userlist->name }}</td>
-                                            <td>{{ $item->userlist->email }}</td>
+                                            <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
+                                            <td>{{ $item->userlist->learning_location ?? '' }}</td>
+                                            <td>{{ $item->category->category_name ?? '' }}</td>
+                                            <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                             <td>
                                               @if($item->approve_status == 1)
                                               <div class="btn mr-1 mt-1">Approved</div>
