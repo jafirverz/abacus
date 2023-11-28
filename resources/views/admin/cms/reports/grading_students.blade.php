@@ -16,47 +16,44 @@
 
                 <div class="row">
 
-                    <div class="col-lg-4"><label>Student Name:</label><input type="text" name="name" class="form-control"
+                    <div class="col-lg-6"><label>Instructor Display Name:</label><input type="text" name="name" class="form-control"
                             id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}"
                             @endif> </div>
-                    <div class="col-lg-4">
-                        <label>Instructor</label>
-                        <select name="instructor[]" class="form-control" multiple>
-                            <option value="">-- Select --</option>
-                            @foreach ($instructor as $key => $value)
-                            <option @if(isset($_GET['instructor_id']) && $_GET['instructor_id']==$value->id) selected="selected"
-                                @endif value="{{$value->id}}">{{$value->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-lg-4">
-                      <label>Event</label>
-                      <select name="event" class="form-control">
+
+                    <div class="col-lg-6">
+                      <label>Country</label>
+                      <select name="country" class="form-control">
                         <option value="">-- Select --</option>
-                        @foreach ($grading_exam as $key => $value)
-                        <option @if(isset($_GET['event']) && $_GET['event']==$value->id) selected="selected"
-                            @endif value="{{$value->id}}">{{$value->title}}</option>
+                        @foreach ($countries as $key => $value)
+                        <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected"
+                            @endif value="{{$value->id}}">{{$value->country}}</option>
                         @endforeach
                     </select>
-                  </div>
+                    </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-lg-4"><label>Status:</label>
-                      <select name="status" class="form-control">
+                <div class="col-lg-6">
+                    <label>Learning Location</label>
+                    <select name="learning_Location" class="form-control">
                         <option value="">-- Select --</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
-                            @endif value="1">Approved</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                            @endif value="2">Pending</option>
-
+                        @foreach ($locations as $key => $value)
+                        <option @if(isset($_GET['learning_Location']) && $_GET['learning_Location']==$value->id) selected="selected"
+                            @endif value="{{$value->id}}">{{$value->title}}</option>
+                        @endforeach
                     </select>
                     </div>
-                    <!-- <div class="col-lg-4"><label>End Date:</label>
-                      <input type="text" name="enddate" class="form-control datepicker1"
-                      id="title" @if(isset($_GET['enddate']) && $_GET['enddate']!="" ) value="{{ $_GET['enddate'] }}"
-                      @endif>
-                    </div> -->
+
+                <div class="col-lg-6">
+                  <label>Grades</label>
+                  <select name="grades" class="form-control">
+                    <option value="">-- Select --</option>
+                    @foreach ($grades as $key => $value)
+                    <option @if(isset($_GET['grades']) && $_GET['grades']==$value->id) selected="selected"
+                        @endif value="{{$value->id}}">{{$value->title}}</option>
+                    @endforeach
+                </select>
+                </div>
                 </div>
                 <br />
                 <div class="row">

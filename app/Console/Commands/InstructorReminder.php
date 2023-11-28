@@ -15,7 +15,7 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 
-class NotifyUser extends Command
+class InstructorReminder extends Command
 {
     use GetEmailTemplate, SystemSettingTrait;
     /**
@@ -64,7 +64,7 @@ class NotifyUser extends Command
 
                             $data['email_sender_name'] = systemSetting()->email_sender_name;
                             $data['from_email'] = systemSetting()->from_email;
-                            $data['to_email'] = [$user->email];
+                            $data['to_email'] = [$remind->teacher->email];
                             $data['cc_to_email'] = [];
                             $data['subject'] = $email_template->subject;
 
@@ -75,7 +75,7 @@ class NotifyUser extends Command
 
                             $data['contents'] = $newContents;
                             try {
-                                $mail = Mail::to($remind->teacher->email)->send(new EmailNotification($data));
+                                $mail = Mail::to('jafir.verz@gmail.com')->send(new EmailNotification($data));
                             } catch (Exception $exception) {
                                 dd($exception);
                             }

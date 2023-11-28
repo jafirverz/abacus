@@ -15,17 +15,32 @@
                     </div>
                     <div class="col-lg-8 mt-20 lastcol">
                         <div class="row input-group">
-                            <div class="col-md">
 
-                            </div>
+
                             <div class="col-md-auto col-sm mt-767-15">
+                                <div class="ggroup">
+                                    <div class="selectwrap">
+                                        <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                                <option value="">Select Status</option>
 
+                                                <option @if(isset($_GET['status']) && $_GET['status']==1) selected @endif value="?status=1">Active</option>
+                                                <option @if(isset($_GET['status']) && $_GET['status']==2) selected @endif value="?status=2">Inactive</option>
+                                                <option @if(isset($_GET['status']) && $_GET['status']==0) selected @endif value="?status=0">Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <form method="get" action="{{ url('external-profile/my-students') }}">
+                                    <input class="form-control" name="keyword" type="text" value="@if(isset($_GET['keyword']) && $_GET['keyword']!='') {{ $_GET['keyword'] }} @endif" placeholder="Search By Nmae">
+                                </form>
                             </div>
                             <div class="col-md-auto col-sm-auto mt-767-15">
                                 <a class="btn-1" href="{{ route('external-profile.add-students') }}">Add New Student <i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 @include('inc.messages')
                 <div class="box-1">
@@ -35,8 +50,9 @@
                                 <tr class="text-uppercase">
                                     <th>Account <br/>ID</th>
                                     <th>Student <br/>Name</th>
-                                    <th>PHONE</th>
                                     <th>Date of <br/>Birth</th>
+                                    <th>Learning Location</th>
+                                    <th>Remarks</th>
                                     <th>Access</th>
                                     <th>Account <br/>Status</th>
                                 </tr>
@@ -49,9 +65,9 @@
                                             <em>{{ $student->account_id ?? '' }}</em>
                                         </td>
                                         <td class="text-nowrap"><em>{{ $student->name ?? '' }}</em></td>
-                                        <td class="text-nowrap"><em>{{ $student->country_code_phone ?? '' }} {{ $student->mobile ?? '' }}</em></td>
                                         <td><em>{{ $student->dob ?? '' }}</em></td>
-
+                                        <td><em>{{ $student->location->title ?? '' }}</em></td>
+                                        <td><em>{{ $student->remarks ?? '' }}</em></td>
                                         <td>
                                             <a class="link-1" href="{{route('external-profile.add-students.edit', $student->id)}}"><i class="icon-edit"></i></a>
                                             <a class="link-1" href="{{route('external-profile.students.view', $student->id)}}">view</i></a>

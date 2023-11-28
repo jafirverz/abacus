@@ -24,10 +24,11 @@
                         <option value="">-- Select --</option>
                         <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
                             @endif value="1">Active</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
-                            @endif value="0">In Active</option>
+
                         <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                            @endif value="2">Rejected</option>
+                            @endif value="2">Inactive</option>
+                        <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
+                            @endif value="0">Pending</option>
                     </select>
                     </div>
                     <!-- <div class="col-lg-4"><label>End Date:</label>

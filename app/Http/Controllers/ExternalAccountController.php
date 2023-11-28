@@ -37,7 +37,19 @@ class ExternalAccountController extends Controller
     {
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
-        $students=User::where('user_type_id',4)->where('instructor_id',$this->user->id)->paginate($this->pagination);
+
+        if(isset($_GET['keyword']) && $_GET['keyword']!='')
+        {
+            $students = User::where('name','like','%' .$_GET['keyword'].'%')->where('instructor_id', Auth::user()->id)->paginate($this->pagination);
+        }
+        elseif(isset($_GET['status']) && $_GET['status']!='')
+        {
+            $students = User::where('approve_status', $_GET['status'])->where('instructor_id', Auth::user()->id)->paginate($this->pagination);
+        }
+        else
+        {
+            $students=User::where('user_type_id',4)->where('instructor_id',$this->user->id)->paginate($this->pagination);
+        }
         return view('account.external-my-students', compact('levels', 'country','students'));
     }
 
