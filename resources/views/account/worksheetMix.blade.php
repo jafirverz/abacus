@@ -63,7 +63,7 @@
                   @foreach($allQuestions as $ques)
                   @php
                   if($ques->symbol == 'multiply'){
-                    $symbol='*';
+                    $symbol='x';
                   }elseif($ques->symbol == 'add'){
                     $symbol='+';
                   }elseif($ques->symbol == 'subtract'){

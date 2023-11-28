@@ -62,11 +62,11 @@
             <div class="inner">
               <strong class="number">Q{{ $i }}</strong>
               <div class="vdwrap">
-                <video width="400">
+                <video controls width="400">
                   <source src="{{ url('/upload-file/'.$question->question_1) }}" type="video/mp4">
                   Your browser does not support HTML video.
                 </video>
-                <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$question->question_1) }}"><i class="fa-solid fa-play"></i></a>
+                <!-- <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$question->question_1) }}"><i class="fa-solid fa-play"></i></a> -->
               </div>
               <textarea class="form-control" rows="3" cols="30" name="answer[{{ $question->id }}]" placeholder="Answer"></textarea>
             </div>
