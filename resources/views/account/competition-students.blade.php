@@ -49,7 +49,7 @@
                   <td><em>{{ sprintf('%03d', $i) }}</em></td>
                   <td>
                     <em>{{ $student->userlist->name }}</em>
-                    <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">Edit</a> <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a></div>
+                    <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">View</a> <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a></div>
                   </td>
                   <td><em>{{ $student->category->category_name ?? '' }}</em></td>
                   <td>@if($student->approve_status == 1) <em class="status-2">Approved</em> @else <em class="status-3">Not Apporved</em> @endif</td>

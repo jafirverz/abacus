@@ -119,7 +119,7 @@ class ReportController extends Controller
 
     public function instructor()
     {
-        $title = 'Instructor Report';
+        $title = __('constant.INSTRUCTOR_REPORTS');
         //$pages = Page::orderBy('view_order', 'asc')->get();
         //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
         $instructor = User::where('user_type_id', 5)->get();
@@ -141,7 +141,7 @@ class ReportController extends Controller
             $q->where('name', 'like', $request->name);
         }
 
-        if (in_array($request->status, [0,1,2])) {
+        if ($request->status!='' && in_array($request->status, [0,1,2])) {
             $q->where('approve_status', $request->status);
         }
 

@@ -36,7 +36,10 @@ Route::get('/cron/competiton-result', function () {
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('competition:results');
     return $exitCode2;
 });
-
+Route::get('/cron-test-reminder', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('instructor:reminder');
+    return $exitCode2;
+});
 
 Route::get('/storage-link', function () {
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('storage:link');
@@ -363,7 +366,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('worksheet/{wId?}/questions/{qId?}/create', 'CMS\WorksheetController@questionCreate')->name('worksheet.questions.create');
     Route::get('worksheet/{wId?}/question/{qid?}/edit', 'CMS\WorksheetController@questionsEdit')->name('worksheet.question.edit');
     Route::get('worksheet/{wId?}/question/{qId?}/show', 'CMS\WorksheetController@questionsShow')->name('worksheet.question.show');
-    
+
 
 
     // LESSONS MASTER
