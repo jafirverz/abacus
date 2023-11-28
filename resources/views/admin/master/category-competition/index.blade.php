@@ -53,7 +53,7 @@
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <!-- <th>
+                                            <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -61,7 +61,7 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th> -->
+                                            </th>
                                             <th>Action</th>
                                             <th>Title</th>
                                             <th>Created At</th>
@@ -72,13 +72,20 @@
                                         @if($category->count())
                                         @foreach ($category as $key => $item)
                                         <tr>
-                                            <!-- <td scope="row">
+                                            @php
+                                            $checkCategoryAssignment = \App\CompetitionStudent::where('category_id', $item->id)->first();
+                                            @endphp
+                                            @if($checkCategoryAssignment)
+                                            <td></td>
+                                            @else
+                                            <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
                                                         data-checkboxes="mygroup" class="custom-control-input"
                                                         id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
-                                            </td> -->
+                                            </td>
+                                            @endif
                                             <td>
                                                 <a href="{{ route('category-competition.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"

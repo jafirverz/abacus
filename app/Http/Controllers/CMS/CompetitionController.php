@@ -44,7 +44,7 @@ class CompetitionController extends Controller
     public function index()
     {
         $title = $this->title;
-        $competition = Competition::paginate($this->pagination);
+        $competition = Competition::orderBy('id', 'desc')->paginate($this->pagination);
         
         return view('admin.competition.index', compact('title', 'competition'));
     }

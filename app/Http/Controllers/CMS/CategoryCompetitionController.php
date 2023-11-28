@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\CategoryCompetition;
 use App\Http\Controllers\Controller;
 use App\CompetitionCategory;
 use App\Traits\SystemSettingTrait;
@@ -35,7 +36,7 @@ class CategoryCompetitionController extends Controller
     public function index()
     {
         $title = $this->title;
-        $category = CompetitionCategory::paginate($this->pagination);
+        $category = CompetitionCategory::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.master.category-competition.index', compact('title', 'category'));
     }
@@ -130,8 +131,18 @@ class CategoryCompetitionController extends Controller
      */
     public function destroy(Request $request)
     {
-        $id = explode(',', $request->multiple_delete);
-        CompetitionCategory::destroy($id);
+        $ids = explode(',', $request->multiple_delete);
+        foreach($ids as $id){
+            $compCat = CategoryCompetition::where('category_id', $id)->first();
+            if($compCat){
+                $compCat->delete();
+            }
+        }
+        foreach($ids as $id){
+            $compCat = CompetitionCategory::where('id', $id)->first();
+            $compCat->delete();
+        }
+        // CompetitionCategory::destroy($id);
 
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
