@@ -45,7 +45,7 @@ class CustomerAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::orderBy('id','desc')->where('user_type_id','!=',5)->paginate($this->pagination);
+        $customer = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->paginate($this->pagination);
 
         return view('admin.account.customer.index', compact('title', 'customer'));
     }
@@ -403,7 +403,7 @@ class CustomerAccountController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
-        $customer = User::join('user_types','users.user_type_id','user_types.id')->where('user_type_id','!=',5)->where('approve_status','!=',0)->select('users.*')->search($search_term)->paginate($this->pagination);
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->whereIn('user_type_id',[1,2,3,4])->where('approve_status','!=',0)->select('users.*')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
             $customer->appends('search', $search_term);
         }

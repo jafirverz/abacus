@@ -23,16 +23,9 @@
                 <div class="col-12">
                     <div class="card">
 
-                        <div class="card-header">
+                        {{-- <div class="card-header">
 
-                            <a href="{{ route('achievement.destroy', 'achievement') }}" class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?" data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();" data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('achievement.destroy', 'achievement') }}" method="post">
 
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="multiple_delete">
-                            </form>
-                            <h4></h4>
                             <div class="card-header-form form-inline">
 
                                 <form action="{{ route('achievement.search') }}" method="get">
@@ -52,61 +45,75 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup"
-                                                        data-checkbox-role="dad" class="custom-control-input"
-                                                        id="checkbox-all">
-                                                    <label for="checkbox-all"
-                                                        class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            </th>
-                                            <th>Action</th>
-                                            <th>Title</th>
 
+                                        <th>Action</th>
+                                        <th>Year</th>
+                                        <th>Events</th>
+                                        <th>Results</th>
                                         </tr>
                                     </thead>
-                                    {{-- <tbody>
+                                    <tbody>
+                                        @if(isset($achievements) && count($achievements)>0)
+                                        @foreach($achievements as $key => $paperSubmited)
 
-                                        @if($grades->count())
-                                        @foreach ($grades as $key => $item)
-                                           <tr>
-                                            <td scope="row">
-                                                <div class="custom-checkbox custom-control"> <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label for="checkbox-{{ ($key+1) }}" class="custom-control-label">&nbsp;</label></div>
-                                            </td>
+                                            @if(isset($paperSubmited->grading_id))
+                                                @php $type=1; @endphp
+                                            @else
+                                                @php $type=2; @endphp
+                                            @endif
+                                        <tr>
+
                                             <td>
-                                                <a href="{{ route('grade.show', $item->id) }}" class="btn btn-info mr-1 mt-1" data-toggle="tooltip" data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('grade.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
-                                            </td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->grade_type->title }}  </td>
 
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                                <a href="{{ route('achievement.edit2', [$paperSubmited->id,$type]) }}"
+                                                    class="btn btn-info mr-1 mt-1"  data-toggle="tooltip"
+                                                    data-original-title="Edit">
+                                                    <i aria-hidden="true" class="fa fa-edit"></i>
+                                                </a>
+
+                                                <a href="{{ route('achievement.delete2', [$paperSubmited->id,$type]) }}"
+                                                    class="btn btn-info mr-1 mt-1"  data-toggle="tooltip"
+                                                    data-original-title="Edit" onclick="return confirm('Are you sure you want to delete this item?');">
+                                                    <i aria-hidden="true" class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date }} @else {{ $paperSubmited->competition->date_of_competition }} @endif
+
+                                        </strong></td>
+                                        <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title }} @else {{ $paperSubmited->competition->title }} @endif</td>
+                                        <td>
+                                            @if(isset($paperSubmited->grading_id))
+                                            @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
+                                            Mental Grade 70:  <strong class="type-1">{{ $paperSubmited->mental_grade }}</strong><br/>
+                                            Abacus Grade 80:  <strong class="type-1">{{ $paperSubmited->abacus_grade }}</strong></td>
+                                            @endif
+                                            @else
+                                            {{ $paperSubmited->category->category_name }} : {{ $paperSubmited->rank ?? '' }}
+                                            @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
+                                            Mental Grade 70:  <strong class="type-1">{{ $paperSubmited->mental_grade }}</strong><br/>
+                                            Abacus Grade 80:  <strong class="type-1">{{ $paperSubmited->abacus_grade }}</strong></td>
+                                            @endif
+                                            @endif
+
                                         </tr>
                                         @endforeach
-                                        @else
-                                        <tr>
-                                            <td colspan="7" class="text-center">{{ __('constant.NO_DATA_FOUND') }}</td>
-                                        </tr>
                                         @endif
-                                    </tbody> --}}
-                                </table>
+
+
+                                    </tbody>
+                                    </table>
+
+
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{-- @if(request()->get('_token'))
-                            {{ $grades->appends(['_token' => request()->get('_token'),'search' => request()->get('search') ])->links() }}
-                            @else
-                            {{ $grades->links() }}
-
-                           @endif --}}
+                            {{ $achievements->links() }}
                         </div>
                     </div>
                 </div>
