@@ -103,7 +103,7 @@
 
                                 <div class="form-group">
                                     <label for="title">Question Template</label>
-                                    <select name="questiontemplate" class="form-control">
+                                    <select name="questiontemplate" class="form-control" disabled>
                                         <option value="">-- Select --</option>
                                         @foreach($questionTempleates as $questionTemp)
                                         <option value="{{ $questionTemp->id }}" @if(old('questiontemplate') == $questionTemp->id) selected @elseif($worksheet->question_template_id == $questionTemp->id) selected @endif>{{ $questionTemp->title }}</option>
