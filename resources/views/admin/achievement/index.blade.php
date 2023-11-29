@@ -8,9 +8,9 @@
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
 
-                <a href="{{ route('grade.create') }}" class="btn btn-primary">Add New</a>
+                <a href="{{ route('achievement.create') }}" class="btn btn-primary">Add New</a>
             </div>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grade')])
+            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_achievement')])
 
 
         </div>
@@ -25,8 +25,8 @@
 
                         <div class="card-header">
 
-                            <a href="{{ route('grade.destroy', 'grade') }}" class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?" data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();" data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('grade.destroy', 'grade') }}" method="post">
+                            <a href="{{ route('achievement.destroy', 'achievement') }}" class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?" data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();" data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span class="badge badge-transparent">0</span></a>
+                            <form id="destroy" action="{{ route('achievement.destroy', 'achievement') }}" method="post">
 
                                 @csrf
                                 @method('DELETE')
@@ -35,7 +35,7 @@
                             <h4></h4>
                             <div class="card-header-form form-inline">
 
-                                <form action="{{ route('grade.search') }}" method="get">
+                                <form action="{{ route('achievement.search') }}" method="get">
 
                                     @csrf
                                     <div class="input-group">
@@ -68,14 +68,11 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
-                                            <th>Exam Grades</th>
+                                            <th>Title</th>
 
-                                            <th>Grade Type</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
 
                                         @if($grades->count())
                                         @foreach ($grades as $key => $item)
@@ -99,17 +96,17 @@
                                             <td colspan="7" class="text-center">{{ __('constant.NO_DATA_FOUND') }}</td>
                                         </tr>
                                         @endif
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
                             </div>
                         </div>
                         <div class="card-footer">
-                            @if(request()->get('_token'))
+                            {{-- @if(request()->get('_token'))
                             {{ $grades->appends(['_token' => request()->get('_token'),'search' => request()->get('search') ])->links() }}
                             @else
                             {{ $grades->links() }}
 
-                           @endif
+                           @endif --}}
                         </div>
                     </div>
                 </div>

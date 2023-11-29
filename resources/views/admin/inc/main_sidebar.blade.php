@@ -23,6 +23,16 @@
             ],
         ],
         [
+            'menu_header'   =>  __('constant.ACHIEVEMENT'),
+            'main_menu' =>  [
+                [
+                    'title' =>  __('constant.ACHIEVEMENT'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/achievement',
+                ],
+            ],
+        ],
+        [
             'menu_header'   =>  __('constant.COMPETITION'),
             'main_menu' =>  [
                 [

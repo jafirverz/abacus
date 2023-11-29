@@ -344,6 +344,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('level/search', 'CMS\LevelController@search')->name('level.search');
     Route::resource('level', 'CMS\LevelController');
 
+    // ACHIEVEMENT
+    Route::get('achievement/search', 'CMS\AchievementController@search')->name('achievement.search');
+    Route::resource('achievement', 'CMS\AchievementController');
+
 
     //QUESTION
     Route::get('question/search', 'CMS\QuestionController@search')->name('question.search');

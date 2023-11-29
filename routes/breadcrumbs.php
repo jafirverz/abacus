@@ -87,7 +87,16 @@ Breadcrumbs::for('admin_grade_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 
+// ACHIEVEMENT
+Breadcrumbs::for('admin_achievement', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.ACHIEVEMENT'), route('achievement.index'));
+});
 
+Breadcrumbs::for('admin_achievement_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_achievement');
+    $trail->push($title, $url);
+});
 
 // MENU
 Breadcrumbs::for('admin_menu', function ($trail) {
