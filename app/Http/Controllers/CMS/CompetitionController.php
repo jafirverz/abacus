@@ -163,10 +163,15 @@ class CompetitionController extends Controller
     public function show($id)
     {
         $title = $this->title;
+        $categoyy = array();
         $competition = Competition::find($id);
         $competitionCategory = CompetitionCategory::get();
         $categoryCompetition = CategoryCompetition::where('competition_id', $id)->pluck('category_id')->toArray();
-        return view('admin.competition.show', compact('title', 'competition', 'categoryCompetition','competitionCategory'));
+        if($categoryCompetition){
+            $categoyy = CompetitionCategory::whereIn('id', $categoryCompetition)->pluck('category_name')->toArray();
+        }
+        
+        return view('admin.competition.show', compact('title', 'competition', 'categoryCompetition','competitionCategory', 'categoyy'));
     }
 
     /**

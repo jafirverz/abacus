@@ -117,7 +117,7 @@
                                     @endif
                                 </div>
 
-                                {{-- 
+                                
                                 <div class="form-group">
                                     <label for="title">End Time of competition</label>
                                     <select name="end_time_of_competition" class="form-control">
@@ -141,7 +141,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                --}}
+                                
 
                                 <div class="form-group">
                                     <label for="title">Image Overview Page</label>
