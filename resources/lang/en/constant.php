@@ -17,6 +17,7 @@ return [
     'TEST_PAPER'  =>  'Test / Lessons',
     'TEST_PAPER_QUIESTION'  =>  'Test/Lesson Questions',
     'COURSE'  =>  'Courses',
+    'ACHIEVEMENT'  =>  'Achievement',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
     'GRADING_EXAM' => 'Grading Exam',
