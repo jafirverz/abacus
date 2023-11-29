@@ -4,6 +4,10 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\GradingExam;
+use App\Competition;
+use App\CompetitionStudentResult;
+use App\GradingStudentResults;
 use App\Traits\SystemSettingTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,7 +39,12 @@ class AchievementController extends Controller
     public function index()
     {
         $title = $this->title;
-        return view('admin.achievement.index', compact('title'));
+        $achievements = CompetitionStudentResult::get();
+        $competition = Competition::get();
+        $actualCompetitionPaperSubted = CompetitionStudentResult::orderBy('id', 'desc')->get();
+        $gradingExamResult = GradingStudentResults::orderBy('id', 'desc')->get();
+        $achievements = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        return view('admin.achievement.index', compact('title','achievements'));
     }
 
     /**
@@ -46,7 +55,10 @@ class AchievementController extends Controller
     public function create()
     {
         $title = $this->title;
-        return view('admin.achievement.create', compact('title',));
+
+        $grading = GradingExam::get();
+        $competition = Competition::get();
+        return view('admin.achievement.create', compact('title','grading','competition'));
 
     }
 
@@ -59,11 +71,30 @@ class AchievementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'  =>  'required',
+            'result'  =>  'required',
+            'rank'  =>  'required',
         ]);
 
 
-
+        if($request->type==2)
+        {
+            $competitionStudentResult = new CompetitionStudentResult();
+            $competitionStudentResult->competition_id  = $request->event ?? null;
+            $competitionStudentResult->user_id  = $request->user_id ?? null;
+            $competitionStudentResult->category_id  = $request->category ?? null;
+            $competitionStudentResult->result = $request->result ?? null;
+            $competitionStudentResult->rank = $request->rank ?? null;
+            $competitionStudentResult->save();
+        }
+        else
+        {
+            $gradingStudentResults = new GradingStudentResults();
+            $gradingStudentResults->grading_id   = $request->event ?? null;
+            $gradingStudentResults->user_id  = $request->user_id ?? null;
+            $gradingStudentResults->result = $request->result ?? null;
+            $gradingStudentResults->rank = $request->rank ?? null;
+            $gradingStudentResults->save();
+        }
         return redirect()->route('achievement.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
 
@@ -76,7 +107,7 @@ class AchievementController extends Controller
     public function show($id)
     {
         $title = $this->title;
-
+        $competition = CompetitionStudentResult::find();
         return view('admin.achievement.show', compact('title'));
     }
 
@@ -86,11 +117,21 @@ class AchievementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$type)
     {
         $title = $this->title;
+        $grading = GradingExam::get();
+        $competition = Competition::get();
+        if($type==2)
+        {
+            $event = CompetitionStudentResult::find($id);
+        }
+        else
+        {
+            $event = GradingStudentResults::find($id);
+        }
 
-        return view('admin.achievement.edit', compact('title'));
+        return view('admin.achievement.edit', compact('title','grading','competition','event','type'));
 
     }
 
@@ -104,10 +145,24 @@ class AchievementController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title'  =>  'required',
+            'result'  =>  'required',
+            'rank'  =>  'required',
         ]);
 
-
+        if($request->type==2)
+        {
+        $competitionStudentResult = CompetitionStudentResult::find($id);
+        $competitionStudentResult->result = $request->result ?? null;
+        $competitionStudentResult->rank = $request->rank ?? null;
+        $competitionStudentResult->save();
+        }
+        else
+        {
+            $gradingStudentResults = GradingStudentResults::find($id);;
+            $gradingStudentResults->result = $request->result ?? null;
+            $gradingStudentResults->rank = $request->rank ?? null;
+            $gradingStudentResults->save();
+        }
 
         return redirect()->route('achievement.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
@@ -118,10 +173,17 @@ class AchievementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id,$type)
     {
-        //$id = explode(',', $request->multiple_delete);
-        //grade::destroy($id);
+        if($type==2)
+        {
+            CompetitionStudentResult::destroy($id);
+        }
+        else
+        {
+            GradingStudentResults::destroy($id);
+        }
+        //
 
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }

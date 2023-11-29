@@ -347,6 +347,8 @@ Route::group(['prefix' => 'admin'], function () {
     // ACHIEVEMENT
     Route::get('achievement/search', 'CMS\AchievementController@search')->name('achievement.search');
     Route::resource('achievement', 'CMS\AchievementController');
+    Route::get('/admin/achievement/edit/{id}/{type}', 'CMS\AchievementController@edit')->name('achievement.edit2');
+    Route::get('/admin/achievement/delete/{id}/{type}', 'CMS\AchievementController@delete')->name('achievement.delete2');
 
 
     //QUESTION
