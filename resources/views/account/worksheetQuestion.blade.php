@@ -83,11 +83,11 @@
                     @endphp
                     <td>
                       @php
-                      $arrVal = explode(',', $question->question_1);
+                      $arrVal = explode('|', $question->question_1);
                       foreach($arrVal as $val){
                       @endphp
                       <div class="row sp-col-5 inrow-1">
-                        <div class="col-auto sp-col">$</div>
+                        <!-- <div class="col-auto sp-col">$</div> -->
                         <div class="col sp-col">{{ $val }}</div>
                       </div>
                       @php
@@ -109,9 +109,9 @@
                     @endphp
                     <td class="coltype">
                       <div class="row sp-col-5 inrow-1">
-                        <div class="col-auto sp-col">$</div>
-                        <div class="col colanswer sp-col"><input class="form-control" type="number"
-                            name="answer[{{ $question->id }}]" /></div>
+                        <!-- <div class="col-auto sp-col">$</div> -->
+                        <div class="col colanswer sp-col"><input class="form-control number-separator" type="text"
+                            value="" id="ans{{ $question->id }}" name="answer[{{ $question->id }}]" /></div>
                       </div>
                     </td>
                     @php
@@ -130,4 +130,16 @@
     </div>
   </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
 @endsection

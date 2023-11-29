@@ -596,6 +596,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
     Route::get('orders', 'CMS\OrderController@index');
+    Route::get('orders', 'CMS\OrderController@index')->name('orders.index');
+    Route::get('orders/create', 'CMS\OrderController@create')->name('orders.create');
+    Route::post('orders/store', 'CMS\OrderController@store')->name('orders.store');
 
     //Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
     Route::get('survey-completed', 'CMS\SurveyController@getlist')->name('survey-completed.getlist');

@@ -101,7 +101,7 @@ class CompetitionResultController extends Controller
     }
 
     public function excelDownload(Request $request, $id){
-        $allItems = CompetitionPaperSubmitted::where('competition_id', $request->competitionId)->orderBy('competition_id', 'desc')->orderBy('user_id', 'asc')->get();
+        $allItems = CompetitionPaperSubmitted::where('paper_type', 'actual')->where('competition_id', $request->competitionId)->orderBy('competition_id', 'desc')->orderBy('user_id', 'asc')->get();
         ob_end_clean();
         ob_start();
         return Excel::download(new CompetetitionResultExport($allItems), 'CompetitionStudentReport.xlsx');

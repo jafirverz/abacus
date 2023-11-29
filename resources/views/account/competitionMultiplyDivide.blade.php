@@ -36,7 +36,7 @@
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Division</th>
+                    <th class="wcol-4 text-center">Division</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
@@ -47,7 +47,7 @@
                   @foreach($questions as $ques)
                   @php
                   if($ques->symbol == 'multiply'){
-                    $symbol='*';
+                    $symbol='x';
                   }else{
                     $symbol='÷';
                   }
@@ -55,7 +55,7 @@
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
+                    <td class="colanswer"><input class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php 
                   $i++;
@@ -74,6 +74,18 @@
   </div>	
   </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
 
 <script>
   

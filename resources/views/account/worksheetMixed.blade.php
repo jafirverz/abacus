@@ -81,11 +81,11 @@
                     @endphp
                       <td>
                         @php
-                        $arrVal = explode(',', $question->question_1);
+                        $arrVal = explode('|', $question->question_1);
                         foreach($arrVal as $val){
                         @endphp
                         <div class="row sp-col-5 inrow-1">
-                          <div class="col-auto sp-col">$</div>
+                          <!-- <div class="col-auto sp-col">$</div> -->
                           <div class="col sp-col">{{ $val }}</div>
                         </div>
                         @php
@@ -107,8 +107,8 @@
                       @endphp
                     <td class="coltype">
                       <div class="row sp-col-5 inrow-1">
-                        <div class="col-auto sp-col">$</div>
-                        <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
+                        <!-- <div class="col-auto sp-col">$</div> -->
+                        <div class="col colanswer sp-col"><input class="form-control number-separator" type="text" name="answer[{{ $question->id }}]" /></div>
                       </div>
                     </td>
                     @php
@@ -127,7 +127,7 @@
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Questions</th>
+                    <th class="wcol-4 text-center">Questions</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
@@ -143,9 +143,9 @@
                   if($ques->symbol == 'add'){
                     $symbol = '+';
                   }elseif($ques->symbol == 'multiply'){
-                    $symbol = '*';
+                    $symbol = 'x';
                   }elseif($ques->symbol == 'divide'){
-                    $symbol = '/';
+                    $symbol = '÷';
                   }elseif($ques->symbol == 'subtract'){
                     $symbol = '-';
                   }
@@ -153,7 +153,7 @@
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" name="answer[{{ $ques->id }}]" type="number" /></td>
+                    <td class="colanswer"><input class="form-control" name="answer[{{ $ques->id }}]" type="text" /></td>
                   </tr>
                   @php 
                   $i++;
@@ -174,4 +174,16 @@
     </div>
   </div>	
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
 @endsection

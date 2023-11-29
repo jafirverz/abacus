@@ -281,7 +281,7 @@ class CompetitionPaperController extends Controller
 
     public function questions($id){
         // dd($id);
-        $title = 'Online Competition Paper Questions';
+        $title = 'Online Competition Question';
         $pId = $id;
         $papercheck = CompetitionPaper::where('id', $id)->first();
         $questemplate = $papercheck->question_template_id;
@@ -292,7 +292,7 @@ class CompetitionPaperController extends Controller
 
     public function questionCreate($pId = null, $qId = null)
     {
-        $title = 'Online Competition Paper Question create';
+        $title = 'Online Competition Question create';
         $papers = CompetitionPaper::get();
         return view('admin.competition_paper.question_create', compact('title', 'papers', 'pId', 'qId'));
     }
@@ -300,7 +300,7 @@ class CompetitionPaperController extends Controller
     public function questionsEdit($pId = null, $qId = null)
     {
         //
-        $title = 'Online Competition Paper Question edit';
+        $title = 'Online Competition Question edit';
         $papers = CompetitionPaper::get();
         $competitionPaper = CompetitionPaper::where('id', $pId)->first();
         $compQues = CompetitionQuestions::where('competition_paper_id', $pId)->get();
@@ -310,7 +310,7 @@ class CompetitionPaperController extends Controller
     public function questionsShow($pId = null, $qId = null)
     {
         //
-        $title = 'Online Competition Paper Question show';
+        $title = 'Online Competition Question show';
         $papers = CompetitionPaper::get();
         $competitionPaper = CompetitionPaper::where('id', $pId)->first();
         $compQues = CompetitionQuestions::where('competition_paper_id', $pId)->get();

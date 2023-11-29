@@ -33,12 +33,12 @@
                                 </div>
 
                                 
-
+                                
                                 
 
                             @if($qId==5)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
-                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="row" style="margin-bottom:30px;">
                                         <div class="col-md-2">
                                             <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
                                         </div>
@@ -63,13 +63,14 @@
                                             <input class="form-control" required value="" name="block[]" placeholder="Block Multiplication Only" type="text" required>
                                         </div>
                                     </div>
+                                    <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
                             @elseif($qId==7)
                                     <label for="" class=" control-label">Horizontal Questions</label>
-                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="row" style="margin-bottom:30px;">
         
                                         <div class="col-md-2">
                                             <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
@@ -92,6 +93,7 @@
                                             <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
                                         </div>
                                     </div>
+                                    <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more7" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
@@ -99,7 +101,7 @@
 
                                     <!-- ////////////////////////////////////// -->
                                     <label for="" class=" control-label">Vertical</label>
-                                    <div class="row after-add-more7-1" style="margin-bottom:30px;">
+                                    <div class="row " style="margin-bottom:30px;">
                                         <div class="col-md-5">
                                             <textarea class="" rows="5" cols="40" required value="" name="vertical_1[]" placeholder="Enter Column 1 data"></textarea>
                                         </div>
@@ -112,13 +114,14 @@
                                             <input class="form-control" required value="" name="vertical_3[]" placeholder="Marks" type="text">
                                         </div>
                                     </div>
+                                    <div class="after-add-more7-1"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more7-1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
                             @elseif($qId==6)
                             <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
-                            <div class="row after-add-more" style="margin-bottom:30px;">
+                            <div class="row " style="margin-bottom:30px;">
 
                                 <div class="col-md-2">
                                     <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
@@ -141,13 +144,14 @@
                                     <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text" required>
                                 </div>
                             </div>
+                            <div class="after-add-more"></div>
                             <div class="input-group-btn">
                                 <button class="btn btn-success add-more6" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                             </div>
                             @elseif($qId==2 || $qId==3)
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
-                                <div class="row after-add-more" style="margin-bottom:30px;">
+                                <div class="row" style="margin-bottom:30px;">
                                     <div class="col-md-5">
                                         <input class="form-control" required value="" name="input_1[]"  type="file">
                                     </div>
@@ -159,6 +163,7 @@
                                     </div>
 
                                 </div>
+                                <div class="after-add-more"></div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
@@ -167,7 +172,8 @@
                             @elseif($qId==1 )
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
-                                <div class="row after-add-more" style="margin-bottom:30px;">
+                                <div class="row" style="margin-bottom:30px;">
+                                    
                                     <div class="col-md-4">
                                         <input class="form-control" required value="" name="input_1[]"  type="file">
                                     </div>
@@ -182,6 +188,7 @@
                                     </div>
 
                                 </div>
+                                <div class="after-add-more"></div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
@@ -189,7 +196,7 @@
                                 @elseif($qId==4)
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
-                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="row" style="margin-bottom:30px;">
                                         <div class="col-md-5">
                                             <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                         </div>
@@ -202,6 +209,7 @@
                                             <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
                                         </div>
                                     </div>
+                                    <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
@@ -218,7 +226,7 @@
                                     </div>
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
-                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="row" style="margin-bottom:30px;">
                                         <div class="col-md-4">
                                             <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                         </div>
@@ -234,6 +242,7 @@
                                             <input class="form-control" required value="" name="blocks[]" placeholder="Block" type="text">
                                         </div>
                                     </div>
+                                    <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more8" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
@@ -495,41 +504,41 @@ $(document).ready(function () {
 
       $(".add-more").click(function(){
           var html = $(".copy").html();
-          $(".after-add-more").after(html);
+          $(".after-add-more").append(html);
       });
       $(".add-more1").click(function(){
           var html = $(".copy1").html();
-          $(".after-add-more").after(html);
+          $(".after-add-more").append(html);
       });
 
       $(".add-more2").click(function(){
           var html = $(".copy2").html();
-          $(".after-add-more").after(html);
+          $(".after-add-more").append(html);
       });
 
     $(".add-more3").click(function(){
         var html = $(".copy3").html();
-        $(".after-add-more").after(html);
+        $(".after-add-more").append(html);
     });
 
     $(".add-more6").click(function(){
         var html = $(".copy6").html();
-        $(".after-add-more").after(html);
+        $(".after-add-more").append(html);
     });
 
     $(".add-more7").click(function(){
         var html = $(".copy7").html();
-        $(".after-add-more").after(html);
+        $(".after-add-more").append(html);
     });
 
     $(".add-more7-1").click(function(){
         var html = $(".copy7-1").html();
-        $(".after-add-more7-1").after(html);
+        $(".after-add-more7-1").append(html);
     });
 
     $(".add-more8").click(function(){
         var html = $(".copy8").html();
-        $(".after-add-more").after(html);
+        $(".after-add-more").append(html);
     });
 
       $("body").on("click",".remove",function(){

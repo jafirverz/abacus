@@ -7,6 +7,9 @@
       <th>Category</th>
       <th>Paper Type</th>
       <th>Student Name</th>
+      <th>DOB</th>
+      <th>Instructor Name</th>
+      <th>Learning Location</th>
       <th>Total Marks</th>
       <th>User Marks</th>
     </tr>
@@ -17,6 +20,7 @@
 
     @php
     //dd($item);
+    $instructorId = \App\User::where('id', $item->user_id)->first();
     @endphp
     <tr>
       <td>{{ ($key+1) }}</td>
@@ -34,6 +38,15 @@
       </td>
       <td>
         {{ getStudent($item->user_id)->name ?? '' }}
+      </td>
+      <td>
+        {{ getStudent($item->user_id)->dob ?? '' }}
+      </td>
+      <td>
+        {{ getInstructor($instructorId->instructor_id)->name ?? '' }}
+      </td>
+      <td>
+        {{ getStudent($item->user_id)->learning_location ?? '' }}
       </td>
       <td>
         {{ $item->total_marks ?? ''}}

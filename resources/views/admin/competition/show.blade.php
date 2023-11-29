@@ -25,15 +25,17 @@
                             <div class="form-group">
                                 <label for="title">Competition Type</label>:{{ ucwords($competition->competition_type) }} 
                             </div>
-
+                            
+                            <div class="form-group">
+                                <label for="status">Competition Category</label>: {{ implode(',', $categoyy) ?? '' }}
+                            </div>
                             
                             <div class="form-group">
                                 <label for="status">Date of competition</label>: {{ $competition->date_of_competition ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="status">Start Time of competition</label>: {{ $competition->start_time_of_competition }}
-                            </div><div class="form-group">
-                                <label for="status">End Time of competition</label>: {{ $competition->end_time_of_competition }}
+                                <label for="status">Competition Time </label>: {{ $competition->start_time_of_competition }} @if($competition->start_time_of_competition <= 12) am @else pm @endif -  {{ $competition->end_time_of_competition }} @if($competition->end_time_of_competition <= 12) am @else pm @endif 
+                                (GMT+08:00) Singapore Standard Time
                             </div>
                             <div class="form-group">
                                 <label for="status">Description</label>: {{ $competition->description }}
