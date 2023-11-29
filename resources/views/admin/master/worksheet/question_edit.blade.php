@@ -33,7 +33,6 @@
                                     @endif
                                 </div>
 
-
                                 @if($question->question_type==8)
                                     <div class="form-group">
                                         <label for="">Abacus Link</label>
@@ -652,48 +651,48 @@
 
           $(".add-more").click(function(){
               var html = $(".copy").html();
-              $(".after-add-more").after(html);
+              $(".after-add-more").append(html);
           });
 
 
           $(".add-more1").click(function(){
               var html = $(".copy1").html();
-              $(".after-add-more").after(html);
+              $(".after-add-more").append(html);
           });
 
           $(".add-more2").click(function(){
           var html = $(".copy2").html();
-          $(".after-add-more").after(html);
+          $(".after-add-more").append(html);
           });
 
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more6").click(function(){
             var html = $(".copy6").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more7").click(function(){
             var html = $(".copy7").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more7-1").click(function(){
             var html = $(".copy7-1").html();
-            $(".after-add-more7-1").after(html);
+            $(".after-add-more7-1").append(html);
         });
 
         $(".add-more5").click(function(){
             var html = $(".copy5").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more8").click(function(){
             var html = $(".copy8").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
           $("body").on("click",".remove",function(){

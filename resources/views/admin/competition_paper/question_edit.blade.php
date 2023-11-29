@@ -36,7 +36,7 @@
 
                                 @if(isset($question_template_id) && $question_template_id==9)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="row " style="margin-bottom:30px;">
                                         <div class="col-md-4">
                                             <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
                                         </div>
@@ -47,6 +47,7 @@
                                             <input class="form-control" required value="" name="input_3[]" placeholder="= Answer" type="text">
                                         </div>
                                     </div>
+                                    <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
@@ -479,32 +480,32 @@
     
         $(".add-more").click(function(){
               var html = $(".copy").html();
-              $(".after-add-more").after(html);
+              $(".after-add-more").append(html);
           });
     
           $(".add-more2").click(function(){
               var html = $(".copy2").html();
-              $(".after-add-more").after(html);
+              $(".after-add-more").append(html);
           });
     
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more5").click(function(){
             var html = $(".copy5").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more6").click(function(){
             var html = $(".copy6").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
 
         $(".add-more7").click(function(){
             var html = $(".copy7").html();
-            $(".after-add-more").after(html);
+            $(".after-add-more").append(html);
         });
     
         $("body").on("click",".remove",function(){
