@@ -128,7 +128,7 @@
                                         </div>
                                     @endif
                                 @else
-                                @if(isset($_GET['grading']) && $_GET['grading']!='')
+                                    @if(isset($_GET['grading']) && $_GET['grading']!='')
                                         @php
                                         $students = \App\GradingStudent::where('grading_exam_id', $_GET['grading'])->get();
                                         @endphp
