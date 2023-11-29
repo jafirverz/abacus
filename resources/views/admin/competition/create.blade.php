@@ -115,22 +115,22 @@
                                     @endif
                                 </div>
 
-                                {{-- 
+                                
                                 <div class="form-group">
                                     <label for="title">End Time of competition</label>
                                     <select name="end_time_of_competition" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="10">10.00</option>
-                                        <option value="11">11.00</option>
-                                        <option value="12">12.00</option>
-                                        <option value="13">13.00</option>
-                                        <option value="14">14.00</option>
-                                        <option value="15">15.00</option>
-                                        <option value="16">16.00</option>
-                                        <option value="17">17.00</option>
-                                        <option value="18">18.00</option>
-                                        <option value="19">19.00</option>
-                                        <option value="20">20.00</option>
+                                        <option value="10" @if(old('end_time_of_competition') == '10') selected @endif>10.00</option>
+                                        <option value="11" @if(old('end_time_of_competition') == '11') selected @endif>11.00</option>
+                                        <option value="12" @if(old('end_time_of_competition') == '12') selected @endif>12.00</option>
+                                        <option value="13" @if(old('end_time_of_competition') == '13') selected @endif>13.00</option>
+                                        <option value="14" @if(old('end_time_of_competition') == '14') selected @endif>14.00</option>
+                                        <option value="15" @if(old('end_time_of_competition') == '15') selected @endif>15.00</option>
+                                        <option value="16" @if(old('end_time_of_competition') == '16') selected @endif>16.00</option>
+                                        <option value="17" @if(old('end_time_of_competition') == '17') selected @endif>17.00</option>
+                                        <option value="18" @if(old('end_time_of_competition') == '18') selected @endif>18.00</option>
+                                        <option value="19" @if(old('end_time_of_competition') == '19') selected @endif>19.00</option>
+                                        <option value="20" @if(old('end_time_of_competition') == '20') selected @endif>20.00</option>
                                     </select>
                                     
                                     @if ($errors->has('end_time_of_competition'))
@@ -139,7 +139,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                --}}
+                                
 
 
                                 <div class="form-group">
