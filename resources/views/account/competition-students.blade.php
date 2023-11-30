@@ -51,7 +51,7 @@
 
                 @endphp
                 <tr>
-                  <td><em>{{ sprintf('%03d', 15*($_REQUEST['page']-1)+$i) }}</em></td>
+                  <td><em>@if(isset($_REQUEST['page'])){{ sprintf('%03d', 15*($_REQUEST['page']-1)+$i) }}@else {{ $i }} @endif</em></td>
                   <td>
                     <em>{{ $student->userlist->name }}</em>
                     <div class="tbactions"><a href="{{ route('competition.instructor.register.edit',$student->id) }}">View</a> @if($student->approve_status != 1) <a onclick="return confirm('Are you sure want to delete this?');" href="{{ route('competition.instructor.register.delete',$student->id) }}">Delete</a>@endif</div>

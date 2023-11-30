@@ -133,12 +133,11 @@
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/level',
                 ],
-                /*[
-                    'title' =>  __('Topics'),
+                [
+                    'title' =>  __('constant.LEARNING_LOCATION'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/topic',
+                    'url'   =>  'admin/learning-location',
                 ],
-                */
                 [
                     'title' =>  __('Worksheet Management'),
                     'icon'  =>  '<i class="fas fa-check"></i>',

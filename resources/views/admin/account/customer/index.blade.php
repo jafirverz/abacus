@@ -41,7 +41,7 @@
                                 <div class="row">
                                     <div class="col-lg-6"><label>Status:</label>
                                       <select name="status" class="form-control">
-                                        <option value="">-- Select --</option>
+                                        <option value="">-- All --</option>
                                         <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @else  selected="selected"
                                             @endif value="1">Active</option>
                                         <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
@@ -53,7 +53,7 @@
                                     <div class="col-lg-6">
                                         <label>Country</label>
                                         <select name="country" class="form-control">
-                                            <option value="">-- Select --</option>
+                                            <option value="">-- All --</option>
                                             @foreach ($country as $key => $value)
                                             <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected" @elseif($value->id==192) selected="selected"
                                                 @endif value="{{$value->id}}">{{$value->country}}</option>
@@ -84,7 +84,7 @@
                         <table class="table table-md">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th width="10%">
                                         @if(isset($_GET['_token']))
                                         Total: {{ $customer->count() }}
                                         @else

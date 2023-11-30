@@ -20,6 +20,7 @@ return [
     'ACHIEVEMENT'  =>  'Achievement',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
+    'LEARNING_LOCATION' => 'Learning Location',
     'GRADING_EXAM' => 'Grading Exam',
     'INSTRUCTOR_CALENDAR' => 'Instructor Calendar',
     'GRADING_EXAM_LIST' => 'Grading Exam List',
