@@ -92,38 +92,36 @@
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     @php 
                                     $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    $i = 1;
                                     @endphp
 
                                     @foreach($compPaperQuestion as $questionss)
+
                                     <div class="form-group">
-                                    <div class="row">
-
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-1">
+                                                <div class="form-control">Q{{ $i }}</div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <textarea rows="5" cols="40" name="input_1[]">{{ $questionss->question_1 }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <select name="input_2[]" class="form-control">
-                                                <option value="add" @if($questionss->symbol == 'add') selected @endif>Add</option>
-                                                <option value="subtract" @if($questionss->symbol == 'subtract') selected @endif>Subtract</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{ $questionss->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
-                                        </div>
-
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                         </div>
                                     </div>
-                                    </div>
+
+                                    @php
+                                    $i++;
+                                    @endphp
                                     @endforeach
+
                                     <div class="after-add-more"></div>
                                     <div class="input-group-btn">
                                         <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
@@ -351,27 +349,15 @@
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-2">
-                <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
+            <div class="col-md-5">
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
-            <div class="col-md-2">
-                <select name="input_2[]" class="form-control">
-                    <option value="add">Add</option>
-                    <option value="subtract">Subtract</option>
-                </select>
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
-            <div class="col-md-2">
-                <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
-            </div>
-
-            <div class="col-md-4">
-                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
-            </div>
-
             <div class="col-md-2">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
             </div>
-
         </div>
         <div class="input-group-btn">
             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
