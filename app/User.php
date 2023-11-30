@@ -51,18 +51,18 @@ class User extends Authenticatable
 
 	 public function scopeSearch($query, $search_term)
     {
-        if($search_term)
-        {
-            $query->where('users.name', 'like', '%'.$search_term.'%');
-            $query->orWhere('users.email', 'like', '%'.$search_term.'%');
-            $query->orWhere('users.account_id', 'like', '%'.$search_term.'%');
-            $query->orWhere('users.mobile', 'like', '%'.$search_term.'%');
-            $query->orWhere('user_types.name', 'like', '%'.$search_term.'%');
-            $query->orwhere(DB::raw("(DATE_FORMAT(users.created_at,'%d %b, %Y %h:%i %p'))"), 'like', '%'.$search_term.'%');
-            $query->orwhere(DB::raw("(DATE_FORMAT(users.updated_at,'%d %b, %Y %h:%i %p'))"), 'like', '%'.$search_term.'%');
 
-            return $query;
+       // dd($search_term);
+        if($search_term->status)
+        {
+            $query->where('users.approve_status',$search_term->status);
         }
+
+        if($search_term->country)
+        {
+            $query->where('users.country_code',$search_term->country);
+        }
+        return $query;
     }
 
 //    public function getFullnameAttribute() {
@@ -121,8 +121,16 @@ class User extends Authenticatable
         return $this->belongsTo('App\Level', 'level_id', 'id');
     }
 
+    public function instructor(){
+        return $this->belongsTo('App\User', 'instructor_id', 'id');
+    }
+
     public function location(){
         return $this->belongsTo('App\LearningLocation', 'learning_locations', 'id');
+    }
+
+    public function country(){
+        return $this->belongsTo('App\Country', 'country_code', 'id');
     }
 
 }

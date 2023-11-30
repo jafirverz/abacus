@@ -31,24 +31,53 @@
                         <input type="hidden" name="multiple_delete">
                     </form>
                     <h4></h4>
-                    <div class="card-header-form form-inline">
+
+
                         <form action="{{ route('customer-account.search') }}" method="get">
                             @csrf
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" placeholder="Search"
-                                    value="{{ $_GET['search'] ?? '' }}">
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+
+
+
+                                <div class="row">
+                                    <div class="col-lg-6"><label>Status:</label>
+                                      <select name="status" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @else  selected="selected"
+                                            @endif value="1">Active</option>
+                                        <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
+                                            @endif value="0">In Active</option>
+                                        <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
+                                            @endif value="2">Rejected</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label>Country</label>
+                                        <select name="country" class="form-control">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($country as $key => $value)
+                                            <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected" @elseif($value->id==192) selected="selected"
+                                                @endif value="{{$value->id}}">{{$value->country}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                &emsp;
-                                            @if(request()->get('_token'))
-                                               <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
-                                            @else
-                                               <button type="reset" class="btn btn-primary">Clear All</button>
-                                            @endif
-                            </div>
-                        </form>
-                    </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                                        @if(request()->get('_token'))
+                                        <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
+                                        @else
+                                        <button type="reset" class="btn btn-primary">Clear All</button>
+                                        @endif
+
+                                    </div>
+                                </div>
+
+
+
+                        </form><br />
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -56,6 +85,11 @@
                             <thead>
                                 <tr>
                                     <th>
+                                        @if(isset($_GET['_token']))
+                                        Total: {{ $customer->count() }}
+                                        @else
+                                        <strong>Total: {{ $total_count }}</strong>
+                                        @endif
                                         <div class="custom-checkbox custom-control">
                                             <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
                                                 class="custom-control-input" id="checkbox-all">
@@ -64,11 +98,11 @@
                                     </th>
                                     <th>Action</th>
                                     <th>Full Name</th>
-                                    <th>Email Address</th>
-                                    <th>Type</th>
-                                    <th>Customer Number</th>
-                                    <th>Account ID</th>
-                                    <th>Last Updated</th>
+                                    <th>DOB</th>
+                                    <th>Instructor</th>
+                                    <th>Learning Location</th>
+                                    <th>Country</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,24 +127,29 @@
                                         </a>
                                     </td>
                                     <td>
-                                        {{ $item->name }}
+                                        {{ $item->name ?? '' }}
                                     </td>
                                     <td>
-                                        {{ $item->email }}
+                                        {{ $item->dob ?? '' }}
                                     </td>
                                     <td>
-                                        @if(isset($item->user_type_id))
-                                        {{ getUserTypes($item->user_type_id)  }}
+                                        {{ $item->instructor->name ?? '' }}if
+                                    </td>
+                                    <td>
+                                        {{ $item->location->title ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ $item->country->country ?? '' }}
+                                    </td>
+                                    <td>
+
+                                        @if($item->approve_status==1)
+                                        Active
+                                        @elseif($item->approve_status==2)
+                                        Inactive
+                                        @else
+                                        Pending
                                         @endif
-                                    </td>
-                                    <td>
-                                        {{ $item->mobile ?? '' }}
-                                    </td>
-                                    <td>
-                                        {{ $item->account_id ?? '' }}
-                                    </td>
-                                    <td>
-                                        {{ $item->updated_at->format('d M, Y h:i A') }}
                                     </td>
                                 </tr>
                                 @endforeach
