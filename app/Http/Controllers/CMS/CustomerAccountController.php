@@ -46,8 +46,9 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->paginate($this->pagination);
-
-        return view('admin.account.customer.index', compact('title', 'customer'));
+        $total_count = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->get()->count();
+        $country = Country::orderBy('country','asc')->get();
+        return view('admin.account.customer.index', compact('title', 'customer','country','total_count'));
     }
 
     /**
@@ -401,14 +402,15 @@ class CustomerAccountController extends Controller
     public function search(Request $request)
     {
         $search_term = $request->search;
-
+        $country = Country::orderBy('country','asc')->get();
         $title = $this->title;
-        $customer = User::join('user_types','users.user_type_id','user_types.id')->whereIn('user_type_id',[1,2,3,4])->where('approve_status','!=',0)->select('users.*')->search($search_term)->paginate($this->pagination);
+        $total_count = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->get()->count();
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->whereIn('user_type_id',[1,2,3,4])->select('users.*')->search($request)->paginate($this->pagination);
         if ($search_term) {
             $customer->appends('search', $search_term);
         }
         //dd($customer);
-        return view('admin.account.customer.index', compact('title', 'customer'));
+        return view('admin.account.customer.index', compact('title', 'customer','country','total_count'));
     }
 
 

@@ -133,9 +133,7 @@ class SystemSettingsController extends Controller
                     'facebook_url' => [
                         'label' => 'Facebook', 'input' => 'text', 'class' => 'form-control', 'required' => '',
                     ],
-                    'twitter_url' => [
-                        'label' => 'Twitter', 'input' => 'text', 'class' => 'form-control',
-                    ],
+
                     'instagram_url' => [
                         'label' => 'Instagram', 'input' => 'text', 'class' => 'form-control',
                     ],
