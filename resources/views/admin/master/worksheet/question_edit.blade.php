@@ -59,7 +59,7 @@
                                         <div class="form-group">
                                             <div class="row" style="margin-bottom:30px;">
                                                 <div class="col-md-1">
-                                                    <div class="form-control">{{ $i }}</div>
+                                                    <div class="form-control">Q{{ $i }}</div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <input class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
@@ -95,7 +95,7 @@
                                             <div class="form-group">
                                                 <div class="row" style="margin-bottom:30px;">
                                                     <div class="col-md-1">
-                                                        <div class="form-control">{{ $i }}</div>
+                                                        <div class="form-control">Q{{ $i }}</div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <input class="form-control"  value="{{ $quest->question_1 }}" name="input_1_old[]" type="hidden">
@@ -132,7 +132,7 @@
                                             <div class="form-group">
                                                 <div class="row" style="margin-bottom:30px;">
                                                     <div class="col-md-1">
-                                                        <div class="form-control">{{ $i }}</div>
+                                                        <div class="form-control">Q{{ $i }}</div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <input class="form-control"  value="{{ $quest->question_1 }}" name="input_1_old[]" type="hidden">
@@ -171,7 +171,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-1">
-                                                <div class="form-control">{{ $i }}</div>
+                                                <div class="form-control">Q{{ $i }}</div>
                                             </div>
                                             <div class="col-md-5">
                                                 <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>
@@ -205,7 +205,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-1">
-                                                <div class="form-control">{{ $i }}</div>
+                                                <div class="form-control">Q{{ $i }}</div>
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $ques->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
@@ -254,7 +254,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-1">
-                                                <div class="form-control">{{ $i }}</div>
+                                                <div class="form-control">Q{{ $i }}</div>
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $ques->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
@@ -300,7 +300,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-1">
-                                                <div class="form-control">{{ $i }}</div>
+                                                <div class="form-control">Q{{ $i }}</div>
                                             </div>
                                             <div class="col-md-5">
                                                 <textarea rows="5" cols="40" name="vertical_1[]">{{ $quest->question_1 }}</textarea>
@@ -336,7 +336,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-1">
-                                                <div class="form-control">{{ $i }}</div>
+                                                <div class="form-control">Q{{ $i }}</div>
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $ques->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
@@ -387,7 +387,7 @@
                                     <div class="form-group">
                                         <div class="row" style="margin-bottom:30px;">
                                             <div class="col-md-1">
-                                                <div class="form-control">{{ $i }}</div>
+                                                <div class="form-control">Q{{ $i }}</div>
                                             </div>
                                             <div class="col-md-4">
                                                 <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>

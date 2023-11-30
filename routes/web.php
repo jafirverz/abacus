@@ -415,6 +415,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('competition/student/list/{id?}/reject', 'CMS\CompetitionController@rejectstudentList')->name('competition.student.reject');
     Route::post('competition/student/list/{id?}/approve', 'CMS\CompetitionController@approvestudentList')->name('competition.student.approve');
 
+    Route::post('competition/student-list/destroy', 'CMS\CompetitionController@studentDelete')->name('competition.student.destroy');
+
     Route::get('comp-result', 'CMS\CompetitionController@uploadCompResult');
     Route::post('comp-result', 'CMS\CompetitionController@compResultUpload')->name('comp.result.store');
 
