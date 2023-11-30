@@ -135,7 +135,7 @@
                         @endphp
                         <div class="col-xl-4 sp-col" id="enablecountry" style="display: none">
                             <label class="lb-1">Country <span class="required">*</span></label>
-                            <select class="selectpicker" name="country_code">
+                            <select data-live-search="true" class="selectpicker" name="country_code">
                                 <option value="">Please Select</option>
                                 @if(getCountry())
                                 @foreach (getCountry() as $key => $item)

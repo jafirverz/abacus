@@ -81,7 +81,7 @@
                           <label class="lb-1">Phone <span class="required">*</span></label>
                           <div class="row sp-col-10">
                               <div class="col-auto sp-col">
-                                  <select class="selectpicker" name="country_code_phone">
+                                  <select data-live-search="true" class="selectpicker" name="country_code_phone">
                                     @foreach($country as $countryy)
                                       <option value="{{ $countryy->phonecode }}" @if($country_code_phone == $countryy->phonecode) selected @endif>+{{ $countryy->phonecode }}</option>
                                     @endforeach
@@ -128,7 +128,7 @@
                   <div class="row sp-col-xl-30">
                       <div class="col-xl-3 sp-col" id="disablecountry">
                           <label class="lb-1">Country <span class="required">*</span></label>
-                          <select class="selectpicker"  disabled>
+                          <select data-live-search="true" class="selectpicker"  disabled>
                               <option>Please Select</option>
                               @if(getCountry())
                               @foreach (getCountry() as $key => $item)
@@ -146,7 +146,7 @@
                       @endphp
                       <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
                           <label class="lb-1">Country <span class="required">*</span></label>
-                          <select class="selectpicker" name="country_code">
+                          <select  data-live-search="true" class="selectpicker" name="country_code">
                               <option value="">Please Select</option>
                               @if(getCountry())
                               @foreach (getCountry() as $key => $item)
@@ -164,13 +164,13 @@
                           <input class="form-control" name="address" type="text" value="{{ $user->address  }}" disabled />
                       </div>
                   </div>
-                  
+
                   <div class="output-2">
                       <button class="btn-1" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
                   </div>
                   </form>
               </div>
-          
+
           </div>
       </div>
     </div>

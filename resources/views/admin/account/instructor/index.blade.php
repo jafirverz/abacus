@@ -68,7 +68,7 @@
                                     <th>Qualified in Year</th>
                                     <th>Highest Mental</th>
                                     <th>Highest Abacus</th>
-
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,6 +109,16 @@
                                     </td>
                                     <td>
                                         {{ $item->highest_abacus_grade ?? '' }}
+                                    </td>
+                                    <td>
+
+                                        @if($item->approve_status==1)
+                                        Active
+                                        @elseif($item->approve_status==2)
+                                        Deactivated
+                                        @else
+                                        -
+                                        @endif
                                     </td>
 
                                 </tr>

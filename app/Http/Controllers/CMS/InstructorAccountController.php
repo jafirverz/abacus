@@ -40,7 +40,7 @@ class InstructorAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::where('user_type_id',5)->where('approve_status','!=',0)->orderBy('id','desc')->paginate($this->pagination);
+        $customer = User::where('user_type_id',5)->where('approve_status','!=',0)->orderBy('name','asc')->paginate($this->pagination);
 
         return view('admin.account.instructor.index', compact('title', 'customer'));
     }

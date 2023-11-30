@@ -77,7 +77,7 @@
                                 <label class="lb-1">Phone <span class="required">*</span></label>
                                 <div class="row sp-col-10">
                                     <div class="col-auto sp-col">
-                                        <select class="selectpicker" disabled>
+                                        <select data-live-search="true" class="selectpicker" disabled>
                                             @foreach($country_phone as $countr)
                                             <option value="{{ $countr->phonecode}}" @if($user->country_code_phone == $countr->phonecode) selected @endif>+{{ $countr->phonecode}}</option>
                                             @endforeach
@@ -98,7 +98,7 @@
                                 <label class="lb-1">Phone <span class="required">*</span></label>
                                 <div class="row sp-col-10">
                                     <div class="col-auto sp-col">
-                                        <select class="selectpicker" name="country_code_phone">
+                                        <select data-live-search="true" class="selectpicker" name="country_code_phone">
                                             @foreach($country as $countr)
                                             <option value="{{ $countr->phonecode}}" @if($country_code_phone == $countr->phonecode) selected @endif>+{{ $countr->phonecode}}</option>
                                             @endforeach
@@ -148,7 +148,7 @@
                         <div class="row sp-col-xl-30" >
                             <div class="col-xl-4 sp-col" id="disableinstructor">
                                 <label class="lb-1">Instructor <span class="required">*</span></label>
-                                <select class="selectpicker" id="instructor" disabled >
+                                <select data-live-search="true" class="selectpicker" id="instructor" disabled >
                                     <option value="" selected>Please Select</option>
                                     @foreach($instructors as $instructor)
                                     <option value="{{$instructor->id}}" @if($instructor->id == $user->instructor_id) selected @endif>{{$instructor->name}}</option>
@@ -181,7 +181,7 @@
 
                             <div class="col-xl-3 sp-col" id="disablecountry">
                                 <label class="lb-1">Country <span class="required">*</span></label>
-                                <select class="selectpicker"  disabled>
+                                <select data-live-search="true" class="selectpicker"  disabled>
                                     <option>Please Select</option>
                                     @foreach($country as $countr)
                                     <option value="{{ $countr->id }}" @if($user->country_code == $countr->id) selected @endif>{{ $countr->country}}</option>
@@ -196,7 +196,7 @@
                             @endphp
                             <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
                                 <label class="lb-1">Country <span class="required">*</span></label>
-                                <select class="selectpicker" name="country_code">
+                                <select data-live-search="true" class="selectpicker" name="country_code">
                                     <option value="">Please Select</option>
                                     @foreach($country as $countr)
                                     <option value="{{ $countr->id }}" @if($country_code == $countr->id && !$errors->has('country_code')) selected @endif>{{ $countr->country}}</option>
