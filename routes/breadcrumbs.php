@@ -173,13 +173,23 @@ Breadcrumbs::for('user_account_crud', function ($trail, $title, $url = '#') {
     $trail->push($title, $url);
 });
 // CONTACT
-Breadcrumbs::for('admin_contact', function ($trail) {
+Breadcrumbs::for('admin_location', function ($trail) {
     $trail->parent('admin_home');
     $trail->push(__('constant.CONTACT'), route('contact.index'));
 });
 
 Breadcrumbs::for('admin_contact_crud', function ($trail, $title, $url = '#') {
     $trail->parent('admin_contact');
+    $trail->push($title, $url);
+});
+//LEARNING_LOCATION
+Breadcrumbs::for('admin_learning_location', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.LEARNING_LOCATION'), route('learning-location.index'));
+});
+
+Breadcrumbs::for('admin_learning_location_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_learning_location');
     $trail->push($title, $url);
 });
 // SLIDER

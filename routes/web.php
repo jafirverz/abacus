@@ -359,8 +359,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     // TOPIC MASTER
-    Route::get('topic/search', 'CMS\TopicController@search')->name('topic.search');
-    Route::resource('topic', 'CMS\TopicController');
+    Route::get('learning-location/search', 'CMS\TopicController@search')->name('learning-location.search');
+    Route::resource('learning-location', 'CMS\TopicController');
 
 
     // WORKSHEET MASTER

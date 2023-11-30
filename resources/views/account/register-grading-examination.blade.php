@@ -30,7 +30,7 @@
                             <label class="lb-1">Student Name
                                 <span class="required">*</span>
                             </label>
-                            <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                            <select data-live-search="true" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                 <option>--Select--</option>
                                 @foreach($students as $key => $value)
                                 <option @if(isset($_GET['student_id']) && $_GET['student_id']== $value->id) selected @endif value="?student_id={{ $value->id }}">{{ $value->name }}</option>

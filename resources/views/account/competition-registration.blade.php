@@ -25,7 +25,7 @@
                             <div class="row sp-col-xl-30">
                                 <div class="col-xl-4 sp-col">
                                     <label class="lb-1">Student Name <span class="required">*</span></label>
-                                    <select class="selectpicker"
+                                    <select data-live-search="true" class="selectpicker"
                                         onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value=''>--Select--</option>
                                         @foreach ($students as $key => $value)
