@@ -15,10 +15,11 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Competition</a></li>
+          <li>{{ $compeTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-          {{-- $worksheet->description --}}
+          {{ $compPaper->description }}
         </div>
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip"

@@ -15,10 +15,11 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
+          <li>{{ $compeTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-          {{-- $worksheet->description --}}
+          {{ $compPaper->description }}
         </div>
         @if($compPaper->time)
           @php
@@ -40,38 +41,80 @@
           <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
           <div class="box-1">
             <div class="xscrollbar">
-              <table class="tb-2 tbtype-1">
+              <table class="tb-2 tbtype-2">
                 <thead>
                   <tr>
-                    <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Add/Subtract</th>
-                    <th>Answer</th>
+                    <th class="wcol-2"></th>
+                    
+                    @php
+                    //if(isset($_GET['s']) && $_GET['s'] == 1){
+                    //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
+                    //}else{
+                    //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+                    //}
+
+                    //$count = count($questionns);
+                    $i = 1;
+                    foreach($questions as $question){
+                    @endphp
+                    <th class="text-center">{{ $i }}</th>
+                    @php
+                    $i++;
+                    }
+                    @endphp
                   </tr>
                 </thead>
                 <tbody>
-                  @php 
-                  $i = 1;
-                  @endphp
-                  @foreach($questions as $ques)
-                  @php
-                  if($ques->symbol == 'add'){
-                    $symbol='+';
-                  }else{
-                    $symbol='-';
-                  }
-                  @endphp
-                  <tr>
-                    <td class="colnumber">{{ $i }}</td>
-                    <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
-                  </tr>
-                  @php 
-                  $i++;
-                  @endphp
-                  @endforeach
                   
+                  <tr>
+                    <td></td>
+                    @php
+                    foreach($questions as $question){
+                    @endphp
+                    <td>
+                      @php
+                      $arrVal = explode('|', $question->question_1);
+                      foreach($arrVal as $val){
+                      @endphp
+                      <div class="row sp-col-5 inrow-1">
+                        <!-- <div class="col-auto sp-col">$</div> -->
+                        <div class="col sp-col">{{ $val }}</div>
+                      </div>
+                      @php
+                      }
+                      @endphp
+                    </td>
+                    @php
+                    }
+                    @endphp
+
+                  </tr>
+
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td class="lb">Answer</td>
+                    @php
+                    foreach($questions as $question){
+                    @endphp
+                    <td class="coltype">
+                      <div class="row sp-col-5 inrow-1">
+                        <!-- <div class="col-auto sp-col">$</div> -->
+                        <div class="col colanswer sp-col"><input class="form-control number-separator" type="text"
+                            value="" id="ans{{ $question->id }}" name="answer[{{ $question->id }}]" /></div>
+                      </div>
+                    </td>
+                    @php
+                    }
+                    @endphp
+                  </tr>
+                </tfoot>
               </table>
+
+
+
+
+              
             </div>
           </div>
           <div class="output-1">
@@ -82,6 +125,18 @@
   </div>	
   </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
 
 @if($compPaper->paper_type == 'actual')
 
