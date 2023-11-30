@@ -446,4 +446,13 @@ class CompetitionController extends Controller
         }
         return redirect()->back()->with('success',  'Assigned');
     }
+
+    public function studentDelete(Request $request){
+        $items = explode(',', $request->multiple_delete);
+        foreach($items as $item){
+            $comStu = CompetitionStudent::where('id', $item)->first();
+            $comStu->delete();
+        }
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  'Competition Student']));
+    }
 }
