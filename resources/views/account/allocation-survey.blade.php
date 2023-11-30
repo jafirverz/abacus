@@ -30,7 +30,7 @@
                                 <label class="lb-1">Student Name <span class="required">*</span></label>
                                 <div class="row">
                                     <div class="col-sm">
-                                        <select name="student_id[]" class="selectpicker" multiple>
+                                        <select data-live-search="true" name="student_id[]" class="selectpicker" multiple>
                                             @if($students->count())
                                             @foreach ($students as $key => $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
