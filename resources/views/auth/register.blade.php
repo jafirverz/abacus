@@ -99,7 +99,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <label class="lb-1">Country <span class="required">*</span></label>
-                                <select class="selectpicker" name="country_code">
+                                <select data-live-search="true" class="selectpicker" name="country_code">
                                     <option value="">Please Select</option>
                                     @foreach($country as $countr)
                                     <option value="{{ $countr->id }}" @if(old('country_code') == $countr->id) selected @endif>{{ $countr->nicename }}</option>
@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <label class="lb-1">Instructor <span class="required">*</span></label>
-                                <select class="selectpicker" name="instructor">
+                                <select data-live-search="true" class="selectpicker" name="instructor">
                                     <option value="">Please Select</option>
                                     @foreach($instructors as $instructor)
                                         <option value="{{$instructor->id}}" @if(old('instructor') == $instructor->id) selected @endif>{{$instructor->name}}</option>

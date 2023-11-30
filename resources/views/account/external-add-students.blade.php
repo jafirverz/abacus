@@ -68,7 +68,7 @@
                             <label class="lb-1">Phone <span class="required">*</span></label>
                             <div class="row sp-col-10">
                                 <div class="col-auto sp-col">
-                                    <select name="country_code_phone" class="selectpicker" >
+                                    <select data-live-search="true" name="country_code_phone" class="selectpicker" >
                                         @foreach($country as $phonecode)
                                             <option value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
                                         @endforeach
@@ -111,7 +111,7 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
-                            <textarea class="form-control" name="learning_locations">{{ old('learning_locations') }}</textarea>
+                            <textarea data-live-search="true" class="form-control" name="learning_locations">{{ old('learning_locations') }}</textarea>
                             @if ($errors->has('learning_locations'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('learning_locations') }}</strong>
