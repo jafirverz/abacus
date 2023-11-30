@@ -28,34 +28,38 @@ class CompetitionController extends Controller
 
     public function paper($id){
         $compPaper = CompetitionPaper::where('id', $id)->first();
+        $compPaperTitle = $compPaper->title;
+        $compId = $compPaper->competition_controller_id;
+        $comDetails = Competition::where('id', $compId)->first();
+        $compeTitle = $comDetails->title;
         if($compPaper){
             if($compPaper->question_template_id == 1){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->groupBy('block')->get();
-                return view('account.competitionAudio', compact('questions', 'compPaper'));
+                return view('account.competitionAudio', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
             if($compPaper->question_template_id == 2){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionVideo', compact('questions', 'compPaper'));
+                return view('account.competitionVideo', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
             if($compPaper->question_template_id == 3){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionNumber', compact('questions', 'compPaper'));
+                return view('account.competitionNumber', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
             if($compPaper->question_template_id == 4){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionAddSubtract', compact('questions', 'compPaper'));
+                return view('account.competitionAddSubtract', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
             if($compPaper->question_template_id == 5){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionMultiplyDivide', compact('questions', 'compPaper'));
+                return view('account.competitionMultiplyDivide', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
             if($compPaper->question_template_id == 6){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionChallenge', compact('questions', 'compPaper'));
+                return view('account.competitionChallenge', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
             if($compPaper->question_template_id == 7){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionMix', compact('questions', 'compPaper'));
+                return view('account.competitionMix', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
             }
         }else{
             return abort(404);

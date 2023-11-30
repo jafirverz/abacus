@@ -15,10 +15,11 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
+          <li>{{ $compeTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-          {{-- $worksheet->description --}}
+          {{ $compPaper->description ?? '' }}
         </div>
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
