@@ -49,7 +49,7 @@ class CompetitionQuestionsController extends Controller
     {
         //
         $title = $this->title;
-        $papers = CompetitionPaper::get();
+        $papers = CompetitionPaper::orderBy('id', 'desc')->get();
         return view('admin.competition_question.create', compact('title', 'papers'));
     }
 
