@@ -65,13 +65,11 @@
                                
 
                                 <div class="form-group">
-                                    <label for="title">Category</label>
-                                    <select name="category[]" class="form-control" multiple>
-                                        <option value="">-- Select --</option>
-                                        @foreach($competitionCategory as $cate)
-                                        <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="title">Category</label><br>
+                                    @foreach($competitionCategory as $cate)
+                                    <input type="checkbox" name="category[]" value="{{ $cate->id }}"> {{ $cate->category_name }} <br>
+                                    @endforeach
+                                    
                                     @if ($errors->has('category'))
                                         <span class="text-danger d-block">
                                         <strong>{{ $errors->first('category') }}</strong>

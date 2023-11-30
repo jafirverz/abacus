@@ -65,6 +65,7 @@
                                             <th>Action</th>
                                             <th>Title</th>
                                             <th>Date of Competition</th>
+                                            <th>Competition Type</th>
                                             <th>Stauts</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -92,6 +93,7 @@
                                             </td>
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->date_of_competition }}</td>
+                                            <td>{{ ucwords($item->competition_type) }}</td>
                                             <td>@if($item->status == 1) Published @elseif($item->status == 2) Draft @endif</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>

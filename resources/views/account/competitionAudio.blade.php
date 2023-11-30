@@ -15,8 +15,9 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Competition</a></li>
-          {{-- <li><strong>{{ $worksheet->title }}</strong></li> --}}
+          <li>{{ $compeTitle }}</li>
+          <li>{{ $categoryTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         @if($compPaper->time)
           @php

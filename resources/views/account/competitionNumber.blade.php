@@ -15,10 +15,12 @@
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <li><a href="{{ url('') }}">Preparatory Level</a></li>
+          <li>{{ $compeTitle }}</li>
+          <li>{{ $categoryTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-          {{-- $worksheet->description --}}
+          {{ $compPaper->description ?? '' }}
         </div>
         <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
           @csrf
