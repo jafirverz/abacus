@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Competition;
+use App\CompetitionCategory;
 use App\CompetitionPaper;
 use App\CompetitionPaperQuestionSubmitted;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionQuestions;
+use App\CompetitionStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,34 +34,38 @@ class CompetitionController extends Controller
         $compId = $compPaper->competition_controller_id;
         $comDetails = Competition::where('id', $compId)->first();
         $compeTitle = $comDetails->title;
+        $compStudent = CompetitionStudent::where('competition_controller_id', $compId)->where('user_id', Auth::user()->id)->first();
+        $compStudentCateogyId = $compStudent->category_id;
+        $compC = CompetitionCategory::where('id', $compStudentCateogyId)->first();
+        $categoryTitle = $compC->category_name;
         if($compPaper){
             if($compPaper->question_template_id == 1){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->groupBy('block')->get();
-                return view('account.competitionAudio', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionAudio', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 2){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionVideo', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionVideo', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 3){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionNumber', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionNumber', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 4){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionAddSubtract', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionAddSubtract', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 5){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionMultiplyDivide', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionMultiplyDivide', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 6){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionChallenge', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionChallenge', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 7){
                 $questions = CompetitionQuestions::where('competition_paper_id', $id)->get();
-                return view('account.competitionMix', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle'));
+                return view('account.competitionMix', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
         }else{
             return abort(404);
