@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\QuestionTemplate;
+use App\User;
 use App\WorksheetQuestionSubmitted;
 use App\WorksheetSubmitted;
 use Illuminate\Http\Request;
@@ -108,16 +109,31 @@ class QuestionAttempt extends Controller
         $quesTemp = $request->quesTemp ?? '';
 
         //$q = WorksheetSubmitted::query();
-
-        if ($request->quesTemp) {
+        $allWorksheetSubmitted = array();
+        if ($request->quesTemp && empty($request->searchname)) {
+            
             // simple where here or another scope, whatever you like
             $allWorksheetSubmitted = DB::table('worksheet_submitteds')
                 ->where('question_template_id', $quesTemp)
-                 ->select('user_id', DB::raw('count(*) as total'))
+                 ->select('user_id','level_id', DB::raw('count(*) as total'))
+                 ->groupBy('level_id')
+                 ->groupBy('user_id')
+                 ->get();
+        }elseif($request->quesTemp && !empty($request->searchname)){
+            if($request->searchname){
+                $user = User::where('name', 'like', '%'.$request->searchname.'%')->pluck('id')->toArray();
+            }else{
+                $user = array();
+            }
+            $allWorksheetSubmitted = DB::table('worksheet_submitteds')
+                ->where('question_template_id', $quesTemp)
+                ->whereIn('user_id', $user)
+                 ->select('user_id','level_id', DB::raw('count(*) as total'))
+                 ->groupBy('level_id')
                  ->groupBy('user_id')
                  ->get();
         }
-
+        // dd($allWorksheetSubmitted);
         $title = 'Question Attempted';
         $quesTemp = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         //dd($allWorksheetSubmitted);
