@@ -26,13 +26,26 @@
             </select>
           </div>
 
+          @php
+          if(!empty($_GET['start_date'])){
+            $starDate = $_GET['start_date'];
+          }else{
+            $starDate = '';
+          }
+
+          if(!empty($_GET['end_date'])){
+            $enddDate = $_GET['end_date'];
+          }else{
+            $enddDate = '';
+          }
+          @endphp
 
             <div class="col-lg-4"><label>Start date:</label>
-              <input type="text" name="start_date" value="" class="form-control datepicker1">
+              <input type="text" name="start_date" value="{{ $starDate }}" class="form-control datepicker1">
             </div>
 
             <div class="col-lg-4"><label>End date:</label>
-              <input type="text" name="end_date" value="" class="form-control datepicker1">
+              <input type="text" name="end_date" value="{{ $enddDate }}" class="form-control datepicker1">
             </div>
             
 
@@ -104,6 +117,7 @@
                       </th>
                       <th>S/N</th>
                       <th>Student Name</th>
+                      <th>Item Purchased</th>
                       <th>Amount</th>
                       <th>Order Date</th>
                     </tr>
@@ -118,7 +132,8 @@
                     @php 
                     
                     $users = \App\User::where('id', $value->user_id)->first();
-                    
+                    $orderDetails = \App\OrderDetail::where('order_id', $value->id)->pluck('name')->toArray();
+                    $orderDetails = implode(', ',$orderDetails);
                     @endphp
                     <tr>
                         <td>
@@ -128,8 +143,9 @@
                               <label for="checkbox-{{ ($i) }}"
                                   class="custom-control-label">&nbsp;</label></div>
                         </td>
-                        <td>{{ ($i) }}</td>
+                        <td>{{ $i }}</td>
                         <td>{{ $users->name }}</td>
+                        <td>{{ $orderDetails ?? '' }}</td>
                         <td>{{ $value->total_amount ?? '' }}</td>
                         <td>{{ $value->created_at ?? '-' }}</td>
 
@@ -148,7 +164,7 @@
                 </tbody>
                 </table>
               </div>
-
+              {{ $allOrders->links() }}
             </div>
           </div>
         </div>

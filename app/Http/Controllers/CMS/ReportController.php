@@ -198,8 +198,8 @@ class ReportController extends Controller
         // if ($request->instructor) {
         //     $q->whereIn('instructor_id', $instructor);
         // }
-
-        $allOrders = $q->get();
+        $q->orderBy('id', 'desc');
+        $allOrders = $q->paginate(30);
         //$allOrders = array_unique($allOrders);
         //$allUsers = User::whereIn('id', $allOrders)->get();
         $title = 'Sales Report';
