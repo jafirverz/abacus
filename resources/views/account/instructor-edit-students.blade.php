@@ -68,7 +68,7 @@
                             <label class="lb-1">Phone <span class="required">*</span></label>
                             <div class="row sp-col-10">
                                 <div class="col-auto sp-col">
-                                    <select name="country_code_phone" class="selectpicker" >
+                                    <select data-live-search="true" name="country_code_phone" class="selectpicker" >
                                         @foreach($country as $phonecode)
                                             <option value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
                                         @endforeach
@@ -103,7 +103,7 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Country <span class="required">*</span></label>
-                            <select class="selectpicker"  name="country_code">
+                            <select data-live-search="true" class="selectpicker"  name="country_code">
                                 @if(getCountry())
                                 @foreach (getCountry() as $key => $item)
                                 <option value="{{ $key }}" @if(old('country_code', $customer->country_code)==$key) selected @endif>{{ $item }}
@@ -123,7 +123,7 @@
                             @endphp
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Level <span class="required">*</span></label>
-                            <select class="selectpicker"  name="level[]" multiple>
+                            <select data-live-search="true" class="selectpicker"  name="level[]" multiple>
                                 @foreach($levels as $level)
                                 <option value="{{ $level->id }}" @if(isset($level_ids) && in_array($level->id,$level_ids)) selected @endif>{{ $level->title }}
                                 </option>
@@ -141,7 +141,7 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
-                            <select name="learning_locations" class="selectpicker" data-title="Select Option">
+                            <select data-live-search="true" name="learning_locations" class="selectpicker" data-title="Select Option">
                                 @if($locations)
                                 @foreach($locations as $item)
                                 <option @if(old('learning_locations',$customer->learning_locations)==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>

@@ -20,7 +20,7 @@
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
-                                        <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"> @if($locations)
+                                        <select data-live-search="true" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"> @if($locations)
                                             <option value="">Select Location</option>
                                         @foreach($locations as $item)
                                         <option @if(isset($_GET['learning_locations']) && $_GET['learning_locations']==$item->id) selected @endif  value="?learning_locations={{ $item->id }}">{{ $item->title }}</option>
@@ -33,7 +33,7 @@
                             <div class="col-md-3 col-sm mt-767-15">
                                 <div class="ggroup">
                                     <div class="selectwrap">
-                                        <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                        <select data-live-search="true" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                                 <option value="">Select Level</option>
                                                 @foreach($levels as $level)
                                                 <option @if(isset($_GET['level_id']) && $_GET['level_id']==$level->id) selected @endif value="?level_id={{ $level->id }}">{{ $level->title }}</option>
