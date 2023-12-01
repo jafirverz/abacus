@@ -25,13 +25,13 @@
         <div class="row mb-40">
           <div class="col-lg-7 col-sm-6">
             <label class="lb-1">Name of Student:</label>
-            <input class="form-control" required type="text" name="name" placeholder="enter student name" />
+            <input class="form-control" required type="text" value="{{ Auth::user()->name }}" name="name" placeholder="enter student name" />
           </div>
           <div class="col-lg-5 col-sm-6">
             <label class="lb-1">Date</label>
             <div class="date-wrap">
               <i class="fa-solid fa-calendar-days ico"></i>
-              <input class="form-control inptype-1 required" name="date" type="text" placeholder="dd/mm/yyyy" />
+              <input class="form-control inptype-1 required" name="date" value="{{ date('Y-m-d') }}" type="text" placeholder="dd/mm/yyyy" />
             </div>
           </div>
         </div>

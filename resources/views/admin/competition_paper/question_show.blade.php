@@ -53,11 +53,15 @@
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 @php 
                                 $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                $i = 1;
                                 @endphp
 
                                 @foreach($compPaperQuestion as $questionss)
                                 <div class="form-group">
                                     <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="form-control">Q{{ $i }}</div>
+                                        </div>
                                         <div class="col-md-4">
                                             <a href="{{ url('/') }}/upload-file/{{  $questionss->question_1 }}" target="_blank">{{ $questionss->question_1 }} </a>
                                             <input class="form-control" required value="{{  $questionss->question_1 }}" name="input_1_old[]" placeholder="" type="hidden">
@@ -68,12 +72,15 @@
                                         <div class="col-md-2">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks_old[]" placeholder="Marks" type="text">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->block }}" name="block_old[]" placeholder="Block" type="text">
                                         </div>
                                         
                                     </div>
                                 </div>
+                                @php 
+                                $i++;
+                                @endphp
                                 @endforeach
                                 
 
@@ -118,12 +125,15 @@
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     @php 
                                     $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    $i = 1;
                                     @endphp
 
                                     @foreach($compPaperQuestion as $questionss)
                                     <div class="form-group">
                                     <div class="row">
-
+                                        <div class="col-md-1">
+                                            <div class="form-control">Q{{ $i }}</div>
+                                        </div>
                                         <div class="col-md-2">
                                             <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
                                         </div>
@@ -140,13 +150,16 @@
                                         <div class="col-md-4">
                                             <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
                                         </div>
                                         
                                         
                                     </div>
                                     </div>
+                                    @php 
+                                    $i++;
+                                    @endphp
                                     @endforeach
                                     
 
@@ -157,12 +170,15 @@
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     @php 
                                     $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    $i = 1;
                                     @endphp
 
                                     @foreach($compPaperQuestion as $questionss)
                                     <div class="form-group">
                                     <div class="row">
-
+                                        <div class="col-md-1">
+                                            <div class="form-control">Q{{ $i }}</div>
+                                        </div>
                                         <div class="col-md-2">
                                             <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
                                         </div>
@@ -181,13 +197,16 @@
                                         <div class="col-md-4">
                                             <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
                                         </div>
                                         
                                         
                                     </div>
                                     </div>
+                                    @php 
+                                    $i++;
+                                    @endphp
                                     @endforeach
                                     
 
@@ -198,12 +217,15 @@
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     @php 
                                     $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    $i=1;
                                     @endphp
 
                                     @foreach($compPaperQuestion as $questionss)
                                     <div class="form-group">
                                     <div class="row">
-
+                                        <div class="col-md-1">
+                                            <div class="form-control">Q{{ $i }}</div>
+                                        </div>
                                         <div class="col-md-2">
                                             <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
                                         </div>
@@ -220,13 +242,16 @@
                                         <div class="col-md-4">
                                             <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
                                         </div>
                                         
                                         
                                     </div>
                                     </div>
+                                    @php 
+                                    $i++;
+                                    @endphp
                                     @endforeach
                                     
 
