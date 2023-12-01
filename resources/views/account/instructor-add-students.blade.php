@@ -104,12 +104,10 @@
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Country <span class="required">*</span></label>
                             <select data-live-search="true" class="selectpicker"  name="country_code">
-                                @if(getCountry())
-                                @foreach (getCountry() as $key => $item)
-                                <option value="{{ $key }}" @if(old('country_code')==$key) selected @endif>{{ $item }}
+
+                                <option value="{{ Auth::user()->country_code }}" @if(old('country_code')==Auth::user()->country_code) selected @endif>{{ getCountry(Auth::user()->country_code) }}
                                 </option>
-                                @endforeach
-                                @endif
+
                             </select>
                             @if ($errors->has('country_code'))
                                     <span class="text-danger d-block">

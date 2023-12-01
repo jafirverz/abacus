@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -253,6 +254,27 @@ class RegisterController extends Controller
         $country = Country::orderBy('country', 'asc')->get();
         $country_phone = Country::orderBy('phonecode', 'asc')->get();
         return view('auth.register',compact("page","instructors", 'country','country_phone'));
+    }
+
+    public function instructor(Request $request)
+    {
+        //DB::enableQueryLog();
+        $intructor = User::join('country','users.country_code','country.id')->select('users.*')->where('users.country_code',$request->id)->where('user_type_id',5)->get();
+        //dd($intructor);
+        //$query = DB::getQueryLog();
+
+
+        $html='';
+        $html.='<label class="lb-1">Instructor <span class="required">*</span></label>';
+        $html.='<select data-live-search="true" class="selectpicker" name="instructor" id="instructor">';
+        $html.='<option value="">Please Select</option>';
+        foreach( $intructor as $ins)
+        {
+        $html.='<option value="'.$ins->id.'">'.$ins->name.'</option>';
+        }
+        $html.='</select>';
+        //dd($html);
+        echo $html;die;
     }
 
 }

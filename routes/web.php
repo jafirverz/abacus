@@ -50,7 +50,7 @@ Auth::routes(['verify' => true]);
 
 Auth::routes();
 Route::get('/', 'PagesFrontController@index');
-
+Route::post('/country/instructor', 'Auth\RegisterController@instructor')->name('country.instructor');
 Route::get('/forget-account-id', 'Auth\LoginController@forgetaccountid');
 Route::post('/forget-account-id', 'Auth\LoginController@checkaccountid')->name('forgetaccountid');
 
