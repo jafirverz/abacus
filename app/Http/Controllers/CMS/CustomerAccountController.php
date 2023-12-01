@@ -269,6 +269,7 @@ class CustomerAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd(url('/login'));
         $fields = [
             'email' =>  'required|email',
             'name' => 'required|string',
@@ -300,6 +301,16 @@ class CustomerAccountController extends Controller
             $gender = 'Female';
             }
         $customer = User::find($id);
+        
+        $flag = 0;
+        $userStatus = $customer->approve_status;
+        if($userStatus == 1){
+            // No need to send email for user account activation
+        }elseif($userStatus == 0 && $request->status == 1 ){
+            $flag = 1;
+        }
+
+
         if($request->instructor_id!='' && $request->status==1 && $customer->approve_status==2)
         {
           // REACTIVATED EMAIL
@@ -375,6 +386,35 @@ class CustomerAccountController extends Controller
         }
         $customer->updated_at = Carbon::now();
         $customer->save();
+
+
+        if($flag == 1){
+            // User email for accout activation
+            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_USER_ACCOUNT_ACTIVATION'));
+            // $admins = Admin::get();
+
+            if ($email_template) {
+                $data = [];
+                $data['email_sender_name'] = systemSetting()->email_sender_name;
+                $data['from_email'] = systemSetting()->from_email;
+                $data['to_email'] = [$customer->email];
+                $data['cc_to_email'] = [];
+                $data['subject'] = $email_template->subject;
+                $url = url('/login');
+                $key = ['{{url}}'];
+                $value = [$url];
+
+                $newContents = str_replace($key, $value, $email_template->content);
+
+                $data['contents'] = $newContents;
+                try {
+                    $mail = Mail::to($customer->email)->send(new EmailNotification($data));
+                } catch (Exception $exception) {
+                    dd($exception);
+                }
+
+            }
+        }
 
         return redirect()->route('customer-account.index')->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
