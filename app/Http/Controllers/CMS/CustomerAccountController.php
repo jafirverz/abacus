@@ -84,7 +84,7 @@ class CustomerAccountController extends Controller
         {
             if($this->user->admin_role==2)
             {
-            $instructors = User::where('country_code',$this->user->country_id)-where('user_type_id', 5)->orderBy('id','desc')->get();
+            $instructors = User::where('country_code',$this->user->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
             }
             else
             {
