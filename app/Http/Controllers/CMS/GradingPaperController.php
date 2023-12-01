@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\GradingPaper;
+use App\Grade;
 use App\GradingPaperQuestion;
 use App\QuestionTemplate;
 use App\Traits\SystemSettingTrait;
@@ -51,7 +52,8 @@ class GradingPaperController extends Controller
     {
         $title = $this->title;
         $templates = QuestionTemplate::get();
-        return view('admin.master.grading-paper.create', compact('title','templates'));
+        $grades = Grade::get();
+        return view('admin.master.grading-paper.create', compact('title','templates','grades'));
     }
 
     /**
@@ -64,6 +66,8 @@ class GradingPaperController extends Controller
     {
         $fields=[
             'title'  =>  'required',
+            'exam_grade'  =>  'required',
+            'type'  =>  'required',
             'question_type'  =>  'required',
             'time' => 'required_if:timer,==,Yes',
         ];
@@ -75,6 +79,8 @@ class GradingPaperController extends Controller
 
         $paper = new GradingPaper();
         $paper->title = $request->title;
+        $paper->exam_grade = $request->exam_grade ?? '';
+        $paper->type = $request->type ?? '';
         $paper->timer = $request->timer ?? '';
         $paper->time = $request->time ?? '';
         $paper->question_type = $request->question_type;
@@ -215,7 +221,8 @@ class GradingPaperController extends Controller
         $title = $this->title;
         $paper = GradingPaper::findorfail($id);
         $templates = QuestionTemplate::get();
-        return view('admin.master.grading-paper.edit', compact('title', 'paper','templates'));
+        $grades = Grade::get();
+        return view('admin.master.grading-paper.edit', compact('title', 'paper','templates','grades'));
     }
 
     /**
@@ -229,6 +236,8 @@ class GradingPaperController extends Controller
     {
         $fields=[
             'title'  =>  'required',
+            'exam_grade'  =>  'required',
+            'type'  =>  'required',
             'question_type'  =>  'required',
             'time' => 'required_if:timer,==,Yes',
         ];
@@ -240,6 +249,8 @@ class GradingPaperController extends Controller
 
         $paper = GradingPaper::findorfail($id);
         $paper->title = $request->title;
+        $paper->exam_grade = $request->exam_grade ?? '';
+        $paper->type = $request->type ?? '';
         $paper->question_type = $request->question_type;
         $paper->timer = $request->timer ?? '';
         $paper->time = $request->time ?? '';

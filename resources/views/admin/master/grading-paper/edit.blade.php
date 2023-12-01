@@ -24,11 +24,43 @@
                             <div class="card-body">
 
                                 <div class="form-group">
+                                    <label for="exam_grade">Exam Grade</label>
+                                    <select  id="exam_grade"  required class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if ($grades)
+                                        @foreach ($grades as $item)
+                                        <option value="{{ $item->id }}" @if(old('exam_grade', $paper->exam_grade)==$item->id) selected @endif> {{ $item->title }} </option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+
+                                    @if ($errors->has('exam_grade'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('exam_grade') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                     <label for="">Title</label>
                                     <input type="text" name="title" class="form-control" value="{{ old('title', $paper->title) }}">
                                     @if ($errors->has('title'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="type">Paper Type</label>
+                                    <select name="type" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option @if(old('type', $paper->type)==1) selected @endif value="1">Actual</option>
+                                        <option @if(old('type', $paper->type)==2) selected @endif value="2">Practice</option>
+                                    </select>
+                                    @if ($errors->has('type'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('type') }}</strong>
+
                                     </span>
                                     @endif
                                 </div>
@@ -55,7 +87,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="question_type">Type</label>
+                                    <label for="question_type">Question Template</label>
                                     <select disabled="disabled"  id="question_type" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
                                         @if ($templates)
