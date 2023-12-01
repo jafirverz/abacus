@@ -221,7 +221,7 @@ if (!function_exists('getPageList')) {
         $i = 0;
         foreach ($country_list as $country) {
             $i++;
-            $country_arr[$i] =    $country->country;
+            $country_arr[$country->id] =    $country->country;
         }
         if ($id) {
             if(isset($country_arr[$id]))
@@ -235,6 +235,14 @@ if (!function_exists('getPageList')) {
 
         }
         return $country_arr;
+    }
+
+    function getFranchiseCountry()
+    {
+        $country_list = Admin::join('country','admins.country_id','country.id')->select('country.*')->where('admins.admin_role',2)->groupBy('admins.country_id')->orderBy('country', 'asc')->get();
+
+
+        return $country_list;
     }
 
     function get_category_paper_list($comprtetion_id,$category)

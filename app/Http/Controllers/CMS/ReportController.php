@@ -245,7 +245,7 @@ class ReportController extends Controller
 
         $q = GradingStudentResults::query();
         $q->join('users','grading_student_results.user_id','users.id');
-        $q->select('grading_student_results.*','users.learning_locations','users.name','users.country_code');
+        $q->select('grading_student_results.*','users.learning_locations','users.name','users.country_code','users.instructor_id');
         if ($request->name) {
             $q->where('users.name', 'like', '%'.$request->name.'%');
         }

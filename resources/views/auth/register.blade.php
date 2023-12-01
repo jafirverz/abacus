@@ -99,9 +99,9 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <label class="lb-1">Country <span class="required">*</span></label>
-                                <select data-live-search="true" class="selectpicker" name="country_code">
+                                <select data-live-search="true" class="selectpicker" onchange="getInstructor(this.value)" name="country_code">
                                     <option value="">Please Select</option>
-                                    @foreach($country as $countr)
+                                    @foreach(getFranchiseCountry() as $countr)
                                     <option value="{{ $countr->id }}" @if(old('country_code') == $countr->id) selected @endif>{{ $countr->nicename }}</option>
                                     @endforeach
                                 </select>
@@ -111,9 +111,9 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" id="showIns">
                                 <label class="lb-1">Instructor <span class="required">*</span></label>
-                                <select data-live-search="true" class="selectpicker" name="instructor">
+                                <select data-live-search="true" class="selectpicker" name="instructor" id="instructor">
                                     <option value="">Please Select</option>
                                     @foreach($instructors as $instructor)
                                         <option value="{{$instructor->id}}" @if(old('instructor') == $instructor->id) selected @endif>{{$instructor->name}}</option>
@@ -138,6 +138,24 @@
             </div>
         </div>
     </main>
-
+<script>
+    function getInstructor(id)
+    {
+       var token=$('meta[name="csrf-token"]').attr('content');
+       $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url : "{{ url('country/instructor') }}",
+        data : {'token' :token ,'id':id},
+        type : 'POST',
+        dataType : 'html',
+        success : function(result){
+            $('#showIns').html(result);
+            $('.selectpicker').selectpicker('refresh');
+        }
+    });
+    }
+</script>
 
 @endsection
