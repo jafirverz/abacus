@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th class="wcol-1 text-center">NO</th>
-                                <th class="wcol-2 text-center">Multiplication</th>
+                                <th class="wcol-2 text-center">Question</th>
                                 <th class="wcol-3 text-center">Answer</th>
                                 <th>Correction</th>
                             </tr>

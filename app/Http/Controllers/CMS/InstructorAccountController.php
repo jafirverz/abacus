@@ -40,8 +40,14 @@ class InstructorAccountController extends Controller
     public function index()
     {
         $title = $this->title;
+        if($this->user->admin_role==2)
+        {
+        $customer = User::where('user_type_id',5)->where('country_code',$this->user->country_id)->where('approve_status','!=',0)->orderBy('name','asc')->paginate($this->pagination);
+        }
+        else
+        {
         $customer = User::where('user_type_id',5)->where('approve_status','!=',0)->orderBy('name','asc')->paginate($this->pagination);
-
+        }
         return view('admin.account.instructor.index', compact('title', 'customer'));
     }
 
@@ -54,8 +60,18 @@ class InstructorAccountController extends Controller
     {
         $title = $this->title;
         $instructors = User::orderBy('id','desc')->get();
-        $country = Country::orderBy('country', 'asc')->get();
-        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        if($this->user->admin_role==2)
+        {
+            $country = Country::where('id',$this->user->country_id)->orderBy('country', 'asc')->get();
+            $country_phone = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
+        }
+        else
+        {
+            $country = Country::orderBy('country', 'asc')->get();
+            $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        }
+
+        //dd($this->user->admin_role);
         return view('admin.account.instructor.create', compact('title', 'instructors','country','country_phone'));
     }
 
@@ -209,8 +225,17 @@ class InstructorAccountController extends Controller
         $title = $this->title;
         $customer = User::findorfail($id);
         $instructors = User::orderBy('id','desc')->get();
-        $country = Country::orderBy('country', 'asc')->get();
-        $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        if($this->user->admin_role==2)
+        {
+            $country = Country::where('id',$this->user->country_id)->orderBy('country', 'asc')->get();
+            $country_phone = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
+        }
+        else
+        {
+            $country = Country::orderBy('country', 'asc')->get();
+            $country_phone = Country::orderBy('phonecode', 'asc')->get();
+        }
+
         return view('admin.account.instructor.edit', compact('title', 'customer','instructors','country','country_phone'));
     }
 
@@ -298,7 +323,16 @@ class InstructorAccountController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
+        if($this->user->admin_role==2)
+        {
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->where('country_code',$this->user->country_id)->where('user_type_id',5)->select('users.*')->search($search_term)->paginate($this->pagination);
+
+        }
+        else
+        {
         $customer = User::join('user_types','users.user_type_id','user_types.id')->where('user_type_id',5)->select('users.*')->search($search_term)->paginate($this->pagination);
+
+        }
         if ($search_term) {
             $customer->appends('search', $search_term);
         }

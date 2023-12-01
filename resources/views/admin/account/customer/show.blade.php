@@ -45,7 +45,7 @@
                                 <label for="">Address</label>: {{ $customer->address ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="">Country</label>: {{ getCountry($customer->country_code) ?? '' }}
+                                <label for="">Country</label>: @if($customer->country_code!='') {{ getCountry($customer->country_code) ?? '' }} @endif
                             </div>
                             <div class="form-group">
                                 <label for="">Instructor</label>: {{ $instructors->name ?? '' }}
@@ -96,7 +96,6 @@
                         <table class="tb-1">
                         <thead>
                             <tr>
-                            <th>&nbsp;</th>
                             <th>Year</th>
                             <th>Events</th>
                             <th>Results</th>
@@ -106,7 +105,6 @@
                             @if(isset($merged) && count($merged)>0)
                             @foreach($merged as $paperSubmited)
                             <tr>
-                            <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
                             <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date }} @else {{ $paperSubmited->competition->date_of_competition }} @endif
 
                             </strong></td>

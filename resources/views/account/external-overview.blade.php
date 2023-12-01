@@ -50,7 +50,7 @@
                           <label class="lb-1">Date of Birth <span class="required">*</span></label>
                           <div class="date-wrap disabled">
                               <i class="fa-solid fa-calendar-days ico"></i>
-                              <input class="form-control" type="text" name="dob" value="{{old('dob', date('d/m/Y', strtotime($user->dob))) ?? ''}}" disabled />
+                              <input class="form-control" type="text" name="dob" value="{{old('dob', $user->dob) ?? ''}}" disabled />
                               @if ($errors->has('dob'))
                               <span class="text-danger">&nbsp;{{ $errors->first('dob') }}</span>
                           @endif

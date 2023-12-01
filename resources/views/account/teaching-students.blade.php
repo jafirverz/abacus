@@ -11,12 +11,12 @@
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="row title-wrap-2 mt-30">
-                    <div class="col-lg-4 mt-20">
+                    <div class="col-lg-12 mt-20">
                         <h1 class="title-3">My Students</h1>
                     </div>
-                    <div class="col-lg-8 mt-20 lastcol">
+                    <div class="col-lg-12 mt-20 lastcol">
                         <div class="row input-group">
-                            <div class="col-md-3 col-sm mt-767-15">
+                            <div class="col-md-4 col-sm mt-767-15">
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
@@ -31,31 +31,25 @@
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm mt-767-15">
-                                <div class="ggroup">
-                                    <div class="selectwrap">
                                         <select data-live-search="true" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                                 <option value="">Select Level</option>
                                                 @foreach($levels as $level)
                                                 <option @if(isset($_GET['level_id']) && $_GET['level_id']==$level->id) selected @endif value="?level_id={{ $level->id }}">{{ $level->title }}</option>
                                                 @endforeach
                                         </select>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="col-md-2 col-sm mt-767-15">
-                                <div class="ggroup">
-                                    <div class="selectwrap">
+
                                         <select class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                                 <option value="">Select Status</option>
 
                                                 <option @if(isset($_GET['status']) && $_GET['status']==1) selected @endif value="?status=1">Activated</option>
                                                 <option @if(isset($_GET['status']) && $_GET['status']==2) selected @endif value="?status=2">Pending</option>
                                         </select>
-                                    </div>
-                                </div>
+
                             </div>
-                            <div class="col-md-4 col-sm-auto mt-767-15">
+                            <div class="col-md-3 col-sm-auto mt-767-15">
                                 <a class="btn-1" href="{{ route('instructor.add-students') }}">Add New Student <i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
