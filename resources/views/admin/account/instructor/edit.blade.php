@@ -114,12 +114,12 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="country_code">Countr <span class="required">*</span>y</label>
+                                    <label for="country_code">Country <span class="required">*</span></label>
                                     <select name="country_code" class="form-control" id="country_code">
                                         <option value="">-- Select --</option>
-                                        @if(getCountry())
-                                        @foreach (getCountry() as $key => $item)
-                                        <option value="{{ $key }}" @if(old('country_code', $customer->country_code)==$key) selected @endif>{{ $item }}
+                                        @if($country)
+                                        @foreach ($country as $key => $item)
+                                        <option value="{{ $item->id }}" @if(old('country_code', $customer->country_code)==$item->id) selected @endif>{{ $item->country }}
                                         </option>
                                         @endforeach
                                         @endif

@@ -53,6 +53,7 @@
 
                                                 </td>
                                                 <td>
+                                                    @if($role->id!=2)
                                                     <form action="{{ url('admin/roles-and-permission/delete') }}" method="post">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $role->id }}">
@@ -60,6 +61,7 @@
                                                             <i aria-hidden="true" class="fa fa-trash"></i>
                                                         </button>
                                                     </form>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         </table>

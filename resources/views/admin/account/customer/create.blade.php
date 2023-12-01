@@ -126,7 +126,7 @@
 
                                 <div class="form-group">
                                     <label for="">Level <span class="required">*</span></label>
-                                    <select name="level[]" class="form-control" tabindex="-98" multiple>
+                                    <select name="level[]" class="selectpicker form-control" tabindex="-98" multiple>
                                         @foreach($levels as $level)
                                         <option value="{{ $level->id }}" @if(old('level')==$level->id) selected @endif>{{ $level->title }}
                                         </option>

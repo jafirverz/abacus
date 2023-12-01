@@ -12,11 +12,13 @@
     <link rel="stylesheet" href="{{ asset('stisla-theme/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla-theme/css/stisla.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla-theme/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('stisla-theme/css/bootstrap-select.css') }}">
     <!-- daterange picker -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script src="{{ asset('stisla-theme/js/app.js') }}"></script>
+    <script src="{{ asset('stisla-theme/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('tinymce/tinymce.js') }}"></script>
 
 

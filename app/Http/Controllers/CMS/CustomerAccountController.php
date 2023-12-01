@@ -45,10 +45,20 @@ class CustomerAccountController extends Controller
     public function index()
     {
         $title = $this->title;
-        $customer = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->paginate($this->pagination);
-        $total_count = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->get()->count();
-        $country = Country::orderBy('country','asc')->get();
+        if($this->user->admin_role==2)
+        {
+            $customer = User::orderBy('id','desc')->where('country_code',$this->user->country_id)->whereIn('user_type_id',[1,2,3,4])->paginate($this->pagination);
+            $total_count = User::orderBy('id','desc')->where('country_code',$this->user->country_id)->whereIn('user_type_id',[1,2,3,4])->get()->count();
+            $country = Country::where('id',$this->user->country_id)->orderBy('country','asc')->get();
+        }
+        else
+        {
+            $customer = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->paginate($this->pagination);
+            $total_count = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->get()->count();
+            $country = Country::orderBy('country','asc')->get();
+        }
         return view('admin.account.customer.index', compact('title', 'customer','country','total_count'));
+
     }
 
     /**
@@ -61,14 +71,36 @@ class CustomerAccountController extends Controller
         $title = $this->title;
         if(isset($_GET['user_type']) && $_GET['user_type']==4)
         {
+            if($this->user->admin_role==2)
+            {
+            $instructors = User::where('country_code',$this->user->country_id)-where('user_type_id', 6)->orderBy('id','desc')->get();
+            }
+            else
+            {
             $instructors = User::where('user_type_id', 6)->orderBy('id','desc')->get();
+            }
         }
         else
         {
+            if($this->user->admin_role==2)
+            {
+            $instructors = User::where('country_code',$this->user->country_id)-where('user_type_id', 5)->orderBy('id','desc')->get();
+            }
+            else
+            {
             $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+            }
         }
 
-        $country = Country::orderBy('phonecode')->get();
+        if($this->user->admin_role==2)
+        {
+            $country = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
+        }
+        else
+        {
+            $country = Country::orderBy('phonecode', 'asc')->get();
+        }
+
         $levels = Level::get();
         return view('admin.account.customer.create', compact('title','instructors','levels', 'country'));
     }
@@ -245,15 +277,36 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-        $country = Country::orderBy('phonecode')->get();
-
-        if($customer->user_type_id==4)
+        if($this->user->admin_role==2)
         {
-            $instructors = User::where('user_type_id', 6)->orderBy('id','desc')->get();
+            $country = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
         }
         else
         {
+            $country = Country::orderBy('phonecode', 'asc')->get();
+        }
+
+        if(isset($_GET['user_type']) && $_GET['user_type']==4)
+        {
+            if($this->user->admin_role==2)
+            {
+            $instructors = User::where('country_code',$this->user->country_id)-where('user_type_id', 6)->orderBy('id','desc')->get();
+            }
+            else
+            {
+            $instructors = User::where('user_type_id', 6)->orderBy('id','desc')->get();
+            }
+        }
+        else
+        {
+            if($this->user->admin_role==2)
+            {
+            $instructors = User::where('country_code',$this->user->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
+            }
+            else
+            {
             $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+            }
         }
 
         $levels = Level::get();
@@ -402,10 +455,24 @@ class CustomerAccountController extends Controller
     public function search(Request $request)
     {
         $search_term = $request->search;
-        $country = Country::orderBy('country','asc')->get();
         $title = $this->title;
-        $total_count = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->get()->count();
-        $customer = User::join('user_types','users.user_type_id','user_types.id')->whereIn('user_type_id',[1,2,3,4])->select('users.*')->search($request)->paginate($this->pagination);
+        if($this->user->admin_role==2)
+        {
+            $country = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
+            $customer = User::join('user_types','users.user_type_id','user_types.id')->where('country_code',$this->user->country_id)->whereIn('user_type_id',[1,2,3,4])->select('users.*')->search($request)->paginate($this->pagination);
+            $total_count = User::orderBy('id','desc')->where('country_code',$this->user->country_id)->whereIn('user_type_id',[1,2,3,4])->get()->count();
+        }
+        else
+        {
+            $country = Country::orderBy('phonecode', 'asc')->get();
+            $customer = User::join('user_types','users.user_type_id','user_types.id')->whereIn('user_type_id',[1,2,3,4])->select('users.*')->search($request)->paginate($this->pagination);
+            $total_count = User::orderBy('id','desc')->whereIn('user_type_id',[1,2,3,4])->get()->count();
+        }
+
+
+
+
+
         if ($search_term) {
             $customer->appends('search', $search_term);
         }
