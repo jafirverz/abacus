@@ -12,8 +12,6 @@
                                             <th>Mental Result Pass/Fail</th>
                                             <th>Abacus Grade</th>
                                             <th>Abacus Paper 1 Result </th>
-                                            <th>Abacus Paper 2 Result </th>
-                                            <th>Abacus Paper 3 Result </th>
                                             <th>Abacus Result Pass/Fail</th>
         </tr>
     </thead>
@@ -39,23 +37,24 @@
                 {{ $item->teacher->name  ?? ''}}
             </td>
             <td>
-                {{ $item->student->email  ?? ''}}
+                {{ $item->location->title ?? '' }}
             </td>
 
             <td>
-                {{ $item->location->title ?? '' }}
+                {{ $item->mental_grade ?? '' }}
+            </td>
+            <td>{{ $item->mental_results ?? '' }}</td>
+            <td>{{ $item->mental_result_passfail ?? '' }}</td>
+
+            <td>
+                {{ $item->abacus_grade ?? '' }}
             </td>
             <td>
-                {{ $item->mental->title ?? '' }}
+                {{ $item->result ?? '' }}
             </td>
-            <td></td>
-            <td></td>
             <td>
-                {{ $item->abacus->title ?? '' }}
+                {{ $item->abacus_result_passfail ?? '' }}
             </td>
-            <td></td>
-            <td></td>
-            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->user_id )->result ?? '-'}}</td>
         </tr>
         @endforeach
         @else
