@@ -44,6 +44,20 @@
                 class="icon-info"></i></button> <strong><a href="{{ $url }}">Shuffle the Questions <i
                   class="icon-shuffle"></i></a></strong></div>
         </div>
+
+        @if($worksheet->timing)
+          @php
+          $timeinSec = $worksheet->timing * 60;
+          $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $dateTime = strtotime($today);
+          $getDateTime = date("F d, Y H:i:s", $dateTime); 
+          @endphp
+          <div class="timer-wrap">
+            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
+          </div>
+        @endif
+
+
         <form method="post" action="{{ route('answer.submit') }}">
           @csrf
           <div class="row grid-4">
@@ -83,7 +97,7 @@
                     </audio>
                   </div>
                   <div class="col sp-col">
-                    <input class="form-control" type="text" name="answer[{{ $question->id }}]" required
+                    <input class="form-control number-separator" type="text" name="answer[{{ $question->id }}]" required
                       placeholder="Answer" />
                   </div>
                 </div>
@@ -107,6 +121,18 @@
 
       </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
 
 <script>
 
@@ -173,4 +199,60 @@
     //   }
 
 </script>
+
+@if(empty($worksheet->preset_timing) && !empty($worksheet->timing))
+
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var current = new Date().getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
+      }
+  }, 1000);
+</script>
+
+
+@elseif($worksheet->timing && !empty($worksheet->preset_timing))
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var current = new Date().getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          //$('form#submitform').submit();
+      }
+  }, 1000);
+</script>
+@endif
+
 @endsection
