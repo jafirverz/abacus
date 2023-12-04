@@ -33,7 +33,7 @@ class QuestionAttempt extends Controller
     {
         //
         $title = 'Question Attempted';
-        $quesTemp = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
+        $quesTemp = QuestionTemplate::whereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
         return view('admin.questionattempt', compact('title', 'quesTemp'));
     }
 
@@ -111,31 +111,31 @@ class QuestionAttempt extends Controller
         //$q = WorksheetSubmitted::query();
         $allWorksheetSubmitted = array();
         if ($request->quesTemp && empty($request->searchname)) {
-            
+
             // simple where here or another scope, whatever you like
             $allWorksheetSubmitted = DB::table('worksheet_submitteds')
                 ->where('question_template_id', $quesTemp)
-                 ->select('user_id','level_id', DB::raw('count(*) as total'))
-                 ->groupBy('level_id')
-                 ->groupBy('user_id')
-                 ->get();
-        }elseif($request->quesTemp && !empty($request->searchname)){
-            if($request->searchname){
-                $user = User::where('name', 'like', '%'.$request->searchname.'%')->pluck('id')->toArray();
-            }else{
+                ->select('user_id', 'level_id', DB::raw('count(*) as total'))
+                ->groupBy('level_id')
+                ->groupBy('user_id')
+                ->get();
+        } elseif ($request->quesTemp && !empty($request->searchname)) {
+            if ($request->searchname) {
+                $user = User::where('name', 'like', '%' . $request->searchname . '%')->pluck('id')->toArray();
+            } else {
                 $user = array();
             }
             $allWorksheetSubmitted = DB::table('worksheet_submitteds')
                 ->where('question_template_id', $quesTemp)
                 ->whereIn('user_id', $user)
-                 ->select('user_id','level_id', DB::raw('count(*) as total'))
-                 ->groupBy('level_id')
-                 ->groupBy('user_id')
-                 ->get();
+                ->select('user_id', 'level_id', DB::raw('count(*) as total'))
+                ->groupBy('level_id')
+                ->groupBy('user_id')
+                ->get();
         }
         // dd($allWorksheetSubmitted);
         $title = 'Question Attempted';
-        $quesTemp = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
+        $quesTemp = QuestionTemplate::whereIn('id', [1, 2, 3, 4, 5, 6, 7])->get();
         //dd($allWorksheetSubmitted);
         return view('admin.questionattempt', compact('title', 'allWorksheetSubmitted', 'quesTemp'));
 
@@ -145,26 +145,46 @@ class QuestionAttempt extends Controller
         //dd($allUsers);
     }
 
-    public function challenge(){
+    public function challenge()
+    {
         $title = 'Challenge Board';
         return view('admin.challengeboard', compact('title'));
     }
 
-    public function challengedelete(Request $request){
-        // dd($request->all());
+    public function challengedelete(Request $request)
+    {
+        $title = 'Challenge Board';
         $start_date = $request->start_date;
         $end_date = date('Y-m-d H:i:s', strtotime($request->end_date . ' +1 day'));
         // $end_date = $request->end_date;
-        $worksheetSub = WorksheetSubmitted::where('created_at','>=', $start_date)->where('updated_at','<=', $end_date)->where('question_template_id', 6)->get();
-        // dd($worksheetSub);
-        foreach($worksheetSub as $val){
-            $worksheetQuesSub = WorksheetQuestionSubmitted::where('worksheet_submitted_id', $val->id)->get();
-            foreach($worksheetQuesSub as $vall) {
-                $vall->delete();
+
+        if ($request->show == 1) {
+            //dd($request->all());
+           $worksheetSub = WorksheetSubmitted::where('question_template_id', 6)->groupBy('level_id')->orderBy('level_id', 'asc')->get();
+           return view('admin.challengeboard', compact('title', 'worksheetSub'));
+           //dd($worksheetSub);
+        } else {
+            $worksheetSub = WorksheetSubmitted::where('created_at', '>=', $start_date)->where('updated_at', '<=', $end_date)->where('question_template_id', 6)->get();
+            // dd($worksheetSub);
+            foreach ($worksheetSub as $val) {
+                $worksheetQuesSub = WorksheetQuestionSubmitted::where('worksheet_submitted_id', $val->id)->get();
+                foreach ($worksheetQuesSub as $vall) {
+                    $vall->delete();
+                }
+                $val->delete();
             }
-            $val->delete();
+            return redirect()->back()->with('success',  "Deleted successfully");
         }
-        return redirect()->back()->with('success',  "Deleted successfully");
         //dd($worksheetSub);
     }
+
+    // public function challengeShow(Request $request){
+    //     dd($request->all());
+    //     $title = 'Challenge Board';
+    //     $allOrders = array();
+    //     $start_date = $request->start_date;
+    //     $end_date = date('Y-m-d H:i:s', strtotime($request->end_date . ' +1 day'));
+    //     $worksheetSub = WorksheetSubmitted::where('created_at','>=', $start_date)->where('updated_at','<=', $end_date)->where('question_template_id', 6)->get();
+    //     return view('admin.challengeboard', compact('title'));
+    // }
 }
