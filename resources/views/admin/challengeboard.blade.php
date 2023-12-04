@@ -10,7 +10,7 @@
 
 
     </div>
-    <form action="{{ route('challenge.delete') }}" method="get">
+    <form action="{{ route('challenge.delete') }}" method="get" id="myForm">
       @csrf
       <div class="section-body">
 
@@ -19,14 +19,14 @@
           
 
             <div class="col-lg-4"><label>Start date:</label>
-              <input type="text" name="start_date" value="" class="form-control datepicker1">
+              <input type="text" name="start_date" value="" class="form-control datepicker1" required>
             </div>
 
             <div class="col-lg-4"><label>End date:</label>
-              <input type="text" name="end_date" value="" class="form-control datepicker1">
+              <input type="text" name="end_date" value="" class="form-control datepicker1" required>
             </div>
             
-
+            <input type="hidden" name="show" value="" id="showw">
 
         </div>
 
@@ -39,7 +39,7 @@
             @else
             <button type="reset" class="btn btn-primary">Clear All</button>
             @endif
-
+            <button type="button" class="btn btn-primary" onclick="submitform();"> Show</button>
           </div>
 
           
@@ -53,7 +53,7 @@
     <div class="section-body">
       @include('admin.inc.messages')
 
-      {{-- <div class="row">
+      <div class="row">
         <div class="col-12">
           <div class="card">
 
@@ -86,50 +86,58 @@
                 <table class="table table-md">
                   <thead>
                     <tr>
-                      <th>
+                      <!-- <th>
                         <div class="custom-checkbox custom-control">
                           <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
                             class="custom-control-input" id="checkbox-all">
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
-                      </th>
+                      </th> -->
                       <th>S/N</th>
+                      <th>Level</th>
+                      <th>Best Result</th>
                       <th>Student Name</th>
-                      <th>Amount</th>
-                      <th>Order Date</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @if(isset($allOrders) && count($allOrders) > 0)
+                    @if(isset($worksheetSub) && count($worksheetSub) > 0)
+                    
                     @php 
                     $i = 1;
                     @endphp
-                    @foreach($allOrders as $value)
-                    
+                    @foreach($worksheetSub as $checkLe)
+
                     @php 
+                    $worksheetSubAns = \App\WorksheetSubmitted::where('question_template_id', 6)->where('level_id', $checkLe->level_id)->orderBy('user_marks', 'desc')->get();
+                    @endphp
                     
-                    $users = \App\User::where('id', $value->user_id)->first();
-                    
+                    @foreach($worksheetSubAns as $value)
+
+                    @php 
+                    $worksheetUser = \App\User::where('id', $value->user_id)->first();
+                    $Level = \App\Level::where('id', $value->level_id)->first();
                     @endphp
                     <tr>
-                        <td>
+                        <!-- <td>
                           <div class="custom-checkbox custom-control"> <input type="checkbox"
                                   data-checkboxes="mygroup" class="custom-control-input"
                                   id="checkbox-{{ ($i) }}" value="{{ $value->id }}">
                               <label for="checkbox-{{ ($i) }}"
                                   class="custom-control-label">&nbsp;</label></div>
-                        </td>
+                        </td> -->
                         <td>{{ ($i) }}</td>
-                        <td>{{ $users->name }}</td>
-                        <td>{{ $value->total_amount ?? '' }}</td>
-                        <td>{{ $value->created_at ?? '-' }}</td>
+                        <td>{{ $Level->title }}</td>
+                        <td>{{ $value->user_marks ?? '' }}</td>
+                        <td>{{ $worksheetUser->name ?? '' }}</td>
+                        <td>@if($worksheetUser->approve_status == 1) Approved @elseif($worksheetUser->approve_status == 2) Rejected @else InActive @endif</td>
 
                         
                     </tr>
                     @php
                         $i++;
                     @endphp
-                    
+                    @endforeach
                     @endforeach
                     @else
                     <tr>
@@ -143,9 +151,16 @@
             </div>
           </div>
         </div>
-      </div> --}}
+      </div>
 
     </div>
   </section>
 </div>
+
+<script>
+  function submitform(){
+    $('#showw').val(1);
+    $('form#myForm').submit();
+  }
+</script>
 @endsection

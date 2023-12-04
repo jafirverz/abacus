@@ -621,6 +621,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('challenge', 'CMS\QuestionAttempt@challenge');
     Route::get('challenge/delete', 'CMS\QuestionAttempt@challengedelete')->name('challenge.delete');
+    // Route::get('challenge/show', 'CMS\QuestionAttempt@challengeShow')->name('challenge.show');
 
 });
 

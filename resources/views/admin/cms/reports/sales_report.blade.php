@@ -164,7 +164,9 @@
                 </tbody>
                 </table>
               </div>
+              @if(isset($allOrders) && count($allOrders) > 0)
               {{ $allOrders->links() }}
+              @endif
             </div>
           </div>
         </div>
