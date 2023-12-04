@@ -15,13 +15,19 @@
       <div class="section-body">
 
         <div class="row">
-          
+          @php
+          if(!empty($_GET['country'])){
+            $countryy = $_GET['country'];
+          }else{
+            $countryy = '';
+          }
+          @endphp
 
           <div class="col-lg-4"><label>Country:</label>
             <select name="country" class="form-control">
               <option value="">--Please Select--</option>
               @foreach($countries as $country)
-              <option value="{{ $country->id }}">{{ $country->nicename }}</option>
+              <option value="{{ $country->id }}" @if($countryy == $country->id) selected @endif>{{ $country->nicename }}</option>
               @endforeach
             </select>
           </div>

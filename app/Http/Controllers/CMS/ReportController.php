@@ -207,7 +207,9 @@ class ReportController extends Controller
         //$allUsers = User::whereIn('id', $allOrders)->get();
         $title = 'Sales Report';
         $instructor = User::where('user_type_id', 5)->get();
-        $countries = Country::get();
+        //$countries = Country::get();
+        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $countries = Country::whereIn('id', $franchiseCountry)->get();
         return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
 
         // ob_end_clean();
@@ -286,7 +288,9 @@ class ReportController extends Controller
         $instructor = User::where('user_type_id', 5)->get();
         $competitions = Competition::where('status', 1)->get();
         $compStudents = CompetitionStudent::paginate($this->pagination);
-        $countries = Country::get();
+        // $countries = Country::get();
+        $countries = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $countries = Country::whereIn('id', $countries)->get();
         return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders','instructor','competitions'));
     }
 
