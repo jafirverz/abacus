@@ -16,14 +16,26 @@
 
         <div class="row">
 
-          
+          @php 
+          if(!empty($_REQUEST['start_date'])){
+            $start_date = $_REQUEST['start_date'];
+          }else{
+            $start_date = '';
+          }
+
+          if(!empty($_REQUEST['end_date'])){
+            $end_date = $_REQUEST['end_date'];
+          }else{
+            $end_date = '';
+          }
+          @endphp
 
             <div class="col-lg-4"><label>Start date:</label>
-              <input type="text" name="start_date" value="" class="form-control datepicker1" required>
+              <input type="text" name="start_date" value="{{ $start_date }}" class="form-control datepicker1" required>
             </div>
 
             <div class="col-lg-4"><label>End date:</label>
-              <input type="text" name="end_date" value="" class="form-control datepicker1" required>
+              <input type="text" name="end_date" value="{{ $end_date }}" class="form-control datepicker1" required>
             </div>
             
             <input type="hidden" name="show" value="" id="showw">
@@ -109,7 +121,7 @@
                     @foreach($worksheetSub as $checkLe)
 
                     @php 
-                    $worksheetSubAns = \App\WorksheetSubmitted::where('question_template_id', 6)->where('level_id', $checkLe->level_id)->orderBy('user_marks', 'desc')->get();
+                    $worksheetSubAns = \App\WorksheetSubmitted::where('created_at', '>=', $start_date)->where('updated_at', '<=', $end_date)->where('question_template_id', 6)->where('level_id', $checkLe->level_id)->orderBy('user_marks', 'desc')->get();
                     @endphp
                     
                     @foreach($worksheetSubAns as $value)

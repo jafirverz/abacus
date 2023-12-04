@@ -15,10 +15,10 @@
       <div class="section-body">
 
         <div class="row">
+          
 
           <div class="col-lg-4"><label>Country:</label>
             <select name="country" class="form-control">
-              <option value="">-- Select --</option>
               <option value="">--Please Select--</option>
               @foreach($countries as $country)
               <option value="{{ $country->id }}">{{ $country->nicename }}</option>

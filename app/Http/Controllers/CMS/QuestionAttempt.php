@@ -160,7 +160,7 @@ class QuestionAttempt extends Controller
 
         if ($request->show == 1) {
             //dd($request->all());
-           $worksheetSub = WorksheetSubmitted::where('question_template_id', 6)->groupBy('level_id')->orderBy('level_id', 'asc')->get();
+           $worksheetSub = WorksheetSubmitted::where('created_at', '>=', $start_date)->where('updated_at', '<=', $end_date)->where('question_template_id', 6)->groupBy('level_id')->orderBy('level_id', 'asc')->get();
            return view('admin.challengeboard', compact('title', 'worksheetSub'));
            //dd($worksheetSub);
         } else {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Admin;
 use App\Country;
 use App\Exports\InstructorExport;
 use App\Exports\SalesExport;
@@ -164,7 +165,9 @@ class ReportController extends Controller
         //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
         $instructor = User::where('user_type_id', 5)->get();
         //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
-        $countries = Country::get();
+        //$countries = Country::get();
+        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $countries = Country::whereIn('id', $franchiseCountry)->get();
         return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
     }
 
