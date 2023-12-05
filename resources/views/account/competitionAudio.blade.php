@@ -21,7 +21,7 @@
         </ul>
         @if($compPaper->time)
           @php
-          $timeinSec = $compPaper->time * 60 + 2;
+          $timeinSec = $compPaper->time * 60;
           $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
           $dateTime = strtotime($today);
           $getDateTime = date("F d, Y H:i:s", $dateTime); 
