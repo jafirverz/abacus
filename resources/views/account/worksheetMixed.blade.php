@@ -43,10 +43,19 @@
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="{{ $url }}" disabled>Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
 
+        @php 
+        $datetime = new DateTime(date("Y-m-d H:i:s"));
+        //echo $datetime->format('Y-m-d H:i:s') . "\n";
+        $sg_time = new DateTimeZone('Asia/Singapore');
+        $datetime->setTimezone($sg_time);
+        //echo $datetime->format('Y-m-d H:i:s');
+        @endphp
+
         @if($worksheet->timing)
           @php
-          $timeinSec = $worksheet->timing * 60;
-          $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $timeinSec = $worksheet->timing * 60 - 21;
+          //$today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $today = date("Y-m-d H:i:s", strtotime($datetime->format('Y-m-d H:i:s')." + $timeinSec seconds"));
           $dateTime = strtotime($today);
           $getDateTime = date("F d, Y H:i:s", $dateTime); 
           @endphp

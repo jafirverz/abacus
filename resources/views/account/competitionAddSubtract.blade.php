@@ -22,13 +22,21 @@
         <div class="box-1">
           {{ $compPaper->description }}
         </div>
+        @php 
+        $datetime = new DateTime(date("Y-m-d H:i:s"));
+        //echo $datetime->format('Y-m-d H:i:s') . "\n";
+        $sg_time = new DateTimeZone('Asia/Singapore');
+        $datetime->setTimezone($sg_time);
+        //echo $datetime->format('Y-m-d H:i:s');
+        @endphp
         @if($compPaper->time)
-          @php
-          $timeinSec = $compPaper->time * 60;
-          $today = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+         @php
+          $timeinSec = $compPaper->time * 60 - 21;
+          $today = date("Y-m-d H:i:s", strtotime($datetime->format('Y-m-d H:i:s')." + $timeinSec seconds"));
           $dateTime = strtotime($today);
-          $getDateTime = date("F d, Y H:i:s", $dateTime); 
-          @endphp
+          //echo "-----";
+          $getDateTime = date("F d, Y H:i:s", $dateTime);
+         @endphp
           <div class="timer-wrap">
             <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
           </div>
