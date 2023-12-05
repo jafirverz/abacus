@@ -69,11 +69,11 @@
                     </div> -->
                 </div>
                 <br />
-                <input type="hidden" name="searchform" value="" id="searchform">
+                <input type="hidden" name="downloadexcel" value="" id="downloadexcel">
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="button" class="btn btn-primary" onclick="formsubmit();"> Search</button>
-                        <!-- <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp; -->
+                        <button type="submit" class="btn btn-primary" > Search</button>
+                        <button type="button" class="btn btn-primary" onclick="formsubmit();"> Export</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
@@ -208,7 +208,7 @@
 
 <script>
     function formsubmit(){
-        $("#searchform").val(1);
+        $("#downloadexcel").val(1);
         $('form#formreport').submit();
     }
 </script>

@@ -306,7 +306,7 @@ class ReportController extends Controller
         $instructor = User::where('user_type_id', 5)->get();
         $competitions = Competition::where('status', 1)->get();
         $learningLocation = LearningLocation::get();
-        //if($request->searchform == 1){
+        if($request->downloadexcel == 0){
             $q = CompetitionStudent::query();
             $q->join('users','competition_students.user_id','users.id');
             $q->select('competition_students.*');
@@ -331,30 +331,30 @@ class ReportController extends Controller
             return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'instructor','competitions', 'learningLocation'));
             //dd($allItems);
 
-        // }else{
-        //     $q = CompetitionStudent::query();
-        //     $q->join('users','competition_students.user_id','users.id');
-        //     $q->select('competition_students.*');
-        //     if ($request->country) {
-        //         $q->where('users.country_code', 'like', $request->country);
-        //     }
+        }else{
+            $q = CompetitionStudent::query();
+            $q->join('users','competition_students.user_id','users.id');
+            $q->select('competition_students.*');
+            if ($request->country) {
+                $q->where('users.country_code', 'like', $request->country);
+            }
 
-        //     if ($request->event) {
-        //         $q->where('competition_students.competition_controller_id', $request->event);
-        //     }
+            if ($request->event) {
+                $q->where('competition_students.competition_controller_id', $request->event);
+            }
 
-        //     if ($request->learning_location) {
-        //         $q->where('users.learning_locations', $request->learning_location);
-        //     }
+            if ($request->learning_location) {
+                $q->where('users.learning_locations', $request->learning_location);
+            }
 
-        //     if ($request->instructor) {
-        //         $q->where('competition_students.instructor_id', $request->instructor);
-        //     }
-        //     $allItems = $q->get();
-        //     ob_end_clean();
-        //     ob_start();
-        //     return Excel::download(new CompetetitionStudentExport($allItems), 'CompetetitionStudentExport.xlsx');
-        // }
+            if ($request->instructor) {
+                $q->where('competition_students.instructor_id', $request->instructor);
+            }
+            $allItems = $q->get();
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new CompetetitionStudentExport($allItems), 'CompetetitionStudentExport.xlsx');
+        }
         
 
         
