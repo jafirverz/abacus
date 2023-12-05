@@ -231,8 +231,8 @@ class ProfileController extends Controller
 		$slug =  __('constant.SLUG_MY_PROFILE');
 
 		$user = $this->user;
-		$test = TestManagement::orderBy('id', 'asc')->paginate($this->pagination);
-        $survey = Survey::where('status',1)->orderBy('id', 'asc')->paginate($this->pagination);
+		$test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->select('test_management.*')->where('allocations.type',1)->orderBy('test_management.id', 'asc')->where('allocations.assigned_by', $this->user->id)->paginate($this->pagination);
+        $survey = Survey::join('allocations','allocations.assigned_id','surveys.id')->where('surveys.status',1)->where('allocations.type',2)->select('surveys.*')->where('allocations.assigned_by', $this->user->id)->orderBy('id', 'asc')->groupBy('allocations.assigned_by')->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -731,7 +731,7 @@ class ProfileController extends Controller
 	 */
 	public function store(Request $request)
 	{
-        // dd($request->all());
+
         $users = User::find($this->user->id);
         if($request->updateimage == 1 && $request->updateprofile == 0){
             if ($request->hasFile('profile_picture')) {
@@ -757,9 +757,11 @@ class ProfileController extends Controller
             $users->updated_at = Carbon::now();
             $users->save();
         }elseif($request->updateimage == 1 && $request->updateprofile == 1){
+
             $messages = [
                 'country_code.regex' => 'The Country code entered is invalid.',
             ];
+
             if($request->updateprofile == 1){
                 if($users->user_type_id == 3){
                     $request->validate([
@@ -775,6 +777,20 @@ class ProfileController extends Controller
                         //'password'  =>  'nullable|min:8',
                         //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
                         ], $messages); //dd($request);
+                }
+                else if($users->user_type_id == 4)
+                {
+                    $request->validate([
+                        'name' => 'required',
+                        'dob' => 'required',
+                        'country_code_phone' => 'required',
+                        'mobile' => 'required',
+                        'gender' => 'required',
+                        // 'instructor' => 'required',
+                        //'country_code' => 'required',
+                        //'password'  =>  'nullable|min:8',
+                        //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
+                        ], $messages);
                 }
                 else{
                     $request->validate([
@@ -799,6 +815,8 @@ class ProfileController extends Controller
             $var = $request->dob;
             $date = str_replace('/', '-', $var);
             $dob = date('Y-m-d', strtotime($date));
+            //dd($request);
+
             // $dob = date('Y-m-d', strtotime($request->dob));
             $updateUserProfile = new UserProfileUpdate();
             $updateUserProfile->user_id  = $users->id;

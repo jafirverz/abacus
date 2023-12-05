@@ -54,11 +54,11 @@
 
                                 <div class="form-group">
                                     <label for="student_id">Instructor</label>
-                                    <select name="student_id[]" class="form-control" multiple>
+                                    <select name="student_id[]" class="form-control selectpicker" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($students)
                                         @foreach ($students as $item)
-                                        <option value="{{ $item->id }}" @if(is_array($j_students) && in_array($item->id,$j_students)) selected @elseif(old('teacher_id')==$item->id)
+                                        <option value="{{ $item->id }}"  @if(is_array($allocationInsList) && in_array($item->id,$allocationInsList)) selected @elseif(old('student_id')==$item->id)
                                             selected
                                             @endif>{{ $item->name }}</option>
                                         @endforeach
@@ -73,7 +73,7 @@
 
                                 <div class="form-group">
                                     <label for="student_idd">Students</label>
-                                    <select name="student_idd[]" class="form-control" multiple>
+                                    <select name="student_idd[]" class="form-control selectpicker" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($userStudent)
                                         @foreach ($userStudent as $item)
@@ -89,7 +89,24 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="">Sstart Date <span class="required">*</span></label>
+                                    <input type="text" name="start_date" class="form-control datepicker1" value="{{ old('start_date',$test->start_date) }}">
+                                    @if ($errors->has('start_date'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">End Date <span class="required">*</span></label>
+                                    <input type="text" name="end_date" class="form-control datepicker1" value="{{ old('end_date',$test->end_date) }}">
+                                    @if ($errors->has('end_date'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="course_id">Course</label>
                                     <select name="course_id" class="form-control">

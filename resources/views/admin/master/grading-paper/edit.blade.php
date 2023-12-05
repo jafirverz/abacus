@@ -25,7 +25,7 @@
 
                                 <div class="form-group">
                                     <label for="exam_grade">Exam Grade</label>
-                                    <select  id="exam_grade"  required class="form-control">
+                                    <select  name="exam_grade"  required class="form-control">
                                         <option value="">-- Select --</option>
                                         @if ($grades)
                                         @foreach ($grades as $item)
