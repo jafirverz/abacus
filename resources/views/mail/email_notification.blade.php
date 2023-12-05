@@ -459,7 +459,7 @@
                         <td class="email-masthead">
                             <a href="{{ url('/') }}" class="f-fallback email-masthead_name">
                                 @if(isset($system_settings->email_logo))
-                                <img src="{{ asset($system_settings->email_logo) }}" style="width:250px;" alt="{{ $system_settings->email_logo }}" />
+                                <img src="{{ url('/') }}/{{ asset($system_settings->email_logo) }}" style="width:250px;" alt="" />
                                 @endif
                             </a>
                         </td>
