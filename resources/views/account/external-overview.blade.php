@@ -46,18 +46,9 @@
                       </div>
                   </div>
                   <div class="row sp-col-xl-30">
-                      <div class="col-xl-4 sp-col">
-                          <label class="lb-1">Date of Birth <span class="required">*</span></label>
-                          <div class="date-wrap disabled">
-                              <i class="fa-solid fa-calendar-days ico"></i>
-                              <input class="form-control" type="text" name="dob" value="{{old('dob', $user->dob) ?? ''}}" disabled />
-                              @if ($errors->has('dob'))
-                              <span class="text-danger">&nbsp;{{ $errors->first('dob') }}</span>
-                          @endif
-                          </div>
-                      </div>
 
-                      <div class="col-xl-4 sp-col" id="disablephone">
+
+                      <div class="col-xl-6 sp-col" id="disablephone">
                           <label class="lb-1">Phone <span class="required">*</span></label>
                           <div class="row sp-col-10">
                               <div class="col-auto sp-col">
@@ -77,7 +68,7 @@
                               $country_code_phone = old("country_code_phone");
                           }
                       @endphp
-                      <div class="col-xl-4 sp-col" id="enablephone" style="display: none">
+                      <div class="col-xl-6 sp-col" id="enablephone" style="display: none">
                           <label class="lb-1">Phone <span class="required">*</span></label>
                           <div class="row sp-col-10">
                               <div class="col-auto sp-col">

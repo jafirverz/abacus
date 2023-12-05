@@ -77,6 +77,8 @@ class TestManagementController extends Controller
         $testManagement = new TestManagement;
         $testManagement->title = $request->title ?? '';
         $testManagement->paper_id = $request->paper_id ?? '';
+        $testManagement->start_date = $request->start_date ?? '';
+        $testManagement->end_date = $request->end_date ?? '';
         $testManagement->course_id = $request->course_id ?? '';
         $testManagement->template = $request->template ?? '';
         $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
@@ -85,17 +87,19 @@ class TestManagementController extends Controller
 
         if(isset($request->student_idd))
         {
-            foreach($request->student_idd as $id){
+            foreach($request->student_idd as $studentid){
+                foreach($request->student_id as $teacher){
                 $allocation = new Allocation();
-                $allocation->student_id  = $id ?? NULL;
-                $allocation->assigned_by  = $this->user->id; // Instructor
-                $allocation->assigned_id  = $testManagement->id;   //Test /Survey
-                // $allocation->start_date  = $request->start_date ?? NULL;
-                // $allocation->end_date  = $request->end_date ?? NULL;
+                $allocation->student_id  = $studentid ?? NULL;
+                $allocation->assigned_by  = $teacher; // Instructor
+                $allocation->assigned_id  = $id;   //Test /Survey
+                $allocation->start_date  = $request->start_date ?? NULL;
+                $allocation->end_date  = $request->end_date ?? NULL;
                 $allocation->type  = 1;
                 $allocation->save();
+                }
             }
-       }
+        }
 
         return redirect()->route('test-management.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
@@ -127,8 +131,9 @@ class TestManagementController extends Controller
         $courses = Course::orderBy('id','desc')->get();
         $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
         $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        $allocationInsList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('assigned_by')->toArray();
         $allocationStudentList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('student_id')->toArray();
-        return view('admin.test-management.edit', compact('title', 'test','courses','papers','students', 'userStudent', 'allocationStudentList'));
+        return view('admin.test-management.edit', compact('title', 'test','courses','papers','students', 'userStudent', 'allocationStudentList','allocationInsList'));
     }
 
     /**
@@ -150,6 +155,8 @@ class TestManagementController extends Controller
         $testManagement = TestManagement::findorfail($id);
         $testManagement->title = $request->title ?? '';
         $testManagement->paper_id = $request->paper_id ?? '';
+        $testManagement->start_date = $request->start_date ?? '';
+        $testManagement->end_date = $request->end_date ?? '';
         $testManagement->course_id = $request->course_id ?? '';
         $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
         $testManagement->created_at = Carbon::now();
@@ -160,17 +167,21 @@ class TestManagementController extends Controller
             $list->delete();
         }
 
+        //dd($request->student_idd);
+
         if(isset($request->student_idd))
         {
             foreach($request->student_idd as $studentid){
+                foreach($request->student_id as $teacher){
                 $allocation = new Allocation();
                 $allocation->student_id  = $studentid ?? NULL;
-                $allocation->assigned_by  = $this->user->id; // Instructor
+                $allocation->assigned_by  = $teacher; // Instructor
                 $allocation->assigned_id  = $id;   //Test /Survey
-                // $allocation->start_date  = $request->start_date ?? NULL;
-                // $allocation->end_date  = $request->end_date ?? NULL;
+                $allocation->start_date  = $request->start_date ?? NULL;
+                $allocation->end_date  = $request->end_date ?? NULL;
                 $allocation->type  = 1;
                 $allocation->save();
+                }
             }
         }
 

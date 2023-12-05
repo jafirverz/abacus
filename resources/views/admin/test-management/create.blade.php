@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="student_id">Instructor</label>
-                                    <select name="student_id[]" class="form-control" multiple>
+                                    <select name="student_id[]" class="form-control selectpicker" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($students)
                                         @foreach ($students as $item)
@@ -70,7 +70,7 @@
 
                                 <div class="form-group">
                                     <label for="student_idd">Students</label>
-                                    <select name="student_idd[]" class="form-control" multiple>
+                                    <select name="student_idd[]" class="form-control selectpicker" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($userStudent)
                                         @foreach ($userStudent as $item)
@@ -86,7 +86,24 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="">Sstart Date </label>
+                                    <input type="text" name="start_date" class="form-control datepicker1" value="{{ old('start_date') }}">
+                                    @if ($errors->has('start_date'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="">End Date </label>
+                                    <input type="text" name="end_date" class="form-control datepicker1" value="{{ old('end_date') }}">
+                                    @if ($errors->has('end_date'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                                 <div class="form-group">
                                     <label for="course_id">Course</label>
                                     <select name="course_id" class="form-control">

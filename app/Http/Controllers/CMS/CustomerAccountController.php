@@ -101,7 +101,7 @@ class CustomerAccountController extends Controller
             $country = Country::orderBy('phonecode', 'asc')->get();
         }
 
-        $levels = Level::get();
+        $levels = Level::where('status',1)->get();
         return view('admin.account.customer.create', compact('title','instructors','levels', 'country'));
     }
 
@@ -286,7 +286,7 @@ class CustomerAccountController extends Controller
             $country = Country::orderBy('phonecode', 'asc')->get();
         }
 
-        if(isset($_GET['user_type']) && $_GET['user_type']==4)
+        if(isset($customer->user_type_id) && $customer->user_type_id==4)
         {
             if($this->user->admin_role==2)
             {
@@ -309,7 +309,7 @@ class CustomerAccountController extends Controller
             }
         }
 
-        $levels = Level::get();
+        $levels = Level::where('status',1)->get();
         return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels', 'country'));
     }
 
@@ -354,7 +354,7 @@ class CustomerAccountController extends Controller
             $gender = 'Female';
             }
         $customer = User::find($id);
-        
+
         $flag = 0;
         $userStatus = $customer->approve_status;
         if($userStatus == 1){

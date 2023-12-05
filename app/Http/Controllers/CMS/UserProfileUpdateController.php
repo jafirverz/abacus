@@ -65,7 +65,7 @@ class UserProfileUpdateController extends Controller
         $title = 'Profile Updated';
         $userprofileupdate = UserProfileUpdate::find($id);
         $fields = [
-            'email' =>  'required|email|unique:users,email,' . $userprofileupdate->user_id . ',id',
+            //'email' =>  'required|email|unique:users,email,' . $userprofileupdate->user_id . ',id',
             'name' => 'required|string',
 //            'password'  =>  'nullable|min:8',
             //'country_code' => 'required',

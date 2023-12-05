@@ -11,7 +11,7 @@
             <div class="tempt-2-content">
 
                 <div class="mb-20">
-                    <a class="link-1 lico" href="be-teacher-dashboard-allocation.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+                    <a class="link-1 lico" href="{{ url('allocation') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
                 </div>
                 @include('inc.messages')
                 <h1 class="title-3">Test and Survey Allocation</h1>
