@@ -37,6 +37,7 @@ use App\MenuList;
 use App\Banner;
 use App\CompetitionCategory;
 use App\CompetitionPaper;
+use App\CompetitionPaperSubmitted;
 
 if (!function_exists('getPageList')) {
 
@@ -1151,5 +1152,49 @@ if (!function_exists('getPageList')) {
             }
         }
         return '-';
+    }
+
+    function getPaper($competition_controller_id, $category_id, $user_id){
+        $comptitoinPaper = CompetitionPaperSubmitted::where('competition_id', $competition_controller_id)->where('category_id', $category_id)->where('paper_type', 'actual')->where('user_id', $user_id)->get();
+        // if($user_id == 15){
+        //     dd($comptitoinPaper);
+        // }
+        
+        if($comptitoinPaper){   
+            $papername = array();         
+            foreach($comptitoinPaper as $paper){
+                $compPaper = CompetitionPaper::where('id', $paper->competition_paper_id)->first();
+                $userMarks = $paper->user_marks;
+                $paperwithmarks = $compPaper->title ."-> Marks: " .$userMarks;
+                array_push($papername, $paperwithmarks);
+                
+            }
+            return $papername;
+        }else{
+            return '';
+        }
+
+    }
+    function getTotalPaperMarks($competition_controller_id, $category_id, $user_id){
+        $comptitoinPaper = CompetitionPaperSubmitted::where('competition_id', $competition_controller_id)->where('category_id', $category_id)->where('paper_type', 'actual')->where('user_id', $user_id)->get();
+       if($comptitoinPaper){  
+            $totalMarks = 0; 
+            foreach($comptitoinPaper as $paper){
+                $totalMarks+= $paper->user_marks;                
+            }
+            return $totalMarks;
+        }else{
+            return 0;
+        }
+
+    }
+
+    function getPrize($competition_controller_id, $category_id, $user_id){
+        $prize = '';
+        $comPrize = CompetitionStudentResult::where('competition_id', $competition_controller_id)->where('category_id', $category_id)->where('user_id', $user_id)->first();
+        if($comPrize){
+            $prize = $comPrize->prize;
+        }
+        return $prize;
     }
 }
