@@ -253,7 +253,8 @@ class ExternalAccountController extends Controller
         }elseif($userStatus == 0 && $request->status == 1 ){
             $flag = 1;
         }
-
+        $userAccountId = $customer->account_id;
+        $userPassword = $request->password ?? $customer->user_pass;
 
         //$customer->level_id = json_encode($request->level);
         $customer->name = $request->name;
@@ -268,6 +269,7 @@ class ExternalAccountController extends Controller
         $customer->mobile = $request->mobile??NULL;
         if (!is_null($request->password)) {
             $customer->password = Hash::make($request->password);
+            $customer->user_pass = $request->password;
         }
         $customer->approve_status=$request->status??NULL;
         if($request->status==2)
@@ -291,8 +293,8 @@ class ExternalAccountController extends Controller
                 $data['cc_to_email'] = [];
                 $data['subject'] = $email_template->subject;
                 $url = url('/login');
-                $key = ['{{url}}'];
-                $value = [$url];
+                $key = ['{{url}}','{{account_id}}','{{password}}'];
+                $value = [$url, $userAccountId, $userPassword];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 
