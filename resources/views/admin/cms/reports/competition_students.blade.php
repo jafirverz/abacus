@@ -123,15 +123,15 @@
                                                 </div>
                                             </th> -->
                                             <th>S/N</th>
-                                            <th>Student Name</th>
-                                            <th>Student DOB</th>
+                                            <th>Student Full Name</th>
+                                            <th>Date of Birth</th>
                                             <th>Contact Number</th>
-                                            <th>Instructor Name</th>
+                                            <th>Instructor Display Name</th>
                                             <th>Learning Location </th>
                                             <th>Country </th>
                                             <th>Competition Category </th>
                                             <th>Paper </th>
-                                            <th>Total Marks </th>
+                                            <th>Total Result </th>
                                             <th>Prize </th>
 
                                         </tr>

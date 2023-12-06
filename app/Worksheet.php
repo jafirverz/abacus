@@ -24,4 +24,8 @@ class Worksheet extends Model
     public function questions(){
         return $this->hasMany('App\Question', 'worksheet_id', 'id');
     }
+
+    public function questionsTemp(){
+        return $this->belongsTo('App\QuestionTemplate', 'question_template_id', 'id');
+    }
 }
