@@ -54,10 +54,14 @@
 
                                 <div class="form-group">
                                     <label for="title">Select Student</label>
-                                    <select name="students[]" class="form-control" multiple>
-                                        <option value="">-- Select --</option>
+                                    <select name="students[]" class="form-control selectpicker" multiple data-live-search="true" >
+                                        
                                         @foreach($students as $student)
-                                        <option value="{{ $student ->id}}">{{$student->name}}</option>
+                                        @php
+                                        $instructor = \App\User::where('id', $student->instructor_id)->first();
+                                        $learningL = \App\LearningLocation::where('id', $student->learning_locations)->first();
+                                        @endphp
+                                        <option value="{{ $student ->id}}">{{$student->name}}, Instructor: {{ $instructor->name ?? '' }}, Learning Location: {{ $learningL->title ?? '' }}, DOB: {{ $student->dob }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('students'))
