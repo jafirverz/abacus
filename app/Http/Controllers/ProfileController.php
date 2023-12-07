@@ -105,7 +105,7 @@ class ProfileController extends Controller
 		}
         $today=date('Y-m-d');
         $highest_competetion_grade = CompetitionStudentResult::join('competition_controllers','competition_student_results.competition_id','competition_controllers.id')->join('competition_students','competition_students.competition_controller_id','competition_controllers.id')->select('competition_student_results.*','competition_controllers.title as comp_title','competition_controllers.date_of_competition')->where('competition_students.instructor_id', $user->id)->where('competition_controllers.date_of_competition','<',$today)->orderBy('competition_student_results.total_marks','desc')->orderBy('competition_controllers.date_of_competition','desc')->first();
-        $highest_grading_grade = GradingStudentResults::join('grading_exams','grading_student_results.grading_id','grading_exams.id')->join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_student_results.*','grading_exams.title as grade_title','grading_exams.exam_date')->where('grading_students.instructor_id', $user->id)->where('grading_exams.exam_date','<',$today)->orderBy('grading_student_results.total_marks','desc')->orderBy('grading_exams.exam_date','desc')->first();
+        $highest_grading_grade = GradingStudentResults::join('grading_exams','grading_student_results.grading_id','grading_exams.id')->join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_student_results.*','grading_exams.title as grade_title','grading_exams.date_of_competition')->where('grading_students.instructor_id', $user->id)->where('grading_exams.date_of_competition','<',$today)->orderBy('grading_student_results.total_marks','desc')->orderBy('grading_exams.date_of_competition','desc')->first();
 
 
         //dd($highest_grading_grade);
@@ -147,7 +147,7 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-        $gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','>=',$todayDate)->orderBy('id','desc')->first();
+        $gradingExam = GradingExam::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->orderBy('id','desc')->first();
 		//dd($user);
 
 		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));

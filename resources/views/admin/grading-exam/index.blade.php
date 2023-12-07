@@ -9,7 +9,7 @@
             <div class="section-header-button">
                 <a href="{{ route('grading-exam.create') }}" class="btn btn-primary">Add New</a>
             </div>
-           @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('grading_exam')])
+{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
         </div>
         <br />
@@ -22,12 +22,12 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('grading-exam.destroy', 'grading-exam') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('grading-exam.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('grading-exam.destroy', 'grading-exam') }}" method="post">
+                            <form id="destroy" action="{{ route('grading-exam.destroy', 'competition') }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
@@ -53,7 +53,7 @@
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <!-- <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -61,26 +61,27 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
+                                            </th> -->
                                             <th>Action</th>
                                             <th>Title</th>
-                                            <th>Type</th>
-                                            <th>Layout</th>
+                                            <th>Date of Competition</th>
+                                            <th>Competition Type</th>
+                                            <th>Stauts</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($exam->count())
-                                        @foreach ($exam as $key => $item)
+                                        @if($competition->count())
+                                        @foreach ($competition as $key => $item)
                                         <tr>
-                                            <td scope="row">
+                                            <!-- <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
                                                         data-checkboxes="mygroup" class="custom-control-input"
                                                         id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <a href="{{ route('grading-exam.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
@@ -88,12 +89,12 @@
                                                 <a href="{{ route('grading-exam.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
-                                                    <a href="{{ route('grading-exam-list.index', $item->id) }}" class="btn btn-light mr-1 mt-1"
-                                                        data-toggle="tooltip" data-original-title="List"><i class="fas fa-bars"></i></a>
+                                                <a href="{{ route('grading-exam.studentlist', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
-                                            <td>{{ gradingExamType($item->type) }}</td>
-                                            <td>{{ gradingExamLayout($item->layout) }}</td>
+                                            <td>{{ $item->date_of_competition }}</td>
+                                            <td>{{ ucwords($item->competition_type) }}</td>
+                                            <td>@if($item->status == 1) Published @elseif($item->status == 2) Draft @endif</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
@@ -108,7 +109,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ $exam->links() }}
+                            {{ $competition->links() }}
                         </div>
                     </div>
                 </div>

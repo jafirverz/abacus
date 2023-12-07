@@ -28,7 +28,7 @@
                                         <strong>Title:</strong> {{$gradingExam->title ?? ''}}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Date:</strong> {{ date('j F Y',strtotime($gradingExam->exam_date)) }} | {{ date('H:i A',strtotime($gradingExam->exam_date)) }}
+                                        <strong>Date:</strong> {{ date('j F Y',strtotime($gradingExam->date_of_competition)) }} | {{ date('H:i A',strtotime($gradingExam->date_of_competition)) }}
                                     </div>
                                     <div class="inrow">
                                         <strong>Exam Venue:</strong> {{$gradingExam->exam_venue ?? ''}}
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-lg-12 sp-col gincol-2">
                                     <div class="inrow">
-                                        <strong>Exam Type:</strong> <span class="status-1">{{ gradingExamType($gradingExam->type) ?? '' }}</span>
+                                        <strong>Exam Type:</strong> <span class="status-1">{{ $gradingExam->competition_type ?? '' }}</span>
                                     </div>
                                     <div class="inrow">
                                         <strong>My Registered Grades:</strong> <br/>
@@ -51,7 +51,7 @@
                         <div class="col-xl-9 sp-col gcol-3">
                             <div class="gcontent">
                                 <h4 class="title-6">Important Note</h4>
-                                {!! $gradingExam->important_note ?? '' !!}
+                                {!! $gradingExam->description ?? '' !!}
                             </div>
                         </div>
                         <div class="col-xl-3 sp-col gcol-4">

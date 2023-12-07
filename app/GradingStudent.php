@@ -15,6 +15,12 @@ class GradingStudent extends Model
     protected static $logAttributes = ['*'];
     protected static $logOnlyDirty = true;
 
+
+    public function userlist(){
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+
     public function student(){
         return $this->belongsTo('App\User', 'user_id', 'id');
     }

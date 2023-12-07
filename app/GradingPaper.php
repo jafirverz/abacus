@@ -34,4 +34,16 @@ class GradingPaper extends Model
         }
     }
 
+    public function comp_ques(){
+        return $this->hasMany('App\GradingPaperQuestion', 'grading_paper_id', 'id');
+    }
+
+    public function comp_contro(){
+        return $this->belongsTo('App\GradingExam', 'grading_exam_id', 'id');
+    }
+
+    public function ques_template(){
+        return $this->belongsTo('App\QuestionTemplate', 'question_template_id', 'id');
+    }
+
 }

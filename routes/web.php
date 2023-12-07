@@ -154,8 +154,8 @@ Route::get('my-profile', 'ProfileController@index')->name('my-profile');
 Route::get('instructor-profile', 'ProfileController@instructor')->name('instructor-profile');
 Route::post('instructor-profile', 'ProfileController@instructor_store')->name('instructor-profile.update');
 Route::post('instructor-profile-cal', 'ProfileController@cal_store')->name('instructor-profile.cal_update');
-Route::get('grading-overview/{id?}', 'ProfileController@grading_overview')->name('grading-overview');
-Route::post('grading-overview/result', 'GradingSubmitController@resultpage')->name('grading_answer.submit');
+//Route::get('grading-overview/{id?}', 'ProfileController@grading_overview')->name('grading-overview');
+//Route::post('grading-overview/result', 'GradingSubmitController@resultpage')->name('grading_answer.submit');
 Route::get('download-grading-certificate/{id?}', 'GradingSubmitController@downloadCertificate')->name('grading.downloadCertificate');
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('grading-examination/delete/{id?}', 'ProfileController@delete_grading')->name('grading-examination.delete');
@@ -165,8 +165,13 @@ Route::get('grading-examination/view/{id?}', 'ProfileController@view_grading')->
 Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
 Route::get('register-grading-examination/{id?}', 'ProfileController@register_grading_examination')->name('register-grading-examination');
 Route::post('register-grading-examination/submit', 'ProfileController@grading_register_store')->name('register-grading-examination.submit');
-Route::get('grading-overview/{grading_exam_id?}/{listing_id?}/{paper_id?}', 'ProfileController@grading_paper');
-Route::get('competition-overview', 'ProfileController@competition_overview')->name('competition-overview');
+//Route::get('grading-overview/{grading_exam_id?}/{listing_id?}/{paper_id?}', 'ProfileController@grading_paper');
+//Route::get('competition-overview', 'ProfileController@competition_overview')->name('competition-overview');
+
+Route::get('/grading/{id?}', 'GradingController@index');
+
+Route::get('/grading-paper/{id?}', 'GradingController@paper');
+Route::post('/grading-paper/submit', 'GradingController@submitPaper')->name('grading.submit');
 
 Route::get('allocation', 'ProfileController@allocation')->name('allocation');
 Route::get('allocation/test/delete/{id?}', 'ProfileController@allocation_test_delete');
@@ -260,10 +265,6 @@ Route::group(['prefix' => 'admin'], function () {
     // MENU
     Route::get('menu/search', 'CMS\MenuController@search')->name('menu.search');
     Route::resource('menu', 'CMS\MenuController');
-
-
-
-
 
     // MENU
     Route::get('menu/search', 'CMS\MenuController@search')->name('menu.search');
@@ -389,6 +390,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('category-competition/search', 'CMS\CategoryCompetitionController@search')->name('category-competition.search');
     Route::resource('category-competition', 'CMS\CategoryCompetitionController');
 
+      // CATEGORY GRADING
+      Route::get('category-grading/search', 'CMS\CategoryGradingController@search')->name('category-grading.search');
+      Route::resource('category-grading', 'CMS\CategoryGradingController');
+
+
 
     // COMPETITION RESULTS
     Route::get('results/search', 'CMS\CompetitionResultController@search')->name('results.search');
@@ -401,13 +407,29 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('results/download/excel/{id?}', 'CMS\CompetitionResultController@excelDownload')->name('studentResultDownload');
     //Route::post('results/update/{id?}', 'CMS\CompetitionResultController@update')->name('results.update');
 
-    // GRADING RESULTS
-    Route::get('grading-students/search', 'CMS\GradingResultController@search')->name('grading-students.search');
-    Route::resource('grading-students', 'CMS\GradingResultController');
-
+    //GRADING RESULTS
+    Route::get('g-results/search', 'CMS\GradingResultController@search')->name('g-results.search');
+    Route::resource('g-results', 'CMS\GradingResultController');
+    Route::get('g-results/grading/{id?}', 'CMS\GradingResultController@studentList')->name('g-results.grading');
+    Route::get('g-results/{id?}/edit', 'CMS\GradingResultController@edit')->name('g-results-user.edit');
+    Route::get('g-results/user/search', 'CMS\GradingResultController@userresultsearch')->name('g-userresults.search');
+    Route::get('g-results/download/excel/{id?}', 'CMS\GradingResultController@excelDownload')->name('studentResultDownload2');
     Route::get('grading-result-upload', 'CMS\GradingResultController@uploadCompResult');
     Route::post('grading-result-upload', 'CMS\GradingResultController@compResultUpload')->name('grading.result.upload');
+    Route::get('assign-grading', 'CMS\GradingResultController@assignGrading');
+    Route::get('assign-grading/edit/{id?}', 'CMS\GradingResultController@assignGradingEdit')->name('assign-grading.edit');
+    Route::post('assign-grading/store', 'CMS\GradingResultController@assignGradingStore')->name('assign-grading.store');
 
+    // GRADING EXAM
+    Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
+    Route::resource('grading-exam', 'CMS\GradingExamController');
+
+    Route::get('grading-exam/student-list/{id?}', 'CMS\GradingExamController@studentList')->name('grading-exam.studentlist');
+    Route::get('grading-exam/student-list/{id?}/edit', 'CMS\GradingExamController@editstudentList')->name('grading-exam.student.edit');
+    Route::post('grading-exam/student/list/{id?}/reject', 'CMS\GradingExamController@rejectstudentList')->name('grading-exam.student.reject');
+    Route::post('grading-exam/student/list/{id?}/approve', 'CMS\GradingExamController@approvestudentList')->name('grading-exam.student.approve');
+
+    Route::post('grading-exam/student-list/destroy', 'CMS\GradingExamController@studentDelete')->name('grading-exam.student.destroy');
 
     // COMPETITION
     Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');
@@ -441,6 +463,10 @@ Route::group(['prefix' => 'admin'], function () {
     // COMPETITION QUESTIONS
     Route::get('comp-questions/search', 'CMS\CompetitionQuestionsController@search')->name('comp-questions.search');
     Route::resource('comp-questions', 'CMS\CompetitionQuestionsController');
+
+    // GRADING QUESTIONS
+    Route::get('grade-questions/search', 'CMS\GradingQuestionsController@search')->name('grade-questions.search');
+    Route::resource('grade-questions', 'CMS\GradingQuestionsController');
 
 
     // STANDALONE PAGE
@@ -511,9 +537,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('grade/search', 'CMS\GradeController@search')->name('grade.search');
      Route::resource('grade', 'CMS\GradeController');
 
-     // GRADING EXAM
-     Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
-     Route::resource('grading-exam', 'CMS\GradingExamController');
+
 
      // GRADING EXAM LIST
     Route::get('grading-exam-list/{exam_id}/search', 'CMS\GradingExamListController@search')->name('grading-exam-list.search');
@@ -528,6 +552,10 @@ Route::group(['prefix' => 'admin'], function () {
      // GRADING PAPER
      Route::get('grading-paper/search', 'CMS\GradingPaperController@search')->name('grading-paper.search');
      Route::resource('grading-paper', 'CMS\GradingPaperController');
+     Route::get('grading-papers/{id?}/questions', 'CMS\GradingPaperController@questions')->name('grading-paper.questions');
+     Route::get('grading-paper/{pId?}/questions/{qId?}/create', 'CMS\GradingPaperController@questionCreate')->name('grading-paper.questions.create');
+     Route::get('grading-paper/{pId?}/question/{qId?}/edit', 'CMS\GradingPaperController@questionsEdit')->name('grading-paper.question.edit');
+     Route::get('grading-paper/{pId?}/question/{qId?}/show', 'CMS\GradingPaperController@questionsShow')->name('grading-paper.question.show');
 
      // TEST MANAGEMENT
      Route::get('test-management/search', 'CMS\TestManagementController@search')->name('test-management.search');

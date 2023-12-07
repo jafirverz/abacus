@@ -552,7 +552,7 @@ if (!function_exists('getPageList')) {
 
     function getAllGradingExamListDetail($id)
     {
-        $result = GradingListingDetail::where('grading_listing_id',$id)->get();
+        $result = GradingPaper::where('grading_exam_id',$id)->get();
         if ($result) {
             return $result;
         }

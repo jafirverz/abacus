@@ -63,7 +63,9 @@
                                     </th>
                                     <th>Action</th>
                                     <th>Display Name</th>
+
                                     <th>Instructor's Full Name</th>
+                                    <th>Account ID</th>
                                     <th>Country</th>
                                     <th>Qualified in Year</th>
                                     <th>Highest Mental</th>
@@ -99,7 +101,10 @@
                                         {{ $item->instructor_full_name }}
                                     </td>
                                     <td>
-
+                                        {{ $item->account_id }}
+                                    </td>
+                                    <td>
+                                        {{ $item->country->country ?? ''}}
                                     </td>
                                     <td>
                                         {{  $item->year_attained_qualified_instructor }}

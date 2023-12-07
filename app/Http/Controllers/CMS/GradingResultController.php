@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Grade;
+use App\GradingStudentResults;
 use App\GradingExam;
+use App\GradingCategory;
+use App\Exports\GradingResultExport;
 use App\Imports\ImportGradingResult;
-use App\GradingExamList;
+use App\GradingSubmitted;
 use App\GradingStudent;
-use App\GradingResultsUpload;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -34,62 +36,82 @@ class GradingResultController extends Controller
         });
     }
 
+
     public function index()
     {
-
+        //
         $title = $this->title;
-        $grading = GradingStudent::orderBy('id', 'desc')->paginate($this->pagination);
-        //dd($grading);
-        return view('admin.grading_result.index', compact('title', 'grading'));
+        // $competition = GradingSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
+        $competition = GradingExam::paginate(10);
+        return view('admin.grading_result.index', compact('title', 'competition'));
     }
 
     public function studentList($id){
         $title = $this->title;
-        $userList = CompetitionPaperSubmitted::where('competition_id', $id)->where('paper_type', 'actual')->paginate($this->pagination);
-        return view('admin.grading_result.userList', compact('title', 'userList'));
+        //$userList = GradingSubmitted::where('competition_id', $id)->paginate($this->pagination);
+        $userList = GradingStudentResults::where('grading_id', $id)->paginate($this->pagination);
+        $competitionId = $id;
+        $competition = GradingExam::where('id', $id)->first();
+        return view('admin.grading_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
     }
 
     public function edit($id){
         $title = $this->title;
-        $grading = GradingStudent::where('id', $id)->first();
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('id','desc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('id','desc')->get();
-        $gradingExam = GradingExam::where('status', 1)->get();
-        //dd($grading);
-        return view('admin.grading_result.edit', compact('title', 'grading','mental_grades','abacus_grades','gradingExam'));
+        //$competitionPaperSubmitted = GradingSubmitted::where('id', $id)->first();
+        $competitionPaperSubmitted = GradingStudentResults::where('id', $id)->first();
+        $certificates = Certificate::get();
+        return view('admin.grading_result.edit', compact('title', 'competitionPaperSubmitted', 'certificates'));
 
     }
 
     public function update(Request $request, $id){
-         $request->validate([
-            'mental_grade' => 'required',
-            'abacus_grade' => 'required',
-        ]);
+        $result = $request->result;
+        $prize = $request->prize;
+        $title = $this->title;
+        //$compPaperResult = GradingSubmitted::where('id', $id)->first();
+        $compPaperResult = GradingStudentResults::where('id', $id)->first();
+        $compPaperResult->result = $result;
+        $compPaperResult->prize = $prize;
+        $compPaperResult->certificate_id = $request->certificate;
+        $compPaperResult->save();
 
 
-        $gradingStudent = GradingStudent::find($id);
-        $gradingStudent->mental_grade  = $request->mental_grade ?? NULL;
-        $gradingStudent->abacus_grade  = $request->abacus_grade ?? NULL;
-        $gradingStudent->remarks  = $request->remarks ?? NULL;
-        $gradingStudent->approve_status  = $request->approve_status ?? NULL;
-        $gradingStudent->save();
+        $competition = GradingSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
+        return view('admin.grading_result.index', compact('title', 'competition'));
 
-        return redirect()->route('grading-students.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
 
-    public function destroy(Request $request)
+    public function search(Request $request)
     {
-        $id = explode(',', $request->multiple_delete);
-        GradingExam::destroy($id);
+        $search_term = $request->search;
+        $title = $this->title;
+        $competition = GradingExam::where('title', 'like', '%'.$search_term.'%')->paginate($this->pagination);
+        return view('admin.grading_result.index', compact('title', 'competition'));
+    }
 
-        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
+    public function excelDownload(Request $request, $id){
+        $allItems = GradingSubmitted::where('paper_type', 'actual')->where('grading_exam_id', $request->competitionId)->orderBy('grading_exam_id', 'desc')->orderBy('user_id', 'asc')->get();
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new GradingResultExport($allItems), 'GradingStudentReport.xlsx');
+    }
+
+    public function userresultsearch(Request $request)
+    {
+        //dd($request->all());
+        $search_term = $request->search;
+        $title = $this->title;
+        $users = User::where('name', 'like', '%'.$search_term.'%')->pluck('id')->toArray();
+        $userList = GradingStudentResults::where('grading_id', $request->competitionId)->whereIn('user_id', $users)->paginate($this->pagination);
+        $competitionId = $request->competitionId;
+        $competition = GradingExam::where('id', $request->competitionId)->first();
+        return view('admin.grading_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
     }
 
     public function uploadCompResult(){
         $title = 'Upload Result';
-        $grading = GradingExam::get();
-        //dd($grading);
-        return view('admin.grading_result.result-upload', compact('title', 'grading'));
+        $competition = GradingExam::get();
+        return view('admin.grading_result.result-upload', compact('title', 'competition'));
     }
 
     public function compResultUpload(Request $request){
@@ -98,18 +120,15 @@ class GradingResultController extends Controller
             // 'amount.required_if' => 'This field is required',
         ];
         $request->validate([
-            'grading_id'  =>  'required',
-            'list_id'  =>  'required',
-            'paper_id'  =>  'required',
-            'fileupload'  =>  'required',
-
+            'competition'  =>  'required',
+            'category' => 'required',
+            'fileupload'  =>  'required|mimes:xlsx',
         ], $messages);
 
-        $gradingResultsUpload = new GradingResultsUpload();
+        $compResultUpload = new GradingResultsUpload();
         if ($request->hasFile('fileupload')) {
 
             $file = $request->file('fileupload');
-            $result = Excel::import(new ImportGradingResult($request->grading_id,$request->paper_id), $file);
 
             $imported_files[] = "Grading Result Upload";
 
@@ -133,9 +152,24 @@ class GradingResultController extends Controller
 
                 $fileupload_path = $filepath . $filename;
 
-                $gradingResultsUpload->uploaded_file =  $fileupload_path;
-                $gradingResultsUpload->grading_id  =  $request->grading_id;
-                $gradingResultsUpload->save();
+                if($request->result_publish_date == date('Y-m-d')){
+                    $is_published = 1;
+                }else{
+                    $is_published = 0;
+                }
+
+                $compResultUpload->uploaded_file =  $fileupload_path;
+                $compResultUpload->grading_id  =  $request->competition;
+                $compResultUpload->category_id =  $request->category;
+                $compResultUpload->result_publish_date =  $request->result_publish_date;
+                $compResultUpload->is_published =  $is_published;
+                $compResultUpload->save();
+
+                if($request->result_publish_date == date('Y-m-d')){
+                    $result = Excel::import(new ImportGradingResult($request->competition, $request->category), $file);
+                }else{
+                    $result = Excel::import(new ImportGradingResult($request->competition, $request->category, $compResultUpload->id), $file);
+                }
 
                 return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $implode_files]));
             }
@@ -145,15 +179,42 @@ class GradingResultController extends Controller
         }
     }
 
-    public function search(Request $request)
-    {
-        $search_term = $request->search;
-        $title = $this->title;
-        $category = GradingExam::search($search_term)->paginate($this->pagination);
-        if ($search_term) {
-            $category->appends('search', $search_term);
-        }
+    public function assignGrading(){
+        $title = 'Assign Competition';
+        $competition = GradingExam::paginate($this->pagination);
 
-        return view('admin.grading-exam.index', compact('title', 'category'));
+        return view('admin.grading_result.assign', compact('title', 'competition'));
     }
+
+    public function assignGradingEdit($id = null){
+        $title = 'Assign Competition';
+        $competition = GradingExam::where('id', $id)->first();
+        $competitionCategory = GradingCategory::get();
+        $userType = array(1,2,3,4);
+        $compStudents = GradingStudent::where('grading_exam_id', $id)->pluck('user_id')->toArray();
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->whereNotIn('id', $compStudents)->get();
+        return view('admin.grading_result.assignstudent', compact('title', 'competition', 'students', 'competitionCategory'));
+
+    }
+
+    public function assignGradingStore(Request $request){
+        //dd($request->all());
+        $compId = $request->competitionId;
+        $category = $request->category;
+        $status = $request->status;
+        if($status != 1){
+            $status = 'null';
+        }
+        foreach($request->students as $student){
+            //dd($student);
+            $compStudent = new GradingStudent();
+            $compStudent->user_id = $student;
+            $compStudent->grading_exam_id  = $compId;
+            $compStudent->category_id = $category;
+            $compStudent->approve_status = $status;
+            $compStudent->save();
+        }
+        return redirect()->back()->with('success',  'Assigned');
+    }
+
 }

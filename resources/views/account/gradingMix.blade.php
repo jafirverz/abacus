@@ -11,31 +11,33 @@
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="{{ route('grading-overview',$grading_exam_id) }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="{{ URL::previous() }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
-            <li><a href="{{ url('home') }}">Overview</a></li>
-            <li><strong>{{ $gradingExam->title }}</strong></li>
+          <li><a href="{{ url('home') }}">Overview</a></li>
+          <li>{{ $compeTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-            {!! $gradingExam->important_note !!}
+          {{ $compPaper->description ?? '' }}
         </div>
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
-        <form method="post" action="{{ route('grading_answer.submit') }}">
-            @csrf
-            <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
-              <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-              <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
-              <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
+        <form method="post" enctype="multipart/form-data" action="{{ route('grading.submit') }}">
+          @csrf
+          <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
+          <input type="hidden" name="categoryId" value="{{ $compPaper->category_id }}">
+          <input type="hidden" name="compId" value="{{ $compPaper->grading_exam_id }}">
+          <input type="hidden" name="questionTemp" value="{{ $compPaper->question_template_id }}">
+          <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
           <div class="box-1">
             <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-2 text-center">Division</th>
+                    <th class="wcol-4 text-center">Mix</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
@@ -43,25 +45,18 @@
                   @php
                   $i = 1;
                   @endphp
-                  @foreach($paper->questionsGrade as $ques)
+                  @foreach($questions as $ques)
                   @php
-                  if($ques->input_3 == 'multiply'){
-                    $symbol='*';
-                  }
-                  elseif($ques->input_3 == 'add'){
-                    $symbol='+';
-                  }
-                  elseif($ques->input_3 == 'subtract'){
-                    $symbol='-';
-                  }
-                  else{
+                  if($ques->symbol == 'multiply'){
+                    $symbol='x';
+                  }else{
                     $symbol='÷';
                   }
                   @endphp
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
-                    <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
+                    <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
+                    <td class="colanswer"><input class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php
                   $i++;
@@ -80,6 +75,18 @@
   </div>
   </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+
+</script>
 
 <script>
 

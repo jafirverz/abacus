@@ -299,6 +299,18 @@ Breadcrumbs::for('category_competition_crud', function ($trail, $title, $url = '
     $trail->push($title, $url);
 });
 
+
+// CATEGORY GRADING
+Breadcrumbs::for('category_grading', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.CATEGORY_GRADING'), route('category-grading.index'));
+});
+
+Breadcrumbs::for('category_grading_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('category_grading');
+    $trail->push($title, $url);
+});
+
 // GRADING EXAM
 Breadcrumbs::for('grading_exam', function ($trail) {
     $trail->parent('admin_home');
