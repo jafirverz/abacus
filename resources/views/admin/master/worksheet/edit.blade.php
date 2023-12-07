@@ -44,8 +44,7 @@
                                     @php
                                         $postTopic = old('level') ?? [];
                                     @endphp
-                                    <select name="level[]" class="form-control" id="" style="height: 200px;" multiple>
-                                        <option value="">-- Select --</option>
+                                    <select name="level[]" class="form-control selectpicker" id="" style="height: 200px;" multiple data-live-search="true">
                                         @foreach($levels as $topic)
                                             <option value="{{$topic->id}}" @if(in_array($topic->id, $postTopic)) selected @elseif(in_array($topic->id, $levelTopic)) selected @endif>{{$topic->title}}</option>
                                         @endforeach

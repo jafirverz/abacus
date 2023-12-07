@@ -56,7 +56,7 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::get();
-        $levels = Level::get();
+        $levels = Level::where('status', 1)->get();
         $topics = Topic::get();
         $users = User::get();
         $franchiseAccounts = Admin::where('admin_role', 2)->get();
@@ -144,7 +144,7 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::find($id);
-        $levels = Level::get();
+        $levels = Level::where('status', 1)->get();
         $topics = Topic::get();
         $questionTempleates = QuestionTemplate::get();
         $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('level_id')->toArray();
