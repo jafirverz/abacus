@@ -291,41 +291,73 @@ class ReportController extends Controller
         // $countries = Country::get();
         $countries = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
         $countries = Country::whereIn('id', $countries)->get();
-        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders','instructor','competitions'));
+        $learningLocation = LearningLocation::get();
+        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders','instructor','competitions', 'learningLocation'));
     }
 
     public function competition_search(Request $request)
     {
         // dd($request->all());
+        $title = 'Competition Report';
         $name = $request->name  ?? '';
         $status = $request->status ?? '';
+        $countries = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $countries = Country::whereIn('id', $countries)->get();
+        $instructor = User::where('user_type_id', 5)->get();
+        $competitions = Competition::where('status', 1)->get();
+        $learningLocation = LearningLocation::get();
+        if($request->downloadexcel == 0){
+            $q = CompetitionStudent::query();
+            $q->join('users','competition_students.user_id','users.id');
+            $q->select('competition_students.*');
 
-        $q = CompetitionStudent::query();
-        $q->join('users','competition_students.user_id','users.id');
-        $q->select('competition_students.*');
-        if ($request->name) {
-            $q->where('users.name', 'like', $request->name);
+            if ($request->country) {
+                $q->where('users.country_code', 'like', $request->country);
+            }
+
+            if ($request->event) {
+                $q->where('competition_students.competition_controller_id', $request->event);
+            }
+
+            if ($request->learning_location) {
+                $q->where('users.learning_locations', $request->learning_location);
+            }
+
+            if ($request->instructor) {
+                $q->where('competition_students.instructor_id', $request->instructor);
+            }
+            $compStudents = $q->paginate($this->pagination);
+            session()->flashInput($request->input());
+            return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'instructor','competitions', 'learningLocation'));
+            //dd($allItems);
+
+        }else{
+            $q = CompetitionStudent::query();
+            $q->join('users','competition_students.user_id','users.id');
+            $q->select('competition_students.*');
+            if ($request->country) {
+                $q->where('users.country_code', 'like', $request->country);
+            }
+
+            if ($request->event) {
+                $q->where('competition_students.competition_controller_id', $request->event);
+            }
+
+            if ($request->learning_location) {
+                $q->where('users.learning_locations', $request->learning_location);
+            }
+
+            if ($request->instructor) {
+                $q->where('competition_students.instructor_id', $request->instructor);
+            }
+            $allItems = $q->get();
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new CompetetitionStudentExport($allItems), 'CompetetitionStudentExport.xlsx');
         }
+        
 
-        if ($request->event) {
-            $q->where('competition_students.competition_controller_id', $request->event);
-        }
-
-        if ($request->status) {
-            $q->where('competition_students.approve_status', $request->status);
-        }
-
-        if ($request->instructor) {
-            $q->whereIn('competition_students.instructor_id', $request->instructor);
-        }
-
-
-
-
-        $allItems = $q->get();
-        ob_end_clean();
-        ob_start();
-        return Excel::download(new CompetetitionStudentExport($allItems), 'CompetetitionStudentExport.xlsx');
+        
         //dd($allUsers);
     }
 

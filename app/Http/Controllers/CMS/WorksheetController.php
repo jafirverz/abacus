@@ -41,9 +41,10 @@ class WorksheetController extends Controller
     public function index()
     {
         $title = $this->title;
-        $worksheet = Worksheet::orderBy('id', 'desc')->paginate($this->pagination);
+        $worksheet = Worksheet::orderBy('title', 'asc')->paginate($this->pagination);
+        $questionTemplate = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8,10])->get();
 
-        return view('admin.master.worksheet.index', compact('title', 'worksheet'));
+        return view('admin.master.worksheet.index', compact('title', 'worksheet', 'questionTemplate'));
     }
 
     /**
@@ -55,7 +56,7 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::get();
-        $levels = Level::get();
+        $levels = Level::where('status', 1)->get();
         $topics = Topic::get();
         $users = User::get();
         $franchiseAccounts = Admin::where('admin_role', 2)->get();
@@ -143,7 +144,7 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::find($id);
-        $levels = Level::get();
+        $levels = Level::where('status', 1)->get();
         $topics = Topic::get();
         $questionTempleates = QuestionTemplate::get();
         $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('level_id')->toArray();
@@ -222,14 +223,22 @@ class WorksheetController extends Controller
 
     public function search(Request $request)
     {
-        $search_term = $request->search;
-        $title = $this->title;
-        $worksheet = Worksheet::search($search_term)->paginate($this->pagination);
-        if ($search_term) {
-            $worksheet->appends('search', $search_term);
+        // dd($request->all());
+        $questionTemplate = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8,10])->get();
+        if($request->qId){
+            $title = $this->title;
+            $worksheet = Worksheet::where('question_template_id', $request->qId)->paginate($this->pagination);
+        }else{
+            $search_term = $request->search;
+            $title = $this->title;
+            $worksheet = Worksheet::search($search_term)->paginate($this->pagination);
+            if ($search_term) {
+                $worksheet->appends('search', $search_term);
+            }
         }
+        
 
-        return view('admin.master.worksheet.index', compact('title', 'worksheet'));
+        return view('admin.master.worksheet.index', compact('title', 'worksheet', 'questionTemplate'));
     }
 
     public function questions($id)

@@ -49,8 +49,8 @@
 
                                 <div class="form-group">
                                     <label for="title">Select Student</label>
-                                    <select name="studen" class="form-control" multiple>
-                                        <option value="">-- Select --</option>
+                                    <select name="studen" class="form-control selectpicker" data-live-search="true">
+                                        <option value="">--Please select--</option>
                                         @foreach($students as $student)
                                         <option value="{{ $student->id}}" @if(old('studen')==$student->id) selected @endif>{{$student->name}}</option>
                                         @endforeach
@@ -66,8 +66,7 @@
 
                                 <div class="form-group">
                                     <label for="title">Level</label>
-                                    <select name="level[]" class="form-control" multiple>
-                                        <option value="">-- Select --</option>
+                                    <select name="level[]" class="form-control selectpicker" multiple data-live-search="true">
                                         @foreach($levels as $cate)
                                         <option value="{{ $cate->id }}">{{ $cate->title }}</option>
                                         @endforeach

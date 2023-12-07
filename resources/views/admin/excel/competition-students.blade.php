@@ -2,18 +2,16 @@
     <thead>
         <tr>
             <th>S/N</th>
-            <th>Event Name</th>
             <th>Student Name</th>
-            <th>Student Email</th>
             <th>Student DOB</th>
-            <th>Student Number</th>
+            <th>Contact Number</th>
             <th>Instructor Name</th>
-            <th>Franchise Country Name</th>
             <th>Learning Location </th>
-            <th>Status </th>
-            <th>Remark </th>
-            <th>Result</th>
-            <th>Pass/Fail</th>
+            <th>Country </th>
+            <th>Competition Category </th>
+            <th>Paper </th>
+            <th>Total Marks </th>
+            <th>Prize </th>
         </tr>
     </thead>
     <tbody>
@@ -26,13 +24,7 @@
         <tr>
             <td>{{ ($key+1) }}</td>
             <td>
-                {{ $item->event->title ?? '' }}
-            </td>
-            <td>
                 {{ $item->student->name  ?? ''}}
-            </td>
-            <td>
-                {{ $item->student->email  ?? ''}}
             </td>
             <td>
                 {{ $item->student->dob  ?? ''}}
@@ -43,16 +35,19 @@
             <td>
                 {{ $item->teacher->name  ?? ''}}
             </td>
-            <td>
-                {{ getCountry($item->teacher->country_code) ?? '' }}
-            </td>
             <td>{{ $item->location->title ?? '' }}</td>
-            <td>
-                {{ ($item->approve_status==1)?'Approved':'Pending' }}
-            </td>
-            <td>{{ $item->remarks ?? ''}}</td>
-            <td>--</td>
-            <td>--</td>
+            <td>{{ getCountry($item->student->country_code) ?? '' }}</td>
+            <td>{{ getCategory($item->category_id)->category_name ?? '' }}</td>
+            @php
+            $abc = getPaper($item->competition_controller_id, $item->category_id, $item->user_id);
+            if(!empty($abc)){
+                $paperResult = implode(',  ', $abc);
+            }
+            @endphp
+            <td>{{ $paperResult ?? '' }}</td>
+            <td>{{ getTotalPaperMarks($item->competition_controller_id, $item->category_id, $item->user_id) }}</td>
+
+            <td>{{ getPrize($item->competition_controller_id, $item->category_id, $item->user_id) }}</td>
         </tr>
         @endforeach
         @else

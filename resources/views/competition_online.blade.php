@@ -35,7 +35,8 @@
                                         <strong>Date:</strong> {{ date('j F Y', strtotime($competition->date_of_competition)) }}
                                     </div>	
                                     <div class="inrow">
-                                        <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
+                                        <strong>Allocated Competition Time:</strong> SGT {{ $competition->start_time_of_competition }}
+                                        @if($competition->start_time_of_competition > 12) PM @else AM @endif
                                     </div>
                                     @php 
                                     //$userCategory = json_decode(Auth::user()->category_id);

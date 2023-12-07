@@ -47,7 +47,7 @@ class OrderController extends Controller
     {
         $title = $this->title;
         $students = User::whereIn('user_type_id', [1,2])->orderBy('id', 'desc')->get();
-        $levels = Level::get();
+        $levels = Level::where('status', 1)->get();
         return view('admin.cms.orders.create', compact('title', 'students', 'levels'));
     }
 

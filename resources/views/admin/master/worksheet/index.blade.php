@@ -17,9 +17,33 @@
         <div class="section-body">
             @include('admin.inc.messages')
 
+            <form action="{{ route('worksheet.search') }}" method="get" id="formreport">
+                @csrf
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-lg-4"><label>Question Template:</label>
+                            <select name="qId" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($questionTemplate as $questionT)
+                                <option value="{{ $questionT->id }}" @if(isset($_REQUEST['qId']) && $_REQUEST['qId']==$questionT->id) selected="selected"
+                                    @endif>{{$questionT->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <button type="submit" class="btn btn-primary"> Filter</button>
+                        </div>
+                    </div>
+                </div>
+            </form><br />
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+
+                        
 
                         <div class="card-header">
                             <a href="{{ route('worksheet.destroy', 'worksheet') }}" class="btn btn-danger d-none destroy"
@@ -64,6 +88,7 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>Title</th>
+                                            <th>Question Template</th>
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -90,7 +115,7 @@
                                                 <a href="{{ route('worksheet.questions', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="List"><i class="fas fa-bars"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
-
+                                            <td>{{ $item->questionsTemp->title ?? '' }}</td>
                                             <td>
                                                 @if(getActiveStatus())
                                                 <div class="badge @if ($item->status==1) badge-success @else badge-danger @endif">{{ getActiveStatus($item->status) }}</div>
@@ -110,7 +135,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ $worksheet->links() }}
+                            {{ $worksheet->appends(request()->input())->links() }}
                         </div>
                     </div>
                 </div>

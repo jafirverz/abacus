@@ -10,21 +10,32 @@
 
 
         </div>
-        <form action="{{ route('reports-competition.search') }}" method="post">
+        <form action="{{ route('reports-competition.search') }}" method="get" id="formreport">
             @csrf
             <div class="section-body">
 
                 <div class="row">
 
-                    <div class="col-lg-4"><label>Student Name:</label><input type="text" name="name" class="form-control"
-                            id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}"
-                            @endif> </div>
+                        <div class="col-lg-4"><label>Learning Location:</label>
+                          <select name="learning_location" class="form-control">
+                            <option value="">-- Select --</option>
+                            @foreach($learningLocation as $locat)
+                            <option @if(isset($_REQUEST['learning_location']) && $_REQUEST['learning_location']==$locat->id) selected="selected"
+                                @endif value="{{ $locat->id }}">{{ $locat->title }}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                        <!-- <div class="col-lg-4"><label>End Date:</label>
+                          <input type="text" name="enddate" class="form-control datepicker1"
+                          id="title" @if(isset($_GET['enddate']) && $_GET['enddate']!="" ) value="{{ $_GET['enddate'] }}"
+                          @endif>
+                        </div> -->
                     <div class="col-lg-4">
                         <label>Instructor</label>
-                        <select name="instructor[]" class="form-control" multiple>
+                        <select name="instructor" class="form-control" >
                             <option value="">-- Select --</option>
                             @foreach ($instructor as $key => $value)
-                            <option @if(isset($_GET['instructor_id']) && $_GET['instructor_id']==$value->id) selected="selected"
+                            <option @if(isset($_REQUEST['instructor']) && $_REQUEST['instructor']==$value->id) selected="selected"
                                 @endif value="{{$value->id}}">{{$value->name}}</option>
                             @endforeach
                         </select>
@@ -34,7 +45,7 @@
                         <select name="event" class="form-control">
                           <option value="">-- Select --</option>
                           @foreach ($competitions as $key => $value)
-                          <option @if(isset($_GET['event']) && $_GET['event']==$value->id) selected="selected"
+                          <option @if(isset($_REQUEST['event']) && $_REQUEST['event']==$value->id) selected="selected"
                               @endif value="{{$value->id}}">{{$value->title}}</option>
                           @endforeach
                       </select>
@@ -42,15 +53,13 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-lg-4"><label>Status:</label>
-                      <select name="status" class="form-control">
+                    <div class="col-lg-4"><label>Country:</label>
+                      <select name="country" class="form-control">
                         <option value="">-- Select --</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
-                            @endif value="1">Active</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
-                            @endif value="0">In Active</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                            @endif value="2">Rejected</option>
+                        @foreach($countries as $country)
+                        <option @if(isset($_REQUEST['country']) && $_REQUEST['country']==$country->id) selected="selected"
+                            @endif value="{{ $country->id }}">{{ $country->country }}</option>
+                        @endforeach
                     </select>
                     </div>
                     <!-- <div class="col-lg-4"><label>End Date:</label>
@@ -60,9 +69,11 @@
                     </div> -->
                 </div>
                 <br />
+                <input type="hidden" name="downloadexcel" value="" id="downloadexcel">
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary" > Search</button>
+                        <button type="button" class="btn btn-primary" onclick="formsubmit();"> Export</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
@@ -102,7 +113,7 @@
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <!-- <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -110,20 +121,18 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
+                                            </th> -->
                                             <th>S/N</th>
-                                            <th>Event Name</th>
-                                            <th>Student Name</th>
-                                            <th>Student Email</th>
-                                            <th>Student DOB</th>
-                                            <th>Student Number</th>
-                                            <th>Instructor Name</th>
-                                            <th>Franchise Country Name</th>
+                                            <th>Student Full Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Contact Number</th>
+                                            <th>Instructor Display Name</th>
                                             <th>Learning Location </th>
-                                            <th>Status </th>
-                                            <th>Remark </th>
-                                            <th>Result</th>
-                                            <th>Pass/Fail</th>
+                                            <th>Country </th>
+                                            <th>Competition Category </th>
+                                            <th>Paper </th>
+                                            <th>Total Result </th>
+                                            <th>Prize </th>
 
                                         </tr>
                                     </thead>
@@ -137,24 +146,19 @@
                                         $i++;
                                         @endphp
                                         <tr>
-                                            <td scope="row">
+                                            <!-- <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
                                                         data-checkboxes="mygroup" class="custom-control-input"
                                                         id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 {{ $i }}
                                             </td>
-                                            <td>
-                                                {{ $item->event->title ?? '' }}
-                                            </td>
+                                            
                                             <td>
                                                 {{ $item->student->name  ?? ''}}
-                                            </td>
-                                            <td>
-                                                {{ $item->student->email  ?? ''}}
                                             </td>
                                             <td>
                                                 {{ $item->student->dob  ?? ''}}
@@ -165,18 +169,21 @@
                                             <td>
                                                 {{ $item->teacher->name  ?? ''}}
                                             </td>
-                                            <td>
-                                                @if(isset($item->teacher->country_code))
-                                                {{ getCountry($item->teacher->country_code) ?? '' }}
-                                                @endif
-                                            </td>
+                                            
                                             <td>{{ $item->location->title ?? '' }}</td>
-                                            <td>
-                                                {{ ($item->approve_status==1)?'Approved':'Pending' }}
-                                            </td>
-                                            <td>{{ $item->remarks ?? ''}}</td>
-                                            <td>{{ getCompetetionStudentResult($item->event->id,$item->student->id)->rank ?? '-'}}</td>
-                                            <td>{{ getCompetetionStudentResult($item->event->id,$item->student->id)->result ?? '-'}}</td>
+                                            <td>{{ getCountry($item->student->country_code) ?? '' }}</td>
+                                            <td>{{ getCategory($item->category_id)->category_name ?? '' }}</td>
+                                            @php
+                                            $abc = getPaper($item->competition_controller_id, $item->category_id, $item->user_id);
+                                            if(!empty($abc)){
+                                                $paperResult = implode(',  ', $abc);
+                                            }
+                                            @endphp
+                                            <td>{{ $paperResult ?? '' }}</td>
+                                            <td>{{ getTotalPaperMarks($item->competition_controller_id, $item->category_id, $item->user_id) }}</td>
+
+                                            <td>{{ getPrize($item->competition_controller_id, $item->category_id, $item->user_id) }}</td>
+                                            
                                         </tr>
                                         @endforeach
                                         @else
@@ -190,7 +197,7 @@
 
                         </div>
                         <div class="card-footer">
-                            {{ $compStudents->links() }}
+                            {{ $compStudents->appends(request()->input())->links() }}
                         </div>
                     </div>
                 </div>
@@ -198,4 +205,11 @@
         </div>
     </section>
 </div>
+
+<script>
+    function formsubmit(){
+        $("#downloadexcel").val(1);
+        $('form#formreport').submit();
+    }
+</script>
 @endsection
