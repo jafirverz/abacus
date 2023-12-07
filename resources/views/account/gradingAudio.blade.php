@@ -5,86 +5,137 @@
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
       @if(Auth::user()->user_type_id == 1)
-        @include('inc.account-sidebar')
+      @include('inc.account-sidebar')
       @endif
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="be-overview-preparatory.html"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="{{ URL::previous() }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
-            <li><a href="{{ url('grading-overview') }}">Grading Overview</a></li>
-            <li><strong>{{ $gradingExam->title }}</strong></li>
+          <li><a href="{{ url('home') }}">Overview</a></li>
+          <li>{{ $compeTitle }}</li>
+          <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
-        <div class="box-1">
-            {!! $gradingExam->important_note !!}
-        </div>
-        <form method="post" action="{{ route('grading_answer.submit') }}">
-            @csrf
-            <input type="hidden" name="grading_exam_id" value="{{ $grading_exam_id }}">
-
-            <input type="hidden" name="listing_id" value="{{ $listing_id }}">
-            <input type="hidden" name="paper_id" value="{{ $paper->listing_paper_id }}">
-            <input type="hidden" name="question_type" value="{{ $paper->question_type }}">
-        <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
-        </div>
-        <div class="row grid-4">
-
+        @if($compPaper->time)
           @php
-          $k=1;
-          if(isset($_GET['s']) && $_GET['s'] == 1){
-            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->inRandomOrder()->get();
-          }else{
-            $questionns = \App\GradingPaperQuestion::where('grading_paper_question_id', $paper->id)->groupBy('input_2')->get();
-          }
-          foreach($questionns as $questionn){
+          $timeinSec = $compPaper->time * 60 + 2;
+          $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $dateTime = strtotime($today);
+          $getDateTime = date("F d, Y H:i:s", $dateTime);
           @endphp
+          <div class="timer-wrap">
+            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
+          </div>
+        @endif
+        <form method="post" enctype="multipart/form-data" action="{{ route('grading.submit') }}" id="submitform">
+          @csrf
+          <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
+          <input type="hidden" name="categoryId" value="{{ $compPaper->category_id }}">
+          <input type="hidden" name="compId" value="{{ $compPaper->grading_exam_id  }}">
+          <input type="hidden" name="questionTemp" value="{{ $compPaper->question_template_id }}">
+          <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
+          <div class="row grid-4">
+            @php
+            $k=1;
+            @endphp
+            @foreach($questions as $question)
             <div class="col-xl-4 col-sm-6">
               <div class="inner">
                 @php
-                $questionnss = \App\GradingPaperQuestion::where('grading_paper_question_id', $questionn->grading_paper_question_id)->where('input_2', $questionn->input_2)->get();
-
-                foreach($questionnss as $question){
+                $questionnss = \App\GradingPaperQuestion::where('grading_paper_id',
+                $question->grading_paper_id)->where('block', $question->block)->get();
                 @endphp
+                @foreach($questionnss as $question)
                 <div class="row sp-col-10 grow">
-                  <input type="hidden" value="{{ $question->id }}">
                   <div class="col-auto sp-col"><strong>Q{{ $k }}</strong></div>
                   <div class="col-auto sp-col">
-                    <button class="link-2 play-wrap" id="play_btn{{ $k }}" type="button" value="{{ $k }}" >
-                      <!-- <i class="fa-solid fa-volume-high"></i> -->
+                    <button class="link-2 play-wrap" id="play_btn{{ $k }}" type="button" value="{{ $k }}">
+                      <!-- <i class="fa-solid fa-volume-high play" id="audio{{ $k }}" data-music_id="audio-{{ $k }}"></i> -->
                     </button>
                     <audio id="audio-{{ $k }}" controls controlsList="nodownload">
-                      <source src="{{ url('/upload-file/'.$question->input_1) }}" type="audio/mp3">
-                      <source src="{{ url('/upload-file/'.$question->input_1) }}" type="audio/ogg">
+                      <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/mp3">
+                      <source src="{{ url('/upload-file/'.$question->question_1) }}" type="audio/ogg">
                       Your browser does not support the audio element.
                     </audio>
                   </div>
                   <div class="col sp-col">
-                    <input class="form-control" type="text" name="answer[{{ $question->id }}]" required placeholder="Answer" />
+                    <input class="form-control" type="text" name="answer[{{ $question->id }}]" placeholder="Answer" />
                   </div>
                 </div>
-
                 @php
                 $k++;
-                }
-
-              @endphp
+                @endphp
+                @endforeach
               </div>
             </div>
-          @php
-          }
-          @endphp
+            @endforeach
+          </div>
 
-        </div>
-    <div class="output-1">
-      <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-    </div>
-  </form>
+          <div class="output-1">
+            <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
+          </div>
+        </form>
 
-  </div>
+
+      </div>
 </main>
+
+@if($compPaper->paper_type == 'actual')
+
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var current = new Date().getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+      }
+  }, 1000);
+</script>
+
+@else
+
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var current = new Date().getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
+      }
+  }, 1000);
+</script>
+
+@endif
 
 <script>
 jQuery(document).ready(function ($) {
@@ -109,35 +160,33 @@ jQuery(document).ready(function ($) {
 
   // initAudioPlayer();
 
-    // function initAudioPlayer(val){
-    //   var audio = new Audio();
-    //   // audio.pause();
-    //   var aContainer = document.getElementById("audio-"+val);
-    //   // assign the audio src
-    //   audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
-    //   audio.load();
-    //   audio.loop = false;
-    //   audio.play();
+  // function initAudioPlayer(val) {
+  //   var audio = new Audio();
+  //   var aContainer = document.getElementById("audio-" + val);
+  //   // assign the audio src
+  //   audio.src = aContainer.querySelectorAll('source')[0].getAttribute('src');
+  //   audio.load();
+  //   audio.loop = false;
+  //   audio.play();
 
-    //   // Set object references
-    //   var playbtn = document.getElementById("play_btn"+val);
+  //   var playbtn = document.getElementById("play_btn" + val);
 
-    //     // Add Event Handling
-    //     playbtn.addEventListener("click", playPause(audio, playbtn));
-    //   }
+  //   playbtn.addEventListener("click", playPause(audio, playbtn));
+  // }
 
-    //   // Functions
-    //   function playPause(audio, playbtn){
-    //       return function () {
-    //          if(audio.paused){
-    //            audio.play();
-    //            $('.link-2').html('<i class="bi bi-pause"></i>')
-    //          } else {
-    //            audio.pause();
-    //            $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
-    //          }
-    //       }
-    //   }
+  // function playPause(audio, playbtn) {
+  //   return function () {
+  //     if (audio.paused) {
+  //       audio.play();
+  //       $('.link-2').html('<i class="bi bi-pause"></i>')
+  //     } else {
+  //       audio.pause();
+  //       $('.link-2').html('<i class="fa-solid fa-volume-high"></i>')
+  //     }
+  //   }
+  // }
 
-  </script>
+</script>
+
+
 @endsection

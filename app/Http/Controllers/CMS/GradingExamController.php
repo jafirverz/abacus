@@ -4,6 +4,9 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\GradingExam;
+use App\GradingCategory;
+use App\CategoryGrading;
+use App\GradingStudent;
 use App\User;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Http\Request;
@@ -36,9 +39,9 @@ class GradingExamController extends Controller
     public function index()
     {
         $title = $this->title;
-        $exam = GradingExam::paginate($this->pagination);
+        $competition = GradingExam::paginate($this->pagination);
 
-        return view('admin.grading-exam.index', compact('title', 'exam'));
+        return view('admin.grading-exam.index', compact('title', 'competition'));
     }
 
     /**
@@ -49,8 +52,10 @@ class GradingExamController extends Controller
     public function create()
     {
         $title = $this->title;
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.create', compact('title','students'));
+        $competitionCategory = GradingCategory::get();
+        $userType = array(1,2,3,4);
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
+        return view('admin.grading-exam.create',compact('title', 'competitionCategory', 'students'));
     }
 
     /**
@@ -61,27 +66,77 @@ class GradingExamController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            // 'amount.required_if' => 'This field is required',
+        ];
         $request->validate([
             'title'  =>  'required',
-            'type'  =>  'required',
-            'layout'  =>  'required',
-            'exam_date'  =>  'required',
-            'exam_venue'  =>  'required',
-            'exam_type'  =>  'required',
-            'status'  =>  'required',
-        ]);
+            'competition_type'  =>  'required',
+            //'students' => 'required',
+            'category' => 'required',
+            'date_of_competition'  =>  'required',
+            'start_time_of_competition'  =>  'required',
+            //'end_time_of_competition'  =>  'required',
+        ], $messages);
 
-        $gradingExam = new GradingExam();
-        $gradingExam->title = $request->title ?? NULL;
-        $gradingExam->type = $request->type ?? NULL;
-        $gradingExam->exam_type = $request->exam_type ?? NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->exam_date = $request->exam_date ?? NULL;
-        $gradingExam->exam_venue = $request->exam_venue ?? NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->important_note = $request->important_note ?? NULL;
-        $gradingExam->status = $request->status ?? NULL;
-        $gradingExam->save();
+        $competition = new GradingExam();
+        if ($request->hasFile('compoverimage')) {
+
+            $compoverimage = $request->file('compoverimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compoverimage->getClientOriginalName();
+
+            $filepath = 'storage/grading/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compoverimage,
+                $filename
+
+            );
+
+            $compoverimage_path = $filepath . $filename;
+
+            $competition->overview_image =  $compoverimage_path;
+        }
+        if ($request->hasFile('compimage')) {
+
+            $compimage = $request->file('compimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compimage->getClientOriginalName();
+
+            $filepath = 'storage/grading/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compimage,
+                $filename
+
+            );
+
+            $competition_path = $filepath . $filename;
+
+            $competition->comp_image = $competition_path;
+        }
+        $competition->title = $request->title;
+        $competition->exam_venue = $request->exam_venue;
+        $competition->date_of_competition = $request->date_of_competition;
+        $competition->start_time_of_competition = $request->start_time_of_competition;
+        $competition->end_time_of_competition = $request->end_time_of_competition;
+        $competition->description = $request->description;
+        $competition->competition_type = $request->competition_type;
+        $competition->status = $request->status ?? null;
+        $competition->save();
+
+        $competitionId = $competition->id;
+        foreach($request->category as $cate){
+            $catCompt = new CategoryGrading();
+            $catCompt->competition_id = $competitionId;
+            $catCompt->category_id = $cate;
+            $catCompt->save();
+        }
 
         return redirect()->route('grading-exam.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
     }
@@ -95,9 +150,14 @@ class GradingExamController extends Controller
     public function show($id)
     {
         $title = $this->title;
-        $exam = GradingExam::find($id);
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.show', compact('title', 'exam','students'));
+        $categoyy = array();
+        $competition = GradingExam::find($id);
+        $competitionCategory = GradingCategory::get();
+        $categoryCompetition = CategoryGrading::where('competition_id', $id)->pluck('category_id')->toArray();
+        if($categoryCompetition){
+            $categoyy = GradingCategory::whereIn('id', $categoryCompetition)->pluck('category_name')->toArray();
+        }
+        return view('admin.grading-exam.show', compact('title', 'competition', 'categoryCompetition','competitionCategory', 'categoyy'));
     }
 
     /**
@@ -109,9 +169,13 @@ class GradingExamController extends Controller
     public function edit($id)
     {
         $title = $this->title;
-        $exam = GradingExam::findorfail($id);
-        $students = User::orderBy('id','desc')->where('user_type_id','!=',5)->where('approve_status','!=',0)->get();
-        return view('admin.grading-exam.edit', compact('title', 'exam','students'));
+        $competition = GradingExam::find($id);
+        $competitionCategory = GradingCategory::get();
+        $userType = array(1,2,3,4);
+        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
+        $categoryCompetition = CategoryGrading::where('competition_id', $id)->pluck('category_id')->toArray();
+
+        return view('admin.grading-exam.edit', compact('title', 'competition', 'categoryCompetition','competitionCategory', 'students'));
     }
 
     /**
@@ -123,27 +187,80 @@ class GradingExamController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $messages = [
+            // 'amount.required_if' => 'This field is required',
+        ];
         $request->validate([
             'title'  =>  'required',
-            'type'  =>  'required',
-            'layout'  =>  'required',
-            'exam_date'  =>  'required',
-            'exam_type'  =>  'required',
-            'exam_venue'  =>  'required',
-            'status'  =>  'required',
-        ]);
+            //'competition_type'  =>  'required',
+            'category' => 'required',
+            'date_of_competition'  =>  'required',
+            'start_time_of_competition'  =>  'required',
+            // 'end_time_of_competition'  =>  'required',
+        ], $messages);
 
-        $gradingExam = GradingExam::findorfail($id);
-        $gradingExam->title = $request->title ?? NULL;
-        $gradingExam->type = $request->type ?? NULL;
-        $gradingExam->exam_type = $request->exam_type ?? NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->exam_date = $request->exam_date ?? NULL;
- $gradingExam->exam_venue = $request->exam_venue ?? NULL;
-        $gradingExam->layout = $request->layout ?? NULL;
-        $gradingExam->important_note = $request->important_note ?? NULL;
-        $gradingExam->status = $request->status ?? NULL;
-        $gradingExam->save();
+
+        $competition = GradingExam::where('id', $id)->first();
+        if ($request->hasFile('compoverimage')) {
+
+            $compoverimage = $request->file('compoverimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compoverimage->getClientOriginalName();
+
+            $filepath = 'storage/grading/';
+
+            Storage::putFileAs(
+
+                'public/grading',
+                $compoverimage,
+                $filename
+
+            );
+
+            $compoverimage_path = $filepath . $filename;
+
+            $competition->overview_image =  $compoverimage_path;
+        }
+        if ($request->hasFile('compimage')) {
+
+            $compimage = $request->file('compimage');
+
+            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $compimage->getClientOriginalName();
+
+            $filepath = 'storage/grading/';
+
+            Storage::putFileAs(
+
+                'public/competition',
+                $compimage,
+                $filename
+
+            );
+
+            $competition_path = $filepath . $filename;
+
+            $competition->comp_image = $competition_path;
+        }
+        $competition->title = $request->title;
+        $competition->exam_venue = $request->exam_venue;
+        $competition->date_of_competition = $request->date_of_competition;
+        $competition->start_time_of_competition = $request->start_time_of_competition;
+        $competition->end_time_of_competition = $request->end_time_of_competition;
+        $competition->description = $request->description;
+        //$competition->competition_type = $request->competition_type;
+        $competition->status = $request->status ?? null;
+        $competition->save();
+
+        $categoryCompetition = CategoryGrading::where('competition_id', $id)->get();
+        foreach($categoryCompetition as $deleteCategory){
+            $deleteCategory->delete();
+        }
+        foreach($request->category as $cate){
+            $catCompt = new CategoryGrading();
+            $catCompt->competition_id = $id;
+            $catCompt->category_id = $cate;
+            $catCompt->save();
+        }
 
         return redirect()->route('grading-exam.index')->with('success', __('constant.UPDATED', ['module' => $this->title]));
     }
@@ -166,11 +283,36 @@ class GradingExamController extends Controller
     {
         $search_term = $request->search;
         $title = $this->title;
-        $exam = GradingExam::search($search_term)->paginate($this->pagination);
+        $competition = GradingExam::search($search_term)->paginate($this->pagination);
         if ($search_term) {
-            $exam->appends('search', $search_term);
+            $competition->appends('search', $search_term);
         }
 
         return view('admin.grading-exam.index', compact('title', 'exam'));
+    }
+
+
+    public function studentList($id){
+        $title = 'Student List';
+        $studentList = GradingStudent::where('grading_exam_id', $id)->orderBy('id', 'desc')->paginate($this->pagination);
+        return view('admin.grading-exam.studentList', compact('title', 'studentList'));
+    }
+
+    public function rejectstudentList($id){
+        //dd($id);
+        $title = 'Student List';
+        $compStudent = GradingStudent::where('id', $id)->first();
+        $compStudent->approve_status = 2;
+        $compStudent->save();
+        return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
+    }
+
+    public function approvestudentList(Request $request, $id){
+        //dd($id);
+        $title = 'Student List';
+        $compStudent = GradingStudent::where('id', $id)->first();
+        $compStudent->approve_status = 1;
+        $compStudent->save();
+        return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
     }
 }

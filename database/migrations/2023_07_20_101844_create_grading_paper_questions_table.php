@@ -15,13 +15,14 @@ class CreateGradingPaperQuestionsTable extends Migration
     {
         Schema::create('grading_paper_questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('grading_paper_question_id');
-            $table->foreign('grading_paper_question_id')->references('id')->on('grading_papers');
-            $table->text('input_1')->nullable();
-            $table->string('input_2')->nullable();
-            $table->string('input_3')->nullable();
-            $table->integer('answer')->nullable();
-            $table->integer('marks')->nullable();
+            $table->unsignedBigInteger('grading_paper_id')->nullable();
+            $table->foreign('grading_paper_id')->references('id')->on('grading_papers');
+            $table->string('question_1')->nullable();
+            $table->string('question_2')->nullable();
+            $table->string('symbol')->nullable();
+            $table->string('answer')->nullable();
+            $table->string('marks')->nullable();
+            $table->string('block')->nullable();
             $table->timestamps();
         });
     }

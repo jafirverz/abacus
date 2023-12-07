@@ -13,10 +13,10 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ImportGradingResult implements ToCollection, WithHeadingRow
 {
     private $grading_id;
-    public function __construct(int $grading_id,int $paper_id)
+    public function __construct(int $grading_id,int $category)
     {
         $this->grading_id = $grading_id;
-        $this->paper_id = $paper_id;
+        $this->category = $category;
     }
 
     /**
@@ -37,6 +37,7 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
                     //dd($row);
                     $gradingStudentResults = new GradingStudentResults();
                     $gradingStudentResults->grading_id  =  $this->grading_id;
+                    $gradingStudentResults->category_id  =  $category;
                     $gradingStudentResults->user_id =  $checkUserName->id;
                     $gradingStudentResults->total_marks =  $row['marks'];
                     $gradingStudentResults->rank =  $row['rank'];

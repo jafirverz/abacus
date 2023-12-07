@@ -14,6 +14,7 @@ use App\Traits\SystemSettingTrait;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use Exception;
+use DB;
 
 class InstructorReminder extends Command
 {
@@ -52,7 +53,9 @@ class InstructorReminder extends Command
         //
         $today = date('Y-m-d');
         $daysAhead = date('Y-m-d', strtotime($today. ' + 2 days'));
-        $reminder = InstructorCalendar::where('start_date', $daysAhead)->get();
+        DB::enableQueryLog();
+        $reminder = InstructorCalendar::where('start_date', $daysAhead)->where('start_time',date('H:i:00'))->get();
+        //dd($reminder);
         if($reminder){
             foreach($reminder as $remind){
                 if($remind){
@@ -75,7 +78,7 @@ class InstructorReminder extends Command
 
                             $data['contents'] = $newContents;
                             try {
-                                $mail = Mail::to('jafir.verz@gmail.com')->send(new EmailNotification($data));
+                                $mail = Mail::to($remind->teacher->email)->send(new EmailNotification($data));
                             } catch (Exception $exception) {
                                 dd($exception);
                             }

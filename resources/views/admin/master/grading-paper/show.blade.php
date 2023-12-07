@@ -6,122 +6,218 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('grading-paper.index') }}" class="btn btn-icon"><i
-                        class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('grading-paper.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('grading_paper_crud', 'Show',
-            route('grading-paper.show', $paper->id))])
+{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Edit', route('bank.edit', $bank->id))])--}}
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
 
-                            <div class="form-group">
-                                <label for="">Title</label>
-                                <input readonly="readonly" type="text" name="title" class="form-control" value="{{ old('title', $paper->title) }}">
+                            <div class="card-body">
 
-                            </div>
+                                @if($competitionPaper->comp_contro->competition_type == 'physical')
+                                <input type="hidden" name="competionT" value="2">
+                                @else
+                                <input type="hidden" name="competionT" value="1">
+                                @endif
 
-
-
-                            <div class="form-group">
-                                <label for="question_type">Type</label>
-                                <select disabled="disabled"  id="question_type" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                                    <option value="">-- Select --</option>
-                                    @if ($templates)
-                                    @foreach ($templates as $item)
-                                    <option value="<?php echo url('/'); ?>/admin/grading-paper/{{ $paper->id }}/edit?question-type={{ $item->id }}" @if(old('question_type', $paper->question_type)==$item->id) selected @endif> {{ $item->title }} </option>
-                                    @endforeach
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" name="title" class="form-control" id=""
+                                        value="{{ old('title', $competitionPaper->title) ?? '' }}">
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
                                     @endif
-                                </select>
+                                </div>
 
-                            </div>
+                                <div class="form-group" >
+                                    <label for="title">Paper Type</label>
+                                    <select name="paper_type" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option value="practice" @if(old('paper_type', $competitionPaper->paper_type) == 'practice') selected @endif>Practice Paper</option>
+                                        <option value="actual" @if(old('paper_type', $competitionPaper->paper_type) == 'actual') selected @endif>Actual Paper</option>
+                                    </select>
+                                    @if ($errors->has('paper_type'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('paper_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
-                            @if($paper->question_type==4 || $paper->question_type==5)
-                                <label for="" class=" control-label">{{ getQuestionTemplate($paper->question_type) }}</label>
-                                @php
-                                    $json_question=json_decode($paper->json_question);
-                                    for($i=0;$i<count($json_question->input_1);$i++)
-                                    {
+                                <div class="form-group">
+                                    <label for="title">Category</label>
+                                    <select name="category" class="form-control" >
+                                        <option value="">-- Select --</option>
+                                        @foreach($catComp as $cate)
+                                        <option value="{{ $cate->category->id }}" @if($cate->category->id == $competitionPaper->category_id) selected @endif>{{ $cate->category->category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('category'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('category') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
-                                @endphp
-
-                                    <div class="form-group">
-                                        <div class="row" style="margin-bottom:30px;">
-                                            <div class="col-md-4">
-                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                @php } @endphp
+                                <div class="form-group" >
+                                    <label for="title">Price</label>
+                                    <input type="text" name="price" class="form-control" id=""
+                                        value="{{ old('price', $competitionPaper->price) ?? '' }}">
+                                    @if ($errors->has('price'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
 
-                                @elseif($paper->question_type==2)
-                                <label for="" class=" control-label">{{ getQuestionTemplate($paper->question_type) }}</label>
-                                @php
-                                $json_question=json_decode($paper->json_question);
-                                for($i=0;$i<count($json_question->input_1);$i++)
-                                {
+                                <div class="form-group">
+                                    <label for="title">Grading</label>
+                                    <select name="competitionn" class="form-control" disabled>
+                                        <option value="">-- Select --</option>
+                                        @foreach($competition as $comp)
+                                        <option value="{{ $comp->id }}" @if($comp->id == $competitionPaper->grading_exam_id) selected @endif>{{ $comp->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('competition'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('competition') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <input type="hidden" name="competition" value="{{ $competitionPaper->grading_exam_id }}">
 
-                                    @endphp
+                                @if($competitionPaper->comp_contro->competition_type == 'physical')
+                                <div class="form-group physicalclass" >
+                                    <label for="title">Price</label>
+                                    <input type="text" name="price" class="form-control" id=""
+                                        value="{{ old('price', $competitionPaper->price) ?? '' }}">
+                                    @if ($errors->has('price'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('price') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
-                                        <div class="form-group">
-                                            <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-4">
-                                                    <input readonly="readonly" class="form-control"  value="{{ $json_question->input_1[$i] }}" name="input_1_old[]" type="hidden">
-                                                    <a href="{{ url('/') }}/upload-file/{{ $json_question->input_1[$i] }}" target="_blank"> {{ $json_question->input_1[$i] }} </a>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
-                                                </div>
-                                            </div>
+                                <div class="form-group physicalclass" >
+                                    <label for="title">PDF Upload</label>
+                                    <input type="file" name="pdf_upload" class="form-control" >
+                                    @if ($errors->has('pdf_upload'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('pdf_upload') }}</strong>
+                                    </span>
+                                    @endif
+                                    <a href="{{ url('/') }}/upload-file/{{  $competitionPaper->pdf_file }}" target="_blank">{{ $competitionPaper->pdf_file }}</a>
+                                </div>
 
-                                        </div>
-                                    @php } @endphp
+                                @else
+                                <div class="form-group">
+                                    <label for="title">Question Template</label>
+                                    <select name="questiontemplate" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @foreach($questionTempleates as $questionTemp)
+                                        <option value="{{ $questionTemp->id }}" @if($questionTemp->id == $competitionPaper->question_template_id ) selected @endif >{{ $questionTemp->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('questiontemplate'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('questiontemplate') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
-                                    @elseif($paper->question_type==4)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate($paper->question_type) }}</label>
-                                    @php
-                                    $json_question=json_decode($paper->json_question);
-                                    for($i=0;$i<count($json_question->input_1);$i++)
-                                    {
 
-                                        @endphp
 
-                                            <div class="form-group">
-                                                <div class="row" style="margin-bottom:30px;">
-                                                    <div class="col-md-4">
-                                                        <textarea readonly rows="5" cols="40">{{ $json_question->input_1[$i] }}</textarea>
+                                <div class="form-group">
+                                    <label for="title">Time</label>
+                                    <input type="text" name="time" class="form-control" id=""
+                                        value="{{ old('time', $competitionPaper->time) }}">
+                                    @if ($errors->has('time'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('time') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
-                                                    </div>
-                                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="title">Question Type</label>
+                                    <select name="question_type" class="form-control" >
+                                        <option value="">-- Select --</option>
+                                        <option value="vertical" @if(old('question_type', $competitionPaper->type) == 'vertical') selected @endif>Vertical</option>
+                                        <option value="horizontal"  @if(old('question_type', $competitionPaper->type) == 'horizontal') selected @endif>Horizontal</option>
+                                    </select>
+                                    @if ($errors->has('question_type'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('question_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div> -->
 
-                                            </div>
-                                        @php } @endphp
+
+
+                                <div class="form-group">
+                                    <label for="title">Timer</label>
+                                    <select name="timer" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        <option value="yes" @if(old('timer', $competitionPaper->timer) == 'yes') selected @endif>Yes</option>
+                                        <option value="no" @if(old('timer', $competitionPaper->timer) == 'no') selected @endif>No</option>
+                                    </select>
+                                    @if ($errors->has('timer'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('timer') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
                                 @endif
 
+                                <div class="form-group">
+                                    <label for="title">Description</label>
+                                    <textarea name="description" class="form-control my-editor" cols="30"
+                                              rows="5">{{old('description', $competitionPaper->description)}}</textarea>
+                                </div>
+
+                                {{--
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if(getActiveStatus())
+                                        @foreach (getActiveStatus() as $key => $item)
+                                            <option value="{{ $key }}" @if(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('status'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('status') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                --}}
+
+                            </div>
 
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+<script>
+    function showAmount(val){
+        if(val==2){
+            $('#amountblock').show();
+        }else{
+            $('#amountblock').hide();
+        }
+    }
+</script>
 @endsection

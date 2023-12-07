@@ -19,6 +19,12 @@ class GradingStudentResults extends Model
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
 
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+    public function gcategory(){
+        return $this->belongsTo('App\GradingCategory', 'category_id', 'id');
+    }
     public function teacher(){
         return $this->belongsTo('App\User', 'instructor_id', 'id');
     }

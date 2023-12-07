@@ -5,11 +5,12 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>{{ $title ?? '-' }}</h1>
-            <div class="section-header-button">
-                <a href="{{ route('grading-exam-list.create',$exam_id) }}" class="btn btn-primary">Add New</a>
+            <div class="section-header-back">
+                <a href="{{ route('grading-exam.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_grading_exam_list', $exam_id)])
+            <h1>{{ $title ?? '-' }}</h1>
+
+{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
         </div>
         <br />
@@ -22,19 +23,18 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('grading-exam-list.destroy', ['exam_id' => $exam_id, 'id' => 'grading-exam-list']) }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('grading-exam.student.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('grading-exam-list.destroy', ['exam_id' => $exam_id, 'id' => 'grading-exam-list']) }}" method="post">
+                            <form id="destroy" action="{{ route('grading-exam.student.destroy', 'competition') }}" method="post">
                                 @csrf
-                                @method('POST')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('grading-exam-list.search',$exam_id) }}" method="get">
+                                <form action="{{ route('grading-exam.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
                                         <input type="text" name="search" class="form-control" placeholder="Search"
@@ -62,15 +62,18 @@
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
                                             </th>
-                                            <th>Action</th>
-                                            <th>Heading</th>
+                                            <th>Student Name</th>
+                                            <th>Instructor</th>
+                                            <th>Learning Location</th>
+                                            <th>Category</th>
+                                            <th>Student Type</th>
                                             <th>Created At</th>
-                                            <th>Updated At</th>
+                                            <th>Approve Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($list->count())
-                                        @foreach ($list as $key => $item)
+                                        @if($studentList->count())
+                                        @foreach ($studentList as $key => $item)
                                         <tr>
                                             <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
@@ -79,15 +82,37 @@
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
-                                            <td>
-                                                <a href="{{ route('grading-exam-list.edit', [$exam_id,$item->id]) }}"
-                                                    class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="Edit"><i class="fas fa-edit"></i></a>
 
-                                            </td>
-                                            <td>{{ $item->heading }}</td>
+                                            <td>{{ $item->userlist->name }}</td>
+                                            <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
+                                            <td>{{ $item->userlist->learning_location ?? '' }}</td>
+                                            <td>{{ $item->category->category_name ?? '' }}</td>
+                                            <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                            <td>
+                                              @if($item->approve_status == 1)
+                                              <div class="btn mr-1 mt-1">Approved</div>
+                                              @elseif($item->approve_status == 2)
+                                                <div class="btn btn-danger mr-1 mt-1">Rejected</div>
+                                              @else
+                                                <a href="{{ route('grading-exam.student.edit', $item->id) }}"
+                                                  class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
+                                                  data-original-title="Approve" data-confirm="Do you want to continue?"
+                                                  data-confirm-yes="event.preventDefault();document.getElementById('approve{{$item->id}}').submit();">Approve</a>
+                                                  <form id="approve{{ $item->id }}" action="{{ route('grading-exam.student.approve', $item->id) }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="approve_user" value="{{ $item->id }}">
+                                                </form>
+                                                <a href="{{ route('grading-exam.student.edit', $item->id) }}"
+                                                    class="btn btn-danger mr-1 mt-1" data-toggle="tooltip"
+                                                    data-original-title="Reject" data-confirm="Do you want to continue?"
+                                                    data-confirm-yes="event.preventDefault();document.getElementById('reject{{$item->id}}').submit();">Reject</a>
+                                                <form id="reject{{$item->id}}" action="{{ route('grading-exam.student.reject', $item->id) }}" method="post">
+                                                      @csrf
+                                                      <input type="hidden" name="reject_user" value="{{ $item->id }}">
+                                                  </form>
+                                              @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                         @else
@@ -100,7 +125,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            {{ $list->links() }}
+                            {{ $studentList->links() }}
                         </div>
                     </div>
                 </div>

@@ -19,13 +19,15 @@ class CreateGradingSubmittedsTable extends Migration
             $table->foreign('grading_exam_id')->references('id')->on('grading_exams');
             $table->unsignedBigInteger('paper_id')->nullable();
             $table->foreign('paper_id')->references('id')->on('grading_papers');
-            $table->unsignedBigInteger('question_template_id')->nullable();
-            $table->foreign('question_template_id')->references('id')->on('question_templates');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('grading_categories');
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('paper_type')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('total_marks')->nullable();
             $table->string('user_marks')->nullable();
             $table->string('result')->nullable();
+            $table->string('prize')->nullable();
             $table->timestamps();
         });
     }

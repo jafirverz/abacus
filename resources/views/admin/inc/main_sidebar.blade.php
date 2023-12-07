@@ -94,6 +94,11 @@
                     'idtag'  => 'grade',
                 ],
                 [
+                    'title' =>  __('constant.CATEGORY_GRADING'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/category-grading',
+                ],
+                [
                     'title' =>  __('constant.GRADING_EXAM'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/grading-exam',
@@ -106,10 +111,14 @@
                     'idtag'  => 'gradingpaper',
                 ],
                 [
+                    'title' =>  __('constant.GRADING_ASSIGN'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/assign-grading',
+                ],
+                [
                     'title' =>  __('constant.GRADING_RESULT'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/grading-students',
-                    'idtag'  => 'gradingstudent',
+                    'url'   =>  'admin/g-results',
                 ],
                 [
                     'title' =>  __('constant.GRADING_RESULT_UPLOAD'),

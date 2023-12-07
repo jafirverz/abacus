@@ -69,7 +69,7 @@
                         <div class="gactions">
                            @if(isset($grading_exam->id))
                                 @if(Auth::user()->approve_status == 1)
-                                <a href="{{ url('grading-overview/'.$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                <a href="{{ url('grading/'.$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                                 @else
                                 <a href="javascript::void(0)">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                                 @endif

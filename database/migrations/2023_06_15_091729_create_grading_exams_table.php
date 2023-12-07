@@ -15,10 +15,13 @@ class CreateGradingExamsTable extends Migration
     {
         Schema::create('grading_exams', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('type')->nullable();
-            $table->string('student_id')->nullable();
-            $table->text('timed')->nullable();
-            $table->text('marks')->nullable();
+            $table->string('title')->nullable();
+            $table->date('date_of_competition')->nullable();
+            $table->string('start_time_of_competition')->nullable();
+            $table->string('end_time_of_competition')->nullable();
+            $table->text('description')->nullable();
+            $table->string('competition_type')->nullable()->comment('online, physical');
+            $table->smallInteger('status')->nullable()->comment('1=>published, 2=>draft');
             $table->timestamps();
         });
     }
