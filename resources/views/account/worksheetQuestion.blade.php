@@ -49,14 +49,14 @@
         @php 
         $datetime = new DateTime(date("Y-m-d H:i:s"));
         //echo $datetime->format('Y-m-d H:i:s') . "\n";
-        $sg_time = new DateTimeZone('Asia/Singapore');
+        $sg_time = new DateTimeZone('Asia/Kolkata');
         $datetime->setTimezone($sg_time);
         //echo $datetime->format('Y-m-d H:i:s');
         @endphp
 
         @if($worksheet->timing)
           @php
-          $timeinSec = $worksheet->timing * 60 - 21;
+          $timeinSec = $worksheet->timing * 60;
           //$today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
           $today = date("Y-m-d H:i:s", strtotime($datetime->format('Y-m-d H:i:s')." + $timeinSec seconds"));
           $dateTime = strtotime($today);
@@ -172,7 +172,13 @@
   var countDownTimer = new Date("{{ $getDateTime }}").getTime();
   // Update the count down every 1 second
   var interval = setInterval(function() {
-      var current = new Date().getTime();
+      var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
+      //alert(time);
       // Find the difference between current and the count down date
       var diff = countDownTimer - current;
       // Countdown Time calculation for days, hours, minutes and seconds
@@ -199,7 +205,12 @@
   var countDownTimer = new Date("{{ $getDateTime }}").getTime();
   // Update the count down every 1 second
   var interval = setInterval(function() {
-      var current = new Date().getTime();
+    var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
       // Find the difference between current and the count down date
       var diff = countDownTimer - current;
       // Countdown Time calculation for days, hours, minutes and seconds
@@ -215,7 +226,6 @@
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
-          //$('form#submitform').submit();
       }
   }, 1000);
 </script>

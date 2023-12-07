@@ -113,7 +113,12 @@
   var countDownTimer = new Date("{{ $getDateTime }}").getTime();
   // Update the count down every 1 second
   var interval = setInterval(function() {
-      var current = new Date().getTime();
+    var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
       // Find the difference between current and the count down date
       var diff = countDownTimer - current;
       // Countdown Time calculation for days, hours, minutes and seconds
@@ -132,14 +137,20 @@
       }
   }, 1000);
 </script>
-
 @else
+
 
 <script>
   var countDownTimer = new Date("{{ $getDateTime }}").getTime();
   // Update the count down every 1 second
   var interval = setInterval(function() {
-      var current = new Date().getTime();
+      var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
+      //alert(time);
       // Find the difference between current and the count down date
       var diff = countDownTimer - current;
       // Countdown Time calculation for days, hours, minutes and seconds
