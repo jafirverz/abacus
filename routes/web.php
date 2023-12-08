@@ -587,7 +587,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-sales', 'CMS\ReportController@sales');
     Route::post('reports-sales', 'CMS\ReportController@searchSales')->name('salesexcel');
 
-    Route::get('reports-online/search', 'CMS\ReportController@searchOnline')->name('reports-online.search');
+    Route::get('reports-online-account/search', 'CMS\ReportController@searchOnline')->name('reports-online.search');
     Route::get('reports-online-account', 'CMS\ReportController@onlineStudent');
 
     Route::get('reports-external-centre/search', 'CMS\ReportController@search_external_centre')->name('reports-external-centre.search');
