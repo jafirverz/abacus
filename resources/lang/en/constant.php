@@ -78,6 +78,7 @@ return [
     'GRADING_RESULT_UPLOAD' => 'Grading Results Upload',
     'REPORTS' => 'Reports',
     'STUDENT_REPORTS' => 'Student Reports',
+    'ONLINESTUDENT_REPORTS' => 'Online Student Reports',
     'INSTRUCTOR_REPORTS' => 'Franchise Admin Account Report',
     'SALES_REPORTS' => 'Sales Reports',
     'WORKSHEET_REPORTS' => 'Worksheet Reports',

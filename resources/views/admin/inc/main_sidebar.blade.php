@@ -433,6 +433,12 @@
                     'idtag'  => 'reportsstudent',
                 ],
                 [
+                    'title' =>  __('constant.ONLINESTUDENT_REPORTS'),
+                    'icon'  =>  '<i class="fas fa-user"></i>',
+                    'url'   =>  'admin/reports-online-account',
+                    'idtag'  => 'reportsonlinestudent',
+                ],
+                [
                     'title' =>  __('constant.INSTRUCTOR_REPORTS'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/reports-instructor',

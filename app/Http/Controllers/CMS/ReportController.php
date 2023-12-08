@@ -18,6 +18,8 @@ use App\Grade;
 use App\Competition;
 use App\GradingExam;
 use App\CompetitionStudent;
+use App\CourseAssignToUser;
+use App\Exports\OnlineStudentExport;
 use App\GradingStudent;
 use App\Order;
 use App\OrderDetail;
@@ -211,6 +213,64 @@ class ReportController extends Controller
         $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
         $countries = Country::whereIn('id', $franchiseCountry)->get();
         return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
+
+        // ob_end_clean();
+        // ob_start();
+        //return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
+        //dd($allUsers);
+    }
+
+    public function onlineStudent()
+    {
+        $title = 'Online Student Report';
+        $allOrders = array();
+        //$pages = Page::orderBy('view_order', 'asc')->get();
+        //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
+        // $instructor = User::where('user_type_id', 5)->get();
+        //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
+        //$countries = Country::get();
+        // $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        // $countries = Country::whereIn('id', $franchiseCountry)->get();
+        $users = User::where('user_type_id', 3)->get();
+        return view('admin.cms.reports.onlinestudent', compact('title', 'users'));
+    }
+    public function searchOnline(Request $request)
+    {
+        // dd($request->all());
+        $status = $request->status  ?? '';
+        $student = $request->student ?? '';
+
+        // $q = User::query();
+        if($request->downloadexcel == 0){
+            $q = CourseAssignToUser::query();
+            $q->join('courses','course_assign_to_users.course_id','courses.id');
+            $q->select('course_assign_to_users.*');
+            if ($request->student) {
+                // simple where here or another scope, whatever you like
+                $q->where('course_assign_to_users.user_id', $student);
+            }
+            $allOrders = $q->get();
+            $title = 'Online Student Report';
+            $users = User::where('user_type_id', 3)->get();
+        
+            return view('admin.cms.reports.onlinestudent', compact('title', 'users', 'allOrders'));
+        }else{
+            $q = CourseAssignToUser::query();
+            $q->join('courses','course_assign_to_users.course_id','courses.id');
+            $q->select('course_assign_to_users.*');
+            if ($request->student) {
+                // simple where here or another scope, whatever you like
+                $q->where('course_assign_to_users.user_id', $student);
+            }
+            $allItems = $q->get();
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new OnlineStudentExport($allItems), 'OnlineStudentExport.xlsx');
+        }
+
+
+        
+
 
         // ob_end_clean();
         // ob_start();
