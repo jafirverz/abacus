@@ -150,6 +150,8 @@
 @if($compPaper->paper_type == 'actual')
 
 <script>
+$(document).ready(function () {
+
   var countDownTimer = new Date("{{ $getDateTime }}").getTime();
   // Update the count down every 1 second
   var interval = setInterval(function() {
@@ -176,6 +178,7 @@
           document.getElementById("counter").innerHTML = "EXPIRED";
       }
   }, 1000);
+});
 </script>
 @else
 
