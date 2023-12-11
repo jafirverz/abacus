@@ -12,11 +12,11 @@
   </thead>
   <tbody>
     @if($allItems->count())
-    @foreach ($allItems as $key => $item)
+    @foreach ($allItems as $key => $value)
 
     <tr>
       <td>{{ $key + 1 }}</td>
-      <td>{{ $value->course->title }}</td>
+      <td>{{ $value->course->title ?? '' }}</td>
     <td>@if(isset($value->submitted->is_submitted) && $value->submitted->is_submitted==1) Submitted @elseif(isset($value->submitted->is_submitted) && $value->submitted->is_submitted==2) In-progress @else - @endif</td>
     <td>@if(isset($value->submitted->updated_at)){{ date('j F,Y H:i:s',strtotime($value->submitted->updated_at)) }}@endif</td>
     <td></td>
