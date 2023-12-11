@@ -164,7 +164,7 @@
                                                 {{ $item->teacher->name  ?? ''}}
                                             </td>
                                             <td>
-                                                {{ getCountry($item->teacher->country_code) ?? '' }}
+                                                {{ getCountry($item->student->country_code) ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $item->mental->title ?? '' }}

@@ -17,11 +17,12 @@ class GradingController extends Controller
     //
     public function index($id){
         $competition = GradingExam::where('id', $id)->first();
+        $gradingStu = GradingStudent::where('grading_exam_id',$id)->where('user_id', Auth::user()->id)->first();
         if($competition){
             if($competition->competition_type == 'physical'){
-                return view('grading_physical', compact("competition"));
+                return view('grading_physical', compact("competition","gradingStu"));
             }else{
-                return view('grading_online', compact("competition"));
+                return view('grading_online', compact("competition","gradingStu"));
             }
         }else{
             return abort(404);
@@ -66,8 +67,9 @@ class GradingController extends Controller
                 return view('account.gradingChallenge', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 7){
-                $questions = GradingPaperQuestion::where('grading_paper_id', $id)->get();
-                return view('account.gradingMix', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
+                $questions = GradingPaperQuestion::where('grading_paper_id', $id)->where('symbol','multiply')->get();
+                $questions_divide = GradingPaperQuestion::where('grading_paper_id', $id)->where('symbol','divide')->get();
+                return view('account.gradingMix', compact('questions','questions_divide', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
         }else{
             return abort(404);

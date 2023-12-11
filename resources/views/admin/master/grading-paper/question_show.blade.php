@@ -21,17 +21,17 @@
                             @method('PUT')
                             <div class="card-body">
 
-                               
 
-                                @php 
+
+                                @php
                                 if(isset($competitionPaper->id)){
                                     $paperId = $competitionPaper->id;
-                                    $compPaper = \App\CompetitionPaper::where('id', $paperId )->first();
+                                    $compPaper = \App\GradingPaper::where('id', $paperId )->first();
                                     $question_template_id = $compPaper->question_template_id;
                                 }else{
                                     $question_template_id = '';
                                 }
-                                
+
                                 @endphp
 
                                 @if(isset($question_template_id) && $question_template_id==9)
@@ -47,12 +47,12 @@
                                             <input class="form-control" required value="" name="input_3[]" placeholder="= Answer" type="text">
                                         </div>
                                     </div>
-                                    
+
                             @elseif(isset($question_template_id) && ($question_template_id==2 || $question_template_id==1 || $question_template_id==3))
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                @php 
-                                $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                @php
+                                $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
                                 $i = 1;
                                 @endphp
 
@@ -75,21 +75,21 @@
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->block }}" name="block_old[]" placeholder="Block" type="text">
                                         </div>
-                                        
+
                                     </div>
                                 </div>
-                                @php 
+                                @php
                                 $i++;
                                 @endphp
                                 @endforeach
-                                
+
 
                                 @elseif(isset($question_template_id) && $question_template_id==4)
 
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    @php 
-                                    $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    @php
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
                                     $i = 1;
                                     @endphp
 
@@ -113,18 +113,18 @@
                                             <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                         </div> -->
                                     </div>
-                                    @php 
+                                    @php
                                     $i++;
                                     @endphp
                                     @endforeach
-                                    
-                                
+
+
                                 @elseif(isset($question_template_id) && $question_template_id==5)
 
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    @php 
-                                    $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    @php
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
                                     $i = 1;
                                     @endphp
 
@@ -153,23 +153,23 @@
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
                                         </div>
-                                        
-                                        
+
+
                                     </div>
                                     </div>
-                                    @php 
+                                    @php
                                     $i++;
                                     @endphp
                                     @endforeach
-                                    
+
 
 
                                 @elseif(isset($question_template_id) && $question_template_id==6)
 
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    @php 
-                                    $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    @php
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
                                     $i = 1;
                                     @endphp
 
@@ -200,23 +200,23 @@
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
                                         </div>
-                                        
-                                        
+
+
                                     </div>
                                     </div>
-                                    @php 
+                                    @php
                                     $i++;
                                     @endphp
                                     @endforeach
-                                    
+
 
 
                                 @elseif(isset($question_template_id) && $question_template_id==7)
 
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    @php 
-                                    $compPaperQuestion = \App\CompetitionQuestions::where('competition_paper_id', $paperId )->get();
+                                    @php
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
                                     $i=1;
                                     @endphp
 
@@ -245,27 +245,27 @@
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
                                         </div>
-                                        
-                                        
+
+
                                     </div>
                                     </div>
-                                    @php 
+                                    @php
                                     $i++;
                                     @endphp
                                     @endforeach
-                                    
+
 
                             @endif
 
-                               
 
-                                
+
+
                             <input type="hidden" name="paperId" value="{{ $competitionPaper->id }}">
                             <input type="hidden" name="question_template_id" value="{{ $competitionPaper->question_template_id }}">
 
-                               
 
-                                {{-- 
+
+                                {{--
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
@@ -285,7 +285,7 @@
                                 --}}
 
                             </div>
-                            
+
                             <!-- <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
                                     Update</button>
@@ -470,17 +470,17 @@
 <script>
 
     $(document).ready(function () {
-    
+
         $(".add-more").click(function(){
               var html = $(".copy").html();
               $(".after-add-more").after(html);
           });
-    
+
           $(".add-more2").click(function(){
               var html = $(".copy2").html();
               $(".after-add-more").after(html);
           });
-    
+
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
             $(".after-add-more").after(html);
@@ -500,7 +500,7 @@
             var html = $(".copy7").html();
             $(".after-add-more").after(html);
         });
-    
+
         $("body").on("click",".remove",function(){
               $(this).parents(".form-group").remove();
           });
@@ -509,7 +509,7 @@
               $(this).parents(".row").remove();
           });
 
-    
+
         });
     </script>
 @endsection

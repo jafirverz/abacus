@@ -45,7 +45,20 @@
                                     </span>
                                     @endif
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="title">Grade</label>
+                                    <select name="grade[]" class="form-control selectpicker" multiple>
+                                        <option value="">-- Select --</option>
+                                        @foreach($grades as $grade)
+                                        <option value="{{ $grade->id}}">{{$grade->title}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('grade'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('grade') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
                                 <!-- <div class="form-group">
                                     <label for="title">Select Student</label>
@@ -88,7 +101,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="title">Date</label>
+                                    <label for="title">Exam Date</label>
                                     <input type="text" name="date_of_competition" class="form-control datepicker1" id=""
                                         value="{{ old('date_of_competition') }}">
                                     @if ($errors->has('date_of_competition'))
@@ -99,7 +112,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Time</label>
+                                    <label for="title">Start Time</label>
                                     <select name="start_time_of_competition" class="form-control">
                                         <option value="">-- Select --</option>
                                         <option value="10" @if(old('start_time_of_competition') == '10') selected @endif>10.00</option>
@@ -171,7 +184,7 @@
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1" @if(old('status') == 1) selected @endif>Published</option>
+                                        <option value="1" @if(old('status') == 1) selected @endif>Active</option>
                                         <option value="2" @if(old('status') == 2) selected @endif>Draft</option>
                                     </select>
                                     @if ($errors->has('status'))

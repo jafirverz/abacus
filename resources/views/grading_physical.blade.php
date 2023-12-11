@@ -29,43 +29,24 @@
                             <div class="row sp-col-15">
                                 <div class="col-lg-12 sp-col gincol-1">
                                     <div class="inrow">
-                                        <strong>Title:</strong> {{ $competition->title }}
+                                        <strong>Title:</strong> {{$competition->title ?? ''}}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Date:</strong> {{ date('j F Y', strtotime($competition->date_of_competition)) }}
+                                        <strong>Date:</strong> {{ date('j F Y',strtotime($competition->date_of_competition)) }} | {{ date('H:i A',strtotime($competition->date_of_competition)) }}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Allocated Competition Time:</strong> {{ $competition->start_time_of_competition }}
+                                        <strong>Exam Venue:</strong> {{$competition->exam_venue ?? ''}}
                                     </div>
-                                    @php
-                                    //$userCategory = json_decode(Auth::user()->category_id);
-                                    $userCategory = \App\GradingStudent::where('user_id',Auth::user()->id)->where('grading_exam_id', $competition->id)->pluck('category_id')->toArray();
-                                    if($userCategory){
-                                        $catComp1 = \App\GradingCategory::whereIn('id', $userCategory)->pluck('category_name')->toArray();
-                                        $categories = implode(',', $catComp1);
-                                    }
-                                    @endphp
-                                    <div class="inrow">
-                                        <strong>Registered Category:</strong> {{ $categories ?? '' }}
-                                    </div>
-                                    {{--
-                                    <div class="inrow">
-                                        <strong>Venu:</strong> XXXX
-                                    </div>
-                                    --}}
                                 </div>
                                 <div class="col-lg-12 sp-col gincol-2">
                                     <div class="inrow">
-                                        <strong>Result:</strong> <span class="status-1"></span>
+                                        <strong>Exam Type:</strong> <span class="status-1">{{ $competition->competition_type ?? '' }}</span>
                                     </div>
                                     <div class="inrow">
-                                        <strong>Competition Type:</strong> <span class="status-1">{{ ucwords($competition->competition_type) }}</span>
+                                        <strong>My Registered Grades:</strong> <br/>
+                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->title ?? '' }}</div>
+                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->title ?? '' }}</div>
                                     </div>
-                                    {{--
-                                    <div class="inrow">
-                                        <a class="btn-1" href="#">Download Competition Pass <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    </div>
-                                    --}}
                                 </div>
                             </div>
                         </div>
@@ -79,12 +60,7 @@
                         @php
                         $compId = $competition->id;
                         //$userCategory = json_decode(Auth::user()->category_id);
-                        $userCategory = \App\GradingStudent::where('user_id',Auth::user()->id)->where('grading_exam_id', $competition->id)->pluck('category_id')->toArray();
-                        if($userCategory){
-                            $catComp = \App\CategoryGrading::where('competition_id', $compId)->whereIn('category_id', $userCategory)->pluck('category_id')->toArray();
-                        }else{
-                            $catComp = array();
-                        }
+                        $catComp = \App\CategoryGrading::where('competition_id', $compId)->pluck('category_id')->toArray();
                         $i = 1;
                         @endphp
 
@@ -120,7 +96,7 @@
                                         <div class="accordion-body">
                                             <form method="post" action="{{ route('cart') }}">
                                             @csrf
-                                            <input type="hidden" name="type" value="physicalcompetition">
+                                            <input type="hidden" name="type" value="physicalgrading">
                                             <div class="row break-1500">
                                                 @php
                                                 $countt = count($checkPaperCategory);
@@ -137,7 +113,7 @@
                                                     @foreach($checkPaperCategory as $pape)
                                                     @php
                                                     $userId = Auth::user()->id;
-                                                    $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalcompetition')->pluck('comp_paper_id')->toArray();
+                                                    $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'physicalgrading')->pluck('comp_paper_id')->toArray();
                                                     @endphp
 
                                                         @php
@@ -146,8 +122,16 @@
                                                             if($pape->paper_type == 'practice'){
                                                         @endphp
                                                             <div class="bxrow">
-                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
-                                                                <label><span>{{ $pape->title }}</span></label>
+                                                                @if(empty($pape->price))
+                                                                <label>
+                                                                    <span>{{ $pape->title }}</span>
+                                                                    <strong>Included</strong>
+                                                                </label>
+                                                                @elseif(in_array($pape->id,$orderDetails))
+                                                                <label>
+                                                                    <span>{{ $pape->title }}</span>
+                                                                    <strong>Paid</strong>
+                                                                </label>
                                                                 @else
                                                                 <div class="checkbxtype">
                                                                     @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
@@ -170,8 +154,16 @@
                                                             if($pape->paper_type == 'actual'){
                                                         @endphp
                                                             <div class="bxrow">
-                                                                @if(empty($pape->price) || in_array($pape->id,$orderDetails))
-                                                                <label><span>{{ $pape->title }}</span></label>
+                                                                @if(empty($pape->price))
+                                                                <label>
+                                                                    <span>{{ $pape->title }}</span>
+                                                                    <strong>Included</strong>
+                                                                </label>
+                                                                @elseif(in_array($pape->id,$orderDetails))
+                                                                <label>
+                                                                    <span>{{ $pape->title }}</span>
+                                                                    <strong>Paid</strong>
+                                                                </label>
                                                                 @else
                                                                 <div class="checkbxtype">
                                                                     @if(!empty($pape->price) || !in_array($pape->id,$orderDetails))
@@ -196,6 +188,17 @@
                                                     @endforeach
                                                     </div>
                                                 </div>
+
+                                                <script>
+                                                    function checkchecked(){
+                                                        var atLeastOneIsChecked = $('input[name="paper[]"]:checked').length > 0;
+                                                        if(atLeastOneIsChecked){
+                                                            $('.addtocart').show();
+                                                        }else{
+                                                            $('.addtocart').hide();
+                                                        }
+                                                    }
+                                                </script>
                                                 @endfor
 
 

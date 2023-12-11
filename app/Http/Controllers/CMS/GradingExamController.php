@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\GradingExam;
+use App\Grade;
 use App\GradingCategory;
 use App\CategoryGrading;
 use App\GradingStudent;
@@ -53,9 +54,10 @@ class GradingExamController extends Controller
     {
         $title = $this->title;
         $competitionCategory = GradingCategory::get();
+        $grades = Grade::get();
         $userType = array(1,2,3,4);
         $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
-        return view('admin.grading-exam.create',compact('title', 'competitionCategory', 'students'));
+        return view('admin.grading-exam.create',compact('title', 'competitionCategory', 'students','grades'));
     }
 
     /**
@@ -122,6 +124,11 @@ class GradingExamController extends Controller
         }
         $competition->title = $request->title;
         $competition->exam_venue = $request->exam_venue;
+        if(isset($request->grade))
+        {
+            $competition->grade = json_encode($request->grade);
+        }
+
         $competition->date_of_competition = $request->date_of_competition;
         $competition->start_time_of_competition = $request->start_time_of_competition;
         $competition->end_time_of_competition = $request->end_time_of_competition;
@@ -173,9 +180,10 @@ class GradingExamController extends Controller
         $competitionCategory = GradingCategory::get();
         $userType = array(1,2,3,4);
         $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->get();
+        $grades = Grade::get();
         $categoryCompetition = CategoryGrading::where('competition_id', $id)->pluck('category_id')->toArray();
 
-        return view('admin.grading-exam.edit', compact('title', 'competition', 'categoryCompetition','competitionCategory', 'students'));
+        return view('admin.grading-exam.edit', compact('title', 'competition','grades', 'categoryCompetition','competitionCategory', 'students'));
     }
 
     /**
@@ -243,6 +251,10 @@ class GradingExamController extends Controller
         }
         $competition->title = $request->title;
         $competition->exam_venue = $request->exam_venue;
+        if(isset($request->grade))
+        {
+            $competition->grade = json_encode($request->grade);
+        }
         $competition->date_of_competition = $request->date_of_competition;
         $competition->start_time_of_competition = $request->start_time_of_competition;
         $competition->end_time_of_competition = $request->end_time_of_competition;
@@ -288,7 +300,7 @@ class GradingExamController extends Controller
             $competition->appends('search', $search_term);
         }
 
-        return view('admin.grading-exam.index', compact('title', 'exam'));
+        return view('admin.grading-exam.index', compact('title', 'competition'));
     }
 
 

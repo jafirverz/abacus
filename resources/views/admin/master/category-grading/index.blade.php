@@ -73,7 +73,7 @@
                                         @foreach ($category as $key => $item)
                                         <tr>
                                             @php
-                                            $checkCategoryAssignment = \App\CompetitionStudent::where('category_id', $item->id)->first();
+                                            $checkCategoryAssignment = \App\GradingStudent::where('category_id', $item->id)->first();
                                             @endphp
                                             @if($checkCategoryAssignment)
                                             <td></td>

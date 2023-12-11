@@ -48,8 +48,31 @@
                                     @endif
                                 </div>
 
-
-
+                                @php
+                                if(isset($competition->grade) && $competition->grade!='')
+                                {
+                                    $grade_json=json_decode($competition->grade);
+                                }
+                                else {
+                                    # code...
+                                    $grade_json=[];
+                                }
+                                //dd($grade);
+                                @endphp
+                                <div class="form-group">
+                                    <label for="title">Grade</label>
+                                    <select name="grade[]" class="form-control selectpicker" multiple>
+                                        <option value="">-- Select --</option>
+                                        @foreach($grades as $grade)
+                                        <option value="{{ $grade->id}}" @if(isset($grade_json)) @if(in_array($grade->id, $grade_json)) selected @endif @endif>{{$grade->title}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('grade'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('grade') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
 
 
@@ -78,7 +101,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="title">Date</label>
+                                    <label for="title">Exam Date</label>
                                     <input type="text" name="date_of_competition" class="form-control datepicker1" id=""
                                         value="{{ old('date_of_competition', $competition->date_of_competition) }}">
                                     @if ($errors->has('date_of_competition'))
@@ -165,7 +188,7 @@
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>
-                                        <option value="1" @if(old('status', $competition->status) == 1) selected @endif>Published</option>
+                                        <option value="1" @if(old('status', $competition->status) == 1) selected @endif>Active</option>
                                         <option value="2" @if(old('status', $competition->status) == 2) selected @endif>Draft</option>
                                     </select>
                                     @if ($errors->has('status'))
