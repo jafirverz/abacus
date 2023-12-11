@@ -16,7 +16,6 @@
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
           <li>{{ $compeTitle }}</li>
-          <li>{{ $categoryTitle }}</li>
           <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">

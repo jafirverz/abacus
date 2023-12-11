@@ -29,26 +29,24 @@
                             <div class="row sp-col-15">
                                 <div class="col-lg-12 sp-col gincol-1">
                                     <div class="inrow">
-                                        <strong>Title:</strong> {{ $competition->title }}
+                                        <strong>Title:</strong> {{$competition->title ?? ''}}
                                     </div>
                                     <div class="inrow">
-                                        <strong>Date:</strong> {{ date('j F Y', strtotime($competition->date_of_competition)) }}
+                                        <strong>Date:</strong> {{ date('j F Y',strtotime($competition->date_of_competition)) }} | {{ date('H:i A',strtotime($competition->date_of_competition)) }}
                                     </div>
-
-
+                                    <div class="inrow">
+                                        <strong>Exam Venue:</strong> {{$competition->exam_venue ?? ''}}
+                                    </div>
                                 </div>
                                 <div class="col-lg-12 sp-col gincol-2">
                                     <div class="inrow">
-                                        <strong>Result:</strong> <span class="status-1"></span>
+                                        <strong>Exam Type:</strong> <span class="status-1">{{ $competition->competition_type ?? '' }}</span>
                                     </div>
                                     <div class="inrow">
-                                        <strong>Competition Type:</strong> <span class="status-1">{{ ucwords($competition->competition_type) }}</span>
+                                        <strong>My Registered Grades:</strong> <br/>
+                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->title ?? '' }}</div>
+                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->title ?? '' }}</div>
                                     </div>
-                                    {{--
-                                    <div class="inrow">
-                                        <a class="btn-1" href="#">Download Competition Pass <i class="fa-solid fa-arrow-right-long"></i></a>
-                                    </div>
-                                    --}}
                                 </div>
                             </div>
                         </div>
@@ -116,7 +114,7 @@
                                                     @php
                                                     $orderDetails = array();
                                                     $userId = Auth::user()->id;
-                                                    $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'onlinecompetition')->pluck('comp_paper_id')->toArray();
+                                                    $orderDetails = \App\OrderDetail::where('user_id', $userId)->where('order_type', 'onlinegrading')->pluck('comp_paper_id')->toArray();
                                                     $todayDate = date('Y-m-d');
                                                     if($competition->date_of_competition > $todayDate ){
                                                         if($paper->paper_type == 'practice'){
@@ -132,7 +130,7 @@
                                                                 @if(!empty($paper->price) && !in_array($paper->id,$orderDetails))
                                                                 <form method="post" action="{{ route('cart') }}">
                                                                     @csrf
-                                                                    <input type="hidden" name="type" value="onlinecompetition">
+                                                                    <input type="hidden" name="type" value="onlinegrading">
                                                                     <input type="hidden" name="paper" value="{{ $paper->id }}">
                                                                 <button class="lnk btn-2" type="submit" >Add to Cart</button>
                                                                 </form>

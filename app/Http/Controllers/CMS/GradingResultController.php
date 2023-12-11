@@ -180,14 +180,14 @@ class GradingResultController extends Controller
     }
 
     public function assignGrading(){
-        $title = 'Assign Competition';
+        $title = 'Grading Assign';
         $competition = GradingExam::paginate($this->pagination);
 
         return view('admin.grading_result.assign', compact('title', 'competition'));
     }
 
     public function assignGradingEdit($id = null){
-        $title = 'Assign Competition';
+        $title = 'Grading Assign';
         $competition = GradingExam::where('id', $id)->first();
         $competitionCategory = GradingCategory::get();
         $userType = array(1,2,3,4);

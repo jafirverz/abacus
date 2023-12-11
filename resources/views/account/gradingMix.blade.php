@@ -33,11 +33,85 @@
           <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
           <div class="box-1">
             <div class="xscrollbar">
+                <table class="tb-2 tbtype-2">
+                  <thead>
+                    <tr>
+                      <th class="wcol-2"></th>
+
+                      @php
+                      //if(isset($_GET['s']) && $_GET['s'] == 1){
+                      //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
+                      //}else{
+                      //$questionns = \App\MiscQuestion::where('question_id', $questions->id)->get();
+                      //}
+
+                      //$count = count($questionns);
+                      $i = 1;
+                      foreach($questions as $question){
+                      @endphp
+                      <th class="text-center">{{ $i }}</th>
+                      @php
+                      $i++;
+                      }
+                      @endphp
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr>
+                      <td></td>
+                      @php
+                      foreach($questions as $question){
+                      //dd($question);
+                      @endphp
+                      <td>
+
+                        <div class="row sp-col-5 inrow-1">
+                          <div class="col sp-col">{{ $question->question_1 }}</div> x
+                          <div class="col sp-col">{{ $question->question_2 }}</div>
+                       </div>
+
+                     </td>
+                      @php
+                      }
+                      @endphp
+
+                    </tr>
+
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="lb">Answer</td>
+                      @php
+                      foreach($questions as $question){
+                      @endphp
+                      <td class="coltype">
+                        <div class="row sp-col-5 inrow-1">
+                          <!-- <div class="col-auto sp-col">$</div> -->
+                          <div class="col colanswer sp-col"><input class="form-control number-separator" type="text"
+                              value="" id="ans{{ $question->id }}" name="answer[{{ $question->id }}]" /></div>
+                        </div>
+                      </td>
+                      @php
+                      }
+                      @endphp
+                    </tr>
+                  </tfoot>
+                </table>
+
+
+
+
+
+              </div>
+          </div>
+          <div class="box-1">
+            <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-4 text-center">Mix</th>
+                    <th class="wcol-4 text-center">Divide</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
@@ -45,7 +119,7 @@
                   @php
                   $i = 1;
                   @endphp
-                  @foreach($questions as $ques)
+                  @foreach($questions_divide as $ques)
                   @php
                   if($ques->symbol == 'multiply'){
                     $symbol='x';

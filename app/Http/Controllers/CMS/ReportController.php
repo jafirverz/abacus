@@ -309,9 +309,9 @@ class ReportController extends Controller
     {
         DB::connection()->enableQueryLog();
 
-        $q = GradingStudentResults::query();
-        $q->join('users','grading_student_results.user_id','users.id');
-        $q->select('grading_student_results.*','users.learning_locations','users.name','users.country_code','users.instructor_id');
+        $q = GradingStudent::query();
+        $q->join('users','grading_students.user_id','users.id');
+        $q->select('grading_students.*','users.learning_locations','users.name','users.country_code','users.instructor_id','users.user_type_id');
         if ($request->name) {
             $q->where('users.name', 'like', '%'.$request->name.'%');
         }
@@ -326,7 +326,7 @@ class ReportController extends Controller
 
         if ($request->grades) {
            // dd($request->grades);
-            $q->where('grading_student_results.mental_grade', $request->grades)->orWhere('grading_student_results.abacus_grade', $request->grades);
+            $q->where('grading_students.mental_grade', $request->grades)->orWhere('grading_students.abacus_grade', $request->grades);
         }
 
 
@@ -334,7 +334,7 @@ class ReportController extends Controller
         $allItems = $q->get();
         //$query = DB::getQueryLog();
 
-        //dd($allItems);
+        //dd($query);
 
         ob_end_clean();
         ob_start();
@@ -416,9 +416,9 @@ class ReportController extends Controller
             ob_start();
             return Excel::download(new CompetetitionStudentExport($allItems), 'CompetetitionStudentExport.xlsx');
         }
-        
 
-        
+
+
         //dd($allUsers);
     }
 

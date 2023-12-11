@@ -7,6 +7,8 @@
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
 
+{{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
+
         </div>
         <br />
 
@@ -18,41 +20,38 @@
                     <div class="card">
 
                         <div class="card-header">
-
-                            <a href="{{ route('grading-students.destroy', 'grading-students') }}" class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?" data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();" data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('grading-students.destroy', 'grading-students') }}" method="post">
-
+                            <a href="{{ route('g-results.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
+                                data-confirm="Do you want to continue?"
+                                data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
+                                data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
+                                    class="badge badge-transparent">0</span></a>
+                            <form id="destroy" action="{{ route('g-results.destroy', 'competition') }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-
-                                <form action="{{ route('grading-students.search') }}" method="get">
-
+                                <form action="{{ route('g-results.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Search" value="{{ $_GET['search'] ?? '' }}">
+                                        <input type="text" name="search" class="form-control" placeholder="Search"
+                                            value="{{ $_GET['search'] ?? '' }}">
                                         <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="fas fa-search"></i></button>
                                         </div>
-                                        &emsp;
-                                            @if(request()->get('_token'))
-                                               <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
-                                            @else
-                                               <button type="reset" class="btn btn-primary">Clear All</button>
-                                            @endif
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <!-- <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -60,40 +59,27 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th>
+                                            </th> -->
                                             <th>Action</th>
-                                            <th>Student Name</th>
-                                            <th>Grading Title</th>
-                                            <th>Teacher Name</th>
-                                            <th>Mental Grade</th>
-                                            <th>Abacus Grades</th>
-                                            <th>Status</th>
-                                            <th>Result</th>
-                                            <th>Rank</th>
-                                            <th>Pass/Fail</th>
+                                            <th>Title</th>
+                                            <th>Date of Competition</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($competition->count())
+                                        @foreach ($competition as $key => $item)
+                                        <tr>
 
-                                        @if($grading->count())
-                                        @foreach ($grading as $key => $item)
-                                           <tr>
-                                            <td scope="row">
-                                                <div class="custom-checkbox custom-control"> <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label for="checkbox-{{ ($key+1) }}" class="custom-control-label">&nbsp;</label></div>
-                                            </td>
                                             <td>
-                                                <a href="{{ route('grading-students.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('g-results.grading', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
                                             </td>
+                                            <td>{{ $item->title }}</td>
+                                            <td>{{ $item->date_of_competition }}</td>
 
-                                            <td>{{ $item->student->name  ?? ''}}</td>
-                                            <td>{{ $item->event->title  ?? ''}}</td>
-                                            <td>{{ $item->teacher->name  ?? ''}}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->mental_grade ?? '-'}}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->abacus_grade ?? '-'}}</td>
-                                            <td>{{ ($item->approve_status==1)?'Approved':'Pending' }}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->result ?? '-'}}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->rank ?? '-'}}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->remark_grade ?? '-'}}</td>
+                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
+                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
                                         @endforeach
                                         @else
@@ -106,12 +92,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            @if(request()->get('_token'))
-                            {{ $grading->appends(['_token' => request()->get('_token'),'search' => request()->get('search') ])->links() }}
-                            @else
-                            {{ $grading->links() }}
-
-                           @endif
+                            {{ $competition->links() }}
                         </div>
                     </div>
                 </div>

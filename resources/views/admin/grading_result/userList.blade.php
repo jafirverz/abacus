@@ -78,7 +78,8 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>User Name</th>
-                                            <th>Category</th>
+                                            <th>Learning Location</th>
+                                            <th>Type</th>
                                             <th>Total Marks</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -95,7 +96,8 @@
                                                 data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
                                             <td>{{ $item->user->name }}</td>
-                                            <td>{{ $item->gcategory->category_name ?? ''}}</td>
+                                            <td>{{ $item->user->location->title ?? '' }}</td>
+                                            <td>{{ getUserTypes($item->user->user_type_id) ?? '' }}</td>
                                             <td>{{ $item->total_marks }}</td>
 
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>

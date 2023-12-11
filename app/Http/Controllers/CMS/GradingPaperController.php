@@ -238,7 +238,7 @@ class GradingPaperController extends Controller
 
     public function questions($id){
         // dd($id);
-        $title = 'Online Competition Question';
+        $title = 'Online Grading Question';
         $pId = $id;
         $papercheck = GradingPaper::where('id', $id)->first();
         $questemplate = $papercheck->question_template_id;
@@ -249,7 +249,7 @@ class GradingPaperController extends Controller
 
     public function questionCreate($pId = null, $qId = null)
     {
-        $title = 'Online Competition Question create';
+        $title = 'Online Grading Question create';
         $papers = GradingPaper::get();
         return view('admin.master.grading-paper.question_create', compact('title', 'papers', 'pId', 'qId'));
     }
@@ -257,7 +257,7 @@ class GradingPaperController extends Controller
     public function questionsEdit($pId = null, $qId = null)
     {
         //
-        $title = 'Online Competition Question edit';
+        $title = 'Online Grading Question edit';
         $papers = GradingPaper::get();
         $competitionPaper = GradingPaper::where('id', $pId)->first();
         $compQues = GradingPaperQuestion::where('grading_paper_id', $pId)->get();
@@ -267,7 +267,7 @@ class GradingPaperController extends Controller
     public function questionsShow($pId = null, $qId = null)
     {
         //
-        $title = 'Online Competition Question show';
+        $title = 'Online Grading Question show';
         $papers = GradingPaper::get();
         $competitionPaper = GradingPaper::where('id', $pId)->first();
         $compQues = GradingPaperQuestion::where('grading_paper_id', $pId)->get();
