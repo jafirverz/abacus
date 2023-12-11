@@ -142,9 +142,17 @@ class OnlineStudentController extends Controller
             $courseSub->course_id  = $course_id;
             $courseSub->question_template_id = $questionTypeId;
             $courseSub->user_id = $userId;
-            $courseSub->certificate_id = 3;
+            if($request->is_submitted==1)
+            {
+                $courseSub->certificate_id = 3;
+                $courseSub->certificate_issued_on = date("Y-m-d");
+            }
+            else
+            {
+                $courseSub->certificate_id = 3;
+                $courseSub->certificate_issued_on = date("Y-m-d");
+            }
             $courseSub->is_submitted = $request->is_submitted;
-            $courseSub->certificate_issued_on = date("Y-m-d");
             $courseSub->save();
             $totalMarks = 0;
             $userMarks = 0;
