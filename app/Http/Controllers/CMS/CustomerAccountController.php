@@ -98,7 +98,8 @@ class CustomerAccountController extends Controller
         }
         else
         {
-            $country = Country::orderBy('phonecode', 'asc')->get();
+            $franchiseAdmin = Admin::where('admin_role', 2)->where('status', 1)->pluck('country_id')->toArray();
+            $country = Country::whereIn('id', $franchiseAdmin)->orderBy('phonecode', 'asc')->get();
         }
 
         $levels = Level::where('status',1)->get();
@@ -284,7 +285,8 @@ class CustomerAccountController extends Controller
         }
         else
         {
-            $country = Country::orderBy('phonecode', 'asc')->get();
+            $franchiseAdmin = Admin::where('admin_role', 2)->where('status', 1)->pluck('country_id')->toArray();
+            $country = Country::whereIn('id', $franchiseAdmin)->orderBy('phonecode', 'asc')->get();
         }
 
         if(isset($customer->user_type_id) && $customer->user_type_id==4)
