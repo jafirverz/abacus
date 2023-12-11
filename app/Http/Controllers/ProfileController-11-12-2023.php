@@ -72,7 +72,6 @@ use PDF;
 
 use Illuminate\Support\Facades\Session;
 
-
 class ProfileController extends Controller
 {
 	use GetEmailTemplate, SystemSettingTrait, PageTrait;
@@ -108,7 +107,7 @@ class ProfileController extends Controller
 		}
         $today=date('Y-m-d');
         $highest_competetion_grade = CompetitionStudentResult::join('competition_controllers','competition_student_results.competition_id','competition_controllers.id')->join('competition_students','competition_students.competition_controller_id','competition_controllers.id')->select('competition_student_results.*','competition_controllers.title as comp_title','competition_controllers.date_of_competition')->where('competition_students.instructor_id', $user->id)->where('competition_controllers.date_of_competition','<',$today)->orderBy('competition_student_results.total_marks','desc')->orderBy('competition_controllers.date_of_competition','desc')->first();
-        $highest_grading_grade = GradingStudentResults::join('grading_exams','grading_student_results.grading_id','grading_exams.id')->join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_student_results.*','grading_exams.title as grade_title','grading_exams.date_of_competition')->where('grading_students.instructor_id', $user->id)->where('grading_exams.date_of_competition','<',$today)->orderBy('grading_student_results.total_marks','desc')->orderBy('grading_exams.date_of_competition','desc')->first();
+        $highest_grading_grade = GradingStudentResults::join('grading_exams','grading_student_results.grading_id','grading_exams.id')->join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_student_results.*','grading_exams.title as grade_title','grading_exams.exam_date')->where('grading_students.instructor_id', $user->id)->where('grading_exams.exam_date','<',$today)->orderBy('grading_student_results.total_marks','desc')->orderBy('grading_exams.exam_date','desc')->first();
 
 
         //dd($highest_grading_grade);
@@ -150,7 +149,7 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-        $gradingExam = GradingExam::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->orderBy('id','desc')->first();
+        $gradingExam = GradingExam::where('status', 1)->whereDate('exam_date','>=',$todayDate)->orderBy('id','desc')->first();
 		//dd($user);
 
 		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
@@ -172,11 +171,11 @@ class ProfileController extends Controller
         }
         if($user->user_type_id==6)
         {
-            $students = User::where('user_type_id',4)->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
         else
         {
-            $students = User::where('user_type_id',1)->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+            $students = User::where('user_type_id',1)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
 
         $mental_grades = Grade::where('grade_type_id', 1)->orderBy('title','asc')->get();
@@ -261,7 +260,7 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::whereIn('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 
         $test = TestManagement::findorfail($test_id);
         $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.type',1)->paginate($this->pagination);
@@ -290,7 +289,7 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::whereIn('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 		$survey = Survey::findorfail($survey_id);
 		$page = get_page_by_slug($slug);
         $list = Allocation::where('allocations.assigned_id',$survey_id)->where('allocations.type',2)->paginate($this->pagination);
@@ -1081,7 +1080,7 @@ class ProfileController extends Controller
     public function approve_students($user_id)
     {
         $customer=UserProfileUpdate::where('user_id',$user_id)->first();
-        $levels = Level::where('status',1)->get();
+        $levels = Level::get();
         $country = Country::orderBy('phonecode')->get();
         //dd($customer);
         return view('account.edit-approved-students', compact('customer','levels','country'));
@@ -1104,7 +1103,7 @@ class ProfileController extends Controller
             $students = User::where('instructor_id', $instructor_id->id)->whereIn('approve_status',[1,0])->paginate($this->pagination);
         }
         $locations = LearningLocation::orderBy('id','desc')->get();
-		$levels = Level::where('status',1)->get();
+		$levels = Level::get();
 		return view('account.teaching-students', compact('students', 'levels','locations'));
     }
 
@@ -1140,7 +1139,7 @@ class ProfileController extends Controller
     public function add_students()
     {
         $country = Country::orderBy('phonecode')->get();
-        $levels = Level::where('status',1)->orderBy('title','asc')->get();
+        $levels = Level::orderBy('title','asc')->get();
         $locations = LearningLocation::orderBy('title','asc')->get();
         return view('account.instructor-add-students', compact('levels', 'country','locations'));
     }
@@ -1148,7 +1147,7 @@ class ProfileController extends Controller
     public function edit_students($id)
     {
         $country = Country::orderBy('phonecode')->get();
-        $levels = Level::where('status',1)->orderBy('title','asc')->get();
+        $levels = Level::orderBy('title','asc')->get();
         $customer = User::find($id);
         $locations = LearningLocation::orderBy('title','asc')->get();
         return view('account.instructor-edit-students', compact('levels', 'country','customer','locations'));
@@ -1157,7 +1156,7 @@ class ProfileController extends Controller
     public function view_students($id)
     {
         $country = Country::orderBy('phonecode')->get();
-        $levels = Level::where('status',1)->orderBy('title','asc')->get();
+        $levels = Level::orderBy('title','asc')->get();
         $customer = User::find($id);
         $locations = LearningLocation::orderBy('title','asc')->get();
         return view('account.instructor-view-students', compact('levels', 'country','customer','locations'));
@@ -1414,7 +1413,7 @@ class ProfileController extends Controller
 	{
 
 
-        $students = User::where('user_type_id',1)->where('instructor_id',$user->id)->orderBy('id','desc')->get();
+        $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
         $locations = LearningLocation::orderBy('id','desc')->get();
         $categories = CompetitionCategory::orderBy('id','desc')->get();
 		$competition_student = CompetitionStudent::find($id);
@@ -1460,11 +1459,11 @@ class ProfileController extends Controller
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
         if($user->user_type_id==6)
         {
-            $students = User::where('user_type_id',4)->where('instructor_id',$user->id)->whereNotIn('id',$allocated_user)->get();
+            $students = User::where('user_type_id',4)->whereNotIn('id',$allocated_user)->get();
         }
         else
         {
-            $students = User::whereIn('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocated_user)->get();
+            $students = User::whereIn('user_type_id',[1,2,3])->whereNotIn('id',$allocated_user)->get();
         }
         $locations = LearningLocation::orderBy('id','desc')->get();
         $categoryComp = CategoryCompetition::where('competition_id', $competition_id)->pluck('category_id')->toArray();
@@ -1944,7 +1943,7 @@ class ProfileController extends Controller
                 $tempCart->save();
         }
         elseif($request->type == 'onlinegrading'){
-            $paper = GradingPaper::where('id', $request->paper)->first();
+            $paper = GradingListingDetail::where('id', $request->paper)->first();
             $levelDetails = array();
             $levelDetails['type'] = 'onlinegrading';
             $levelDetails['id'] = $request->paper;
@@ -1964,7 +1963,7 @@ class ProfileController extends Controller
     }
     elseif($request->type == 'physicalgrading'){
         foreach($request->paper as $value){
-            $paper = GradingPaper::where('id', $value)->first();
+            $paper = GradingListingDetail::where('id', $value)->first();
             $levelDetails = array();
             $levelDetails['type'] = 'physicalgrading';
             $levelDetails['id'] = $value;
@@ -2060,7 +2059,7 @@ class ProfileController extends Controller
         }
         return view('account.membership', compact('orderDetails'));
     }
-    
+
     public function downloadPass($id = null, $user_id = null){
         $pass = ExaminationPass::where('type', 1)->first();
         $competition = Competition::where('id', $id)->first();
