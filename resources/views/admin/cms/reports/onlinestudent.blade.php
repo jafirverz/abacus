@@ -23,13 +23,13 @@
           }
           @endphp
 
-          <div class="col-lg-4"><label>Status:</label>
+          <!-- <div class="col-lg-4"><label>Status:</label>
             <select name="status" class="form-control">
               <option value="">--Please Select--</option>
               <option value="1">Active</option>
               <option value="2">Deactivated</option>
             </select>
-          </div>
+          </div> -->
 
           <div class="col-lg-4"><label>Student:</label>
             <select name="student" class="form-control">

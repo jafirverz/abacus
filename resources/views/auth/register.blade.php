@@ -9,8 +9,7 @@
                     <div class="intro-1">
                         @include('inc.messages')
                         <h1 class="title-1">Student Registration</h1>
-                        <p>Please fill up the form as below and submit for approval.<br/>
-                            This is only for new 3G Abacus student who does not already have an account.</p>
+                        {!! $page->content ?? '' !!}
                     </div>
                     <hr class="bdrtype-3"/>
                     <form action="{{ route('register') }}" name="student_registration" enctype="multipart/form-data"
@@ -133,8 +132,17 @@
                     </form>
                 </div>
             </div>
+            @php
+            $pageId = 14;
+            $bannerImage = \App\Banner::where('page_id', $pageId)->first();
+            if($bannerImage){
+                $image = asset($bannerImage->banner_image);
+            }else{
+                $image = asset('images/tempt/login.jpg');
+            }
+            @endphp
             <div class="col-lg-6 col-md-5 col-sm-3 sp-col order-sm-first bg image">
-                <img class="bgimg" src="images/tempt/student-registration.jpg" alt=""/>
+                <img class="bgimg" src="{{ $image }}" alt=""/>
             </div>
         </div>
     </main>
