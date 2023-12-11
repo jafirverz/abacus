@@ -17,7 +17,7 @@
         <tr>
             <td>{{ $item->account_id ?? '' }}</td>
             <td>{{ $item->name }}</td>
-            <td>{{ $item->instructor_full_name }}</td>
+            <td>{{ $item->name }}</td>
             <td>{{ $item->email }}</td>
             <td>{{ $item->mobile }}</td>
             <td>@if($item->approve_status == 1) Active @elseif($item->approve_status == 2) Deactivated @else Pending @endif</td>

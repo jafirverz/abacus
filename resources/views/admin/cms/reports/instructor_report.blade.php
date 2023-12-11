@@ -16,17 +16,17 @@
 
         <div class="row">
 
-          <div class="col-lg-4"><label>Instructor Name:</label><input type="text" name="name" class="form-control"
-              id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}" @endif> </div>
+          <!-- <div class="col-lg-4"><label>Instructor Name:</label><input type="text" name="name" class="form-control"
+              id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}" @endif> </div> -->
 
 
-            <div class="col-lg-4"><label>Status:</label>
-              <select name="status" class="form-control">
+            <div class="col-lg-4"><label>Franchise Accounts:</label>
+              <select name="country_code" class="form-control" required>
                 <option value="">-- Select --</option>
-                <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @endif value="1">Active
+                @foreach($franshises as $franchiseAccount)
+                <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @endif value="{{ $franchiseAccount->country_id }}">{{ $franchiseAccount->firstname }} {{  $franchiseAccount->lastname }}
                 </option>
-                <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected" @endif value="0">In Active
-                </option>
+               @endforeach
               </select>
             </div>
             
