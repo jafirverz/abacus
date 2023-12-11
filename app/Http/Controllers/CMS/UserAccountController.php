@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Admin;
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Role;
 use App\Traits\SystemSettingTrait;
@@ -51,8 +52,8 @@ class UserAccountController extends Controller
     {
         $title = $this->title;
         $roles = Role::all();
-
-        return view('admin.account.user_account.create', compact('title', 'roles'));
+        $countries = Country::get();
+        return view('admin.account.user_account.create', compact('title', 'roles', 'countries'));
     }
 
     /**
@@ -65,16 +66,18 @@ class UserAccountController extends Controller
     {
         $request->validate([
             'firstname'  =>  'required',
-            // 'lastname'  =>  'required',
+            'lastname'  =>  'required',
             'email' =>  'required|email|unique:admins',
             'password'  =>  'required|min:8',
             'admin_role'    =>  'required',
+            'countrry'    =>  'required',
         ]);
 
         $admins = new Admin;
         $admins->firstname = $request->firstname;
         $admins->lastname = $request->lastname;
         $admins->email = $request->email;
+        $admins->country_id = $request->countrry;
         $admins->password = Hash::make($request->password);
         $admins->admin_role = $request->admin_role;
         $admins->status = $request->status;
@@ -108,8 +111,8 @@ class UserAccountController extends Controller
         $title = $this->title;
         $roles = Role::all();
         $admin = Admin::findorfail($id);
-
-        return view('admin.account.user_account.edit', compact('title', 'roles', 'admin'));
+        $countries = Country::get();
+        return view('admin.account.user_account.edit', compact('title', 'roles', 'admin', 'countries'));
     }
 
     /**
@@ -123,16 +126,18 @@ class UserAccountController extends Controller
     {
         $request->validate([
             'firstname'  =>  'required',
-            // 'lastname'  =>  'required',
+            'lastname'  =>  'required',
             'email' =>  'required|email|unique:admins,email,'.$id.',id',
             'password'  =>  'nullable|min:8',
             'admin_role'    =>  'required',
+            'countrry'    =>  'required',
         ]);
 
         $admins = Admin::find($id);
         $admins->firstname   =   $request->firstname;
         $admins->lastname   =   $request->lastname;
         $admins->email = $request->email;
+        $admins->country_id = $request->countrry;
         if($request->password)
         {
             $admins->password = Hash::make($request->password);
