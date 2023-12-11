@@ -142,10 +142,10 @@
                         </td> -->
                         <td>{{ $i }}</td>
                         <td>{{ $value->course->title }}</td>
-                        <td>{{ $value->submitted->is_submitted }}</td>
-                        <td>{{ $value->submitted->certificate_issued_on }}</td>
+                        <td>@if(isset($value->submitted->is_submitted) && $value->submitted->is_submitted==1) Submitted @elseif(isset($value->submitted->is_submitted) && $value->submitted->is_submitted==2) In-progress @else - @endif</td>
+                        <td>@if(isset($value->submitted->updated_at)){{ date('j F,Y H:i:s',strtotime($value->submitted->updated_at)) }}@endif</td>
                         <td></td>
-                        <td></td>
+                        <td>@if(isset($value->submitted->certificate_issued_on)){{ date('j F,Y',strtotime($value->submitted->certificate_issued_on)) }}@endif</td>
                         <td>{{ $value->user->last_login }}</td>
                     </tr>
                     @php
