@@ -306,6 +306,13 @@
                     'idtag'  => 'emailtemplate',
                 ],
 
+                [
+                    'title' =>  __('constant.PASS'),
+                    'icon'  =>  '<i class="fas fa-envelope"></i>',
+                    'url'   =>  'admin/pass',
+                    'idtag'  => 'pass',
+                ],
+
             ],
         ],
 
