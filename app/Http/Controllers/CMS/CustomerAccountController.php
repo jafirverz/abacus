@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\CompetitionStudentResult;
 use App\GradingStudentResults;
+use App\LearningLocation;
 use Illuminate\Support\Facades\DB;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
@@ -69,6 +70,7 @@ class CustomerAccountController extends Controller
     public function create()
     {
         $title = $this->title;
+        $learningLocations = LearningLocation::get();
         if(isset($_GET['user_type']) && $_GET['user_type']==4)
         {
             if($this->user->admin_role==2)
@@ -103,7 +105,7 @@ class CustomerAccountController extends Controller
         }
 
         $levels = Level::where('status',1)->get();
-        return view('admin.account.customer.create', compact('title','instructors','levels', 'country'));
+        return view('admin.account.customer.create', compact('title','instructors','levels', 'country', 'learningLocations'));
     }
 
     /**
@@ -172,6 +174,7 @@ class CustomerAccountController extends Controller
         $customer->name = $request->name;
         $customer->role_id = 3;
         $customer->account_id = $accountId;
+        $customer->learning_locations = $request->learning_location??NULL;
         $customer->instructor_id = $request->instructor_id??NULL;
         $customer->user_type_id = $request->user_type_id??NULL;
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
@@ -279,6 +282,7 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
+        $learningLocations = LearningLocation::get();
         if($this->user->admin_role==2)
         {
             $country = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
@@ -313,7 +317,7 @@ class CustomerAccountController extends Controller
         }
 
         $levels = Level::where('status',1)->get();
-        return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels', 'country'));
+        return view('admin.account.customer.edit', compact('title', 'customer','instructors','levels', 'country', 'learningLocations'));
     }
 
     /**
@@ -433,6 +437,7 @@ class CustomerAccountController extends Controller
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
         $customer->address = $request->address??NULL;
+        $customer->learning_locations = $request->learning_location??NULL;
         $customer->gender = $request->gender??NULL;
         //$customer->user_type_id = $request->user_type_id??NULL;
         $customer->country_code = $request->country_code??NULL;

@@ -159,6 +159,22 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="">Learning Location </label>
+                                    <select name="learning_location" class="form-control" tabindex="-98">
+                                        <option value="">-- Select --</option>
+                                        @foreach($learningLocations as $learninglocat)
+                                        <option value="{{ $learninglocat->id }}" @if(old('learning_location')==$learninglocat->id) selected @endif>{{ $learninglocat->title }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('learning_location'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('learning_location') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group">
                                     <label for="instructor_id">@if(isset($_GET['user_type']) && $_GET['user_type']==4) External Centre Account @else Instructor @endif</label>
                                     <select name="instructor_id" class="form-control">
                                         <option value="">-- Select --</option>
