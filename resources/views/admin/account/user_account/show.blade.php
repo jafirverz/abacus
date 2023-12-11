@@ -32,6 +32,9 @@
                                 <label for="">Role</label>: {{ $admins->roles->name ?? '' }}
                             </div>
                             <div class="form-group">
+                                <label for="">Country</label>: @if($admins->country_id!='') {{ getCountry($admins->country_id) ?? '' }} @endif
+                            </div>
+                            <div class="form-group">
                                 <label for="status">Status</label>: {{ getActiveStatus($admins->status) }}
                             </div>
                             <div class="form-group">
