@@ -67,7 +67,8 @@ class InstructorAccountController extends Controller
         }
         else
         {
-            $country = Country::orderBy('country', 'asc')->get();
+            $franchiseAdmin = Admin::where('admin_role', 2)->where('status', 1)->pluck('country_id')->toArray();
+            $country = Country::whereIn('id', $franchiseAdmin)->orderBy('country', 'asc')->get();
             $country_phone = Country::orderBy('phonecode', 'asc')->get();
         }
 
@@ -232,7 +233,8 @@ class InstructorAccountController extends Controller
         }
         else
         {
-            $country = Country::orderBy('country', 'asc')->get();
+            $franchiseAdmin = Admin::where('admin_role', 2)->where('status', 1)->pluck('country_id')->toArray();
+            $country = Country::whereIn('id', $franchiseAdmin)->orderBy('country', 'asc')->get();
             $country_phone = Country::orderBy('phonecode', 'asc')->get();
         }
 
