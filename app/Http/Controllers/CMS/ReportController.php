@@ -130,25 +130,26 @@ class ReportController extends Controller
         $instructor = User::where('user_type_id', 5)->get();
         //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
         $countries = Country::get();
-        return view('admin.cms.reports.instructor_report', compact('title', 'instructor', 'countries'));
+        $franshises = Admin::where('admin_role', 2)->where('status', 1)->get();
+        return view('admin.cms.reports.instructor_report', compact('title', 'instructor', 'countries', 'franshises'));
     }
 
     public function searchInstructor(Request $request)
     {
         // dd($request->all());
-        $name = $request->name  ?? '';
-        $status = $request->status ?? '';
+        $country_code = $request->country_code  ?? '';
+        // $status = $request->status ?? '';
 
         $q = User::query();
-        $q->where('user_type_id', 5);
-        if ($request->name) {
-            // simple where here or another scope, whatever you like
-            $q->where('name', 'like', $request->name);
-        }
+        $q->where('user_type_id', 5)->where('country_code', $request->country_code);
+        // if ($request->country_code) {
+        //     // simple where here or another scope, whatever you like
+        //     $q->where('country_code', $request->country_code);
+        // }
 
-        if ($request->status!='' && in_array($request->status, [0,1,2])) {
-            $q->where('approve_status', $request->status);
-        }
+        // if ($request->status!='' && in_array($request->status, [0,1,2])) {
+        //     $q->where('approve_status', $request->status);
+        // }
 
 
         $allUsers = $q->get();
