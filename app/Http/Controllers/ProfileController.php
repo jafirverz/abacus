@@ -2070,8 +2070,9 @@ class ProfileController extends Controller
         }else{
             $compTime = $competition->start_time_of_competition . ' PM';
         }
-        $key = ['{{competition_name}}','{{student_name}}','{{exam_date}}','{{competition_starttime}}'];
-        $value = [$competition->title, $user->name, $competition->date_of_competition, $compTime];
+        $logo='<img style="width: 120px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
+        $key = ['{{competition_name}}','{{student_name}}','{{exam_date}}','{{competition_starttime}}','{{logo}}'];
+        $value = [$competition->title, $user->name, $competition->date_of_competition, $compTime, $logo];
         $newContents = str_replace($key, $value, $pass->content);
         $pdf = PDF::loadView('account.competition_pass', compact('newContents'));
         return $pdf->download('competition-pass.pdf');
