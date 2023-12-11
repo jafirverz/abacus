@@ -59,17 +59,28 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="admin_role">Admin Role</label>
-                                    <select name="admin_role" class="form-control" id="">
-                                        <option value="">-- Select --</option>
-                                        @if($roles->count())
-                                        @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}" @if(old('admin_role', $admin->admin_role)==$role->id) selected @endif>{{ $role->name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
+                                        <select name="admin_role" class="form-control" id="">
+                                            <option value="">-- Select --</option>
+                                            <option value="1" @if(old('admin_role', $admin->admin_role)==1) selected @endif>Super Admin</option>
+                                            <option value="2" @if(old('admin_role', $admin->admin_role)==2) selected @endif>Franchise Admin</option>
+                                        </select>
                                     @if ($errors->has('admin_role'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('admin_role') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="admin_role">Country</label>
+                                    <select name="countrry" class="form-control" id="">
+                                        <option value="">-- Select --</option>
+                                        @foreach($countries as $countryy)
+                                        <option value="{{ $countryy->id }}" @if(old('countrry', $admin->country_id)==$countryy->id) selected @endif>{{ $countryy->country }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('countrry'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('countrry') }}</strong>
                                     </span>
                                     @endif
                                 </div>
