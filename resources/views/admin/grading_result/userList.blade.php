@@ -8,7 +8,7 @@
             <div class="section-header-back">
                 <a href="{{ route('g-results.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h1>{{ $title ?? '-' }}</h1>
+            <h1> GE Student List > {{ $competition->title ?? '-' }}</h1>
 
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
