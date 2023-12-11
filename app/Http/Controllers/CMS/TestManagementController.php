@@ -92,7 +92,7 @@ class TestManagementController extends Controller
                 $allocation = new Allocation();
                 $allocation->student_id  = $studentid ?? NULL;
                 $allocation->assigned_by  = $teacher; // Instructor
-                $allocation->assigned_id  = $id;   //Test /Survey
+                $allocation->assigned_id  = $testManagement->id;   //Test /Survey
                 $allocation->start_date  = $request->start_date ?? NULL;
                 $allocation->end_date  = $request->end_date ?? NULL;
                 $allocation->type  = 1;
