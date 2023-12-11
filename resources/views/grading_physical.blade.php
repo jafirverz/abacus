@@ -51,10 +51,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mt-30">
-                        <h4 class="title-6">Important Note</h4>
-                        {{ $competition->description }}
+                    <div class="row sp-col-15 grid-2">
+                        <div class="col-xl-9 sp-col gcol-3">
+                            <div class="gcontent">
+                                <h4 class="title-6">Important Note</h4>
+                                {{ $competition->description }}
+                            </div>
+                        </div>
+                        <div class="col-xl-3 sp-col gcol-4">
+                            <a class="btn-1" href="{{ route('grading.pass', ['id'=>$competition->id, 'user_id'=> Auth::user()->id]) }}">Download Examination Pass <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <div class="note-2"><i class="icon-info"></i> Note: This page will be disabled after the exam finishes.</div>
+                        </div>
                     </div>
+
+
                     <div class="accordion mt-30">
 
                         @php
