@@ -40,7 +40,7 @@
             </select>
           </div>
 
-          
+
 
 
         </div>
@@ -59,7 +59,7 @@
 
           </div>
 
-          
+
 
         </div>
 
@@ -76,7 +76,7 @@
 
             <div class="card-header">
               <a href="javascript:void(0);" class="btn btn-info mr-1 d-none excel" onclick="event.preventDefault();document.getElementById('excel').submit();"><i class="fas fa-file-download"></i> Excel</a>
-          
+
               <form id="excel" action="{{ route('salesexcel') }}" method="post">
                 @csrf
                 @method('POST')
@@ -121,13 +121,13 @@
                   </thead>
                   <tbody>
                     @if(isset($allOrders) && count($allOrders) > 0)
-                    @php 
+                    @php
                     $i = 1;
                     @endphp
                     @foreach($allOrders as $value)
-                    
-                    @php 
-                    
+
+                    @php
+
                     $users = \App\User::where('id', $value->user_id)->first();
                     $orderDetails = \App\OrderDetail::where('order_id', $value->id)->pluck('name')->toArray();
                     $orderDetails = implode(', ',$orderDetails);
@@ -142,8 +142,8 @@
                         </td> -->
                         <td>{{ $i }}</td>
                         <td>{{ $value->course->title }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $value->submitted->is_submitted }}</td>
+                        <td>{{ $value->submitted->certificate_issued_on }}</td>
                         <td></td>
                         <td></td>
                         <td>{{ $value->user->last_login }}</td>
@@ -151,7 +151,7 @@
                     @php
                         $i++;
                     @endphp
-                    
+
                     @endforeach
                     @else
                     <tr>
