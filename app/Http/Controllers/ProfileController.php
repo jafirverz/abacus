@@ -35,6 +35,7 @@ use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
 use App\CompetitionStudent;
 use App\Country;
+use App\ExaminationPass;
 use App\UserProfileUpdate;
 use Carbon\Carbon;
 use Exception;
@@ -67,6 +68,7 @@ use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use Illuminate\Support\Facades\URL;
+use PDF;
 
 use Illuminate\Support\Facades\Session;
 
@@ -2056,5 +2058,21 @@ class ProfileController extends Controller
             $orderDetails = OrderDetail::whereIn('order_id', $orders)->paginate(10);
         }
         return view('account.membership', compact('orderDetails'));
+    }
+
+    public function downloadPass($id = null, $user_id = null){
+        $pass = ExaminationPass::where('type', 1)->first();
+        $competition = Competition::where('id', $id)->first();
+        $user = User::where('id', $user_id)->first();
+        if($competition->start_time_of_competition <= 12){
+            $compTime = $competition->start_time_of_competition . ' AM';
+        }else{
+            $compTime = $competition->start_time_of_competition . ' PM';
+        }
+        $key = ['{{competition_name}}','{{student_name}}','{{exam_date}}','{{competition_starttime}}'];
+        $value = [$competition->title, $user->name, $competition->date_of_competition, $compTime];
+        $newContents = str_replace($key, $value, $pass->content);
+        $pdf = PDF::loadView('account.competition_pass', compact('newContents'));
+        return $pdf->download('competition-pass.pdf');
     }
 }
