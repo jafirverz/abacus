@@ -2077,17 +2077,26 @@ class ProfileController extends Controller
         return $pdf->download('competition-pass.pdf');
     }
 
-    public function downloadPass($id = null, $user_id = null){
+    public function downloadPass2($id = null, $user_id = null){
         $pass = ExaminationPass::where('type', 2)->first();
         $grading = GradingExam::where('id', $id)->first();
         $user = User::where('id', $user_id)->first();
         if($grading->start_time_of_competition <= 12){
-            $compTime = $grading->start_time_of_competition . ' AM';
+            $start_time_of_competition = $grading->start_time_of_competition . ' AM';
         }else{
-            $compTime = $grading->start_time_of_competition . ' PM';
+            $start_time_of_competition = $grading->start_time_of_competition-12 . ' PM';
         }
-        $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{exam_venue}}','{{exam_time}}'];
-        $value = [$grading->title, $user->name, date('j F Y, l',strtotime($grading->date_of_competition)), $grading->exam_venue, $compTime];
+
+        if($grading->end_time_of_competition <= 12){
+            $end_time_of_competition = $grading->end_time_of_competition . ' AM';
+        }else{
+            $end_time_of_competition = $grading->end_time_of_competition-12 . ' PM';
+        }
+
+        $compTime=$start_time_of_competition.' - '.$end_time_of_competition;
+        $logo='<img style="width: 120px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
+        $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{exam_venue}}','{{exam_time}}','{{logo}}'];
+        $value = [$grading->title, $user->name, date('j F Y, l',strtotime($grading->date_of_competition)), $grading->exam_venue, $compTime,$logo];
         $newContents = str_replace($key, $value, $pass->content);
         $pdf = PDF::loadView('account.grading_pass', compact('newContents'));
         return $pdf->download('grading-pass.pdf');
