@@ -2060,7 +2060,7 @@ class ProfileController extends Controller
         }
         return view('account.membership', compact('orderDetails'));
     }
-    
+
     public function downloadPass($id = null, $user_id = null){
         $pass = ExaminationPass::where('type', 1)->first();
         $competition = Competition::where('id', $id)->first();
@@ -2075,5 +2075,21 @@ class ProfileController extends Controller
         $newContents = str_replace($key, $value, $pass->content);
         $pdf = PDF::loadView('account.competition_pass', compact('newContents'));
         return $pdf->download('competition-pass.pdf');
+    }
+
+    public function downloadPass($id = null, $user_id = null){
+        $pass = ExaminationPass::where('type', 2)->first();
+        $grading = GradingExam::where('id', $id)->first();
+        $user = User::where('id', $user_id)->first();
+        if($grading->start_time_of_competition <= 12){
+            $compTime = $grading->start_time_of_competition . ' AM';
+        }else{
+            $compTime = $grading->start_time_of_competition . ' PM';
+        }
+        $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{exam_venue}}','{{exam_time}}'];
+        $value = [$grading->title, $user->name, date('j F Y, l',strtotime($grading->date_of_competition)), $grading->exam_venue, $compTime];
+        $newContents = str_replace($key, $value, $pass->content);
+        $pdf = PDF::loadView('account.grading_pass', compact('newContents'));
+        return $pdf->download('grading-pass.pdf');
     }
 }
