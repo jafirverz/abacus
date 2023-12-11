@@ -61,11 +61,11 @@
                                     <div class="inrow">
                                         <strong>Competition Type:</strong> <span class="status-1">{{ ucwords($competition->competition_type) }}</span>
                                     </div>
-                                    {{-- 	
+                                    	
                                     <div class="inrow">
-                                        <a class="btn-1" href="#">Download Competition Pass <i class="fa-solid fa-arrow-right-long"></i></a>
+                                        <a class="btn-1" href="{{ route('competition.pass', ['id'=>$competition->id, 'user_id'=> Auth::user()->id]) }}">Download Competition Pass <i class="fa-solid fa-arrow-right-long"></i></a>
                                     </div>	
-                                    --}}		
+                                    		
                                 </div>
                             </div>		
                         </div>

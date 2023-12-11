@@ -198,6 +198,8 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('download-certificate/{id?}', 'OnlineStudentController@downloadCertificate')->name('downloadCertificate');
 
+Route::get('competition-pass/{id?}/{user_id?}', 'ProfileController@downloadPass')->name('competition.pass');
+
 
 Route::group(['prefix' => 'safelogin'], function () {
     Route::get('/', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
