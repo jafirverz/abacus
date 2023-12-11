@@ -285,6 +285,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('email-template/search', 'CMS\EmailTemplateController@search')->name('email-template.search');
     Route::resource('email-template', 'CMS\EmailTemplateController');
 
+    //Route::get('email-template/search', 'CMS\EmailTemplateController@search')->name('email-template.search');
+    Route::resource('pass', 'CMS\ExaminationPassController');
+
 
     // BANNER MANAGEMENT
     Route::get('banner-management', 'CMS\BannerManagementController@index');
