@@ -36,7 +36,7 @@ class AnnouncementController extends Controller
     public function index()
     {
         $title = $this->title;
-        $announcements = Announcement::orderBy('id', 'asc')->paginate($this->pagination);
+        $announcements = Announcement::orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.announcement.index', compact('title', 'announcements'));
     }
@@ -72,6 +72,24 @@ class AnnouncementController extends Controller
 
         if($request->teacher_id)
         {
+
+            if ($request->hasfile('attachments')) {
+                $i=0;
+                foreach ($request->file('attachments') as $file) {
+                    $i++;
+                    $today=strtotime(date('Y-m-d H:i:s'));
+                    $name = $today.$i.'_'.$file->getClientOriginalName();
+                    $file->move(public_path() . '/upload-file/', $name);
+                    $data[] = $name;
+                }
+
+
+            }
+            else
+            {
+                $data=[];
+            }
+
             foreach($request->teacher_id as $key => $value)
             {
                 $announcement = new Announcement;
@@ -80,21 +98,11 @@ class AnnouncementController extends Controller
                 if ($request->hasFile('image')) {
                     $announcement->image = uploadPicture($request->file('image'), $this->title);
                 }
-                if ($request->hasfile('attachments')) {
-                    $i=0;
-                    foreach ($request->file('attachments') as $file) {
-                        $i++;
-                        $today=strtotime(date('Y-m-d H:i:s'));
-                        $name = $today.$i.'_'.$file->getClientOriginalName();
-                        $file->move(public_path() . '/upload-file/', $name);
-                        $data[] = $name;
-                    }
 
-                    $announcement->attachments = json_encode($data);
-                }
                 $announcement->description = $request->description ?? Null;
                 $announcement->function = $request->function ?? Null;
                 $announcement->teacher_id = $value;
+                $announcement->attachments = json_encode($data);
                 $announcement->created_at = Carbon::now();
                 $announcement->save();
             }

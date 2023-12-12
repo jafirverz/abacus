@@ -52,7 +52,7 @@
 
                                 <div class="form-group">
                                     <label for="teacher_id">Teacher</label>
-                                    <select name="teacher_id[]" class="form-control selectpicker" multiple>
+                                    <select data-live-search="true" name="teacher_id[]" class="form-control selectpicker" multiple>
                                         <option value="">-- Select --</option>
                                         @if ($instructors)
                                         @foreach ($instructors as $item)
