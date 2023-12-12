@@ -13,7 +13,7 @@
 
 
         </div>
-        <form action="{{ route('reports-external-centre.search') }}" method="get">
+        <form action="" method="get">
             @csrf
             <div class="section-body">
 
@@ -41,7 +41,12 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <input type="hidden" name="user_id" value="{{ $external_center->id }}">
-                        <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                        @if(isset($_GET['_token']))
+                        <a class="btn btn-primary" href="{{ route('reports-external-centre.search',['status'=>$_GET['status'],'user_id'=>$external_center->id]) }}">Export</a>&nbsp;&nbsp;
+                        @else
+                        <a class="btn btn-primary" href="{{ route('reports-external-centre.search',['user_id'=>$external_center->id]) }}">Export</a>&nbsp;&nbsp;
+                        @endif
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else

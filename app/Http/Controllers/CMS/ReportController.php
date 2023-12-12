@@ -107,8 +107,12 @@ class ReportController extends Controller
             $q->where('approve_status', $request->status);
         }
 
+        $q->whereIn('user_type_id',  [4]);
+
 
         $q->where('instructor_id',  $request->user_id);
+
+
 
 
 
@@ -120,6 +124,32 @@ class ReportController extends Controller
         ob_start();
         return Excel::download(new StudentExport($allUsers), 'external-center.xlsx');
         //dd($allUsers);
+    }
+
+    public function external_centre_students_list($id)
+    {
+        $title = 'Student List';
+        $external_center=User::find($id);
+       // $users = User::whereIn('user_type_id', [4])->where('instructor_id',$id)->paginate($this->pagination);
+        $q = User::query();
+
+
+
+        if (isset($_GET['status']) && in_array($_GET['status'], [0,1,2])) {
+            $q->where('approve_status', $_GET['status']);
+        }
+
+        $q->whereIn('user_type_id',  [4]);
+        $q->where('instructor_id',  $id);
+
+
+
+
+        $users = $q->paginate($this->pagination);
+
+        $countries = Country::get();
+
+        return view('admin.cms.reports.external-centre-students-list', compact('title', 'users', 'countries','external_center'));
     }
 
     public function instructor()
@@ -253,7 +283,7 @@ class ReportController extends Controller
             $allOrders = $q->get();
             $title = 'Online Student Report';
             $users = User::where('user_type_id', 3)->get();
-        
+
             return view('admin.cms.reports.onlinestudent', compact('title', 'users', 'allOrders'));
         }else{
             $q = CourseAssignToUser::query();
@@ -270,7 +300,7 @@ class ReportController extends Controller
         }
 
 
-        
+
 
 
         // ob_end_clean();
@@ -422,14 +452,7 @@ class ReportController extends Controller
         //dd($allUsers);
     }
 
-    public function external_centre_students_list($id)
-    {
-        $title = 'Student List';
-        $external_center=User::find($id);
-        $users = User::whereIn('user_type_id', [4])->where('instructor_id',$id)->paginate($this->pagination);
-        $countries = Country::get();
-        return view('admin.cms.reports.external-centre-students-list', compact('title', 'users', 'countries','external_center'));
-    }
+
 
     public function searchSales(Request $request)
     {
