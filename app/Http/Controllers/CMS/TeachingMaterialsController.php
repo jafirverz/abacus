@@ -68,15 +68,25 @@ class TeachingMaterialsController extends Controller
             'teacher_id'  =>  'required',
         ]);
 
-        $material = new TeachingMaterials;
-        $material->title = $request->title ?? '';
-        if ($request->hasFile('uploaded_files')) {
-            $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
+        if($request->teacher_id)
+        {
+            foreach($request->teacher_id as $key => $value)
+            {
+
+                $material = new TeachingMaterials;
+                $material->title = $request->title ?? '';
+                if ($request->hasFile('uploaded_files')) {
+                    $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
+                }
+                $material->description = $request->description ?? '';
+                $material->teacher_id = $value;
+                $material->created_at = Carbon::now();
+                $material->save();
+
+
+            }
+
         }
-        $material->description = $request->description ?? '';
-        $material->teacher_id = $request->teacher_id ?? '';
-        $material->created_at = Carbon::now();
-        $material->save();
 
         return redirect()->route('teaching-materials.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }

@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <input type="hidden" name="user_id" value="{{ $external_center->id }}">
-                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
