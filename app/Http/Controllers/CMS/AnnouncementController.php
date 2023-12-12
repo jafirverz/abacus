@@ -70,29 +70,36 @@ class AnnouncementController extends Controller
             'teacher_id'  =>  'required',
         ]);
 
-        $announcement = new Announcement;
-        $announcement->title = $request->title ?? Null;
-        $announcement->announcement_date = $request->announcement_date ?? Null;
-        if ($request->hasFile('image')) {
-            $announcement->image = uploadPicture($request->file('image'), $this->title);
-        }
-        if ($request->hasfile('attachments')) {
-            $i=0;
-            foreach ($request->file('attachments') as $file) {
-                $i++;
-                $today=strtotime(date('Y-m-d H:i:s'));
-                $name = $today.$i.'_'.$file->getClientOriginalName();
-                $file->move(public_path() . '/upload-file/', $name);
-                $data[] = $name;
+        if($request->teacher_id)
+        {
+            foreach($request->teacher_id as $key => $value)
+            {
+                $announcement = new Announcement;
+                $announcement->title = $request->title ?? Null;
+                $announcement->announcement_date = $request->announcement_date ?? Null;
+                if ($request->hasFile('image')) {
+                    $announcement->image = uploadPicture($request->file('image'), $this->title);
+                }
+                if ($request->hasfile('attachments')) {
+                    $i=0;
+                    foreach ($request->file('attachments') as $file) {
+                        $i++;
+                        $today=strtotime(date('Y-m-d H:i:s'));
+                        $name = $today.$i.'_'.$file->getClientOriginalName();
+                        $file->move(public_path() . '/upload-file/', $name);
+                        $data[] = $name;
+                    }
+
+                    $announcement->attachments = json_encode($data);
+                }
+                $announcement->description = $request->description ?? Null;
+                $announcement->function = $request->function ?? Null;
+                $announcement->teacher_id = $value;
+                $announcement->created_at = Carbon::now();
+                $announcement->save();
             }
 
-            $announcement->attachments = json_encode($data);
         }
-        $announcement->description = $request->description ?? Null;
-        $announcement->function = $request->function ?? Null;
-        $announcement->teacher_id = $request->teacher_id ?? Null;
-        $announcement->created_at = Carbon::now();
-        $announcement->save();
 
         return redirect()->route('announcement.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }

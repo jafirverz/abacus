@@ -62,21 +62,29 @@ class InstructorCalendarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'teacher_id' => 'required',
             'full_name' => 'required',
             'start_date' => 'date|required',
             'start_time' => 'required',
             'note' => 'required',
             'reminder' => 'required',
         ]);
+        if($request->teacher_id)
+        {
+            foreach($request->teacher_id as $key => $value)
+            {
+                $instructorCalendar = new InstructorCalendar();
+                $instructorCalendar->full_name  = $request->full_name ?? NULL;
+                $instructorCalendar->teacher_id  = $value;
+                $instructorCalendar->start_date  = $request->start_date ?? NULL;
+                $instructorCalendar->start_time  = $request->start_time ?? NULL;
+                $instructorCalendar->note  = $request->note ?? NULL;
+                $instructorCalendar->reminder  = $request->reminder ?? NULL;
+                $instructorCalendar->save();
+            }
 
-        $instructorCalendar = new InstructorCalendar();
-        $instructorCalendar->full_name  = $request->full_name ?? NULL;
-        $instructorCalendar->teacher_id  = $request->teacher_id ?? NULL;
-        $instructorCalendar->start_date  = $request->start_date ?? NULL;
-        $instructorCalendar->start_time  = $request->start_time ?? NULL;
-        $instructorCalendar->note  = $request->note ?? NULL;
-        $instructorCalendar->reminder  = $request->reminder ?? NULL;
-        $instructorCalendar->save();
+        }
+
 
         return redirect()->route('instructor-calendar.index')->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
