@@ -202,7 +202,7 @@
                                         </div>
 
                                         <div class="col-md-5">
-                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                            <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                         </div>
 
                                         <div class="col-md-2">
@@ -479,6 +479,18 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
+
 <script>
 
 $(document).ready(function () {
@@ -519,6 +531,7 @@ $(document).ready(function () {
     $(".add-more3").click(function(){
         var html = $(".copy3").html();
         $(".after-add-more").append(html);
+        $('input[type=text]').addClass('number-separator');
     });
 
     $(".add-more6").click(function(){
