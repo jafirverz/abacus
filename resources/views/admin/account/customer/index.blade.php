@@ -101,6 +101,7 @@
                                     <th>Full Name</th>
                                     <th>DOB</th>
                                     <th>Instructor</th>
+                                    <th>Type</th>
                                     <th>Learning Location</th>
                                     <th>Country</th>
                                     <th>Status</th>
@@ -134,7 +135,10 @@
                                         {{ $item->dob ?? '' }}
                                     </td>
                                     <td>
-                                        {{ $item->instructor->name ?? '' }}if
+                                        {{ $item->instructor->name ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ getUserTypes($item->user_type_id) ?? '' }}
                                     </td>
                                     <td>
                                         {{ $item->location->title ?? '' }}
