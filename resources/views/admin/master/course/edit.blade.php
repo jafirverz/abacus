@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="students">Students</label>
-                                    <select name="students[0]" class="form-control" multiple>
+                                    <select name="students[0]"  data-live-search="true" class="selectpicker form-control" multiple>
                                         @if ($students)
                                         @foreach ($students as $item)
                                         <option value="{{ $item->id }}" @if(in_array($item->id,$courseAssignToUser))

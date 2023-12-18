@@ -57,7 +57,7 @@
                                     <div class="row">
                                             <div class="col-md-3">
 
-                                                <select name="country_code_phone" class="form-control">
+                                                <select name="country_code_phone"  data-live-search="true" class="selectpicker form-control">
                                                     @foreach($country as $phonecode)
                                                     <option value="{{ $phonecode->phonecode }}" @if($phonecode->phonecode == $customer->country_code_phone) selected @endif>+ {{ $phonecode->phonecode }}</option>
                                                     @endforeach
@@ -124,7 +124,7 @@
 
                                 <div class="form-group">
                                     <label for="country_code">Country <span class="required">*</span></label>
-                                    <select name="country_code" class="form-control" id="country_code">
+                                    <select name="country_code"  data-live-search="true" class="selectpicker form-control" id="country_code">
                                         <option value="">-- Select --</option>
                                         @if($country)
                                         @foreach ($country as $item)
@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="instructor_id">@if($customer->user_type_id==4) External Centre Account @else Instructor @endif</label>
-                                    <select name="instructor_id" class="form-control">
+                                    <select name="instructor_id"  data-live-search="true" class="selectpicker form-control">
                                         <option value="">-- Select --</option>
                                         @if ($instructors)
                                         @foreach ($instructors as $item)
