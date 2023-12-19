@@ -272,7 +272,7 @@ class ReportController extends Controller
         $student = $request->student ?? '';
 
         // $q = User::query();
-        if($request->downloadexcel == 0){
+        if($request->downloadexcel == 0 && !empty($student)){
             $q = CourseAssignToUser::query();
             $q->join('courses','course_assign_to_users.course_id','courses.id');
             $q->select('course_assign_to_users.*');
@@ -285,7 +285,7 @@ class ReportController extends Controller
             $users = User::where('user_type_id', 3)->get();
 
             return view('admin.cms.reports.onlinestudent', compact('title', 'users', 'allOrders'));
-        }else{
+        }elseif($request->downloadexcel == 1){
             $q = CourseAssignToUser::query();
             $q->join('courses','course_assign_to_users.course_id','courses.id');
             $q->select('course_assign_to_users.*');
@@ -297,6 +297,11 @@ class ReportController extends Controller
             ob_end_clean();
             ob_start();
             return Excel::download(new OnlineStudentExport($allItems), 'OnlineStudentExport.xlsx');
+        }else{
+            $title = 'Online Student Report';
+            $allOrders = array();
+            $users = User::where('user_type_id', 3)->get();
+            return view('admin.cms.reports.onlinestudent', compact('title', 'users'));
         }
 
 
