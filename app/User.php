@@ -60,6 +60,11 @@ class User extends Authenticatable
         {
             $query->where('users.approve_status',$search_term->status);
         }
+        if($search_term->search);
+        {
+            $query->where('users.name','like','%'.$search_term->search.'%');
+            $query->orWhere('users.email','like','%'.$search_term->search.'%');
+        }
 
         return $query;
     }

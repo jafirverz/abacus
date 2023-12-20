@@ -10,7 +10,7 @@
 
 
         </div>
-        <form action="{{ route('reports-grading-examination.search') }}" method="post">
+        <form action="" method="GET">
             @csrf
             <div class="section-body">
 
@@ -58,7 +58,12 @@
                 <br />
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary"> Export</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                        @if(isset($_GET['_token']))
+                        <a class="btn btn-primary" href="{{ route('reports-grading-examination.search',['name'=>$_GET['name'],'country'=>$_GET['country'],'learning_Location'=>$_GET['learning_Location'],'grades'=>$_GET['grades']]) }}">Export</a>&nbsp;&nbsp;
+                        @else
+                        <a class="btn btn-primary" href="{{ route('reports-grading-examination.search') }}">Export</a>&nbsp;&nbsp;
+                        @endif
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
