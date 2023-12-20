@@ -12,7 +12,54 @@
         </div>
         @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('customer_account')])
     </div>
+    <form action="{{ route('customer-account.search') }}" method="get">
+        @csrf
 
+        <div class="section-body">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <label>Keyword</label>
+                    <input type="text" class="form-control" name="search" value="@if(isset($_GET['search']) && $_GET['search']!='') {{ $_GET['search'] }}  @endif" placeholder="">
+                </div>
+                <div class="col-lg-4">
+                    <label>Country</label>
+                    <select name="country" class="form-control">
+                        <option value="">-- All --</option>
+                        @foreach ($country as $key => $value)
+                        <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected" @elseif($value->id==192) selected="selected"
+                            @endif value="{{$value->id}}">{{$value->country}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-4"><label>Status:</label>
+                    <select name="status" class="form-control">
+                      <option value="">-- All --</option>
+                      <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @else  selected="selected"
+                          @endif value="1">Active</option>
+                      <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
+                          @endif value="0">In Active</option>
+                      <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
+                          @endif value="2">Rejected</option>
+                  </select>
+                  </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
+                    @if(request()->get('_token'))
+                    <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
+                    @else
+                    <button type="reset" class="btn btn-primary">Clear All</button>
+                    @endif
+
+                </div>
+            </div>
+
+        </div>
+
+    </form>
 <div class="section-body">
     @include('admin.inc.messages')
     <div class="row">
@@ -33,51 +80,7 @@
                     <h4></h4>
 
 
-                        <form action="{{ route('customer-account.search') }}" method="get">
-                            @csrf
-
-
-
-                                <div class="row">
-
-                                    <div class="col-lg-6">
-                                        <label>Country</label>
-                                        <select name="country" class="form-control">
-                                            <option value="">-- All --</option>
-                                            @foreach ($country as $key => $value)
-                                            <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected" @elseif($value->id==192) selected="selected"
-                                                @endif value="{{$value->id}}">{{$value->country}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-6"><label>Status:</label>
-                                        <select name="status" class="form-control">
-                                          <option value="">-- All --</option>
-                                          <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @else  selected="selected"
-                                              @endif value="1">Active</option>
-                                          <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
-                                              @endif value="0">In Active</option>
-                                          <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                                              @endif value="2">Rejected</option>
-                                      </select>
-                                      </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <button type="submit" class="btn btn-primary"> Search</button>&nbsp;&nbsp;
-                                        @if(request()->get('_token'))
-                                        <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
-                                        @else
-                                        <button type="reset" class="btn btn-primary">Clear All</button>
-                                        @endif
-
-                                    </div>
-                                </div>
-
-
-
-                        </form><br />
+                        <br />
 
                 </div>
                 <div class="card-body">

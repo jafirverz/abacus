@@ -332,7 +332,32 @@ class ReportController extends Controller
         $allOrders = array();
         $instructor = User::where('user_type_id', 5)->get();
         $grading_exam = GradingExam::where('status', 1)->get();
-        $grading_students = GradingStudent::paginate($this->pagination);
+        DB::connection()->enableQueryLog();
+        //$grading_students = GradingStudent::paginate($this->pagination);
+        $q = GradingStudent::query();
+        $q->join('users','grading_students.user_id','users.id');
+        $q->select('grading_students.*','users.learning_locations','users.name','users.country_code','users.instructor_id','users.user_type_id');
+        if (isset($_GET['name']) && $_GET['name']!='') {
+            $q->where('users.name', 'like', '%'.$_GET['name'].'%');
+        }
+
+        if (isset($_GET['country']) && $_GET['country']!='') {
+            $q->where('users.country_code', $_GET['country']);
+        }
+
+        if (isset($_GET['learning_Location']) && $_GET['learning_Location']!='') {
+            $q->where('users.learning_locations', $_GET['learning_Location']);
+        }
+
+        if (isset($_GET['grades']) && $_GET['grades']!='') {
+           // dd($request->grades);
+            $q->where('grading_students.mental_grade', $_GET['grades'])->orWhere('grading_students.abacus_grade', $_GET['grades']);
+        }
+
+        $grading_students = $q->paginate($this->pagination);
+
+        //$query = DB::getQueryLog();
+        //dd($query);
         $countries = Country::orderBy('phonecode')->get();
         $grades = Grade::get();
         $locations = LearningLocation::get();

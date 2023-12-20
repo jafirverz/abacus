@@ -392,7 +392,7 @@ class CustomerAccountController extends Controller
                             $data['subject'] = $email_template->subject;
 
                             $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                            $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                            $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructor->name];
 
                             $newContents = str_replace($key, $value, $email_template->content);
 
@@ -406,7 +406,7 @@ class CustomerAccountController extends Controller
 
                     }
 
-                    //			Instructor email for new student registration
+                    //Instructor email for new student registration
                 $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_REACTIVATED'));
 
                 if ($email_template) {
@@ -418,13 +418,15 @@ class CustomerAccountController extends Controller
                         $data['subject'] = $email_template->subject;
 
                         $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                        $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                        $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructor->name];
 
                         $newContents = str_replace($key, $value, $email_template->content);
 
                         $data['contents'] = $newContents;
+
+                        //dd($instructor->email);
                         try {
-                            $mail = Mail::to($request->email)->send(new EmailNotification($data));
+                            $mail = Mail::to($instructor->email)->send(new EmailNotification($data));
                         } catch (Exception $exception) {
                             dd($exception);
                         }
