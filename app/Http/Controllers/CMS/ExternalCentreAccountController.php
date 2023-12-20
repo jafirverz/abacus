@@ -68,7 +68,7 @@ class ExternalCentreAccountController extends Controller
     public function store(Request $request)
     {
         $fields = [
-            'email' =>  'required|email|unique:users,email',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'in_charge_name' => 'required|string',
             'password'  =>  'required|min:8',
@@ -223,7 +223,7 @@ class ExternalCentreAccountController extends Controller
     public function update(Request $request, $id)
     {
         $fields = [
-            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'in_charge_name' => 'required|string',
             'password'  =>  'nullable|min:8',
@@ -296,7 +296,7 @@ class ExternalCentreAccountController extends Controller
         $search_term = $request->search;
 
         $title = $this->title;
-        $customer = User::join('user_types','users.user_type_id','user_types.id')->where('users.user_type_id',6)->select('users.*')->search($search_term)->paginate($this->pagination);
+        $customer = User::join('user_types','users.user_type_id','user_types.id')->where('users.user_type_id',6)->select('users.*')->search2($search_term)->paginate($this->pagination);
         //dd($customer);
         if ($search_term) {
             $customer->appends('search', $search_term);
