@@ -34,7 +34,7 @@
                                 <label for="status">Date of competition</label>: {{ $competition->date_of_competition ?? '' }}
                             </div>
                             <div class="form-group">
-                                <label for="status">Competition Time </label>: {{ $competition->start_time_of_competition }} @if($competition->start_time_of_competition <= 12) am @else pm @endif -  {{ $competition->end_time_of_competition }} @if($competition->end_time_of_competition <= 12) am @else pm @endif 
+                                <label for="status">Competition Time </label>: {{ $competition->start_time_of_competition }}  -  {{ $competition->end_time_of_competition }} 
                                 (GMT+08:00) Singapore Standard Time
                             </div>
                             <div class="form-group">
