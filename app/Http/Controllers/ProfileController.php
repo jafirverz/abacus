@@ -1413,7 +1413,7 @@ class ProfileController extends Controller
     public function edit_instructor_competition($id)
 	{
 
-
+        $user = $this->user;
         $students = User::where('user_type_id',1)->where('instructor_id',$user->id)->orderBy('id','desc')->get();
         $locations = LearningLocation::orderBy('id','desc')->get();
         $categories = CompetitionCategory::orderBy('id','desc')->get();
