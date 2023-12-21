@@ -436,9 +436,10 @@ class CompetitionController extends Controller
             $status = 'null';
         }
         foreach($request->students as $student){
-            //dd($student);
+            $user = User::where('id', $student)->first();
             $compStudent = new CompetitionStudent();
             $compStudent->user_id = $student;
+            $compStudent->instructor_id = $user->instructor_id;
             $compStudent->competition_controller_id = $compId;
             $compStudent->category_id = $category;
             $compStudent->approve_status = $status;
