@@ -177,7 +177,7 @@
     //var timeZone = 'Asia/Singapore';
     var timeZone = 'Asia/Kolkata';
     var time = date.toLocaleString('en-IN', { timeZone  });
-      var current = new Date(time).getTime();
+      var current = new Date().getTime();
       //alert(time);
       // Find the difference between current and the count down date
       var diff = countDownTimer - current;
@@ -210,7 +210,7 @@
     //var timeZone = 'Asia/Singapore';
     var timeZone = 'Asia/Kolkata';
     var time = date.toLocaleString('en-IN', { timeZone  });
-      var current = new Date(time).getTime();
+      var current = new Date().getTime();
       // Find the difference between current and the count down date
       var diff = countDownTimer - current;
       // Countdown Time calculation for days, hours, minutes and seconds
