@@ -168,7 +168,7 @@ class WorksheetController extends Controller
             'title'  =>  'required',
             'fee'  =>  'required',
             'amount' => 'required_if:fee,2',
-            'questiontemplate'  =>  'required',
+            // 'questiontemplate'  =>  'required',
             'stopwatch'  =>  'required',
             'presettiming'  =>  'required',
             //'questiontype' => 'required',
