@@ -21,13 +21,18 @@
           }else{
             $student = '';
           }
+          if(!empty($_GET['status'])){
+            $status = $_GET['status'];
+          }else{
+            $status = '';
+          }
           @endphp
 
           <div class="col-lg-4"><label>Status:</label>
             <select name="status" class="form-control">
               <option value="">--Please Select--</option>
-              <option value="1">Active</option>
-              <option value="2">Deactivated</option>
+              <option value="1" @if($status == 1) selected @endif>Active</option>
+              <option value="2" @if($status == 2) selected @endif>Deactivated</option>
             </select>
           </div>
 
