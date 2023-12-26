@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('papers.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <!-- <a href="{{ route('papers.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a> -->
                 <a href="{{ url('upload-file/CompetitionResultUpload.xlsx') }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Download Sample</a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
