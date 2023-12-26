@@ -316,7 +316,8 @@ class CompetitionController extends Controller
     public function studentList($id){
         $title = 'Student List';
         $studentList = CompetitionStudent::where('competition_controller_id', $id)->orderBy('id', 'desc')->paginate($this->pagination);
-        return view('admin.competition.studentList', compact('title', 'studentList'));
+        $competition = Competition::where('id', $id)->first();
+        return view('admin.competition.studentList', compact('title', 'studentList', 'competition'));
     }
 
     public function rejectstudentList($id){
