@@ -370,6 +370,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('learning-location/search', 'CMS\TopicController@search')->name('learning-location.search');
     Route::resource('learning-location', 'CMS\TopicController');
 
+    // COUNTRY
+    Route::get('country/search', 'CMS\CountryController@search')->name('country.search');
+    Route::resource('country', 'CMS\CountryController');
+
 
     // WORKSHEET MASTER
     Route::get('worksheet/search', 'CMS\WorksheetController@search')->name('worksheet.search');

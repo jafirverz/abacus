@@ -170,13 +170,14 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['user_id'];
         }
+        //dd($allocated_user);
         if($user->user_type_id==6)
         {
             $students = User::where('user_type_id',4)->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
         else
         {
-            $students = User::where('user_type_id',1)->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+            $students = User::whereIN('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
 
         $mental_grades = Grade::where('grade_type_id', 1)->orderBy('title','asc')->get();
@@ -1398,7 +1399,7 @@ class ProfileController extends Controller
         {
             $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
         }
-        $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->where('competition_controller_id', $competition->id)->paginate($this->pagination);
 
 
 		return view('account.competition-students', compact('competition', 'compStudents', 'competition'));
