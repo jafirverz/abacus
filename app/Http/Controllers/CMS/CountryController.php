@@ -32,7 +32,7 @@ class CountryController extends Controller
     public function index()
     {
         $title = $this->title;
-        $country = Country::paginate($this->pagination);
+        $country = Country::orderBy('id','desc')->paginate($this->pagination);
 
         return view('admin.master.country.index', compact('title', 'country'));
     }
@@ -57,7 +57,7 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'  =>  'required|unique:country,country|max:191',
+            'country'  =>  'required|unique:country,country|max:191',
         ]);
 
         $topic = new Country();
@@ -134,11 +134,11 @@ class CountryController extends Controller
     {
         $search_term = $request->search;
         $title = $this->title;
-        $country = Country::search($search_term)->paginate($this->pagination);
+        $country = Country::orderBy('id','desc')->search($search_term)->paginate($this->pagination);
         if ($search_term) {
-            $topic->appends('search', $search_term);
+            $country->appends('search', $search_term);
         }
 
-        return view('admin.master.country.index', compact('title', 'countrys'));
+        return view('admin.master.country.index', compact('title', 'country'));
     }
 }
