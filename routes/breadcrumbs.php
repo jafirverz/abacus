@@ -192,6 +192,17 @@ Breadcrumbs::for('admin_learning_location_crud', function ($trail, $title, $url 
     $trail->parent('admin_learning_location');
     $trail->push($title, $url);
 });
+
+//COUNTRY
+Breadcrumbs::for('admin_country', function ($trail) {
+    $trail->parent('admin_home');
+    $trail->push(__('constant.COUNTRY'), route('country.index'));
+});
+
+Breadcrumbs::for('admin_country_crud', function ($trail, $title, $url = '#') {
+    $trail->parent('admin_country');
+    $trail->push($title, $url);
+});
 // SLIDER
 Breadcrumbs::for('admin_slider', function ($trail) {
     $trail->parent('admin_banner_management');

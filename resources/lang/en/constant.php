@@ -4,6 +4,7 @@ return [
 
     'DASHBOARD' => 'Dashboard',
     'MASTER' => 'Master',
+    'COUNTRY' => 'Country',
     'TEST_ALLOCATION' => 'Test Allocation',
     'SURVEY_ALLOCATION' => 'Survey Allocation',
     'CONTACT' => 'Contact Enquiry',

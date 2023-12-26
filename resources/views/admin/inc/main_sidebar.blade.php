@@ -162,6 +162,12 @@
                     'idtag'  => 'level',
                 ],
                 [
+                    'title' =>  __('constant.COUNTRY'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/country',
+                    'idtag'  => 'country',
+                ],
+                [
                     'title' =>  __('constant.LEARNING_LOCATION'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/learning-location',
@@ -511,7 +517,7 @@
             @foreach ($item->main_menu as $mainitem)
             <li
                 class="dropdown @if(property_exists($mainitem, 'sub_menu') && hasChildUrl(url()->current(), $mainitem->sub_menu)!==false)  active @elseif(Str::contains(url()->current(), $mainitem->url)!==false) active @endif" id="{{ $mainitem->idtag ?? '' }}">
-                <a href="{{ url($mainitem->url) }}" 
+                <a href="{{ url($mainitem->url) }}"
                     class="@if(property_exists($mainitem, 'sub_menu')) has-dropdown @endif nav-link">{!! $mainitem->icon
                     !!}<span>{{ $mainitem->title }}</span></a>
                 @if(property_exists($mainitem, 'sub_menu'))
