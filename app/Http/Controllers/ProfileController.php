@@ -207,8 +207,8 @@ class ProfileController extends Controller
 
 		$user = $this->user;
         $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('title','asc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('title','asc')->get();
+        $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
+        $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $gradingExam = GradingExam::where('status', 1)->get();
         $locations = LearningLocation::orderBy('id','desc')->get();
 		$page = get_page_by_slug($slug);
