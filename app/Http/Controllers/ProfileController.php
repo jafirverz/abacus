@@ -6,6 +6,8 @@ use App\Notification;
 use App\Announcement;
 use App\InstructorCalendar;
 use App\Grade;
+use App\CategoryGrading;
+use App\GradingCategory;
 use App\GradingStudentResults;
 use App\GradingExam;
 use App\GradingPaper;
@@ -180,11 +182,11 @@ class ProfileController extends Controller
             $students = User::whereIN('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
         }
 
-        $mental_grades = Grade::where('grade_type_id', 1)->orderBy('title','asc')->get();
-        $abacus_grades = Grade::where('grade_type_id', 2)->orderBy('title','asc')->get();
+        $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
+        $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $gradingExam = GradingExam::find($id);
         $locations = LearningLocation::orderBy('id','desc')->get();
-        //dd($gradingExam);
+        //dd($abacus_grades);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
