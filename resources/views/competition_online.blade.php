@@ -98,7 +98,7 @@
 
                             @php
                             //$checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
-                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->get();
+                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->get();
                             @endphp
 
 
@@ -133,7 +133,7 @@
                                                     <div class="box-2">
                                                     @php
                                                     $skip = $i * 6;
-                                                    $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->skip($skip)->take(6)->get();
+                                                    $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->skip($skip)->take(6)->get();
                                                     @endphp
                                                     @foreach($checkPaperCategory as $paper)
                                                    
