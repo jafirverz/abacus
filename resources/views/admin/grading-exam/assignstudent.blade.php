@@ -35,7 +35,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="title">Category</label>
+                                    <label for="title">Exam Grade</label>
                                     <select name="category" class="form-control">
                                         <option value="">-- Select --</option>
                                         @foreach($competitionCategory as $cate)
@@ -49,7 +49,7 @@
                                     @endif
                                 </div>
 
-                                
+
 
 
                                 <div class="form-group">
@@ -67,14 +67,14 @@
                                     @endif
                                 </div>
 
-                               
 
-                                
 
-                                
-                                
 
-                                
+
+
+
+
+
 
                                 <div class="form-group">
                                     <label for="status">Status</label>

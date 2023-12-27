@@ -45,7 +45,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="title">Grade</label>
                                     <select name="grade[]" class="form-control selectpicker" multiple>
                                         <option value="">-- Select --</option>
@@ -58,7 +58,7 @@
                                         <strong>{{ $errors->first('grade') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> --}}
 
                                 <!-- <div class="form-group">
                                     <label for="title">Select Student</label>
@@ -78,7 +78,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="title">Category</label><br>
+                                    <label for="title">Grade</label><br>
                                     @foreach($competitionCategory as $cate)
                                     <input type="checkbox" name="category[]" value="{{ $cate->id }}"> {{ $cate->category_name }} <br>
                                     @endforeach
