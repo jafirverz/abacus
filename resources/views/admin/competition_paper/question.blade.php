@@ -8,11 +8,12 @@
           <div class="section-header-back">
             <a href="{{ route('papers.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-            <h1>{{ $title ?? '-' }}</h1>
+            <h1>{{ $title ?? '-' }}, {{ $papercheck->title }}</h1>
             @if(count($competitionPaper) <= 0)
             <div class="section-header-button">
                 <a href="{{ route('papers.questions.create', ['pId'=> $pId, 'qId' => $questemplate]) }}" class="btn btn-primary">Add New</a>
             </div>
+            
             @endif
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 

@@ -289,7 +289,7 @@ class CompetitionPaperController extends Controller
         $questemplate = $papercheck->question_template_id;
         // $competitionQuestions = CompetitionQuestions::with('comp_paper')->groupBy('competition_paper_id')->paginate($this->pagination);
         $competitionPaper = CompetitionPaper::whereHas('comp_ques')->where('id', $id)->paginate($this->pagination);
-        return view('admin.competition_paper.question', compact('title', 'competitionPaper', 'pId', 'questemplate'));
+        return view('admin.competition_paper.question', compact('title', 'competitionPaper', 'pId', 'questemplate', 'papercheck'));
     }
 
     public function questionCreate($pId = null, $qId = null)
