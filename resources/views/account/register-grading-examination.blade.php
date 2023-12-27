@@ -92,7 +92,7 @@
                             <select name="mental_grade" class="selectpicker" data-title="Select Option">
                                 @if($mental_grades)
                                 @foreach($mental_grades as $grade)
-                                <option value="{{ $grade->id }}">{{ $grade->title }}</option>
+                                <option value="{{ $grade->id }}">{{ $grade->category_name }}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -109,7 +109,7 @@
                             <select name="abacus_grade" class="selectpicker" data-title="Select Option">
                                 @if($abacus_grades)
                                 @foreach($abacus_grades as $grade)
-                                <option value="{{ $grade->id }}">{{ $grade->title }}</option>
+                                <option value="{{ $grade->id }}">{{ $grade->category_name }}</option>
                                 @endforeach
                                 @endif
                             </select>
