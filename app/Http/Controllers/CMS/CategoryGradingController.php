@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\CMS;
-
-use App\CategoryCompetition;
+use App\GradeType;
 use App\Http\Controllers\Controller;
 use App\GradingCategory;
 use App\Traits\SystemSettingTrait;
@@ -49,7 +48,8 @@ class CategoryGradingController extends Controller
     public function create()
     {
         $title = $this->title;
-        return view('admin.master.category-grading.create', compact('title'));
+        $grade_types = GradeType::orderBy('id', 'asc')->get();
+        return view('admin.master.category-grading.create', compact('title','grade_types'));
     }
 
     /**
@@ -62,11 +62,12 @@ class CategoryGradingController extends Controller
     {
         $request->validate([
             'category_name'  =>  'required|max:191',
+            'grade_type_id'  =>  'required|max:191',
         ]);
 
         $category = new GradingCategory();
-
         $category->category_name = $request->category_name;
+        $category->grade_type_id = $request->grade_type_id;
         $category->description = $request->description;
         $category->save();
 
@@ -97,8 +98,8 @@ class CategoryGradingController extends Controller
     {
         $title = $this->title;
         $category = GradingCategory::findorfail($id);
-
-        return view('admin.master.category-grading.edit', compact('title', 'category'));
+        $grade_types = GradeType::orderBy('id', 'asc')->get();
+        return view('admin.master.category-grading.edit', compact('title', 'category','grade_types'));
     }
 
     /**
@@ -112,11 +113,12 @@ class CategoryGradingController extends Controller
     {
         $request->validate([
             'category_name'  =>  'required|max:191',
+            'grade_type_id'  =>  'required|max:191',
         ]);
 
         $category = GradingCategory::findorfail($id);
-
         $category->category_name = $request->category_name;
+        $category->grade_type_id = $request->grade_type_id;
         $category->description = $request->description;
         $category->save();
 
@@ -132,12 +134,7 @@ class CategoryGradingController extends Controller
     public function destroy(Request $request)
     {
         $ids = explode(',', $request->multiple_delete);
-        foreach($ids as $id){
-            $compCat = CategoryCompetition::where('category_id', $id)->first();
-            if($compCat){
-                $compCat->delete();
-            }
-        }
+
         foreach($ids as $id){
             $compCat = GradingCategory::where('id', $id)->first();
             $compCat->delete();

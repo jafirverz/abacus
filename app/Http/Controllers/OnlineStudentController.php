@@ -204,7 +204,7 @@ class OnlineStudentController extends Controller
         //$bg = 'http://abacus.verz1.com/storage/images/1702371744__657821a0f0a96__bg-certificate-2.jpg';
         $bg1 = 'http://abacus.verz1.com/storage/images/1702371744__657821a0f0a96__bg-certificate-2.jpg';
         $bg = '<div style="background: url('.$bg1.') repeat 0 0; border: #333 solid 1px; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 840px;">';
-        $date_of_issue_certificate=date('j F,Y',strtotime($courseSubmitted->date_of_issue_certificate));
+        $date_of_issue_certificate=date('j F,Y',strtotime($courseSubmitted->certificate_issued_on));
         $key = ['{{course_name}}','{{level_name}}','{{user_name}}','{{date_of_issue_certificate}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
         $value = [$courseSubmitted->course->title,'Preparatory Level', Auth::user()->name, $date_of_issue_certificate, $logo, $logoFoot, $bg];
         $newContents = str_replace($key, $value, $certificate->content);
