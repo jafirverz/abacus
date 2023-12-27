@@ -107,6 +107,7 @@ class CompetitionPaperController extends Controller
         $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->category_id = $request->category;
+        $competitionPaper->status = $request->status;
         $competitionPaper->save();
 
         // $competitionPaperId = $competitionPaper->id;
@@ -225,6 +226,7 @@ class CompetitionPaperController extends Controller
         
         $competitionPaper->type = $request->question_type ?? null;
         $competitionPaper->timer = $request->timer;
+        $competitionPaper->status = $request->status;
         $competitionPaper->save();
 
         // $categoryCompetition = PaperCategory::where('competition_paper_id', $id)->get();

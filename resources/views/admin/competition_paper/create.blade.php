@@ -204,16 +204,12 @@
 
 
 
-                                {{-- 
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" class="form-control">
                                         <option value="">-- Select --</option>
-                                        @if(getActiveStatus())
-                                        @foreach (getActiveStatus() as $key => $item)
-                                            <option value="{{ $key }}" @if(old('status')==$key) selected @elseif($key==1) selected @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
+                                        <option value="1">Live</option>
+                                        <option value="2">Draft</option>
                                     </select>
                                     @if ($errors->has('status'))
                                     <span class="text-danger d-block">
@@ -221,7 +217,6 @@
                                     </span>
                                     @endif
                                 </div>
-                                --}}
 
                             </div>
                             <div class="card-footer text-right">
