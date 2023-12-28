@@ -27,8 +27,83 @@
             <input type="hidden" name="allocation_id" value="{{ $test->allocation_id }}">
             <input type="hidden" name="test_id" value="{{ $test->id }}">
             <input type="hidden" name="question_type" value="{{ $test->paper->question_template_id }}">
-            @if($all_paper_detail)
-            @foreach($all_paper_detail as $paper_detail)
+            @if($all_paper_detail_v)
+            @foreach($all_paper_detail_v as $paper_detail)
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
+            <div class="box-1">
+                <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
+                <div class="xscrollbar">
+                    <table class="tb-2 tbtype-1">
+                        <thead>
+                            <tr>
+                              <th class="wcol-2"></th>
+                              @php
+
+                              $questionns = \App\TestPaperQuestionDetail::where('test_paper_question_id', $paper_detail->id)->get();
+
+                              $count = count($questionns);
+                              $i = 1;
+                              foreach($questionns as $question){
+                              @endphp
+                              <th class="text-center">{{ $i }}</th>
+                              @php
+                              $i++;
+                              }
+                              @endphp
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr>
+                              <td></td>
+                              @php
+                            foreach($questionns as $question){
+                            @endphp
+                              <td>
+                                @php
+                                $arrVal = explode(',', $question->input_1);
+                                foreach($arrVal as $val){
+                                @endphp
+                                <div class="row sp-col-5 inrow-1">
+                                  <div class="col-auto sp-col">$</div>
+                                  <div class="col sp-col">{{ $val }}</div>
+                                </div>
+                                @php
+                              }
+                                @endphp
+                              </td>
+                              @php
+                            }
+                            @endphp
+
+                            </tr>
+
+                        </tbody>
+                            <tfoot>
+                                <tr>
+                                <td class="lb">Answer</td>
+                                @php
+                                foreach($questionns as $question){
+                                    @endphp
+                                <td class="coltype">
+                                    <div class="row sp-col-5 inrow-1">
+                                    <div class="col-auto sp-col">$</div>
+                                    <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
+                                    </div>
+                                </td>
+                                @php
+                                }
+                                @endphp
+                                </tr>
+                          </tfoot>
+                    </table>
+                </div>
+            </div>
+            @endforeach
+            @endif
+            @if($all_paper_detail_h)
+            @foreach($all_paper_detail_h as $paper_detail)
             <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <div class="box-1">
                 <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
@@ -76,6 +151,8 @@
             </div>
             @endforeach
             @endif
+
+
             <div class="output-1">
                 <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
             </div>

@@ -54,6 +54,27 @@
                                     </span>
                                     @endif
                                 </div>
+                                @if(isset($question_template_id) && $question_template_id==7)
+                                    <div class="form-group">
+                                        <label for="template">Input Type</label>
+                                        <select disabled name="template" class="form-control">
+                                            <option value="">-- Select --</option>
+                                            @if (gradingExamLayout())
+                                            @foreach (gradingExamLayout() as $key=>$item)
+                                            <option value="{{ $key }}" @if(old('template', $list->template)==$key)
+                                                selected
+                                                @endif>{{ $item }}</option>
+                                            @endforeach
+                                            @endif
+                                        </select>
+                                        @if ($errors->has('template'))
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $errors->first('template') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                    <input type="hidden" name="template" value="{{ $list->template }}">
+                                @endif
                                 @if(isset($question_template_id) && $question_template_id==5)
                                     @php
                                     $detail=getAllQuestions($list->id);
@@ -67,9 +88,6 @@
                                                 <div class="col-md-3">
                                                     <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
-                                                </div>
                                                 <div class="col-md-2">
                                                     <select name="old_input_3[]" class="form-control">
                                                         <option @if($value->input_3=='add') selected @endif value="add" >Add</option>
@@ -78,6 +96,10 @@
                                                         <option @if($value->input_3=='divide') selected @endif value="divide">Divide</option>
                                                     </select>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
+                                                </div>
+
                                                 <div class="col-md-2">
                                                     <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
                                                 </div>
@@ -127,46 +149,82 @@
                                 <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                             </div>
                             @elseif(isset($question_template_id) && $question_template_id==7)
-                                @php
-                                $detail=getAllQuestions($list->id);
-                                if($detail)
-                                {
-                                foreach($detail as $key=>$value)
-                                {
-                                @endphp
-                                <div class="form-group">
-                                            <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <select name="old_input_3[]" class="form-control">
-                                                        <option @if($value->input_3=='add') selected @endif value="add" >Add</option>
-                                                        <option @if($value->input_3=='subtract') selected @endif value="subtract">Subtract </option>
-                                                        <option @if($value->input_3=='multiply') selected @endif value="multiply">Multiply</option>
-                                                        <option @if($value->input_3=='divide') selected @endif value="divide">Divide</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
-                                                </div>
+                             @if($list->template==1)
+                                        @php
+                                        $detail=getAllQuestions($list->id);
+                                        if($detail)
+                                        {
+                                        foreach($detail as $key=>$value)
+                                        {
+                                        @endphp
+                                        <div class="form-group">
+                                                    <div class="row" style="margin-bottom:30px;">
+                                                        <div class="col-md-6">
+                                                            <textarea class="" rows="5" cols="40" required value="" name="old_input_1[]" placeholder="Enter Column 1 data">{{ $value->input_1 }}</textarea>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                    </div>
                                             </div>
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                            </div>
-                                        </div>
-                                <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
-                            @php } } @endphp
-                            <div class="after-add-more"></div>
-                            <div class="input-group-btn">
-                                <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                            </div>
+                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php } } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+                             @else
+                                        @php
+                                        $detail=getAllQuestions($list->id);
+                                        if($detail)
+                                        {
+                                        foreach($detail as $key=>$value)
+                                        {
+                                        @endphp
+                                        <div class="form-group">
+                                                    <div class="row" style="margin-bottom:30px;">
+                                                        <div class="col-md-3">
+                                                            <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <select name="old_input_3[]" class="form-control">
+                                                                <option @if($value->input_3=='add') selected @endif value="add" >Add</option>
+                                                                <option @if($value->input_3=='subtract') selected @endif value="subtract">Subtract </option>
+                                                                <option @if($value->input_3=='multiply') selected @endif value="multiply">Multiply</option>
+                                                                <option @if($value->input_3=='divide') selected @endif value="divide">Divide</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                    </div>
+                                                </div>
+                                        <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                                    @php } } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+
+
+                                @endif
                             @elseif(isset($question_template_id) && $question_template_id==8)
                                 @php
                                 $detail=getAllQuestions($list->id);
@@ -308,9 +366,6 @@
                                                 <div class="col-md-3">
                                                     <input class="form-control" required value="{{ $value->input_1 }}" name="old_input_1[]" placeholder="Number 1" type="text">
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
-                                                </div>
                                                 <div class="col-md-2">
                                                     <select name="old_input_3[]" class="form-control">
                                                         <option value="add">Add</option>
@@ -319,6 +374,10 @@
                                                         <option value="divide">Divide</option>
                                                     </select>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->input_2 }}" name="old_input_2[]" placeholder="Number 2" type="text">
+                                                </div>
+
                                                 <div class="col-md-2">
                                                     <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
                                                 </div>
@@ -362,9 +421,6 @@
             <div class="col-md-3">
                 <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
             </div>
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-            </div>
             <div class="col-md-2">
                 <select name="input_3[]" class="form-control">
                     <option value="add">Add</option>
@@ -373,6 +429,10 @@
                     <option value="divide">Divide</option>
                 </select>
             </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+            </div>
+
             <div class="col-md-2">
                 <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
             </div>

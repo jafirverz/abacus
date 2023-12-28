@@ -2,7 +2,7 @@
 
 @section('content')
 @php
-  echo $question_template_id = getPaperDetail($paper_id)->question_template_id;
+   $question_template_id = getPaperDetail($paper_id)->question_template_id;
 @endphp
 <!-- Main Content -->
 <div class="main-content">
@@ -53,14 +53,30 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="template">Input Type</label>
+                                    <select name="template" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                        <option value="">-- Select --</option>
+                                        @if (gradingExamLayout())
+                                        @foreach (gradingExamLayout() as $key=>$item)
+                                        <option @if(old('template')==$key) selected @elseif(isset($_GET['template']) && $key==$_GET['template']) selected @endif value="?template={{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('template'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('template') }}</strong>
+                                    </span>
+                                    @endif
+                                    @if(isset($question_template_id) && $question_template_id==7)
+                                    <input type="hidden" name="template" value=" @if(isset($_GET['template'])) {{ $_GET['template'] }} @endif">
+                                    @endif
+                                </div>
                                 @if(isset($question_template_id) && $question_template_id==5)
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
                                     <div class="col-md-3">
                                         <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <select name="input_3[]" class="form-control">
@@ -70,6 +86,10 @@
                                             <option value="divide">Divide</option>
                                         </select>
                                     </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                    </div>
+
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
                                     </div>
@@ -155,15 +175,27 @@
                             <div class="input-group-btn">
                                 <button class="btn btn-success add-more4" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                             </div>
-                            @elseif(isset($question_template_id) && ($question_template_id==6 || $question_template_id==7 || $question_template_id==8 || $question_template_id==9))
-
+                            @elseif(isset($question_template_id) && ($question_template_id==7))
+                            @if(isset($_GET['template']) && $_GET['template']==1)
+                            <div class="row after-add-more" style="margin-bottom:30px;">
+                                <div class="col-md-6">
+                                    <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                </div>
+                            </div>
+                            <div class="input-group-btn">
+                                <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
+                            @else
                                 <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                 <div class="row after-add-more" style="margin-bottom:30px;">
                                     <div class="col-md-3">
                                         <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <select name="input_3[]" class="form-control">
@@ -173,6 +205,10 @@
                                             <option value="divide">Divide</option>
                                         </select>
                                     </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                    </div>
+
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
                                     </div>
@@ -183,6 +219,38 @@
                                 <div class="input-group-btn">
                                     <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                 </div>
+                            @endif
+
+                                @elseif(isset($question_template_id) && ($question_template_id==6 ||  $question_template_id==9))
+
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                                <div class="row after-add-more" style="margin-bottom:30px;">
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="input_3[]" class="form-control">
+                                            <option value="add">Add</option>
+                                            <option value="subtract">Subtract </option>
+                                            <option value="multiply">Multiply</option>
+                                            <option value="divide">Divide</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                    </div>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+
                         @endif
                             </div>
                             <input type="hidden" name="paper_id" value="<?=$paper_id?>">
@@ -208,9 +276,6 @@
             <div class="col-md-3">
                 <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
             </div>
-            <div class="col-md-3">
-                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
-            </div>
             <div class="col-md-2">
                 <select name="input_3[]" class="form-control">
                     <option value="add">Add</option>
@@ -219,6 +284,10 @@
                     <option value="divide">Divide</option>
                 </select>
             </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+            </div>
+
             <div class="col-md-2">
                 <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
             </div>

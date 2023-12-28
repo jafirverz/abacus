@@ -49,7 +49,7 @@
                                     @endif
                                 </div>
                                 @php
-                                  $j_students=json_decode($test->student_id);
+                                 // dd($allocationInsList);
                                 @endphp
 
                                 <div class="form-group">

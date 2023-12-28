@@ -189,7 +189,7 @@ class GradingResultController extends Controller
     public function assignGradingEdit($id = null){
         $title = 'Grading Assign';
         $competition = GradingExam::where('id', $id)->first();
-        $competitionCategory = GradingCategory::get();
+        $competitionCategory = GradingCategory::join('category_gradings','grading_categories.id','category_gradings.category_id')->where('category_gradings.competition_id', $id)->get();
         $userType = array(1,2,3,4);
         $compStudents = GradingStudent::where('grading_exam_id', $id)->pluck('user_id')->toArray();
         $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->whereNotIn('id', $compStudents)->get();
