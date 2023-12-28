@@ -66,14 +66,16 @@ class TestPaperQuestionController extends Controller
     {
         $request->validate([
             'question'  =>  'required',
+            'template'  =>  'required',
 
         ]);
 
         $testPaperDetail = new TestPaperDetail();
         $testPaperDetail->question = $request->question ?? NULL;
         $testPaperDetail->paper_id  = $request->paper_id;
+        $testPaperDetail->template  = $request->template;
         $testPaperDetail->save();
-        if($request->type==5 || $request->type==7  || $request->type==6)
+        if($request->type==5  || $request->type==6)
         {
             for($k=0;$k<count($request->input_1);$k++)
             {
@@ -85,6 +87,36 @@ class TestPaperQuestionController extends Controller
                 $testPaperQuestionDetail->marks   = $request->marks[$k];
                 $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
                 $testPaperQuestionDetail->save();
+            }
+        }
+        elseif($request->type==7)
+        {
+            if($request->template==1)
+            {
+                for($k=0;$k<count($request->input_1);$k++)
+                {
+                    $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                    $testPaperQuestionDetail->input_1   = $request->input_1[$k];
+                    $testPaperQuestionDetail->answer   = $request->answer[$k];
+                    $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
+                    $testPaperQuestionDetail->marks   = $request->marks[$k];
+                    $testPaperQuestionDetail->save();
+                }
+            }
+            else
+            {
+                //dd($request);
+                for($k=0;$k<count($request->input_1);$k++)
+                {
+                    $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                    $testPaperQuestionDetail->input_1   = $request->input_1[$k];
+                    $testPaperQuestionDetail->input_2   = $request->input_2[$k];
+                    $testPaperQuestionDetail->input_3   = $request->input_3[$k];
+                    $testPaperQuestionDetail->answer   = $request->answer[$k];
+                    $testPaperQuestionDetail->marks   = $request->marks[$k];
+                    $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
+                    $testPaperQuestionDetail->save();
+                }
             }
         }
         elseif($request->type==4)
@@ -225,7 +257,7 @@ class TestPaperQuestionController extends Controller
         $testPaperDetail->question = $request->question ?? NULL;
         $testPaperDetail->save();
 
-        if($request->type==5 || $request->type==7  || $request->type==6)
+        if($request->type==5 || $request->type==6)
         {
 
                 if(isset($request->listing_detail_id))
@@ -281,6 +313,111 @@ class TestPaperQuestionController extends Controller
 
 
 
+
+        }
+        elseif($request->type==7)
+        {
+            if($request->template==1)
+            {
+                if(isset($request->listing_detail_id))
+                {
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
+                                    $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
+                                    $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
+
+                                    $testPaperQuestionDetail->save();
+                                }
+                                else
+                                {
+                                    TestPaperQuestionDetail::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+                }
+
+                if($request->input_1)
+                 {
+
+                    for($z=0;$z<count($request->input_1);$z++)
+                    {
+                        if(isset($request->input_1[$z]))
+                        {
+                            $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                            $testPaperQuestionDetail->input_1   = $request->input_1[$z];
+                            $testPaperQuestionDetail->answer   = $request->answer[$z];
+                            $testPaperQuestionDetail->marks   = $request->marks[$z];
+                            $testPaperQuestionDetail->test_paper_question_id    = $id;
+                            $testPaperQuestionDetail->save();
+                        }
+
+                    }
+
+                 }
+            }
+            else
+            {
+                if(isset($request->listing_detail_id))
+                {
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
+                                    $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
+                                    $testPaperQuestionDetail->input_2   = $request->old_input_2[$m];
+                                    $testPaperQuestionDetail->input_3   = $request->old_input_3[$m];
+                                    $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
+                                    $testPaperQuestionDetail->save();
+                                }
+                                else
+                                {
+                                    TestPaperQuestionDetail::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+                }
+
+                if($request->input_1)
+                {
+
+                    for($z=0;$z<count($request->input_1);$z++)
+                    {
+                        if(isset($request->input_1[$z]))
+                        {
+                            $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                            $testPaperQuestionDetail->input_1   = $request->input_1[$z];
+                            $testPaperQuestionDetail->input_2   = $request->input_2[$z];
+                            $testPaperQuestionDetail->input_3   = $request->input_3[$z];
+                            $testPaperQuestionDetail->answer   = $request->answer[$z];
+                            $testPaperQuestionDetail->marks   = $request->marks[$z];
+                            $testPaperQuestionDetail->test_paper_question_id    = $id;
+                            $testPaperQuestionDetail->save();
+                        }
+
+                    }
+
+                }
+            }
 
         }
         elseif($request->type==2 || $request->type==3)

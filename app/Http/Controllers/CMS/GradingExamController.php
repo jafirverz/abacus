@@ -124,10 +124,10 @@ class GradingExamController extends Controller
         }
         $competition->title = $request->title;
         $competition->exam_venue = $request->exam_venue;
-        if(isset($request->grade))
-        {
-            $competition->grade = json_encode($request->grade);
-        }
+        // if(isset($request->grade))
+        // {
+        //     $competition->grade = json_encode($request->grade);
+        // }
 
         $competition->date_of_competition = $request->date_of_competition;
         $competition->start_time_of_competition = $request->start_time_of_competition;
@@ -251,10 +251,10 @@ class GradingExamController extends Controller
         }
         $competition->title = $request->title;
         $competition->exam_venue = $request->exam_venue;
-        if(isset($request->grade))
-        {
-            $competition->grade = json_encode($request->grade);
-        }
+        // if(isset($request->grade))
+        // {
+        //     $competition->grade = json_encode($request->grade);
+        // }
         $competition->date_of_competition = $request->date_of_competition;
         $competition->start_time_of_competition = $request->start_time_of_competition;
         $competition->end_time_of_competition = $request->end_time_of_competition;

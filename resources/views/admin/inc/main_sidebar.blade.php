@@ -87,14 +87,9 @@
         [
             'menu_header'   =>  __('constant.GRADE'),
             'main_menu' =>  [
+
                 [
                     'title' =>  __('constant.GRADE'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/grade',
-                    'idtag'  => 'grade',
-                ],
-                [
-                    'title' =>  __('constant.CATEGORY_GRADING'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/category-grading',
                 ],

@@ -18,7 +18,7 @@ class CategoryGradingController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->title = __('constant.CATEGORY_GRADING');
+        $this->title = __('constant.GRADE');
         $this->module = 'CATEGORY_GRADING';
         $this->middleware('grant.permission:'.$this->module);
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');

@@ -264,10 +264,10 @@ class ProfileController extends Controller
         {
             $allocate_user_array[]=$value['student_id'];
         }
-        $students = User::whereIn('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
+        $students = User::whereIn('user_type_id',[1,2])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 
         $test = TestManagement::findorfail($test_id);
-        $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.type',1)->paginate($this->pagination);
+        $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.assigned_by', $this->user->id)->where('allocations.type',1)->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
@@ -296,7 +296,7 @@ class ProfileController extends Controller
         $students = User::whereIn('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 		$survey = Survey::findorfail($survey_id);
 		$page = get_page_by_slug($slug);
-        $list = Allocation::where('allocations.assigned_id',$survey_id)->where('allocations.type',2)->paginate($this->pagination);
+        $list = Allocation::where('allocations.assigned_id',$survey_id)->where('allocations.assigned_by', $this->user->id)->where('allocations.type',2)->paginate($this->pagination);
 		if (!$page) {
 			return abort(404);
 		}
@@ -349,7 +349,9 @@ class ProfileController extends Controller
             return view('account.testAbacus', compact("test","all_paper_detail"));
         }
         elseif($qId == 7){
-            return view('account.testMix', compact("test","all_paper_detail"));
+            $all_paper_detail_v=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',1)->get();
+            $all_paper_detail_h=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',2)->get();
+            return view('account.testMix', compact("test","all_paper_detail_h","all_paper_detail_v"));
         }
         elseif($qId == 4){
             return view('account.testAddSubQuestion', compact("test","all_paper_detail"));
