@@ -118,6 +118,7 @@
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
       }
   }, 1000);
 </script>
@@ -150,7 +151,7 @@
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
-          $('form#submitform').submit();
+          //$('form#submitform').submit();
       }
   }, 1000);
 </script>

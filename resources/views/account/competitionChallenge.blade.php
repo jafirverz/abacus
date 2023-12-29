@@ -38,7 +38,7 @@
         <!-- <div class="timer-wrap">
           <div class="timer"><i class="icon-clock"></i> <strong>Timer: HH: MM: SS</strong></div>
         </div> -->
-        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
+        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}" id="submitform">
           @csrf
           <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
           <input type="hidden" name="categoryId" value="{{ $compPaper->category_id }}">
@@ -134,6 +134,7 @@
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
       }
   }, 1000);
 </script>
@@ -166,7 +167,7 @@
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
-          $('form#submitform').submit();
+          //$('form#submitform').submit();
       }
   }, 1000);
 </script>

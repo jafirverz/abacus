@@ -22,9 +22,9 @@
         <div class="box-1">
           {{ $compPaper->description ?? '' }}
         </div>
-        <div class="shuffle-wrap">
+        <!-- <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
-        </div>
+        </div> -->
         @php 
         $datetime = new DateTime(date("Y-m-d H:i:s"));
         //echo $datetime->format('Y-m-d H:i:s') . "\n";
@@ -44,7 +44,7 @@
             <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
           </div>
         @endif
-        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}">
+        <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}" id="submitform">
           @csrf
           <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
           <input type="hidden" name="categoryId" value="{{ $compPaper->category_id }}">
@@ -174,6 +174,7 @@ $(document).ready(function () {
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
       }
   }, 1000);
 });
@@ -208,7 +209,7 @@ $(document).ready(function () {
       if (diff < 0) {
           clearInterval(interval);
           document.getElementById("counter").innerHTML = "EXPIRED";
-          $('form#submitform').submit();
+          //$('form#submitform').submit();
       }
   }, 1000);
 });
