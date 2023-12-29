@@ -176,7 +176,7 @@
                                                                 <div class="checkbxtype">
                                                                     <input type="checkbox" id="practice-7">
                                                                     <label><span>{{ $paper->title }}</span>
-                                                                        <strong>${{ $paper->price ?? 0 }}</strong>
+                                                                        <!-- <strong>${{ $paper->price ?? 0 }}</strong> -->
                                                                     </label>
                                                                 </div>
                                                                 <a class="lnk btn-2" href="{{ url('competition-paper/'.$paper->id) }}" >View</a>
