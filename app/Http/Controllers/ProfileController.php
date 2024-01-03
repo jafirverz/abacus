@@ -348,6 +348,10 @@ class ProfileController extends Controller
         elseif($qId == 8){
             return view('account.testAbacus', compact("test","all_paper_detail"));
         }
+        elseif($qId == 11){
+            $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->first();
+            return view('account.testOther', compact("test","all_paper_detail"));
+        }
         elseif($qId == 7){
             $all_paper_detail_v=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',1)->get();
             $all_paper_detail_h=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',2)->get();
@@ -373,8 +377,8 @@ class ProfileController extends Controller
         $test_id = $request->test_id;
         $questionTypeId = $request->question_type;
         $userId = Auth::user()->id;
-        $questTem = array(1,2,3,4,5,6,7,8);
-        $resultpage = array(1,2,3,4,5,6,7,8);
+        $questTem = array(1,2,3,4,5,6,7,8,11);
+        $resultpage = array(1,2,3,4,5,6,7,8,11);
 
         foreach($request->test_paper_question_id as $test_paper_question_id)
         {

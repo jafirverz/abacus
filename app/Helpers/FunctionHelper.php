@@ -1159,15 +1159,15 @@ if (!function_exists('getPageList')) {
         // if($user_id == 15){
         //     dd($comptitoinPaper);
         // }
-        
-        if($comptitoinPaper){   
-            $papername = array();         
+
+        if($comptitoinPaper){
+            $papername = array();
             foreach($comptitoinPaper as $paper){
                 $compPaper = CompetitionPaper::where('id', $paper->competition_paper_id)->first();
                 $userMarks = $paper->user_marks;
                 $paperwithmarks = $compPaper->title ."-> Marks: " .$userMarks;
                 array_push($papername, $paperwithmarks);
-                
+
             }
             return $papername;
         }else{
@@ -1177,10 +1177,10 @@ if (!function_exists('getPageList')) {
     }
     function getTotalPaperMarks($competition_controller_id, $category_id, $user_id){
         $comptitoinPaper = CompetitionPaperSubmitted::where('competition_id', $competition_controller_id)->where('category_id', $category_id)->where('paper_type', 'actual')->where('user_id', $user_id)->get();
-       if($comptitoinPaper){  
-            $totalMarks = 0; 
+       if($comptitoinPaper){
+            $totalMarks = 0;
             foreach($comptitoinPaper as $paper){
-                $totalMarks+= $paper->user_marks;                
+                $totalMarks+= $paper->user_marks;
             }
             return $totalMarks;
         }else{

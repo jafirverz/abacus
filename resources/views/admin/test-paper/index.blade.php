@@ -93,7 +93,7 @@
                                             </td>
                                             <td>{{ $item->title }}</td>
                                             <td>{{ getPaperType($item->paper_type) ?? '' }}</td>
-                                            <td>{{ $item->template->title }}</td>
+                                            <td>{{ $item->template->title ?? '' }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>

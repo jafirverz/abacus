@@ -57,6 +57,11 @@
                                                 selected
                                                 @endif>{{ $item->title }}</option>
                                             @endforeach
+                                            @if(isset($_GET['paper-type']) && $_GET['paper-type']==1)
+                                                <option  @if(old('question_template_id')==11)
+                                                    selected
+                                                    @endif value="11">Other</option>
+                                            @endif
                                         @endif
                                     </select>
                                     @if ($errors->has('question_template_id'))

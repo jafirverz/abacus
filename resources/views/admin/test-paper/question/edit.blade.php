@@ -45,6 +45,11 @@
                                                 selected
                                                 @endif>{{ $item->title }}</option>
                                             @endforeach
+                                            @if(getPaperDetail($paper_id)->paper_type==1)
+                                            <option  @if($question_template_id==11)
+                                                selected
+                                                @endif value="11">Other</option>
+                                            @endif
                                         @endif
                                     </select>
                                     @if ($errors->has('question_template_id'))
@@ -54,6 +59,18 @@
                                     </span>
                                     @endif
                                 </div>
+                                @if(getPaperDetail($paper_id)->paper_type==1 && $question_template_id==11)
+                                <div class="form-group">
+                                    <label for="write_to">Write 1 to </label>
+                                    <input type="text" name="write_to" class="form-control" id=""
+                                        value="{{ old('write_to', $list->write_to) }}">
+                                    @if ($errors->has('write_to'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('write_to') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                @endif
                                 @if(isset($question_template_id) && $question_template_id==7)
                                     <div class="form-group">
                                         <label for="template">Input Type</label>
@@ -319,7 +336,70 @@
                             @php } } @endphp
                             <div class="after-add-more"></div>
                             <div class="input-group-btn">
-                                <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
+                            @elseif(isset($question_template_id) && $question_template_id==11)
+                            @php
+                                $detail=\App\TestPaperQuestionDetail::where('test_paper_question_id',$list->id)->where('input_3','text')->get();
+                                if($detail)
+                                {
+                                foreach($detail as $key=>$value)
+                                {
+                                @endphp
+                                <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-6">
+                                                    <textarea class="" rows="5" cols="40" required value="" name="old_input_1[]" placeholder="Enter Column 1 data">{{ $value->input_1 }}</textarea>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->answer }}" name="old_answer[]" placeholder="= Answer" type="text">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input class="form-control" required value="{{ $value->marks }}" name="old_marks[]" placeholder="= Marks" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div>
+                                    </div>
+                                <input type="hidden" name="listing_detail_id[]" value="{{ $value->id }}">
+                            @php } } @endphp
+                            <div class="after-add-more-oth-text"></div>
+                            <div class="input-group-btn">
+                                <button class="btn btn-success add-more33" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                            </div>
+
+                                @php
+                                $o_detail=\App\TestPaperQuestionDetail::where('test_paper_question_id',$list->id)->where('input_3','file')->get();
+                                if($o_detail)
+                                {
+                                foreach($o_detail as $key=>$value)
+                                {
+                                @endphp
+
+                                <div class="form-group">
+                                                <div class="row" style="margin-bottom:30px;">
+                                                    <div class="col-md-6">
+                                                        <a href="{{ url('/') }}/{{ $value->input_1 }}" target="_blank"> {{ $value->input_1 }} </a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control"  value="{{ $value->input_1 }}" name="old_o_input_1[]" type="hidden">
+                                                        <input class="form-control" required value="{{ $value->answer }}" name="old_o_answer[]" placeholder="= Answer" type="text">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input class="form-control" required value="{{ $value->marks }}" name="old_o_marks[]" placeholder="= Marks" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-danger remove_o" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                <input type="hidden" name="o_listing_detail_id[]" value="{{ $value->id }}">
+                            @php } } @endphp
+                            <div class="after-add-more-oth-file"></div>
+                            <div class="input-group-btn">
+                                <button class="btn btn-success add-more22" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                             </div>
                             @elseif(isset($question_template_id) && $question_template_id==1)
                             @php
@@ -445,7 +525,25 @@
       </div>
     </div>
 </div>
+<div class="copy22" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+        <div class="col-md-6">
+            <input class="form-control" required name="o_input_1[]"  type="file">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="o_answer[]" placeholder="Answer" type="text">
+        </div>
+        <div class="col-md-3">
+            <input class="form-control" required value="" name="o_marks[]" placeholder="Marks" type="text">
+        </div>
 
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
 <div class="copy2" style="display:none;">
     <div class="form-group">
         <div class="row">
@@ -465,7 +563,25 @@
       </div>
     </div>
 </div>
+<div class="copy33" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            </div>
+            <div class="col-md-3">
+                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+            </div>
 
+        </div>
+        <div class="input-group-btn">
+            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+    </div>
+</div>
 <div class="copy3" style="display:none;">
     <div class="form-group">
         <div class="row">
@@ -554,10 +670,19 @@
           var html = $(".copy2").html();
           $(".after-add-more").after(html);
           });
+          $(".add-more22").click(function(){
+          var html = $(".copy22").html();
+          $(".after-add-more-oth-file").after(html);
+          });
 
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
             $(".after-add-more").after(html);
+        });
+
+        $(".add-more33").click(function(){
+            var html = $(".copy33").html();
+            $(".after-add-more-oth-text").after(html);
         });
 
         $(".add-more4").click(function(){
@@ -571,6 +696,10 @@
         });
 
           $("body").on("click",".remove",function(){
+              $(this).parents(".form-group").remove();
+          });
+
+          $("body").on("click",".remove_o",function(){
               $(this).parents(".form-group").remove();
           });
 
