@@ -38,6 +38,7 @@ use App\Banner;
 use App\CompetitionCategory;
 use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
+use App\LearningLocation;
 
 if (!function_exists('getPageList')) {
 
@@ -1196,5 +1197,16 @@ if (!function_exists('getPageList')) {
             $prize = $comPrize->prize;
         }
         return $prize;
+    }
+
+    function getLearningLocation($id)
+    {
+        if ($id) {
+            $result = LearningLocation::where('id', $id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
     }
 }

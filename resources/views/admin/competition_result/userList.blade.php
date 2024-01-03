@@ -77,9 +77,12 @@
                                             </th>
                                             <th>Action</th>
                                             <th>User Name</th>
+                                            <th>DOB</th>
                                             <th>Category</th>
                                             <th>Total Marks</th>
-                                            <th>Created At</th>
+                                            <th>Prize</th>
+                                            <th>Instructor</th>
+                                            <th>Learning Location</th>
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
@@ -101,10 +104,12 @@
                                                 data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
                                             <td>{{ $item->user->name }}</td>
+                                            <td>{{ $item->user->dob }}</td>
                                             <td>{{ $item->category->category_name }}</td>
                                             <td>{{ $item->total_marks }}</td>
-                                           
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
+                                            <td>{{ $item->prize }}</td>
+                                            <td>{{ getInstructor($item->user->instructor_id)->name }}</td>
+                                            <td>{{ getLearningLocation($item->user->learning_locations)->title ?? '' }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
                                         @endforeach
