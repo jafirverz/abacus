@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('competition.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('results.competition', $competitionPaperSubmitted->competition_id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Edit', route('bank.edit', $bank->id))])--}}
@@ -131,7 +131,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="title">Certificate</label>
                                     <select class="form-control" name="certificate">
                                         <option value="">Please select</option>
@@ -144,9 +144,9 @@
                                         <strong>{{ $errors->first('certificate') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
                      
-
+                                <input type="hidden" name="compeitionId" value="{{ $competitionPaperSubmitted->competition_id }}">
                                 
 
                             </div>

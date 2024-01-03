@@ -63,6 +63,7 @@ class CompetitionResultController extends Controller
     }
 
     public function update(Request $request, $id){
+        
         $result = $request->result;
         $prize = $request->prize;
         $title = $this->title;
@@ -80,8 +81,12 @@ class CompetitionResultController extends Controller
         // }else{
         //     dd("not found");
         // }
-        $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
-        return view('admin.competition_result.index', compact('title', 'competition'));
+        // $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
+        $userList = CompetitionStudentResult::where('competition_id', $request->compeitionId)->paginate($this->pagination);
+        $competitionId = $request->compeitionId;
+        $competition = Competition::where('id', $request->compeitionId)->first();
+        return redirect()->route('results.competition', $request->compeitionId)->with('success', __('constant.UPDATED', ['module' => $this->title]));
+        //return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
 
     }
 
