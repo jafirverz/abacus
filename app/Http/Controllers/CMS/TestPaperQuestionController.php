@@ -66,12 +66,11 @@ class TestPaperQuestionController extends Controller
     {
         $request->validate([
             'question'  =>  'required',
-            'template'  =>  'required',
-
         ]);
 
         $testPaperDetail = new TestPaperDetail();
         $testPaperDetail->question = $request->question ?? NULL;
+        $testPaperDetail->write_to = $request->write_to ?? NULL;
         $testPaperDetail->paper_id  = $request->paper_id;
         $testPaperDetail->template  = $request->template;
         $testPaperDetail->save();
@@ -144,6 +143,46 @@ class TestPaperQuestionController extends Controller
                 $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
                 $testPaperQuestionDetail->marks   = $request->marks[$k];
                 $testPaperQuestionDetail->save();
+            }
+
+
+        }
+
+        elseif($request->type==11)
+        {
+            for($k=0;$k<count($request->input_1);$k++)
+            {
+                $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                $testPaperQuestionDetail->input_1   = $request->input_1[$k];
+                $testPaperQuestionDetail->answer   = $request->answer[$k];
+                $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
+                $testPaperQuestionDetail->marks   = $request->marks[$k];
+                $testPaperQuestionDetail->input_3 = 'text';
+                $testPaperQuestionDetail->save();
+            }
+
+            if ($request->hasfile('o_input_1'))
+            {
+                $i=0;
+                foreach ($request->file('o_input_1') as $file) {
+
+                    if(isset($request->o_answer[$i]))
+                    {
+                    $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                    $testPaperQuestionDetail->input_1 = uploadPicture($file, 'upload-file');
+                    $testPaperQuestionDetail->test_paper_question_id   = $testPaperDetail->id;
+                    $testPaperQuestionDetail->answer   = $request->o_answer[$i];
+                    $testPaperQuestionDetail->marks   = $request->o_marks[$i];
+                    $testPaperQuestionDetail->input_3 = 'file';
+                    $testPaperQuestionDetail->save();
+
+                    }
+
+                    $i++;
+
+
+                }
+
             }
 
 
@@ -255,6 +294,7 @@ class TestPaperQuestionController extends Controller
 
         $testPaperDetail = TestPaperDetail::findorfail($id);
         $testPaperDetail->question = $request->question ?? NULL;
+        $testPaperDetail->write_to = $request->write_to ?? NULL;
         $testPaperDetail->save();
 
         if($request->type==5 || $request->type==6)
@@ -471,6 +511,102 @@ class TestPaperQuestionController extends Controller
                      }
 
 
+
+
+        }
+        elseif($request->type==11)
+        {
+
+            if(isset($request->listing_detail_id))
+                {
+                    for($m=0;$m<count($request->listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->listing_detail_id[$m]) && $request->listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_input_1[$m]) && $request->old_input_1[$m]!='')
+                                {
+                                    $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
+                                    $testPaperQuestionDetail->input_1   = $request->old_input_1[$m];
+                                    $testPaperQuestionDetail->answer   = $request->old_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_marks[$m];
+
+                                    $testPaperQuestionDetail->save();
+                                }
+                                else
+                                {
+                                    TestPaperQuestionDetail::where('id',$request->listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+                }
+                if(isset($request->input_1))
+                {
+                    for($k=0;$k<count($request->input_1);$k++)
+                    {
+                        $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                        $testPaperQuestionDetail->input_1   = $request->input_1[$k];
+                        $testPaperQuestionDetail->answer   = $request->answer[$k];
+                        $testPaperQuestionDetail->test_paper_question_id    = $testPaperDetail->id;
+                        $testPaperQuestionDetail->input_3 = 'text';
+                        $testPaperQuestionDetail->marks   = $request->marks[$k];
+                        $testPaperQuestionDetail->save();
+                    }
+                }
+
+
+            if(isset($request->o_listing_detail_id))
+                {
+                    for($m=0;$m<count($request->o_listing_detail_id);$m++)
+                    {
+
+
+                            if(isset($request->o_listing_detail_id[$m]) && $request->o_listing_detail_id[$m]!='')
+                            {
+                                if(isset($request->old_o_input_1[$m]) && $request->old_o_input_1[$m]!='')
+                                {
+                                    $testPaperQuestionDetail = TestPaperQuestionDetail::findorfail($request->listing_detail_id[$m]);
+                                    $testPaperQuestionDetail->answer   = $request->old_o_answer[$m];
+                                    $testPaperQuestionDetail->marks   = $request->old_o_marks[$m];
+                                    $testPaperQuestionDetail->save();
+                                }
+                                else
+                                {
+                                    TestPaperQuestionDetail::where('id',$request->o_listing_detail_id[$m])->delete();
+                                }
+
+
+                            }
+
+                    }
+                }
+            if ($request->hasfile('o_input_1'))
+            {
+                $i=0;
+                foreach ($request->file('o_input_1') as $file) {
+
+                    if(isset($request->o_answer[$i]))
+                    {
+                    $testPaperQuestionDetail = new TestPaperQuestionDetail();
+                    $testPaperQuestionDetail->input_1 = uploadPicture($file, 'upload-file');
+                    $testPaperQuestionDetail->test_paper_question_id   = $testPaperDetail->id;
+                    $testPaperQuestionDetail->answer   = $request->o_answer[$i];
+                    $testPaperQuestionDetail->marks   = $request->o_marks[$i];
+                    $testPaperQuestionDetail->input_3 = 'file';
+                    $testPaperQuestionDetail->save();
+
+                    }
+
+                    $i++;
+
+
+                }
+
+            }
 
 
         }
