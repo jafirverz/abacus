@@ -8,7 +8,7 @@
             <div class="section-header-back">
                 <a href="{{ route('results.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h1>{{ $title ?? '-' }}</h1>
+            <h1>{{ $title ?? '-' }}, {{ $competition->title }}</h1>
             
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
@@ -35,14 +35,13 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <a href="{{ route('results.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
+                            <a href="{{ route('results-user.destroy', ['id'=>$competitionId]) }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                                 data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                                     class="badge badge-transparent">0</span></a>
-                            <form id="destroy" action="{{ route('results.destroy', 'competition') }}" method="post">
+                            <form id="destroy" action="{{ route('results-user.destroy', ['id'=>$competitionId]) }}" method="post">
                                 @csrf
-                                @method('DELETE')
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
@@ -67,7 +66,7 @@
                                 <table class="table table-md">
                                     <thead>
                                         <tr>
-                                            <!-- <th>
+                                            <th>
                                                 <div class="custom-checkbox custom-control">
                                                     <input type="checkbox" data-checkboxes="mygroup"
                                                         data-checkbox-role="dad" class="custom-control-input"
@@ -75,7 +74,7 @@
                                                     <label for="checkbox-all"
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
-                                            </th> -->
+                                            </th>
                                             <th>Action</th>
                                             <th>User Name</th>
                                             <th>Category</th>
@@ -88,6 +87,13 @@
                                         @if($userList->count())
                                         @foreach ($userList as $key => $item)
                                         <tr>
+                                            <td scope="row">
+                                                <div class="custom-checkbox custom-control"> <input type="checkbox"
+                                                        data-checkboxes="mygroup" class="custom-control-input"
+                                                        id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label
+                                                        for="checkbox-{{ ($key+1) }}"
+                                                        class="custom-control-label">&nbsp;</label></div>
+                                            </td>
                                             
                                             <td>
                                               <a href="{{ route('results-user.edit', $item->id) }}"

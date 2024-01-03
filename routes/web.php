@@ -412,6 +412,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('results', 'CMS\CompetitionResultController');
     Route::get('results/competition/{id?}', 'CMS\CompetitionResultController@studentList')->name('results.competition');
     Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
+    Route::post('results/competition/{id?}', 'CMS\CompetitionResultController@deleteUser')->name('results-user.destroy');
+    
 
     Route::get('results/user/search', 'CMS\CompetitionResultController@userresultsearch')->name('userresults.search');
 

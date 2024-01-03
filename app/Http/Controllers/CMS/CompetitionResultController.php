@@ -119,4 +119,14 @@ class CompetitionResultController extends Controller
         $competition = Competition::where('id', $request->competitionId)->first();
         return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
     }
+
+    public function deleteUser(Request $request){
+        //dd($request->multiple_delete);
+        $ids = explode(',',$request->multiple_delete);
+        $competitionStudentResult = CompetitionStudentResult::whereIn('id', $ids)->get();
+        foreach($competitionStudentResult as $user){
+            $user->delete();
+        }
+        return redirect()->back()->with('success', 'Deleted Successfully');
+    }
 }
