@@ -14,7 +14,7 @@
         
         <div class="chooselist-2">
           <div class="radiotype">
-            <input  type="radio" required name="surveyfor" value="children" id="children" />
+            <input  type="radio" required name="surveyfor" value="children" id="children" checked />
             <label for="children">Children Course</label>
           </div>
           <div class="radiotype">
@@ -152,7 +152,7 @@
                     @foreach($optionChoices as $choices)
                     <td>	
                       <div class="radiotype">
-                          <input name="{{ strtolower($quesChoices->title) }}" required type="radio" id="ele-1"  value="{{ $choices->title }}" />
+                          <input name="{{ strtolower($quesChoices->title) }}" required type="radio" id="ele-{{ rand() }}"  value="{{ $choices->title }}-{{ rand() }}" />
                           <label for="ele-1">{{ $choices->title }}</label>
                         </div>
                     </td>
