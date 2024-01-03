@@ -19,9 +19,9 @@
         <h1 class="title-3">Result</h1>
 
         <div class="box-msg-2 mt-50">
-          <h4>Thank you for your submission.</h4>
+          <h2>Thank you for your submission.</h2>
           @if($paperType == 'practice')
-          <h2>Here is your marks {{ $userMarks }} out of {{ $totalMarks }}.</h2>
+          <h2>Your result: {{ $userMarks }}</h2>
           @endif
         </div>
 
