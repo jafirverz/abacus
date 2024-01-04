@@ -213,7 +213,7 @@ class CustomerAccountController extends Controller
                     $data['subject'] = $email_template->subject;
 
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructor->name];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -239,7 +239,7 @@ class CustomerAccountController extends Controller
                 $data['subject'] = $email_template->subject;
 
                 $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $instructor->name];
+                $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructor->name];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 
@@ -397,8 +397,10 @@ class CustomerAccountController extends Controller
                             $newContents = str_replace($key, $value, $email_template->content);
 
                             $data['contents'] = $newContents;
+                            //dd($data);
                             try {
                                 $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+                                //$mail = Mail::to('jafir.verz@gmail.com')->send(new EmailNotification($data));
                             } catch (Exception $exception) {
                                 dd($exception);
                             }
@@ -507,7 +509,6 @@ class CustomerAccountController extends Controller
 
     public function search(Request $request)
     {
-        DB::enableQueryLog();
         $search_term = $request->search;
         $title = $this->title;
         if($this->user->admin_role==2)
@@ -530,7 +531,7 @@ class CustomerAccountController extends Controller
         if ($search_term) {
             $customer->appends('search', $search_term);
         }
-        //dd(DB::getQueryLog());
+        //dd($customer);
         return view('admin.account.customer.index', compact('title', 'customer','country','total_count'));
     }
 
