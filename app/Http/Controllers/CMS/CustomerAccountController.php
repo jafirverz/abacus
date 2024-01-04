@@ -507,6 +507,7 @@ class CustomerAccountController extends Controller
 
     public function search(Request $request)
     {
+        DB::enableQueryLog();
         $search_term = $request->search;
         $title = $this->title;
         if($this->user->admin_role==2)
@@ -529,7 +530,7 @@ class CustomerAccountController extends Controller
         if ($search_term) {
             $customer->appends('search', $search_term);
         }
-        //dd($customer);
+        //dd(DB::getQueryLog());
         return view('admin.account.customer.index', compact('title', 'customer','country','total_count'));
     }
 

@@ -33,7 +33,7 @@
                                         <div class="input-group-btn">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
-                                        &emsp;             
+                                        &emsp;
                                             @if(request()->get('_token'))
                                                <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                                             @else

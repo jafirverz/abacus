@@ -52,16 +52,18 @@ class User extends Authenticatable
 	 public function scopeSearch($query, $search_term)
     {
 
-        if($search_term->country);
+        if($search_term->country!=null)
         {
             $query->where('users.country_code',$search_term->country);
         }
-        if($search_term->status);
+        if($search_term->status!=null)
         {
+            //dd($search_term->status);
             $query->where('users.approve_status',$search_term->status);
         }
-        if($search_term->search);
+        if($search_term->search!=null)
         {
+            ///dd($search_term->search);
             $query->where('users.name','like','%'.$search_term->search.'%');
             $query->orWhere('users.email','like','%'.$search_term->search.'%');
         }
