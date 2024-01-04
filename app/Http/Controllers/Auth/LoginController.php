@@ -200,27 +200,27 @@ class LoginController extends Controller
 
         $request->validate([
             'name' => 'required|string',
-            // 'email' =>  'required|email|exists:users,email',
-            // 'dob' => 'required',
+            'email' =>  'required|email|exists:users,email',
+            'dob' => 'required',
         ], $messages);
 
         $dob = date('Y-m-d', strtotime($request->dob));
-        // $user = User::where('email', $request->email)->where('dob', $dob)->first();
-        $user = User::where('email', $request->email)->orWhere('dob', $dob)->first();
-        if($user){
-            if($user->dob != $request->dob){
-                throw ValidationException::withMessages(['dob' => 'Invalid DOB']);
-            }elseif($user->email != $request->email){
-                throw ValidationException::withMessages(['email' => 'Invalid email']);
-            }
+        $user = User::where('email', $request->email)->where('dob', $dob)->first();
+        // $user = User::where('email', $request->email)->orWhere('dob', $dob)->first();
+        // if($user){
+        //     if($user->dob != $request->dob){
+        //         throw ValidationException::withMessages(['dob' => 'Invalid DOB']);
+        //     }elseif($user->email != $request->email){
+        //         throw ValidationException::withMessages(['email' => 'Invalid email']);
+        //     }
 
-        }else{
-            throw ValidationException::withMessages(['email' => 'Invalid email', 'dob' => 'Invalid DOB']);
+        // }else{
+        //     throw ValidationException::withMessages(['email' => 'Invalid email', 'dob' => 'Invalid DOB']);
+        // }
+        if(empty($user)){
+            throw ValidationException::withMessages(['email' => 'Email Id and DOB does not match']);
+            // return back()->withErrors('Details does not match')->withInput();
         }
-//         if(empty($user)){
-//             throw ValidationException::withMessages(['email' => 'Email Id and DOB does not match']);
-// //            return back()->withErrors('Details does not match')->withInput();
-//         }
         if($user){
             //			Student email for forget account id
             $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_STUDENT_ACCOUNT_ID'));
