@@ -160,7 +160,7 @@ class InstructorAccountController extends Controller
                     $data['subject'] = $email_template->subject;
 
                     $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{Year_Attained_Qualified_Instructor_Certification}}','{{Year_Attained_Senior_Instructor_Certification}}','{{Highest_Abacus_Grade_Attained}}','{{Highest_Mental_Grade_Attained}}','{{Awards}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $request->country_code, $request->year_attained_qualified_instructor, $request->year_attained_senior_instructor, $request->highest_abacus_grade, $request->highest_mental_grade, $request->awards];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $request->year_attained_qualified_instructor, $request->year_attained_senior_instructor, $request->highest_abacus_grade, $request->highest_mental_grade, $request->awards];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
