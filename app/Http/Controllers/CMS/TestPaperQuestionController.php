@@ -70,9 +70,9 @@ class TestPaperQuestionController extends Controller
 
         $testPaperDetail = new TestPaperDetail();
         $testPaperDetail->question = $request->question ?? NULL;
+        $testPaperDetail->write_from = $request->write_from ?? NULL;
         $testPaperDetail->write_to = $request->write_to ?? NULL;
-        $testPaperDetail->paper_id  = $request->paper_id;
-        $testPaperDetail->template  = $request->template;
+        $testPaperDetail->marks = $request->marks ?? NULL;
         $testPaperDetail->save();
         if($request->type==5  || $request->type==6)
         {
@@ -294,7 +294,9 @@ class TestPaperQuestionController extends Controller
 
         $testPaperDetail = TestPaperDetail::findorfail($id);
         $testPaperDetail->question = $request->question ?? NULL;
+        $testPaperDetail->write_from = $request->write_from ?? NULL;
         $testPaperDetail->write_to = $request->write_to ?? NULL;
+        $testPaperDetail->marks = $request->marks ?? NULL;
         $testPaperDetail->save();
 
         if($request->type==5 || $request->type==6)

@@ -61,7 +61,17 @@
 
                                 @if(getPaperDetail($paper_id)->paper_type==1 && $question_template_id==11)
                                 <div class="form-group">
-                                    <label for="write_to">Write 1 to </label>
+                                    <label for="write_from">Write From </label>
+                                    <input type="text" name="write_from" class="form-control" id=""
+                                        value="{{ old('write_from') }}">
+                                    @if ($errors->has('write_from'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('write_from') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="write_to">Write To </label>
                                     <input type="text" name="write_to" class="form-control" id=""
                                         value="{{ old('write_to') }}">
                                     @if ($errors->has('write_to'))
@@ -70,6 +80,17 @@
                                     </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="marks">Marks </label>
+                                    <input type="text" name="marks" class="form-control" id=""
+                                        value="{{ old('marks') }}">
+                                    @if ($errors->has('marks'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('marks') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                                 @endif
 
                                 @if(isset($question_template_id) && $question_template_id==7)
