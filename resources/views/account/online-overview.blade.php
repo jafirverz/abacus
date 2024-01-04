@@ -163,7 +163,7 @@
           <div class="row sp-col-xl-30">
             <div class="col-xl-8 sp-col">
               <label class="lb-1">Address</label>
-              <input class="form-control" type="text" value="134 Jurong Gateway Road #04-307A Singapore 600134" disabled />
+              <input class="form-control" name="address" type="text" value="134 Jurong Gateway Road #04-307A Singapore 600134" disabled />
             </div>
           </div>
           <div class="output-2">

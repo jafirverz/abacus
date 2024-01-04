@@ -96,6 +96,9 @@
 
                                 @php
                                 $countrycode = str_replace('+', '', $customer->country_code);
+                                if(empty($countrycode)){
+                                    $countrycode = $customer->user->country_code;
+                                }
                                 @endphp
                                 <div class="form-group">
                                     <label for="country_code">Country</label>
