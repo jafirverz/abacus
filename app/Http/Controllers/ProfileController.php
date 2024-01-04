@@ -383,11 +383,37 @@ class ProfileController extends Controller
         foreach($request->test_paper_question_id as $test_paper_question_id)
         {
             if(in_array($questionTypeId, $questTem)){
+                $testPaperdetail = TestPaperDetail::find($test_paper_question_id);
+                //dd($testPaperdetail);
+                $flag=1;
+                foreach($request->answer2 as $key=>$value)
+                {
+                    if($key+$testPaperdetail->write_from!=$value)
+                    {
+                        $flag=0;
+                    }
+                }
+                //echo $flag;die;
                 $courseSub = new TestSubmission();
                 $courseSub->test_paper_question_id   = $test_paper_question_id;
                 $courseSub->test_id  = $test_id;
                 $courseSub->question_template_id = $questionTypeId;
                 $courseSub->user_id = $userId;
+                $courseSub->other_answer = json_encode($request->answer2);
+
+                if($questionTypeId==11)
+                {
+                    if( $flag==1)
+                    {
+                        $courseSub->other_marks =$other_marks= $testPaperdetail->marks;
+                    }
+                    else
+                    {
+                        $courseSub->other_marks=$other_marks = 0;
+                    }
+                }
+
+
                 $courseSub->save();
                 $allocation =Allocation::find($request->allocation_id);
                 $allocation->is_finished =1;
@@ -413,6 +439,11 @@ class ProfileController extends Controller
                     }
                     $totalMarks+= $testPaperQuestion->marks;
                     $quesSub->save();
+                }
+                if($questionTypeId==11)
+                {
+                    $totalMarks+=$testPaperdetail->marks;
+                    $userMarks+=$other_marks;
                 }
                 $saveResult = TestSubmission::where('id', $courseSub->id)->first();
                 $saveResult->total_marks = $totalMarks;

@@ -32,10 +32,10 @@
             <input type="hidden" name="question_type" value="{{ $test->paper->question_template_id }}">
             <input type="hidden" name="test_paper_question_id[]" value="{{ $all_paper_detail->id }}">
             <div class="box-1">
-                <div class="note-4">Write 1 to {{ $all_paper_detail->write_to }}</div>
+                <div class="note-4">Write {{ $all_paper_detail->write_from }} to {{ $all_paper_detail->write_to }}</div>
                 <div class="gtb-1">
-                    @php for($i=0;$i<$all_paper_detail->write_to;$i++){ @endphp
-                    <div class="col"><input name="write_to[]" class="form-control" type="number"></div>
+                    @php for($i=$all_paper_detail->write_from;$i<=$all_paper_detail->write_to;$i++){ @endphp
+                    <div class="col"><input name="answer2[]" class="form-control" type="number"></div>
                     @php } @endphp
             </div>
             <div class="row">
@@ -45,6 +45,7 @@
                         $detail_beads=\App\TestPaperQuestionDetail::where('test_paper_question_id',$all_paper_detail->id)->where('input_3','file')->get();
                         $k=0;
                         @endphp
+                        @if(isset($detail_beads) && $detail_beads->count() > 0)
                         <div class="col-md-6">
                             <div class="box-1">
                                 <label class="lb-1 mt-0">Recognise Beads</label>
@@ -57,7 +58,7 @@
                                             <img src="{{ url($bead->input_1) }}" alt="">
                                         </div>
                                     </div>
-                                    @if($k%2==0)
+                                    @if($detail_beads->count() > 2 && $k%2==0)
                                             </div>
                                         </div>
                                     </div>
@@ -70,6 +71,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                     </div>
                 </div>
