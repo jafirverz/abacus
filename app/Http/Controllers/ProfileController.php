@@ -785,7 +785,7 @@ class ProfileController extends Controller
                         'gender' => 'required',
                         'country_code_phone' => 'required',
                         // 'instructor' => 'required',
-                        //'country_code' => 'required',
+                        'country_code' => 'required',
                         //'password'  =>  'nullable|min:8',
                         //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
                         ], $messages); //dd($request);

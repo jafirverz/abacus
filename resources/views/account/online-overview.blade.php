@@ -152,6 +152,35 @@
                 <input class="form-control" id="learning_locations" type="text" value="{{$user->location->title ?? ''}}" disabled />
 
             </div>
+
+            <div class="col-xl-3 sp-col" id="disablecountry">
+              <label class="lb-1">Country <span class="required">*</span></label>
+              <select data-live-search="true" class="selectpicker"  disabled>
+                  <option>Please Select</option>
+                  @foreach($country as $countr)
+                  <option value="{{ $countr->id }}" @if($user->country_code == $countr->id) selected @endif>{{ $countr->country}}</option>
+                  @endforeach
+              </select>
+          </div>
+          @php
+              $country_code = $user->country_code;
+              if(old("country_code")){
+                  $country_code = old("country_code");
+              }
+          @endphp
+          <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
+              <label class="lb-1">Country <span class="required">*</span></label>
+              <select data-live-search="true" class="selectpicker" name="country_code">
+                  <option value="">Please Select</option>
+                  @foreach($country as $countr)
+                  <option value="{{ $countr->id }}" @if($country_code == $countr->id && !$errors->has('country_code')) selected @endif>{{ $countr->country}}</option>
+                  @endforeach
+
+              </select>
+              @if ($errors->has('country_code'))
+                  <span class="text-danger">&nbsp;{{ $errors->first('country_code') }}</span>
+              @endif
+          </div>
             <!-- <div class="col-xl-4 sp-col" >
                 <label class="lb-1">Learning Updates </label>
                 <input class="form-control" id="learning_updates" type="text"  value="{{$user->learning_updates ?? ''}}" disabled />
