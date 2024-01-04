@@ -23,11 +23,11 @@
                     <input type="text" class="form-control" name="search" value="@if(isset($_GET['search']) && $_GET['search']!='') {{ $_GET['search'] }}  @endif" placeholder="">
                 </div>
                 <div class="col-lg-4">
-                    <label>Country</label>
+                    <label>Country </label>
                     <select name="country" class="form-control">
                         <option value="">-- All --</option>
                         @foreach ($country as $key => $value)
-                        <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected" @elseif($value->id==192) selected="selected"
+                        <option @if(isset($_GET['country']) && $_GET['country']==$value->id) selected="selected" @elseif(!isset($_GET['country']) && $value->id==192) selected="selected"
                             @endif value="{{$value->id}}">{{$value->country}}</option>
                         @endforeach
                     </select>
@@ -38,9 +38,9 @@
                       <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected" @else  selected="selected"
                           @endif value="1">Active</option>
                       <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
-                          @endif value="0">In Active</option>
+                          @endif value="0">Pending</option>
                       <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                          @endif value="2">Rejected</option>
+                          @endif value="2">In Active</option>
                   </select>
                   </div>
             </div>
