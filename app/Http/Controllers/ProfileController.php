@@ -2024,7 +2024,8 @@ class ProfileController extends Controller
 
 		$cartDetails = TempCart::where('user_id', Auth::user()->id)->get();
 
-		return view('account.cart', compact("cartDetails"));
+		//return view('account.cart', compact("cartDetails"));
+        return redirect()->back();
 	}
 
 	public function cartList($id = null){
