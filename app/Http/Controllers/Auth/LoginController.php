@@ -108,7 +108,7 @@ class LoginController extends Controller
                 ->withSuccess('Signed in');
                 }elseif(Auth::user()->approve_status == 2){
                     $checkOrder = Order::where('user_id', Auth::user()->id)->pluck('id')->toArray();
-                    if($checkOrder) {
+                    if(isset($checkOrder)) {
                         $checkOrderDetails = OrderDetail::whereIn('order_id', $checkOrder)->where('level_id', '!=', null)->where('expiry_date', '>=', date('Y-m-d'))->get();
                         if(isset($checkOrderDetails) && count($checkOrderDetails) > 0) {
                             $levelActive= array();
