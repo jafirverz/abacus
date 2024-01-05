@@ -82,12 +82,12 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="marks">Marks </label>
-                                    <input type="text" name="marks" class="form-control" id=""
-                                        value="{{ old('marks', $list->marks) }}">
-                                    @if ($errors->has('marks'))
+                                    <label for="marks_o">Marks </label>
+                                    <input type="text" name="marks_o" class="form-control" id=""
+                                        value="{{ old('marks_o', $list->marks) }}">
+                                    @if ($errors->has('marks_o'))
                                     <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('marks') }}</strong>
+                                        <strong>{{ $errors->first('marks_o') }}</strong>
                                     </span>
                                     @endif
                                 </div>

@@ -85,7 +85,7 @@
                         @foreach($detail_number as $num)
                             <div class="col-sm-4 col-6 sp-col mt-10">
                                 @php
-                                    $input_1=explode(',',$num->input_1);
+                                    $input_1=explode('|',$num->input_1);
                                 @endphp
                                 @foreach($input_1 as $input)
                                 <div class="sumrow">{{ $input }}</div>

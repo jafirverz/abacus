@@ -37,6 +37,11 @@
                                 @endforeach
                             </select>
                             <input type="hidden" name="user_id" value="{{ $grading->user_id }}">
+                            @if ($errors->has('user_id'))
+                            <span class="text-danger d-block">
+                                <strong>{{ $errors->first('user_id') }}</strong>
+                            </span>
+                        @endif
                         </div>
                         <div class="col-xl-4 sp-col">
                             <label class="lb-1">Date of Birth
@@ -86,7 +91,7 @@
                         </div>
                         <div class="col-xl-3 sp-col">
                             <label class="lb-1">Mental Grade
-                                <span class="required">*</span>
+
                             </label>
                             <select name="mental_grade" class="selectpicker" data-title="Select Option">
                                 @if($mental_grades)
@@ -103,7 +108,7 @@
                         </div>
                         <div class="col-xl-3 sp-col">
                             <label class="lb-1">Abacus Grade
-                                <span class="required">*</span>
+
                             </label>
                             <select name="abacus_grade" class="selectpicker" data-title="Select Option">
                                 @if($abacus_grades)

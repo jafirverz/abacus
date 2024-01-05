@@ -10,7 +10,9 @@
             </div>
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
+                @if($list->count()==0)
                 <a href="{{ route('test-paper-question.create',$paper_id) }}" class="btn btn-primary">Add New</a>
+                @endif
             </div>
             @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_test_paper_question', $paper_id)])
 

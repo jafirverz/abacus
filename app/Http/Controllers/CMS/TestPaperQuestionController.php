@@ -72,7 +72,9 @@ class TestPaperQuestionController extends Controller
         $testPaperDetail->question = $request->question ?? NULL;
         $testPaperDetail->write_from = $request->write_from ?? NULL;
         $testPaperDetail->write_to = $request->write_to ?? NULL;
-        $testPaperDetail->marks = $request->marks ?? NULL;
+        $testPaperDetail->marks = $request->marks_o ?? NULL;
+        $testPaperDetail->paper_id  = $request->paper_id;
+        $testPaperDetail->template  = $request->template ?? NULL;
         $testPaperDetail->save();
         if($request->type==5  || $request->type==6)
         {
@@ -296,7 +298,7 @@ class TestPaperQuestionController extends Controller
         $testPaperDetail->question = $request->question ?? NULL;
         $testPaperDetail->write_from = $request->write_from ?? NULL;
         $testPaperDetail->write_to = $request->write_to ?? NULL;
-        $testPaperDetail->marks = $request->marks ?? NULL;
+        $testPaperDetail->marks = $request->marks_o ?? NULL;
         $testPaperDetail->save();
 
         if($request->type==5 || $request->type==6)
