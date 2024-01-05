@@ -42,8 +42,8 @@
                 <form method="post" action="{{ route('clear.cart') }}" id="clearcart">
                   @csrf
                   <div class="checkbxtype nolb">
-                    <input id="check-1" type="checkbox" name="deletecart[]" value="{{ $cart->id }}" />
-                    <label for="check-1"></label>
+                    <input id="check-{{ rand() }}" type="checkbox" name="deletecart[]" value="{{ $cart->id }}" />
+                    <label for="check-{{ rand() }}"></label>
                   </div>
                 </form>
                 <div class="ginner">
