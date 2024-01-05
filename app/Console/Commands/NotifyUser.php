@@ -59,7 +59,6 @@ class NotifyUser extends Command
                 $orderDetails = OrderDetail::where('order_id', $order->id)->where('order_type', 'level')->where('expiry_date', $daysAhead)->get();
                 if($orderDetails){
                     
-                    // Admin email for new student registration
                     $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_USER_MEMBERSHIP_EXPIRY'));
 
                     if ($email_template) {
