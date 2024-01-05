@@ -654,8 +654,6 @@ class ProfileController extends Controller
 
         $request->validate([
             'user_id' => 'required',
-            'mental_grade' => 'required',
-            'abacus_grade' => 'required',
         ]);
 
 
@@ -707,10 +705,7 @@ class ProfileController extends Controller
         //dd($request->all());
         $users = User::find($this->user->id);
 
-        $request->validate([
-            'mental_grade' => 'required',
-            'abacus_grade' => 'required',
-        ]);
+
 
 
         $gradingStudent = GradingStudent::find($id);

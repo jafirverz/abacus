@@ -38,7 +38,7 @@ class TestPaperController extends Controller
     public function index()
     {
         $title = $this->title;
-        $paper = TestPaper::paginate($this->pagination);
+        $paper = TestPaper::orderBy('id','desc')->paginate($this->pagination);
 
         return view('admin.test-paper.index', compact('title', 'paper'));
     }
@@ -134,7 +134,7 @@ class TestPaperController extends Controller
                 $powerpoint_path = $filepath . $filename;
                 $testPaper->powerpoint_file = $powerpoint_path;
             }
-        
+
         $testPaper->simulator_link = $request->simulator_link;
         $testPaper->description = $request->description;
         }
@@ -249,7 +249,7 @@ class TestPaperController extends Controller
                 $powerpoint_path = $filepath . $filename;
                 $testPaper->powerpoint_file = $powerpoint_path;
             }
-        
+
         $testPaper->simulator_link = $request->simulator_link;
         $testPaper->description = $request->description;
         }
@@ -277,7 +277,7 @@ class TestPaperController extends Controller
     {
         $search_term = $request->search;
         $title = $this->title;
-        $paper = TestPaper::search($search_term)->paginate($this->pagination);
+        $paper = TestPaper::search($search_term)->orderBy('id','desc')->paginate($this->pagination);
         if ($search_term) {
             $paper->appends('search', $search_term);
         }
