@@ -50,6 +50,12 @@ class LevelController extends Controller
             }else{
                 $addedToCart = 0;
             }
+            // $view_name = 'account.level_details';
+            // $view_data = compact("qestionTemplate", 'checkSlug', 'worksheets', 'premium', 'addedToCart');
+            // $content = view($view_name, $view_data);
+
+            // return response($content)->header('Cache-Control', 'no-cache, must-revalidate');
+
             return view('account.level_details', compact("qestionTemplate", 'checkSlug', 'worksheets', 'premium', 'addedToCart'));
         }else{
             return abort(404);
