@@ -4,7 +4,7 @@
       <th>S/N</th>
       <th>Name</th>
       <th>Paper Name</th>
-      <th>Category</th>
+      <th>Grades</th>
       <th>Paper Type</th>
       <th>Student Name</th>
       <th>DOB</th>

@@ -71,7 +71,7 @@
                                         <td>
                                             <a class="link-1" href="{{route('external-profile.add-students.edit', $student->id)}}"><i class="icon-edit"></i></a>
                                             <a class="link-1" href="{{route('external-profile.students.view', $student->id)}}">view</i></a>
-                                            <a onclick="return confirm('Are you sure want to delete this?');" href="{{route('external-profile.add-students.delete', $student->id)}}">delete</a>
+                                            {{-- <a onclick="return confirm('Are you sure want to delete this?');" href="{{route('external-profile.add-students.delete', $student->id)}}">delete</a> --}}
                                         </td>
                                         <td>
                                             @if($student->approve_status==1)

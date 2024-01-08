@@ -306,8 +306,9 @@ class GradingExamController extends Controller
 
     public function studentList($id){
         $title = 'Student List';
+        $grading_exam = GradingExam::find($id);
         $studentList = GradingStudent::where('grading_exam_id', $id)->orderBy('id', 'desc')->paginate($this->pagination);
-        return view('admin.grading-exam.studentList', compact('title', 'studentList'));
+        return view('admin.grading-exam.studentList', compact('title', 'studentList','grading_exam'));
     }
 
     public function rejectstudentList($id){
