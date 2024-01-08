@@ -28,7 +28,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">GE Paper Title</label>
                                     <input type="text" name="title" class="form-control" id=""
                                         value="{{ old('title', $competitionPaper->title) ?? '' }}">
                                     @if ($errors->has('title'))
@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Category</label>
+                                    <label for="title">Exam Grade</label>
                                     <select name="category" class="form-control" >
                                         <option value="">-- Select --</option>
                                         @foreach($catComp as $cate)

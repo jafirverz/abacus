@@ -20,16 +20,7 @@
                             @csrf
                             @method('POST')
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" name="title" class="form-control" id=""
-                                        value="{{ old('title') }}">
-                                    @if ($errors->has('title'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('title') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
                                 <div class="form-group">
                                     <label for="paper_type">Paper Type</label>
                                     <select  class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
@@ -44,6 +35,17 @@
                                     @if ($errors->has('paper_type'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('paper_type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                @if(isset($_GET['paper-type']) && $_GET['paper-type']!="")
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" name="title" class="form-control" id=""
+                                        value="{{ old('title') }}">
+                                    @if ($errors->has('title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -71,6 +73,7 @@
                                     </span>
                                     @endif
                                 </div>
+                                @endif
                                 @if(isset($_GET['paper-type']) && $_GET['paper-type']==2)
                                 <div class="form-group">
                                     <label for="title">Video Upload</label>

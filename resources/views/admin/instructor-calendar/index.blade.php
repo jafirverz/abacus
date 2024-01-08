@@ -62,7 +62,7 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
-                                            <th>Name</th>
+                                            <th>Event Title</th>
                                             <th>Start Date & Time</th>
                                             <th>Teacher</th>
                                             <th>Reminder</th>

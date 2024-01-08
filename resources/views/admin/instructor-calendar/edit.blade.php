@@ -21,7 +21,7 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="full_name">Full Name</label>
+                                    <label for="full_name">Event Title</label>
                                     <input type="text" name="full_name" class="form-control" id=""
                                         value="{{ old('full_name', $calendar->full_name) }}">
                                     @if ($errors->has('full_name'))

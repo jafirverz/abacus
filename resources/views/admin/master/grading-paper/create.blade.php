@@ -29,7 +29,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="title">Grading</label>
+                                    <label for="title">Exam Name</label>
                                     <select name="competitionn" class="form-control" id="competition" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                         <option value="">-- Select --</option>
                                         @foreach($competition as $comp)
@@ -48,7 +48,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">GE Paper Title</label>
                                     <input type="text" name="title" class="form-control" id=""
                                         value="{{ old('title') }}">
                                     @if ($errors->has('title'))
@@ -87,7 +87,7 @@
 
                                 @if(isset($_GET['comp_id']))
                                 <div class="form-group">
-                                    <label for="title">Category</label>
+                                    <label for="title">Exam Grade</label>
                                     <select name="category" class="form-control">
                                         <option value="">-- Select --</option>
                                         @foreach($compCat as $cate)

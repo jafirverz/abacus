@@ -8,7 +8,7 @@
             <div class="section-header-back">
                 <a href="{{ route('grading-exam.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h1>{{ $title ?? '-' }}</h1>
+            <h1>{{ $grading_exam->title }} >> {{ $title ?? '-' }}</h1>
 
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
@@ -63,9 +63,11 @@
                                                 </div>
                                             </th>
                                             <th>Student Name</th>
+                                            <th>Date of Birth</th>
                                             <th>Instructor</th>
+                                            <th>Mental Grade</th>
+                                            <th>Abacus Grade</th>
                                             <th>Learning Location</th>
-                                            <th>Category</th>
                                             <th>Student Type</th>
                                             <th>Created At</th>
                                             <th>Approve Status</th>
@@ -84,9 +86,12 @@
                                             </td>
 
                                             <td>{{ $item->userlist->name }}</td>
+                                            <td>{{ $item->userlist->dob }}</td>
                                             <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
-                                            <td>{{ $item->userlist->learning_location ?? '' }}</td>
-                                            <td>{{ $item->category->category_name ?? '' }}</td>
+                                            <td>{{ $item->mental->title ?? '' }}</td>
+                                            <td>{{ $item->abacus->title ?? '' }}</td>
+                                            <td>{{ $item->userlist->location->title ?? '' }}</td>
+
                                             <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>

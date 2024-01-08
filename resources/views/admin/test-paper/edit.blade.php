@@ -21,6 +21,24 @@
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
+                                    <label for="paper_type">Paper Type</label>
+                                    <select disabled  class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @if(getPaperType())
+                                        @foreach (getPaperType() as $key => $item)
+                                            <option value="{{ $key }}" @if(old('paper_type', $paper->paper_type)==$key) selected  @endif>{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('paper_type'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('paper_type') }}</strong>
+                                    </span>
+                                    @endif
+                                    <input type="hidden" name="paper_type" value="{{ $paper->paper_type }}">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" name="title" class="form-control" id=""
                                         value="{{ old('title', $paper->title) }}">
@@ -53,23 +71,6 @@
 
                                     </span>
                                     @endif
-                                </div>
-                                <div class="form-group">
-                                    <label for="paper_type">Paper Type</label>
-                                    <select disabled  class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if(getPaperType())
-                                        @foreach (getPaperType() as $key => $item)
-                                            <option value="{{ $key }}" @if(old('paper_type', $paper->paper_type)==$key) selected  @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('paper_type'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('paper_type') }}</strong>
-                                    </span>
-                                    @endif
-                                    <input type="hidden" name="paper_type" value="{{ $paper->paper_type }}">
                                 </div>
 
                                 @if($paper->paper_type==2)

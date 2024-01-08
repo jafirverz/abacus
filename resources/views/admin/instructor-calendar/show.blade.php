@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <strong>Full Name</strong>: {{ $calendar->full_name ?? '' }}
+                                    <strong>Event Title</strong>: {{ $calendar->full_name ?? '' }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Start Date</strong>: {{ $calendar->start_date ?? '' }}
