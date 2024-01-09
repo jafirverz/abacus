@@ -42,7 +42,7 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::orderBy('title', 'asc')->paginate($this->pagination);
-        $questionTemplate = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8,10])->get();
+        $questionTemplate = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8,10,11])->get();
 
         return view('admin.master.worksheet.index', compact('title', 'worksheet', 'questionTemplate'));
     }
