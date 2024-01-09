@@ -64,7 +64,9 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>Order Id</th>
+                                            <th>Student Name</th>
                                             <th>Total Amount</th>
+                                            <th>Item</th>
                                             <th>Payment Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -73,6 +75,10 @@
                                     <tbody>
                                         @if($orders->count())
                                         @foreach ($orders as $key => $item)
+
+                                        @php 
+                                        $orderDetails = \App\OrderDetail::where('order_id', $item->id)->pluck('name')->toArray();
+                                        @endphp
                                         <tr>
                                             <!-- <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
@@ -91,7 +97,9 @@
                                                 <a href="{{ route('competition.studentlist', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a> -->
                                             </td>
                                             <td>{{ $item->id }}</td>
+                                            <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->total_amount }}</td>
+                                            <td>{{ implode(', ', $orderDetails) }}</td>
                                             <td>{{ $item->payment_status }}</td>
                                            
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
