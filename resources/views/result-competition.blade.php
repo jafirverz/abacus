@@ -10,6 +10,9 @@
         @if(Auth::user()->user_type_id == 1 || Auth::user()->user_type_id == 2)
         @include('inc.account-sidebar')
         @endif
+        @if(Auth::user()->user_type_id == 4)
+                @include('inc.account-sidebar-event-student')
+            @endif
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">

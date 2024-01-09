@@ -99,7 +99,12 @@
                             @php
                             //$checkPaperCategory = \App\PaperCategory::where('category_id', $cat)->where('competition_id', $compId)->count();
                             $checkPaperSubmitted = \App\CompetitionPaperSubmitted::where('competition_id', $compId)->where('category_id', $cat)->where('user_id', Auth::user()->id)->pluck('competition_paper_id')->toArray();
-                            $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->whereNotIn('id', $checkPaperSubmitted)->get();
+                            if($competition->date_of_competition == date('Y-m-d')){
+                                $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->whereNotIn('id', $checkPaperSubmitted)->get();
+                            }else{
+                                $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->get();
+                            }
+                            
                             @endphp
 
 
@@ -135,7 +140,12 @@
                                                     @php
                                                     $skip = $i * 6;
                                                     $checkPaperSubmitted = \App\CompetitionPaperSubmitted::where('competition_id', $compId)->where('category_id', $cat)->where('user_id', Auth::user()->id)->pluck('competition_paper_id')->toArray();
-                                                    $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->whereNotIn('id', $checkPaperSubmitted)->skip($skip)->take(6)->get();
+                                                    if($competition->date_of_competition == date('Y-m-d')){
+                                                        $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->whereNotIn('id', $checkPaperSubmitted)->skip($skip)->take(6)->get();
+                                                    }else{
+                                                        $checkPaperCategory = \App\CompetitionPaper::where('category_id', $cat)->where('competition_controller_id', $compId)->where('status', 1)->skip($skip)->take(6)->get();
+                                                    }
+                                                    
                                                     @endphp
                                                     @foreach($checkPaperCategory as $paper)
                                                    
