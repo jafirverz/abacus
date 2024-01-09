@@ -169,6 +169,20 @@
                                 </div>
 
 
+                            @elseif($qId==11)
+
+                                <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
+                                <div class="row" style="margin-bottom:30px;">
+                                    <div class="col-md-5">
+                                        <input class="form-control" required value="" name="input_1[]"  type="file">
+                                    </div>
+                                </div>
+                                <div class="after-add-more"></div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more11" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+
+
                             @elseif($qId==1 )
 
                                 <label for="" class=" control-label">{{ getQuestionTemplate($qId) }}</label>
@@ -202,7 +216,7 @@
                                         </div>
 
                                         <div class="col-md-5">
-                                            <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
+                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
                                         </div>
 
                                         <div class="col-md-2">
@@ -479,7 +493,20 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<div class="copy11" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-5">
+                <input class="form-control" required name="input_1[]"  type="file">
+            </div>
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
+<!-- <script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
 <script>
   $(function () {
     easyNumberSeparator({
@@ -489,7 +516,7 @@
     })
   });
   
-</script>
+</script> -->
 
 <script>
 
@@ -531,7 +558,7 @@ $(document).ready(function () {
     $(".add-more3").click(function(){
         var html = $(".copy3").html();
         $(".after-add-more").append(html);
-        $('input[type=text]').addClass('number-separator');
+        //$('input[type=text]').addClass('number-separator');
     });
 
     $(".add-more6").click(function(){
@@ -551,6 +578,11 @@ $(document).ready(function () {
 
     $(".add-more8").click(function(){
         var html = $(".copy8").html();
+        $(".after-add-more").append(html);
+    });
+
+    $(".add-more11").click(function(){
+        var html = $(".copy11").html();
         $(".after-add-more").append(html);
     });
 

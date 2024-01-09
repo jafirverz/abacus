@@ -118,6 +118,38 @@
                                         <button class="btn btn-success add-more2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
+                                @elseif($question->question_type==11)
+                                    <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
+                                    @php
+                                    //$json_question=json_decode($question->json_question);
+                                    $json_question=\App\MiscQuestion::where('question_id', $question->id)->get();
+                                    $i = 1;
+                                    foreach($json_question as $quest)
+                                    {
+
+                                        @endphp
+
+                                            <div class="form-group">
+                                                <div class="row" style="margin-bottom:30px;">
+                                                    <div class="col-md-1">
+                                                        <div class="form-control">Q{{ $i }}</div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input class="form-control"  value="{{ $quest->question_1 }}" name="input_1_old[]" type="hidden">
+                                                        <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                </div>
+                                            </div>
+                                        @php $i++; } @endphp
+                                    <div class="after-add-more"></div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-success add-more11" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div>
+
                                     @elseif($question->question_type==1)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
                                     @php
@@ -661,7 +693,20 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<div class="copy11" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+        <div class="col-md-4">
+            <input class="form-control number-separator" required name="input_1[]"  type="file">
+        </div>
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
+<!-- <script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
 <script>
   $(function () {
     easyNumberSeparator({
@@ -671,7 +716,7 @@
     })
   });
   
-</script>
+</script> -->
 
 <script>
 
@@ -739,6 +784,11 @@
 
         $(".add-more8").click(function(){
             var html = $(".copy8").html();
+            $(".after-add-more").append(html);
+        });
+
+        $(".add-more11").click(function(){
+            var html = $(".copy11").html();
             $(".after-add-more").append(html);
         });
 
