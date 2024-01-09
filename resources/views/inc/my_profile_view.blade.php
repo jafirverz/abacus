@@ -145,7 +145,15 @@
                                 @endphp
                             @endif
                             @if(Auth::user()->approve_status == 1)
-                            <a href="{{ $url }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            @php
+                            $is_submitted = \App\TestSubmission::where('user_id', Auth::user()->id)->where('test_id', $test->id)->count();
+
+                            @endphp
+                                @if(isset($is_submitted) && $is_submitted>0)
+                                <a href="javascript::void(0)">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @else
+                                <a href="{{ $url }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                                @endif
                             @else
                             <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @endif
