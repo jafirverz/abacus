@@ -131,6 +131,15 @@ class WorksheetController extends Controller
             $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
             return view('account.worksheetGradingSample', compact("worksheet", 'level', 'questions'));
         }
+        if($qId == 11) {
+            if(empty($worksheetId)){
+                return abort(404);
+            }
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $lId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $qId)->first();
+            return view('account.worksheetLearningVideo', compact("worksheet", 'level', 'questions'));
+        }
     }
 
     public function resultpage(Request $request){
