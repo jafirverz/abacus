@@ -14,11 +14,11 @@
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
         <div class="mb-20">
-          <a class="link-1 lico" href="{{ url('/') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+          <a class="link-1 lico" href="{{ url('level/'.$level->slug) }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
         </div>
         <ul class="breadcrumb bctype">
           <li><a href="{{ url('home') }}">Overview</a></li>
-          <!-- <li><a href="{{ url('') }}">Preparatory Level</a></li> -->
+          <li><a href="{{ url('level/'.$level->slug) }}">{{ $level->title }}</a></li>
           <li><strong>{{ $worksheet->title }}</strong></li> 
         </ul>
         <div class="box-1">
@@ -32,7 +32,7 @@
           $k=1;
           //$count = count($questionns->input_1);
           foreach($questionns as $question){
-            $questionSub = \App\WorksheetQuestionSubmitted::where('misc_question_id', $question->id)->first();
+            $questionSub = \App\WorksheetQuestionSubmitted::where('misc_question_id', $question->id)->orderBy('id', 'desc')->first();
             if($questionSub->question_answer != $questionSub->user_answer){
               $addClass = 'ans-wrong';
               $flag = 1;
@@ -43,7 +43,7 @@
           @endphp
           <div class="col-md-4 col-6 sp-col">
             <div class="item">
-              <div class="inner" style="height: 306.133px;">
+              <div class="inner {{ $addClass }}" style="height: 306.133px;">
                 <div class="number">Q{{ $k }}</div>
                 <figure>
                   <img src="{{ url('/upload-file/'.$question->question_1) }}" alt="" />
