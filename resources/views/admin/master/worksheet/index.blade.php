@@ -88,15 +88,20 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>Title</th>
+                                            <th>Levels</th>
                                             <th>Question Template</th>
+                                            <th>Free/Premium</th>
                                             <th>Status</th>
-                                            <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @if($worksheet->count())
                                         @foreach ($worksheet as $key => $item)
+                                        @php 
+                                        $levelId = $item->leveTopic->pluck('level_id')->toArray();
+                                        $levels = \App\Level::whereIn('id', $levelId)->pluck('title')->toArray();
+                                        @endphp
                                         <tr>
                                             <!-- <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox"
@@ -115,13 +120,14 @@
                                                 <a href="{{ route('worksheet.questions', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="List"><i class="fas fa-bars"></i></a>
                                             </td>
                                             <td>{{ $item->title }}</td>
+                                            <td>{{ implode(', ', $levels) }}</td>
                                             <td>{{ $item->questionsTemp->title ?? '' }}</td>
+                                            <td>@if($item->type == 1) Free @else Premium @endif</td>
                                             <td>
                                                 @if(getActiveStatus())
                                                 <div class="badge @if ($item->status==1) badge-success @else badge-danger @endif">{{ getActiveStatus($item->status) }}</div>
                                                 @endif
                                             </td>
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
                                         @endforeach

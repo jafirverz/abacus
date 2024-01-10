@@ -68,11 +68,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="title">Free/Paid</label>
+                                    <label for="title">Free/Premium</label>
                                     <select name="fee" class="form-control" onchange="showAmount(this.value);">
                                         <option value="">-- Select --</option>
                                         <option value="1" @if(old('fee') == 1) selected @elseif($worksheet->type == 1) selected @endif>Free</option>
-                                        <option value="2" @if(old('fee') == 2) selected @elseif($worksheet->type == 2) selected @endif>Paid</option>
+                                        <option value="2" @if(old('fee') == 2) selected @elseif($worksheet->type == 2) selected @endif>Premium</option>
                                     </select>
                                     @if ($errors->has('fee'))
                                         <span class="text-danger d-block">
@@ -82,14 +82,15 @@
                                 </div>
 
                                 @php
-                                    $feeP = old('fee') ?? $worksheet->type;
-                                    if(empty($feeP) || $feeP == 1){
-                                        $stylee = 'display: none';
-                                    }else{
-                                        $stylee = 'display: block';
-                                    }
+                                    //$feeP = old('fee') ?? $worksheet->type;
+                                    //if(empty($feeP) || $feeP == 1){
+                                        //$stylee = 'display: none';
+                                    //}else{
+                                        //$stylee = 'display: block';
+                                    //}
                                 @endphp
-                                <div class="form-group" style="{{$stylee}}"  id="amountblock">
+
+                                {{--<div class="form-group" style="{{$stylee}}"  id="amountblock">
                                     <label for="title">Amount</label>
                                     <input type="text" name="amount" class="form-control" id=""
                                            value="{{ old('amount') ?? $worksheet->amount }}">
@@ -98,7 +99,7 @@
                                         <strong>{{ $errors->first('amount') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div>--}}
 
                                 <div class="form-group">
                                     <label for="title">Question Template</label>

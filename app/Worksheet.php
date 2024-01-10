@@ -28,4 +28,8 @@ class Worksheet extends Model
     public function questionsTemp(){
         return $this->belongsTo('App\QuestionTemplate', 'question_template_id', 'id');
     }
+
+    public function leveTopic(){
+        return $this->hasMany('App\LevelTopic', 'worksheet_id', 'id');
+    }
 }

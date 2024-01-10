@@ -80,7 +80,7 @@ class WorksheetController extends Controller
             'level'  =>  'required|array|min:1',
             'title'  =>  'required',
             'fee'  =>  'required',
-            'amount' => 'required_if:fee,2',
+            //'amount' => 'required_if:fee,2',
            'questiontemplate'  =>  'required',
             //'stopwatch'  =>  'required',
             //'presettiming'  =>  'required',
@@ -92,7 +92,7 @@ class WorksheetController extends Controller
 //        $worksheet->topic = $request->topic;
         $worksheet->title = $request->title;
         $worksheet->type = $request->fee;
-        $worksheet->amount = $request->amount;
+        //$worksheet->amount = $request->amount;
         $worksheet->question_template_id = $request->questiontemplate;
         $worksheet->stopwatch_timing = $request->stopwatch;
         $worksheet->preset_timing = $request->presettiming;
@@ -167,7 +167,7 @@ class WorksheetController extends Controller
             'level'  =>  'required|array|min:1',
             'title'  =>  'required',
             'fee'  =>  'required',
-            'amount' => 'required_if:fee,2',
+            //'amount' => 'required_if:fee,2',
             // 'questiontemplate'  =>  'required',
             'stopwatch'  =>  'required',
             'presettiming'  =>  'required',
@@ -179,8 +179,8 @@ class WorksheetController extends Controller
 //        $worksheet->topic = $request->topic;
         $worksheet->title = $request->title;
         $worksheet->type = $request->fee;
-        $worksheet->amount = $request->amount;
-        $worksheet->question_template_id = $request->questiontemplate;
+        //$worksheet->amount = $request->amount;
+        // $worksheet->question_template_id = $request->questiontemplate;
         $worksheet->stopwatch_timing = $request->stopwatch;
         $worksheet->preset_timing = $request->presettiming;
         $worksheet->description = $request->description;
