@@ -18,15 +18,38 @@
 
         <div class="section-body">
             @include('admin.inc.messages')
+            
+            <form action="{{ route('achievement.search') }}" method="get" id="formreport">
+                @csrf
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-lg-4"><label>Student Name:</label>
+                            <select name="student" class="form-control selectpicker" data-live-search="true">
+                                <option value="">-- Select --</option>
+                                @foreach($students as $student)
+                                <option value="{{ $student->id }}" @if(isset($_REQUEST['student']) && $_REQUEST['student']==$student->id) selected="selected"
+                                    @endif>{{$student->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div><br>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <button type="submit" class="btn btn-primary"> Filter</button>
+                        </div>
+                    </div>
+                </div>
+            </form><br>
 
             <div class="row">
                 <div class="col-12">
                     <div class="card">
 
-                        {{-- <div class="card-header">
+                        <div class="card-header">
 
 
                             <div class="card-header-form form-inline">
+                                
 
                                 <form action="{{ route('achievement.search') }}" method="get">
 
@@ -45,7 +68,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div> --}}
+                        </div> 
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-md">

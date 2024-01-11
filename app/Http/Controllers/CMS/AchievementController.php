@@ -46,7 +46,8 @@ class AchievementController extends Controller
         // $gradingExamResult = GradingStudentResults::orderBy('id', 'desc')->get();
         // $achievements = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
         $achievements = AchievementOther::paginate(10);
-        return view('admin.achievement.index', compact('title','achievements'));
+        $students = User::whereIn('user_type_id', [1,2,3,4])->get();
+        return view('admin.achievement.index', compact('title','achievements', 'students'));
     }
 
     /**
@@ -224,12 +225,28 @@ class AchievementController extends Controller
 
     public function search(Request $request)
     {
+        //dd($request->all());
         //DB::enableQueryLog();
+        if(isset($request->student) && !empty($request->student)){
+            $achievements = AchievementOther::where('user_id', $request->student)->paginate(10);
+        }elseif(isset($request->search) && !empty($request->search)){
+            $keyword = $request->search;
+            $achievements = AchievementOther::where(function ($query) use($keyword) {
+                $query->where('title', 'like', '%'.$keyword.'%')
+                   ->orWhere('user_name', 'like', '%'.$keyword.'%')
+                   ->orWhere('competition_date', 'like', '%'.$keyword.'%');
+              })->paginate(10);
+        
+        }else{
+            $achievements = AchievementOther::paginate(10);
+        }
+        
+        $students = User::whereIn('user_type_id', [1,2,3,4])->get();
 		$title = $this->title;
         //$grades = Grade::search($request->search)->join('grade_types','grade_types.id','grades.grade_type_id')->select('grades.*')->paginate($this->systemSetting()->pagination);
 
        // dd(DB::getQueryLog());
-        return view('admin.achievement.index', compact('title'));
+        return view('admin.achievement.index', compact('title', 'achievements', 'students'));
 
     }
 }
