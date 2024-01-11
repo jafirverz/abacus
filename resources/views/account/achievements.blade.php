@@ -27,17 +27,17 @@
                     @foreach($merged as $paperSubmited)
                     <tr>
                       <td class="tbico-1"><img src="images/tempt/ico-award.png" alt="awrad" /></td>
-                      <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date }} @elseif(isset($paperSubmited->competition_date)) {{ $paperSubmited->competition_date ?? '' }} @else {{ $paperSubmited->competition->date_of_competition ?? '' }} @endif
+                      <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date }} @elseif(isset($paperSubmited->title)) {{ $paperSubmited->competition_date ?? '' }} @else {{ $paperSubmited->competition->date_of_competition ?? '' }} @endif
 
                       </strong></td>
-                      <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title ?? '' }} @elseif(isset($paperSubmited->competition_date)) {{ $paperSubmited->title ?? '' }} @else {{ $paperSubmited->competition->title ?? '' }} @endif</td>
+                      <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title ?? '' }} @elseif(isset($paperSubmited->title)) {{ $paperSubmited->title ?? '' }} @else {{ $paperSubmited->competition->title ?? '' }} @endif</td>
                       <td>
                         @if(isset($paperSubmited->grading_id)) 
                           @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
                           Mental Grade 70:  <strong class="type-1">{{ $paperSubmited->mental_grade }}</strong><br/>
                           Abacus Grade 80:  <strong class="type-1">{{ $paperSubmited->abacus_grade }}</strong></td>
                           @endif
-                        @elseif(isset($paperSubmited->competition_date)) {{ $paperSubmited->result ?? '' }}
+                        @elseif(isset($paperSubmited->title)) {{ $paperSubmited->result ?? '' }}
                         @else 
                         {{ $paperSubmited->category->category_name ?? '' }} : {{ $paperSubmited->rank ?? '' }}
                           @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))

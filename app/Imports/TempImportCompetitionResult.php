@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Competition;
 use App\CompetitionStudent;
 use App\CompetitionStudentResult;
 use App\TempStudentCompetitionResult;
@@ -36,9 +37,11 @@ class TempImportCompetitionResult implements ToCollection, WithHeadingRow
             if($checkInstructorName){
                 $checkUserName = User::where('name', $studentName)->where('instructor_id', $checkInstructorName->id)->first();
                 if($checkUserName){
+                    $competitionn = Competition::where('id', $this->competition)->first();
                     $compStudentResult = new TempStudentCompetitionResult();
                     $compStudentResult->cru_id =  $this->uploadId;
                     $compStudentResult->competition_id =  $this->competition;
+                    $compStudentResult->competition_date =  $competitionn->date_of_competition;
                     $compStudentResult->category_id =  $this->category;
                     $compStudentResult->user_id =  $checkUserName->id;
                     $compStudentResult->total_marks =  $row['total_marks'];
