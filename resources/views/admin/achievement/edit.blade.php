@@ -25,152 +25,72 @@
                             <div class="card-body">
 
                                 <div class="form-group">
-                                    <label for="type">Type</label>
-                                    <select disabled name="type" class="form-control" id="type">
+                                    <label for="studentss">Student</label>
+                                    <select required name="studentss" class="form-control selectpicker" id="type"  data-live-search="true">
                                         <option value="">-- Select --</option>
-                                        @foreach(achievementType() as $key=>$val)
-                                        <option value="{{ $key }}"    @if($type==$key) selected @endif>{{ $val }}</option>
+                                        @foreach($students as $key=>$val)
+                                        <option value="{{ $val->id }}" @if($event->user_id == $val->id) selected @endif >{{ $val->name }}, Instructor: {{ getInstructor($val->instructor_id)->name ?? '' }},Learning Location: {{ getLearningLocation($val->learning_locations)->title ?? '' }}, DOD: {{ $val->dob }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('type'))
+                                    @if ($errors->has('studentss'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('type') }}</strong>
+                                        <strong>{{ $errors->first('studentss') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="event">Grading/Competition</label>
-                                    <select disabled required name="event" class="form-control" id="event">
-                                        <option value="">-- Select --</option>
-                                @if($type==1)
-
-
-                                        @foreach($grading as $grade)
-                                        <option value="{{ $grade->id }}"  @if($event->grading_id ==$grade->id) selected @endif>{{ $grade->title }}</option>
-                                        @endforeach
-
-
-                                @elseif($type==2)
-
-                                        @foreach($competition as $comp)
-                                        <option value="{{ $comp->id }}"  @if($event->competition_id ==$comp->id) selected @endif>{{ $comp->title }}</option>
-                                        @endforeach
-
-
-
-                                @endif
-                                        </select>
-                                        @if ($errors->has('event'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('event') }}</strong>
-                                        </span>
-                                        @endif
+                                    <label for="year">Year</label>
+                                    <input required type="text" name="year" class="form-control datepicker1" id="" value="{{ old('year', $event->competition_date) ?? '' }}">
+                                    @if ($errors->has('year'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('year') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 
-                                @if(isset($event->competition_id))
-                                    @php
-                                    $compCategory = \App\CategoryCompetition::where('competition_id', $event->competition_id)->get();
-                                    @endphp
-                                    <div class="form-group">
-                                        <label for="category">Category</label>
-                                        <select disabled required name="category" class="form-control" id="category">
-                                            <option value="">-- Select --</option>
-                                            @foreach($compCategory as $key=>$val)
-                                            <option value="{{ $val->category_id }}"    @if($event->category_id ==$val->category_id) selected @endif>{{ $val->category->category_name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('category'))
-                                            <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('category') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                                <div class="form-group">
+                                    <label for="event_title">Event Title</label>
+                                    <input required type="text" name="event_title" class="form-control" id="" value="{{ old('event_title', $event->title) ?? '' }}">
 
-
-
-
-                                @if(isset($event->category_id))
-                                    @php
-                                    $students = \App\CompetitionStudent::where('competition_controller_id', $event->competition_id)->where('category_id', $event->category_id)->get();
-                                    @endphp
-                                    <div class="form-group">
-                                        <label for="user_id">Students</label>
-                                        <select disabled required name="user_id" class="form-control" id="category">
-                                            <option value="">-- Select --</option>
-                                            @foreach($students as $key=>$val)
-                                            <option @if($event->user_id ==$val->user_id) selected @endif value="{{ $val->user_id }}">{{ $val->student->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('user_id'))
-                                            <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('user_id') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="result">Result</label>
-                                        <input required type="text" name="result" class="form-control" id="" value="{{ old('result',$event->result) }}">
-
-                                        @if ($errors->has('result'))
-                                        <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('result') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="rank">Rank</label>
-                                        <input required type="text" name="rank" class="form-control" id="" value="{{ old('rank',$event->rank) }}">
-
-                                        @if ($errors->has('rank'))
-                                        <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('rank') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                @endif
-
-                                @else
-
-                                    @if(isset($event->grading_id))
-                                    @php
-                                    $students = \App\GradingStudent::where('grading_exam_id', $event->grading_id)->get();
-                                    @endphp
-                                    <div class="form-group">
-                                        <label for="user_id">Students</label>
-                                        <select required name="user_id" class="form-control" id="category">
-                                            <option value="">-- Select --</option>
-                                            @foreach($students as $key=>$val)
-                                            <option @if($event->user_id ==$val->user_id) selected @endif value="{{ $val->user_id }}">{{ $val->student->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('user_id'))
-                                            <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('user_id') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="result">Result</label>
-                                        <input required type="text" name="result" class="form-control" id="" value="{{ old('result',$event->result) }}">
-
-                                        @if ($errors->has('result'))
-                                        <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('result') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="rank">Rank</label>
-                                        <input required type="text" name="rank" class="form-control" id="" value="{{ old('rank',$event->rank) }}">
-
-                                        @if ($errors->has('rank'))
-                                        <span class="text-danger d-block">
-                                            <strong>{{ $errors->first('rank') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
+                                    @if ($errors->has('event_title'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('event_title') }}</strong>
+                                    </span>
                                     @endif
-                                @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="result">Result</label>
+                                    <input required type="text" name="result" class="form-control" id="" value="{{ old('result', $event->result) ?? '' }}">
+
+                                    @if ($errors->has('result'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('result') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="rank">Rank</label>
+                                    <input required type="text" name="rank" class="form-control" id="" value="{{ old('rank', $event->rank) ?? '' }}">
+
+                                    @if ($errors->has('rank'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('rank') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="marks">Total Marks</label>
+                                    <input required type="text" name="marks" class="form-control" id="" value="{{ old('marks', $event->total_marks) ?? '' }}">
+
+                                    @if ($errors->has('marks'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('marks') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                
+
+                                
                             </div>
                             <div class="card-footer text-right">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
