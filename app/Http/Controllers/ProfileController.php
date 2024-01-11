@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AchievementOther;
 use App\Notification;
 use App\Announcement;
 use App\InstructorCalendar;
@@ -1893,7 +1894,11 @@ class ProfileController extends Controller
         //dd($actualCompetitionPaperSubted);
         $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('total_marks', 'desc')->get();
 
+        $achievementsOther = AchievementOther::where('user_id', $userId)->orderBy('total_marks', 'desc')->get();
+
         $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(10);
+
+        $merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
         //dd($merged);
 
 
