@@ -31,7 +31,7 @@
               <a class="btn-2" href="{{ asset($questions->link ?? '') }}" target="_blank">Download Sample PDF</a>
             </div>
           </div>
-          <div class="xscrollbar">
+          <!-- <div class="xscrollbar">
             <table class="tb-2 tbtype-1">
               <thead>
                 <tr>
@@ -104,7 +104,7 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> -->
         </div>
     </div>
   </div>	
