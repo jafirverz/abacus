@@ -42,7 +42,7 @@ class WorksheetController extends Controller
     {
         $title = $this->title;
         $worksheet = Worksheet::orderBy('title', 'asc')->paginate($this->pagination);
-        $questionTemplate = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,8,10,11])->get();
+        $questionTemplate = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,10,11])->get();
 
         return view('admin.master.worksheet.index', compact('title', 'worksheet', 'questionTemplate'));
     }
@@ -60,7 +60,7 @@ class WorksheetController extends Controller
         $topics = Topic::get();
         $users = User::get();
         $franchiseAccounts = Admin::where('admin_role', 2)->get();
-        $questionTempleates = QuestionTemplate::get();
+        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,10,11])->get();
         return view('admin.master.worksheet.create', compact('title','worksheet', 'levels', 'topics', 'questionTempleates', 'users', 'franchiseAccounts'));
     }
 
@@ -146,7 +146,7 @@ class WorksheetController extends Controller
         $worksheet = Worksheet::find($id);
         $levels = Level::where('status', 1)->get();
         $topics = Topic::get();
-        $questionTempleates = QuestionTemplate::get();
+        $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7,10,11])->get();
         $levelTopic = LevelTopic::where('worksheet_id', $id)->pluck('level_id')->toArray();
         return view('admin.master.worksheet.edit', compact('title', 'worksheet', 'levels', 'topics', 'levelTopic', 'questionTempleates'));
     }
