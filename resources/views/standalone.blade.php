@@ -40,7 +40,7 @@
                         <td></td>
                         @foreach($questi as $ques)
                         @php 
-                        $explo = explode(',', $ques->question_1);
+                        $explo = explode('|', $ques->question_1);
                         $m = 0;
                         @endphp
                         <td>
@@ -60,7 +60,7 @@
                       <tr>
                         <td class="lbtb-1">Your<br/>Answer:</td>
                         @foreach($questi as $ques)
-                        <td class="colanswer text-center"><input class="form-control minwinpt-1" type="number" value="" name="answer[{{ $ques->id }}]" /></td>
+                        <td class="colanswer text-center"><input class="form-control minwinpt-1 number-separator" type="text" value="" name="answer[{{ $ques->id }}]" /></td>
                         @endforeach
                         
                       </tr>
@@ -79,7 +79,7 @@
                     <thead>
                       <tr>
                         <th class="wcol-1 text-center">NO</th>
-                        <th class="wcol-2 text-center">Numbers</th>
+                        <th class="wcol-2 text-center">Questions</th>
                         <th>Answer</th>
                       </tr>
                     </thead>
@@ -103,7 +103,7 @@
                       <tr>
                         <td class="colnumber">{{ $k }}</td>
                         <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                        <td class="colanswer"><input class="form-control" type="number" /></td>
+                        <td class="colanswer"><input class="form-control number-separator" type="text" /></td>
                       </tr>
                       @php 
                       $k++;
@@ -127,4 +127,17 @@
     </div>
 </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
+
 @endsection
