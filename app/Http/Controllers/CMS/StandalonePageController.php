@@ -141,7 +141,8 @@ class StandalonePageController extends Controller
 
     public function questionsAdd(){
         $title = 'Standalone Questions';
-        $questionsTemplate = QuestionTemplate::whereIn('id', [3,4,5,6,7])->get();
+        //$questionsTemplate = QuestionTemplate::whereIn('id', [3,4,5,6,7])->get();
+        $questionsTemplate = QuestionTemplate::whereIn('id', [4])->get();
         $questions = StandaloneQuestions::groupBy('question_template_id')->pluck('question_template_id')->toArray();
         return view('admin.standalone-questionsadd', compact('title', 'questionsTemplate', 'questions'));
     }
@@ -407,6 +408,6 @@ class StandalonePageController extends Controller
 
         //dd($question);
         
-        return redirect()->route('standalone.questions.add', 1)->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
+        return redirect()->route('standalone.questions', 1)->with('success',  __('constant.CREATED', ['module'    =>  $this->title]));
     }
 }

@@ -81,9 +81,9 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td> -->
                                             <td>
-                                                <a href="{{ route('standalone.show', $item->id) }}"
+                                                <!-- <a href="{{ route('standalone.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="View"><i class="fas fa-eye"></i></a>
+                                                    data-original-title="View"><i class="fas fa-eye"></i></a> -->
                                                 <a href="{{ route('standalone.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>

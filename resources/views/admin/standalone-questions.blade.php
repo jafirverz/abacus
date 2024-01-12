@@ -5,6 +5,9 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
+            <div class="section-header-back">
+                <a href="{{ route('standalone.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            </div>
             <h1>{{ $title ?? '-' }}</h1>
             <div class="section-header-button">
                 <a href="{{ route('standalone.questions.add', $standalonePageId) }}" class="btn btn-primary">Add Questions</a>
@@ -32,7 +35,7 @@
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
-                            <div class="card-header-form form-inline">
+                            <!-- <div class="card-header-form form-inline">
                                 <form action="{{ route('standalone.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
@@ -44,7 +47,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="card-body">
@@ -80,9 +83,9 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('standalone.show', $item->id) }}"
+                                                <!-- <a href="{{ route('standalone.show', $item->id) }}"
                                                     class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="View"><i class="fas fa-eye"></i></a>
+                                                    data-original-title="View"><i class="fas fa-eye"></i></a> -->
                                                 <a href="{{ route('standalone.questions.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
