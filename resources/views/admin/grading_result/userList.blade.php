@@ -78,11 +78,16 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>User Name</th>
+                                            <th>DOB</th>
+                                            <th>Instructor</th>
                                             <th>Learning Location</th>
                                             <th>Type</th>
-                                            <th>Total Marks</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
+                                            <th>Mental Grade</th>
+                                            <th>Mental Marks</th>
+                                            <th>Mental Result Pass/Fail</th>
+                                            <th>Abacus Grade</th>
+                                            <th>Abacus Result Pass/Fail</th>
+                                            <th>Abacus Marks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,12 +101,16 @@
                                                 data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
                                             <td>{{ $item->user->name }}</td>
+                                            <td>{{ $item->user->dob }}</td>
+                                            <td>{{ $item->user->instructor->name }}</td>
                                             <td>{{ $item->user->location->title ?? '' }}</td>
                                             <td>{{ getUserTypes($item->user->user_type_id) ?? '' }}</td>
-                                            <td>{{ $item->total_marks }}</td>
-
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                            <td>{{ $item->mental_grade }}</td>
+                                            <td>{{ $item->mental_results }}</td>
+                                            <td>{{ $item->mental_result_passfail }}</td>
+                                            <td>{{ $item->abacus_grade }}</td>
+                                            <td>{{ $item->abacus_result_passfail }}</td>
+                                            <td>{{ $item->abacus_marks }}</td>
                                         </tr>
                                         @endforeach
                                         @else
