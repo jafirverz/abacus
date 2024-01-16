@@ -22,16 +22,27 @@
                             <div class="form-group">
                                 <label for="title">Order Id</label>: {{ $orderDetail->order->id ?? '' }}
                             </div>
-                            
                             <div class="form-group">
-                                <label for="title">Order Name</label>:{{ ucwords($orderDetail->name) }} 
+                                <label for="title">Student Name</label>: {{ $orderDetail->order->user->name }} 
                             </div>
                             <div class="form-group">
-                                <label for="title">Order Amount</label>:{{ $orderDetail->amount }} 
+                                <label for="title">Order Name</label>: {{ ucwords($orderDetail->name) }} 
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Order Amount</label>: {{ $orderDetail->amount }} 
                             </div>
                             
                             <div class="form-group">
                                 <label for="status">Order Status</label>: {{ $orderDetail->order->payment_status ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Expiry Date</label>: {{ $orderDetail->expiry_date ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Created At</label>: {{ $orderDetail->created_at ?? '' }}
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Updated At</label>: {{ $orderDetail->updated_at ?? '' }}
                             </div>
                             <hr>
                             @endforeach
