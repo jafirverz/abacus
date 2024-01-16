@@ -6,120 +6,172 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('question.index') }}" class="btn btn-icon"><i
-                        class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('options-survey-questions.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('question_crud', 'Show',
-            route('question.show', $question->id))])
+            {{--@include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('survey_crud', 'Edit',
+            route('survey.edit', $survey->id))]) --}}
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
+                        
+                            <div class="card-body">
 
-                            <div class="form-group">
-                                <label for="">Title</label>
-                                <input readonly="readonly" type="text" name="title" class="form-control" value="{{ old('title', $question->title) }}">
-
-                            </div>
-
-                            <div class="form-group">
-                                <label for="worksheet">Worksheet</label>
-                                <select disabled="disabled"  id="worksheet_id" class="form-control"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                                    <option value="">-- Select --</option>
-                                    @if ($worksheets)
-                                    @foreach ($worksheets as $item)
-                                    <option value="<?php echo url('/'); ?>/admin/question/{{ $question->id }}/edit?question-type={{ $item->question_type }}" @if(old('worksheet_id', $question->worksheet_id)==$item->id) selected @endif> {{ $item->title }} </option>
-                                    @endforeach
+                                <div class="form-group">
+                                    <label for="">Select Questions</label>
+                                    <input class="form-control" type="text" readonly name="survey_question" value="{{ $surveysQuestions->title }}" disabled>
+                                    @if ($errors->has('survey_question'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('survey_question') }}</strong>
+                                    </span>
                                     @endif
-                                </select>
-
-
-                            </div>
-                            @if($question->question_type==9)
-                                <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
-                                @php
-                                    $json_question=json_decode($question->json_question);
-                                    for($i=0;$i<count($json_question->input_1);$i++)
-                                    {
-
-                                @endphp
-
-                                    <div class="form-group">
-                                        <div class="row" style="margin-bottom:30px;">
-                                            <div class="col-md-4">
-                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_1[$i] }}" name="input_1[]" placeholder="Number 1" type="text">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <input readonly="readonly" class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                @php } @endphp
-
-
-                                @elseif($question->question_type==2 || $question->question_type==1 || $question->question_type==3)
-                                <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
-                                @php
-                                $json_question=json_decode($question->json_question);
-                                for($i=0;$i<count($json_question->input_1);$i++)
-                                {
-
-                                    @endphp
-
+                                </div>
+                                
+                                @if($surveysQuestions->type == 'radio')
+                                    @foreach($surveysQuestionOptions as $surveysQuestionOption)
                                         <div class="form-group">
                                             <div class="row" style="margin-bottom:30px;">
-                                                <div class="col-md-4">
-                                                    <input readonly="readonly" class="form-control"  value="{{ $json_question->input_1[$i] }}" name="input_1_old[]" type="hidden">
-                                                    <a href="{{ url('/') }}/upload-file/{{ $json_question->input_1[$i] }}" target="_blank"> {{ $json_question->input_1[$i] }} </a>
+                                                <div class="col-md-5">
+                                                    <input class="form-control" required value="{{ $surveysQuestionOption->title }}" name="input_1[]" placeholder="Option Name" type="text" disabled>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
+                                                <div class="col-md-5">
+                                                    <select name="radio_type[]" class="form-control" required disabled>
+                                                        <option value="">-- Select --</option>
+                                                        <option value="with_title" @if(old('radio_type', $surveysQuestionOption->option_type) == 'with_title') selected @endif>With Title</option>
+                                                        <option value="without_title" @if(old('radio_type', $surveysQuestionOption->option_type) == 'without_title') selected @endif>Without Title</option>
+                                                    </select>
                                                 </div>
                                             </div>
-
+                                            <!-- <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div> -->
                                         </div>
-                                    @php } @endphp
-
-                                    @elseif($question->question_type==4)
-                                    <label for="" class=" control-label">{{ getQuestionTemplate($question->question_type) }}</label>
-                                    @php
-                                    $json_question=json_decode($question->json_question);
-                                    for($i=0;$i<count($json_question->input_1);$i++)
-                                    {
-    
-                                        @endphp
-    
-                                            <div class="form-group">
-                                                <div class="row" style="margin-bottom:30px;">
-                                                    <div class="col-md-4">
-                                                        <textarea readonly rows="5" cols="40">{{ $json_question->input_1[$i] }}</textarea>
-                                                        
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <input readonly="readonly" class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Answer" type="text">
-                                                    </div>
+                                    @endforeach
+                                    <div class="after-add-more"></div>
+                                    <!-- <div class="input-group-btn">
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div> -->
+                                @elseif($surveysQuestions->type == 'textarea')
+                                    @foreach($surveysQuestionOptions as $surveysQuestionOption)
+                                        <div class="form-group">
+                                            <div class="row" style="margin-bottom:30px;">
+                                                <div class="col-md-5">
+                                                    <input class="form-control" required value="{{ $surveysQuestionOption->title }}" name="input_1[]" placeholder="Option Name" type="text" disabled>
                                                 </div>
-    
+                                            
+                                            
                                             </div>
-                                        @php } @endphp
-
+                                            <!-- <div class="input-group-btn">
+                                                <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                            </div> -->
+                                        </div>
+                                        @endforeach
+                                    <div class="after-add-more"></div>
+                                    <!-- <div class="input-group-btn">
+                                    <button class="btn btn-success add-more1" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                    </div> -->
                                 @endif
 
+                                
+
+                                
+                            </div>
 
 
-                        </div>
+                            
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
+
+
+<!-- Copy Fields -->
+<div class="copy" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+        
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="input_1[]" placeholder="Option Name" type="text">
+            </div>
+            <div class="col-md-5">
+                <select name="radio_type[]" class="form-control" required>
+                    <option value="">-- Select --</option>
+                    <option value="with_title" >With Title</option>
+                    <option value="without_title" >Without Title</option>
+                </select>
+            </div>
+
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
+<!-- Copy Fields -->
+<div class="copy1" style="display:none;">
+    <div class="form-group">
+        <div class="row">
+        
+            <div class="col-md-5">
+                <input class="form-control" required value="" name="input_1[]" placeholder="Option Name" type="text">
+            </div>
+            
+
+       </div>
+       <div class="input-group-btn">
+        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+      </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('body').on('change','#worksheet', function() {
+             alert(this.value);
+             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var worksheet_id= this.value;
+                //alert(make);
+                //alert(id);
+                $.ajax({
+                    url:"<?php echo url('/'); ?>/admin/survey/find-worksheet",
+                    method:"POST",
+                    data:{_token: CSRF_TOKEN,worksheet_id:worksheet_id},
+                    success:function(data){
+                        //$("#model_header_list").html(data);
+                        //$('.selectpicker').selectpicker('refresh');
+                    }
+                });
+        });
+
+
+        $(".add-more").click(function(){
+              var html = $(".copy").html();
+              $(".after-add-more").after(html);
+          });
+
+          $(".add-more1").click(function(){
+          var html = $(".copy2").html();
+          $(".after-add-more").after(html);
+          });
+          
+
+          $("body").on("click",".remove",function(){
+              $(this).parents(".form-group").remove();
+          });
+
+          $("body").on("click",".remove2",function(){
+              $(this).parents(".row").remove();
+          });
+
+        });
+    </script>
+
 @endsection
