@@ -101,7 +101,7 @@
                                 <select data-live-search="true" class="selectpicker" onchange="getInstructor(this.value)" name="country_code">
                                     <option value="">Please Select</option>
                                     @foreach(getFranchiseCountry() as $countr)
-                                    <option value="{{ $countr->id }}" @if(old('country_code') == $countr->id) selected @endif>{{ $countr->nicename }}</option>
+                                    <option value="{{ $countr->id }}" @if(old('country_code') == $countr->id) selected @endif>{{ $countr->country }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('country_code'))
