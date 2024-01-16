@@ -95,9 +95,13 @@ class SurveyQuestionOptionController extends Controller
      * @param  \App\SurveyQuestionOption  $surveyQuestionOption
      * @return \Illuminate\Http\Response
      */
-    public function show(SurveyQuestionOption $surveyQuestionOption)
+    public function show($id)
     {
         //
+        $title = $this->title;
+        $surveysQuestionOptions = SurveyQuestionOption::where('survey_question_id', $id)->get();
+        $surveysQuestions = SurveyQuestion::where('id', $id)->first();
+        return view('admin.survey_question_option.show', compact('title', 'surveysQuestionOptions', 'surveysQuestions'));
     }
 
     /**
