@@ -209,37 +209,6 @@
                 ],
                 */
                 [
-                    'title' =>  __('constant.SURVEY'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/surveys',
-                    'idtag'  => 'surveys',
-                ],
-                [
-                    'title' =>  __('constant.SURVEY_QUESTIONS'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/survey-questions',
-                    'idtag'  => 'surveyquestion',
-                ],
-                [
-                    'title' =>  __('constant.SURVEY_QUESTIONS_OPTIONS'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/options-survey-questions',
-                    'idtag'  => 'optionsurveyquestion',
-                ],
-                [
-                    'title' =>  __('constant.OPTIONS_CHOICES'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/option-choices',
-                    'idtag'  => 'optionchoices',
-                ],
-                [
-                    'title' =>  __('constant.SURVEY_ALLOCATION'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/survey-allocation',
-                    'idtag'  => 'surveyallocation',
-                ],
-
-                [
                     'title' =>  __('constant.STANDALONE_PAGE'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/standalone',
@@ -406,6 +375,36 @@
         [
             'menu_header'   =>  __('constant.USERSURVEY'),
             'main_menu' =>  [
+                [
+                    'title' =>  __('constant.SURVEY'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/surveys',
+                    'idtag'  => 'surveys',
+                ],
+                [
+                    'title' =>  __('constant.SURVEY_QUESTIONS'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/survey-questions',
+                    'idtag'  => 'surveyquestion',
+                ],
+                [
+                    'title' =>  __('constant.SURVEY_QUESTIONS_OPTIONS'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/options-survey-questions',
+                    'idtag'  => 'optionsurveyquestion',
+                ],
+                [
+                    'title' =>  __('constant.OPTIONS_CHOICES'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/option-choices',
+                    'idtag'  => 'optionchoices',
+                ],
+                [
+                    'title' =>  __('constant.SURVEY_ALLOCATION'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/survey-allocation',
+                    'idtag'  => 'surveyallocation',
+                ],
                 [
                     'title' =>  __('constant.USERSURVEY'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
