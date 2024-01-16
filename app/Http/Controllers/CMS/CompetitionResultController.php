@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\CategoryCompetition;
 use App\Certificate;
 use App\Competition;
 use App\CompetitionPaper;
@@ -44,13 +45,21 @@ class CompetitionResultController extends Controller
         return view('admin.competition_result.index', compact('title', 'competition'));
     }
 
-    public function studentList($id){
+    public function studentList(Request $request, $id){
+        // dd($request->all());
+        $catId = $request->catId;
         $title = $this->title;
         //$userList = CompetitionPaperSubmitted::where('competition_id', $id)->paginate($this->pagination);
-        $userList = CompetitionStudentResult::where('competition_id', $id)->paginate($this->pagination);
+        if(isset($catId) & !empty($catId)){
+            $userList = CompetitionStudentResult::where('competition_id', $id)->where('category_id', $catId)->paginate($this->pagination);
+        }else{
+            $userList = CompetitionStudentResult::where('competition_id', $id)->paginate($this->pagination);
+        }
+        
         $competitionId = $id;
         $competition = Competition::where('id', $id)->first();
-        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
+        $competitionCategory = CategoryCompetition::where('competition_id', $id)->get();
+        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition', 'competitionCategory'));
     }
 
     public function edit($id){
@@ -122,7 +131,8 @@ class CompetitionResultController extends Controller
         $userList = CompetitionStudentResult::where('competition_id', $request->competitionId)->whereIn('user_id', $users)->paginate($this->pagination);
         $competitionId = $request->competitionId;
         $competition = Competition::where('id', $request->competitionId)->first();
-        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
+        $competitionCategory = CategoryCompetition::where('competition_id', $competitionId)->get();
+        return view('admin.competition_result.userList', compact('title', 'userList', 'competitionId', 'competition', 'competitionCategory'));
     }
 
     public function deleteUser(Request $request){
