@@ -18,6 +18,28 @@
         @if($competition->competition_type == 'online')
         <div class="section-body">
             @include('admin.inc.messages')
+
+            <form action="{{ route('results.competition', ['id'=>$competitionId]) }}" method="get" id="formreport">
+                @csrf
+                <div class="section-body">
+                    <div class="row">
+                        <div class="col-lg-4"><label>Category:</label>
+                            <select name="catId" class="form-control">
+                                <option value="">-- Select --</option>
+                                @foreach($competitionCategory as $cate)
+                                <option value="{{ $cate->category_id }}" @if(isset($_REQUEST['catId']) && $_REQUEST['catId']==$cate->category_id) selected="selected"
+                                    @endif>{{$cate->category->category_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <button type="submit" class="btn btn-primary"> Filter</button>
+                        </div>
+                    </div>
+                </div>
+            </form><br />
             
             <div class="row">
                 <form method="get" action="{{ route('studentResultDownload', $competitionId) }}">
