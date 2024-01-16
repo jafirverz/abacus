@@ -92,9 +92,14 @@ class SurveyQuestionController extends Controller
      * @param  \App\SurveyQuestion  $surveyQuestion
      * @return \Illuminate\Http\Response
      */
-    public function show(SurveyQuestion $surveyQuestion)
+    public function show($id)
     {
         //
+        //
+        $title = $this->title;
+        $surveysQuestion = SurveyQuestion::find($id);
+        $surveys = Survey::get();
+        return view('admin.survey_question.show', compact('title', 'surveys', 'surveysQuestion'));
     }
 
     /**
