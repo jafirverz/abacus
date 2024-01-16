@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-md">
                                 <form method="get" action="{{ url('external-profile/my-students') }}">
-                                    <input class="form-control" name="keyword" type="text" value="@if(isset($_GET['keyword']) && $_GET['keyword']!='') {{ $_GET['keyword'] }} @endif" placeholder="Search By Nmae">
+                                    <input class="form-control" name="keyword" type="text" value="@if(isset($_GET['keyword']) && $_GET['keyword']!='') {{ $_GET['keyword'] }} @endif" placeholder="Search By Name">
                                 </form>
                             </div>
                             <div class="col-md-auto col-sm-auto mt-767-15">
