@@ -10,21 +10,21 @@
 
 
         </div>
-        <form action="{{ route('reports-student.search') }}" method="post">
+        <form action="{{ route('reports-student.search') }}" method="get" id="formreport">
             @csrf
             <div class="section-body">
 
                 <div class="row">
 
-                    <div class="col-lg-4"><label>Student Name:</label><input type="text" name="name" class="form-control"
+                    <!-- <div class="col-lg-4"><label>Student Name:</label><input type="text" name="name" class="form-control"
                             id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}"
-                            @endif> </div>
+                            @endif> </div> -->
                     <div class="col-lg-4">
                         <label>Instructor</label>
-                        <select name="instructor[]" class="form-control" multiple>
+                        <select name="instructor[]" class="form-control selectpicker" multiple data-live-search="true">
                             <option value="">-- Select --</option>
                             @foreach ($instructor as $key => $value)
-                            <option @if(isset($_GET['instructor_id']) && $_GET['instructor_id']==$value->id) selected="selected"
+                            <option @if(isset($_GET['instructor']) && in_array($value->id, $_GET['instructor'])) selected="selected"
                                 @endif value="{{$value->id}}">{{$value->name}}</option>
                             @endforeach
                         </select>
@@ -40,29 +40,26 @@
                       </select>
                   </div>
 
+                  <div class="col-lg-4"><label>Status:</label>
+                    <select name="status" class="form-control">
+                      <option value="">-- Select --</option>
+                      <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
+                          @endif value="1">Active</option>
+                      <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
+                          @endif value="0">In Active</option>
+                      <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
+                          @endif value="2">Rejected</option>
+                  </select>
+                  </div>
+
                 </div>
-                <div class="row">
-                    <div class="col-lg-4"><label>Status:</label>
-                      <select name="status" class="form-control">
-                        <option value="">-- Select --</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
-                            @endif value="1">Active</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
-                            @endif value="0">In Active</option>
-                        <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                            @endif value="2">Rejected</option>
-                    </select>
-                    </div>
-                    <!-- <div class="col-lg-4"><label>End Date:</label>
-                      <input type="text" name="enddate" class="form-control datepicker1"
-                      id="title" @if(isset($_GET['enddate']) && $_GET['enddate']!="" ) value="{{ $_GET['enddate'] }}"
-                      @endif>
-                    </div> -->
-                </div>
+                
                 <br />
+                <input type="hidden" name="downloadexcel" value="" id="downloadexcel">
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary"> Download</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" onclick="formsubmitsearch();"> Search</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" onclick="formsubmit();"> Download</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
@@ -215,4 +212,15 @@
         </div>
     </section>
 </div>
+
+<script>
+    function formsubmit(){
+        $("#downloadexcel").val(1);
+        $('form#formreport').submit();
+    }
+    function formsubmitsearch(){
+        $("#downloadexcel").val(0);
+        $('form#formreport').submit();
+    }
+  </script>
 @endsection
