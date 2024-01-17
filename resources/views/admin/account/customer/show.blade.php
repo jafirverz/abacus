@@ -105,10 +105,10 @@
                             @if(isset($merged) && count($merged)>0)
                             @foreach($merged as $paperSubmited)
                             <tr>
-                            <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date }} @else {{ $paperSubmited->competition->date_of_competition }} @endif
+                            <td><strong class="type-1">@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->exam_date ?? '' }} @else {{ $paperSubmited->competition->date_of_competition ?? '' }} @endif
 
                             </strong></td>
-                            <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title }} @else {{ $paperSubmited->competition->title }} @endif</td>
+                            <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title ?? '' }} @else {{ $paperSubmited->competition->title ?? '' }} @endif</td>
                             <td>
                                 @if(isset($paperSubmited->grading_id))
                                 @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
