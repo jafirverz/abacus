@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="form-group" >
-                                    <label for="title">Price</label>
+                                    <label for="title">Price (0.00)</label>
                                     <input type="text" name="price" class="form-control" id=""
                                         value="{{ old('price', $competitionPaper->price) ?? '' }}">
                                     @if ($errors->has('price'))
@@ -97,7 +97,7 @@
                                 
                                 @if($competitionPaper->comp_contro->competition_type == 'physical')
                                 <div class="form-group physicalclass" >
-                                    <label for="title">Price</label>
+                                    <label for="title">Price (0.00)</label>
                                     <input type="text" name="price" class="form-control" id=""
                                         value="{{ old('price', $competitionPaper->price) ?? '' }}">
                                     @if ($errors->has('price'))
@@ -137,7 +137,7 @@
                                 
 
                                 <div class="form-group">
-                                    <label for="title">Time</label>
+                                    <label for="title">Timing (mins)</label>
                                     <input type="text" name="time" class="form-control" id=""
                                         value="{{ old('time', $competitionPaper->time) }}">
                                     @if ($errors->has('time'))
