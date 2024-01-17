@@ -62,7 +62,7 @@
                             @endphp
                               <td>
                                 @php
-                                $arrVal = explode(',', $question->input_1);
+                                $arrVal = explode('|', $question->input_1);
                                 foreach($arrVal as $val){
                                 @endphp
                                 <div class="row sp-col-5 inrow-1">

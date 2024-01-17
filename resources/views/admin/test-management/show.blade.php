@@ -30,7 +30,13 @@
                                     <strong>Course</strong>: {{ $test->course->title }}
                                 </div>
                                 <div class="form-group">
-                                    <strong>Course</strong>: {{ gradingExamLayout($test->template)??'' }}
+                                    <strong>Input Type</strong>: {{ gradingExamLayout($test->template)??'' }}
+                                </div>
+                                <div class="form-group">
+                                    <strong>Start Date</strong>: {{ date('d M, Y h:i A',strtotime($test->start_date)) }}
+                                </div>
+                                <div class="form-group">
+                                    <strong>End Date</strong>: {{ date('d M, Y h:i A',strtotime($test->end_date)) }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Created At</strong>: {{ $test->created_at->format('d M, Y h:i A') }}

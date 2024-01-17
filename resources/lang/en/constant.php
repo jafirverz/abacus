@@ -15,7 +15,7 @@ return [
     'GRADING_ASSIGN'  =>  'Grading Assign',
     'GRADING_PAPER'  =>  'Grading Paper',
     'TEACHING_MATERIALS'  =>  'Teaching Materials',
-    'TEST_MANAGEMENT'  =>  'Test Management',
+    'TEST_MANAGEMENT'  =>  'Allocate Test/Online Lesson',
     'TEST_PAPER'  =>  'Test / Lessons',
     'TEST_PAPER_QUIESTION'  =>  'Test/Lesson Questions',
     'COURSE'  =>  'Courses',

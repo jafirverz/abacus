@@ -90,7 +90,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Sstart Date <span class="required">*</span></label>
+                                    <label for="">Start Date <span class="required">*</span></label>
                                     <input type="text" name="start_date" class="form-control datepicker1" value="{{ old('start_date',$test->start_date) }}">
                                     @if ($errors->has('start_date'))
                                     <span class="text-danger d-block">

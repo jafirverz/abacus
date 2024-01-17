@@ -387,21 +387,27 @@ class ProfileController extends Controller
                 $testPaperdetail = TestPaperDetail::find($test_paper_question_id);
                 //dd($testPaperdetail);
                 $flag=1;
-                foreach($request->answer2 as $key=>$value)
+                if(isset($request->answer2))
                 {
-                    if($key+$testPaperdetail->write_from!=$value)
+                    foreach($request->answer2 as $key=>$value)
                     {
-                        $flag=0;
+                        if($key+$testPaperdetail->write_from!=$value)
+                        {
+                            $flag=0;
+                        }
                     }
                 }
+
                 //echo $flag;die;
                 $courseSub = new TestSubmission();
                 $courseSub->test_paper_question_id   = $test_paper_question_id;
                 $courseSub->test_id  = $test_id;
                 $courseSub->question_template_id = $questionTypeId;
                 $courseSub->user_id = $userId;
+                if(isset($request->answer2))
+                {
                 $courseSub->other_answer = json_encode($request->answer2);
-
+                }
                 if($questionTypeId==11)
                 {
                     if( $flag==1)
