@@ -611,7 +611,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('notification', 'CMS\NotificationController');
 
 
-    Route::post('reports-student/search', 'CMS\ReportController@search')->name('reports-student.search');
+    Route::get('reports-student/search', 'CMS\ReportController@search')->name('reports-student.search');
     Route::get('reports-student', 'CMS\ReportController@index');
 
     Route::get('reports-grading-examination/search', 'CMS\ReportController@grading_examination_search')->name('reports-grading-examination.search');

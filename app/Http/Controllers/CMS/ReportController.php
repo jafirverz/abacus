@@ -55,7 +55,7 @@ class ReportController extends Controller
         $title = 'Student Report';
         //$pages = Page::orderBy('view_order', 'asc')->get();
         $users = User::whereIn('user_type_id', [1, 2, 3, 4])->paginate($this->pagination);
-        $instructor = User::where('user_type_id', 5)->get();
+        $instructor = User::where('user_type_id', 5)->orderBy('name', 'asc')->get();
         $userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
         $countries = Country::get();
         return view('admin.cms.reports.student_report', compact('title', 'users', 'instructor', 'countries', 'userType'));
@@ -63,35 +63,59 @@ class ReportController extends Controller
 
     public function search(Request $request)
     {
+        // dd($request->all());
         //dd($request->instructor);
+        $title = 'Student Report';
         DB::enableQueryLog();
         $instructor = $request->instructor ?? array();
-
         $q = User::query();
+        if($request->downloadexcel == 1){
+            
 
-        if ($request->name) {
-            // simple where here or another scope, whatever you like
-            $q->where('name', 'like', $request->name);
+            // if ($request->name) {
+            //     // simple where here or another scope, whatever you like
+            //     $q->where('name', 'like', $request->name);
+            // }
+
+            if ($request->status!='' && in_array($request->status, [0,1,2])) {
+                $q->where('approve_status', $request->status);
+            }
+
+            if ($request->user_type) {
+                $q->where('user_type_id', $request->user_type);
+            }
+
+            if ($request->instructor) {
+                $q->whereIn('instructor_id', $instructor);
+            }
+
+            $allUsers = $q->get();
+            //$query = DB::getQueryLog();
+            //dd($query);
+            ob_end_clean();
+            ob_start();
+            return Excel::download(new StudentExport($allUsers), 'StudentReport.xlsx');
+        }else{
+            // dd($request->all());
+            if ($request->status!='' && in_array($request->status, [0,1,2])) {
+                $q->where('approve_status', $request->status);
+            }
+
+            if ($request->user_type) {
+                $q->where('user_type_id', $request->user_type);
+            }
+
+            if ($request->instructor) {
+                $q->whereIn('instructor_id', $instructor);
+            }
+
+            $users = $q->paginate($this->pagination);
+            // $users = User::whereIn('user_type_id', [1, 2, 3, 4])->paginate($this->pagination);
+            $instructor = User::where('user_type_id', 5)->orderBy('name', 'asc')->get();
+            $userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
+            // $countries = Country::get();
+            return view('admin.cms.reports.student_report', compact('title', 'users', 'instructor', 'userType'));
         }
-
-        if ($request->status!='' && in_array($request->status, [0,1,2])) {
-            $q->where('approve_status', $request->status);
-        }
-
-        if ($request->user_type) {
-            $q->where('user_type_id', $request->user_type);
-        }
-
-        if ($request->instructor) {
-            $q->whereIn('instructor_id', $instructor);
-        }
-
-        $allUsers = $q->get();
-        //$query = DB::getQueryLog();
-        //dd($query);
-        ob_end_clean();
-        ob_start();
-        return Excel::download(new StudentExport($allUsers), 'StudentReport.xlsx');
         //dd($allUsers);
     }
 
