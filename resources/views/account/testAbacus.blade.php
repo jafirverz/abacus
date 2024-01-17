@@ -57,7 +57,7 @@
                                   <td></td>
                                   @foreach($paper_detail->questionsCourse as $ques)
                                   @php
-                                  $explo = explode(',', $ques->input_1);
+                                  $explo = explode('|', $ques->input_1);
                                   $m = 0;
                                   @endphp
                                   <td>

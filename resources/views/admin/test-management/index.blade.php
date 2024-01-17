@@ -65,8 +65,6 @@
                                             <th>Title</th>
                                             <th>Paper</th>
                                             <th>Course</th>
-                                            <th>Students</th>
-                                            <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
@@ -84,7 +82,6 @@
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->paper->title }}</td>
                                             <td>{{ $item->course->title }}</td>
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
                                         @endforeach

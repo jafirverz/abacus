@@ -40,8 +40,9 @@ class TestPaperQuestionController extends Controller
     {
         $title = $this->title;
         $list = TestPaperDetail::where('paper_id',$paper_id)->paginate($this->pagination);
+        $paper = TestPaper::find($paper_id);
 
-        return view('admin.test-paper.question.index', compact('title', 'list','paper_id'));
+        return view('admin.test-paper.question.index', compact('title', 'list','paper_id','paper'));
     }
 
     /**

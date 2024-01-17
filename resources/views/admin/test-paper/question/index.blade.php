@@ -7,17 +7,18 @@
         <div class="section-header">
             <div class="section-header-back">
                 <a href="{{ route('test-paper.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i> Go Back</a>
-            </div>
-            <h1>{{ $title ?? '-' }}</h1>
+            </div><br>
+            <h1>{{ $title ?? '-' }} >> {{  $paper->title}}</h1><br><p><br></p>
             <div class="section-header-button">
                 @if($list->count()==0)
                 <a href="{{ route('test-paper-question.create',$paper_id) }}" class="btn btn-primary">Add New</a>
                 @endif
             </div>
+            <br>
             @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_test_paper_question', $paper_id)])
 
         </div>
-        <br />
+
 
         <div class="section-body">
             @include('admin.inc.messages')
@@ -68,6 +69,7 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
+                                            <th>Question Template</th>
                                             <th>Instruction</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -90,6 +92,7 @@
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
 
                                             </td>
+                                            <td>{{ $item->test_paper->template->title ?? '' }}</td>
                                             <td>{{ $item->question }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
