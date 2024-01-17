@@ -88,7 +88,7 @@
                                             </th> -->
                                             <th>Action</th>
                                             <th>Title</th>
-                                            <th>Levels</th>
+                                            <th>Level Allocated</th>
                                             <th>Question Template</th>
                                             <th>Free/Premium</th>
                                             <th>Status</th>

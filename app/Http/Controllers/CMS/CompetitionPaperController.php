@@ -84,6 +84,7 @@ class CompetitionPaperController extends Controller
             'time'  =>  'required_if:competionT,1',
             //'question_type'  =>  'required_if:competionT,1',
             'paper_type'  =>  'required',
+            'status' => 'required',
         ], $messages);
 
         if ($request->hasfile('pdf_upload')) {
@@ -202,6 +203,7 @@ class CompetitionPaperController extends Controller
             'time'  =>  'required_if:competionT,1',
             //'question_type'  =>  'required_if:competionT,1',
             'paper_type'  =>  'required',
+            'status' => 'required',
         ], $messages);
 
         

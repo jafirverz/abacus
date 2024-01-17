@@ -87,7 +87,7 @@ return [
     'GRADING_EXAMINATION_REPORTS' => 'Grading Examination Reports',
     'COMPETITION_REPORTS' => 'Competition Reports',
     'ORDERS' => 'Orders',
-    'USERSURVEY' => 'Completed Survey',
+    'USERSURVEY' => 'Survey',
     'CERTIFICATE' => 'Certificate',
     'QUESTIONS_ATTEMPT' => 'Questions Attempt',
     'CHALLENGE_BOARD_CLEAR' => 'Challenge Board',
