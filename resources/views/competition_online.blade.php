@@ -35,7 +35,7 @@
                                         <strong>Date:</strong> {{ date('j F Y', strtotime($competition->date_of_competition)) }}
                                     </div>	
                                     <div class="inrow">
-                                        <strong>Allocated Competition Time:</strong> SGT {{ $competition->start_time_of_competition }} - {{ $competition->end_time_of_competition }}
+                                        <strong>Competition Time:</strong> SGT {{ $competition->start_time_of_competition }} - {{ $competition->end_time_of_competition }}
                                         
                                     </div>
                                     @php 
