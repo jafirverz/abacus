@@ -42,7 +42,7 @@ return [
     'PAGES' =>  'Pages',
     'SYSTEM_SETTING'    =>  'System Setting',
     'EMAIL_TEMPLATE'    =>  'Email Template',
-    'PASS'    =>  'Examination Pass',
+    'PASS'    =>  'Grading Exam & Competition Pass',
     'PROFILE'   =>  'Profile',
     'ROLES_AND_PERMISSION'  =>  'Roles and Permission',
     'BANNER'    =>  'Page Banner',
