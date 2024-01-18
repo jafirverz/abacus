@@ -7,6 +7,7 @@ use App\Competition;
 use App\CompetitionCategory;
 use App\CompetitionResultUpload;
 use App\CompetitionStudent;
+use App\Exports\CompetetitionStudentList;
 use App\Http\Controllers\Controller;
 use App\Imports\ImportCompetitionResult;
 use App\Imports\TempImportCompetitionResult;
@@ -456,5 +457,12 @@ class CompetitionController extends Controller
             $comStu->delete();
         }
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  'Competition Student']));
+    }
+
+    public function studentExcel(Request $request, $id){
+        $allItems = CompetitionStudent::where('competition_controller_id', $id)->get();
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new CompetetitionStudentList($allItems), 'CompetitionStudentList.xlsx');
     }
 }

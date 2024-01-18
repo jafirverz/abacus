@@ -21,8 +21,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-
                         <div class="card-header">
+                            <form method="post" action="{{ route('competition.student.excel', ['id'=>$competition->id]) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-primary"> Download Student List</button>
+                            </form>
+
                             <a href="{{ route('competition.student.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
                                 data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"

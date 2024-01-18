@@ -45,7 +45,7 @@
                 <div class="col-12">
                     <div class="card">
 
-                        <div class="card-header">
+                        <div class="card-header justify-content-end">
 
 
                             <div class="card-header-form form-inline">
