@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="title">Select Student</label>
                                     <select name="students[]" class="form-control" data-live-search="true" multiple>
-                                        <option value="">-- Select --</option>
+
                                         @foreach($students as $student)
                                         <option value="{{ $student ->id}}">{{$student->name}}</option>
                                         @endforeach

@@ -121,12 +121,11 @@
                                             <th>Instructor Name</th>
                                             <th>Franchise Country Name</th>
                                             <th>Registered <br>Mental Grade</th>
+                                            <th>Mental Pass/Fail</th>
                                             <th>Registered <br>Abacus Grades</th>
+                                            <th>Abacus Pass/Fail</th>
                                             <th>Learning Location </th>
                                             <th>Status </th>
-                                            <th>Remark </th>
-                                            <th>Result</th>
-                                            <th>Pass/Fail</th>
 
                                         </tr>
                                     </thead>
@@ -175,17 +174,21 @@
                                                 {{ $item->mental->title ?? '' }}
                                             </td>
                                             <td>
+                                                {{ $item->mental->title ?? '' }}
+                                            </td>
+                                            <td>
                                                 {{ $item->abacus->title ?? '' }}
                                             </td>
                                             <td>
-                                                {{ $item->location->title ?? '' }}
+                                                {{ $item->abacus->title ?? '' }}
+                                            </td>
+                                            <td>
+                                                {{ $item->userlist->location->title ?? '' }}
                                             </td>
                                             <td>
                                                 {{ ($item->approve_status==1)?'Approved':'Pending' }}
                                             </td>
-                                            <td>{{ $item->remarks ?? ''}}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->user_id )->result ?? '-'}}</td>
-                                            <td>{{ getGradingStudentResult($item->grading_exam_id,$item->user_id )->remark_grade ?? '-'}}</td>
+
                                         </tr>
                                         @endforeach
                                         @else

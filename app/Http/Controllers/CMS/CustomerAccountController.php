@@ -70,7 +70,7 @@ class CustomerAccountController extends Controller
     public function create()
     {
         $title = $this->title;
-        $learningLocations = LearningLocation::get();
+        $learningLocations = LearningLocation::orderBy('title','asc')->get();
         if(isset($_GET['user_type']) && $_GET['user_type']==4)
         {
             if($this->user->admin_role==2)
@@ -282,7 +282,7 @@ class CustomerAccountController extends Controller
     {
         $title = $this->title;
         $customer = User::findorfail($id);
-        $learningLocations = LearningLocation::get();
+        $learningLocations = LearningLocation::orderBy('title','asc')->get();
         if($this->user->admin_role==2)
         {
             $country = Country::where('id',$this->user->country_id)->orderBy('phonecode', 'asc')->get();
