@@ -31,7 +31,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="template">Input Type</label>
                                     <select name="template" class="form-control">
                                         <option value="">-- Select --</option>
@@ -48,7 +48,7 @@
                                         <strong>{{ $errors->first('template') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="student_id">Instructor</label>
                                     <select data-live-search="true" name="student_id[]" class="form-control selectpicker" multiple>

@@ -71,7 +71,6 @@ class TestManagementController extends Controller
             'title'  =>  'required',
             'paper_id'  =>  'required',
             'course_id'  =>  'required',
-            'template'  =>  'required',
         ]);
 
         $testManagement = new TestManagement;
@@ -80,7 +79,7 @@ class TestManagementController extends Controller
         $testManagement->start_date = $request->start_date ?? '';
         $testManagement->end_date = $request->end_date ?? '';
         $testManagement->course_id = $request->course_id ?? '';
-        $testManagement->template = $request->template ?? '';
+        //$testManagement->template = $request->template ?? '';
         $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
         $testManagement->created_at = Carbon::now();
         $testManagement->save();
@@ -114,7 +113,13 @@ class TestManagementController extends Controller
     {
         $title = $this->title;
         $test = TestManagement::findorfail($id);
-        return view('admin.test-management.show', compact('title', 'test'));
+        $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        $courses = Course::orderBy('id','desc')->get();
+        $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
+        $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        $allocationInsList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('assigned_by')->toArray();
+        $allocationStudentList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('student_id')->toArray();
+        return view('admin.test-management.show', compact('title', 'test','courses','papers','students', 'userStudent', 'allocationStudentList','allocationInsList'));
     }
 
     /**
@@ -149,7 +154,6 @@ class TestManagementController extends Controller
             'title'  =>  'required',
             'paper_id'  =>  'required',
             'course_id'  =>  'required',
-            'template'  =>  'required',
         ]);
 
         $testManagement = TestManagement::findorfail($id);
