@@ -1074,8 +1074,8 @@ class ProfileController extends Controller
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $this->user->name];
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address,  $this->user->name];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -1103,8 +1103,8 @@ class ProfileController extends Controller
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructorDetail->name];
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 

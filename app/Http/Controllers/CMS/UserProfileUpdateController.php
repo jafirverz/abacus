@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Admin;
+use App\Country;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use App\User;
@@ -57,7 +59,9 @@ class UserProfileUpdateController extends Controller
         $title = 'Profile Update';
         $customer = UserProfileUpdate::findorfail($id);
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.account.customer.editpending', compact('title', 'customer','instructors'));
+        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $countries = Country::whereIn('id', $franchiseCountry)->get();
+        return view('admin.account.customer.editpending', compact('title', 'customer','instructors', 'countries'));
     }
 
     public function update(Request $request, $id)
