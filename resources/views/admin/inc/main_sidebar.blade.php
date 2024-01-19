@@ -85,7 +85,7 @@
             ],
         ],
         [
-            'menu_header'   =>  __('constant.GRADE'),
+            'menu_header'   =>  __('constant.GRADE_MENU'),
             'main_menu' =>  [
 
                 [

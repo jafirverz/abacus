@@ -30,24 +30,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
-                                    <label for="template">Input Type</label>
-                                    <select name="template" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @if (gradingExamLayout())
-                                        @foreach (gradingExamLayout() as $key=>$item)
-                                        <option value="{{ $key }}" @if(old('template',$test->template)==$key)
-                                            selected
-                                            @endif>{{ $item }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('template'))
-                                    <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('template') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+
                                 @php
                                  // dd($allocationInsList);
                                 @endphp

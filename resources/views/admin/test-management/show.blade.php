@@ -29,8 +29,29 @@
                                 <div class="form-group">
                                     <strong>Course</strong>: {{ $test->course->title }}
                                 </div>
+
                                 <div class="form-group">
-                                    <strong>Input Type</strong>: {{ gradingExamLayout($test->template)??'' }}
+                                    <strong>Instructor</strong>
+
+                                        @if ($students)
+                                        @foreach ($students as $item)
+                                         @if(is_array($allocationInsList) && in_array($item->id,$allocationInsList)) {{ $item->name }}, @endif
+                                        @endforeach
+                                        @endif
+
+
+                                </div>
+
+                                <div class="form-group">
+                                    <strong>Students</strong>
+
+                                        @if ($userStudent)
+                                        @foreach ($userStudent as $item)
+                                         @if(is_array($allocationStudentList) && in_array($item->id,$allocationStudentList)) {{ $item->name }}, @endif
+                                        @endforeach
+                                        @endif
+
+
                                 </div>
                                 <div class="form-group">
                                     <strong>Start Date</strong>: {{ date('d M, Y h:i A',strtotime($test->start_date)) }}

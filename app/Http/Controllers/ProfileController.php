@@ -186,7 +186,7 @@ class ProfileController extends Controller
         $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $gradingExam = GradingExam::find($id);
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
         //dd($abacus_grades);
 		$page = get_page_by_slug($slug);
 
@@ -211,7 +211,7 @@ class ProfileController extends Controller
         $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $gradingExam = GradingExam::where('status', 1)->get();
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
 		$page = get_page_by_slug($slug);
         $grading=GradingStudent::where('id', $id)->first();
 
@@ -1146,14 +1146,14 @@ class ProfileController extends Controller
         {
             $students = User::where('instructor_id', $instructor_id->id)->whereIn('approve_status',[1,0])->paginate($this->pagination);
         }
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
 		$levels = Level::where('status',1)->get();
 		return view('account.teaching-students', compact('students', 'levels','locations'));
     }
 
     public function add_material()
     {
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        $instructors = User::where('user_type_id', 5)->orderBy('title','asc')->get();
         return view('account.add-material', compact('instructors'));
     }
 
@@ -1458,7 +1458,7 @@ class ProfileController extends Controller
 
         $user = $this->user;
         $students = User::where('user_type_id',1)->where('instructor_id',$user->id)->orderBy('id','desc')->get();
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
         $categories = CompetitionCategory::orderBy('id','desc')->get();
 		$competition_student = CompetitionStudent::find($id);
 
@@ -1509,7 +1509,7 @@ class ProfileController extends Controller
         {
             $students = User::whereIn('user_type_id',[1,2,3])->where('instructor_id',$user->id)->whereNotIn('id',$allocated_user)->get();
         }
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
         $categoryComp = CategoryCompetition::where('competition_id', $competition_id)->pluck('category_id')->toArray();
         $categories = CompetitionCategory::whereIn('id', $categoryComp)->orderBy('id','desc')->get();
 		$compStudents = CompetitionStudent::has('userlist')->where('competition_controller_id', $competition->id)->where('instructor_id', $user->id)->paginate($this->pagination);

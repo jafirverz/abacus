@@ -41,7 +41,7 @@
                                 <th class="wcol-1 text-center">NO</th>
                                 <th class="wcol-2 text-center">Question</th>
                                 <th class="wcol-3 text-center">Answer</th>
-                                <th>Correction</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -61,8 +61,7 @@
                                 <tr>
                                     <td class="colnumber">{{ $i }}</td>
                                     <td class="text-center">{{ $ques->input_1 }} {{ $operator }} {{ $ques->input_2 }}  =</td>
-                                    <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
-                                    <td><input class="form-control" type="number" /></td>
+                                    <td class="colanswer"><input onkeyup="number_separator({{ $ques->id }})" id="answer_{{ $ques->id }}" class="form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
                                 </tr>
                                 @php
                                 $i++;
@@ -81,4 +80,23 @@
         </form>
     </div>
 </main>
+<script>
+
+    function number_separator(id)
+    {
+
+                // skip for arrow keys
+                if(event.which >= 37 && event.which <= 40){
+                    event.preventDefault();
+                }
+                var $this =$('#answer_'+id);
+                var num = $this.val().replace(/,/gi, "");
+                var num2 = num.split(/(?=(?:\d{3})+$)/).join(",");
+                console.log(num2);
+                // the following line has been simplified. Revision history contains original.
+                $('#answer_'+id).val(num2);
+
+    }
+</script>
+
 @endsection

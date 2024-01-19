@@ -63,9 +63,10 @@
                                     </th>
                                     <th>Action</th>
                                     <th>Centre Name</th>
+                                    <th>Centre Location</th>
                                     <th>Person In-Charge Name</th>
                                     <th>Email Address</th>
-                                    <th>Customer Number</th>
+                                    <th>Contact Number</th>
                                     <th>Account ID</th>
                                     <th>Last Updated</th>
                                 </tr>
@@ -96,6 +97,9 @@
                                     </td>
                                     <td>
                                         {{ $item->in_charge_name }}
+                                    </td>
+                                    <td>
+                                        {{ $item->centre_location }}
                                     </td>
                                     <td>
                                         {{ $item->email }}
