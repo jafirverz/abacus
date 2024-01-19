@@ -65,7 +65,7 @@
                         </div>
                         <div class="row sp-col-xl-30">
                             <div class="col-xl-4 sp-col">
-                                <label class="lb-1">Date of Birth <span class="required">*</span></label>
+                                <label class="lb-1">Date of Birth {{ $user->dob }} <span class="required">*</span></label>
                                 <div class="date-wrap disabled">
                                     <i class="fa-solid fa-calendar-days ico"></i>
                                     <input class="form-control" type="text" name="dob" value="{{old('dob', date('Y-m-d', strtotime($user->dob))) ?? ''}}" disabled />
