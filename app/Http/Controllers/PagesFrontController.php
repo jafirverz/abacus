@@ -96,7 +96,9 @@ class PagesFrontController extends Controller
         //$grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.exam_date','=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
         $surveys = Survey::where('status', 1)->first();
         $user = User::where('id', Auth::user()->id)->first();
-        $country = Country::orderBy('country', 'asc')->get();
+        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $country = Country::whereIn('id', $franchiseCountry)->get();
+        // $country = Country::orderBy('country', 'asc')->get();
         return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test','lesson','gradingCertificate'));
     }
 

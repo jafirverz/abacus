@@ -168,6 +168,7 @@
                   $country_code = old("country_code");
               }
           @endphp
+          {{-- 
           <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
               <label class="lb-1">Country <span class="required">*</span></label>
               <select data-live-search="true" class="selectpicker" name="country_code">
@@ -181,6 +182,7 @@
                   <span class="text-danger">&nbsp;{{ $errors->first('country_code') }}</span>
               @endif
           </div>
+          --}}
             <!-- <div class="col-xl-4 sp-col" >
                 <label class="lb-1">Learning Updates </label>
                 <input class="form-control" id="learning_updates" type="text"  value="{{$user->learning_updates ?? ''}}" disabled />
@@ -240,8 +242,8 @@
           $('#enablephone').show();
           $('#disablegender').hide();
           $('#enablegender').show();
-          $('#disablecountry').hide();
-          $('#enablecountry').show();
+          // $('#disablecountry').hide();
+          // $('#enablecountry').show();
           //$('#disableinstructor').hide();
           //$('#enableinstructor').show();
           $('#updateprofile').val(1);
@@ -259,8 +261,8 @@
         $('#enablephone').show();
         $('#disablegender').hide();
         $('#enablegender').show();
-        $('#disablecountry').hide();
-        $('#enablecountry').show();
+        // $('#disablecountry').hide();
+        // $('#enablecountry').show();
         //$('#disableinstructor').hide();
         //$('#enableinstructor').show();
         $('#updateprofile').val(1);
