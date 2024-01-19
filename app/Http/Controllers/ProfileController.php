@@ -549,8 +549,9 @@ class ProfileController extends Controller
 		}
 
 		//dd($user);
-
-        $country = Country::orderBy('country', 'asc')->get();
+        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
+        $country = Country::whereIn('id', $franchiseCountry)->get();
+        // $country = Country::orderBy('country', 'asc')->get();
         $country_phone = Country::orderBy('phonecode', 'asc')->get();
         //dd( $country_phone);
         if($this->user->user_type_id==4)
@@ -818,7 +819,7 @@ class ProfileController extends Controller
                         'gender' => 'required',
                         'country_code_phone' => 'required',
                         // 'instructor' => 'required',
-                        'country_code' => 'required',
+                        // 'country_code' => 'required',
                         //'password'  =>  'nullable|min:8',
                         //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
                         ], $messages); //dd($request);
@@ -846,7 +847,7 @@ class ProfileController extends Controller
                         'mobile' => 'required',
                         'gender' => 'required',
                         // 'instructor' => 'required',
-                        'country_code' => 'required',
+                        // 'country_code' => 'required',
                         //'password'  =>  'nullable|min:8',
                         //'country_code' => 'required|regex:/^(\+)([1-9]{1,3})$/',
                         ], $messages); //dd($request);
@@ -873,7 +874,7 @@ class ProfileController extends Controller
                 $updateUserProfile->password = Hash::make($request->password);
             }
             $updateUserProfile->address = $request->address ?? NULL;
-            $updateUserProfile->country_code = $request->country_code;
+            // $updateUserProfile->country_code = $request->country_code;
             $updateUserProfile->country_code_phone = $request->country_code_phone;
             $updateUserProfile->dob = $dob;
             $updateUserProfile->instructor_id  = $request->oldInstructorId;
@@ -924,8 +925,8 @@ class ProfileController extends Controller
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructorDetail->name];
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
 
                     $newContents = str_replace($key, $value, $email_template->content);
 
@@ -953,9 +954,9 @@ class ProfileController extends Controller
                     $data['cc_to_email'] = [];
                     $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{country}}','{{instructor}}'];
+                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
                     //dd($instructorDetail);
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, getCountry($request->country_code), $instructorDetail->name];
+                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
                     $newContents = str_replace($key, $value, $email_template->content);
 
                     $data['contents'] = $newContents;
