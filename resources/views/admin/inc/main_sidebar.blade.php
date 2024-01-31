@@ -406,7 +406,7 @@
                     'idtag'  => 'surveyallocation',
                 ],
                 [
-                    'title' =>  __('constant.USERSURVEY'),
+                    'title' =>  __('constant.USERSURVEYCOMPLETED'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
                     'url'   =>  'admin/survey-completed',
                     'idtag'  => 'surveycompleted',

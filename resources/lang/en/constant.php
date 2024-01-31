@@ -88,6 +88,7 @@ return [
     'COMPETITION_REPORTS' => 'Competition Reports',
     'ORDERS' => 'Orders',
     'USERSURVEY' => 'Survey',
+    'USERSURVEYCOMPLETED' => 'Completed Survey',
     'CERTIFICATE' => 'Certificate',
     'QUESTIONS_ATTEMPT' => 'Questions Attempt',
     'CHALLENGE_BOARD_CLEAR' => 'Challenge Board',
