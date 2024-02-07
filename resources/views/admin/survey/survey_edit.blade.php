@@ -24,26 +24,26 @@
               <div class="card-body">
 
                 @foreach($data as $key=>$value)
-                          @if($key == '_token')
-                          @else
-                          @php 
-                          $wordss = ["__", "_"];
-                          $replacewith   = [". ", " "];
-                          @endphp
-                            <div class="form-group">
-                              <label for="title">{{ ucwords(str_replace($wordss, $replacewith, $key)) }}</label>
-                              <input type="text" disabled class="form-control" value="{{ $value }}">
-                                
-                            </div>
-                            @endif
-                          @endforeach
+                @if($key == '_token')
+                @else
+                @php
+                $wordss = ["__", "_"];
+                $replacewith = [". ", " "];
+                @endphp
+                <div class="form-group">
+                  <label for="title">{{ ucwords(str_replace($wordss, $replacewith, $key)) }}</label>
+                  <input type="text" disabled class="form-control" value="{{ $value }}">
+
+                </div>
+                @endif
+                @endforeach
 
                 <div class="form-group">
                   <label for="title">Allocate Certificate</label>
                   <select name="certificate" class="form-control">
                     <option value="">----Please Select----</option>
                     @foreach($certificate as $certi)
-                    <option value="{{ $certi->id }}">{{ $certi->title }}</option>
+                    <option value="{{ $certi->id }}" @if($certi->id == $survey->certificate_id) selected @endif>{{ $certi->title }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -52,9 +52,9 @@
 
 
 
-              <div class="card-footer text-right">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-              </div>
+                <div class="card-footer text-right">
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                </div>
             </form>
           </div>
         </div>
