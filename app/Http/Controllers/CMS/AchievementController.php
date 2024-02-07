@@ -24,7 +24,7 @@ class AchievementController extends Controller
         $this->middleware('auth:admin');
         $this->title = __('constant.ACHIEVEMENT');
         $this->module = 'ACHIEVEMENT';
-        $this->middleware('grant.permission:'.$this->module);
+        $this->middleware('grant.permission:' . $this->module);
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
@@ -40,14 +40,19 @@ class AchievementController extends Controller
     public function index()
     {
         $title = $this->title;
+        if (Auth::user()->admin_role != 1) {
+            $achievements = AchievementOther::where('user_country_code', Auth::user()->country_id)->paginate(10);
+        } else {
+            $achievements = AchievementOther::paginate(10);
+        }
         // $achievements = CompetitionStudentResult::get();
         // $competition = Competition::get();
         // $actualCompetitionPaperSubted = CompetitionStudentResult::orderBy('id', 'desc')->get();
         // $gradingExamResult = GradingStudentResults::orderBy('id', 'desc')->get();
         // $achievements = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
-        $achievements = AchievementOther::paginate(10);
-        $students = User::whereIn('user_type_id', [1,2,3,4])->get();
-        return view('admin.achievement.index', compact('title','achievements', 'students'));
+
+        $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
+        return view('admin.achievement.index', compact('title', 'achievements', 'students'));
     }
 
     /**
@@ -61,9 +66,8 @@ class AchievementController extends Controller
 
         $grading = GradingExam::get();
         $competition = Competition::get();
-        $students = User::whereIn('user_type_id', [1,2,3,4])->get();
-        return view('admin.achievement.create', compact('title','grading','competition', 'students'));
-
+        $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
+        return view('admin.achievement.create', compact('title', 'grading', 'competition', 'students'));
     }
 
     /**
@@ -82,10 +86,11 @@ class AchievementController extends Controller
             'result'  =>  'required',
         ]);
 
-        foreach($request->studentss as $student){
+        foreach ($request->studentss as $student) {
             $achievement = new AchievementOther();
             $user = User::where('id', $student)->first();
             $achievement->user_id = $student;
+            $achievement->user_country_code = $user->country_code;
             $achievement->user_name = $user->name;
             $achievement->title = $request->event_title;
             $achievement->total_marks = $request->marks;
@@ -149,11 +154,10 @@ class AchievementController extends Controller
         // {
         //     $event = GradingStudentResults::find($id);
         // }
-        $students = User::whereIn('user_type_id', [1,2,3,4])->get();
+        $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
         $event = AchievementOther::find($id);
 
-        return view('admin.achievement.edit', compact('title','event', 'students'));
-
+        return view('admin.achievement.edit', compact('title', 'event', 'students'));
     }
 
     /**
@@ -175,6 +179,7 @@ class AchievementController extends Controller
         $achievement = AchievementOther::find($id);
         $user = User::where('id', $request->studentss)->first();
         $achievement->user_id = $request->studentss;
+        $achievement->user_country_code = $user->country_code;
         $achievement->user_name = $user->name;
         $achievement->title = $request->event_title;
         $achievement->total_marks = $request->marks;
@@ -227,26 +232,43 @@ class AchievementController extends Controller
     {
         //dd($request->all());
         //DB::enableQueryLog();
-        if(isset($request->student) && !empty($request->student)){
-            $achievements = AchievementOther::where('user_id', $request->student)->paginate(10);
-        }elseif(isset($request->search) && !empty($request->search)){
+        if (isset($request->student) && !empty($request->student)) {
+            if (Auth::user()->admin_role != 1) {
+                $achievements = AchievementOther::where('user_country_code', Auth::user()->country_id)->where('user_id', $request->student)->paginate(10);
+            } else {
+                $achievements = AchievementOther::where('user_id', $request->student)->paginate(10);
+            }
+        } elseif (isset($request->search) && !empty($request->search)) {
             $keyword = $request->search;
-            $achievements = AchievementOther::where(function ($query) use($keyword) {
-                $query->where('title', 'like', '%'.$keyword.'%')
-                   ->orWhere('user_name', 'like', '%'.$keyword.'%')
-                   ->orWhere('competition_date', 'like', '%'.$keyword.'%');
-              })->paginate(10);
-        
-        }else{
-            $achievements = AchievementOther::paginate(10);
+            if (Auth::user()->admin_role != 1) {
+                $achievements = AchievementOther::where('user_country_code', Auth::user()->country_id)->where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', '%' . $keyword . '%')
+                        ->orWhere('user_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('competition_date', 'like', '%' . $keyword . '%');
+                })->paginate(10);
+                // $achievements = AchievementOther::where('user_country_code', Auth::user()->country_id)->where('user_id', $request->student)->paginate(10);
+            } else {
+                $achievements = AchievementOther::where(function ($query) use ($keyword) {
+                    $query->where('title', 'like', '%' . $keyword . '%')
+                        ->orWhere('user_name', 'like', '%' . $keyword . '%')
+                        ->orWhere('competition_date', 'like', '%' . $keyword . '%');
+                })->paginate(10);
+            }
+        } else {
+            if (Auth::user()->admin_role != 1) {
+                $achievements = AchievementOther::where('user_country_code', Auth::user()->country_id)->paginate(10);
+            } else {
+                $achievements = AchievementOther::paginate(10);
+            }
         }
-        
-        $students = User::whereIn('user_type_id', [1,2,3,4])->get();
-		$title = $this->title;
+
+
+
+        $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
+        $title = $this->title;
         //$grades = Grade::search($request->search)->join('grade_types','grade_types.id','grades.grade_type_id')->select('grades.*')->paginate($this->systemSetting()->pagination);
 
-       // dd(DB::getQueryLog());
+        // dd(DB::getQueryLog());
         return view('admin.achievement.index', compact('title', 'achievements', 'students'));
-
     }
 }
