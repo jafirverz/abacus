@@ -40,46 +40,52 @@
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="{{ $url }}">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div>
-        
-        
+
+        @php 
+        $datetime = new DateTime(date("Y-m-d H:i:s"));
+        //echo $datetime->format('Y-m-d H:i:s') . "\n";
+        $sg_time = new DateTimeZone('Asia/Kolkata');
+        $datetime->setTimezone($sg_time);
+        //echo $datetime->format('Y-m-d H:i:s');
+        @endphp
 
         @if($worksheet->timing)
+          @php
+          $timeinSec = $worksheet->timing * 60;
+          //$today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $today = date("Y-m-d H:i:s", strtotime($datetime->format('Y-m-d H:i:s')." + $timeinSec seconds"));
+          $dateTime = strtotime($today);
+          $getDateTime = date("F d, Y H:i:s", $dateTime); 
+          @endphp
           <div class="timer-wrap">
-            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <span id="time"></span></strong></div>
+            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
           </div>
         @endif
-        
+
+
         <form method="post" action="{{ route('answer.submit') }}" id="submitform">
           @csrf
           <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
           <input type="hidden" name="levelId" value="{{ $level->id }}">
           <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
-          @php $i=1; @endphp
-          @foreach($allQuestions as $questionss)
           <div class="box-1">
             <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-4 text-center">Multiplication</th>
+                    <th class="wcol-4 text-center">Division</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
                 <tbody>
                   @php
-                  if(isset($_GET['s']) && $_GET['s'] == 1){
-                    $questionnss =\App\MiscQuestion::where('question_id', $questions->id)->where('block', $questionss->block)->inRandomOrder()->get();
-                  }else{
-                    $questionnss = \App\MiscQuestion::where('question_id', $questions->id)->where('block', $questionss->block)->get();
-                  }
-                  
+                  $i = 1;
                   @endphp
-                  @foreach($questionnss as $ques)
-                  
+                  @foreach($allQuestions as $ques)
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
-                    <td class="text-center">{{ $ques->question_1 }} x {{ $ques->question_2 }}  =</td>
+                    <td class="text-center">{{ $ques->question_1 }} ÷ {{ $ques->question_2 }}  =</td>
                     <td class="colanswer"><input class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php
@@ -91,7 +97,6 @@
               </table>
             </div>
           </div>
-          @endforeach
           <div class="output-1">
             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
           </div>
@@ -102,6 +107,17 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+  
+</script>
+
 <script>
 
 
@@ -139,75 +155,69 @@
 
   </script>
 
-<script>
-  $(function () {
-    easyNumberSeparator({
-      selector: '.number-separator',
-      separator: ',',
-      //resultInput: '.number-separator',
-    })
-  });
-  
-</script>
-
 @if(empty($worksheet->preset_timing) && !empty($worksheet->timing))
+
 <script>
-  function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
+      //alert(time);
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-            $('form#submitform').submit();
-        }
-    }, 1000);
-}
-$(window).on('load', function() {
-    var compTime = {{$worksheet->timing}};
-    var fiveMinutes = 60 * compTime;
-    var display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
-});
-
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
+      }
+  }, 1000);
 </script>
+
+
 @elseif($worksheet->timing && !empty($worksheet->preset_timing))
-
 <script>
-  function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+    var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-            document.getElementById("time").innerHTML = "EXPIRED";
-            //$('form#submitform').submit();
-        }
-    }, 1000);
-}
-$(window).on('load', function() {
-    var compTime = {{$worksheet->timing}};
-    var fiveMinutes = 60 * compTime;
-    var display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
-});
-
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+      }
+  }, 1000);
 </script>
-
-
 @endif
 
 @endsection
