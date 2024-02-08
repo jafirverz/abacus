@@ -252,56 +252,5 @@ class PagesController extends Controller
         return view('admin.cms.pages.index', compact('title', 'pages'));
     }
 
-    public function imageUpload()
-    {
-        $title = 'Image Upload';
-        $images = ImagesUpload::orderBy('id', 'desc')->paginate(10);
-
-        return view('admin.cms.pages.image_upload', compact('title', 'images'));
-    }
-
-    public function imageCreate()
-    {
-        $title = 'Image Upload';
-        return view('admin.cms.pages.create_image', compact('title'));
-    }
-
-    public function imageStore(Request $request)
-    {
-        $request->validate([
-            'image' => 'required',
-        ]);
-
-        if ($request->hasFile('image')) {
-
-            $image = $request->file('image');
-
-            $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $image->getClientOriginalName();
-
-            $filepath = 'storage/images/';
-
-            Storage::putFileAs(
-
-                'public/images',
-                $image,
-                $filename
-
-            );
-
-            $image_path = $filepath . $filename;
-            $imageUpload = new ImagesUpload();
-            $imageUpload->image = $image_path;
-            $imageUpload->save();
-        }
-        return redirect()->route('image-upload')->with('success',  __('constant.CREATED', ['module'    =>  'Image Upload']));
-    }
-
-    public function imageDelete(Request $request){
-        $deleteId = explode(',',$request->multiple_delete);
-        foreach($deleteId as $item){
-            $image = ImagesUpload::where('id', $item)->first();
-            $image->delete();
-        }
-        return redirect()->route('image-upload')->with('success',  __('constant.DELETED', ['module'    =>  'Image']));
-    }
+    
 }

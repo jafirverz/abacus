@@ -45,7 +45,9 @@
         <br />
         <div class="row">
           <div class="col-lg-4">
+            @if(Auth::user()->admin_role == 1)
             <button type="submit" class="btn btn-primary"> Delete</button>&nbsp;&nbsp;
+            @endif
             @if(request()->get('_token'))
             <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
             @else

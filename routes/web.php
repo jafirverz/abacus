@@ -252,10 +252,13 @@ Route::group(['prefix' => 'admin'], function () {
     // PAGES
     Route::get('pages/search', 'CMS\PagesController@search')->name('pages.search');
     Route::resource('pages', 'CMS\PagesController');
-    Route::get('image/upload', 'CMS\PagesController@imageUpload')->name('image-upload');
-    Route::get('image/create', 'CMS\PagesController@imageCreate')->name('images.create');
-    Route::post('image/upload', 'CMS\PagesController@imageStore')->name('image.store');
-    Route::post('image/delete', 'CMS\PagesController@imageDelete')->name('images.destroy');
+
+
+
+    Route::get('image/upload', 'CMS\ImageUploadController@index')->name('image-upload');
+    Route::get('image/create', 'CMS\ImageUploadController@create')->name('images.create');
+    Route::post('image/upload', 'CMS\ImageUploadController@store')->name('image.store');
+    Route::post('image/delete', 'CMS\ImageUploadController@destroy')->name('images.destroy');
 
 
 

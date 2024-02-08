@@ -93,6 +93,7 @@ return [
     'CERTIFICATE' => 'Certificate',
     'QUESTIONS_ATTEMPT' => 'Questions Attempt',
     'CHALLENGE_BOARD_CLEAR' => 'Challenge Board',
+    'IMAGEUPLOAD' => 'Image Upload',
 
 
     // CONTENT
