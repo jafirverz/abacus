@@ -31,23 +31,10 @@
         <!-- <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
         </div> -->
-        @php 
-        $datetime = new DateTime(date("Y-m-d H:i:s"));
-        //echo $datetime->format('Y-m-d H:i:s') . "\n";
-        $sg_time = new DateTimeZone('Asia/Kolkata');
-        $datetime->setTimezone($sg_time);
-        //echo $datetime->format('Y-m-d H:i:s');
-        @endphp
+        
         @if($compPaper->time)
-         @php
-          $timeinSec = $compPaper->time * 60;
-          $today = date("Y-m-d H:i:s", strtotime($datetime->format('Y-m-d H:i:s')." + $timeinSec seconds"));
-          $dateTime = strtotime($today);
-          //echo "-----";
-          $getDateTime = date("F d, Y H:i:s", $dateTime);
-         @endphp
           <div class="timer-wrap">
-            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
+            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <span id="time"></span></strong></div>
           </div>
         @endif
         <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}" id="submitform">
@@ -150,76 +137,64 @@
       }
   
   </script>
-
+  
 @if($compPaper->paper_type == 'actual')
-
 <script>
-$(document).ready(function () {
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
-  // Update the count down every 1 second
-  var interval = setInterval(function() {
-    var date = new Date();
-    // Get the timezone the user has selected
-    //var timeZone = 'Asia/Singapore';
-    var timeZone = 'Asia/Kolkata';
-    var time = date.toLocaleString('en-IN', { timeZone  });
-      var current = new Date(time).getTime();
-      // Find the difference between current and the count down date
-      var diff = countDownTimer - current;
-      // Countdown Time calculation for days, hours, minutes and seconds
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
-      //minutes + "m " + seconds + "s ";
-      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
-      // Display Expired, if the count down is over
-      if (diff < 0) {
-          clearInterval(interval);
-          document.getElementById("counter").innerHTML = "EXPIRED";
-          $('form#submitform').submit();
-      }
-  }, 1000);
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+            $('form#submitform').submit();
+        }
+    }, 1000);
+}
+$(window).on('load', function() {
+    var compTime = {{$compPaper->time}};
+    var fiveMinutes = 60 * compTime;
+    var display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
 });
+
 </script>
 @else
 
-
 <script>
-  $(document).ready(function () {
-  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
-  // Update the count down every 1 second
-  var interval = setInterval(function() {
-      var date = new Date();
-    // Get the timezone the user has selected
-    //var timeZone = 'Asia/Singapore';
-    var timeZone = 'Asia/Kolkata';
-    var time = date.toLocaleString('en-IN', { timeZone  });
-      var current = new Date(time).getTime();
-      //alert(time);
-      // Find the difference between current and the count down date
-      var diff = countDownTimer - current;
-      // Countdown Time calculation for days, hours, minutes and seconds
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
-      //minutes + "m " + seconds + "s ";
-      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
-      // Display Expired, if the count down is over
-      if (diff < 0) {
-          clearInterval(interval);
-          document.getElementById("counter").innerHTML = "EXPIRED";
-          //$('form#submitform').submit();
-      }
-  }, 1000);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+            document.getElementById("time").innerHTML = "EXPIRED";
+            //$('form#submitform').submit();
+        }
+    }, 1000);
+}
+$(window).on('load', function() {
+    var compTime = {{$compPaper->time}};
+    var fiveMinutes = 60 * compTime;
+    var display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
 });
+
 </script>
+
 
 @endif
 @endsection

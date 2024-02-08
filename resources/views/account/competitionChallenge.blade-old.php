@@ -28,15 +28,22 @@
         <div class="box-1">
           {{ $compPaper->description ?? '' }}
         </div>
-        <!-- <div class="shuffle-wrap">
-          <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="#">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>
-        </div> -->
-        
+
         @if($compPaper->time)
+          @php
+          $timeinSec = $compPaper->time * 60;
+          $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
+          $dateTime = strtotime($today);
+          $getDateTime = date("F d, Y H:i:s", $dateTime); 
+          @endphp
           <div class="timer-wrap">
-            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <span id="time"></span></strong></div>
+            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
           </div>
         @endif
+       
+        <!-- <div class="timer-wrap">
+          <div class="timer"><i class="icon-clock"></i> <strong>Timer: HH: MM: SS</strong></div>
+        </div> -->
         <form method="post" enctype="multipart/form-data" action="{{ route('competition.submit') }}" id="submitform">
           @csrf
           <input type="hidden" name="paperId" value="{{ $compPaper->id }}">
@@ -45,12 +52,13 @@
           <input type="hidden" name="questionTemp" value="{{ $compPaper->question_template_id }}">
           <input type="hidden" name="paperType" value="{{ $compPaper->paper_type }}">
           <div class="box-1">
+            <div class="note-3 mb-20">Sections 2 &amp; 3: Each question is worth 1 mark for each correct answer.</div>
             <div class="xscrollbar">
               <table class="tb-2 tbtype-1">
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-4 text-center">Mix</th>
+                    <th class="wcol-4 text-center">Challenge</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
@@ -60,16 +68,20 @@
                   @endphp
                   @foreach($questions as $ques)
                   @php
-                  if($ques->symbol == 'multiply'){
-                    $symbol='x';
-                  }else{
-                    $symbol='÷';
+                  if($ques->symbol == 'add'){
+                    $symbol = '+';
+                  }elseif($ques->symbol == 'multiply'){
+                    $symbol = 'x';
+                  }elseif($ques->symbol == 'divide'){
+                    $symbol = '÷';
+                  }elseif($ques->symbol == 'subtract'){
+                    $symbol = '-';
                   }
                   @endphp
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
                     <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
-                    <td class="colanswer"><input class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
+                    <td class="colanswer"><input class="form-control number-separator" type="text"  name="answer[{{ $ques->id }}]"/></td>
                   </tr>
                   @php 
                   $i++;
@@ -100,6 +112,73 @@
   });
   
 </script>
+
+@if($compPaper->paper_type == 'actual')
+
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+    var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          $('form#submitform').submit();
+      }
+  }, 1000);
+</script>
+@else
+
+
+<script>
+  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
+  // Update the count down every 1 second
+  var interval = setInterval(function() {
+      var date = new Date();
+    // Get the timezone the user has selected
+    //var timeZone = 'Asia/Singapore';
+    var timeZone = 'Asia/Kolkata';
+    var time = date.toLocaleString('en-IN', { timeZone  });
+      var current = new Date(time).getTime();
+      //alert(time);
+      // Find the difference between current and the count down date
+      var diff = countDownTimer - current;
+      // Countdown Time calculation for days, hours, minutes and seconds
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
+      //minutes + "m " + seconds + "s ";
+      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+      // Display Expired, if the count down is over
+      if (diff < 0) {
+          clearInterval(interval);
+          document.getElementById("counter").innerHTML = "EXPIRED";
+          //$('form#submitform').submit();
+      }
+  }, 1000);
+</script>
+
+@endif
 
 <script>
   
@@ -137,64 +216,4 @@
       }
   
   </script>
-  
-@if($compPaper->paper_type == 'actual')
-<script>
-  function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-            $('form#submitform').submit();
-        }
-    }, 1000);
-}
-$(window).on('load', function() {
-    var compTime = {{$compPaper->time}};
-    var fiveMinutes = 60 * compTime;
-    var display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
-});
-
-</script>
-@else
-
-<script>
-  function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-            document.getElementById("time").innerHTML = "EXPIRED";
-            //$('form#submitform').submit();
-        }
-    }, 1000);
-}
-$(window).on('load', function() {
-    var compTime = {{$compPaper->time}};
-    var fiveMinutes = 60 * compTime;
-    var display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
-});
-
-</script>
-
-
-@endif
 @endsection
