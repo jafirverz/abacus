@@ -460,8 +460,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('competition/student-list/{id?}/excel', 'CMS\CompetitionController@studentExcel')->name('competition.student.excel');
 
 
-    Route::get('comp-result', 'CMS\CompetitionController@uploadCompResult');
-    Route::post('comp-result', 'CMS\CompetitionController@compResultUpload')->name('comp.result.store');
+    // Route::get('comp-result', 'CMS\CompetitionController@uploadCompResult');
+    // Route::post('comp-result', 'CMS\CompetitionController@compResultUpload')->name('comp.result.store');
+
+    Route::get('comp-result', 'CMS\CompetitionResultUploadController@index');
+    Route::post('comp-result', 'CMS\CompetitionResultUploadController@store')->name('comp.result.store');
 
 
     // Route::get('assign-competition', 'CMS\CompetitionController@assignCompetition');

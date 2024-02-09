@@ -339,76 +339,76 @@ class CompetitionController extends Controller
         return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
     }
 
-    public function uploadCompResult(){
-        $title = 'Upload Result';
-        $competition = Competition::get();
-        return view('admin.competition.result-upload', compact('title', 'competition'));
-    }
+    // public function uploadCompResult(){
+    //     $title = 'Upload Result';
+    //     $competition = Competition::get();
+    //     return view('admin.competition.result-upload', compact('title', 'competition'));
+    // }
 
-    public function compResultUpload(Request $request){
-        $title = 'Upload Result';
-        $messages = [
-            // 'amount.required_if' => 'This field is required',
-        ];
-        $request->validate([
-            'competition'  =>  'required',
-            'category' => 'required',
-            'fileupload'  =>  'required|mimes:xlsx',
-        ], $messages);
+    // public function compResultUpload(Request $request){
+    //     $title = 'Upload Result';
+    //     $messages = [
+    //         // 'amount.required_if' => 'This field is required',
+    //     ];
+    //     $request->validate([
+    //         'competition'  =>  'required',
+    //         'category' => 'required',
+    //         'fileupload'  =>  'required|mimes:xlsx',
+    //     ], $messages);
 
-        $compResultUpload = new CompetitionResultUpload();
-        if ($request->hasFile('fileupload')) {
+    //     $compResultUpload = new CompetitionResultUpload();
+    //     if ($request->hasFile('fileupload')) {
 
-            $file = $request->file('fileupload');
+    //         $file = $request->file('fileupload');
             
-            $imported_files[] = "Competition Result Upload";
+    //         $imported_files[] = "Competition Result Upload";
 
-            if(count($imported_files))
-            {
-                $implode_files = implode(', ', $imported_files);
+    //         if(count($imported_files))
+    //         {
+    //             $implode_files = implode(', ', $imported_files);
 
-                $fileupload = $request->file('fileupload');
+    //             $fileupload = $request->file('fileupload');
 
-                $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $fileupload->getClientOriginalName();
+    //             $filename = Carbon::now()->timestamp . '__' . guid() . '__' . $fileupload->getClientOriginalName();
 
-                $filepath = 'storage/competition/result';
+    //             $filepath = 'storage/competition/result';
 
-                Storage::putFileAs(
+    //             Storage::putFileAs(
 
-                    'public/competition/result',
-                    $fileupload,
-                    $filename
+    //                 'public/competition/result',
+    //                 $fileupload,
+    //                 $filename
 
-                );
+    //             );
 
-                $fileupload_path = $filepath . $filename;
+    //             $fileupload_path = $filepath . $filename;
 
-                if($request->result_publish_date == date('Y-m-d')){
-                    $is_published = 1;
-                }else{
-                    $is_published = 0;
-                }
+    //             if($request->result_publish_date == date('Y-m-d')){
+    //                 $is_published = 1;
+    //             }else{
+    //                 $is_published = 0;
+    //             }
 
-                $compResultUpload->uploaded_file =  $fileupload_path;
-                $compResultUpload->competition_id =  $request->competition;
-                $compResultUpload->category_id =  $request->category;
-                $compResultUpload->result_publish_date =  $request->result_publish_date;
-                $compResultUpload->is_published =  $is_published;
-                $compResultUpload->save();
+    //             $compResultUpload->uploaded_file =  $fileupload_path;
+    //             $compResultUpload->competition_id =  $request->competition;
+    //             $compResultUpload->category_id =  $request->category;
+    //             $compResultUpload->result_publish_date =  $request->result_publish_date;
+    //             $compResultUpload->is_published =  $is_published;
+    //             $compResultUpload->save();
 
-                if($request->result_publish_date == date('Y-m-d')){
-                    $result = Excel::import(new ImportCompetitionResult($request->competition, $request->category), $file);
-                }else{
-                    $result = Excel::import(new TempImportCompetitionResult($request->competition, $request->category, $compResultUpload->id), $file);
-                }
+    //             if($request->result_publish_date == date('Y-m-d')){
+    //                 $result = Excel::import(new ImportCompetitionResult($request->competition, $request->category), $file);
+    //             }else{
+    //                 $result = Excel::import(new TempImportCompetitionResult($request->competition, $request->category, $compResultUpload->id), $file);
+    //             }
 
-                return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $implode_files]));
-            }
+    //             return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $implode_files]));
+    //         }
 
-            return redirect()->back()->with('error',  'Upload files to import data.');
+    //         return redirect()->back()->with('error',  'Upload files to import data.');
 
-        }
-    }
+    //     }
+    // }
 
     // public function assignCompetition(){
     //     $title = 'Assign Competition';
