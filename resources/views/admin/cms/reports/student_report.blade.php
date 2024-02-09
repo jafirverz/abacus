@@ -42,7 +42,7 @@
 
                   <div class="col-lg-4"><label>Status:</label>
                     <select name="status" class="form-control">
-                      <option value="">-- Select --</option>
+                      <option value="" selected>-- Select --</option>
                       <option @if(isset($_GET['status']) && $_GET['status']==1) selected="selected"
                           @endif value="1">Active</option>
                       <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
