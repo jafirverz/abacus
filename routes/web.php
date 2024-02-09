@@ -634,8 +634,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-competition', 'CMS\ReportController@competition');
 
 
-    Route::post('reports-instructor/search', 'CMS\ReportController@searchInstructor')->name('reports-instructor.search');
-    Route::get('reports-instructor', 'CMS\ReportController@instructor');
+    // Route::post('reports-instructor/search', 'CMS\ReportController@searchInstructor')->name('reports-instructor.search');
+    // Route::get('reports-instructor', 'CMS\ReportController@instructor');
+
+    Route::post('reports-instructor/search', 'CMS\FranchiseAdminReportController@searchInstructor')->name('reports-instructor.search');
+    Route::get('reports-instructor', 'CMS\FranchiseAdminReportController@index');
 
     // Route::get('reports-sales/search', 'CMS\ReportController@searchInSales')->name('reports-sales.search');
     // Route::get('reports-sales', 'CMS\ReportController@sales');

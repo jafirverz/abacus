@@ -184,46 +184,6 @@ class ReportController extends Controller
         return view('admin.cms.reports.external-centre-students-list', compact('title', 'users', 'countries','external_center'));
     }
 
-    public function instructor()
-    {
-        $title = __('constant.INSTRUCTOR_REPORTS');
-        //$pages = Page::orderBy('view_order', 'asc')->get();
-        //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
-        $instructor = User::where('user_type_id', 5)->get();
-        //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
-        $countries = Country::get();
-        $franshises = Admin::where('admin_role', 2)->where('status', 1)->get();
-        return view('admin.cms.reports.instructor_report', compact('title', 'instructor', 'countries', 'franshises'));
-    }
-
-    public function searchInstructor(Request $request)
-    {
-        // dd($request->all());
-        $country_code = $request->country_code  ?? '';
-        // $status = $request->status ?? '';
-
-        $q = User::query();
-        $q->where('user_type_id', 5)->where('country_code', $request->country_code);
-        // if ($request->country_code) {
-        //     // simple where here or another scope, whatever you like
-        //     $q->where('country_code', $request->country_code);
-        // }
-
-        // if ($request->status!='' && in_array($request->status, [0,1,2])) {
-        //     $q->where('approve_status', $request->status);
-        // }
-
-
-        $allUsers = $q->get();
-        ob_end_clean();
-        ob_start();
-        return Excel::download(new InstructorExport($allUsers), 'InstructorReport.xlsx');
-        //dd($allUsers);
-    }
-
-
-    
-    
     
 
     public function external_centre()
