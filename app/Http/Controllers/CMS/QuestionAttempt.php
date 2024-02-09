@@ -111,20 +111,36 @@ class QuestionAttempt extends Controller
         //$q = WorksheetSubmitted::query();
         $allWorksheetSubmitted = array();
         if ($request->quesTemp && empty($request->searchname)) {
-
+            if(Auth::user()->admin_role == 1){
+                $user = User::pluck('id')->toArray();
+            }else{
+                $franchiseCountry = Auth::user()->country_id;
+                $user = User::where('country_code', $franchiseCountry)->pluck('id')->toArray();
+            }
             // simple where here or another scope, whatever you like
             $allWorksheetSubmitted = DB::table('worksheet_submitteds')
                 ->where('question_template_id', $quesTemp)
+                ->whereIn('user_id', $user)
                 ->select('user_id', 'level_id', DB::raw('count(*) as total'))
                 ->groupBy('level_id')
                 ->groupBy('user_id')
                 ->get();
         } elseif ($request->quesTemp && !empty($request->searchname)) {
-            if ($request->searchname) {
-                $user = User::where('name', 'like', '%' . $request->searchname . '%')->pluck('id')->toArray();
-            } else {
-                $user = array();
+            if(Auth::user()->admin_role == 1){
+                if ($request->searchname) {
+                    $user = User::where('name', 'like', '%' . $request->searchname . '%')->pluck('id')->toArray();
+                }else {
+                    $user = array();
+                }
+            }else{
+                $franchiseCountry = Auth::user()->country_id;
+                $user = User::where('country_code', $franchiseCountry)->pluck('id')->toArray();
             }
+            // if ($request->searchname) {
+            //     $user = User::where('name', 'like', '%' . $request->searchname . '%')->pluck('id')->toArray();
+            // } else {
+            //     $user = array();
+            // }
             $allWorksheetSubmitted = DB::table('worksheet_submitteds')
                 ->where('question_template_id', $quesTemp)
                 ->whereIn('user_id', $user)
