@@ -658,9 +658,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-external-centre/students/{id}', 'CMS\ReportController@external_centre_students_list')->name('reports-external-centre.student_list');;
 
 
-    Route::get('reports-worksheet/search', 'CMS\ReportController@searchInWorksheet')->name('reports-worksheet.search');
-    Route::get('reports-worksheet', 'CMS\ReportController@worksheet');
+    // Route::get('reports-worksheet/search', 'CMS\ReportController@searchInWorksheet')->name('reports-worksheet.search');
+    // Route::get('reports-worksheet', 'CMS\ReportController@worksheet');
     //Route::post('reports-worksheet', 'CMS\ReportController@searchWorksheet')->name('salesexcel');
+
+    Route::get('reports-worksheet/search', 'CMS\WorksheetReportController@searchInWorksheet')->name('reports-worksheet.search');
+    Route::get('reports-worksheet', 'CMS\WorksheetReportController@index');
 
     Route::get('orders/show/{id?}', 'CMS\OrderController@show')->name('order.show');
     Route::get('orders', 'CMS\OrderController@index');

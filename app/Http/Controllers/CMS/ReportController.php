@@ -356,65 +356,6 @@ class ReportController extends Controller
 
 
 
-    
-
-
-    public function worksheet()
-    {
-        $title = 'Worksheet Report';
-        $allOrders = array();
-        $levels = Level::get();
-        $students = User::whereIn('user_type_id', [1,2])->where('approve_status', 1)->get();
-        return view('admin.cms.reports.worksheet_reports', compact('title', 'levels', 'students'));
-    }
-
-    public function searchInWorksheet(Request $request)
-    {
-        // dd($request->all());
-        $level = $request->level  ?? '';
-        $start_date = $request->start_date ?? '';
-        $end_date = $request->end_date ?? '';
-        $student = $request->student ?? '';
-
-
-        $q = WorksheetSubmitted::query();
-
-        if ($request->level) {
-            // simple where here or another scope, whatever you like
-            $q->where('level_id', $level);
-        }
-
-        if ($request->start_date) {
-            // simple where here or another scope, whatever you like
-            $q->where('created_at', '>=', $start_date);
-        }
-
-        if ($request->end_date) {
-            $q->where('created_at', '<=', $end_date);
-        }
-
-        if ($request->student) {
-            $q->where('user_id', $student);
-        }
-
-        // if ($request->instructor) {
-        //     $q->whereIn('instructor_id', $instructor);
-        // }
-
-        $allOrders = $q->get();
-        //$allOrders = array_unique($allOrders);
-        //$allUsers = User::whereIn('id', $allOrders)->get();
-        // $title = 'Sales Report';
-        // $instructor = User::where('user_type_id', 5)->get();
-        // $countries = Country::get();
-        // return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
-
-        ob_end_clean();
-        ob_start();
-        return Excel::download(new WorksheetExport($allOrders), 'WorksheetReport.xlsx');
-        //dd($allUsers);
-    }
-
 
     // public function searchWorksheet(Request $request)
     // {
