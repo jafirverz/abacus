@@ -653,9 +653,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reports-online-account', 'CMS\OnlineStudentReportController@index');
     Route::get('reports-online-account/search', 'CMS\OnlineStudentReportController@searchOnline')->name('reports-online.search');
 
-    Route::get('reports-external-centre/search', 'CMS\ReportController@search_external_centre')->name('reports-external-centre.search');
-    Route::get('reports-external-centre', 'CMS\ReportController@external_centre');
-    Route::get('reports-external-centre/students/{id}', 'CMS\ReportController@external_centre_students_list')->name('reports-external-centre.student_list');;
+    // Route::get('reports-external-centre/search', 'CMS\ReportController@search_external_centre')->name('reports-external-centre.search');
+    // Route::get('reports-external-centre', 'CMS\ReportController@external_centre');
+    // Route::get('reports-external-centre/students/{id}', 'CMS\ReportController@external_centre_students_list')->name('reports-external-centre.student_list');
+
+    Route::get('reports-external-centre/search', 'CMS\ExternalCenterReportController@search_external_centre')->name('reports-external-centre.search');
+    Route::get('reports-external-centre', 'CMS\ExternalCenterReportController@index');
+    Route::get('reports-external-centre/students/{id}', 'CMS\ExternalCenterReportController@external_centre_students_list')->name('reports-external-centre.student_list');
 
 
     // Route::get('reports-worksheet/search', 'CMS\ReportController@searchInWorksheet')->name('reports-worksheet.search');
