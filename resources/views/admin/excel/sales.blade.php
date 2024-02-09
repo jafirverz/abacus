@@ -27,7 +27,7 @@
             <td>{{ $user->mobile }}</td>
             <td>{{ $item->name }}</td>
             <td>{{ $item->amount }}</td>
-            <td>{{ $payment->transaction_id }}</td>
+            <td>{{ $payment->transaction_id ?? '' }}</td>
             <td>{{ $item->expiry_date ?? '' }}</td>
             <td>{{ $item->created_at }}</td>
             <td>{{ $item->updated_at }}</td>

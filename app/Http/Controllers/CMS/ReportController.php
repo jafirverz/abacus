@@ -40,8 +40,8 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->title = __('constant.REPORTS');
-        $this->module = 'REPORTS';
+        $this->title = __('constant.STUDENT_REPORTS');
+        $this->module = 'STUDENT_REPORTS';
         $this->middleware('grant.permission:' . $this->module);
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
@@ -214,67 +214,7 @@ class ReportController extends Controller
     }
 
 
-    public function sales()
-    {
-        $title = 'Sales Report';
-        $allOrders = array();
-        //$pages = Page::orderBy('view_order', 'asc')->get();
-        //$users = User::whereIn('user_type_id', [5])->paginate($this->pagination);
-        $instructor = User::where('user_type_id', 5)->get();
-        //$userType = UserType::whereIn('id', [1, 2, 3, 4])->get();
-        //$countries = Country::get();
-        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
-        $countries = Country::whereIn('id', $franchiseCountry)->get();
-        return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
-    }
-
-    public function searchInSales(Request $request)
-    {
-        // dd($request->all());
-        $start_date = $request->start_date  ?? '';
-        $end_date = $request->end_date ?? '';
-        $country = $request->country ?? '';
-
-        $q = Order::query();
-
-        if ($request->country) {
-            // simple where here or another scope, whatever you like
-            $q->where('country_id', $country);
-        }
-
-        if ($request->start_date) {
-            // simple where here or another scope, whatever you like
-            $q->where('created_at', '>=', $start_date);
-        }
-
-        if ($request->end_date) {
-            $q->where('created_at', '<=', $end_date);
-        }
-
-        // if ($request->user_type) {
-        //     $q->where('user_type_id', $request->user_type);
-        // }
-
-        // if ($request->instructor) {
-        //     $q->whereIn('instructor_id', $instructor);
-        // }
-        $q->orderBy('id', 'desc');
-        $allOrders = $q->paginate(30);
-        //$allOrders = array_unique($allOrders);
-        //$allUsers = User::whereIn('id', $allOrders)->get();
-        $title = 'Sales Report';
-        $instructor = User::where('user_type_id', 5)->get();
-        //$countries = Country::get();
-        $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
-        $countries = Country::whereIn('id', $franchiseCountry)->get();
-        return view('admin.cms.reports.sales_report', compact('title', 'instructor', 'countries', 'allOrders'));
-
-        // ob_end_clean();
-        // ob_start();
-        //return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
-        //dd($allUsers);
-    }
-
+    
     public function onlineStudent()
     {
         $title = 'Online Student Report';
@@ -508,41 +448,7 @@ class ReportController extends Controller
 
 
 
-    public function searchSales(Request $request)
-    {
-        $start_date = $request->start_date  ?? '';
-        $end_date = $request->end_date ?? '';
-        $country = $request->country ?? '';
-        $orderId = explode(',', $request->excel_id);
-        //dd($userId);
-        $q = OrderDetail::query();
-        $q->whereIn('order_id', $orderId);
-        // if ($request->country) {
-        //     // simple where here or another scope, whatever you like
-        //     $q->where('country_id', $country);
-        // }
-
-        // if ($request->start_date) {
-        //     // simple where here or another scope, whatever you like
-        //     $q->where('created_at', '>=', $start_date);
-        // }
-
-        // if ($request->end_date) {
-        //     $q->where('created_at', '<=', $end_date);
-        // }
-
-        // if ($userId) {
-        //     $q->whereIn('user_id', $userId);
-        // }
-
-
-
-        $allOrders = $q->get();
-        ob_end_clean();
-        ob_start();
-        return Excel::download(new SalesExport($allOrders), 'SalesReport.xlsx');
-        //dd($allUsers);
-    }
+    
 
 
     public function worksheet()
