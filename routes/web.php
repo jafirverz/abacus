@@ -464,9 +464,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('comp-result', 'CMS\CompetitionController@compResultUpload')->name('comp.result.store');
 
 
-    // Route::get('assign-competition', 'CMS\CompetitionController@index');
-    // Route::get('assign-competition/edit/{id?}', 'CMS\CompetitionController@edit')->name('assign-competition.edit');
-    // Route::post('assign-competition/store', 'CMS\CompetitionController@store')->name('assign-competition.store');
+    // Route::get('assign-competition', 'CMS\CompetitionController@assignCompetition');
+    // Route::get('assign-competition/edit/{id?}', 'CMS\CompetitionController@assignCompetitionEdit')->name('assign-competition.edit');
+    // Route::post('assign-competition/store', 'CMS\CompetitionController@assignCompetitionStore')->name('assign-competition.store');
 
     Route::get('assign-competition', 'CMS\CompetitionAssignController@index');
     Route::get('assign-competition/edit/{id?}', 'CMS\CompetitionAssignController@edit')->name('assign-competition.edit');
