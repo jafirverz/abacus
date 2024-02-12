@@ -80,8 +80,12 @@
                                 @php
                                 $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
                                 @endphp
-                                @if($worksheet->question_template_id == $questions->id && $checkQuestions)
-                                <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
+                                @if($worksheet->question_template_id == 6)
+                                <li><a href="{{ url('leaderboard/'.$checkSlug->id.'/'.$worksheet->id) }}">{{ $worksheet->title }}</a></li>
+                                @else
+                                  @if($worksheet->question_template_id == $questions->id && $checkQuestions)
+                                  <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
+                                  @endif
                                 @endif
                               @endif
                             @endforeach
@@ -110,11 +114,20 @@
                                 @php
                                 $checkQuestions = \App\Question::where('worksheet_id', $worksheet->id)->first();
                                 @endphp
-                                @if($worksheet->question_template_id == $questions->id && $checkQuestions)
+                                @if($worksheet->question_template_id == 6)
                                   @if(empty($premium))
-                                    <li>{{ $worksheet->title }}</li>
+                                      <li>{{ $worksheet->title }}</li>
                                   @else 
-                                    <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
+                                      <li><a href="{{ url('leaderboard/'.$checkSlug->id.'/'.$worksheet->id) }}">{{ $worksheet->title }}</a></li>
+                                  @endif
+                                
+                                @else
+                                  @if($worksheet->question_template_id == $questions->id && $checkQuestions)
+                                    @if(empty($premium))
+                                      <li>{{ $worksheet->title }}</li>
+                                    @else 
+                                      <li><a href="{{ url('worksheet/'.$worksheet->id.'/qId/'.$questions->id .'/lId/'.$checkSlug->id) }}">{{ $worksheet->title }}</a></li>
+                                    @endif
                                   @endif
                                 @endif
                               @endif
