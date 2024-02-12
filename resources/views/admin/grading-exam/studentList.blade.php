@@ -22,6 +22,11 @@
                 <div class="col-12">
                     <div class="card">
 
+                        <form method="post" action="{{ route('grading.student.excel', ['id'=>$grading_exam->id]) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary"> Download Student List</button>
+                        </form>
+
                         <div class="card-header">
                             <a href="{{ route('grading-exam.student.destroy', 'competition') }}" class="btn btn-danger d-none destroy"
                                 data-confirm="Do you want to continue?"
