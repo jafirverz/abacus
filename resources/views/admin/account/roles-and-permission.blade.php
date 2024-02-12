@@ -88,6 +88,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Permission</th>
+                                    <th>Country</th>
+                                    <th>Email</th>
                                     <th>Date of Account Creation</th>
                                     <th>Last Login</th>
                                     <th>Last Updated</th>
@@ -103,6 +105,12 @@
                                     </td>
                                     <td>
                                         {{ isset($admin->role_name) ? $admin->role_name : '-' }}
+                                    </td>
+                                    <td>
+                                        {{ getCountryByID($admin->country_id)->country ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ isset($admin->email) ? $admin->email : '-' }}
                                     </td>
                                     <td data-order="{{ $admin->admin_created_at }}">
                                         {{ isset($admin->admin_created_at) ? date('d M, Y h:i A', strtotime($admin->admin_created_at)) : '-' }}

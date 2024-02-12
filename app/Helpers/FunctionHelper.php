@@ -38,6 +38,7 @@ use App\Banner;
 use App\CompetitionCategory;
 use App\CompetitionPaper;
 use App\CompetitionPaperSubmitted;
+use App\Country;
 use App\LearningLocation;
 
 if (!function_exists('getPageList')) {
@@ -1203,6 +1204,17 @@ if (!function_exists('getPageList')) {
     {
         if ($id) {
             $result = LearningLocation::where('id', $id)->first();
+            if ($result) {
+                return $result;
+            }
+        }
+        return '-';
+    }
+
+    function getCountryByID($id)
+    {
+        if ($id) {
+            $result = Country::where('id', $id)->first();
             if ($result) {
                 return $result;
             }
