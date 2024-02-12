@@ -13,7 +13,7 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
-                <h1 class="title-3">My Profile</h1>
+                <h1 class="title-3">{{ $page->title ?? '' }}</h1>
                 <div class="box-1">
                     <div class="row align-items-center title-type">
                         <div class="col-md">
@@ -53,7 +53,7 @@
                                 <div class="col-auto sp-col">
                                     <select disabled name="country_code_phone" class="selectpicker" >
                                         @foreach($country as $phonecode)
-                                            <option value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
+                                            <option @if(old('country_code_phone', $customer->country_code_phone)==$phonecode->phonecode) selected @endif value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
                                         @endforeach
                                     </select>
 

@@ -276,8 +276,8 @@
             $('#enablegender').show();
             $('#disablephone').hide();
             $('#enablephone').show();
-            $('#disablecountry').hide();
-            $('#enablecountry').show();
+            //$('#disablecountry').hide();
+            //$('#enablecountry').show();
             $('#updateprofile').val(1);
             // $('#profileform').hide();
             // $('#profileformedit').show();
