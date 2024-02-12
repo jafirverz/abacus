@@ -79,7 +79,7 @@ class PagesFrontController extends Controller
         $levels = Level::where('status', 1)->get();
         $levelArray = json_decode(Auth::user()->level_id) ?? array();
         $todayDate = date('Y-m-d');
-        $lesson=CourseAssignToUser::join('courses','courses.id','course_assign_to_users.course_id')->join('test_papers','test_papers.id','courses.paper_id')->select('test_papers.*','course_assign_to_users.course_id')->get();
+        $lesson=CourseAssignToUser::join('courses','courses.id','course_assign_to_users.course_id')->join('test_papers','test_papers.id','courses.paper_id')->select('test_papers.*','course_assign_to_users.course_id')->where('course_assign_to_users.user_id',Auth::user()->id)->get();
 		//dd($lesson);
         $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.is_finished',NULL)->where('allocations.start_date','<=',$todayDate)->where('allocations.end_date','>=',$todayDate)->where('allocations.student_id',Auth::user()->id)->select('test_management.*','allocations.id as allocation_id')->orderBy('test_management.id', 'desc')->first();
         //dd($test);
