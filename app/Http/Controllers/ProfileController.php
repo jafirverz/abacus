@@ -1026,7 +1026,7 @@ class ProfileController extends Controller
                     'mobile' => 'required',
                     'gender' => 'required',
                     'instructor' => 'required',
-                    'country_code' => 'required',
+                    //'country_code' => 'required',
                 ], $messages); //dd($request);
             }
 
@@ -1042,7 +1042,7 @@ class ProfileController extends Controller
                 $updateUserProfile->password = Hash::make($request->password);
             }
             $updateUserProfile->address = $request->address ?? NULL;
-            $updateUserProfile->country_code = $request->country_code;
+            //$updateUserProfile->country_code = $request->country_code;
             $updateUserProfile->country_code_phone = $request->country_code_phone;
             $updateUserProfile->dob = $dob;
             $updateUserProfile->mobile = $request->mobile;
