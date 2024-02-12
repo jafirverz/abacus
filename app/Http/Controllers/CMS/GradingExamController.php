@@ -7,6 +7,7 @@ use App\GradingExam;
 use App\Grade;
 use App\GradingCategory;
 use App\CategoryGrading;
+use App\Exports\GradingStudentList;
 use App\GradingStudent;
 use App\User;
 use App\Traits\SystemSettingTrait;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Excel;
 
 
 class GradingExamController extends Controller
@@ -327,5 +329,12 @@ class GradingExamController extends Controller
         $compStudent->approve_status = 1;
         $compStudent->save();
         return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $title]));
+    }
+
+    public function studentExcel(Request $request, $id){
+        $allItems = GradingStudent::where('grading_exam_id', $id)->get();
+        ob_end_clean();
+        ob_start();
+        return Excel::download(new GradingStudentList($allItems), 'GradingStudentList.xlsx');
     }
 }

@@ -446,6 +446,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('grading-exam/student/list/{id?}/approve', 'CMS\GradingExamController@approvestudentList')->name('grading-exam.student.approve');
 
     Route::post('grading-exam/student-list/destroy', 'CMS\GradingExamController@studentDelete')->name('grading-exam.student.destroy');
+    Route::post('grading-exam/student-list/{id?}/excel', 'CMS\GradingExamController@studentExcel')->name('grading.student.excel');
 
     // COMPETITION
     Route::get('competition/search', 'CMS\CompetitionController@search')->name('competition.search');
