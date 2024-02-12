@@ -40,7 +40,7 @@
                       <option @if(isset($_GET['status']) && $_GET['status']==0) selected="selected"
                           @endif value="0">Pending</option>
                       <option @if(isset($_GET['status']) && $_GET['status']==2) selected="selected"
-                          @endif value="2">In Active</option>
+                          @endif value="2">Inactive</option>
                   </select>
                   </div>
             </div>
