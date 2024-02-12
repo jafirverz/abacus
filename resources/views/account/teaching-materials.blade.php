@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
-                <h1 class="title-3">Teaching Materials</h1>
+                <h1 class="title-3">{{ $page->title ?? '' }}</h1>
                 @include('inc.messages')
                 <div class="box-1">
                     <div class="d-flex mb-20 justify-content-end">

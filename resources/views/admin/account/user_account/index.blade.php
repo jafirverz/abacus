@@ -58,6 +58,7 @@
                                             </th>
                                             <th>Action</th>
                                             <th>Name</th>
+                                            <th>Country</th>
                                             <th>Email</th>
                                             <th>Permission</th>
                                             <th>Date of Account Creation</th>
@@ -78,14 +79,17 @@
                                             <td>
                                                 <a href="{{ route('user-account.show', $item->id) }}" class="btn btn-info mr-1 mt-1" data-toggle="tooltip" data-original-title="View"><i class="fas fa-eye"></i></a>
                                                 @if($item->id<>__('constant.FIXED_SUPER_ADMIN'))
-                                                <a href="{{ route('user-account.edit', $item->id) }}"
+                                                {{-- <a href="{{ route('user-account.edit', $item->id) }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit">
                                                     <i aria-hidden="true" class="fa fa-edit"></i>
-                                                </a>
+                                                </a> --}}
                                                 @endif
                                             </td>
                                             <td>
                                                 {{ $item->fullname }}
+                                            </td>
+                                            <td>
+                                                {{ $item->country->country ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $item->email }}

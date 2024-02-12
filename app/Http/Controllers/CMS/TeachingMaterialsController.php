@@ -64,7 +64,7 @@ class TeachingMaterialsController extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,ppt,pptx',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,ppt,pptx,mp4',
             'teacher_id'  =>  'required',
         ]);
 
@@ -130,7 +130,7 @@ class TeachingMaterialsController extends Controller
     {
         $request->validate([
             'title'  =>  'required',
-            'uploaded_files'  =>  'nullable|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,ppt,pptx',
+            'uploaded_files'  =>  'nullable|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,ppt,pptx,mp4',
             'teacher_id'  =>  'required',
         ]);
 

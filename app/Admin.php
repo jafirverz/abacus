@@ -49,7 +49,7 @@ class Admin extends Authenticatable
 
         // EMAIL Notification to the Admin
         $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_FORGET_PASSWORD'));
-		
+
         if ($email_template) {
             $data = [];
 
@@ -106,7 +106,7 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo('App\Role', 'admin_role');
     }
-	
+
 	public function scopePartner($query)
     {
         return $query->where('admin_role', __('constant.USER_PARTNER'))->where('status', 1);
@@ -115,6 +115,8 @@ class Admin extends Authenticatable
     {
         return $query->where('admin_role', __('constant.USER_SUPER_ADMIN'));
     }
-	
 
+    public function country(){
+        return $this->belongsTo('App\Country', 'country_id', 'id');
+    }
 }

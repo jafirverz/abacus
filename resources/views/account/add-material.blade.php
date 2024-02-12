@@ -10,11 +10,11 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
-                <h1 class="title-3">My Profile</h1>
+                <h1 class="title-3">{{ $page->title ?? '' }}</h1>
                 <div class="box-1">
                     <div class="row align-items-center title-type">
                         <div class="col-md">
-                            <h2 class="title-2">Add Teaching Materials</h2>
+                            <h2 class="title-2">Upload new Materials</h2>
                         </div>
                     </div>
                 <form method="post" name="student" id="student" enctype="multipart/form-data" action="">
@@ -34,6 +34,9 @@
                         <div class="col-xl-12 sp-col">
                             <label class="lb-1">Uploaded Files</label>
                             <input type="file" name="uploaded_files" class="form-control">
+                            {{-- <span class="text-danger d-block">
+                                <strong>The uploaded files must be a file of type:jpeg,jpg,png,gif,doc,docx,pdf.</strong>
+                            </span> --}}
                             @if ($errors->has('uploaded_files'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('uploaded_files') }}</strong>
@@ -41,7 +44,7 @@
                                     @endif
                         </div>
                     </div>
-                    
+
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-12 sp-col">
                             <label class="lb-1">Description</label>
@@ -51,7 +54,7 @@
 
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-12 sp-col">
-                            <label class="lb-1">Abacus Simulator link</label>
+                            <label class="lb-1">Link Address (for upload of web link)</label>
                             <input name="abacus_simulator" class="form-control" type="text" value="{{ old('abacus_simulator') }}"  />
                         </div>
                     </div>

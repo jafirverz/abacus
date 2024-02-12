@@ -195,7 +195,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Password <span class="required">*</span></label>
+                                    <label for="">Password <span style="color:red">
+                                        <strong>(at least 8 characters)</strong>
+                                    </span><span class="required">*</span></label>
                                     <input type="password" name="password" class="form-control">
                                     @if ($errors->has('password'))
                                     <span class="text-danger d-block">

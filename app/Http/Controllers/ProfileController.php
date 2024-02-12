@@ -979,7 +979,7 @@ class ProfileController extends Controller
     public function teaching_materials()
     {
         $title = __('constant.MY_PROFILE');
-		$slug =  __('constant.SLUG_MY_PROFILE');
+		$slug =  'teaching-materials';
 
 		$user = $this->user;
 		//dd($user);
@@ -1153,15 +1153,20 @@ class ProfileController extends Controller
 
     public function add_material()
     {
-        $instructors = User::where('user_type_id', 5)->orderBy('title','asc')->get();
-        return view('account.add-material', compact('instructors'));
+        $slug =  'teaching-materials';
+
+		$user = $this->user;
+		//dd($user);
+		$page = get_page_by_slug($slug);
+        $instructors = User::where('user_type_id', 5)->orderBy('name','asc')->get();
+        return view('account.add-material', compact('instructors','page'));
     }
 
     public function store_add_material(Request $request)
     {
         $request->validate([
             'title'  =>  'required',
-            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,mp4',
         ]);
 
         $material = new TeachingMaterials;
