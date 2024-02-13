@@ -179,42 +179,6 @@ class GradingResultController extends Controller
         }
     }
 
-    public function assignGrading(){
-        $title = 'Grading Assign';
-        $competition = GradingExam::paginate($this->pagination);
-
-        return view('admin.grading_result.assign', compact('title', 'competition'));
-    }
-
-    public function assignGradingEdit($id = null){
-        $title = 'Grading Assign';
-        $competition = GradingExam::where('id', $id)->first();
-        $competitionCategory = GradingCategory::join('category_gradings','grading_categories.id','category_gradings.category_id')->where('category_gradings.competition_id', $id)->get();
-        $userType = array(1,2,3,4);
-        $compStudents = GradingStudent::where('grading_exam_id', $id)->pluck('user_id')->toArray();
-        $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->whereNotIn('id', $compStudents)->get();
-        return view('admin.grading_result.assignstudent', compact('title', 'competition', 'students', 'competitionCategory'));
-
-    }
-
-    public function assignGradingStore(Request $request){
-        //dd($request->all());
-        $compId = $request->competitionId;
-        $category = $request->category;
-        $status = $request->status;
-        if($status != 1){
-            $status = 'null';
-        }
-        foreach($request->students as $student){
-            //dd($student);
-            $compStudent = new GradingStudent();
-            $compStudent->user_id = $student;
-            $compStudent->grading_exam_id  = $compId;
-            $compStudent->category_id = $category;
-            $compStudent->approve_status = $status;
-            $compStudent->save();
-        }
-        return redirect()->back()->with('success',  'Assigned');
-    }
+    
 
 }

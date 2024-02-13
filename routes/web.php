@@ -432,9 +432,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('g-results/download/excel/{id?}', 'CMS\GradingResultController@excelDownload')->name('studentResultDownload2');
     Route::get('grading-result-upload', 'CMS\GradingResultController@uploadCompResult');
     Route::post('grading-result-upload', 'CMS\GradingResultController@compResultUpload')->name('grading.result.upload');
-    Route::get('assign-grading', 'CMS\GradingResultController@assignGrading');
-    Route::get('assign-grading/edit/{id?}', 'CMS\GradingResultController@assignGradingEdit')->name('assign-grading.edit');
-    Route::post('assign-grading/store', 'CMS\GradingResultController@assignGradingStore')->name('assign-grading.store');
+    Route::get('assign-grading', 'CMS\GradingAssignReportController@index');
+    Route::get('assign-grading/edit/{id?}', 'CMS\GradingAssignReportController@edit')->name('assign-grading.edit');
+    Route::post('assign-grading/store', 'CMS\GradingAssignReportController@store')->name('assign-grading.store');
 
     // GRADING EXAM
     Route::get('grading-exam/search', 'CMS\GradingExamController@search')->name('grading-exam.search');
