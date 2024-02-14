@@ -29,11 +29,21 @@
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
+                            <div  class="card-header-form form-inline">
+                            <select style="float:left; width:200px; margin-right:20px;" name="sub_heading" id="sub_heading" class="form-control">
+                                    <option><strong>Group by heading</strong></option>
+                                    @foreach ($heading as $key => $value)
+                                    <option @if(isset($_GET['search']) && $_GET['search']==$value->full_name) selected="selected"
+                                        @endif  value="{{$value->full_name}}">{{$value->full_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="card-header-form form-inline">
+
                                 <form action="{{ route('instructor-calendar.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Search" value="{{ $_GET['search'] ?? '' }}">
+                                        <input type="text" name="search" class="form-control" placeholder="Search" value="@if(isset($_GET['_token'])){{ $_GET['search'] }}@endif">
                                         <div class="input-group-btn">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -111,4 +121,15 @@
         </div>
     </section>
 </div>
+<script>
+    $(document).ready( function() {
+        $('#sub_heading').change( function() {
+            if($(this).val()!='')
+            {
+                location.href = '{{ url("/") }}/admin/instructor-calendar/search?search='+$(this).val();
+            }
+
+        });
+    });
+</script>
 @endsection

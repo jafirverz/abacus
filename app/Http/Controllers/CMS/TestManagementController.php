@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\TestManagement;
 use App\User;
 use App\Course;
+use App\TestSubmission;
 use App\TestPaper;
 use App\Traits\SystemSettingTrait;
 use Carbon\Carbon;
@@ -139,6 +140,34 @@ class TestManagementController extends Controller
         $allocationInsList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('assigned_by')->toArray();
         $allocationStudentList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('student_id')->toArray();
         return view('admin.test-management.edit', compact('title', 'test','courses','papers','students', 'userStudent', 'allocationStudentList','allocationInsList'));
+    }
+
+
+    public function studentList($id)
+    {
+        $title = $this->title;
+        $testSubmissions = TestSubmission::where('test_id', $id)->paginate($this->pagination);
+        //dd($testSubmissions);
+        return view('admin.test-management.test-submissions', compact('title', 'testSubmissions'));
+    }
+
+    public function studentEdit($id)
+    {
+        $title = $this->title;
+        $test = TestSubmission::findorfail($id);
+        return view('admin.test-management.studentEdit', compact('title', 'test'));
+    }
+
+    public function studentUpdate(Request $request, $id)
+    {
+
+
+        $testManagement = TestSubmission::findorfail($id);
+        $testManagement->result = $request->result ?? '';
+        $testManagement->updated_at = Carbon::now();
+        $testManagement->save();
+
+        return redirect()->route('test-management.studentlist',[$testManagement->test_id])->with('success',  __('constant.UPDATED', ['module'    =>  $this->title]));
     }
 
     /**

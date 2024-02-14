@@ -66,7 +66,7 @@
                                 foreach($arrVal as $val){
                                 @endphp
                                 <div class="row sp-col-5 inrow-1">
-                                  <div class="col-auto sp-col">$</div>
+                                  <div class="col-auto sp-col"></div>
                                   <div class="col sp-col">{{ $val }}</div>
                                 </div>
                                 @php
@@ -88,7 +88,7 @@
                                     @endphp
                                 <td class="coltype">
                                     <div class="row sp-col-5 inrow-1">
-                                    <div class="col-auto sp-col">$</div>
+                                    <div class="col-auto sp-col"></div>
                                     <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
                                     </div>
                                 </td>

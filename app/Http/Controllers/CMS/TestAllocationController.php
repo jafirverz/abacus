@@ -36,7 +36,7 @@ class TestAllocationController extends Controller
     public function index()
     {
         $title = $this->title;
-        $allocations = Allocation::where('allocations.type',1)->paginate($this->pagination);
+        $allocations = Allocation::where('allocations.type',1)->orderBy('id', 'desc')->paginate($this->pagination);
 
         return view('admin.test-allocation.index', compact('title', 'allocations'));
     }

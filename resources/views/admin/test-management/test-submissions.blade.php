@@ -6,10 +6,10 @@
     <section class="section">
         <div class="section-header">
             <h1>{{ $title ?? '-' }}</h1>
-            <div class="section-header-button">
+            {{--<div class="section-header-button">
                 <a href="{{ route('test-management.create') }}" class="btn btn-primary">Add New</a>
             </div>
-            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('test_management')])
+             @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('test_management')]) --}}
 
         </div>
         <br />
@@ -29,7 +29,7 @@
                                 <input type="hidden" name="multiple_delete">
                             </form>
                             <h4></h4>
-                            <div class="card-header-form form-inline">
+                            {{-- <div class="card-header-form form-inline">
                                 <form action="{{ route('test-management.search') }}" method="get">
                                     @csrf
                                     <div class="input-group">
@@ -45,7 +45,7 @@
                                             @endif
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -62,28 +62,27 @@
                                                 </div>
                                             </th>
                                             <th>Action</th>
-                                            <th>Title</th>
+                                            <th>Account Id</th>
+                                            <th>Name</th>
                                             <th>Paper</th>
-                                            <th>Course</th>
-                                            <th>Updated At</th>
+                                            <th>Result</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($test->count())
-                                        @foreach ($test as $key => $item)
+                                        @if($testSubmissions->count())
+                                        @foreach ($testSubmissions as $key => $item)
                                         <tr>
                                             <td scope="row">
                                                 <div class="custom-checkbox custom-control"> <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-{{ ($key+1) }}" value="{{ $item->id }}"> <label for="checkbox-{{ ($key+1) }}" class="custom-control-label">&nbsp;</label></div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('test-management.show', $item->id) }}" class="btn btn-info mr-1 mt-1" data-toggle="tooltip" data-original-title="View"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('test-management.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
-                                                <a href="{{ route('test-management.studentlist', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
+                                                <a href="{{ route('test-management.studentlist.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
+
                                             </td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->paper->title }}</td>
-                                            <td>{{ $item->course->title }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                            <td>{{ $item->user->account_id ?? '' }}</td>
+                                            <td>{{ $item->user->name ?? '' }}</td>
+                                            <td>{{ $item->detail->question ?? '' }}</td>
+                                            <td>{{ $item->result ?? '' }}</td>
                                         </tr>
                                         @endforeach
                                         @else
@@ -97,9 +96,9 @@
                         </div>
                         <div class="card-footer">
                             @if(request()->get('_token'))
-                            {{ $test->appends(['_token' => request()->get('_token'),'search' => request()->get('search') ])->links() }}
+                            {{ $testSubmissions->appends(['_token' => request()->get('_token'),'search' => request()->get('search') ])->links() }}
                             @else
-                            {{ $test->links() }}
+                            {{ $testSubmissions->links() }}
                            @endif
                         </div>
                     </div>
