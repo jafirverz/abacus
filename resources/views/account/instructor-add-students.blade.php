@@ -103,7 +103,7 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Country <span class="required">*</span></label>
-                            <select data-live-search="true" class="selectpicker"  name="country_code">
+                            <select disabled="disabled" data-live-search="true" class="selectpicker">
 
                                 <option value="{{ Auth::user()->country_code }}" @if(old('country_code')==Auth::user()->country_code) selected @endif>{{ getCountry(Auth::user()->country_code) }}
                                 </option>
@@ -114,6 +114,7 @@
                                         <strong>{{ $errors->first('country_code') }}</strong>
                                     </span>
                             @endif
+                            <input type="hidden" name="country_code" value="{{ $customer->country_code }}">
                         </div>
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Level <span class="required">*</span></label>

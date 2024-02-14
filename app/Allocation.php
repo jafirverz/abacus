@@ -24,6 +24,10 @@ class Allocation extends Model
         return $this->belongsTo('App\Survey', 'assigned_id', 'id');
     }
 
+    public function submission(){
+        return $this->belongsTo('App\TestSubmission', 'id', 'allocation_id');
+    }
+
     public function scopeSearch($query, $search_term)
     {
         if($search_term)

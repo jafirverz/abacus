@@ -19,8 +19,8 @@
 
             <div class="row">
                 <div class="col-lg-4">
-                    <label>Keyword</label>
-                    <input type="text" class="form-control" name="search" value="@if(isset($_GET['search']) && $_GET['search']!='') {{ $_GET['search'] }}  @endif" placeholder="">
+                    <label>Filter by</label>
+                    <input type="text" class="form-control" name="search" value="@if(isset($_GET['search']) && isset($_GET['country']) && $_GET['search']!='') {{ $_GET['search'] }}  @endif" placeholder="">
                 </div>
                 <div class="col-lg-4">
                     <label>Country </label>
@@ -60,6 +60,31 @@
         </div>
 
     </form>
+    <div class="row">
+        <div class="col-12">
+            <div class="card" style="float:right;">
+                <div class="card-header">
+                                <div class="card-header-form">
+                                    <form action="{{ route('customer-account.search') }}" method="get">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="text" name="search" class="form-control" placeholder="Search" value="{{ $_GET['search'] ?? '' }}">
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                            </div>
+                                            &emsp;
+                                                @if(request()->get('_token'))
+                                                <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
+                                                @else
+                                                <button type="reset" class="btn btn-primary">Clear All</button>
+                                                @endif
+                                        </div>
+                                    </form>
+                                </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="section-body">
     @include('admin.inc.messages')
     <div class="row">

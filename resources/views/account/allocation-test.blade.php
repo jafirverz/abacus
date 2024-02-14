@@ -88,7 +88,7 @@
                                     <td><em>{{ date('d/m/Y',strtotime($item->start_date)) }}</em></td>
                                     <td><em>{{ date('d/m/Y',strtotime($item->end_date)) }}</em></td>
                                     <td><em>{{ diff_between_dates($item->start_date,$item->end_date) }}</em></td>
-                                    <td><em class="status-5">FAILED</em></td>
+                                    <td><em class="status-5">{{ $item->submission->result ?? '' }}</em></td>
                                 </tr>
                                 @endforeach
                                 @else

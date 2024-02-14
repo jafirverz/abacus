@@ -404,6 +404,7 @@ class ProfileController extends Controller
                 $courseSub->test_id  = $test_id;
                 $courseSub->question_template_id = $questionTypeId;
                 $courseSub->user_id = $userId;
+                $courseSub->allocation_id = $request->allocation_id;
                 if(isset($request->answer2))
                 {
                 $courseSub->other_answer = json_encode($request->answer2);

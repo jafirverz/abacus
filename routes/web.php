@@ -416,7 +416,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('results/competition/{id?}', 'CMS\CompetitionResultController@studentList')->name('results.competition');
     Route::get('results/{id?}/edit', 'CMS\CompetitionResultController@edit')->name('results-user.edit');
     Route::post('results/competition/{id?}', 'CMS\CompetitionResultController@deleteUser')->name('results-user.destroy');
-    
+
 
     Route::get('results/user/search', 'CMS\CompetitionResultController@userresultsearch')->name('userresults.search');
 
@@ -587,6 +587,10 @@ Route::group(['prefix' => 'admin'], function () {
      // TEST MANAGEMENT
      Route::get('test-management/search', 'CMS\TestManagementController@search')->name('test-management.search');
      Route::resource('test-management', 'CMS\TestManagementController');
+     Route::get('test-management/student-list/{id?}', 'CMS\TestManagementController@studentList')->name('test-management.studentlist');
+     Route::get('test-management/student-list/edit/{id?}', 'CMS\TestManagementController@studentEdit')->name('test-management.studentlist.edit');
+     Route::post('test-management/student-list/edit/{id?}', 'CMS\TestManagementController@studentUpdate')->name('test-management.studentlist.update');
+
 
      // COURSE
      Route::get('course/search', 'CMS\CourseController@search')->name('course.search');
@@ -637,7 +641,7 @@ Route::group(['prefix' => 'admin'], function () {
     // Route::any('reports-competition/search', 'CMS\ReportController@competition_search')->name('reports-competition.search');
     // Route::get('reports-competition', 'CMS\ReportController@competition');
 
-    
+
     Route::any('reports-competition/search', 'CMS\CompetitionReportController@competition_search')->name('reports-competition.search');
     Route::get('reports-competition', 'CMS\CompetitionReportController@index');
 

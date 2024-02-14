@@ -37,8 +37,10 @@ class InstructorCalendarController extends Controller
     {
         $title = $this->title;
         $calendar = InstructorCalendar::orderBy('id', 'desc')->paginate($this->pagination);
+        $heading = InstructorCalendar::orderBy('id', 'desc')->groupBy('full_name')->get();
 
-        return view('admin.instructor-calendar.index', compact('title', 'calendar'));
+
+        return view('admin.instructor-calendar.index', compact('title', 'calendar','heading'));
     }
 
     /**
@@ -166,6 +168,7 @@ class InstructorCalendarController extends Controller
 		$title = $this->title;
         $calendar = InstructorCalendar::join('users','users.id','instructor_calendars.teacher_id')->search($request->search)->select('instructor_calendars.*')->orderBy('instructor_calendars.id', 'asc')->paginate($this->systemSetting()->pagination);
        //dd(DB::getQueryLog());
-        return view('admin.instructor-calendar.index', compact('title', 'calendar'));
+        $heading = InstructorCalendar::orderBy('id', 'desc')->groupBy('full_name')->get();
+        return view('admin.instructor-calendar.index', compact('title', 'calendar','heading'));
     }
 }

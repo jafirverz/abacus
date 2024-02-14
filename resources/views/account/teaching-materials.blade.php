@@ -79,7 +79,10 @@
                                         @foreach ($materials as $material)
                                         @php
                                         $uploaded_files = explode('.', $material->uploaded_files);
+                                        $filename = explode('/', $material->uploaded_files);
+                                        $filename =end($filename);
                                         $extension=end($uploaded_files);
+                                        $file_name = explode('_', $filename);
                                         @endphp
                                 <tr>
                                     <td>
@@ -92,7 +95,7 @@
                                     </td>
                                     <td><em>{{ $material->file_type ?? ''}}</em></td>
                                     <td><em>{{ $material->description }}</em></td>
-                                    <td><em>{{ asset($material->uploaded_files) }}</em></td>
+                                    <td><em>{{ end($file_name)}}</em></td>
                                 </tr>
                                         @endforeach
                                 @endif
