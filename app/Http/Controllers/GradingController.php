@@ -67,8 +67,8 @@ class GradingController extends Controller
                 return view('account.gradingChallenge', compact('questions', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
             if($compPaper->question_template_id == 7){
-                $questions = GradingPaperQuestion::where('grading_paper_id', $id)->where('symbol','multiply')->get();
-                $questions_divide = GradingPaperQuestion::where('grading_paper_id', $id)->where('symbol','divide')->get();
+                $questions = GradingPaperQuestion::join('grading_paper_details','grading_paper_details.id','grading_paper_questions.grading_paper_detail_id')->where('grading_paper_questions.grading_paper_id', $id)->select('grading_paper_questions.*')->where('grading_paper_details.template',1)->get();
+                $questions_divide = GradingPaperQuestion::join('grading_paper_details','grading_paper_details.id','grading_paper_questions.grading_paper_detail_id')->where('grading_paper_questions.grading_paper_id', $id)->where('grading_paper_details.template',2)->select('grading_paper_questions.*')->get();
                 return view('account.gradingMix', compact('questions','questions_divide', 'compPaper', 'compeTitle', 'compPaperTitle', 'categoryTitle'));
             }
         }else{
