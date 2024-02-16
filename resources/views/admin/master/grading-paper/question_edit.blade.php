@@ -33,6 +33,24 @@
                                 }
 
                                 @endphp
+                                @if(isset($question_template_id) && $question_template_id==7)
+                                <div class="form-group">
+                                    <label for="template">Input Type</label>
+                                    <select disabled name="template" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                        <option value="">-- Select --</option>
+                                        @if (gradingExamLayout())
+                                        @foreach (gradingExamLayout() as $key=>$item)
+                                        <option @if(old('template')==$key) selected @elseif(!isset($_GET['template']) && $key==1) selected @elseif(isset($_GET['template']) && $key==$_GET['template']) selected  @endif value="?template={{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+
+
+                                    <input type="hidden" name="template" value="{{ $_GET['template'] }}">
+                                    <input type="hidden" name="paper_detail_id" value="{{ $_GET['paper_detail_id'] }}">
+
+                                </div>
+                                @endif
 
                                 @if(isset($question_template_id) && $question_template_id==9)
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
@@ -237,11 +255,49 @@
 
 
                                 @elseif(isset($question_template_id) && $question_template_id==7)
+                                <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                                @php
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->where('grading_paper_detail_id', $_GET['paper_detail_id'] )->get();
+                                    $i=1;
+                                @endphp
 
+                                @if(isset($_GET['template']) && $_GET['template']==1)
+                                @foreach($compPaperQuestion as $questionss)
+
+                                <div class="form-group">
+                                    <div class="row" style="margin-bottom:30px;">
+                                        <div class="col-md-1">
+                                            <div class="form-control">Q{{ $i }}</div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <textarea rows="5" cols="40" name="input_1[]">{{ $questionss->question_1 }}</textarea>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input class="form-control" required value="{{ $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                    </div>
+                                </div>
+
+                                @php
+                                $i++;
+                                @endphp
+                                @endforeach
+
+                                <div class="after-add-more"></div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                                @else
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     @php
-                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->where('grading_paper_detail_id', $_GET['paper_detail_id'] )->get();
                                     $i=1;
                                     @endphp
 
@@ -285,15 +341,12 @@
                                         <button class="btn btn-success add-more7" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                     </div>
 
+                              @endif
+
                             @endif
-
-
-
 
                             <input type="hidden" name="paperId" value="{{ $competitionPaper->id }}">
                             <input type="hidden" name="question_template_id" value="{{ $competitionPaper->question_template_id }}">
-
-
 
                                 {{--
                                 <div class="form-group">

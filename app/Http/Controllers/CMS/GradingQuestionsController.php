@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\GradingPaper;
 use App\GradingPaperQuestion;
+use App\GradingPaperDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
@@ -64,7 +65,46 @@ class GradingQuestionsController extends Controller
         // dd($request);
         $grading_paper_id = $request->paperId;
         $question_template_id = $request->question_template_id;
-        if($question_template_id == 5 || $question_template_id == 6 || $question_template_id == 7){
+        if($question_template_id == 7){
+
+            $gradingPaperDetail = new GradingPaperDetail();
+            $gradingPaperDetail->question = $request->question ?? NULL;
+            $gradingPaperDetail->paper_id  = $grading_paper_id;
+            $gradingPaperDetail->template  = $request->template ?? NULL;
+            $gradingPaperDetail->save();
+
+            if($request->template==1)
+            {
+
+                $count = count($request->input_1);
+                for($i=0; $i<$count; $i++){
+                    $storQues = new GradingPaperQuestion();
+                    $storQues->grading_paper_id = $grading_paper_id;
+                    $storQues->grading_paper_detail_id = $gradingPaperDetail->id;
+                    $storQues->question_1 = $request->input_1[$i];
+                    $storQues->answer = $request->answer[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                }
+            }
+            else
+            {
+                $count = count($request->input_1);
+                for($i=0; $i<$count; $i++){
+                    $storQues = new GradingPaperQuestion();
+                    $storQues->grading_paper_id = $grading_paper_id;
+                    $storQues->grading_paper_detail_id = $gradingPaperDetail->id;
+                    $storQues->question_1 = $request->input_1[$i];
+                    $storQues->question_2 = $request->input_3[$i];
+                    $storQues->symbol = $request->input_2[$i];
+                    $storQues->answer = $request->answer[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                }
+            }
+
+        }
+        elseif($question_template_id == 5 || $question_template_id == 6){
             $count = count($request->input_1);
             for($i=0; $i<$count; $i++){
                 $storQues = new GradingPaperQuestion();
@@ -166,7 +206,7 @@ class GradingQuestionsController extends Controller
             }
         }
         // return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
-        return redirect()->route('grading-paper.index')->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
+        return redirect()->route('grading-paper.questions',[$grading_paper_id])->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
 
     }
 
@@ -210,12 +250,58 @@ class GradingQuestionsController extends Controller
         // dd($request->all());
         $grading_paper_id = $id;
         $question_template_id = $request->question_template_id;
+        if($question_template_id == 7){
+        $storQues = GradingPaperQuestion::where('grading_paper_detail_id', $request->paper_detail_id)->get();
+        }
+        else
+        {
         $storQues = GradingPaperQuestion::where('grading_paper_id', $grading_paper_id)->get();
+        }
         foreach($storQues as $quess){
             //$quess->destroy($quess);
             $quess->delete();
         }
-        if($question_template_id == 5 || $question_template_id == 6 || $question_template_id == 7){
+
+        if($question_template_id == 7){
+
+            // $gradingPaperDetail = new GradingPaperDetail();
+            // $gradingPaperDetail->question = $request->question ?? NULL;
+            // $gradingPaperDetail->paper_id  = $grading_paper_id;
+            // $gradingPaperDetail->template  = $request->template ?? NULL;
+            // $gradingPaperDetail->save();
+
+            if($request->template==1)
+            {
+
+                $count = count($request->input_1);
+                for($i=0; $i<$count; $i++){
+                    $storQues = new GradingPaperQuestion();
+                    $storQues->grading_paper_id = $grading_paper_id;
+                    $storQues->grading_paper_detail_id = $request->paper_detail_id;
+                    $storQues->question_1 = $request->input_1[$i];
+                    $storQues->answer = $request->answer[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                }
+            }
+            else
+            {
+                $count = count($request->input_1);
+                for($i=0; $i<$count; $i++){
+                    $storQues = new GradingPaperQuestion();
+                    $storQues->grading_paper_id = $grading_paper_id;
+                    $storQues->grading_paper_detail_id = $request->paper_detail_id;
+                    $storQues->question_1 = $request->input_1[$i];
+                    $storQues->question_2 = $request->input_3[$i];
+                    $storQues->symbol = $request->input_2[$i];
+                    $storQues->answer = $request->answer[$i];
+                    $storQues->marks = $request->marks[$i];
+                    $storQues->save();
+                }
+            }
+
+        }
+        elseif($question_template_id == 5 || $question_template_id == 6){
             $count = count($request->input_1);
             for($i=0; $i<$count; $i++){
                 $storQues = new GradingPaperQuestion();
@@ -300,7 +386,7 @@ class GradingQuestionsController extends Controller
 
 
         // return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
-        return redirect()->route('grading-paper.index')->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
+        return redirect()->route('grading-paper.questions',[$grading_paper_id])->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
     }
 
     /**

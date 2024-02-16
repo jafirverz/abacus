@@ -9,7 +9,7 @@
             <a href="{{ route('grading-paper.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
             <h1>{{ $title ?? '-' }}</h1>
-            @if(count($competitionPaper) <= 0)
+            @if($questemplate==7 || count($competitionPaper) <= 0)
             <div class="section-header-button">
                 <a href="{{ route('grading-paper.questions.create', ['pId'=> $pId, 'qId' => $questemplate]) }}" class="btn btn-primary">Add New</a>
             </div>
@@ -90,9 +90,17 @@
                                                     data-original-title="View"><i class="fas fa-eye"></i></a>
                                                 @php
                                                 $checkPaper = \App\GradingSubmitted::where('paper_id', $pId)->first();
+                                                if($questemplate==7)
+                                                {
+                                                  $template='?template='.$item->template.'&paper_detail_id='.$item->paper_detail_id;
+                                                }
+                                                else
+                                                {
+                                                  $template='';
+                                                }
                                                 @endphp
                                                 @if(!$checkPaper)
-                                                <a href="{{ route('grading-paper.question.edit', ['pId'=> $pId, 'qId' => $questemplate]) }}"
+                                                <a href="{{ route('grading-paper.question.edit', ['pId'=> $pId, 'qId' => $questemplate]).$template }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                     data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                                 @endif

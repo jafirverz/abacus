@@ -243,7 +243,15 @@ class GradingPaperController extends Controller
         $papercheck = GradingPaper::where('id', $id)->first();
         $questemplate = $papercheck->question_template_id;
         // $competitionQuestions = CompetitionQuestions::with('comp_paper')->groupBy('grading_paper_id')->paginate($this->pagination);
-        $competitionPaper = GradingPaper::whereHas('comp_ques')->where('id', $id)->paginate($this->pagination);
+        if($questemplate==7)
+        {
+            $competitionPaper = GradingPaper::join('grading_paper_details','grading_paper_details.paper_id','grading_papers.id')->select('grading_papers.*','grading_paper_details.template','grading_paper_details.id as paper_detail_id')->where('grading_paper_details.paper_id', $id)->paginate($this->pagination);
+        }
+        else
+        {
+            $competitionPaper = GradingPaper::whereHas('comp_ques')->where('id', $id)->paginate($this->pagination);
+        }
+
         return view('admin.master.grading-paper.question', compact('title', 'competitionPaper', 'pId', 'questemplate'));
     }
 
