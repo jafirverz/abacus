@@ -62,17 +62,21 @@
                       <td></td>
                       @php
                       foreach($questions as $question){
-                      //dd($question);
                       @endphp
-                      <td>
-
-                        <div class="row sp-col-5 inrow-1">
-                          <div class="col sp-col">{{ $question->question_1 }}</div> x
-                          <div class="col sp-col">{{ $question->question_2 }}</div>
-                       </div>
-
-                     </td>
-                      @php
+                        <td>
+                          @php
+                          $arrVal = explode('|', $question->question_1);
+                          foreach($arrVal as $val){
+                          @endphp
+                          <div class="row sp-col-5 inrow-1">
+                            <div class="col-auto sp-col"></div>
+                            <div class="col sp-col">{{ $val }}</div>
+                          </div>
+                          @php
+                        }
+                          @endphp
+                        </td>
+                        @php
                       }
                       @endphp
 
@@ -111,7 +115,7 @@
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-4 text-center">Divide</th>
+                    <th class="wcol-4 text-center">Question</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
