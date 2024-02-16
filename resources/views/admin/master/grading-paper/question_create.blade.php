@@ -21,7 +21,27 @@
                             @method('POST')
                             <div class="card-body">
 
-
+                                @if(isset($qId) && $qId==7)
+                                <div class="form-group">
+                                    <label for="template">Input Type</label>
+                                    <select name="template" class="form-control" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                        <option value="">-- Select --</option>
+                                        @if (gradingExamLayout())
+                                        @foreach (gradingExamLayout() as $key=>$item)
+                                        <option @if(old('template')==$key) selected @elseif(!isset($_GET['template']) && $key==1) selected @elseif(isset($_GET['template']) && $key==$_GET['template']) selected  @endif value="?template={{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @if ($errors->has('template'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('template') }}</strong>
+                                    </span>
+                                    @endif
+                                    @if(isset($qId) && $qId==7)
+                                    <input type="hidden" name="template" value="@if(isset($_GET['template'])) {{ $_GET['template'] }} @else{{1}}@endif">
+                                    @endif
+                                </div>
+                                @endif
                                 @php
                                 if(isset($pId)){
                                     $paperId = $pId;
@@ -159,36 +179,54 @@
 
 
                                 @elseif(isset($question_template_id) && $question_template_id==7 )
+                                    @if(isset($_GET['template']) && $_GET['template']==2)
+                                        <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
+                                        <div class="row " style="margin-bottom:30px;">
 
-                                    <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
-                                    <div class="row " style="margin-bottom:30px;">
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select name="input_2[]" class="form-control">
+                                                    <option value="multiply">Multiply</option>
+                                                    <option value="divide">Divide</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
+                                            </div>
 
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="" name="input_1[]" placeholder="Variable 1" type="text" required>
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <select name="input_2[]" class="form-control">
-                                                <option value="multiply">Multiply</option>
-                                                <option value="divide">Divide</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="" name="input_3[]" placeholder="Variable 2" type="text" required>
+                                        <div class="after-add-more"></div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-success add-more7" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text" required>
+                                    @else
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-6">
+                                                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
+                                        <div class="after-add-more"></div>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-success add-more3" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                         </div>
-                                    </div>
-                                    <div class="after-add-more"></div>
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-success add-more7" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                                    </div>
+                                    @endif
 
-                            @endif
+                                @endif
 
 
 
@@ -280,14 +318,14 @@
 
 <div class="copy3" style="display:none;">
     <div class="form-group">
-        <div class="row">
-            <div class="col-md-5">
+        <div class="row"  style="margin-bottom:30px;">
+            <div class="col-md-6">
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
             </div>
         </div>

@@ -50,7 +50,7 @@
                               $i++;
                               }
                               @endphp
-                              <th></th>
+
                             </tr>
                           </thead>
                           <tbody>

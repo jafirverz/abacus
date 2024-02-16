@@ -15,7 +15,7 @@
                      @foreach($level as $item)
                      @php
 
-                     $courses = \App\Course::join('course_assign_to_users','course_assign_to_users.course_id','courses.id')->where('course_assign_to_users.user_id', Auth::user()->id)->where('courses.level_id', $item->id)->select('courses.*')->get();
+                     $courses = \App\Course::join('course_assign_to_users','course_assign_to_users.course_id','courses.id')->where('course_assign_to_users.user_id', Auth::user()->id)->where('courses.level_id', $item->id)->where('courses.status', 1)->select('courses.*')->get();
 
                      @endphp
                      @if(isset($courses) && $courses->count() > 0)
