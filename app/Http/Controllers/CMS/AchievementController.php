@@ -42,7 +42,7 @@ class AchievementController extends Controller
         $title = $this->title;
         if (Auth::user()->admin_role != 1) {
             $achievements = AchievementOther::where('user_country_code', Auth::user()->country_id)->paginate(10);
-            $students = User::whereIn('user_type_id', [1, 2, 3, 4])->where('user_country_code', Auth::user()->country_id)->get();
+            $students = User::whereIn('user_type_id', [1, 2, 3, 4])->where('country_code', Auth::user()->country_id)->get();
         } else {
             $achievements = AchievementOther::paginate(10);
             $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
@@ -69,11 +69,11 @@ class AchievementController extends Controller
         $grading = GradingExam::get();
         $competition = Competition::get();
         if (Auth::user()->admin_role != 1) {
-            $students = User::whereIn('user_type_id', [1, 2, 3, 4])->where('user_country_code', Auth::user()->country_id)->get();
+            $students = User::whereIn('user_type_id', [1, 2, 3, 4])->where('country_code', Auth::user()->country_id)->get();
         } else {
             $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
         }
-        $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
+        // $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
         return view('admin.achievement.create', compact('title', 'grading', 'competition', 'students'));
     }
 
@@ -162,7 +162,7 @@ class AchievementController extends Controller
         //     $event = GradingStudentResults::find($id);
         // }
         if (Auth::user()->admin_role != 1) {
-            $students = User::whereIn('user_type_id', [1, 2, 3, 4])->where('user_country_code', Auth::user()->country_id)->get();
+            $students = User::whereIn('user_type_id', [1, 2, 3, 4])->where('country_code', Auth::user()->country_id)->get();
         } else {
             $students = User::whereIn('user_type_id', [1, 2, 3, 4])->get();
         }
