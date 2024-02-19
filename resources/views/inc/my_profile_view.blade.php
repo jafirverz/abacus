@@ -133,7 +133,7 @@
                                 @php
                                 //dd($test);
                                 if($surveys){
-                                    $allocation = \App\Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
+                                    $allocation = \App\Allocation::where('student_id', Auth::user()->id)->where('type', 2)->where('is_finished', null)->orderBy('id', 'desc')->first();
                                     if(!$allocation){
                                         $url = 'javascript::void(0)';
                                     }else{
