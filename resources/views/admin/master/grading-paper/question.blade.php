@@ -85,9 +85,7 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td> -->
                                             <td>
-                                                <a href="{{ route('grading-paper.question.show', ['pId'=> $pId, 'qId' => $questemplate]) }}"
-                                                    class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
-                                                    data-original-title="View"><i class="fas fa-eye"></i></a>
+
                                                 @php
                                                 $checkPaper = \App\GradingSubmitted::where('paper_id', $pId)->first();
                                                 if($questemplate==7)
@@ -99,6 +97,9 @@
                                                   $template='';
                                                 }
                                                 @endphp
+                                                <a href="{{ route('grading-paper.question.show', ['pId'=> $pId, 'qId' => $questemplate]).$template }}"
+                                                    class="btn btn-info mr-1 mt-1" data-toggle="tooltip"
+                                                    data-original-title="View"><i class="fas fa-eye"></i></a>
                                                 @if(!$checkPaper)
                                                 <a href="{{ route('grading-paper.question.edit', ['pId'=> $pId, 'qId' => $questemplate]).$template }}"
                                                     class="btn btn-light mr-1 mt-1" data-toggle="tooltip"

@@ -6,7 +6,7 @@
     <section class="section">
         <div class="section-header">
             <div class="section-header-back">
-                <a href="{{ route('papers.questions', ['id' => $pId]) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{ route('grading-paper.questions', ['id' => $pId]) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Edit', route('bank.edit', $bank->id))])--}}
@@ -216,7 +216,7 @@
 
                                     <label for="" class=" control-label">{{ getQuestionTemplate($question_template_id) }}</label>
                                     @php
-                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->get();
+                                    $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->where('grading_paper_detail_id', $_GET['paper_detail_id'] )->get();
                                     $i=1;
                                     @endphp
 
