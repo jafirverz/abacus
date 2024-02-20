@@ -219,40 +219,66 @@
                                     $compPaperQuestion = \App\GradingPaperQuestion::where('grading_paper_id', $paperId )->where('grading_paper_detail_id', $_GET['paper_detail_id'] )->get();
                                     $i=1;
                                     @endphp
-
+                                    @if(isset($_GET['template']) && $_GET['template']==1)
                                     @foreach($compPaperQuestion as $questionss)
                                     <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <div class="form-control">Q{{ $i }}</div>
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-md-1">
+                                                <div class="form-control">Q{{ $i }}</div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <textarea rows="5" cols="40" name="vertical_1[]">{{ $questionss->question_1 }}</textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $questionss->answer }}" name="vertical_2[]" placeholder="Answer" type="text">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $questionss->marks }}" name="vertical_3[]" placeholder="Marks" type="text">
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <select name="input_2[]" class="form-control">
-                                                <option value="multiply" @if($questionss->symbol == 'multiply') selected @endif>Multiply</option>
-                                                <option value="divide" @if($questionss->symbol == 'divide') selected @endif>Divide</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input class="form-control" required value="{{ $questionss->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
-                                        </div>
-
-
-                                    </div>
+                                        <!-- <div class="input-group-btn">
+                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div> -->
                                     </div>
                                     @php
                                     $i++;
                                     @endphp
                                     @endforeach
+                                    @else
+                                    @foreach($compPaperQuestion as $questionss)
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <div class="form-control">Q{{ $i }}</div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $questionss->question_1 }}" name="input_1[]" placeholder="Variable 1" type="text" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select name="input_2[]" class="form-control">
+                                                    <option value="multiply" @if($questionss->symbol == 'multiply') selected @endif>Multiply</option>
+                                                    <option value="divide" @if($questionss->symbol == 'divide') selected @endif>Divide</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input class="form-control" required value="{{ $questionss->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    @php
+                                    $i++;
+                                    @endphp
+                                    @endforeach
+                                    @endif
 
 
                             @endif
