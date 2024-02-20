@@ -61,7 +61,7 @@
                                 <tr>
                                     <td class="colnumber">{{ $i }}</td>
                                     <td class="text-center">{{ $ques->input_1 }} {{ $operator }} {{ $ques->input_2 }}  =</td>
-                                    <td class="colanswer"><input onkeyup="number_separator({{ $ques->id }})" id="answer_{{ $ques->id }}" class="form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
+                                    <td class="colanswer"><input  class="number-separator form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
                                 </tr>
                                 @php
                                 $i++;
@@ -80,23 +80,16 @@
         </form>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
 <script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
 
-    function number_separator(id)
-    {
-
-                // skip for arrow keys
-                if(event.which >= 37 && event.which <= 40){
-                    event.preventDefault();
-                }
-                var $this =$('#answer_'+id);
-                var num = $this.val().replace(/,/gi, "");
-                var num2 = num.split(/(?=(?:\d{3})+$)/).join(",");
-                console.log(num2);
-                // the following line has been simplified. Revision history contains original.
-                $('#answer_'+id).val(num2);
-
-    }
 </script>
 
 @endsection

@@ -64,7 +64,7 @@
                             <tr>
                               <td class="colnumber">{{ $i }}</td>
                               <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
-                              <td class="colanswer"><input class="form-control" name="answer[{{ $ques->id }}]" type="text" /></td>
+                              <td class="colanswer"><input class="number-separator form-control" name="answer[{{ $ques->id }}]" type="text" /></td>
                             </tr>
                             @php
                             $i++;
@@ -83,6 +83,17 @@
         </form>
     </div>
 </main>
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+
+</script>
 <script>
 
 
