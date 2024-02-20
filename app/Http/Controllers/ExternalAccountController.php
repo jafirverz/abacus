@@ -293,8 +293,8 @@ class ExternalAccountController extends Controller
                 $data['cc_to_email'] = [];
                 $data['subject'] = $email_template->subject;
                 $url = url('/login');
-                $key = ['{{url}}','{{account_id}}','{{password}}'];
-                $value = [$url, $userAccountId, $userPassword];
+                $key = ['{{name}}','{{url}}','{{account_id}}','{{password}}'];
+                $value = [$request->name,$url, $userAccountId, $userPassword];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 
@@ -307,7 +307,7 @@ class ExternalAccountController extends Controller
 
             }
         }
-        
+
         if(Auth::user()->user_type_id==5)
         {
             return redirect()->route('instructor.my-students')->with('success', __('constant.ACOUNT_UPDATED'));

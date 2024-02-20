@@ -469,8 +469,8 @@ class CustomerAccountController extends Controller
                 $data['cc_to_email'] = [];
                 $data['subject'] = $email_template->subject;
                 $url = url('/login');
-                $key = ['{{url}}','{{account_id}}','{{password}}'];
-                $value = [$url, $userAccountId, $userPassword];
+                $key = ['{{name}}','{{url}}','{{account_id}}','{{password}}'];
+                $value = [$request->name,$url, $userAccountId, $userPassword];
 
                 $newContents = str_replace($key, $value, $email_template->content);
 
