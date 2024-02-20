@@ -89,7 +89,7 @@
                                 <td class="coltype">
                                     <div class="row sp-col-5 inrow-1">
                                     <div class="col-auto sp-col"></div>
-                                    <div class="col colanswer sp-col"><input class="form-control" type="number" name="answer[{{ $question->id }}]" /></div>
+                                    <div class="col colanswer sp-col"><input class="form-control" type="text" name="answer[{{ $question->id }}]" /></div>
                                     </div>
                                 </td>
                                 @php
@@ -138,7 +138,7 @@
                             <tr>
                               <td class="colnumber">{{ $i }}</td>
                               <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
-                              <td class="colanswer"><input class="form-control" type="number" name="answer[{{ $ques->id }}]" /></td>
+                              <td class="colanswer"><input class="form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
                             </tr>
                             @php
                             $i++;

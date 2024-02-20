@@ -53,7 +53,7 @@
                                   @foreach($detail_beads as $bead)
                                   @php $k++; @endphp
                                     <div class="col-6 sp-col mt-10">
-                                        <input class="form-control inptype-2" name="answer[{{ $bead->id }}]" type="number">
+                                        <input class="form-control inptype-2" name="answer[{{ $bead->id }}]" type="text">
                                         <div class="imgwrap-3">
                                             <img src="{{ url($bead->input_1) }}" alt="">
                                         </div>
@@ -91,7 +91,7 @@
                                 <div class="sumrow">{{ $input }}</div>
                                 @endforeach
                                 <hr class="bdrtype-2">
-                                <input class="form-control inptype-2" type="number" name="answer[{{ $num->id }}]">
+                                <input class="form-control inptype-2" type="text" name="answer[{{ $num->id }}]">
                             </div>
                         @endforeach
                         </div>
