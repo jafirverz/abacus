@@ -33,7 +33,7 @@
             <div class="box-1">
                 <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
-                    <table class="tb-2 tbtype-1">
+                    <table class="tb-2 tbtype-2">
                         <thead>
                             <tr>
                               <th class="wcol-2"></th>
