@@ -77,7 +77,7 @@
                                 <tr>
                                   <td class="lbtb-1">Your<br/>Answer:</td>
                                   @foreach($paper_detail->questionsCourse as $ques)
-                                  <td class="colanswer text-center"><input class="form-control minwinpt-1" type="number" value="" name="answer[{{ $ques->id }}]" /></td>
+                                  <td class="colanswer text-center"><input class="form-control minwinpt-1" type="text" value="" name="answer[{{ $ques->id }}]" /></td>
                                   @endforeach
 
                                 </tr>

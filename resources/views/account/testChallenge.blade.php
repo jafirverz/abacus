@@ -64,7 +64,7 @@
                             <tr>
                               <td class="colnumber">{{ $i }}</td>
                               <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
-                              <td class="colanswer"><input class="form-control" name="answer[{{ $ques->id }}]" type="number" /></td>
+                              <td class="colanswer"><input class="form-control" name="answer[{{ $ques->id }}]" type="text" /></td>
                             </tr>
                             @php
                             $i++;
