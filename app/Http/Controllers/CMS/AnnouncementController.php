@@ -50,7 +50,12 @@ class AnnouncementController extends Controller
     {
         $title = $this->title;
         $announcement = Announcement::orderBy('title', 'asc')->get();
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        if(Auth::user()->admin_role == 1){
+            $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        }else{
+            $instructors = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
+        }
+        
         return view('admin.announcement.create', compact('title', 'announcement','instructors'
     ));
     }
