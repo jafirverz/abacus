@@ -18,7 +18,13 @@ class PermissionController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
+        $this->module = 'ROLES_AND_PERMISSION';
+        $this->middleware('grant.permission:' . $this->module);
         $this->module_name = 'ROLES_AND_PERMISSION';
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+            return $next($request);
+        });
     }
     /**
      * Display a listing of the resource.
