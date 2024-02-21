@@ -159,6 +159,19 @@ class ProfileController extends Controller
 		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
 	}
 
+    public function grading_examination_listing()
+	{
+
+		$title = __('constant.MY_PROFILE');
+		$slug =  __('constant.SLUG_MY_PROFILE');
+        $page = get_page_by_slug($slug);
+        $todayDate = date('Y-m-d');
+		$user = $this->user;
+		$grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.date_of_competition','>=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->get();
+
+		return view('account.grading-examination-listing', compact("page", "user","grading_exam"));
+	}
+
     public function register_grading_examination($id)
 	{
 		//
