@@ -21,10 +21,10 @@
                 @foreach($grading_exam as $grade)
                 <div class="grid-13">
                     <div class="gday">
-                        {{ date('j F Y',strtotime($grade->date_of_competition)) }}
+                        {{ date('j M Y',strtotime($grade->date_of_competition)) }}
                     </div>
                     <div class="gtitle">
-                        {{ $grade->date_of_competition }}
+                        {{ $grade->title }}
                     </div>
                     <a class="link-fix" href="{{ url('grading/'.$grade->id) }}">View details</a>
                 </div>
