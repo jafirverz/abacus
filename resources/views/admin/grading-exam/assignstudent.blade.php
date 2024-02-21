@@ -57,7 +57,11 @@
                                     <select name="students[]" class="form-control" data-live-search="true" multiple>
 
                                         @foreach($students as $student)
-                                        <option value="{{ $student ->id}}">{{$student->name}}</option>
+                                        @php
+                                        $instructor = \App\User::where('id', $student->instructor_id)->first();
+                                        $learningL = \App\LearningLocation::where('id', $student->learning_locations)->first();
+                                        @endphp
+                                        <option value="{{ $student ->id}}">{{$student->name}}, Instructor: {{ $instructor->name ?? '' }}, Learning Location: {{ $learningL->title ?? '' }}, DOB: {{ $student->dob }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('students'))
