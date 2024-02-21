@@ -53,10 +53,17 @@ class TestManagementController extends Controller
     public function create()
     {
         $title = $this->title;
-        $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        if(Auth::user()->admin_role == 1){
+            $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+            $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        }else{
+            $students = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
+            $userStudent = User::where('country_code', Auth::user()->country_id)->whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        }
+        
         $courses = Course::orderBy('id','desc')->get();
         $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
-        $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        
         return view('admin.test-management.create', compact('title','courses','papers','students', 'userStudent'));
     }
 
@@ -133,10 +140,15 @@ class TestManagementController extends Controller
     {
         $title = $this->title;
         $test = TestManagement::findorfail($id);
-        $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        if(Auth::user()->admin_role == 1){
+            $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+            $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        }else{
+            $students = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
+            $userStudent = User::where('country_code', Auth::user()->country_id)->whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
+        }
         $courses = Course::orderBy('id','desc')->get();
         $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
-        $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
         $allocationInsList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('assigned_by')->toArray();
         $allocationStudentList = Allocation::where('assigned_id', $id)->where('type', 1)->pluck('student_id')->toArray();
         return view('admin.test-management.edit', compact('title', 'test','courses','papers','students', 'userStudent', 'allocationStudentList','allocationInsList'));
