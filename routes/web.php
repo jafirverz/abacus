@@ -159,7 +159,7 @@ Route::post('instructor-profile-cal', 'ProfileController@cal_store')->name('inst
 //Route::get('grading-overview/{id?}', 'ProfileController@grading_overview')->name('grading-overview');
 //Route::post('grading-overview/result', 'GradingSubmitController@resultpage')->name('grading_answer.submit');
 Route::get('download-grading-certificate/{id?}', 'GradingSubmitController@downloadCertificate')->name('grading.downloadCertificate');
-Route::get('grading-examination', 'ProfileController@grading_examination')->name('grading-examination');
+Route::get('grading-examination-listing', 'ProfileController@grading_examination_listing')->name('grading-examination-listing');
 Route::get('grading-examination/delete/{id?}', 'ProfileController@delete_grading')->name('grading-examination.delete');
 Route::get('grading-examination/edit/{id?}', 'ProfileController@edit_grading')->name('grading-examination.edit');
 Route::post('grading-examination/edit/{id?}', 'ProfileController@update_grading')->name('grading-examination.update');
