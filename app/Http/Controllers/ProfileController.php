@@ -139,7 +139,7 @@ class ProfileController extends Controller
 		return view('account.instructor-overview', compact("page", "user","announcements","calendars"));
 	}
 
-    public function grading_examination()
+    public function grading_examination($id)
 	{
 		//
 
@@ -153,7 +153,7 @@ class ProfileController extends Controller
 		if (!$page) {
 			return abort(404);
 		}
-        $gradingExam = GradingExam::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->orderBy('id','desc')->first();
+        $gradingExam = GradingExam::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->where('id',$id)->first();
 		//dd($user);
 
 		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
@@ -167,7 +167,7 @@ class ProfileController extends Controller
         $page = get_page_by_slug($slug);
         $todayDate = date('Y-m-d');
 		$user = $this->user;
-		$grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.date_of_competition','>=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->get();
+		$grading_exam = GradingExam::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->orderBy('id','desc')->get();
 
 		return view('account.grading-examination-listing', compact("page", "user","grading_exam"));
 	}
