@@ -468,6 +468,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('comp-result', 'CMS\CompetitionResultUploadController@store')->name('comp.result.store');
 
 
+    Route::get('comp-pass-upload', 'CMS\CompetitionPassUploadController@index');
+    Route::post('comp-pass-upload', 'CMS\CompetitionPassUploadController@store')->name('comp.pass.store');
+
+
     // Route::get('assign-competition', 'CMS\CompetitionController@assignCompetition');
     // Route::get('assign-competition/edit/{id?}', 'CMS\CompetitionController@assignCompetitionEdit')->name('assign-competition.edit');
     // Route::post('assign-competition/store', 'CMS\CompetitionController@assignCompetitionStore')->name('assign-competition.store');

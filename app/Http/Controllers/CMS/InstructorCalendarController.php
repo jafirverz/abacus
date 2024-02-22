@@ -51,7 +51,12 @@ class InstructorCalendarController extends Controller
     public function create()
     {
         $title = $this->title;
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        if(Auth::user()->admin_role == 1){
+            $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        }else{
+            $instructors = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
+        }
+        
         return view('admin.instructor-calendar.create', compact('title','instructors'));
     }
 
@@ -115,7 +120,11 @@ class InstructorCalendarController extends Controller
     {
         $title = $this->title;
         $calendar = InstructorCalendar::findorfail($id);
-        $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        if(Auth::user()->admin_role == 1){
+            $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
+        }else{
+            $instructors = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
+        }
         return view('admin.instructor-calendar.edit', compact('title', 'calendar','instructors'));
     }
 
