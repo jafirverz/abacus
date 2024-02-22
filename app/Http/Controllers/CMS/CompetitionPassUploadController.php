@@ -107,7 +107,7 @@ class CompetitionPassUploadController extends Controller
 
                 $fileupload_path = $filepath . $filename;
 
-                $result = Excel::import(new ImportCompetitionPass($request->competition, $request->category), $file);
+                $result = Excel::import(new ImportCompetitionPass($request->competition), $file);
 
                 // if($request->result_publish_date == date('Y-m-d')){
                 //     $is_published = 1;
