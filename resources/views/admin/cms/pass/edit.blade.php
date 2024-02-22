@@ -41,6 +41,12 @@
                                     </span>
                                     @endif
                                 </div>
+
+
+                                <div class="form-group">
+                                    <label for="title">Variables</label>
+                                    <?php echo '{{competition_name}}, {{student_name}}, {{exam_date}}, {{logo}}, {{competition_venue}}, {{student_id}}, {{dob}}, {{seat_no}}, {{reporting_time}}, {{competition_time}}, {{venue_arrangement}}'; ?>
+                                </div>
                                 
                                 
                             </div>
