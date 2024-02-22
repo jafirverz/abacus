@@ -284,6 +284,12 @@
                     'url'   =>  'admin/email-template',
                     'idtag'  => 'emailtemplate',
                 ],
+                [
+                    'title' =>  __('constant.COMPEITION_PASS_UPLOAD'),
+                    'icon'  =>  '<i class="fas fa-envelope"></i>',
+                    'url'   =>  'admin/comp-pass-upload',
+                    'idtag'  => 'pass',
+                ],
 
                 [
                     'title' =>  __('constant.PASS'),

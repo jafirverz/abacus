@@ -94,6 +94,7 @@ return [
     'QUESTIONS_ATTEMPT' => 'Questions Attempt',
     'CHALLENGE_BOARD_CLEAR' => 'Challenge Board',
     'IMAGEUPLOAD' => 'Image Upload',
+    'COMPEITION_PASS_UPLOAD' => 'Competition Pass Upload',
 
 
     // CONTENT
