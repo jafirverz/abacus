@@ -3,10 +3,14 @@
 <main class="main-wrap">
     <div class="row sp-col-0 tempt-2">
         <div class="col-lg-3 sp-col tempt-2-aside">
-            @if(Auth::user()->user_type_id == 4)
-              @include('inc.account-sidebar-event-student')
+            @if(Auth::user()->user_type_id == 6)
+            <div class="menu-aside">
+             @include('inc.account-sidebar-external')
+            </div>
             @else
-              @include('inc.account-sidebar')
+            <div class="menu-aside">
+             @include('inc.intructor-account-sidebar')
+            </div>
             @endif
         </div>
 
@@ -26,7 +30,7 @@
                     <div class="gtitle">
                         {{ $grade->title }}
                     </div>
-                    <a class="link-fix" href="{{ url('grading/'.$grade->id) }}">View details</a>
+                    <a class="link-fix" href="{{ url('grading-examination',$grade->id) }}">View details</a>
                 </div>
                 @endforeach
                 @endif
