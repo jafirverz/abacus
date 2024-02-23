@@ -471,6 +471,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('comp-pass-upload', 'CMS\CompetitionPassUploadController@index');
     Route::post('comp-pass-upload', 'CMS\CompetitionPassUploadController@store')->name('comp.pass.store');
 
+    Route::get('grade-pass-upload', 'CMS\GradingPassUploadController@index');
+    Route::post('grade-pass-upload', 'CMS\GradingPassUploadController@store')->name('grade.pass.store');
+
 
     // Route::get('assign-competition', 'CMS\CompetitionController@assignCompetition');
     // Route::get('assign-competition/edit/{id?}', 'CMS\CompetitionController@assignCompetitionEdit')->name('assign-competition.edit');

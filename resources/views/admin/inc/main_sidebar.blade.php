@@ -290,6 +290,12 @@
                     'url'   =>  'admin/comp-pass-upload',
                     'idtag'  => 'pass',
                 ],
+                [
+                    'title' =>  __('constant.GRADING_PASS_UPLOAD'),
+                    'icon'  =>  '<i class="fas fa-envelope"></i>',
+                    'url'   =>  'admin/grade-pass-upload',
+                    'idtag'  => 'pass',
+                ],
 
                 [
                     'title' =>  __('constant.PASS'),

@@ -95,6 +95,7 @@ return [
     'CHALLENGE_BOARD_CLEAR' => 'Challenge Board',
     'IMAGEUPLOAD' => 'Image Upload',
     'COMPEITION_PASS_UPLOAD' => 'Competition Pass Upload',
+    'GRADING_PASS_UPLOAD' => 'Grading Pass Upload',
 
 
     // CONTENT

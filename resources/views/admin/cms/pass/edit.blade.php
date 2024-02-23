@@ -42,11 +42,16 @@
                                     @endif
                                 </div>
 
-
+                                @if($email_template->type == 1)
                                 <div class="form-group">
                                     <label for="title">Variables</label>
                                     <?php echo '{{competition_name}}, {{student_name}}, {{exam_date}}, {{logo}}, {{competition_venue}}, {{student_id}}, {{dob}}, {{seat_no}}, {{reporting_time}}, {{competition_time}}, {{venue_arrangement}}'; ?>
                                 </div>
+                                @else
+                                <div class="form-group">
+                                    <?php echo '{{grading_name}}, {{student_name}}, {{exam_date}}, {{logo}}, {{competition_venue}}, {{student_id}}, {{dob}}, {{mental_seat_no}}, {{abacus_seat_no}},  {{reporting_time}}, {{competition_time}}, {{venue_arrangement}}'; ?>
+                                </div>
+                                @endif
                                 
                                 
                             </div>
