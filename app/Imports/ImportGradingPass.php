@@ -33,13 +33,14 @@ class ImportGradingPass implements ToCollection, WithHeadingRow
         foreach($rows->all() as $row) {
           $competitionn = GradingExam::where('id', $this->competition)->first();
           $CompetitionPassUpload = new GradingPassUpload();
+          $user = User::where('account_id', $row['student_id'])->first();
           $CompetitionPassUpload->competition_id =  $this->competition;
           //$CompetitionPassUpload->category_id =  $this->category;
-          $CompetitionPassUpload->competition_date =  $row['exam_date'];
+          $CompetitionPassUpload->competition_date =  $competitionn->date_of_competition;
           $CompetitionPassUpload->competition_venue =  $row['exam_venue'];
           $CompetitionPassUpload->student_name =  $row['student_name'];
           $CompetitionPassUpload->student_id =  $row['student_id'];
-          $CompetitionPassUpload->dob =  $row['dob'];
+          $CompetitionPassUpload->dob =  $user->dob;
           $CompetitionPassUpload->mental_seat_no =  $row['mental_seat_no'];
           $CompetitionPassUpload->abacus_seat_no =  $row['abacus_seat_no'];
           $CompetitionPassUpload->reporting_time =  $row['reporting_time'];

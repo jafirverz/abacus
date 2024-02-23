@@ -30,6 +30,7 @@ class ImportCompetitionPass implements ToCollection, WithHeadingRow
     {
         foreach($rows->all() as $row) {
           $competitionn = Competition::where('id', $this->competition)->first();
+          $user = User::where('account_id', $row['student_id'])->first();
           $CompetitionPassUpload = new CompetitionPassUpload();
           $CompetitionPassUpload->competition_id =  $this->competition;
           //$CompetitionPassUpload->category_id =  $this->category;
@@ -37,7 +38,7 @@ class ImportCompetitionPass implements ToCollection, WithHeadingRow
           $CompetitionPassUpload->competition_venue =  $row['competition_venue'];
           $CompetitionPassUpload->student_name =  $row['student_name'];
           $CompetitionPassUpload->student_id =  $row['student_id'];
-          $CompetitionPassUpload->dob =  $row['dob'];
+          $CompetitionPassUpload->dob =  $user->dob;
           $CompetitionPassUpload->seat_no =  $row['seat_no'];
           $CompetitionPassUpload->reporting_time =  $row['reporting_time'];
           $CompetitionPassUpload->competition_time =  $row['competition_time'];

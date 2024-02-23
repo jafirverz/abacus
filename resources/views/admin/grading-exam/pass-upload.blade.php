@@ -7,7 +7,7 @@
         <div class="section-header">
             <div class="section-header-back">
                 <!-- <a href="{{ route('papers.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a> -->
-                <a href="{{ url('upload-file/CompetitionPassUpload.xlsx') }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Download Sample</a>
+                <a href="{{ url('upload-file/GradingPassUpload.xlsx') }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Download Sample</a>
             </div>
             <h1>{{ $title ?? '-' }}</h1>
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank_crud', 'Create', route('bank.create'))])--}}
