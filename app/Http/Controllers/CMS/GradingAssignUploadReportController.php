@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\GradingResultsUpload;
 use App\GradingStudentResults;
 use App\GradingExam;
 use App\GradingCategory;

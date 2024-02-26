@@ -2153,6 +2153,7 @@ class ProfileController extends Controller
         $grading = GradingExam::where('id', $id)->first();
         $user = User::where('id', $user_id)->first();
         $examPass = GradingPassUpload::where('competition_id', $id)->where('student_id', $user->account_id)->first();
+        //dd($examPass);
         // if($grading->start_time_of_competition <= 12){
         //     $start_time_of_competition = $grading->start_time_of_competition . ' AM';
         // }else{
@@ -2164,17 +2165,19 @@ class ProfileController extends Controller
         // }else{
         //     $end_time_of_competition = $grading->end_time_of_competition-12 . ' PM';
         // }
+        if(isset($examPass))
+        {
+            // $compTime=$start_time_of_competition.' - '.$end_time_of_competition;
+            $logo='<img style="width: 120px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
+            // $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{exam_venue}}','{{exam_time}}','{{logo}}'];
+            // $value = [$grading->title, $user->name, date('j F Y, l',strtotime($grading->date_of_competition)), $grading->exam_venue, $compTime,$logo];
 
-        // $compTime=$start_time_of_competition.' - '.$end_time_of_competition;
-        $logo='<img style="width: 120px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
-        // $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{exam_venue}}','{{exam_time}}','{{logo}}'];
-        // $value = [$grading->title, $user->name, date('j F Y, l',strtotime($grading->date_of_competition)), $grading->exam_venue, $compTime,$logo];
+            $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{logo}}', '{{competition_venue}}','{{student_id}}','{{dob}}','{{mental_seat_no}}','{{abacus_seat_no}}','{{reporting_time}}','{{competition_time}}','{{venue_arrangement}}'];
+            $value = [$grading->title, $user->name, $examPass->competition_date, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->mental_seat_no,$examPass->abacus_seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
 
-        $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{logo}}', '{{competition_venue}}','{{student_id}}','{{dob}}','{{mental_seat_no}}','{{abacus_seat_no}}','{{reporting_time}}','{{competition_time}}','{{venue_arrangement}}'];
-        $value = [$grading->title, $user->name, $examPass->competition_date, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->mental_seat_no,$examPass->abacus_seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
-
-        $newContents = str_replace($key, $value, $pass->content);
-        $pdf = PDF::loadView('account.grading_pass', compact('newContents'));
-        return $pdf->download('grading-pass.pdf');
+            $newContents = str_replace($key, $value, $pass->content);
+            $pdf = PDF::loadView('account.grading_pass', compact('newContents'));
+            return $pdf->download('grading-pass.pdf');
+        }
     }
 }
