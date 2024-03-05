@@ -19,7 +19,7 @@ return [
     'TEST_MANAGEMENT'  =>  'Allocate Test / Lesson',
     'TEST_PAPER'  =>  'Create Test / Lesson',
     'TEST_PAPER_QUIESTION'  =>  'Test/Lesson Questions',
-    'COURSE'  =>  'Course',
+    'COURSE'  =>  'Assign Online Lesson',
     'ACHIEVEMENT'  =>  'Achievement',
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
