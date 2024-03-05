@@ -12,7 +12,7 @@
             <strong>My Profile</strong>
         </a>
     </li>
-    <li @if(Request::segment(1) == 'instructor-students') class="active" @endif>
+    <li @if(Request::segment(1) == 'instructor-students' || Request::segment(1) == 'students') class="active" @endif>
         <a href="{{ url('/instructor-students') }}">
             <span><img src="{{ asset('images/tempt/ico-students.png') }}" alt="Students icon" /></span>
             <strong>My Students</strong>

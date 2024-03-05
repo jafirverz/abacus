@@ -13,7 +13,10 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
-                <h1 class="title-3">{{ $page->title ?? '' }}</h1>
+                <div class="mb-20">
+                    <a class="link-1 lico" href="{{ url('instructor-students') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+                </div>
+                <h1 class="title-3">My Students profile</h1>
                 <div class="box-1">
                     <div class="row align-items-center title-type">
                         <div class="col-md">

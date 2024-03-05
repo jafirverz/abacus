@@ -75,12 +75,21 @@ class TestManagementController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+
+        $arr=[
             'title'  =>  'required',
-            'student_idd'  =>  'required',
-            'student_id'  =>  'required',
             'paper_id'  =>  'required',
-        ]);
+        ];
+        if(isset($request->student_idd))
+        {
+            $arr=array_merge($arr,['student_id'  =>  'required']);
+        }
+        if(isset($request->student_id))
+        {
+            $arr=array_merge($arr,['student_idd'  =>  'required']);
+        }
+        //dd($arr);
+        $request->validate($arr);
 
         $testManagement = new TestManagement;
         $testManagement->title = $request->title ?? '';

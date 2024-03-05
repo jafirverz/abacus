@@ -59,7 +59,7 @@
 
                                                 <select name="country_code_phone"  data-live-search="true" class="selectpicker form-control">
                                                     @foreach($country as $phonecode)
-                                                    <option value="{{ $phonecode->phonecode }}" @if($phonecode->phonecode == $customer->country_code) selected @endif>+ {{ $phonecode->phonecode }}</option>
+                                                    <option value="{{ $phonecode->phonecode }}" @if($phonecode->phonecode == $customer->country_code_phone) selected @endif>+ {{ $phonecode->phonecode }}</option>
                                                     @endforeach
                                                 </select>
 
