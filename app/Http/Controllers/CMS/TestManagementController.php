@@ -60,10 +60,10 @@ class TestManagementController extends Controller
             $students = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
             $userStudent = User::where('country_code', Auth::user()->country_id)->whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
         }
-        
+
         $courses = Course::orderBy('id','desc')->get();
         $papers = TestPaper::where('paper_type', 1)->orderBy('id','desc')->get();
-        
+
         return view('admin.test-management.create', compact('title','courses','papers','students', 'userStudent'));
     }
 
@@ -77,8 +77,9 @@ class TestManagementController extends Controller
     {
         $request->validate([
             'title'  =>  'required',
+            'student_idd'  =>  'required',
+            'student_id'  =>  'required',
             'paper_id'  =>  'required',
-            'course_id'  =>  'required',
         ]);
 
         $testManagement = new TestManagement;
@@ -86,7 +87,7 @@ class TestManagementController extends Controller
         $testManagement->paper_id = $request->paper_id ?? '';
         $testManagement->start_date = $request->start_date ?? '';
         $testManagement->end_date = $request->end_date ?? '';
-        $testManagement->course_id = $request->course_id ?? '';
+        //$testManagement->course_id = $request->course_id ?? '';
         //$testManagement->template = $request->template ?? '';
         $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
         $testManagement->created_at = Carbon::now();

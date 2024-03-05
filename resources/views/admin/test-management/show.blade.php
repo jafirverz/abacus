@@ -26,9 +26,9 @@
                                 <div class="form-group">
                                     <strong>Paper</strong>: {{ $test->paper->title }}
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <strong>Course</strong>: {{ $test->course->title }}
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group">
                                     <strong>Instructor</strong>
