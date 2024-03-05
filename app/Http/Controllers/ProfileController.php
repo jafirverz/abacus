@@ -254,7 +254,7 @@ class ProfileController extends Controller
 
 		$user = $this->user;
 		$test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->select('test_management.*')->where('allocations.type',1)->orderBy('test_management.id', 'asc')->where('allocations.assigned_by', $this->user->id)->paginate($this->pagination);
-        $survey = Survey::join('allocations','allocations.assigned_id','surveys.id')->where('surveys.status',1)->where('allocations.type',2)->select('surveys.*')->where('allocations.assigned_by', $this->user->id)->orderBy('id', 'asc')->groupBy('allocations.assigned_by')->paginate($this->pagination);
+        $survey = Survey::paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
