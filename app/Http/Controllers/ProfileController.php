@@ -680,6 +680,7 @@ class ProfileController extends Controller
             'user_id' => 'required',
         ]);
 
+        //dd($request);
 
         $gradingStudent = new GradingStudent();
         $gradingStudent->user_id   = $request->user_id ?? NULL;
@@ -721,7 +722,7 @@ class ProfileController extends Controller
 
             }
 
-		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
+		return redirect()->route('grading-examination',[$request->grading_exam_id])->with('success', __('constant.GRADING_UPDATED'));
 	}
 
     public function update_grading(Request $request,$id)
