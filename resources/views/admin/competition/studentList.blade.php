@@ -67,6 +67,7 @@
                                                 </div>
                                             </th>
                                             <th>Student Name</th>
+                                            <th>Account ID</th>
                                             <th>Instructor</th>
                                             <th>Learning Location</th>
                                             <th>Category</th>
@@ -88,6 +89,7 @@
                                             </td>
                                             
                                             <td>{{ $item->userlist->name }}</td>
+                                            <td>{{ $item->userlist->account_id ?? '' }}</td>
                                             <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
                                             <td>{{ $item->userlist->learning_location ?? '' }}</td>
                                             <td>{{ $item->category->category_name ?? '' }}</td>
