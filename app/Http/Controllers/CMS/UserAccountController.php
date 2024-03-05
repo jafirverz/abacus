@@ -52,7 +52,7 @@ class UserAccountController extends Controller
     {
         $title = $this->title;
         $roles = Role::all();
-        $countries = Country::get();
+        $countries = Country::orderBy('country', 'DESC')->get();
         return view('admin.account.user_account.create', compact('title', 'roles', 'countries'));
     }
 

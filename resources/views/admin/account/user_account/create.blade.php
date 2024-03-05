@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="admin_role">Country</label>
-                                    <select name="countrry" class="form-control" id="">
+                                    <select name="countrry" class="form-control selectpicker" id="" data-live-search="true">
                                         <option value="">-- Select --</option>
                                         @foreach($countries as $countryy)
                                         <option value="{{ $countryy->id }}">{{ $countryy->country }}</option>
