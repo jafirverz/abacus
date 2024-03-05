@@ -139,6 +139,12 @@
                     'idtag'  => 'testmanagement',
                 ],
                 [
+                    'title' =>  __('constant.COURSE'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/course',
+                    'idtag'  => 'admincourse',
+                ],
+                [
                     'title' =>  __('constant.TEST_ALLOCATION'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/test-allocation',
@@ -346,12 +352,7 @@
                     'url'   =>  'admin/external-centre-account',
                     'idtag'  => 'externalcentreaccount',
                 ],
-                [
-                    'title' =>  __('constant.COURSE'),
-                    'icon'  =>  '<i class="fas fa-check"></i>',
-                    'url'   =>  'admin/course',
-                    'idtag'  => 'admincourse',
-                ],
+
                 [
                     'title' =>  __('constant.FEEDBACK'),
                     'icon'  =>  '<i class="fas fa-user"></i>',
