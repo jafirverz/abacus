@@ -160,7 +160,7 @@
 
                                 <div class="form-group">
                                     <label for="">Learning Location </label>
-                                    <select name="learning_location" class="form-control" tabindex="-98">
+                                    <select data-live-search="true" name="learning_location" class="selectpicker form-control" tabindex="-98">
                                         <option value="">-- Select --</option>
                                         @foreach($learningLocations as $learninglocat)
                                         <option value="{{ $learninglocat->id }}" @if(old('learning_location')==$learninglocat->id) selected @endif>{{ $learninglocat->title }}

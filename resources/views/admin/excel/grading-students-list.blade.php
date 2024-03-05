@@ -3,6 +3,7 @@
     <tr>
       <th>S/N</th>
       <th>Grading Exam Name</th>
+      <th>Account ID</th>
       <th>Student Name</th>
       <th>Student DOB</th>
       <th>Instructor Name</th>
@@ -26,6 +27,7 @@
       <td>
         {{ getExamName($item->grading_exam_id) ?? '' }}
       </td>
+      <td>{{ $item->userlist->account_id }}</td>
       <td>{{ $item->userlist->name }}</td>
       <td>{{ $item->userlist->dob }}</td>
       <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
