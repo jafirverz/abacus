@@ -74,7 +74,7 @@
                                         <option value="">-- Select --</option>
                                         @if ($userStudent)
                                         @foreach ($userStudent as $item)
-                                        <option value="{{ $item->id }}" @if(old('student_idd')==$item->id)
+                                        <option value="{{ $item->id }}"  @if(old('student_idd') && in_array($item->id,old('student_idd')))
                                             selected
                                             @endif>{{ $item->name }}</option>
                                         @endforeach

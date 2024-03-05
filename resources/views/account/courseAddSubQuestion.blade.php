@@ -81,7 +81,7 @@
                                 @endphp
                                 <div class="row sp-col-5 inrow-1">
                                   <div class="col-auto sp-col"></div>
-                                  <div class="col sp-col">{{ $val }}</div>
+                                  <div class="col sp-col">{{ number_format($val) }}</div>
                                 </div>
                                 @php
                               }

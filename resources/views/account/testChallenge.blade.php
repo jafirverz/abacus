@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                               <th class="wcol-1 text-center">NO</th>
-                              <th class="wcol-2 text-center">Question</th>
+                              <th class="wcol-4 text-center">Question</th>
                               <th>Answer</th>
                             </tr>
                           </thead>
@@ -54,7 +54,7 @@
                             if($ques->input_3 == 'add'){
                               $symbol = '+';
                             }elseif($ques->input_3 == 'multiply'){
-                              $symbol = '*';
+                              $symbol = 'x';
                             }elseif($ques->input_3 == 'divide'){
                               $symbol = '/';
                             }elseif($ques->input_3 == 'subtract'){
@@ -63,7 +63,7 @@
                             @endphp
                             <tr>
                               <td class="colnumber">{{ $i }}</td>
-                              <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
+                              <td class="text-center">{{ number_format($ques->input_1) }} {{ $symbol }} {{ number_format($ques->input_2) }}  =</td>
                               <td class="colanswer"><input class="number-separator form-control" name="answer[{{ $ques->id }}]" type="text" /></td>
                             </tr>
                             @php

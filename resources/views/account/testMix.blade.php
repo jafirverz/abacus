@@ -67,7 +67,7 @@
                                 @endphp
                                 <div class="row sp-col-5 inrow-1">
                                   <div class="col-auto sp-col"></div>
-                                  <div class="col sp-col">{{ $val }}</div>
+                                  <div class="col sp-col">{{ number_format($val) }}</div>
                                 </div>
                                 @php
                               }
@@ -112,7 +112,7 @@
                         <thead>
                             <tr>
                               <th class="wcol-1 text-center">NO</th>
-                              <th class="wcol-2 text-center">Question</th>
+                              <th class="wcol-4 text-center">Question</th>
                               <th>Answer</th>
                             </tr>
                           </thead>
@@ -123,7 +123,7 @@
                             @foreach($paper_detail->questionsCourse as $ques)
                             @php
                             if($ques->input_3 == 'multiply'){
-                              $symbol='*';
+                              $symbol='x';
                             }
                             elseif($ques->input_3 == 'add'){
                               $symbol='+';
@@ -137,7 +137,7 @@
                             @endphp
                             <tr>
                               <td class="colnumber">{{ $i }}</td>
-                              <td class="text-center">{{ $ques->input_1 }} {{ $symbol }} {{ $ques->input_2 }}  =</td>
+                              <td class="text-center">{{ number_format($ques->input_1) }} {{ $symbol }} {{ number_format($ques->input_2) }}  =</td>
                               <td class="colanswer"><input class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
                             </tr>
                             @php

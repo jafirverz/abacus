@@ -56,7 +56,7 @@
                   @endphp
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
-                    <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
+                    <td class="text-center">{{ number_format($ques->question_1) }} {{ $symbol }} {{ number_format($ques->question_2) }}  =</td>
                     <td class="colanswer"><input class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
                   </tr>
                   @php
