@@ -90,7 +90,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="course_id">Course</label>
                                     <select name="course_id" class="form-control">
                                         <option value="">-- Select --</option>
@@ -107,7 +107,7 @@
                                         <strong>{{ $errors->first('course_id') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="paper_id">Paper</label>
                                     <select name="paper_id" class="form-control">

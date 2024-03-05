@@ -64,7 +64,7 @@
                                             <th>Action</th>
                                             <th>Title</th>
                                             <th>Paper</th>
-                                            <th>Course</th>
+                                            {{-- <th>Course</th> --}}
                                             <th>Updated At</th>
                                         </tr>
                                     </thead>
@@ -80,9 +80,9 @@
                                                 <a href="{{ route('test-management.edit', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                                 <a href="{{ route('test-management.studentlist', $item->id) }}" class="btn btn-light mr-1 mt-1" data-toggle="tooltip" data-original-title="Menu List"><i class="fas fa-bars"></i></a>
                                             </td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->paper->title }}</td>
-                                            <td>{{ $item->course->title }}</td>
+                                            <td>{{ $item->title ?? '' }}</td>
+                                            <td>{{ $item->paper->title ?? '' }}</td>
+                                            {{-- <td>{{ $item->course->title ?? '' }}</td> --}}
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                         </tr>
                                         @endforeach

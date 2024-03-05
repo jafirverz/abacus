@@ -55,7 +55,7 @@
                                         <option value="">-- Select --</option>
                                         @if ($students)
                                         @foreach ($students as $item)
-                                        <option value="{{ $item->id }}" @if(old('teacher_id')==$item->id)
+                                        <option value="{{ $item->id }}" @if(old('student_id') && in_array($item->id,old('student_id')))
                                             selected
                                             @endif>{{ $item->name }}</option>
                                         @endforeach
@@ -104,7 +104,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="course_id">Course</label>
                                     <select name="course_id" class="form-control">
                                         <option value="">-- Select --</option>
@@ -121,7 +121,7 @@
                                         <strong>{{ $errors->first('course_id') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="paper_id">Paper</label>
                                     <select name="paper_id" class="form-control">
