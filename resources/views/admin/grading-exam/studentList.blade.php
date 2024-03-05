@@ -67,6 +67,7 @@
                                                         class="custom-control-label">&nbsp;</label>
                                                 </div>
                                             </th>
+                                            <th>Account ID</th>
                                             <th>Student Name</th>
                                             <th>Date of Birth</th>
                                             <th>Instructor</th>
@@ -90,6 +91,7 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
 
+                                            <td>{{ $item->userlist->account_id }}</td>
                                             <td>{{ $item->userlist->name }}</td>
                                             <td>{{ $item->userlist->dob }}</td>
                                             <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>

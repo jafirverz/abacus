@@ -86,8 +86,9 @@
                                             <th>Mental Marks</th>
                                             <th>Mental Result Pass/Fail</th>
                                             <th>Abacus Grade</th>
-                                            <th>Abacus Result Pass/Fail</th>
                                             <th>Abacus Marks</th>
+                                            <th>Abacus Result Pass/Fail</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,8 +110,9 @@
                                             <td>{{ $item->mental_results }}</td>
                                             <td>{{ $item->mental_result_passfail }}</td>
                                             <td>{{ $item->abacus_grade }}</td>
-                                            <td>{{ $item->abacus_result_passfail }}</td>
                                             <td>{{ $item->abacus_marks }}</td>
+                                            <td>{{ $item->abacus_result_passfail }}</td>
+
                                         </tr>
                                         @endforeach
                                         @else
