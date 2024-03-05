@@ -204,7 +204,6 @@ class TestManagementController extends Controller
         $request->validate([
             'title'  =>  'required',
             'paper_id'  =>  'required',
-            'course_id'  =>  'required',
         ]);
 
         $testManagement = TestManagement::findorfail($id);
@@ -212,7 +211,7 @@ class TestManagementController extends Controller
         $testManagement->paper_id = $request->paper_id ?? '';
         $testManagement->start_date = $request->start_date ?? '';
         $testManagement->end_date = $request->end_date ?? '';
-        $testManagement->course_id = $request->course_id ?? '';
+        //$testManagement->course_id = $request->course_id ?? '';
         $testManagement->student_id = isset($request->student_id)?json_encode($request->student_id):NULL;
         $testManagement->created_at = Carbon::now();
         $testManagement->save();

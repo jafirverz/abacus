@@ -69,7 +69,7 @@
                                 @endif
                                 <tr>
                                     <td class="colnumber">{{ $i }}</td>
-                                    <td class="text-center">{{ $ques->input_1 }} {{ $operator }} {{ $ques->input_2 }}  =</td>
+                                    <td class="text-center">{{ number_format($ques->input_1) }} {{ $operator }} {{ number_format($ques->input_2) }}  =</td>
                                     <td class="colanswer"><input value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" class="form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
                                     <td><input class="form-control" type="number" /></td>
                                 </tr>

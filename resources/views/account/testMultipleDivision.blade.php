@@ -60,7 +60,7 @@
                                 @endif
                                 <tr>
                                     <td class="colnumber">{{ $i }}</td>
-                                    <td class="text-center">{{ $ques->input_1 }} {{ $operator }} {{ $ques->input_2 }}  =</td>
+                                    <td class="text-center">{{ number_format($ques->input_1) }} {{ $operator }} {{ number_format($ques->input_2) }}  =</td>
                                     <td class="colanswer"><input  class="number-separator form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
                                 </tr>
                                 @php
