@@ -2135,6 +2135,9 @@ class ProfileController extends Controller
         $pass = ExaminationPass::where('type', 1)->first();
         $competition = Competition::where('id', $id)->first();
         $user = User::where('id', $user_id)->first();
+        $weekDat = date('l', strtotime($competition->date_of_competition));
+        $dateFor = date('d F Y', strtotime($competition->date_of_competition));
+        $competitionDate = $dateFor . ', '.$weekDat;
         $examPass = CompetitionPassUpload::where('competition_id', $id)->where('student_id', $user->account_id)->first();
         // if($competition->start_time_of_competition <= 12){
         //     $compTime = $competition->start_time_of_competition . ' AM';
@@ -2143,7 +2146,7 @@ class ProfileController extends Controller
         // }
         $logo='<img style="width: 120px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
         $key = ['{{competition_name}}','{{student_name}}','{{exam_date}}','{{logo}}', '{{competition_venue}}','{{student_id}}','{{dob}}','{{seat_no}}','{{reporting_time}}','{{competition_time}}','{{venue_arrangement}}'];
-        $value = [$competition->title, $user->name, $competition->date_of_competition, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
+        $value = [$competition->title, $user->name, $competitionDate, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
         $newContents = str_replace($key, $value, $pass->content);
         $pdf = PDF::loadView('account.competition_pass', compact('newContents'));
         return $pdf->download('competition-pass.pdf');
@@ -2154,6 +2157,11 @@ class ProfileController extends Controller
         $grading = GradingExam::where('id', $id)->first();
         $user = User::where('id', $user_id)->first();
         $examPass = GradingPassUpload::where('competition_id', $id)->where('student_id', $user->account_id)->first();
+
+        $weekDat = date('l', strtotime($examPass->competition_date));
+        $dateFor = date('d F Y', strtotime($examPass->competition_date));
+        $competitionDate = $dateFor . ', '.$weekDat;
+
         //dd($examPass);
         // if($grading->start_time_of_competition <= 12){
         //     $start_time_of_competition = $grading->start_time_of_competition . ' AM';
@@ -2174,7 +2182,7 @@ class ProfileController extends Controller
             // $value = [$grading->title, $user->name, date('j F Y, l',strtotime($grading->date_of_competition)), $grading->exam_venue, $compTime,$logo];
 
             $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{logo}}', '{{competition_venue}}','{{student_id}}','{{dob}}','{{mental_seat_no}}','{{abacus_seat_no}}','{{reporting_time}}','{{competition_time}}','{{venue_arrangement}}'];
-            $value = [$grading->title, $user->name, $examPass->competition_date, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->mental_seat_no,$examPass->abacus_seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
+            $value = [$grading->title, $user->name, $competitionDate, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->mental_seat_no,$examPass->abacus_seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
 
             $newContents = str_replace($key, $value, $pass->content);
             $pdf = PDF::loadView('account.grading_pass', compact('newContents'));
