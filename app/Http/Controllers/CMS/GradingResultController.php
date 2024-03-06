@@ -42,7 +42,7 @@ class GradingResultController extends Controller
         //
         $title = $this->title;
         // $competition = GradingSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
-        $competition = GradingExam::paginate(10);
+        $competition = GradingExam::orderBy('id','desc')->paginate(10);
         return view('admin.grading_result.index', compact('title', 'competition'));
     }
 

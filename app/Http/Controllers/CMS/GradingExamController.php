@@ -42,7 +42,7 @@ class GradingExamController extends Controller
     public function index()
     {
         $title = $this->title;
-        $competition = GradingExam::paginate($this->pagination);
+        $competition = GradingExam::orderBy('id','desc')->paginate($this->pagination);
 
         return view('admin.grading-exam.index', compact('title', 'competition'));
     }

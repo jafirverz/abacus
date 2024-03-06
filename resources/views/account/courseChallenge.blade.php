@@ -60,7 +60,7 @@
                       if($ques->input_3 == 'add'){
                         $symbol = '+';
                       }elseif($ques->input_3 == 'multiply'){
-                        $symbol = '*';
+                        $symbol = 'x';
                       }elseif($ques->input_3 == 'divide'){
                         $symbol = '/';
                       }elseif($ques->input_3 == 'subtract'){

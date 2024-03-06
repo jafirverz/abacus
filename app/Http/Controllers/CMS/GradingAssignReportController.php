@@ -38,7 +38,7 @@ class GradingAssignReportController extends Controller
 
     public function index(){
         $title = 'Grading Assign';
-        $competition = GradingExam::paginate($this->pagination);
+        $competition = GradingExam::orderBy('id','desc')->paginate($this->pagination);
 
         return view('admin.grading_result.assign', compact('title', 'competition'));
     }

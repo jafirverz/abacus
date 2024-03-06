@@ -174,13 +174,13 @@
                                                 {{ $item->mental->title ?? '' }}
                                             </td>
                                             <td>
-                                                {{ $item->mental->title ?? '' }}
+                                               {{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->mental_result_passfail ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $item->abacus->title ?? '' }}
                                             </td>
                                             <td>
-                                                {{ $item->abacus->title ?? '' }}
+                                                {{ getGradingStudentResult($item->grading_exam_id,$item->student->id)->abacus_result_passfail ?? '' }}
                                             </td>
                                             <td>
                                                 {{ $item->userlist->location->title ?? '' }}
