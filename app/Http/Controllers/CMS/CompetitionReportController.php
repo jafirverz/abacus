@@ -17,6 +17,7 @@ use App\GradingStudentResults;
 use App\LearningLocation;
 use App\Grade;
 use App\Competition;
+use App\CompetitionCategory;
 use App\GradingExam;
 use App\CompetitionStudent;
 use App\CourseAssignToUser;
@@ -61,7 +62,8 @@ class CompetitionReportController extends Controller
         $countries = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
         $countries = Country::whereIn('id', $countries)->get();
         $learningLocation = LearningLocation::get();
-        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders','instructor','competitions', 'learningLocation'));
+        $competitoinCategory = CompetitionCategory::get();
+        return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'allOrders','instructor','competitions', 'learningLocation', 'competitoinCategory'));
     }
 
     public function competition_search(Request $request)
@@ -75,6 +77,7 @@ class CompetitionReportController extends Controller
         $instructor = User::where('user_type_id', 5)->get();
         $competitions = Competition::where('status', 1)->get();
         $learningLocation = LearningLocation::get();
+        $competitoinCategory = CompetitionCategory::get();
         if($request->downloadexcel == 0){
             $q = CompetitionStudent::query();
             $q->join('users','competition_students.user_id','users.id');
@@ -88,6 +91,10 @@ class CompetitionReportController extends Controller
                 $q->where('competition_students.competition_controller_id', $request->event);
             }
 
+            if ($request->category) {
+                $q->where('competition_students.category_id', $request->category);
+            }
+
             if ($request->learning_location) {
                 $q->where('users.learning_locations', $request->learning_location);
             }
@@ -97,7 +104,7 @@ class CompetitionReportController extends Controller
             }
             $compStudents = $q->paginate($this->pagination);
             session()->flashInput($request->input());
-            return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'instructor','competitions', 'learningLocation'));
+            return view('admin.cms.reports.competition_students', compact('title', 'compStudents', 'countries', 'instructor','competitions', 'learningLocation', 'competitoinCategory'));
             //dd($allItems);
 
         }else{
@@ -110,6 +117,10 @@ class CompetitionReportController extends Controller
 
             if ($request->event) {
                 $q->where('competition_students.competition_controller_id', $request->event);
+            }
+
+            if ($request->category) {
+                $q->where('competition_students.category_id', $request->category);
             }
 
             if ($request->learning_location) {
