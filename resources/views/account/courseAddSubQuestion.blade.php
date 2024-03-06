@@ -43,7 +43,7 @@
 
             @if($all_paper_detail)
             @foreach($all_paper_detail as $paper_detail)
-            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
+            {{-- <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}"> --}}
             <div class="box-1">
                 <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
