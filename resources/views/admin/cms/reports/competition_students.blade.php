@@ -16,26 +16,28 @@
 
                 <div class="row">
 
-                        <div class="col-lg-4"><label>Learning Location:</label>
-                          <select name="learning_location" class="form-control">
+                    <div class="col-lg-4"><label>Learning Location:</label>
+                        <select name="learning_location" class="form-control">
                             <option value="">-- Select --</option>
                             @foreach($learningLocation as $locat)
-                            <option @if(isset($_REQUEST['learning_location']) && $_REQUEST['learning_location']==$locat->id) selected="selected"
+                            <option @if(isset($_REQUEST['learning_location']) &&
+                                $_REQUEST['learning_location']==$locat->id) selected="selected"
                                 @endif value="{{ $locat->id }}">{{ $locat->title }}</option>
                             @endforeach
                         </select>
-                        </div>
-                        <!-- <div class="col-lg-4"><label>End Date:</label>
+                    </div>
+                    <!-- <div class="col-lg-4"><label>End Date:</label>
                           <input type="text" name="enddate" class="form-control datepicker1"
                           id="title" @if(isset($_GET['enddate']) && $_GET['enddate']!="" ) value="{{ $_GET['enddate'] }}"
                           @endif>
                         </div> -->
                     <div class="col-lg-4">
                         <label>Instructor</label>
-                        <select name="instructor" class="form-control" >
+                        <select name="instructor" class="form-control">
                             <option value="">-- Select --</option>
                             @foreach ($instructor as $key => $value)
-                            <option @if(isset($_REQUEST['instructor']) && $_REQUEST['instructor']==$value->id) selected="selected"
+                            <option @if(isset($_REQUEST['instructor']) && $_REQUEST['instructor']==$value->id)
+                                selected="selected"
                                 @endif value="{{$value->id}}">{{$value->name}}</option>
                             @endforeach
                         </select>
@@ -43,24 +45,38 @@
                     <div class="col-lg-4">
                         <label>Event</label>
                         <select name="event" class="form-control">
-                          <option value="">-- Select --</option>
-                          @foreach ($competitions as $key => $value)
-                          <option @if(isset($_REQUEST['event']) && $_REQUEST['event']==$value->id) selected="selected"
-                              @endif value="{{$value->id}}">{{$value->title}}</option>
-                          @endforeach
-                      </select>
-                  </div>
+                            <option value="">-- Select --</option>
+                            @foreach ($competitions as $key => $value)
+                            <option @if(isset($_REQUEST['event']) && $_REQUEST['event']==$value->id) selected="selected"
+                                @endif value="{{$value->id}}">{{$value->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                 </div>
                 <div class="row">
+
+                    <div class="col-lg-4">
+                        <label>Category</label>
+                        <select name="category" class="form-control">
+                            <option value="">-- Select --</option>
+                            @foreach ($competitoinCategory as $key => $value)
+                            <option @if(isset($_REQUEST['category']) && $_REQUEST['category']==$value->id)
+                                selected="selected"
+                                @endif value="{{$value->id}}">{{$value->category_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="col-lg-4"><label>Country:</label>
-                      <select name="country" class="form-control">
-                        <option value="">-- Select --</option>
-                        @foreach($countries as $country)
-                        <option @if(isset($_REQUEST['country']) && $_REQUEST['country']==$country->id) selected="selected"
-                            @endif value="{{ $country->id }}">{{ $country->country }}</option>
-                        @endforeach
-                    </select>
+                        <select name="country" class="form-control">
+                            <option value="">-- Select --</option>
+                            @foreach($countries as $country)
+                            <option @if(isset($_REQUEST['country']) && $_REQUEST['country']==$country->id)
+                                selected="selected"
+                                @endif value="{{ $country->id }}">{{ $country->country }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <!-- <div class="col-lg-4"><label>End Date:</label>
                       <input type="text" name="enddate" class="form-control datepicker1"
@@ -72,8 +88,9 @@
                 <input type="hidden" name="downloadexcel" value="" id="downloadexcel">
                 <div class="row">
                     <div class="col-lg-4">
-                        <button type="submit" class="btn btn-primary" > Search</button>
-                        <button type="button" class="btn btn-primary" onclick="formsubmit();"> Export</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" onclick="formsubmitSearch();"> Search</button>
+                        <button type="button" class="btn btn-primary" onclick="formsubmit();">
+                            Export</button>&nbsp;&nbsp;
                         @if(request()->get('_token'))
                         <a href="{{ url()->current() }}" class="btn btn-primary">Clear All</a>
                         @else
@@ -156,34 +173,37 @@
                                             <td>
                                                 {{ $i }}
                                             </td>
-                                            
+
                                             <td>
-                                                {{ $item->student->name  ?? ''}}
+                                                {{ $item->student->name ?? ''}}
                                             </td>
                                             <td>
-                                                {{ $item->student->dob  ?? ''}}
+                                                {{ $item->student->dob ?? ''}}
                                             </td>
                                             <td>
-                                                {{ $item->student->country_code_phone.$item->student->mobile  ?? ''}}
+                                                {{ $item->student->country_code_phone.$item->student->mobile ?? ''}}
                                             </td>
                                             <td>
-                                                {{ $item->teacher->name  ?? ''}}
+                                                {{ $item->teacher->name ?? ''}}
                                             </td>
-                                            
+
                                             <td>{{ $item->location->title ?? '' }}</td>
                                             <td>{{ getCountry($item->student->country_code) ?? '' }}</td>
                                             <td>{{ getCategory($item->category_id)->category_name ?? '' }}</td>
                                             @php
-                                            $abc = getPaper($item->competition_controller_id, $item->category_id, $item->user_id);
+                                            $abc = getPaper($item->competition_controller_id, $item->category_id,
+                                            $item->user_id);
                                             if(!empty($abc)){
-                                                $paperResult = implode(',  ', $abc);
+                                            $paperResult = implode(', ', $abc);
                                             }
                                             @endphp
                                             <td>{{ $paperResult ?? '' }}</td>
-                                            <td>{{ getTotalPaperMarks($item->competition_controller_id, $item->category_id, $item->user_id) }}</td>
+                                            <td>{{ getTotalPaperMarks($item->competition_controller_id,
+                                                $item->category_id, $item->user_id) }}</td>
 
-                                            <td>{{ getPrize($item->competition_controller_id, $item->category_id, $item->user_id) }}</td>
-                                            
+                                            <td>{{ getPrize($item->competition_controller_id, $item->category_id,
+                                                $item->user_id) }}</td>
+
                                         </tr>
                                         @endforeach
                                         @else
@@ -207,9 +227,16 @@
 </div>
 
 <script>
-    function formsubmit(){
+    function formsubmit() {
         $("#downloadexcel").val(1);
         $('form#formreport').submit();
     }
+
+    function formsubmitSearch() {
+        $("#downloadexcel").val(0);
+        $('form#formreport').submit();
+    }
+
+    
 </script>
 @endsection
