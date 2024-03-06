@@ -12,6 +12,7 @@ use App\CompetitionCategory;
 use App\CompetitionPassUpload;
 use App\CompetitionResultUpload;
 use App\CompetitionStudent;
+use App\ExaminationPass;
 use App\Exports\CompetetitionStudentList;
 use App\Imports\ImportCompetitionResult;
 use App\Imports\TempImportCompetitionResult;
@@ -106,6 +107,11 @@ class CompetitionPassUploadController extends Controller
                 );
 
                 $fileupload_path = $filepath . $filename;
+
+                $examPaas = CompetitionPassUpload::where('competition_id', $request->competition)->get();
+                foreach($examPaas as $pass){
+                    $pass->delete();
+                }
 
                 $result = Excel::import(new ImportCompetitionPass($request->competition), $file);
 

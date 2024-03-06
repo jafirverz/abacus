@@ -14,6 +14,7 @@ use App\CompetitionResultUpload;
 use App\CompetitionStudent;
 use App\Exports\CompetetitionStudentList;
 use App\GradingExam;
+use App\GradingPassUpload;
 use App\Imports\ImportCompetitionResult;
 use App\Imports\ImportGradingPass;
 use App\Imports\TempImportCompetitionResult;
@@ -107,6 +108,11 @@ class GradingPassUploadController extends Controller
                 );
 
                 $fileupload_path = $filepath . $filename;
+
+                $examPaas = GradingPassUpload::where('competition_id', $request->competition)->get();
+                foreach($examPaas as $pass){
+                    $pass->delete();
+                }
 
                 $result = Excel::import(new ImportGradingPass($request->competition), $file);
 
