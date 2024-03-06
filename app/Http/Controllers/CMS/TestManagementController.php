@@ -80,14 +80,14 @@ class TestManagementController extends Controller
             'title'  =>  'required',
             'paper_id'  =>  'required',
         ];
-        if(isset($request->student_idd))
-        {
-            $arr=array_merge($arr,['student_id'  =>  'required']);
-        }
-        if(isset($request->student_id))
-        {
-            $arr=array_merge($arr,['student_idd'  =>  'required']);
-        }
+        // if(isset($request->student_idd))
+        // {
+        //     $arr=array_merge($arr,['student_id'  =>  'required']);
+        // }
+        // if(isset($request->student_id))
+        // {
+        //     $arr=array_merge($arr,['student_idd'  =>  'required']);
+        // }
         //dd($arr);
         $request->validate($arr);
 
