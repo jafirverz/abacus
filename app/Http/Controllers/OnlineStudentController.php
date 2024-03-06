@@ -137,7 +137,6 @@ class OnlineStudentController extends Controller
         $questTem = array(1,2,3,4,5,6,7,8);
         $resultpage = array(1,2,3,4,5,6,7,8);
         if(in_array($questionTypeId, $questTem)){
-            dd($test_paper_question_id);
             $courseSub = new CourseSubmitted();
             $courseSub->test_paper_question_id   = $test_paper_question_id;
             $courseSub->course_id  = $course_id;

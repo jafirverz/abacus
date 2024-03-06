@@ -63,6 +63,10 @@
                                     <tr>
                                         <td>
                                             <em>{{ $student->account_id ?? '' }}</em>
+                                            <div class="tbactions">
+                                                <a href="{{route('normal.my-achievements', $student->id)}}">Achievements</a>
+
+                                            </div>
                                         </td>
                                         <td class="text-nowrap"><em>{{ $student->name ?? '' }}</em></td>
                                         <td><em>{{ $student->dob ?? '' }}</em></td>
