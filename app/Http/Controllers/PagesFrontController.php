@@ -22,6 +22,7 @@ use App\CourseAssignToUser;
 use App\TestManagement;
 use App\Allocation;
 use App\Competition;
+use App\CompetitionStudent;
 use App\Country;
 use App\Partner;
 use App\SystemSetting;
@@ -85,7 +86,9 @@ class PagesFrontController extends Controller
         //dd($test);
         $competition = Competition::where('status', 1)->where('date_of_competition', $todayDate)->first();
         $grading_exam = GradingExam::join('grading_students','grading_students.grading_exam_id','grading_exams.id')->select('grading_exams.*')->whereDate('grading_exams.date_of_competition','>=',$todayDate)->where('grading_exams.status', 1)->where('grading_students.approve_status', 1)->where('grading_students.user_id', Auth::user()->id)->first();
-        $competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
+        //$competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
+        $competitionStudent = CompetitionStudent::where('user_id', Auth::user()->id)->pluck('competition_controller_id')->toArray();
+        $competition = Competition::whereIn('id', $competitionStudent)->where('status', 1)->where('date_of_competition', '>=', $todayDate)->orderBy('date_of_competition', 'asc')->first();
         $gradingCertificate = GradingSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
 
 
