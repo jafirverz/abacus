@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\AchievementOther;
 use App\Country;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
@@ -266,9 +267,20 @@ class CustomerAccountController extends Controller
         $title = $this->title;
         $customer = User::findorfail($id);
         $instructors = User::findorfail($customer->instructor_id);
-        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $id)->orderBy('id', 'desc')->get();
-        $gradingExamResult = GradingStudentResults::where('user_id', $id)->orderBy('id', 'desc')->get();
-        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        // $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $id)->orderBy('id', 'desc')->get();
+        // $gradingExamResult = GradingStudentResults::where('user_id', $id)->orderBy('id', 'desc')->get();
+        // $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+
+        $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $id)->orderBy('total_marks', 'desc')->get();
+        //dd($actualCompetitionPaperSubted);
+        $gradingExamResult = GradingStudentResults::where('user_id', $id)->orderBy('total_marks', 'desc')->get();
+
+        $achievementsOther = AchievementOther::where('user_id', $id)->orderBy('total_marks', 'desc')->get();
+
+        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(10);
+
+        $merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
+
         return view('admin.account.customer.show', compact('title', 'customer','instructors','merged'));
     }
 
