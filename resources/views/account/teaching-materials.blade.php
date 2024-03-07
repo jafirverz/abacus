@@ -89,7 +89,7 @@
                                         <em>{{ $material->title }}</em>
                                         <div class="tbactions"><a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a>
                                             @if(!in_array($material->file_type,['mp4','ppt']))
-                                            <a target="_blank" href="{{ asset($material->uploaded_files) }}">Download</a>
+                                            {{-- <a target="_blank" href="{{ asset($material->uploaded_files) }}">Download</a> --}}
                                             @endif
                                         </div>
                                     </td>
