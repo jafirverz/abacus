@@ -74,10 +74,14 @@
             </div>
             @endforeach
           </div>
-
+          
+          @if($compPaper->paper_type == 'actual')
+          @else
           <div class="output-1">
             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
           </div>
+          @endif
+
         </form>
 
 
