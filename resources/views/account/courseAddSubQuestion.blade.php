@@ -29,7 +29,7 @@
                     </video>
                 </div>
                 <div class="col-lg-6 sp-col countwrap">
-                    <img src="{{asset($test_paper->powerpoint_file)}}" alt="" />
+                    <iframe width="500" height="400" src="{{ $test_paper->simulator_link }}" ></iframe>
                 </div>
             </div>
             <form method="post" action="{{ route('course.answer.submit') }}">

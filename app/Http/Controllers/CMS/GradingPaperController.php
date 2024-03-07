@@ -107,6 +107,7 @@ class GradingPaperController extends Controller
         $competitionPaper->paper_type = $request->paper_type;
         $competitionPaper->timer = $request->timer;
         $competitionPaper->category_id = $request->category;
+        $competitionPaper->status = $request->status;
         $competitionPaper->save();
 
 
@@ -193,6 +194,7 @@ class GradingPaperController extends Controller
 
         $competitionPaper->type = $request->question_type ?? null;
         $competitionPaper->timer = $request->timer;
+        $competitionPaper->status = $request->status;
         $competitionPaper->save();
 
 

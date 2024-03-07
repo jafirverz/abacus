@@ -1938,7 +1938,7 @@ class ProfileController extends Controller
 	}
 
     public function my_achievements($id){
-		$userId = Auth::user()->id;
+		$userId = $id;
 		// $actualCompetitionPaperSubted = CompetitionPaperSubmitted::where('user_id', $userId)->where('paper_type', 'actual')->groupBy('category_id')->groupBy('competition_id')->get();
 		//dd($actualCompetitionPaperSubted);
         $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('id', 'desc')->get();
