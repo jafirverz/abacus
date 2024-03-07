@@ -68,7 +68,7 @@
                                     </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="rank">Rank</label>
                                     <input required type="text" name="rank" class="form-control" id="" value="{{ old('rank', $event->rank) ?? '' }}">
 
@@ -87,7 +87,7 @@
                                         <strong>{{ $errors->first('marks') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
                                 
 
                                 
