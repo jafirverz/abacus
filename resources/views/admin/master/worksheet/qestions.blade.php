@@ -8,7 +8,7 @@
       <div class="section-header-back">
         <a href="{{ route('worksheet.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
-      <h1>{{ $title ?? '-' }}</h1>
+      <h1>{{ $worksheet->title ?? '-' }}</h1>
       @if(sizeof($questions) > 0)
       @else
       <div class="section-header-button">
