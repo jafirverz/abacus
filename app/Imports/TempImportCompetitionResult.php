@@ -32,10 +32,14 @@ class TempImportCompetitionResult implements ToCollection, WithHeadingRow
     {
         foreach($rows->all() as $row) {
             $studentName = $row['candidate_name'];
+            $student_id = trim($row['student_id']);
+            $instructor_code = trim($row['instructor_code']);
             $instructorName = $row['instructor'];
-            $checkInstructorName = User::where('name', $instructorName)->where('user_type_id', 5)->first();
+            //$checkInstructorName = User::where('name', $instructorName)->where('user_type_id', 5)->first();
+            $checkInstructorName = User::where('account_id', $instructor_code)->where('user_type_id', 5)->first();
             if($checkInstructorName){
-                $checkUserName = User::where('name', $studentName)->where('instructor_id', $checkInstructorName->id)->first();
+                // $checkUserName = User::where('name', $studentName)->where('instructor_id', $checkInstructorName->id)->first();
+                $checkUserName = User::where('account_id', $student_id)->where('instructor_id', $checkInstructorName->id)->first();
                 if($checkUserName){
                     $competitionn = Competition::where('id', $this->competition)->first();
                     $compStudentResult = new TempStudentCompetitionResult();
