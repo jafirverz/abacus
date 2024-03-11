@@ -19,15 +19,9 @@
           <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         @if($compPaper->time)
-          @php
-          $timeinSec = $compPaper->time * 60 + 2;
-          $today = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." + $timeinSec seconds"));
-          $dateTime = strtotime($today);
-          $getDateTime = date("F d, Y H:i:s", $dateTime);
-          @endphp
-          <div class="timer-wrap">
-            <div class="timer"><i class="icon-clock"></i> <strong>Timer: <div id="counter"> MM: SS </div></strong></div>
-          </div>
+        <div class="timer-wrap">
+          <div class="timer"><i class="icon-clock"></i> <strong>Timer: <span id="time"></span></strong></div>
+        </div>
         @endif
         <form method="post" enctype="multipart/form-data" action="{{ route('grading.submit') }}" id="submitform">
           @csrf
@@ -73,68 +67,75 @@
             @endforeach
           </div>
 
+          @if($compPaper->paper_type == 'actual')
+          @else
           <div class="output-1">
             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
           </div>
+          @endif
         </form>
+
 
 
       </div>
 </main>
 
 @if($compPaper->paper_type == 'actual')
-
 <script>
-  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
-  // Update the count down every 1 second
-  var interval = setInterval(function() {
-      var current = new Date().getTime();
-      // Find the difference between current and the count down date
-      var diff = countDownTimer - current;
-      // Countdown Time calculation for days, hours, minutes and seconds
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
-      //minutes + "m " + seconds + "s ";
-      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
-      // Display Expired, if the count down is over
-      if (diff < 0) {
-          clearInterval(interval);
-          document.getElementById("counter").innerHTML = "EXPIRED";
-      }
-  }, 1000);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+            $('form#submitform').submit();
+        }
+    }, 1000);
+}
+$(window).on('load', function() {
+    var compTime = {{$compPaper->time}};
+    var fiveMinutes = 60 * compTime;
+    var display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+});
+
 </script>
-
 @else
 
 <script>
-  var countDownTimer = new Date("{{ $getDateTime }}").getTime();
-  // Update the count down every 1 second
-  var interval = setInterval(function() {
-      var current = new Date().getTime();
-      // Find the difference between current and the count down date
-      var diff = countDownTimer - current;
-      // Countdown Time calculation for days, hours, minutes and seconds
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-      //document.getElementById("counter").innerHTML = days + "Day : " + hours + "h " +
-      //minutes + "m " + seconds + "s ";
-      document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
-      // Display Expired, if the count down is over
-      if (diff < 0) {
-          clearInterval(interval);
-          document.getElementById("counter").innerHTML = "EXPIRED";
-          $('form#submitform').submit();
-      }
-  }, 1000);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+            document.getElementById("time").innerHTML = "EXPIRED";
+            //$('form#submitform').submit();
+        }
+    }, 1000);
+}
+$(window).on('load', function() {
+    var compTime = {{$compPaper->time}};
+    var fiveMinutes = 60 * compTime;
+    var display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+});
+
 </script>
-
 @endif
 
 <script>
