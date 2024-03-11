@@ -135,7 +135,7 @@
                                                                 <button class="lnk btn-2" type="submit" >Add to Cart</button>
                                                                 </form>
                                                                 @else
-                                                                <a class="lnk btn-2" href="{{ url('grading-paper/'.$paper->id) }}" >View</a>
+                                                                <a class="lnk btn-2" href="{{ url('grading-paper/'.$paper->id) }}" >Start</a>
                                                                 @endif
                                                             </div>
 
@@ -151,7 +151,7 @@
                                                                         <strong>${{ $paper->price ?? 0 }}</strong>
                                                                     </label>
                                                                 </div>
-                                                                <a class="lnk btn-2" href="{{ url('grading-paper/'.$paper->id) }}" >View</a>
+                                                                <a class="lnk btn-2" href="{{ url('grading-paper/'.$paper->id) }}" >Start</a>
                                                             </div>
                                                     @php
                                                         }
