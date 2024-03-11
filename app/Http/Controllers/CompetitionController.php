@@ -125,7 +125,7 @@ class CompetitionController extends Controller
             $saveResult->user_marks = $userMarks;
             $saveResult->save();
         }
-        return view('result-competition', compact('totalMarks', 'userMarks', 'paperType'));
+        return view('result-competition', compact('totalMarks', 'userMarks', 'paperType', 'compId'));
         // if(in_array($questionTypeId, $resultpage)){
         //     return view('result-competition', compact('totalMarks', 'userMarks', 'paperType'));
         // }
