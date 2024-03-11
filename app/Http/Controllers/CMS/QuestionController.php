@@ -208,8 +208,8 @@ class QuestionController extends Controller
                 $storQues = new MiscQuestion();
                 $storQues->question_id = $question->id;
                 $storQues->question_1 = $request->input_1[$i];
-                $storQues->question_2 = $request->input_3[$i];
-                $storQues->symbol = $request->input_2[$i];
+                // $storQues->question_2 = $request->input_3[$i];
+                // $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
                 $storQues->marks = $request->marks[$i];
                 $storQues->save();
@@ -599,8 +599,8 @@ class QuestionController extends Controller
                 $storQues = new MiscQuestion();
                 $storQues->question_id = $question->id;
                 $storQues->question_1 = $request->input_1[$i];
-                $storQues->question_2 = $request->input_3[$i];
-                $storQues->symbol = $request->input_2[$i];
+                // $storQues->question_2 = $request->input_3[$i];
+                // $storQues->symbol = $request->input_2[$i];
                 $storQues->answer = $request->answer[$i];
                 $storQues->marks = $request->marks[$i];
                 $storQues->save();

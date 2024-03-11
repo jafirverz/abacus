@@ -43,7 +43,7 @@
                 <thead>
                   <tr>
                     <th class="wcol-1 text-center">NO</th>
-                    <th class="wcol-4 text-center">Questions</th>
+                    <th class="wcol-6 text-center">Questions</th>
                     <th>Answer</th>
                   </tr>
                 </thead>
@@ -55,7 +55,7 @@
                   @endphp
                   
                   @foreach($getQues as $ques)
-                  @php
+                  <!-- @php
                   if($ques->symbol == 'add'){
                     $symbol = '+';
                   }elseif($ques->symbol == 'multiply'){
@@ -65,10 +65,10 @@
                   }elseif($ques->symbol == 'subtract'){
                     $symbol = '-';
                   }
-                  @endphp
+                  @endphp -->
                   <tr>
                     <td class="colnumber">{{ $i }}</td>
-                    <td class="text-center">{{ $ques->question_1 }} {{ $symbol }} {{ $ques->question_2 }}  =</td>
+                    <td class="text-center">{{ $ques->question_1 }} =</td>
                     <td class="colanswer"><input class="form-control number-separator" name="answer[{{ $ques->id }}]" type="text" /></td>
                   </tr>
                   @php 
