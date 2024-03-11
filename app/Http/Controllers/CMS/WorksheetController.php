@@ -248,7 +248,7 @@ class WorksheetController extends Controller
         $worksheetId = $id;
         $questionTemplateId = $worksheet->question_template_id;
         $questions = Question::where('worksheet_id', $id)->orderBy('id','desc')->paginate($this->pagination);
-        return view('admin.master.worksheet.qestions', compact('title', 'questions', 'worksheetId', 'questionTemplateId'));
+        return view('admin.master.worksheet.qestions', compact('title', 'questions', 'worksheetId', 'questionTemplateId', 'worksheet'));
     }
 
     public function questionCreate($wId = null, $qId = null)
