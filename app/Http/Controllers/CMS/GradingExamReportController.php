@@ -69,6 +69,10 @@ class GradingExamReportController extends Controller
             $q->where('users.country_code', $_GET['country']);
         }
 
+        if (isset($_GET['event_name']) && $_GET['event_name']!='') {
+            $q->where('grading_students.grading_exam_id', $_GET['event_name']);
+        }
+
         if (isset($_GET['learning_Location']) && $_GET['learning_Location']!='') {
             $q->where('users.learning_locations', $_GET['learning_Location']);
         }

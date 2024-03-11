@@ -16,11 +16,21 @@
 
                 <div class="row">
 
-                    <div class="col-lg-6"><label>Instructor Display Name:</label><input type="text" name="name" class="form-control"
+                    <div class="col-lg-4">
+                        <label>Grading Exam Event Name</label>
+                        <select name="event_name" class="form-control">
+                            <option value="">-- Select --</option>
+                            @foreach ($grading_exam as $key => $value)
+                            <option @if(isset($_GET['event_name']) && $_GET['event_name']==$value->id) selected="selected"
+                                @endif value="{{$value->id}}">{{$value->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-4"><label>Instructor Display Name:</label><input type="text" name="name" class="form-control"
                             id="title" @if(isset($_GET['name']) && $_GET['name']!="" ) value="{{ $_GET['name'] }}"
                             @endif> </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                       <label>Country</label>
                       <select name="country" class="form-control">
                         <option value="">-- Select --</option>
