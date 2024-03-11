@@ -483,7 +483,7 @@ class ProfileController extends Controller
 
     public function grading_paper($grading_exam_id,$listing_id,$paper_id)
     {
-        $paper=GradingPaper::join('grading_listing_details','grading_listing_details.paper_id','grading_papers.id')->where('grading_listing_details.id',$paper_id)->select('grading_papers.*','grading_listing_details.id as listing_paper_id')->first();
+        $paper=GradingPaper::join('grading_listing_details','grading_listing_details.paper_id','grading_papers.id')->where('grading_listing_details.id',$paper_id)->where('grading_papers.status',1)->select('grading_papers.*','grading_listing_details.id as listing_paper_id')->first();
         //dd($paper);
         $gradingExam = GradingExam::find($grading_exam_id);
         if($paper){

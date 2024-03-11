@@ -114,7 +114,7 @@
                                         <strong>{{ $errors->first('country_code') }}</strong>
                                     </span>
                             @endif
-                            <input type="hidden" name="country_code" value="{{ $customer->country_code }}">
+                            <input type="hidden" name="country_code" value="{{ Auth::user()->country_code }}">
                         </div>
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Level <span class="required">*</span></label>
