@@ -39,7 +39,7 @@ class CompetitionAssignController extends Controller
 
     public function index(){
         $title = 'Assign Competition';
-        $competition = Competition::paginate($this->pagination);
+        $competition = Competition::orderBy('id', 'desc')->paginate($this->pagination);
         
         return view('admin.competition.assign', compact('title', 'competition'));
     }
