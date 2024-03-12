@@ -60,11 +60,19 @@
                         @php
                         $compId = $competition->id;
                         $catComp=[];
-                        $catgrade = \App\GradingStudent::where('grading_exam_id', $compId)->where('user_id', Auth::user()->id)->first();
+                        $catgrade = \App\GradingStudent::where('grading_exam_id', $compId)->where('user_id', Auth::user()->id)->orderBy('id','desc')->first();
+                        if(isset($catgrade->mental_grade) && $catgrade->mental_grade!=NULL)
+                        {
+                            array_push($catComp,$catgrade->mental_grade);
+                        }
 
-                        array_push($catComp,$catgrade->mental_grade);
-                        array_push($catComp,$catgrade->abacus_grade);
+                        if(isset($catgrade->abacus_grade) && $catgrade->abacus_grade!=NULL)
+                        {
+                            array_push($catComp,$catgrade->abacus_grade);
+                        }
+
                         $i = 1;
+                        //dd($catgrade);
                         @endphp
 
                         @if(isset($catComp) && count($catComp) > 0)
@@ -79,6 +87,7 @@
 
                             @php
                             $catt = \App\GradingCategory::where('id', $cat)->first();
+
                             if($key == 0){
                                 $collaspse = '';
                                 $show = 'show';
