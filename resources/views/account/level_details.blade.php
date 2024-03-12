@@ -68,6 +68,7 @@
                           <ul class="list-1">
                             @php 
                             $flag = 0;
+                            $worksheets = \App\Worksheet::where('question_template_id', $questions->id)->where('status', 1)->orderBy('title', 'asc')->get();
                             @endphp
                             @foreach($worksheets as $worksheet)
                               @php 
