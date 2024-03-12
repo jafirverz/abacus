@@ -36,7 +36,14 @@ class TestAllocationController extends Controller
     public function index()
     {
         $title = $this->title;
+        if(Auth::user()->admin_role == 1)
+        {
         $allocations = Allocation::where('allocations.type',1)->orderBy('id', 'desc')->paginate($this->pagination);
+        }
+        else
+        {
+        $allocations = Allocation::where('allocations.type',1)->join('users','users.id','allocations.student_id')->where('users.country_code', Auth::user()->country_id)->orderBy('allocations.id', 'desc')->select('allocations.*')->paginate($this->pagination);
+        }
 
         return view('admin.test-allocation.index', compact('title', 'allocations'));
     }

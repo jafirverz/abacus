@@ -40,7 +40,13 @@ class TestManagementController extends Controller
     public function index()
     {
         $title = $this->title;
+        if(Auth::user()->admin_role == 1){
         $test = TestManagement::orderBy('id', 'desc')->paginate($this->pagination);
+        }
+        else
+        {
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->join('users','users.id','allocations.student_id')->where('users.country_code', Auth::user()->country_id)->select('test_management.*')->orderBy('test_management.id', 'desc')->paginate($this->pagination);
+        }
 
         return view('admin.test-management.index', compact('title', 'test'));
     }

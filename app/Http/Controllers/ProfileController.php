@@ -283,7 +283,7 @@ class ProfileController extends Controller
         $students = User::whereIn('user_type_id',[1,2])->where('instructor_id',$user->id)->whereNotIn('id',$allocate_user_array)->orderBy('id','desc')->get();
 
         $test = TestManagement::findorfail($test_id);
-        $list = Allocation::where('allocations.assigned_id',$test_id)->where('allocations.assigned_by', $this->user->id)->where('allocations.type',1)->paginate($this->pagination);
+        $list = Allocation::join('users','users.id','allocations.student_id')->where('users.instructor_id',$user->id)->where('allocations.assigned_id',$test_id)->where('allocations.assigned_by', $this->user->id)->where('allocations.type',1)->paginate($this->pagination);
 		$page = get_page_by_slug($slug);
 
 		if (!$page) {
