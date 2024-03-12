@@ -172,6 +172,14 @@
                     </div>
                     @endforeach
                     @endif
+
+                    @if($competitionCertificate)
+                    @foreach($competitionCertificate as $certificate)
+                    <div class="col-md-6">
+                        <a class="item" href="{{ route('download.competition.certificate', $certificate->id) }}">{{ $certificate->competition->title ?? '' }}</a>
+                    </div>
+                    @endforeach
+                    @endif
                 </div>
             </div>
 </div>

@@ -23,6 +23,7 @@ use App\TestManagement;
 use App\Allocation;
 use App\Competition;
 use App\CompetitionStudent;
+use App\CompetitionStudentResult;
 use App\Country;
 use App\Partner;
 use App\SystemSetting;
@@ -90,6 +91,7 @@ class PagesFrontController extends Controller
         $competitionStudent = CompetitionStudent::where('user_id', Auth::user()->id)->pluck('competition_controller_id')->toArray();
         $competition = Competition::whereIn('id', $competitionStudent)->where('status', 1)->where('date_of_competition', '>=', $todayDate)->orderBy('date_of_competition', 'asc')->first();
         $gradingCertificate = GradingSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
+        $competitionCertificate = CompetitionStudentResult::where('certificate_id', 2)->where('user_id', Auth::user()->id)->get();
 
 
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();
@@ -102,7 +104,7 @@ class PagesFrontController extends Controller
         $franchiseCountry = Admin::where('admin_role', 2)->pluck('country_id')->toArray();
         $country = Country::whereIn('id', $franchiseCountry)->get();
         // $country = Country::orderBy('country', 'asc')->get();
-        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test','lesson','gradingCertificate'));
+        return view('home', compact("page", 'levels', 'levelArray', 'competition', 'surveys', 'user', 'country','grading_exam','test','lesson','gradingCertificate', 'competitionCertificate'));
     }
 
     public function instructor($slug = null){

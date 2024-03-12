@@ -82,6 +82,9 @@ Route::get('/competition-paper/{id?}', 'CompetitionController@paper');
 Route::post('/competition-paper/submit', 'CompetitionController@submitPaper')->name('competition.submit');
 
 
+Route::get('download-competition-certificate/{id?}', 'CompetitionController@downloadCertificate')->name('download.competition.certificate');
+
+
 Route::get('/online-student/feedback', 'OnlineStudentController@feedback')->name('feedback');
 Route::post('/online-student/feedback', 'OnlineStudentController@feedbackstore')->name('feedback.submit');
 Route::get('/online-student/my-course', 'OnlineStudentController@my_course')->name('my-course');
