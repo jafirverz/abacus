@@ -59,11 +59,11 @@
 
                         @php
                         $compId = $competition->id;
+                        $catComp=[];
+                        $catgrade = \App\GradingStudent::where('grading_exam_id', $compId)->where('user_id', Auth::user()->id)->first();
 
-                        $catComp = \App\CategoryGrading::where('competition_id', $compId)->pluck('category_id')->toArray();
-
-                        //dd($catComp);
-
+                        array_push($catComp,$catgrade->mental_grade);
+                        array_push($catComp,$catgrade->abacus_grade);
                         $i = 1;
                         @endphp
 
