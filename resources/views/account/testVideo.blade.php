@@ -43,7 +43,7 @@
                 <strong class="number">Q{{ $i }}</strong>
                 <div class="vdwrap">
                 <video width="400">
-                    <source src="{{ url('/upload-file/'.$question->input_1) }}" type="video/mp4">
+                    <source src="{{ url('/upload-file/'.$question->input_1) }}" type="video/mp4"  controlsList="nodownload">
                     Your browser does not support HTML video.
                 </video>
                 <a class="link-fix" data-fancybox href="{{ url('/upload-file/'.$question->input_1) }}"><i class="fa-solid fa-play"></i></a>
