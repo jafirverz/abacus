@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <title>DIY Cars</title> -->
   <style type="text/css">
     @font-face {
         font-family: 'NotoSans';
@@ -28,7 +27,11 @@
 </head>
 
 <body>
-  {!! $newContents !!}
+    <div style="padding: 50px 15px;" >
+        <div style="background: url('https://abacus.verz1.com/images/bg-certificate-3.jpg') no-repeat 0 0; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 817px;">
+            {!! $newContents !!}
+        </div>
+    </div>
 </body>
 
 </html>

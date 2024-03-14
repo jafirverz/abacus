@@ -24,7 +24,7 @@
             <div class="row sp-col-30 grid-7">
                 <div class="col-lg-6 sp-col videowrap">
                     <video width="400" controls>
-                        <source src="{{asset($test_paper->video_file)}}" type="video/mp4">
+                        <source src="{{asset($test_paper->video_file)}}" type="video/mp4"  controlsList="nodownload">
                         Your browser does not support HTML video.
                     </video>
                 </div>

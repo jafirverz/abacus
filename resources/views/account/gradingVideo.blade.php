@@ -49,7 +49,7 @@
               <div class="inner">
                 <strong class="number">Q{{ $i }}</strong>
                 <div class="vdwrap">
-                  <video controls width="400">
+                  <video controls width="400"  controlsList="nodownload">
                     <source src="{{ url('/upload-file/'.$question->question_1) }}" type="video/mp4">
                     Your browser does not support HTML video.
                   </video>
