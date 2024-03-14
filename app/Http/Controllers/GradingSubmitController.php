@@ -35,7 +35,7 @@ class GradingSubmitController extends Controller
             $gradeSub->paper_id = $paper_id;
             $gradeSub->question_template_id = $questionTypeId;
             $gradeSub->user_id = $userId;
-            //$gradeSub->certificate_id = __('constant.CERTIFICATE_GRADING_ID');
+            $gradeSub->certificate_id = __('constant.CERTIFICATE_GRADING_ID');
             $gradeSub->save();
             $totalMarks = 0;
             $userMarks = 0;
@@ -72,9 +72,10 @@ class GradingSubmitController extends Controller
 
     public function downloadCertificate( $id = null){
         $GradingSubmitted = GradingSubmitted::where('id', $id)->first();
+        $date_of_issue=date('j F Y',strtotime($GradingSubmitted->created_at));
         $certificate = Certificate::where('id', $GradingSubmitted->certificate_id)->first();
-        $key = ['{{grading_name}}','{{full_name}}','{{email}}','{{dob}}','{{contact_number}}','{{address}}'];
-        $value = [$GradingSubmitted->grade->title, Auth::user()->name, Auth::user()->email, Auth::user()->dob, Auth::user()->mobile, Auth::user()->address];
+        $key = ['{{grading_name}}','{{full_name}}','{{dob}}','{{category}}','{{date_of_issue}}'];
+        $value = [$GradingSubmitted->grade->title, Auth::user()->name,  Auth::user()->dob, $GradingSubmitted->gcategory->category_name, $date_of_issue];
         $newContents = str_replace($key, $value, $certificate->content);
         $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
         return $pdf->download('certificate.pdf');

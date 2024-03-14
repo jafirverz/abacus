@@ -199,14 +199,14 @@ class OnlineStudentController extends Controller
 
         $courseSubmitted = CourseSubmitted::where('id', $id)->first();
         $certificate = Certificate::where('id', $courseSubmitted->certificate_id)->first();
-        $logo='<img style="width: 300px" width="300" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
-        $logoFoot='<img style="width: 300px" width="300" src="http://abacus.verz1.com/storage/images/1702371736__65782198b8449__3g-abacus-foot.png" alt="abacus" />';
+        $logo='<img src="{{ url ("/")}}/images/3g-abacus-logo.png" alt="" style="width: 300px;" width="300" />';
+        $logoFoot='<img src="{{ url ("/")}}/images/3g-abacus-foot.png" alt="" style="width: 300px;" width="300" />';
         //$bg = 'http://abacus.verz1.com/storage/images/1702371744__657821a0f0a96__bg-certificate-2.jpg';
         $bg1 = 'http://abacus.verz1.com/storage/images/1702371744__657821a0f0a96__bg-certificate-2.jpg';
         $bg = '<div style="background: url('.$bg1.') repeat 0 0; border: #333 solid 1px; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 840px;">';
         $date_of_issue_certificate=date('j F,Y',strtotime($courseSubmitted->certificate_issued_on));
-        $key = ['{{course_name}}','{{level_name}}','{{user_name}}','{{date_of_issue_certificate}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
-        $value = [$courseSubmitted->course->title,'Preparatory Level', Auth::user()->name, $date_of_issue_certificate, $logo, $logoFoot, $bg];
+        $key = ['{{course_name}}','{{level_name}}','{{user_name}}','{{date_of_issue_certificate}}','{{logo}}','{{logofoot}}'];
+        $value = [$courseSubmitted->course->title,'Preparatory Level', Auth::user()->name, $date_of_issue_certificate, $logo, $logoFoot];
         $newContents = str_replace($key, $value, $certificate->content);
         $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
         return $pdf->download('certificate.pdf');
