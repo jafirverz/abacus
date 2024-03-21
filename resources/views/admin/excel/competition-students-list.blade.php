@@ -6,6 +6,7 @@
       <th>Student Name</th>
       <th>Account ID</th>
       <th>Instructor Name</th>
+      <th>Instructor ID</th>
       <th>Learning Location</th>
       <th>Category</th>
       <th>Student Type</th>
@@ -33,6 +34,9 @@
       </td>
       <td>
         {{ getInstructor($instructorId->instructor_id)->name ?? '' }}
+      </td>
+      <td>
+        {{ getInstructor($instructorId->instructor_id)->account_id ?? '' }}
       </td>
       <td>
         {{ getLearningLocation(getStudent($item->user_id)->learning_location ?? '') ?? '' }}
