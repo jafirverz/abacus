@@ -28,10 +28,16 @@
             <input type="hidden" name="test_id" value="{{ $test->id }}">
             <input type="hidden" name="question_type" value="{{ $test->paper->question_template_id }}">
             @if($all_paper_detail_v)
+            @php
+                $letter = 'A';
+                $letterAscii = ord($letter);
+            @endphp
             @foreach($all_paper_detail_v as $paper_detail)
+
+
             <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <div class="box-1">
-                <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
+                <div class="note-4 mb-20">{{ chr($letterAscii) }}. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
                     <table class="tb-2 tbtype-1">
                         <thead>
@@ -100,19 +106,21 @@
                     </table>
                 </div>
             </div>
+            @php $letterAscii++; @endphp
             @endforeach
             @endif
             @if($all_paper_detail_h)
             @foreach($all_paper_detail_h as $paper_detail)
+
             <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <div class="box-1">
-                <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
+                <div class="note-4 mb-20">{{ chr($letterAscii) }}. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
                     <table class="tb-2 tbtype-1">
                         <thead>
                             <tr>
                               <th class="wcol-1 text-center">NO</th>
-                              <th class="wcol-4 text-center">Question</th>
+                              <th class="wcol-6 text-center">Question</th>
                               <th>Answer</th>
                             </tr>
                           </thead>
@@ -149,6 +157,7 @@
                     </table>
                 </div>
             </div>
+            @php $letterAscii++; @endphp
             @endforeach
             @endif
 

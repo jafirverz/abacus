@@ -16,7 +16,7 @@
                 <div class="mb-20">
                     <a class="link-1 lico" href="{{ url('instructor-students') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
                 </div>
-                <h1 class="title-3">My Students profile</h1>
+                <h1 class="title-3">My Student Profile</h1>
                 <div class="box-1">
                     <div class="row align-items-center title-type">
                         <div class="col-md">
