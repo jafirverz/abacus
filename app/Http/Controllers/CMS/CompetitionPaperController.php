@@ -56,7 +56,7 @@ class CompetitionPaperController extends Controller
         $title = $this->title;
         $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         $competitionCategory = CompetitionCategory::get();
-        $competition = Competition::get();
+        $competition = Competition::orderBy('id', 'desc')->get();
         // $competitionCategory = CompetitionPaper::get();
         // $worksheets = Worksheet::orderBy('id','desc')->get();
         return view('admin.competition_paper.create', compact('title', 'questionTempleates', 'competition', 'competitionCategory'));

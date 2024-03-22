@@ -41,7 +41,7 @@ class CompetitionResultController extends Controller
         //
         $title = $this->title;
         // $competition = CompetitionPaperSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
-        $competition = Competition::paginate(10);
+        $competition = Competition::orderBy('id', 'desc')->paginate(10);
         return view('admin.competition_result.index', compact('title', 'competition'));
     }
 
