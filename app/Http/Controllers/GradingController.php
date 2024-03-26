@@ -17,7 +17,7 @@ class GradingController extends Controller
     //
     public function index($id){
         $competition = GradingExam::where('id', $id)->first();
-        $gradingStu = GradingStudent::where('grading_exam_id',$id)->where('user_id', Auth::user()->id)->first();
+        $gradingStu = GradingStudent::where('grading_exam_id',$id)->where('user_id', Auth::user()->id)->orderBy('id','desc')->first();
         if($competition){
             if($competition->competition_type == 'physical'){
                 return view('grading_physical', compact("competition","gradingStu"));

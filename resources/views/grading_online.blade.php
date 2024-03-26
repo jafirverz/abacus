@@ -44,8 +44,8 @@
                                     </div>
                                     <div class="inrow">
                                         <strong>My Registered Grades:</strong> <br/>
-                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->title ?? '' }}</div>
-                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->title ?? '' }}</div>
+                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->category_name ?? '' }}</div>
+                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->category_name ?? '' }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -61,6 +61,7 @@
                         $compId = $competition->id;
                         $catComp=[];
                         $catgrade = \App\GradingStudent::where('grading_exam_id', $compId)->where('user_id', Auth::user()->id)->orderBy('id','desc')->first();
+                        //dd($catgrade);
                         if(isset($catgrade->mental_grade) && $catgrade->mental_grade!=NULL)
                         {
                             array_push($catComp,$catgrade->mental_grade);

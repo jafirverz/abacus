@@ -36,7 +36,7 @@ class SurveyAllocationController extends Controller
     public function index()
     {
         $title = $this->title;
-        $allocations = Allocation::where('allocations.type',2)->paginate($this->pagination);
+        $allocations = Allocation::where('allocations.type',2)->orderBy('allocations.id','desc')->paginate($this->pagination);
 
         return view('admin.survey-allocation.index', compact('title', 'allocations'));
     }

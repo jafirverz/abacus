@@ -32,11 +32,11 @@ class GradingStudent extends Model
 
 
     public function mental(){
-        return $this->belongsTo('App\Grade', 'mental_grade', 'id');
+        return $this->belongsTo('App\GradingCategory', 'mental_grade', 'id');
     }
 
     public function abacus(){
-        return $this->belongsTo('App\Grade', 'abacus_grade', 'id');
+        return $this->belongsTo('App\GradingCategory', 'abacus_grade', 'id');
     }
 
     public function event(){

@@ -10,6 +10,9 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
           <div class="tempt-2-content">
+            <div class="mb-20">
+                <a class="link-1 lico" onclick="window.history.go(-1); return false;" href="javascript:void();"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+            </div>
             <h1 class="title-3">@if(isset($user->name)) {{ $user->name }} > My Achievements @else My Achievements @endif </h1>
             <div class="box-1">
               <div class="xscrollbar">

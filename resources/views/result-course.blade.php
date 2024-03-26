@@ -4,11 +4,14 @@
 <main class="main-wrap">
   <div class="row sp-col-0 tempt-2">
     <div class="col-lg-3 sp-col tempt-2-aside">
-      <div class="menu-aside">
-        @if(Auth::user()->user_type_id == 1)
+
+        @if(Auth::user()->user_type_id == 3)
         @include('inc.account-sidebar-online')
         @endif
-      </div>
+        @if(Auth::user()->user_type_id == 1)
+        @include('inc.account-sidebar')
+        @endif
+
     </div>
     <div class="col-lg-9 sp-col tempt-2-inner">
       <div class="tempt-2-content">
