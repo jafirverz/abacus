@@ -13,6 +13,9 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
+                <div class="mb-20">
+                    <a class="link-1 lico" onclick="window.history.go(-1); return false;" href="javascript:void();"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
+                </div>
                 <h1 class="title-3">My Student Profile</h1>
                 <div class="box-1">
                     <div class="row align-items-center title-type">
@@ -70,7 +73,7 @@
                                 <div class="col-auto sp-col">
                                     <select data-live-search="true" name="country_code_phone" class="selectpicker" >
                                         @foreach($country as $phonecode)
-                                            <option value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
+                                            <option @if(old('country_code_phone', $customer->country_code_phone)==$phonecode->phonecode) selected @endif value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
                                         @endforeach
                                     </select>
                                     @if ($errors->has('country_code_phone'))

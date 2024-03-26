@@ -59,7 +59,7 @@ class GradingPaperController extends Controller
         $grades = Grade::get();
         $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         $competitionCategory = GradingCategory::get();
-        $competition = GradingExam::get();
+        $competition = GradingExam::orderBy('id','desc')->get();
         return view('admin.master.grading-paper.create', compact('title','templates','grades','questionTempleates','competitionCategory','competition'));
     }
 
@@ -143,7 +143,7 @@ class GradingPaperController extends Controller
         $competitionPaper = GradingPaper::with('comp_contro')->find($id);
         $questionTempleates = QuestionTemplate::whereIn('id', [1,2,3,4,5,6,7])->get();
         $competitionCategory = CategoryGrading::get();
-        $competition = GradingExam::get();
+        $competition = GradingExam::orderBy('id','desc')->get();
         $grades = Grade::get();
         $catComp = CategoryGrading::where('competition_id', $competitionPaper->grading_exam_id)->get();
         return view('admin.master.grading-paper.edit', compact('title','catComp', 'competitionPaper','grades','questionTempleates', 'competition', 'competitionCategory'));

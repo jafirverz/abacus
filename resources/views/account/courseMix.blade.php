@@ -37,53 +37,143 @@
             @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
             <input type="hidden" name="course_submitted_id" value="{{ $courseSubmitted->id }}">
             @endif
-            <input type="hidden" name="test_paper_question_id" value="{{ $paper_detail->id }}">
             <input type="hidden" name="course_id" value="{{ $course->id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
+
+
+            @if($all_paper_detail_v)
+            @php
+                $letter = 'A';
+                $letterAscii = ord($letter);
+            @endphp
+            @foreach($all_paper_detail_v as $paper_detail)
+
+
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <div class="box-1">
+                <div class="note-4 mb-20">{{ chr($letterAscii) }}. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
-                  <table class="tb-2 tbtype-1">
-                    <thead>
-                      <tr>
-                        <th class="wcol-1 text-center">NO</th>
-                        <th class="wcol-2 text-center">Question</th>
-                        <th>Answer</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @php
-                      $i = 1;
-                      @endphp
-                      @foreach($paper_detail->questionsCourse as $ques)
-                      @php
-                      if($ques->input_3 == 'multiply'){
-                        $symbol='x';
-                      }
-                      elseif($ques->input_3 == 'add'){
-                        $symbol='+';
-                      }
-                      elseif($ques->input_3 == 'subtract'){
-                        $symbol='-';
-                      }
-                      else{
-                        $symbol='÷';
-                      }
-                      @endphp
-                      <tr>
-                        <td class="colnumber">{{ $i }}</td>
-                        <td class="text-center">{{ number_format($ques->input_1) }} {{ $symbol }} {{ number_format($ques->input_2) }}  =</td>
-                        <td class="colanswer"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" type="text" name="answer[{{ $ques->id }}]" /></td>
-                      </tr>
-                      @php
-                      $i++;
-                      @endphp
-                      @endforeach
+                    <table class="tb-2 tbtype-1">
+                        <thead>
+                            <tr>
+                              <th class="wcol-2"></th>
+                              @php
 
-                    </tbody>
-                  </table>
+                              $questionns = \App\TestPaperQuestionDetail::where('test_paper_question_id', $paper_detail->id)->get();
+
+                              $count = count($questionns);
+                              $i = 1;
+                              foreach($questionns as $question){
+                              @endphp
+                              <th class="text-center">{{ $i }}</th>
+                              @php
+                              $i++;
+                              }
+                              @endphp
+
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr>
+                              <td></td>
+                              @php
+                            foreach($questionns as $question){
+                            @endphp
+                              <td>
+                                @php
+                                $arrVal = explode('|', $question->input_1);
+                                foreach($arrVal as $val){
+                                @endphp
+                                <div class="row sp-col-5 inrow-1">
+                                  <div class="col-auto sp-col"></div>
+                                  <div class="col sp-col">{{ number_format($val) }}</div>
+                                </div>
+                                @php
+                              }
+                                @endphp
+                              </td>
+                              @php
+                            }
+                            @endphp
+
+                            </tr>
+
+                        </tbody>
+                            <tfoot>
+                                <tr>
+                                <td class="lb">Answer</td>
+                                @php
+                                foreach($questionns as $question){
+                                    @endphp
+                                <td class="coltype">
+                                    <div class="row sp-col-5 inrow-1">
+                                    <div class="col-auto sp-col"></div>
+                                    <div class="col colanswer sp-col"><input style="text-align: right;"  class="form-control number-separator" type="text" name="answer[{{ $question->id }}]" /></div>
+                                    </div>
+                                </td>
+                                @php
+                                }
+                                @endphp
+                                </tr>
+                          </tfoot>
+                    </table>
                 </div>
-              </div>
+            </div>
+            @php $letterAscii++; @endphp
+            @endforeach
+            @endif
+            @if($all_paper_detail_h)
+            @foreach($all_paper_detail_h as $paper_detail)
 
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
+            <div class="box-1">
+                <div class="note-4 mb-20">{{ chr($letterAscii) }}. {{ $paper_detail->question }}</div>
+                <div class="xscrollbar">
+                    <table class="tb-2 tbtype-1">
+                        <thead>
+                            <tr>
+                              <th class="wcol-1 text-center">NO</th>
+                              <th class="wcol-6 text-center">Question</th>
+                              <th>Answer</th>
+                            </tr>
+                          </thead>
+                        <tbody>
+                            @php
+                            $i = 1;
+                            @endphp
+                            @foreach($paper_detail->questionsCourse as $ques)
+                            @php
+                            if($ques->input_3 == 'multiply'){
+                              $symbol='x';
+                            }
+                            elseif($ques->input_3 == 'add'){
+                              $symbol='+';
+                            }
+                            elseif($ques->input_3 == 'subtract'){
+                              $symbol='-';
+                            }
+                            else{
+                              $symbol='÷';
+                            }
+                            @endphp
+                            <tr>
+                              <td class="colnumber">{{ $i }}</td>
+                              <td class="text-center">{{ number_format($ques->input_1) }} {{ $symbol }} {{ number_format($ques->input_2) }}  =</td>
+                              <td class="colanswer"><input  class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
+                            </tr>
+                            @php
+                            $i++;
+                            @endphp
+                            @endforeach
+
+                          </tbody>
+                    </table>
+                </div>
+            </div>
+            @php $letterAscii++; @endphp
+            @endforeach
+            @endif
 
               <div class="output-1">
                 @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)

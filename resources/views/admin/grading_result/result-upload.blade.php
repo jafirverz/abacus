@@ -66,7 +66,7 @@
 
                                 @if(isset($_GET['comp_id']))
                                 <div class="form-group">
-                                    <label for="title">Category</label>
+                                    <label for="title">Grade</label>
                                     <select name="category" class="form-control">
                                         <option value="">-- Select --</option>
                                         @foreach($compCat as $cate)
