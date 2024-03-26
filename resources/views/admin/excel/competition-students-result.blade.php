@@ -7,8 +7,10 @@
       <th>Category</th>
       <th>Paper Type</th>
       <th>Student Name</th>
+      <th>Student ID</th>
       <th>DOB</th>
       <th>Instructor Name</th>
+      <th>Instructor ID</th>
       <th>Learning Location</th>
       <th>Total Marks</th>
       <th>User Marks</th>
@@ -40,10 +42,16 @@
         {{ getStudent($item->user_id)->name ?? '' }}
       </td>
       <td>
+        {{ getStudent($item->user_id)->account_id ?? '' }}
+      </td>
+      <td>
         {{ getStudent($item->user_id)->dob ?? '' }}
       </td>
       <td>
         {{ getInstructor($instructorId->instructor_id)->name ?? '' }}
+      </td>
+      <td>
+        {{ getInstructor($instructorId->instructor_id)->account_id ?? '' }}
       </td>
       <td>
         {{ getStudent($item->user_id)->learning_location ?? '' }}
