@@ -99,7 +99,9 @@ class OnlineStudentController extends Controller
             return view('account.courseAbacus', compact("course","paper_detail","test_paper","courseSubmitted"));
         }
         elseif($qId == 7){
-            return view('account.courseMix', compact("course","paper_detail","test_paper","courseSubmitted"));
+            $all_paper_detail_v=TestPaperDetail::where('paper_id',$course->paper->id)->where('template',1)->get();
+            $all_paper_detail_h=TestPaperDetail::where('paper_id',$course->paper->id)->where('template',2)->get();
+            return view('account.courseMix', compact("course","all_paper_detail_h","all_paper_detail_v","test_paper","courseSubmitted"));
         }
         elseif($qId == 4){
             return view('account.courseAddSubQuestion', compact("course","all_paper_detail","test_paper","courseSubmitted","paper_detail"));
@@ -130,58 +132,62 @@ class OnlineStudentController extends Controller
 
         }
 
-        $test_paper_question_id = $request->test_paper_question_id;
+        //$test_paper_question_id = $request->test_paper_question_id;
         $course_id = $request->course_id;
         $questionTypeId = $request->question_type;
         $userId = Auth::user()->id;
         $questTem = array(1,2,3,4,5,6,7,8);
         $resultpage = array(1,2,3,4,5,6,7,8);
-        if(in_array($questionTypeId, $questTem)){
-            $courseSub = new CourseSubmitted();
-            $courseSub->test_paper_question_id   = $test_paper_question_id;
-            $courseSub->course_id  = $course_id;
-            $courseSub->question_template_id = $questionTypeId;
-            $courseSub->user_id = $userId;
-            if($request->is_submitted==1)
-            {
-                $courseSub->certificate_id = 3;
-                $courseSub->certificate_issued_on = date("Y-m-d");
-            }
-            else
-            {
-                $courseSub->certificate_id = 3;
-                $courseSub->certificate_issued_on = date("Y-m-d");
-            }
-            $courseSub->is_submitted = $request->is_submitted;
-            $courseSub->save();
-            $totalMarks = 0;
-            $userMarks = 0;
-
-            foreach($request->answer as $key=>$value){
-                $quesSub = new CourseQuestionSubmitted();
-                $testPaperQuestion = TestPaperQuestionDetail::where('id', $key)->first();
-                $quesSub->course_submitted_id   = $courseSub->id;
-                $quesSub->question_id = $key;
-                $quesSub->question_answer = $testPaperQuestion->answer;
-                //dd($testPaperQuestion);
-                $quesSub->user_answer = $value;
-                $quesSub->marks = $testPaperQuestion->marks;
-                if($value == $testPaperQuestion->answer){
-                    $quesSub->user_marks = $testPaperQuestion->marks;
-                    $userMarks+= $testPaperQuestion->marks;
-                }else{
-                    $quesSub->user_marks = null;
+        foreach($request->test_paper_question_id as $test_paper_question_id)
+        {
+            if(in_array($questionTypeId, $questTem)){
+                $courseSub = new CourseSubmitted();
+                $courseSub->test_paper_question_id   = $test_paper_question_id;
+                $courseSub->course_id  = $course_id;
+                $courseSub->question_template_id = $questionTypeId;
+                $courseSub->user_id = $userId;
+                if($request->is_submitted==1)
+                {
+                    $courseSub->certificate_id = 3;
+                    $courseSub->certificate_issued_on = date("Y-m-d");
                 }
-                $totalMarks+= $testPaperQuestion->marks;
-                $quesSub->save();
+                else
+                {
+                    $courseSub->certificate_id = 3;
+                    $courseSub->certificate_issued_on = date("Y-m-d");
+                }
+                $courseSub->is_submitted = $request->is_submitted;
+                $courseSub->save();
+                $totalMarks = 0;
+                $userMarks = 0;
+
+                foreach($request->answer as $key=>$value){
+                    $quesSub = new CourseQuestionSubmitted();
+                    $testPaperQuestion = TestPaperQuestionDetail::where('id', $key)->first();
+                    $quesSub->course_submitted_id   = $courseSub->id;
+                    $quesSub->question_id = $key;
+                    $quesSub->question_answer = $testPaperQuestion->answer;
+                    //dd($testPaperQuestion);
+                    $quesSub->user_answer = $value;
+                    $quesSub->marks = $testPaperQuestion->marks;
+                    if($value == $testPaperQuestion->answer){
+                        $quesSub->user_marks = $testPaperQuestion->marks;
+                        $userMarks+= $testPaperQuestion->marks;
+                    }else{
+                        $quesSub->user_marks = null;
+                    }
+                    $totalMarks+= $testPaperQuestion->marks;
+                    $quesSub->save();
+                }
+                $saveResult = CourseSubmitted::where('id', $courseSub->id)->first();
+                $saveResult->total_marks = $totalMarks;
+                $saveResult->user_marks = $userMarks;
+                $saveResult->save();
             }
-            $saveResult = CourseSubmitted::where('id', $courseSub->id)->first();
-            $saveResult->total_marks = $totalMarks;
-            $saveResult->user_marks = $userMarks;
-            $saveResult->save();
-        }
-        if(in_array($questionTypeId, $resultpage)){
-            return view('result-course', compact('totalMarks', 'userMarks','courseSub'));
+            if(in_array($questionTypeId, $resultpage)){
+                return view('result-course', compact('totalMarks', 'userMarks','courseSub'));
+            }
+
         }
 
 

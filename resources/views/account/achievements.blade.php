@@ -10,7 +10,7 @@
         </div>
         <div class="col-lg-9 sp-col tempt-2-inner">
           <div class="tempt-2-content">
-            <h1 class="title-3">My Achievements</h1>
+            <h1 class="title-3">@if(isset($user->name)) {{ $user->name }} > My Achievements @else My Achievements @endif </h1>
             <div class="box-1">
               <div class="xscrollbar">
                 <table class="tb-1">
@@ -32,13 +32,13 @@
                       </strong></td>
                       <td>@if(isset($paperSubmited->grading_id)) {{ $paperSubmited->grading->title ?? '' }} @elseif(isset($paperSubmited->title)) {{ $paperSubmited->title ?? '' }} @else {{ $paperSubmited->competition->title ?? '' }} @endif</td>
                       <td>
-                        @if(isset($paperSubmited->grading_id)) 
+                        @if(isset($paperSubmited->grading_id))
                           @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
                           Mental Grade 70:  <strong class="type-1">{{ $paperSubmited->mental_grade }}</strong><br/>
                           Abacus Grade 80:  <strong class="type-1">{{ $paperSubmited->abacus_grade }}</strong></td>
                           @endif
                         @elseif(isset($paperSubmited->title)) {{ $paperSubmited->result ?? '' }}
-                        @else 
+                        @else
                         {{ $paperSubmited->category->category_name ?? '' }} : {{ $paperSubmited->rank ?? '' }}
                           @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
                           Mental Grade 70:  <strong class="type-1">{{ $paperSubmited->mental_grade }}</strong><br/>
@@ -49,8 +49,8 @@
                     </tr>
                     @endforeach
                     @endif
-                    
-                    
+
+
                   </tbody>
                 </table>
               </div>
