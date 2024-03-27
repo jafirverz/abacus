@@ -6,6 +6,8 @@
       <th>Account ID</th>
       <th>Student Name</th>
       <th>Student DOB</th>
+
+      <th>Instructor ID</th>
       <th>Instructor Name</th>
       <th>Mental Grade</th>
       <th>Abacus Grade</th>
@@ -30,9 +32,11 @@
       <td>{{ $item->userlist->account_id }}</td>
       <td>{{ $item->userlist->name }}</td>
       <td>{{ $item->userlist->dob }}</td>
+      <td>{{ getInstructor($item->userlist->instructor_id)->account_id ?? '' }}</td>
       <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
-      <td>{{ $item->mental->title ?? '' }}</td>
-      <td>{{ $item->abacus->title ?? '' }}</td>
+
+      <td>{{ $item->mental->category_name ?? '' }}</td>
+      <td>{{ $item->abacus->category_name ?? '' }}</td>
       <td>{{ $item->userlist->location->title ?? '' }}</td>
 
       <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>

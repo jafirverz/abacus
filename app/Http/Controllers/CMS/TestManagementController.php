@@ -227,12 +227,13 @@ class TestManagementController extends Controller
             $list->delete();
         }
 
-        //dd($request->student_idd);
+
 
         if(isset($request->student_idd))
         {
             foreach($request->student_idd as $studentid){
                 foreach($request->student_id as $teacher){
+                //dd($teacher);
                 $allocation = new Allocation();
                 $allocation->student_id  = $studentid ?? NULL;
                 $allocation->assigned_by  = $teacher; // Instructor
