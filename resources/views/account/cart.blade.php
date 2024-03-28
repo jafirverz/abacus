@@ -83,9 +83,11 @@
           <div class="col-md-6">
             <span>Total:</span> <strong>$ {{ number_format($totalAmount, 2) }}</strong>
           </div>
+          @if(count($cartDetails) > 0)
           <div class="col-md-6 lastcol">
             <a class="btn-1" href="{{ url('checkout') }}">Proceed <i class="fa-solid fa-arrow-right-long"></i></a>
           </div>
+          @endif
         </div>
       </div>
     </div>
