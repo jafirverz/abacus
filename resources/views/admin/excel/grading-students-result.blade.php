@@ -4,9 +4,6 @@
       <th>S/N</th>
       
       <th>Name</th>
-      <th>Paper Name</th>
-      <th>Grades</th>
-      <th>Paper Type</th>
       <th>Account Id</th>
       <th>Student Name</th>
       <th>DOB</th>
@@ -30,15 +27,7 @@
       <td>
         {{ $item->grade->title ?? '' }}
       </td>
-      <td>
-        {{ $item->paper->title ?? '' }}
-      </td>
-      <td>
-        {{ $item->gcategory->category_name ?? '' }}
-      </td>
-      <td>
-        {{ $item->paper_type ?? ''}}
-      </td>
+      
       <td>
         {{ getStudent($item->user_id)->account_id ?? '' }}
       </td>

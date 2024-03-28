@@ -37,7 +37,7 @@
             @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
             <input type="hidden" name="course_submitted_id" value="{{ $courseSubmitted->id }}">
             @endif
-            <input type="hidden" name="test_paper_question_id" value="{{ $paper_detail->id }}">
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <input type="hidden" name="course_id" value="{{ $course->id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
             <div class="xscrollbar mt-50">
@@ -45,7 +45,7 @@
                     <thead>
                       <tr>
                         <th class="wcol-1 text-center">NO</th>
-                        <th class="wcol-2 text-center">Multiplication</th>
+                        <th class="wcol-4 text-center">Question</th>
                         <th>Answer</th>
                       </tr>
                     </thead>
