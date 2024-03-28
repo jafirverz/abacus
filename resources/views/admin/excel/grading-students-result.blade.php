@@ -2,12 +2,15 @@
   <thead>
     <tr>
       <th>S/N</th>
+      
       <th>Name</th>
       <th>Paper Name</th>
       <th>Grades</th>
       <th>Paper Type</th>
+      <th>Account Id</th>
       <th>Student Name</th>
       <th>DOB</th>
+      <th>Instructor Id</th>
       <th>Instructor Name</th>
       <th>Learning Location</th>
       <th>Total Marks</th>
@@ -37,10 +40,16 @@
         {{ $item->paper_type ?? ''}}
       </td>
       <td>
+        {{ getStudent($item->user_id)->account_id ?? '' }}
+      </td>
+      <td>
         {{ getStudent($item->user_id)->name ?? '' }}
       </td>
       <td>
         {{ getStudent($item->user_id)->dob ?? '' }}
+      </td>
+      <td>
+        {{ getInstructor($instructorId->instructor_id)->account_id ?? '' }}
       </td>
       <td>
         {{ getInstructor($instructorId->instructor_id)->name ?? '' }}

@@ -50,7 +50,6 @@ class GradingAssignUploadReportController extends Controller
         ];
         $request->validate([
             'competition'  =>  'required',
-            'category' => 'required',
             'fileupload'  =>  'required|mimes:xlsx',
         ], $messages);
 
@@ -89,7 +88,7 @@ class GradingAssignUploadReportController extends Controller
 
                 $compResultUpload->uploaded_file =  $fileupload_path;
                 $compResultUpload->grading_id  =  $request->competition;
-                $compResultUpload->category_id =  $request->category;
+                //$compResultUpload->category_id =  $request->category;
                 $compResultUpload->result_publish_date =  $request->result_publish_date;
                 $compResultUpload->is_published =  $is_published;
                 $compResultUpload->save();

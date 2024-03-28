@@ -9,7 +9,7 @@
                 <a href="{{ route('competition.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
             <h1>{{ $title ?? '-' }}, {{ $competition->title }} - {{ $competition->date_of_competition }}</h1>
-            
+
 {{--            @include('admin.inc.breadcrumb', ['breadcrumbs' => Breadcrumbs::generate('admin_bank')])--}}
 
         </div>
@@ -87,11 +87,11 @@
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
-                                            
+
                                             <td>{{ $item->userlist->name }}</td>
                                             <td>{{ $item->userlist->account_id ?? '' }}</td>
                                             <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
-                                            <td>{{ $item->userlist->learning_location ?? '' }}</td>
+                                            <td>{{ $item->location->title ?? '' }}</td>
                                             <td>{{ $item->category->category_name ?? '' }}</td>
                                             <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>

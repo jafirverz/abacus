@@ -1522,7 +1522,7 @@ class ProfileController extends Controller
 	{
         $user = $this->user;
 		$competition = Competition::where('status', 1)->where('id', $competition_id)->first();
-        $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->pluck('user_id');
+        $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->where('competition_controller_id',$competition_id)->pluck('user_id');
         if($user->user_type_id==6)
         {
             $students = User::where('user_type_id',4)->where('instructor_id',$user->id)->whereNotIn('id',$allocated_user)->get();
@@ -1554,7 +1554,7 @@ class ProfileController extends Controller
         $competitionStudent->user_id   = $request->user_id ?? NULL;
         $competitionStudent->competition_controller_id    = $id ?? NULL;
         $competitionStudent->instructor_id  = $this->user->id;   //Test /Survey
-        //$competitionStudent->learning_location  = $request->learning_location ?? NULL;
+        $competitionStudent->learning_location  = $request->learning_locations ?? NULL;
         $competitionStudent->category_id  = $request->category_id ?? NULL;
         $competitionStudent->remarks  = $request->remarks ?? NULL;
         $competitionStudent->save();

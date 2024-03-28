@@ -48,6 +48,7 @@
                 $i++;
 
 
+                $userCompetition = \App\CompetitionStudentResult::where('user_id',$student->userlist->id)->where('competition_id', $student->competition_controller_id)->first();
 
                 @endphp
                 <tr>
@@ -59,7 +60,7 @@
                   <td><em>{{ $student->category->category_name ?? '' }}</em></td>
                   <td>@if($student->approve_status == 1) <em class="status-2">Approved</em> @else <em class="status-3">Not Apporved</em> @endif</td>
                   <td><em>{{ $student->remarks ?? '' }} </em></td>
-                  <td><em>{{ getCompetetionStudentResult($student->competition_controller_id,$student->id )->result ?? '-'}}</em></td>
+                  <td><em>{{ $userCompetition->result ?? '' }}</em></td>
                 </tr>
                 @endforeach
               </tbody>
