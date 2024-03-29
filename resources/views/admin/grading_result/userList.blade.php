@@ -77,8 +77,10 @@
                                                 </div>
                                             </th> -->
                                             <th>Action</th>
+                                            <th>Account Id</th>
                                             <th>User Name</th>
                                             <th>DOB</th>
+                                            <th>Instructor Id</th>
                                             <th>Instructor</th>
                                             <th>Learning Location</th>
                                             <th>Type</th>
@@ -101,8 +103,10 @@
                                                 class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                 data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
+                                            <td>{{ $item->user->account_id }}</td>
                                             <td>{{ $item->user->name }}</td>
                                             <td>{{ $item->user->dob }}</td>
+                                            <td>{{ $item->user->instructor->account_id }}</td>
                                             <td>{{ $item->user->instructor->name }}</td>
                                             <td>{{ $item->user->location->title ?? '' }}</td>
                                             <td>{{ getUserTypes($item->user->user_type_id) ?? '' }}</td>

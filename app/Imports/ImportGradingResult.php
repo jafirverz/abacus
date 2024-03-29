@@ -37,15 +37,15 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
                     //dd($row);
                     $gradingStudentResults = new GradingStudentResults();
                     $gradingStudentResults->grading_id  =  $this->grading_id;
-                    $gradingStudentResults->category_id  =  $category;
+                    //$gradingStudentResults->category_id  =  $category;
                     $gradingStudentResults->user_id =  $checkUserName->id;
-                    $gradingStudentResults->total_marks =  $row['marks'];
+                    //$gradingStudentResults->total_marks =  $row['marks'];
                     //$gradingStudentResults->rank =  $row['rank'];
                     $gradingStudentResults->result =  $row['result'];
                    // $gradingStudentResults->remark_grade =  $row['passfail'];
                     $gradingStudentResults->abacus_grade =  $row['abacus_grade'];
                     $gradingStudentResults->mental_results =  $row['mental_results'];
-                    $gradingStudentResults->abacus_result =  $row['abacus_results'];
+                    $gradingStudentResults->abacus_results =  $row['abacus_results'];
                     $gradingStudentResults->mental_result_passfail =  $row['mental_result_passfail'];
                     $gradingStudentResults->abacus_result_passfail =  $row['abacus_result_passfail'];
                     $gradingStudentResults->mental_grade =  $row['mental_grade'];

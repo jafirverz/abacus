@@ -36,7 +36,7 @@
             <form method="post" action="{{ route('course.answer.submit') }}">
             @csrf
 
-            <input type="hidden" name="test_paper_question_id" value="{{ $paper_detail->id }}">
+            <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <input type="hidden" name="course_id" value="{{ $course->id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
             @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
@@ -48,7 +48,7 @@
                         <thead>
                             <tr>
                                 <th class="wcol-1 text-center">NO</th>
-                                <th class="wcol-2 text-center">Multiplication</th>
+                                <th class="wcol-4 text-center">Question</th>
                                 <th class="wcol-3 text-center">Answer</th>
                                 <th>Correction</th>
                             </tr>
@@ -84,9 +84,10 @@
 
               <div class="output-1">
                 @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1)
-                <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-                @elseif(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
                 <button class="btn-1" name="is_submitted" value="1" disabled>Submitted <i class="fa-solid fa-arrow-right-long"></i></button>
+                @elseif(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
+                
+                <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
                 @else
                 <button class="btn-2" name="is_submitted" value="2" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
                 <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>

@@ -90,9 +90,9 @@ class GradingResultController extends Controller
     }
 
     public function excelDownload(Request $request, $id){
-        $allItems = GradingSubmitted::where('paper_type', 'actual')->where('grading_exam_id', $request->competitionId)->orderBy('grading_exam_id', 'desc')->orderBy('user_id', 'asc')->get();
-        ob_end_clean();
-        ob_start();
+        //$allItems = GradingSubmitted::where('paper_type', 'actual')->where('grading_exam_id', $request->competitionId)->orderBy('grading_exam_id', 'desc')->orderBy('user_id', 'asc')->get();
+        $allItems = GradingStudentResults::where('grading_id', $id)->get();
+        
         return Excel::download(new GradingResultExport($allItems), 'GradingStudentReport.xlsx');
     }
 

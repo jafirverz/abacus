@@ -50,36 +50,7 @@
                                 @endif
 
 
-                                @php
-                                if(isset($_GET['comp_id'])){
-                                    $compId = $_GET['comp_id'];
-                                    if($compId){
-                                        $catComp = \App\CategoryGrading::where('competition_id', $compId)->pluck('category_id')->toArray();
-                                        $compCat = \App\GradingCategory::whereIn('id', $catComp)->get();
-                                    }
-                                    else{
-                                        $compCat = array();
-                                    }
-                                }
-
-                                @endphp
-
-                                @if(isset($_GET['comp_id']))
-                                <div class="form-group">
-                                    <label for="title">Grade</label>
-                                    <select name="category" class="form-control">
-                                        <option value="">-- Select --</option>
-                                        @foreach($compCat as $cate)
-                                        <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('category'))
-                                        <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('category') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                @endif
+                                
 
                                 <div class="form-group">
                                     <label for="title">Result Publish Date</label>
