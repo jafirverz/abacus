@@ -112,10 +112,15 @@ class ExternalAccountController extends Controller
         }
         $accountId = 'SUD-'.$dob1.$acName;
         $customer = new User();
-        //$customer->level_id = json_encode($request->level);
+        if(Auth::user()->user_type_id==5)
+        {
+            $customer->level_id = json_encode($request->level);
+            $customer->country_code = Auth::user()->country_code;
+            $customer->learning_updates = $request->learning_updates??NULL;
+        }
+        
         $customer->name = $request->name;
         $customer->account_id = $accountId;
-
         $customer->instructor_id = $this->user->id;
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
@@ -123,7 +128,7 @@ class ExternalAccountController extends Controller
         $customer->gender = $request->gender??NULL;
         $customer->learning_locations = $request->learning_locations??NULL;
         $customer->remarks = $request->remarks??NULL;
-        //$customer->country_code = $request->country_code??NULL;
+        
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
         if(Auth::user()->user_type_id==6)
@@ -256,7 +261,12 @@ class ExternalAccountController extends Controller
         $userAccountId = $customer->account_id;
         $userPassword = $request->password ?? $customer->user_pass;
 
-        //$customer->level_id = json_encode($request->level);
+        if(Auth::user()->user_type_id==5)
+        {
+            $customer->level_id = json_encode($request->level);
+            $customer->country_code = Auth::user()->country_code;
+            $customer->learning_updates = $request->learning_updates??NULL;
+        }
         $customer->name = $request->name;
         $customer->dob = date('Y-m-d', strtotime($request->dob))??NULL;
         $customer->email = $request->email??NULL;
@@ -264,7 +274,6 @@ class ExternalAccountController extends Controller
         $customer->gender = $request->gender??NULL;
         $customer->learning_locations = $request->learning_locations??NULL;
         $customer->remarks = $request->remarks??NULL;
-        //$customer->country_code = $request->country_code??NULL;
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
         if (!is_null($request->password)) {
