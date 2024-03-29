@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class CompetitionQuestionsController extends Controller
 {
@@ -99,7 +100,8 @@ class CompetitionQuestionsController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     //$data[] = $name;
                     $storQues = new CompetitionQuestions();
@@ -124,7 +126,8 @@ class CompetitionQuestionsController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     //$data[] = $name;
                     $storQues = new CompetitionQuestions();
@@ -148,7 +151,8 @@ class CompetitionQuestionsController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     //$data[] = $name;
                     $storQues = new CompetitionQuestions();
@@ -271,7 +275,8 @@ class CompetitionQuestionsController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     //$data[] = $name;
                     $storQues = new CompetitionQuestions();

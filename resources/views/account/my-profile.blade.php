@@ -277,7 +277,7 @@
         // $('#preview').removeAttr("src").hide();
     });
     $('#chooseimage').click(function() {
-        alert("aa");
+        //alert("aa");
         //$("#preview").attr("src", "");
         $('#preview').show();
     });
@@ -286,7 +286,7 @@
         // $('#preview').removeAttr("src").hide();
     });
     $('#chooseimage1').click(function() {
-        alert("aa");
+        //alert("aa");
         //$("#preview").attr("src", "");
         $('#preview1').show();
     });

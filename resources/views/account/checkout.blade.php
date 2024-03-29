@@ -83,7 +83,7 @@
         <div class="col-xl-5 sp-col mt-1199-30">
           <div class="box-6-col">
             <h2 class="title-1">Checkout</h2>
-            <div class="mb-30">Lorem ipsum dolor sit amet, consectetur piscing</div>
+            <!-- <div class="mb-30">Lorem ipsum dolor sit amet, consectetur piscing</div> -->
             <div class="box-3">
               <!-- <h4 class="title-8">Card Details</h4>
               <h5 class="title-9">Card Type</h5>
@@ -130,6 +130,7 @@
 
               <div class="row output-3">
 
+                @if(count($cartDetails) > 0)
                 <div class="col-auto order-last">
                   <form method="post" action="{{ route('processTransaction') }}">
                     @csrf
@@ -139,7 +140,8 @@
                     <button class="btn-1" type="submit">Checkout <i class="fa-solid fa-arrow-right-long"></i></button>
                   </form>
                 </div>
-
+                @endif
+                
                 <div class="col order-first">
                   <a class="btn-2 rico" href="{{ URL::previous() }}"><i class="fa-solid fa-arrow-left-long"></i>
                     Back</a>
