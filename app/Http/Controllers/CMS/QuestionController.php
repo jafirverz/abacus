@@ -107,7 +107,8 @@ class QuestionController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
 
@@ -308,7 +309,8 @@ class QuestionController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
 
@@ -463,7 +465,8 @@ class QuestionController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
                     $storQues = new MiscQuestion();
@@ -724,7 +727,8 @@ class QuestionController extends Controller
                 $i = 0;
                 foreach ($request->file('input_1') as $file) {
 
-                    $name = $file->getClientOriginalName();
+                    //$name = $file->getClientOriginalName();
+                    $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
                     $file->move(public_path() . '/upload-file/', $name);
                     $data[] = $name;
                     $storQues = new MiscQuestion();
