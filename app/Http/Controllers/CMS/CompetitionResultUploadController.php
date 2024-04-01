@@ -45,7 +45,7 @@ class CompetitionResultUploadController extends Controller
     {
         //
         $title = 'Upload Result';
-        $competition = Competition::get();
+        $competition = Competition::orderBy('id', 'desc')->get();
         return view('admin.competition.result-upload', compact('title', 'competition'));
     }
 
