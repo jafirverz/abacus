@@ -39,7 +39,7 @@
                                     <th>Registered <br>Mental Grade</th>
                                     <th>Registered <br>Abacus Grades</th>
                                     <th>Status <button type="button" class="btn-tooltip ml-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="For Pending instructor cal still change the grade. Once Approved, instructor cannot chanage grade, only superadmin can change."><i class="icon-info"></i></button></th>
-                                    <th>Remark <button type="button" class="btn-tooltip ml-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Lorem ipsum dolor sit amet consetetur"><i class="icon-info"></i></button></th>
+                                    <th>Remark <button type="button" class="btn-tooltip ml-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="This section is for any additional notes or insights you may have for a specific student regarding their grade or any of their course requirements"><i class="icon-info"></i></button></th>
                                     <th>Result</th>
                                 </tr>
                             </thead>
