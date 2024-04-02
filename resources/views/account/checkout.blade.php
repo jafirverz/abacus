@@ -83,7 +83,7 @@
         <div class="col-xl-5 sp-col mt-1199-30">
           <div class="box-6-col">
             <h2 class="title-1">Checkout</h2>
-            <!-- <div class="mb-30">Lorem ipsum dolor sit amet, consectetur piscing</div> -->
+            <div class="mb-30">Kindly review your cart and information before checking out</div>
             <div class="box-3">
               <!-- <h4 class="title-8">Card Details</h4>
               <h5 class="title-9">Card Type</h5>

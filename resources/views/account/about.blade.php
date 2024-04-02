@@ -14,7 +14,7 @@
         <figure class="imgwrap-1">
           <img src="{{ asset(get_banner_by_page($page->id)->banner_image ?? '') }}" alt="" />
         </figure>
-        <h2 class="title-2">Lesson 1: Lorem ipsum dolor sit amet, consetetur sadipscing elitr</h2>
+        <h2 class="title-2">{!! $page->title ?? '' !!}</h2>
         {!! $page->content ?? '' !!}
       </div>
     </div>
