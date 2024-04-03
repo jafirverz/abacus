@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\GradingStudentResults;
 use App\GradingExam;
-use App\GradingCategory;
+use App\Certificate;
 use App\Exports\GradingResultExport;
 use App\Imports\ImportGradingResult;
 use App\GradingSubmitted;
@@ -66,18 +66,19 @@ class GradingResultController extends Controller
 
     public function update(Request $request, $id){
         $result = $request->result;
-        $prize = $request->prize;
+       
         $title = $this->title;
         //$compPaperResult = GradingSubmitted::where('id', $id)->first();
         $compPaperResult = GradingStudentResults::where('id', $id)->first();
-        $compPaperResult->result = $result;
-        $compPaperResult->prize = $prize;
-        $compPaperResult->certificate_id = $request->certificate;
+        $compPaperResult->result = $request->result ?? NULL;
+        $compPaperResult->abacus_results = $request->abacus_results ?? NULL;
+        $compPaperResult->mental_results = $request->mental_results ?? NULL;
+        $compPaperResult->rank = $request->rank ?? NULL;
+        //$compPaperResult->certificate_id = $request->certificate;
         $compPaperResult->save();
 
 
-        $competition = GradingSubmitted::where('paper_type', 'actual')->groupBy('competition_id')->orderBy('id', 'desc')->paginate($this->pagination);
-        return view('admin.grading_result.index', compact('title', 'competition'));
+        return redirect()->route('g-results.grading', $compPaperResult->grading_id)->with('success', __('constant.UPDATED', ['module' => $this->title]));
 
     }
 

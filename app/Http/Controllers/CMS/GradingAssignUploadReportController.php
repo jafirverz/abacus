@@ -39,7 +39,7 @@ class GradingAssignUploadReportController extends Controller
 
     public function index(){
         $title = 'Upload Result';
-        $competition = GradingExam::get();
+        $competition = GradingExam::orderBy('id','desc')->get();
         return view('admin.grading_result.result-upload', compact('title', 'competition'));
     }
 

@@ -32,25 +32,49 @@
                                     </span>
                                     @endif
                                 </div>
-
-
                                 <div class="form-group">
-                                    <label for="title">Exam Grade</label>
-                                    <select name="category" class="form-control">
+                                    <label for="mental_grade">Mental Grade </label>
+                                    <select name="mental_grade" class="form-control">
                                         <option value="">-- Select --</option>
-                                        @foreach($competitionCategory as $cate)
+                                        @foreach($mental_grades as $cate)
                                         <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
                                         @endforeach
                                     </select>
-                                    @if ($errors->has('category'))
+                                    @if ($errors->has('mental_grade'))
                                         <span class="text-danger d-block">
-                                        <strong>{{ $errors->first('category') }}</strong>
+                                        <strong>{{ $errors->first('mental_grade') }}</strong>
                                     </span>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="abacus_grade">Abacus Grade  </label>
+                                    <select name="abacus_grade" class="form-control">
+                                        <option value="">-- Select --</option>
+                                        @foreach($abacus_grades as $cate)
+                                        <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('abacus_grade'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('abacus_grade') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Select Instructor</label>
+                                    <select data-live-search="true" name="instructor_id" class="selectpicker form-control">
 
-
-
+                                        @foreach($instructors as $student)
+                                       
+                                        <option value="{{ $student ->id}}">{{$student->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('instructor'))
+                                        <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('instructor') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
 
                                 <div class="form-group">
                                     <label for="title">Select Student</label>
@@ -70,15 +94,6 @@
                                     </span>
                                     @endif
                                 </div>
-
-
-
-
-
-
-
-
-
 
                                 <div class="form-group">
                                     <label for="status">Status</label>

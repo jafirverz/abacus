@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\GradingStudentResults;
+use App\CategoryGrading;
 use App\GradingExam;
 use App\GradingCategory;
 use App\Exports\GradingResultExport;
@@ -47,17 +48,19 @@ class GradingAssignReportController extends Controller
         $title = 'Grading Assign';
         $competition = GradingExam::where('id', $id)->first();
         $competitionCategory = GradingCategory::join('category_gradings','grading_categories.id','category_gradings.category_id')->where('category_gradings.competition_id', $id)->get();
+        $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
+        $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $userType = array(1,2,3,4);
         $compStudents = GradingStudent::where('grading_exam_id', $id)->pluck('user_id')->toArray();
         $students = User::whereIn('user_type_id', $userType)->where('approve_status', 1)->whereNotIn('id', $compStudents)->get();
-        return view('admin.grading_result.assignstudent', compact('title', 'competition', 'students', 'competitionCategory'));
+        $instructors = User::whereIn('user_type_id', [5])->where('approve_status', 1)->get();
+        return view('admin.grading_result.assignstudent', compact('title', 'competition', 'students', 'competitionCategory','mental_grades','abacus_grades','instructors'));
 
     }
 
     public function store(Request $request){
         //dd($request->all());
         $compId = $request->competitionId;
-        $category = $request->category;
         $status = $request->status;
         if($status != 1){
             $status = 'null';
@@ -67,7 +70,9 @@ class GradingAssignReportController extends Controller
             $compStudent = new GradingStudent();
             $compStudent->user_id = $student;
             $compStudent->grading_exam_id  = $compId;
-            $compStudent->category_id = $category;
+            $compStudent->instructor_id = $request->instructor_id??NULL;
+            $compStudent->mental_grade = $request->mental_grade??NULL;
+            $compStudent->abacus_grade = $request->abacus_grade??NULL;
             $compStudent->approve_status = $status;
             $compStudent->save();
         }
