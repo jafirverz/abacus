@@ -99,7 +99,7 @@
                                         <tr>
 
                                             <td>
-                                              <a href="{{ route('results-user.edit', $item->id) }}"
+                                              <a href="{{ route('g-results-user.edit', $item->id) }}"
                                                 class="btn btn-light mr-1 mt-1" data-toggle="tooltip"
                                                 data-original-title="Edit"><i class="fas fa-edit"></i></a>
                                             </td>
