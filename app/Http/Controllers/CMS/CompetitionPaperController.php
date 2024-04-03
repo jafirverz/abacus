@@ -13,6 +13,7 @@ use App\PaperCategory;
 use App\QuestionTemplate;
 use App\Traits\SystemSettingTrait;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class CompetitionPaperController extends Controller
 {
@@ -89,7 +90,8 @@ class CompetitionPaperController extends Controller
 
         if ($request->hasfile('pdf_upload')) {
             $file = $request->file('pdf_upload');
-            $name = $file->getClientOriginalName();
+            $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
+            //$name = $file->getClientOriginalName();
             $file->move(public_path() . '/upload-file/', $name);
 
             // $json['input_1']=$data;
@@ -219,7 +221,8 @@ class CompetitionPaperController extends Controller
         $competitionPaper->category_id = $request->category;
         if ($request->hasfile('pdf_upload')) {
             $file = $request->file('pdf_upload');
-            $name = $file->getClientOriginalName();
+            $name = Carbon::now()->timestamp . '__' . guid() . '__' . $file->getClientOriginalName();
+            //$name = $file->getClientOriginalName();
             $file->move(public_path() . '/upload-file/', $name);
             $competitionPaper->pdf_file = $name;
             // $json['input_1']=$data;
