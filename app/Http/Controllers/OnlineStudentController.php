@@ -68,7 +68,7 @@ class OnlineStudentController extends Controller
                 }
             }
         }
-        return redirect()->route('feedback')->with('success', 'Submitted Successfully');
+        return redirect()->route('feedback')->with('message', 'Thank you! Submitted Successfully');
     }
 
     public function my_course(){
