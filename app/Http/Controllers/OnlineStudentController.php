@@ -9,6 +9,7 @@ use App\TestPaper;
 use App\CourseSubmitted;
 use App\CourseQuestionSubmitted;
 use App\Level;
+use App\CourseLevelCertificate;
 use App\TestPaperDetail;
 use App\TestPaperQuestionDetail;
 use App\UserFeedback;
@@ -73,7 +74,7 @@ class OnlineStudentController extends Controller
 
     public function my_course(){
         $level = Level::get();
-        $courseCertificate = CourseSubmitted::where('user_id', Auth::user()->id)->where('is_submitted',1)->where('certificate_id', '!=', null)->get();
+        $courseCertificate = CourseLevelCertificate::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
         return view('account.online-my-course', compact('level', 'courseCertificate'));
     }
 
@@ -144,6 +145,7 @@ class OnlineStudentController extends Controller
                 $courseSub = new CourseSubmitted();
                 $courseSub->test_paper_question_id   = $test_paper_question_id;
                 $courseSub->course_id  = $course_id;
+                $courseSub->level_id  = $request->level_id;
                 $courseSub->question_template_id = $questionTypeId;
                 $courseSub->user_id = $userId;
                 if($request->is_submitted==1)
@@ -179,10 +181,26 @@ class OnlineStudentController extends Controller
                     $totalMarks+= $testPaperQuestion->marks;
                     $quesSub->save();
                 }
+                $total_lesson=Course::join('course_assign_to_users','course_assign_to_users.course_id','courses.id')->where('course_assign_to_users.user_id', Auth::user()->id)->where('courses.level_id', $request->level_id)->where('courses.status', 1)->select('courses.*')->get();
+                $check_lesson=CourseSubmitted::where('level_id', $request->level_id)->where('user_id', Auth::user()->id)->where('is_submitted',1)->get();
                 $saveResult = CourseSubmitted::where('id', $courseSub->id)->first();
                 $saveResult->total_marks = $totalMarks;
                 $saveResult->user_marks = $userMarks;
                 $saveResult->save();
+
+                //Certificate creation
+
+                if($total_lesson->count()==$check_lesson->count())
+                {
+                    $courseLevelCertificate = new CourseLevelCertificate();
+                    $courseLevelCertificate->course_id  = $course_id;
+                    $courseLevelCertificate->level_id  = $request->level_id;
+                    $courseLevelCertificate->user_id  = Auth::user()->id;
+                    $courseLevelCertificate->certificate_id  = 3;
+                    $courseLevelCertificate->save();
+                }
+
+
             }
             if(in_array($questionTypeId, $resultpage)){
                 return view('result-course', compact('totalMarks', 'userMarks','courseSub'));

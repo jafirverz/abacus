@@ -38,6 +38,7 @@
             <input type="hidden" name="course_submitted_id" value="{{ $courseSubmitted->id }}">
             @endif
             <input type="hidden" name="course_id" value="{{ $course->id }}">
+            <input type="hidden" name="level_id" value="{{ $course->level_id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
 
 

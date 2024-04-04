@@ -38,6 +38,7 @@
 
             <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <input type="hidden" name="course_id" value="{{ $course->id }}">
+            <input type="hidden" name="level_id" value="{{ $course->level_id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
             @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
             <input type="hidden" name="course_submitted_id" value="{{ $courseSubmitted->id }}">
@@ -86,7 +87,7 @@
                 @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1)
                 <button class="btn-1" name="is_submitted" value="1" disabled>Submitted <i class="fa-solid fa-arrow-right-long"></i></button>
                 @elseif(isset($courseSubmitted) && $courseSubmitted->is_submitted==2)
-                
+
                 <button class="btn-1" name="is_submitted" value="1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
                 @else
                 <button class="btn-2" name="is_submitted" value="2" type="submit">Save <i class="fa-solid fa-arrow-right-long"></i></button>
