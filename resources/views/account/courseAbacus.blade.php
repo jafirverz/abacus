@@ -39,6 +39,7 @@
             @endif
             <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <input type="hidden" name="course_id" value="{{ $course->id }}">
+            <input type="hidden" name="level_id" value="{{ $course->level_id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
             <div class="row sp-col-20">
                 <div class="col-xl-6 col-md-5 sp-col mt-30 order-md-last">

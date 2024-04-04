@@ -39,6 +39,7 @@
             @endif
             <input type="hidden" name="test_paper_question_id[]" value="{{ $paper_detail->id }}">
             <input type="hidden" name="course_id" value="{{ $course->id }}">
+            <input type="hidden" name="level_id" value="{{ $course->level_id }}">
             <input type="hidden" name="question_type" value="{{ $course->paper->question_template_id }}">
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="(Note: This feature is only available for premium member)"><i class="icon-info"></i></button> <strong><a href="?s=1">Shuffle the Questions <i class="icon-shuffle"></i></a></strong></div>

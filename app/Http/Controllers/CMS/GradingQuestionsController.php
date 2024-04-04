@@ -19,7 +19,7 @@ class GradingQuestionsController extends Controller
     {
         $this->middleware('auth:admin');
         $this->title = __('constant.GRADINGQUESTIONS');
-        $this->module = 'GRADINGQUESTIONS';
+        $this->module = 'GRADING_PAPER';
         $this->middleware('grant.permission:'.$this->module);
         $this->pagination = $this->systemSetting()->pagination ?? config('system_settings.pagination');
         $this->middleware(function ($request, $next) {
@@ -206,7 +206,7 @@ class GradingQuestionsController extends Controller
             }
         }
         // return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
-        return redirect()->route('grading-paper.questions',[$grading_paper_id])->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
+        return redirect()->route('grading-paper.questions',[$grading_paper_id])->with('success', __('constant.CREATED',  ['module' => 'Grading paper question']));
 
     }
 
@@ -386,7 +386,7 @@ class GradingQuestionsController extends Controller
 
 
         // return redirect()->route('comp-questions.index')->with('success', __('constant.CREATED', ['module' => $this->title]));
-        return redirect()->route('grading-paper.questions',[$grading_paper_id])->with('success', __('constant.CREATED',  ['module' => 'Competition paper question']));
+        return redirect()->route('grading-paper.questions',[$grading_paper_id])->with('success', __('constant.CREATED',  ['module' => 'Grading paper question']));
     }
 
     /**
