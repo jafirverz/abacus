@@ -56,7 +56,7 @@ class LevelController extends Controller
 
             // return response($content)->header('Cache-Control', 'no-cache, must-revalidate');
 
-            return view('account.level_details', compact("qestionTemplate", 'checkSlug', 'worksheets', 'premium', 'addedToCart'));
+            return view('account.level_details', compact("qestionTemplate", 'checkSlug', 'worksheets', 'premium', 'addedToCart', 'levelTopics'));
         }else{
             return abort(404);
         }
