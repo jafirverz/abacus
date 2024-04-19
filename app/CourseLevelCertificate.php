@@ -11,6 +11,10 @@ class CourseLevelCertificate extends Model
         return $this->belongsTo('App\Certificate', 'certificate_id', 'id');
     }
 
+    public function course(){
+        return $this->belongsTo('App\Course', 'course_id', 'id');
+    }
+
     public function level(){
         return $this->belongsTo('App\Level', 'level_id', 'id');
     }

@@ -1054,6 +1054,7 @@ class ProfileController extends Controller
             $updateUserProfile = User::find($this->user->id);
             //$updateUserProfile->user_id  = $users->id;
             $updateUserProfile->name = $request->name;
+            $updateUserProfile->instructor_full_name = $request->instructor_full_name ?? NULL;
             $updateUserProfile->email = $request->email;
             //$users->email = $request->email;
             if ($request->password != '') {

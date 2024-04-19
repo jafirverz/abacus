@@ -28,15 +28,19 @@
                     <form method="post" name="profile" id="profileform" enctype="multipart/form-data" action="{{route('instructor-profile.update')}}">
                         @csrf
                     <div class="row sp-col-xl-30">
-                        <div class="col-xl-4 sp-col">
-                            <label class="lb-1">Full Name <span class="required">*</span></label>
+                        <div class="col-xl-3 sp-col">
+                            <label class="lb-1">Display Name <span class="required">*</span></label>
                             <input class="form-control" name="name" type="text" value="{{ $user->name }}" disabled />
                         </div>
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-3 sp-col">
+                            <label class="lb-1">Full Name <span class="required">*</span></label>
+                            <input class="form-control" name="instructor_full_name" type="text" value="{{ $user->instructor_full_name }}" disabled />
+                        </div>
+                        <div class="col-xl-3 sp-col">
                             <label class="lb-1">Email <span class="required">*</span></label>
                             <input class="form-control" name="email" type="text" value="{{ $user->email  }}" disabled />
                         </div>
-                        <div class="col-xl-4 sp-col">
+                        <div class="col-xl-3 sp-col">
                             <label class="lb-1">Password <span class="required">*</span></label>
                             <input class="form-control" name="password" type="password" placeholder="*****" disabled />
                         </div>
