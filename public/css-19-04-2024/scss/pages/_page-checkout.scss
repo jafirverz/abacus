@@ -1,0 +1,162 @@
+.intro-home {
+	&-1 { margin-bottom: -320px; padding-top: 30px; position: relative; top: -320px; z-index: 3;
+		.title-1 { margin-top: 100px; 
+			@include maxmedia(991px) {
+				margin-top: 50px;
+			}
+		}
+		.grid-6 { margin-top: 50px; 
+			.title-2 { margin-top: 0 !important; }
+			.gcontent { background: $white; padding: 80px 80px 80px 0; 
+				@include maxmedia(991px) {
+					padding: 30px;
+				}
+				@include maxmedia(767px) {
+					text-align: center;
+				}
+				@include maxmedia(574px) {
+					padding: 30px 20px 35px;
+				}
+			}
+			@include maxmedia(767px) {
+				.bg { background: none !important;
+					.bgimg { display: block !important; width: 100%; }
+				}
+			}
+		}
+		.btn-1 { margin-top: 20px; min-width: 240px;
+			@include maxmedia(574px) {
+				min-width: 150px;
+			}
+		}
+		.slick-1 {
+			@include maxmedia(574px) {
+				padding-left: 20px; padding-right: 20px;
+			}
+			.item { opacity: 0.52; padding: 15px; text-align: center; 
+				&:hover { opacity: 1; }
+			}
+			.slick {
+				&-prev { left: -100px; 
+					@include maxmedia(1399px) {
+						left: -70px;
+					}
+					@include maxmedia(1299px) {
+						left: -30px;
+					}
+					@include maxmedia(574px) {
+						left: -10px;
+					}
+				}
+				&-next { right: -100px;
+					@include maxmedia(1399px) {
+						right: -70px;
+					}
+					@include maxmedia(1299px) {
+						right: -30px;
+					}
+					@include maxmedia(574px) {
+						right: -10px;
+					}
+				}
+			}
+		}
+	}
+	&-2 {
+		.slick-2 {
+			.item { padding: 14px; 
+				.inner { margin-bottom: 0; }
+				@include maxmedia(574px) {
+					 padding: 10px; 
+				}
+			}
+			.slick {
+				&-prev { left: -100px; 
+					@include maxmedia(1399px) {
+						left: -70px;
+					}
+					@include maxmedia(1299px) {
+						left: -20px;
+					}
+					@include maxmedia(999px) {
+						left: 0px;
+					}
+				}
+				&-next { right: -100px;
+					@include maxmedia(1399px) {
+						right: -70px;
+					}
+					@include maxmedia(1299px) {
+						right: -20px;
+					}
+					@include maxmedia(999px) {
+						right: 0px;
+					}
+				}
+			}
+		}		
+	}
+	&-3 { position: relative; z-index: 3;
+		.inner { background: #F5F5F5; bottom: -150px; margin-top: -150px; padding: 80px 50px; position: relative;
+			@include maxmedia(991px) {
+				padding: 50px;
+			}
+			@include maxmedia(1199px) {
+				padding: 50px 20px;
+			}
+		}
+		.slick-1 {
+			.item { padding: 15px; text-align: center; 
+				@include maxmedia(574px) {
+					padding: 10px;
+				}
+				.ginner { align-items: center; background: $white; @include flexwrap; justify-content: center; padding: 20px; }
+			}
+			.slick {
+				&-prev { left: -160px; top: 10px;
+					@include maxmedia(1399px) {
+						left: -130px;
+					}
+					@include maxmedia(1299px) {
+						left: -90px; top: 50%;
+					}
+					@include maxmedia(1199px) {
+						left: -55px;
+					}
+					@include maxmedia(999px) {
+						left: -30px;
+					}
+				}
+				&-next { right: -160px; top: 10px;
+					@include maxmedia(1399px) {
+						right: -130px;
+					}
+					@include maxmedia(1299px) {
+						right: -90px; top: 50%;
+					}
+					@include maxmedia(1199px) {
+						right: -55px;
+					}
+					@include maxmedia(999px) {
+						right: -30px;
+					}
+				}
+			}
+		}
+	}
+	&-4 { padding-top: 250px;		
+		@include maxmedia(767px) {
+			padding-top: 200px;
+		}
+		label { color: #000; display: block; font-weight: 500; margin-top: 20px; }
+		.contact-form { background: rgba(255,255,255,0.93); padding: 70px 90px; 			
+			@include maxmedia(1199px) {
+				padding: 50px;
+			}			
+			@include maxmedia(474px) {
+				padding: 40px 20px;
+			}
+		}
+	}
+}
+

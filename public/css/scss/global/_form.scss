@@ -42,6 +42,7 @@ textarea.form-control {
 }
 
 .bootstrap-select {  position: relative; width: 100% !important;
+	.bs-searchbox .form-control { @include bd-radius(0px); border-color: $green !important; height: 40px; line-height: 40px; padding: 5px 15px; }
 	>.dropdown-toggle { background: #fff !important; border: #fff solid 1px !important; @include bd-radius (20px !important); box-shadow: rgba(0,0,0,0.07) 0 3px 6px !important; color: #333; font-size: 16px; font-weight: 400; height: 50px; line-height: 48px; outline-offset: 0 !important; outline: none !important; padding: 0 40px 0 20px; position: relative;
 		&:after { border: none; @include fonticon(900,14px); color: #000; content: "\f107"; line-height: 1; margin: 0; position: absolute; right: 15px; top: 50%; @include transition(0.5s); transform: translateY(-50%); }
 		&:focus { outline: none !important; }		
@@ -60,11 +61,11 @@ textarea.form-control {
 		}
 	}
 	>.dropdown { 
-		&-menu { background: $white; border: $green solid 1px; border-top: none; @include bd-radius (0 !important); font-size: 16px; max-height: 200px !important; overflow-y: auto !important; padding: 0; top: 100% !important; transform: none !important;
-			> .inner { height: 100% !important; padding: 0; }
+		&-menu { background: $white; border: $green solid 1px; @include bd-radius (0 !important); font-size: 16px; /*max-height: 200px !important; overflow-y: auto !important;*/ inset: auto !important; margin-top: -1px !important; padding: 0; top: 100% !important; transform: none !important;
+			> .inner { /*height: 100% !important; padding: 0;*/ }
 			.dropdown { 
 				&-menu { background: none; font-size: 16px; }
-				&-item { background: none !important; border: none !important; color: #333; margin-bottom: 1px; padding: 10px 20px;
+				&-item { background: none !important; border: none !important; color: #333; margin-bottom: 1px; padding: 5px 20px;
 					&:hover, &:focus, &.active, &-item:active { color: $red !important; }
 					&:last-child { margin-bottom: 0; }
 				}
@@ -78,7 +79,7 @@ textarea.form-control {
 		.dropdown { 
 			&-menu li a { padding-left: 50px; position: relative;
 				&:before { border: #ddd solid 1px; content: ""; height: 16px; left: 20px; position: absolute; top: 7px; width: 16px; }
-				.check-mark { color: #F5BC2E; font-size: 14px; left: 26px; position: absolute; right: auto !important; top: 6px !important; }
+				.check-mark { color: #EF3741; font-size: 14px; left: 26px; position: absolute; right: auto !important; top: 6px !important; }
 			}
 		}
 	}
@@ -407,3 +408,13 @@ span.required { color: #CA0835; }
 	}
 }
 
+.form-type {
+	&-1 { margin: 0 auto 120px; max-width: 500px; 
+		@include maxmedia(1499px) {	
+			margin-bottom: 50px;
+		}
+		@include maxmedia(574px) {	
+			margin-bottom: 80px;
+		}
+	}
+}

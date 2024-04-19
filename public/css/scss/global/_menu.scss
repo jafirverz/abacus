@@ -14,8 +14,8 @@
 					width: 24%; 
 				}
 			}
-			a { align-items: center; color: #48420E; @include flexwrap; padding: 10px 15px; position: relative; z-index: 2;
-				&:before { background: #FBED72; @include bd-radius (12px 0 0 12px); bottom: 0; content: ""; position: absolute; right: 0; top: 0; width: 0; @include transition(0.5s); z-index: -1; }
+			a { align-items: center; color: #48420E; @include flexwrap; overflow: hidden; padding: 10px 15px; position: relative; z-index: 2;
+				&:before { background: #FBED72; @include bd-radius (12px 0 0 12px); bottom: 0; content: ""; position: absolute; right: -1px; top: 0; width: 0; @include transition(0.5s); z-index: -1; }
 				&:hover:before { width: 100%; }				
 				@include maxmedia(1299px) {
 					padding-left: 15px; padding-right: 15px;
