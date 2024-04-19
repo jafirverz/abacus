@@ -221,16 +221,16 @@ class OnlineStudentController extends Controller
 
     public function downloadCertificate( $id = null){
 
-        $courseSubmitted = CourseSubmitted::where('id', $id)->first();
-        $certificate = Certificate::where('id', $courseSubmitted->certificate_id)->first();
-        $logo='<img style="width: 220px" width="220" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
+        $courseLevelCertificate = CourseLevelCertificate::where('id', $id)->first();
+        $certificate = Certificate::where('id', $courseLevelCertificate->certificate_id)->first();
+        $logo='<img style="width: 220px" width="220" src="https://3gabels.3gabacus.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
 
-        $logoFoot='<img style="width: 180px" width="180" src="http://abacus.verz1.com/storage/images/1702371736__65782198b8449__3g-abacus-foot.png" alt="abacus" />';
-        $bg1 = 'http://abacus.verz1.com/images/bg-certificate-3.jpg';
+        $logoFoot='<img style="width: 180px" width="180" src="https://3gabels.3gabacus.com/storage/images/1702371736__65782198b8449__3g-abacus-foot.png" alt="abacus" />';
+        $bg1 = url('/').'/images/bg-certificate-3.jpg';
         $bg = '<div style="background: url('.$bg1.') repeat 0 0; border: #333 solid 1px; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 840px;">';
-        $date_of_issue_certificate=date('j F,Y',strtotime($courseSubmitted->certificate_issued_on));
+        $date_of_issue_certificate=date('j F,Y',strtotime($courseLevelCertificate->created_at));
         $key = ['{{course_name}}','{{level_name}}','{{user_name}}','{{date_of_issue_certificate}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
-        $value = [$courseSubmitted->course->title,'Preparatory Level', Auth::user()->name, $date_of_issue_certificate, $logo, $logoFoot,$bg];
+        $value = [$courseLevelCertificate->course->title,$courseLevelCertificate->level->title, Auth::user()->name, $date_of_issue_certificate, $logo, $logoFoot,$bg];
         $newContents = str_replace($key, $value, $certificate->content);
         $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
         return $pdf->download('certificate-course.pdf');
