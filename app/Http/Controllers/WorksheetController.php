@@ -210,6 +210,13 @@ class WorksheetController extends Controller
             //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
             return view('resultMixx', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
         }
+        if($questionTypeId == 7){
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $levelId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
+            //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+            return view('resultmix7', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
+        }
         if(in_array($questionTypeId, $resultpage)){
             return view('result', compact('totalMarks', 'userMarks'));
         }
