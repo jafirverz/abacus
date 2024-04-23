@@ -24,6 +24,7 @@ return [
     'STATUS'  =>  'Status',
     'LOCATION' => 'Location',
     'LEARNING_LOCATION' => 'Learning Location',
+    'SUB_HEADING' => 'Sub Heading',
     'GRADING_EXAM' => 'Grading Exam & Registration Mgmt',
     'INSTRUCTOR_CALENDAR' => 'Instructor Calendar',
     'GRADING_EXAM_LIST' => 'Grading Exam List',

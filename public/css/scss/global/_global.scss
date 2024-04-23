@@ -18,7 +18,7 @@ textarea { resize: none; }
 address { font-style: normal; }
 blockquote { border: none; font-size: 1em; padding: 0; }
 *:hover, *:visited, *:active, *:focus { outline: none !important; }
-a { -webkit-transition: color 0.15s ease; -moz-transition: color 0.15s ease; -o-transition: color 0.15s ease; transition: color 0.15s ease;  
+a { color: #333; -webkit-transition: color 0.15s ease; -moz-transition: color 0.15s ease; -o-transition: color 0.15s ease; transition: color 0.15s ease;  
 	&:link, &:visited, &:focus { color: #333; outline: none !important; text-decoration: none; }
     &:hover { color: #EF3741; outline: none; }
 }

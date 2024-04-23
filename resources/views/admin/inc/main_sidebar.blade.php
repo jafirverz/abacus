@@ -163,6 +163,12 @@
                     'idtag'  => 'level',
                 ],
                 [
+                    'title' =>  __('constant.SUB_HEADING'),
+                    'icon'  =>  '<i class="fas fa-check"></i>',
+                    'url'   =>  'admin/sub-heading',
+                    'idtag'  => 'sub-heading',
+                ],
+                [
                     'title' =>  __('constant.COUNTRY'),
                     'icon'  =>  '<i class="fas fa-check"></i>',
                     'url'   =>  'admin/country',

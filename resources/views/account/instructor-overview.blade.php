@@ -73,6 +73,36 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
                         <div class="box-1">
                             <h3 class="title-7 text-center">Calendar</h3>
                             <div id="calendar"></div>
+                            <div id="ppevent" class="modal pp-1" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <button type="button" class="btn-closepp" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h3 class="title-3 text-center">Event details</h3>
+                                            <div class="row mt-20">
+                                                <div class="col-sm-3"><strong>Name:</strong></div>
+                                                <div class="col-sm-9">
+                                                    <div class="event-title"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-20">
+                                                <div class="col-sm-3"><strong>Date start:</strong></div>
+                                                <div class="col-sm-9">
+                                                    <span class="event-date-start"></span>, <span class="event-time-start"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-20">
+                                                <div class="col-sm-3"><strong>Note:</strong></div>
+                                                <div class="col-sm-9">
+                                                    <div class="event-descript"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-xl-5 sp-col order-xl-first">
@@ -154,19 +184,43 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
           center: 'prev,title,next',
           right: ''
         },
-        events: [
-@foreach($calendars as $key=>$value)
-          {
-            title: '{{ $value->note }}',
-            start: '{{ $value->start_date }}T{{ $value->start_time }}',
-            end: '{{ $value->start_date }}T{{ $value->start_time }}'
-          },
-@endforeach
-        ]
+        dayMaxEvents: true,
+        events: [@foreach($calendars as $key=>$value)
+            {
+                title: '{{ $value->full_name }}',
+                start: '{{ $value->start_date }}T{{ $value->start_time }}',
+                end: '{{ $value->start_date }}T{{ $value->start_time }}',
+                description: '{{ $value->note }}',
+            },
+            @endforeach],
+          eventClick: function(info) {
+              var title = info.event.title;
+              var dateStart = info.event.start;
+              var dateEnd = info.event.end;
+              var descript = info.event.extendedProps.description;
+              $("#ppevent .event-title").html(title);
+              $("#ppevent .event-date-start").html(getDate(dateStart).date);
+              $("#ppevent .event-time-start").html(getDate(dateStart).time);
+              $("#ppevent .event-descript").html(descript);
+             // $("#ppevent .event-date-end").html(getDate(dateEnd).date);
+              //$("#ppevent .event-time-end").html(getDate(dateEnd).time);
+              $("#ppevent").modal('show');
+          }
       });
 
       calendar.render();
     });
+    function getDate(str){
+        var d = new Date(str);
+        var m = d.getMonth() + 1;
+        return {
+            date : d.getDate() + "/" + getStr(m) + "/" + d.getFullYear(),
+            time : getStr(d.getHours()) + ":" + getStr(d.getMinutes())
+        };
+    }
+      function getStr(num){
+          return num < 10 ? "0" + num : num;
+      }
 
   </script>
 @endsection

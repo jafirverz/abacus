@@ -1,9 +1,11 @@
+.fc-popover .fc-event-title { max-width: 200px; overflow-x: hidden; text-overflow: ellipsis; }
+.fc-daygrid-event-dot { border: #666 solid 3px !important; @include bd-radius (100%); }
 .modal { display: block !important; height: 0; overflow: hidden;
 	&.show { background: rgba(0,0,0,0.78); height: 100%; }
 	&-content { border: none; border-radius: 0; position: relative; }
-	.btn-closepp { background: $blue; border: $white solid 5px; @include bd-radius (100%); color: $white; height: 70px; line-height: 60px; padding: 0; position: absolute; right: -20px; text-align: center; top: -25px; width: 70px;
-		&:before { content: "\f00d"; @include fonticon(900,36px); }
-		&:hover { background: $darkblue; }
+	.btn-closepp { background: #A4A07A; border: $white solid 2px; @include bd-radius (100%); color: $white; height: 40px; line-height: 40px; padding: 0; position: absolute; right: -20px; text-align: center; top: -25px; width: 40px;
+		&:before { content: "\f00d"; @include fonticon(900,20px); }
+		&:hover { background: #333; }
 	}
 	&-dialog { margin-top: 30px; 
 		&-scrollable {
@@ -14,7 +16,9 @@
 			}
 		}
 	}
-	&-backdrop { display: none; }	
+	&-backdrop { display: none; 
+		&.show { z-index: 99999; }
+	}	
 }
 .pp {
 	&-image { margin: 0; width: 100%; }
@@ -27,23 +31,11 @@
 				img { @include bd-radius (10px); }
 			}
 			&-dialog { 
-				@media (min-width: 992px) {
-					max-width: 720px;
-				}
-				@media (min-width: 1440px) {
-					max-width: 1400px;
+				@media (min-width: 1200px) {
+					max-width: 700px;
 				}
 			}
-			&-body { padding: 0; position: relative; }
-		}		
-		.btn-closepp { 
-			@include maxmedia(1440px) {
-				border-width: 3px; height: 50px; line-height: 40px; right: -20px; top: -25px; width: 50px;
-				&:before { font-size: 20px; }
-			}
-			@include maxmedia(574px) {
-				height: 40px; line-height: 34px; right: -10px; width: 40px;
-			}
-		}
+			&-body { padding: 50px; position: relative; }
+		}	
 	}
 }
