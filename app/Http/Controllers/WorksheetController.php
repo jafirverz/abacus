@@ -157,6 +157,7 @@ class WorksheetController extends Controller
             $workshSub->question_template_id = $questionTypeId;
             $workshSub->user_id = $userId;
             $workshSub->save();
+            $worksheetSubmittedId = $workshSub->id;
             $totalMarks = 0;
             $userMarks = 0;
             foreach($request->answer as $key=>$value){
@@ -180,6 +181,41 @@ class WorksheetController extends Controller
             $saveResult->total_marks = $totalMarks;
             $saveResult->user_marks = $userMarks;
             $saveResult->save();
+        }
+        if($questionTypeId == 1){
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $levelId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
+            //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+            return view('resultListening', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
+        }
+        if($questionTypeId == 2){
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $levelId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
+            //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+            return view('resultVideo', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
+        }
+        if($questionTypeId == 4){
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $levelId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
+            //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+            return view('resultAddSubtract', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
+        }
+        if($questionTypeId == 5){
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $levelId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
+            //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+            return view('resultMixx', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
+        }
+        if($questionTypeId == 7){
+            $worksheet = Worksheet::where('id', $worksheetId)->first();
+            $level = Level::where('id', $levelId)->first();
+            $questions = Question::where('worksheet_id', $worksheetId)->where('question_type', $questionTypeId)->first();
+            //return view('account.worksheetNumber', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks'));
+            return view('resultmix7', compact("worksheet", 'level', 'questions','totalMarks', 'userMarks', 'worksheetSubmittedId'));
         }
         if(in_array($questionTypeId, $resultpage)){
             return view('result', compact('totalMarks', 'userMarks'));

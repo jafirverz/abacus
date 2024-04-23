@@ -50,6 +50,9 @@ class ImportCompetitionResult implements ToCollection, WithHeadingRow
                     $compStudentResult->save();
                 }
             }
+            // else{
+            //     return redirect()->back()->with('error',  'Please enter correct Instructor code');
+            // }
         }
     }
 }
