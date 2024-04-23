@@ -138,7 +138,7 @@
 			&.ans { 
 				&-right, &-wrong { 
 					.number { padding-right: 40px; position: relative; 
-						&:before { @include fonticon(900,32px); position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
+						&:before { @include fonticon(900,24px); position: absolute; right: 0; top: 50%; transform: translateY(-50%); }
 					}
 				}				
 				&-right { border-color: #07C426; 
@@ -164,6 +164,9 @@
 		}
 	}
 	&-4 { 
+		.answer {
+			&-true, &-false { @include bd-radius (20px); padding: 5px 50px 5px 15px; }
+		}
 		.grow { align-items: center; margin-bottom: 10px; margin-top: 10px; 			
 			@include maxmedia(474px) {
 				margin-left: -5px !important; margin-right: -5px !important;
@@ -369,6 +372,23 @@
 			@include maxmedia(474px) {
 				padding: 10px; 
 			}	
+		}
+	}
+	&-13 { background: #f1f1f1; @include bd-radius (10px); margin-top: 20px; padding: 20px 20px 20px 140px; position: relative; @include transition(0.5s);
+		@include maxmedia(574px) {
+			padding-left: 130px;
+		}	
+		.gday { height: 100%; left: 0; padding: 20px; position: absolute; top: 0; width: 140px;
+			@include maxmedia(574px) {
+				padding-right: 10px;
+			}	
+		}
+		.gtitle { border-left: #ccc solid 1px; font-weight: 700; padding-left: 30px;
+			@include maxmedia(574px) {
+				padding-left: 20px;
+			}	
+		}
+		&:hover { background: $red; color: #fff;
 		}
 	}
 }

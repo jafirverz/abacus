@@ -18,7 +18,7 @@ textarea { resize: none; }
 address { font-style: normal; }
 blockquote { border: none; font-size: 1em; padding: 0; }
 *:hover, *:visited, *:active, *:focus { outline: none !important; }
-a { -webkit-transition: color 0.15s ease; -moz-transition: color 0.15s ease; -o-transition: color 0.15s ease; transition: color 0.15s ease;  
+a { color: #333; -webkit-transition: color 0.15s ease; -moz-transition: color 0.15s ease; -o-transition: color 0.15s ease; transition: color 0.15s ease;  
 	&:link, &:visited, &:focus { color: #333; outline: none !important; text-decoration: none; }
     &:hover { color: #EF3741; outline: none; }
 }
@@ -42,15 +42,15 @@ body { position: relative; }
 	}
 }
 
-.fitimg { margin: 0; overflow: hidden; position: relative;
-	.img { bottom: 0; height: auto; left: 0; margin: auto; min-height: 100%; min-width: 100%; object-fit: cover; position: absolute; top: 0; right: 0; width: auto; z-index: 0; }
+.fitimg, .bg { margin: 0; overflow: hidden; position: relative;
+	.img, .bgimg { bottom: 0; height: auto; left: 0; margin: auto; min-height: 100%; min-width: 100%; object-fit: cover; position: absolute; top: 0; right: 0; width: auto; z-index: 0; }
 }
 .alignimg { margin: 0; overflow: hidden; position: relative;
 	img { bottom: 0; height: auto; left: 0; margin: auto; min-height: 100%; min-width: 100%; object-fit: scale-down; position: absolute; top: 0; right: 0; width: auto; z-index: 0; }
 }
-.bg { background-repeat: no-repeat; background-position: center center; background-size: cover;
+/*.bg { background-repeat: no-repeat; background-position: center center; background-size: cover;
 	.bgimg { display: none; }
-}
+}*/
 
 .gotop { background: #03030B; bottom: 0; color: $white !important; height: 50px; line-height: 50px; display: none; position: fixed; right: 0; text-align: center; width: 50px; z-index: 9999; @include transition(0.5s);
 	i { font-size: 20px; line-height: 50px; }
@@ -174,11 +174,9 @@ p {
 }
 
 .imgwrap {
-	&-1  { margin: 0 0 30px;
-		img { width: 100%; }
-	}
+	&-1  { margin: 0 0 30px; }
 	&-2  { margin: 0 0 30px;
-		img { @include bd-radius (20px); width: 100%; }
+		img { @include bd-radius (20px); }
 	}
 	&-3  { background: $white; @include bd-radius (20px); margin-top: 20px; padding: 20px 10px; text-align: center; }
 }
@@ -234,6 +232,24 @@ p {
 	&.mCSB_scrollTools_horizontal { background: #eee; @include bd-radius (20px); height: 10px;
 		.mCSB_dragger .mCSB_dragger_bar { background: #A4A07A; margin: 0; height: 10px; }
 	}	
+}
+
+.answer {
+	&-true, &-false { padding: 5px 50px 5px 15px; position: relative;
+		i { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+	}
+	&-true { background: #d6ffc7 !important; border: #40ae4b solid 1px;
+		i { color: #00d916; }
+	}
+	&-false { background: #f8e4e3 !important; border: #ab2421 solid 1px;
+		span { margin-right: 10px; }
+		i { color: #fe0000; }		
+		.ansfalse { color: rgba(0,0,0,0.5); position: relative;
+			&:after, &:before { background: #f00; content: ""; height: 1px; left: 50%; margin-left: -10px; position: absolute; top: 50%; width: 24px; }
+			&:before { transform: rotate(45deg) translateY(-50%); }
+			&:after { transform: rotate(-45deg) translateY(-50%); }
+		}
+	}
 }
 
 @include minmedia(1400px) {	

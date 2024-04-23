@@ -110,6 +110,167 @@
 		}
 	}
 	&-4 { margin: 0 auto; max-width: 1800px; }
+	&-5 { border: #333 solid 1px; margin: 0 auto; max-width: 720px;
+		&-wrap { padding: 50px 15px;
+			@include maxmedia(574px) {
+				padding: 10px;
+			}
+		}
+		table { width: 100%; 
+			td { padding: 0; }
+		}
+		.space { 
+			&-1 { border-top: #333 solid 1px; padding: 20px;				
+				@include maxmedia(474px) {
+					padding: 10px;
+				}
+			}
+		}
+		.coltype {
+			&-1 { background: #FFF8BB; color: #000; font-size: 20px; padding: 20px 10px 0; text-align: center;
+				@include maxmedia(767px) {
+					font-size: 18px;
+				}
+				@include maxmedia(474px) {
+					font-size: 16px; padding: 10px 10px 0;
+				}
+			}
+			&-2 { padding: 0 10px; width: 20%; }
+			&-3 { text-align: center; 
+				h1 { color: #000; font-size: 46px; font-weight: 700; margin: 0;
+					@include maxmedia(767px) {
+						font-size: 40px;
+					}
+					@include maxmedia(640px) {
+						font-size: 36px;
+					}
+				}
+			}
+			&-4 { font-size: 20px; font-weight: 700; line-height: 1.2; padding: 10px 30px 10px 0; width: 25%;
+				@include maxmedia(640px) {
+					font-size: 18px;
+				}
+				@include maxmedia(574px) {
+					font-size: 16px; padding: 5px 20px 5px 0;
+				}
+				@include maxmedia(360px) {
+					font-size: 14px; padding: 5px 10px 5px 0;
+				}
+			}
+			&-5 { color: #000; font-size: 30px; font-weight: 700; padding: 10px 0;
+				@include maxmedia(640px) {
+					font-size: 24px;
+				}
+				@include maxmedia(574px) {
+					font-size: 20px; padding: 5px 0;
+				}
+				@include maxmedia(360px) {
+					font-size: 16px; 
+				}
+			}
+			&-6 { font-size: 18px; font-weight: 500; padding: 5px 10px 5px 0; vertical-align: top;
+				@include maxmedia(640px) {
+					font-size: 16px;
+				}
+				&.wcol { width: 27%; }
+			}
+			&-7 { font-size: 18px; padding: 5px 0; 
+				@include maxmedia(640px) {
+					font-size: 16px;
+				}
+				strong { color: #000; font-weight: 700; }
+			}
+			&-10 { background: #FBF7D3; border-top: #333 solid 1px; font-size: 20px; font-weight: 700; padding: 20px;
+				@include maxmedia(640px) {
+					font-size: 18px;
+				}
+				@include maxmedia(574px) {
+					font-size: 16px; padding: 10px;
+				}
+				@include maxmedia(360px) {
+					font-size: 14px; 
+				}
+				strong { color: #000; font-size: 30px; font-weight: 700;
+					@include maxmedia(640px) {
+						font-size: 24px;
+					}
+					@include maxmedia(574px) {
+						font-size: 20px;
+					}
+					@include maxmedia(360px) {
+						font-size: 18px; 
+					}
+				}
+			}
+			&-11 { background: #FBF7D3; border-top: #333 solid 1px; border-left: #333 solid 1px; padding: 20px; text-align: center; 
+				@include maxmedia(640px) {
+					font-size: 18px;
+				}
+				@include maxmedia(574px) {
+					font-size: 16px; padding: 10px;
+				}
+				@include maxmedia(360px) {
+					font-size: 14px; 
+				}
+				strong { color: #000; font-size: 30px; font-weight: 700;
+					@include maxmedia(640px) {
+						font-size: 24px;
+					}
+					@include maxmedia(574px) {
+						font-size: 20px;
+					}
+					@include maxmedia(360px) {
+						font-size: 18px; 
+					}
+				}
+			}
+			&-12 { background: #F6F3D9; border-top: #333 solid 1px; color: #000; font-size: 24px; font-weight: 700; padding: 15px 20px; text-align: center;
+				@include maxmedia(640px) {
+					font-size: 18px;
+				}
+				@include maxmedia(574px) {
+					padding: 10px;
+				}
+			}
+			&-13 { font-size: 20px; font-weight: 700; padding: 10px 0; text-align: center;
+				strong { color: #000; font-size: 36px; font-weight: 700;
+					@include maxmedia(640px) {
+						font-size: 24px;
+					}
+					@include maxmedia(574px) {
+						font-size: 20px;
+					}
+					@include maxmedia(360px) {
+						font-size: 18px; 
+					}
+				}
+			}
+			&-14 { font-size: 14px; padding-top: 20px; }
+		}
+		.tbtype { 
+			&-1 {
+				td { border: #ddd solid 1px; padding: 10px;
+					@include maxmedia(374px) {
+						padding: 5px;
+					}
+				}
+				tr:nth-child(even) {
+					td { background: #f6f6f6; }
+				}
+			}
+			&-2 { background: #FFF8BB; 
+				td { padding-bottom: 10px; }
+				@include maxmedia(574px) {
+					display: block;
+					tbody, tr, td { display: block; width: 100%; }
+					.coltype-2 { text-align: center;
+						img { max-width: 150px; }
+					}
+				}
+				
+			}
+		}
+	}
 }
 
 .ifrcal { height: 600px !important; margin-top: -30px;	

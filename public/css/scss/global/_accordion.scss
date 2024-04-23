@@ -25,12 +25,12 @@
 		.accordion {
 			&-button { 
 				strong, span, em { display: block; }
-				strong { text-transform: uppercase; }
+				strong { overflow: hidden; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
 				span { display: block; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 				em { font-style: normal; margin-top: 5px; }
 				@include minmedia(574px) {
 					@include flexwrap; 
-					strong { margin-right: 20px; width: 140px; }
+					strong { margin-right: 20px; width: 175px; }
 					span { flex: 1; margin-top: 0; }
 					em { margin-top: 0; padding-left: 20px; }
 				}

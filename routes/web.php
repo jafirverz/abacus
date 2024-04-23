@@ -376,6 +376,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('learning-location/search', 'CMS\TopicController@search')->name('learning-location.search');
     Route::resource('learning-location', 'CMS\TopicController');
 
+    // SUB-HEADING
+    Route::get('sub-heading/search', 'CMS\SubHeadingController@search')->name('sub-heading.search');
+    Route::resource('sub-heading', 'CMS\SubHeadingController');
+
     // COUNTRY
     Route::get('country/search', 'CMS\CountryController@search')->name('country.search');
     Route::resource('country', 'CMS\CountryController');
