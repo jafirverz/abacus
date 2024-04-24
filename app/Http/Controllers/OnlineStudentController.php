@@ -232,7 +232,7 @@ class OnlineStudentController extends Controller
         $key = ['{{course_name}}','{{level_name}}','{{user_name}}','{{date_of_issue_certificate}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
         $value = [$courseLevelCertificate->course->title,$courseLevelCertificate->level->title, Auth::user()->name, $date_of_issue_certificate, $logo, $logoFoot,$bg];
         $newContents = str_replace($key, $value, $certificate->content);
-        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
+        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'))->setPaper('a4', 'landscape');
         return $pdf->download('certificate-course.pdf');
     }
 }

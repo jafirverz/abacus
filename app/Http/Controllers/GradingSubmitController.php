@@ -82,7 +82,7 @@ class GradingSubmitController extends Controller
         $key = ['{{grading_name}}','{{full_name}}','{{dob}}','{{category}}','{{date_of_issue}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
         $value = [$GradingSubmitted->grade->title, Auth::user()->name,  Auth::user()->dob, $GradingSubmitted->gcategory->category_name, $date_of_issue, $logo, $logoFoot,$bg];
         $newContents = str_replace($key, $value, $certificate->content);
-        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
+        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'))->setPaper('a4', 'landscape');
         return $pdf->download('certificate.pdf');
     }
 }
