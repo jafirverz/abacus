@@ -2151,7 +2151,7 @@ class ProfileController extends Controller
         $key = ['{{competition_name}}','{{student_name}}','{{exam_date}}','{{logo}}', '{{competition_venue}}','{{student_id}}','{{dob}}','{{seat_no}}','{{reporting_time}}','{{competition_time}}','{{venue_arrangement}}'];
         $value = [$competition->title, $user->name, $competitionDate, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
         $newContents = str_replace($key, $value, $pass->content);
-        $pdf = PDF::loadView('account.competition_pass', compact('newContents'));
+        $pdf = PDF::loadView('account.competition_pass', compact('newContents'))->setPaper('a4', 'landscape');
         return $pdf->download('competition-pass.pdf');
     }
 
@@ -2188,7 +2188,7 @@ class ProfileController extends Controller
             $value = [$grading->title, $user->name, $competitionDate, $logo, $examPass->competition_venue, $examPass->student_id,$examPass->dob,$examPass->mental_seat_no,$examPass->abacus_seat_no,$examPass->reporting_time,$examPass->competition_time,$examPass->venue_arrangement];
 
             $newContents = str_replace($key, $value, $pass->content);
-            $pdf = PDF::loadView('account.grading_pass', compact('newContents'));
+            $pdf = PDF::loadView('account.grading_pass', compact('newContents'))->setPaper('a4', 'landscape');
             return $pdf->download('grading-pass.pdf');
         }
     }
