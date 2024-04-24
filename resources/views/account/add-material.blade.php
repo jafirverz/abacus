@@ -32,6 +32,21 @@
                     </div>
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-12 sp-col">
+                            <label class="lb-1">Sub Heading <span class="required">*</span></label>
+                            <select class="selectpicker" name="sub_heading" data-title="Select">
+                                @foreach ($subHeading as $key => $value)
+                                    <option value="{{ $value->id }}">{{ $value->title }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('sub_heading'))
+                                    <span class="text-danger d-block">
+                                        <strong>{{ $errors->first('sub_heading') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row sp-col-xl-30">
+                        <div class="col-xl-12 sp-col">
                             <label class="lb-1">Uploaded Files</label>
                             <input type="file" name="uploaded_files" class="form-control">
                             {{-- <span class="text-danger d-block">

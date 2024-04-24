@@ -17,6 +17,7 @@ use App\GradingListingDetail;
 use App\GradingStudent;
 use App\LearningLocation;
 use App\TeachingMaterials;
+use App\SubHeading;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\Traits\SystemSettingTrait;
@@ -1178,19 +1179,22 @@ class ProfileController extends Controller
 		$user = $this->user;
 		//dd($user);
 		$page = get_page_by_slug($slug);
+        $subHeading = SubHeading::get();
         $instructors = User::where('user_type_id', 5)->orderBy('name','asc')->get();
-        return view('account.add-material', compact('instructors','page'));
+        return view('account.add-material', compact('instructors','page','subHeading'));
     }
 
     public function store_add_material(Request $request)
     {
         $request->validate([
             'title'  =>  'required',
+            'sub_heading'  =>  'required',
             'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,mp4',
         ]);
 
         $material = new TeachingMaterials;
         $material->title = $request->title ?? '';
+        $material->sub_heading = $request->sub_heading ?? '';
         if ($request->hasFile('uploaded_files')) {
             $material->uploaded_files=$uploaded_file = uploadPicture($request->file('uploaded_files'), __('constant.TEACHING_MATERIALS'));
             $ext = pathinfo($uploaded_file, PATHINFO_EXTENSION);
