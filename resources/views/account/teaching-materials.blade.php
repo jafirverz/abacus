@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="col-md-auto col-sm-auto mt-767-15">
-                                <a class="btn-1" href="{{ url('add-material') }}">Upload New Material <i class="fa-solid fa-arrow-right-long"></i></a>
+                                <a class="btn-1" href="{{ route('instructor.add-material') }}">Upload New Material <i class="fa-solid fa-arrow-right-long"></i></a>
                             </div>
                         </div>
                     </div>
