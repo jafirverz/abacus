@@ -167,7 +167,7 @@ class CompetitionController extends Controller
 
         $newContents = str_replace($key, $value, $certificate->content);
 
-        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'));
+        $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'))->setPaper('a4', 'landscape');
         return $pdf->download('certificate.pdf');
     }
 }

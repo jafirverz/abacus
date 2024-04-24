@@ -1,0 +1,59 @@
+.list {
+	&-1, &-2, &-3, &-4 { @include resetlist; }
+	&-1 { 
+		li { margin: 0 0 20px; padding-left: 25px; position: relative;				
+			&:before { content: "\f058"; @include fonticon(900,16px); left: 0; position: absolute; top: 0; }
+			a { color: #333333; display: block;  
+				&:hover { color: #A4A07A; font-weight: 700; text-decoration: underline; }
+			}
+			&:hover { 
+				&:before { color: #A4A07A; }
+			}
+		}
+		&.disabled { color: #B6B6B6; 
+			li:hover { 
+				&:before { color: #B6B6B6 !important; }
+			}
+			
+		}
+	}
+	&-2 { 
+		li { margin: 10px 0 20px;
+			a { color: #333; 
+				&:hover { color: #EF3741; text-decoration: underline; }
+			}
+		}
+	}
+	&-3 { @include flexwrap;
+		@include maxmedia(640px) {
+			display: block;
+		}
+		li { margin: 10px 10px 0 0; max-width: 95%;
+			@include maxmedia(640px) {
+				margin-right: 0; max-width: 100%;
+			}
+			a { background: #fff; border: #EBEBEB solid 1px; @include bd-radius (10px); color: #333; display: block; font-size: 14px; overflow: hidden; padding: 10px 45px 10px 15px; position: relative; @include transition(0.5s); text-overflow: ellipsis; white-space: nowrap;
+				&:before { color: #A4A07A; content: "\e909"; font-family: 'icomoon' !important; font-size: 16px; position: absolute; top: 50%; right: 15px; transform: translateY(-50%); }
+				&:hover { background: #A4A07A; color: $white;
+					&:before { color: $white; }
+				}
+			}
+		}
+	}
+	&-4 { @include flexwrap; margin-left: -10px; margin-right: -10px;
+		li { padding: 10px; width: 25%;
+			@include maxmedia(1199px) {
+				width: 33.3333%;
+			}
+			@include maxmedia(767px) {
+				width: 50%;
+			}
+			@include maxmedia(424px) {
+				width: 100%;
+			}
+		}
+		a { align-items: center; background: #fff; @include bd-radius (15px); color: #231F03; @include flexwrap; font-weight: 700; height: 100%; justify-content: center; min-height: 70px; padding: 10px; text-align: center; @include transition(0.5s); 
+			&:hover { background: $red; color: $white; }
+		}
+	}
+}
