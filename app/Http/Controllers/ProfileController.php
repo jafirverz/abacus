@@ -1004,7 +1004,7 @@ class ProfileController extends Controller
 		$user = $this->user;
 		//dd($user);
 		$page = get_page_by_slug($slug);
-
+        $subHeading = SubHeading::get();
 		if (!$page) {
 			return abort(404);
 		}
@@ -1019,12 +1019,18 @@ class ProfileController extends Controller
             $materials = TeachingMaterials::where('file_type',$_GET['file_type'])->where('teacher_id',$this->user->id)->orderBy('id', 'asc')->paginate($this->pagination);
             //dd($materials);
         }
+        else if(isset($_GET['sub_heading']) && $_GET['sub_heading']!='')
+        {
+
+            $materials = TeachingMaterials::where('sub_heading',$_GET['sub_heading'])->where('teacher_id',$this->user->id)->orderBy('id', 'asc')->paginate($this->pagination);
+            //dd($materials);
+        }
         else
         {
             $materials = TeachingMaterials::orderBy('id', 'asc')->where('teacher_id',$this->user->id)->paginate($this->pagination);
         }
 
-		return view('account.teaching-materials', compact("page", "user","materials"));
+		return view('account.teaching-materials', compact("page", "user","materials","subHeading"));
     }
 
 

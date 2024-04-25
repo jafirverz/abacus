@@ -31,6 +31,19 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    <label class="sub_heading">Sub Heading <span class="required">*</span></label>
+                                    <select class="form-control" name="sub_heading">
+                                        @foreach ($subHeading as $key => $value)
+                                            <option @if(old('teacher_id')) selected @endif value="{{ $value->id }}">{{ $value->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('sub_heading'))
+                                            <span class="text-danger d-block">
+                                                <strong>{{ $errors->first('sub_heading') }}</strong>
+                                            </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label for="uploaded_files">Uploaded Files</label>
                                     <input type="file" name="uploaded_files" class="form-control">
                                     @if ($errors->has('uploaded_files'))

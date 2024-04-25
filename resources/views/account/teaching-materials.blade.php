@@ -45,6 +45,24 @@
                                 <div class="ggroup">
                                     <label for="filter">Filter By:</label>
                                     <div class="selectwrap">
+                                        @php
+                                            if(isset($_GET['file_type']))
+                                            {
+                                                $file_type=$_GET['file_type'];
+                                            }
+                                            else
+                                            {
+                                                $file_type='';
+                                            }
+                                        @endphp
+                                        <select name="sub_heading" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                                            <option>Sub Heading</option>
+                                            @foreach ($subHeading as $key => $value)
+                                            <option value="{{ url('teaching-materials?file_type='.$file_type.'&sub_heading='.$value->id) }}">{{ $value->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="selectwrap">
                                         <select name="file_type" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                             <option>File Type</option>
                                             <option value="{{ url('teaching-materials?file_type=pdf') }}">PDF</option>

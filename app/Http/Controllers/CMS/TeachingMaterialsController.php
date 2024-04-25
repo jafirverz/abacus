@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\TeachingMaterials;
 use App\User;
+use App\SubHeading;
 use App\Traits\SystemSettingTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -51,7 +52,8 @@ class TeachingMaterialsController extends Controller
         $title = $this->title;
         $materials = TeachingMaterials::orderBy('title', 'asc')->get();
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.materials.create', compact('title', 'materials','instructors'));
+        $subHeading = SubHeading::get();
+        return view('admin.materials.create', compact('title', 'materials','instructors','subHeading'));
     }
 
     /**
@@ -75,6 +77,7 @@ class TeachingMaterialsController extends Controller
 
                 $material = new TeachingMaterials;
                 $material->title = $request->title ?? '';
+                $material->sub_heading = $request->sub_heading ?? '';
                 if ($request->hasFile('uploaded_files')) {
                     $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
                 }
@@ -116,7 +119,8 @@ class TeachingMaterialsController extends Controller
         $title = $this->title;
         $material = TeachingMaterials::findorfail($id);
         $instructors = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-        return view('admin.materials.edit', compact('title', 'material','instructors'));
+        $subHeading = SubHeading::get();
+        return view('admin.materials.edit', compact('title', 'material','instructors','subHeading'));
     }
 
     /**
@@ -136,6 +140,7 @@ class TeachingMaterialsController extends Controller
 
         $material = TeachingMaterials::findorfail($id);
         $material->title = $request->title ?? '';
+        $material->sub_heading = $request->sub_heading ?? '';
         if ($request->hasFile('uploaded_files')) {
             $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
         }
