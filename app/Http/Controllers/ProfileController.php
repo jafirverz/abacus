@@ -1033,6 +1033,20 @@ class ProfileController extends Controller
 		return view('account.teaching-materials', compact("page", "user","materials","subHeading"));
     }
 
+    public function teaching_materials_download($id)
+    {
+
+        $material = TeachingMaterials::find($id);
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path(). "/".$material->uploaded_files;
+
+        $headers = array(
+                'Content-Type: application/pdf',
+                );
+
+        return Response::download($file, 'filename.pdf', $headers);
+    }
+
 
 
     public function instructor_store(Request $request)
