@@ -83,7 +83,7 @@
                                 <tr>
                                     <td>
                                         <em>{{ $item->student->name }}</em>
-                                        <div class="tbactions"><a href="{{route('external-profile.students.view', $item->student->id)}}">View</a> <a onclick="return confirm('Are you sure to delete this record?')" href="{{ url('allocation/test/delete/'.$item->id) }}">Delete</a></div>
+                                        <div class="tbactions"><a href="{{route('view.test.result', [$item->student->id,$test_id])}}">View</a> <a onclick="return confirm('Are you sure to delete this record?')" href="{{ url('allocation/test/delete/'.$item->id) }}">Delete</a></div>
                                     </td>
                                     <td><em>{{ date('d/m/Y',strtotime($item->start_date)) }}</em></td>
                                     <td><em>{{ date('d/m/Y',strtotime($item->end_date)) }}</em></td>

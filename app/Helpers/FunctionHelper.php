@@ -505,6 +505,16 @@ if (!function_exists('getPageList')) {
         return NULL;
     }
 
+    function getTestAnswer($test_submitted_id,$question_id)
+    {
+        $result = TestQuestionSubmission::where('test_submitted_id',$test_submitted_id)->where('question_id',$question_id)->first();
+
+        if ($result) {
+            return $result;
+        }
+        return NULL;
+    }
+
     function getCourseSubmitted($course_id)
     {
         $result = CourseSubmitted::where('course_id',$course_id)->where('user_id',Auth::user()->id)->first();

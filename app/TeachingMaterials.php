@@ -17,6 +17,10 @@ class TeachingMaterials extends Model
         return $this->belongsTo('App\User', 'teacher_id', 'id');
     }
 
+    public function subHeading(){
+        return $this->belongsTo('App\SubHeading', 'sub_heading', 'id');
+    }
+
 
     public function scopeSearch($query, $search_term)
     {

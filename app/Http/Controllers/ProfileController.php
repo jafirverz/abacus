@@ -75,6 +75,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use Illuminate\Support\Facades\URL;
 use PDF;
+use Response;
 
 use Illuminate\Support\Facades\Session;
 
@@ -357,9 +358,49 @@ class ProfileController extends Controller
         //$test = TestManagement::find($id);
         $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
         $qId=$test->paper->question_template_id;
+        $testSubmitted = TestSubmission::where('test_id',$id)->where('test_submissions.user_id', Auth::user()->id)->first();
         //dd($qId);
         if($qId == 5){
-            return view('account.testMultipleDivision', compact("test","all_paper_detail"));
+            return view('account.testMultipleDivision', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 6){
+            return view('account.testChallenge', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 8){
+            return view('account.testAbacus', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 11){
+            $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->first();
+            return view('account.testOther', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 7){
+            $all_paper_detail_v=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',1)->get();
+            $all_paper_detail_h=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',2)->get();
+            return view('account.testMix', compact("test","all_paper_detail_h","all_paper_detail_v","testSubmitted"));
+        }
+        elseif($qId == 4){
+            return view('account.testAddSubQuestion', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 3){
+            return view('account.testNumber', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 1){
+            return view('account.testAudio', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 2){
+            return view('account.testVideo', compact("test","all_paper_detail","testSubmitted"));
+        }
+        //return view('account.online-my-course-detail', compact('course'));
+    }
+
+    public function view_test_result($user,$id){
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$user)->where('test_management.id',$id)->select('test_management.*','allocations.id as allocation_id')->first();
+        //$test = TestManagement::find($id);
+        $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
+        $qId=$test->paper->question_template_id;
+        //dd($qId);
+        if($qId == 5){
+            return view('account.testSubmitMultipleDivision', compact("test","all_paper_detail"));
         }
         elseif($qId == 6){
             return view('account.testChallenge', compact("test","all_paper_detail"));
@@ -1039,12 +1080,15 @@ class ProfileController extends Controller
         $material = TeachingMaterials::find($id);
         //PDF file is stored under project/public/download/info.pdf
         $file= public_path(). "/".$material->uploaded_files;
-
+        $filename = explode('/', $material->uploaded_files);
+        $filename =end($filename);
+        $file_name = explode('_', $filename);
+        $download_filename=end($file_name);
         $headers = array(
                 'Content-Type: application/pdf',
                 );
 
-        return Response::download($file, 'filename.pdf', $headers);
+        return Response::download($file, $download_filename, $headers);
     }
 
 
@@ -1209,7 +1253,7 @@ class ProfileController extends Controller
         $request->validate([
             'title'  =>  'required',
             'sub_heading'  =>  'required',
-            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,mp4',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,mp4,pptx',
         ]);
 
         $material = new TeachingMaterials;
