@@ -58,7 +58,7 @@
                                         <select name="sub_heading" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                                             <option>Sub Heading</option>
                                             @foreach ($subHeading as $key => $value)
-                                            <option value="{{ url('teaching-materials?file_type='.$file_type.'&sub_heading='.$value->id) }}">{{ $value->title }}</option>
+                                            <option @if(isset($_GET['sub_heading']) && $_GET['sub_heading']==$value->id) selected @endif value="{{ url('teaching-materials?file_type='.$file_type.'&sub_heading='.$value->id) }}">{{ $value->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -87,9 +87,10 @@
                             <thead>
                                 <tr class="text-uppercase">
                                     <th>Material Title</th>
+                                    <th>Sub-Heading</th>
                                     <th>File Type</th>
                                     <th>Description</th>
-                                    <th>Files</th>
+                                    {{-- <th>Files</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,14 +107,15 @@
                                     <td>
                                         <em>{{ $material->title }}</em>
                                         <div class="tbactions"><a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a>
-                                            @if(!in_array($material->file_type,['mp4','ppt']))
-                                            {{-- <a target="_blank" href="{{ asset($material->uploaded_files) }}">Download</a> --}}
+                                            @if(!in_array($material->file_type,['mp4','pptx']))
+                                            <a  href="{{ route('teaching-materials.download',$material->id) }}">Download</a>
                                             @endif
                                         </div>
                                     </td>
+                                    <td><em>{{ $material->subHeading->title ?? ''}}</em></td>
                                     <td><em>{{ $material->file_type ?? ''}}</em></td>
                                     <td><em>{{ $material->description }}</em></td>
-                                    <td><em>{{ end($file_name)}}</em></td>
+                                    {{-- <td><em>{{ end($file_name)}}</em></td> --}}
                                 </tr>
                                         @endforeach
                                 @endif
