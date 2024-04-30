@@ -188,6 +188,7 @@ Route::post('allocation/test/{id?}', 'ProfileController@allocation_store')->name
 Route::get('allocation/survey/{id?}', 'ProfileController@allocation_survey');
 Route::get('teaching-materials', 'ProfileController@teaching_materials')->name('teaching-materials');
 Route::get('teaching-materials/download/{id}', 'ProfileController@teaching_materials_download')->name('teaching-materials.download');
+Route::get('teaching-materials/view/{id}', 'ProfileController@teaching_materials_view')->name('teaching-materials.view');
 
 Route::post('my-profile', 'ProfileController@store')->name('my-profile.update');
 

@@ -34,6 +34,7 @@
                     <div class="col-lg-4 mt-20">
                         <h1 class="title-3">Material List</h1>
                     </div>
+
                     <form method="get" name="material_search" id="material_search" enctype="multipart/form-data" action="">
                     @csrf
                     <div class="col-lg-8 mt-20 lastcol">
@@ -106,8 +107,13 @@
                                 <tr>
                                     <td>
                                         <em>{{ $material->title }}</em>
-                                        <div class="tbactions"><a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a>
-                                            @if(!in_array($material->file_type,['mp4','pptx']))
+                                        <div class="tbactions">
+                                            @if(in_array($material->file_type,['pptx','ppt']))
+                                            <a target="_blank" href="{{ route('teaching-materials.view',$material->id) }}">View</a>
+                                            @else
+                                            <a target="_blank" href="{{ asset($material->uploaded_files) }}">View</a>
+                                            @endif
+                                            @if(!in_array($material->file_type,['mp4','pptx','ppt']))
                                             <a  href="{{ route('teaching-materials.download',$material->id) }}">Download</a>
                                             @endif
                                         </div>
@@ -130,6 +136,7 @@
         </div>
     </div>
 </main>
+
 @if($errors->any())
         <script>
                 $("#profileform").find("input, select, textarea").attr("disabled", false);
