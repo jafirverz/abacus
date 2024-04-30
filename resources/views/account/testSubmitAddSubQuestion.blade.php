@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
-
 <main class="main-wrap">
     <div class="tempt-3">
         <div class="mb-20">
@@ -24,8 +22,6 @@
                 </div>
             </div>
         </div>
-
-
         <form method="post" action="{{ route('test.answer.submit') }}">
             @csrf
             <input type="hidden" name="allocation_id" value="{{ $test->allocation_id }}">
@@ -37,40 +33,70 @@
             <div class="box-1">
                 <div class="note-4 mb-20">A. {{ $paper_detail->question }}</div>
                 <div class="xscrollbar">
-                    <table class="tb-2 tbtype-1">
+                    <table class="tb-2 tbtype-2">
                         <thead>
                             <tr>
-                                <th class="wcol-1 text-center">NO</th>
-                                <th class="wcol-2 text-center">Question</th>
-                                <th class="wcol-3 text-center">Answer</th>
+                              <th class="wcol-2"></th>
+                              @php
+
+                              $questionns = \App\TestPaperQuestionDetail::where('test_paper_question_id', $paper_detail->id)->get();
+
+                              $count = count($questionns);
+                              $i = 1;
+                              foreach($questionns as $question){
+                              @endphp
+                              <th class="text-center">{{ $i }}</th>
+                              @php
+                              $i++;
+                              }
+                              @endphp
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr>
+                              <td></td>
+                              @php
+                            foreach($questionns as $question){
+                            @endphp
+                              <td>
+                                @php
+                                $arrVal = explode('|', $question->input_1);
+                                foreach($arrVal as $val){
+                                @endphp
+                                <div class="row sp-col-5 inrow-1">
+                                  <div class="col-auto sp-col"></div>
+                                  <div class="col sp-col">{{ number_format($val) }}</div>
+                                </div>
+                                @php
+                              }
+                                @endphp
+                              </td>
+                              @php
+                            }
+                            @endphp
 
                             </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $i=1;
-                            @endphp
-                            @foreach($paper_detail->questionsCourse as $ques)
-                                @if($ques->input_3=='multiply')
-                                @php
-                                $operator='x';
-                                @endphp
-                                @else
-                                @php
-                                $operator='÷';
-                                @endphp
-                                @endif
-                                <tr>
-                                    <td class="colnumber">{{ $i }}</td>
-                                    <td class="text-center">{{ number_format($ques->input_1) }} {{ $operator }} {{ number_format($ques->input_2) }}  =</td>
-                                    <td class="colanswer"><input disabled="disabled" value="@if(isset($testSubmitted)) {{ getTestAnswer($testSubmitted->id,$ques->id)->question_answer ?? '' }} @endif"  class="number-separator form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
-                                </tr>
-                                @php
-                                $i++;
-                                @endphp
-                            @endforeach
 
                         </tbody>
+                            <tfoot>
+                                <tr>
+                                <td class="lb">Answer</td>
+                                @php
+                                foreach($questionns as $question){
+                                    @endphp
+                                <td class="coltype">
+                                    <div class="row sp-col-5 inrow-1">
+                                    <div class="col-auto sp-col"></div>
+                                    <div class="col colanswer sp-col"><input disabled="disabled" value="@if(isset($testSubmitted)) {{ getTestAnswer($testSubmitted->id,$question->id)->question_answer ?? '' }} @endif" class="number-separator form-control" type="text" name="answer[{{ $question->id }}]" /></div>
+                                    </div>
+                                </td>
+                                @php
+                                }
+                                @endphp
+                                </tr>
+                          </tfoot>
                     </table>
                 </div>
             </div>
@@ -91,5 +117,4 @@
   });
 
 </script>
-
 @endsection
