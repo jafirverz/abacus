@@ -1091,6 +1091,17 @@ class ProfileController extends Controller
         return Response::download($file, $download_filename, $headers);
     }
 
+    public function teaching_materials_view($id)
+    {
+
+        $material = TeachingMaterials::find($id);
+        //PDF file is stored under project/public/download/info.pdf
+        $full_file= asset($material->uploaded_files);
+
+
+        return view('account.view-teaching-materials', compact("full_file",));
+    }
+
 
 
     public function instructor_store(Request $request)
@@ -1253,7 +1264,7 @@ class ProfileController extends Controller
         $request->validate([
             'title'  =>  'required',
             'sub_heading'  =>  'required',
-            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,mp4,pptx',
+            'uploaded_files'  =>  'required|file|mimes:jpeg,jpg,png,gif,doc,docx,pdf,mp4,pptx,ppt',
         ]);
 
         $material = new TeachingMaterials;
