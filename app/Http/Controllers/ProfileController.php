@@ -358,49 +358,9 @@ class ProfileController extends Controller
         //$test = TestManagement::find($id);
         $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
         $qId=$test->paper->question_template_id;
-        $testSubmitted = TestSubmission::where('test_id',$id)->where('test_submissions.user_id', Auth::user()->id)->first();
         //dd($qId);
         if($qId == 5){
-            return view('account.testMultipleDivision', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 6){
-            return view('account.testChallenge', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 8){
-            return view('account.testAbacus', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 11){
-            $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->first();
-            return view('account.testOther', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 7){
-            $all_paper_detail_v=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',1)->get();
-            $all_paper_detail_h=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',2)->get();
-            return view('account.testMix', compact("test","all_paper_detail_h","all_paper_detail_v","testSubmitted"));
-        }
-        elseif($qId == 4){
-            return view('account.testAddSubQuestion', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 3){
-            return view('account.testNumber', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 1){
-            return view('account.testAudio', compact("test","all_paper_detail","testSubmitted"));
-        }
-        elseif($qId == 2){
-            return view('account.testVideo', compact("test","all_paper_detail","testSubmitted"));
-        }
-        //return view('account.online-my-course-detail', compact('course'));
-    }
-
-    public function view_test_result($user,$id){
-        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$user)->where('test_management.id',$id)->select('test_management.*','allocations.id as allocation_id')->first();
-        //$test = TestManagement::find($id);
-        $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
-        $qId=$test->paper->question_template_id;
-        //dd($qId);
-        if($qId == 5){
-            return view('account.testSubmitMultipleDivision', compact("test","all_paper_detail"));
+            return view('account.testMultipleDivision', compact("test","all_paper_detail"));
         }
         elseif($qId == 6){
             return view('account.testChallenge', compact("test","all_paper_detail"));
@@ -428,6 +388,46 @@ class ProfileController extends Controller
         }
         elseif($qId == 2){
             return view('account.testVideo', compact("test","all_paper_detail"));
+        }
+        //return view('account.online-my-course-detail', compact('course'));
+    }
+
+    public function view_test_result($user,$id){
+        $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$user)->where('test_management.id',$id)->select('test_management.*','allocations.id as allocation_id')->first();
+        //$test = TestManagement::find($id);
+        $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
+        $testSubmitted = TestSubmission::where('test_id',$id)->where('test_submissions.user_id', $user)->first();
+        $qId=$test->paper->question_template_id;
+        //dd($qId);
+        if($qId == 5){
+            return view('account.testSubmitMultipleDivision', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 6){
+            return view('account.testSubmitChallenge', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 8){
+            return view('account.testSubmitAbacus', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 11){
+            $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->first();
+            return view('account.testOther', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 7){
+            $all_paper_detail_v=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',1)->get();
+            $all_paper_detail_h=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',2)->get();
+            return view('account.testSubmitMix', compact("test","all_paper_detail_h","all_paper_detail_v","testSubmitted"));
+        }
+        elseif($qId == 4){
+            return view('account.testSubmitAddSubQuestion', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 3){
+            return view('account.testSubmitNumber', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 1){
+            return view('account.testSubmitAudio', compact("test","all_paper_detail","testSubmitted"));
+        }
+        elseif($qId == 2){
+            return view('account.testSubmitVideo', compact("test","all_paper_detail","testSubmitted"));
         }
         //return view('account.online-my-course-detail', compact('course'));
     }

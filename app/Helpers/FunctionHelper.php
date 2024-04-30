@@ -8,6 +8,7 @@ use App\UserProfileUpdate;
 use App\Page;
 use App\OrderDetail;
 use App\Course;
+use App\TestQuestionSubmission;
 use App\CourseSubmitted;
 use App\CourseAssignToUser;
 use App\CourseQuestionSubmitted;
@@ -507,6 +508,7 @@ if (!function_exists('getPageList')) {
 
     function getTestAnswer($test_submitted_id,$question_id)
     {
+        //echo $test_submitted_id.','.$question_id;die;
         $result = TestQuestionSubmission::where('test_submitted_id',$test_submitted_id)->where('question_id',$question_id)->first();
 
         if ($result) {
