@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
         //
         //$schedule->command('chat:notification')->hourly();
         $schedule->command('notify:users')->dailyAt('9:00');
-        $schedule->command('instructor:reminder')->dailyAt('9:00');
-        $schedule->command('competition:results')->dailyAt('9:00');
+        $schedule->command('instructor:reminder')->everyMinute();
+        $schedule->command('competition:results')->everyMinute();
     }
 
     /**
