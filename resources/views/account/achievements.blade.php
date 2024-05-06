@@ -39,8 +39,8 @@
                       <td>
                         @if(isset($paperSubmited->grading_id))
                           @if(!empty($paperSubmited->abacus_grade || $paperSubmited->mental_grade))
-                          {{ $paperSubmited->mental_grade }}:  <strong class="type-1">{{ $paperSubmited->mental_results ?? '' }} {{ $paperSubmited->mental_result_passfail ?? '' }}</strong><br/>
-                          {{ $paperSubmited->abacus_grade }}:  <strong class="type-1">{{ $paperSubmited->abacus_results ?? '' }} {{ $paperSubmited->abacus_result_passfail ?? '' }}</strong></td>
+                          {{ $paperSubmited->mental_grade }}:  <strong class="type-1">{{ $paperSubmited->mental_results ?? '' }} ({{ $paperSubmited->mental_result_passfail ?? '' }})</strong><br/>
+                          {{ $paperSubmited->abacus_grade }}:  <strong class="type-1">{{ $paperSubmited->abacus_results ?? '' }} ({{ $paperSubmited->abacus_result_passfail ?? '' }})</strong></td>
                           @endif
                         @elseif(isset($paperSubmited->title)) {{ $paperSubmited->result ?? '' }}
                         @else
