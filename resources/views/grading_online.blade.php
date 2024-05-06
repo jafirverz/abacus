@@ -53,7 +53,7 @@
                     </div>
                     <div class="mt-30">
                         <h4 class="title-6">Important Note</h4>
-                        {{ $competition->description }}
+                        {!! $competition->description !!}
                     </div>
                     <div class="accordion mt-30">
 

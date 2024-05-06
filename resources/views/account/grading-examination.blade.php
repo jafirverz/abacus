@@ -60,8 +60,8 @@
                                         <div class="tbactions"><a href="{{ route('grading-examination.edit',$grade->id) }}">Edit</a> <a href="{{ route('grading-examination.view',$grade->user_id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
                                         @endif
                                     </td>
-                                    <td><em>{{ $grade->mental->title ?? '' }}</em></td>
-                                    <td><em>{{ $grade->abacus->title ?? '' }}</em></td>
+                                    <td><em>{{ $grade->mental->category_name ?? '' }}</em></td>
+                                    <td><em>{{ $grade->abacus->category_name ?? '' }}</em></td>
                                     <td>{!! ($grade->approve_status==1)?'<em class="status-2">Approved</em>':'<em class="status-3">Pending</em>' !!}</td>
                                     <td><em>{{ $grade->remarks ?? ''}}</em></td>
                                     <td><em>{{ getGradingStudentResult($grade->grading_exam_id,$grade->user_id )->result ?? '-'}} </em></td>
