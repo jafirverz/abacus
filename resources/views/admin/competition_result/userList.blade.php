@@ -103,6 +103,7 @@
                                             <th>Category</th>
                                             <th>Total Marks</th>
                                             <th>Prize</th>
+                                            <th>Result</th>
                                             <th>Instructor</th>
                                             <th>Learning Location</th>
                                             <th>Updated At</th>
@@ -130,6 +131,7 @@
                                             <td>{{ $item->category->category_name }}</td>
                                             <td>{{ $item->total_marks }}</td>
                                             <td>{{ $item->prize }}</td>
+                                            <td>{{ $item->result }}</td>
                                             <td>{{ getInstructor($item->user->instructor_id)->name }}</td>
                                             <td>{{ getLearningLocation($item->user->learning_locations)->title ?? '' }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>

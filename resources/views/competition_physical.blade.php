@@ -54,9 +54,12 @@
                                     </div>
                                     --}}	
                                 </div>
+                                @php 
+                                $userCompetition = \App\CompetitionStudentResult::where('user_id',Auth::user()->id)->where('competition_id', $competition->id)->first();
+                                @endphp
                                 <div class="col-lg-12 sp-col gincol-2">
                                     <div class="inrow">
-                                        <strong>Result:</strong> <span class="status-1"></span>
+                                        <strong>Result:</strong> <span class="status-1">{{ $userCompetition->result ?? '' }}</span>
                                     </div>		
                                     <div class="inrow">
                                         <strong>Competition Type:</strong> <span class="status-1">{{ ucwords($competition->competition_type) }}</span>
