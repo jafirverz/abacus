@@ -71,8 +71,8 @@ class InstructorReminder extends Command
                             $data['cc_to_email'] = [];
                             $data['subject'] = $email_template->subject;
 
-                            $key = ['{{full_name}}', '{{start_date}}'];
-                            $value = [$remind->teacher->name, $remind->start_date];
+                            $key = ['{{full_name}}', '{{start_date}}', '{{event_name}}'];
+                            $value = [$remind->teacher->instructor_full_name, $remind->start_date,$remind->full_name];
 
                             $newContents = str_replace($key, $value, $email_template->content);
 

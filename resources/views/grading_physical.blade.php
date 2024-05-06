@@ -44,8 +44,8 @@
                                     </div>
                                     <div class="inrow">
                                         <strong>My Registered Grades:</strong> <br/>
-                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->title ?? '' }}</div>
-                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->title ?? '' }}</div>
+                                        <div class="mt-5px">Mental Grade: {{ $gradingStu->mental->category_name ?? '' }}</div>
+                                        <div class="mt-5px">Abacus Grade: {{ $gradingStu->abacus->category_name ?? '' }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                         <div class="col-xl-9 sp-col gcol-3">
                             <div class="gcontent">
                                 <h4 class="title-6">Important Note</h4>
-                                {{ $competition->description }}
+                                {!! $competition->description !!}
                             </div>
                         </div>
                         <div class="col-xl-3 sp-col gcol-4">

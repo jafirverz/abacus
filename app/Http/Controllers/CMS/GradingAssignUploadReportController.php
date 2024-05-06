@@ -94,9 +94,9 @@ class GradingAssignUploadReportController extends Controller
                 $compResultUpload->save();
 
                 if($request->result_publish_date == date('Y-m-d')){
-                    $result = Excel::import(new ImportGradingResult($request->competition, $request->category), $file);
+                    $result = Excel::import(new ImportGradingResult($request->competition), $file);
                 }else{
-                    $result = Excel::import(new ImportGradingResult($request->competition, $request->category, $compResultUpload->id), $file);
+                    $result = Excel::import(new ImportGradingResult($request->competition, $compResultUpload->id), $file);
                 }
 
                 return redirect()->back()->with('success', __('constant.UPDATED', ['module' => $implode_files]));
