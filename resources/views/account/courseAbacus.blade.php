@@ -85,7 +85,7 @@
                             <tr>
                               <td class="lbtb-1">Your<br/>Answer:</td>
                               @foreach($paper_detail->questionsCourse as $ques)
-                              <td class="colanswer text-center"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control minwinpt-1" type="text" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" name="answer[{{ $ques->id }}]" /></td>
+                              <td class="colanswer text-center"><input @if(isset($courseSubmitted) && $courseSubmitted->is_submitted==1) disabled="disabled" @endif class="form-control minwinpt-1 number-separator" type="text" value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" name="answer[{{ $ques->id }}]" /></td>
                               @endforeach
 
                             </tr>
@@ -115,4 +115,15 @@
   </div>
   </div>
 </main>
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+
+</script>
 @endsection

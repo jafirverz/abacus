@@ -371,7 +371,7 @@ if (!function_exists('getPageList')) {
             'COMPETITION','COMPETITIONPAPER','COMPETITION_ASSIGN','COMPETITION_RESULT_UPLOAD','COURSE','EXTERNAL_CENTRE_ACCOUNT','GRADE','GRADING_EXAM','GRADING_PAPER','GRADING_ASSIGN','GRADING_RESULT_UPLOAD','STUDENT_REPORTS','TEACHING_MATERIALS',
             'TEST_ALLOCATION','TEST_MANAGEMENT','TEST_PAPER','COMPETITIONQUESTIONS','COMPETITION_RESULT','SURVEY', 'SURVEY_COMPLETED', 'SURVEY_QUESTIONS','SURVEY_QUESTIONS_OPTIONS',
             'SURVEY_ALLOCATION','STANDALONE_PAGE','QUESTIONS_ATTEMPT','ORDERS','ACHIEVEMENT', 'IMAGEUPLOAD','SALES_REPORTS','ONLINESTUDENT_REPORTS','INSTRUCTOR_REPORTS','WORKSHEET_REPORTS', 'EXTERNAL_CENTRE_REPORT', 'COMPETITION_REPORTS', 'GRADING_EXAMINATION_REPORTS',
-            'INSTRUCTOR_CALENDAR','LEARNING_LOCATION','GRADING_PASS_UPLOAD','COMPEITION_PASS_UPLOAD','PASS','CATEGORY_GRADING','GRADING_RESULT','COUNTRY','FEEDBACK','SUB_HEADING',
+            'INSTRUCTOR_CALENDAR','LEARNING_LOCATION','GRADING_PASS_UPLOAD','COMPEITION_PASS_UPLOAD','PASS','CATEGORY_GRADING','GRADING_RESULT','COUNTRY','FEEDBACK','SUB_HEADING','SUB_HEADING',
 
 
         ];
@@ -530,10 +530,10 @@ if (!function_exists('getPageList')) {
 
     function checkAllLessonSubitted()
     {
-        $result = CourseAssignToUser::where('user_id',Auth::user()->id)->pluck('course_id')->toArray();
-        $result2 = CourseSubmitted::where('user_id',Auth::user()->id)->pluck('course_id')->toArray();
+        $result = CourseAssignToUser::join('courses','course_assign_to_users.course_id','courses.id')->where('course_assign_to_users.user_id',Auth::user()->id)->pluck('course_assign_to_users.course_id')->toArray();
+        $result2 = CourseSubmitted::join('courses','course_submitteds.course_id','courses.id')->where('course_submitteds.user_id',Auth::user()->id)->pluck('course_submitteds.course_id')->toArray();
         $diff=array_diff($result,$result2);
-
+        //dd($diff);
         if(count($diff)==0)
         {
             return NULL;
