@@ -51,7 +51,7 @@
                                 <th class="wcol-1 text-center">NO</th>
                                 <th class="wcol-4 text-center">Question</th>
                                 <th class="wcol-3 text-center">Answer</th>
-                                <th>Correction</th>
+                                {{-- <th>Correction</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -71,8 +71,8 @@
                                 <tr>
                                     <td class="colnumber">{{ $i }}</td>
                                     <td class="text-center">{{ number_format($ques->input_1) }} {{ $operator }} {{ number_format($ques->input_2) }}  =</td>
-                                    <td class="colanswer"><input value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" class="form-control" type="text" name="answer[{{ $ques->id }}]" /></td>
-                                    <td><input class="form-control" type="number" /></td>
+                                    <td class="colanswer"><input value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif" class="form-control  number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
+                                    {{-- <td><input class="form-control" type="number" /></td> --}}
                                 </tr>
                                 @php
                                 $i++;
@@ -99,4 +99,15 @@
   </div>
   </div>
 </main>
+<script src="https://cdn.jsdelivr.net/gh/amiryxe/easy-number-separator/easy-number-separator.js"></script>
+<script>
+  $(function () {
+    easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
+  });
+
+</script>
 @endsection

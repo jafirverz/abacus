@@ -29,7 +29,7 @@
           <h4>Thank you for your submission.</h4>
           <h2>Here is your marks {{ $userMarks }} out of {{ $totalMarks }}.</h2>
           @if(checkAllLessonSubitted()==NULL)
-          Click<a href="{{ url('/') }}/survey-form">here</a> to survey.
+          Click <a href="{{ url('/') }}/survey-form">here</a> to survey.
           @endif
         </div>
         @endif
