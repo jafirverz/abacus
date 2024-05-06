@@ -7,13 +7,13 @@
       <ul class="steps">
         <li>
           <span>
-            <img src="images/tempt/ico-step-1.jpg" alt="" />
+            <img src="{{ asset('images/tempt/ico-step-1.jpg') }}" alt="" />
           </span>
           <strong>Step 1</strong>
         </li>
         <li>
           <span>
-            <img src="images/tempt/ico-step-2.jpg" alt="" />
+            <img src="{{ asset('images/tempt/ico-step-2.jpg') }}" alt="" />
           </span>
           <strong>Step 2</strong>
         </li>
