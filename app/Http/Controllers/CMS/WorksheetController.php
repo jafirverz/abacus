@@ -6,6 +6,7 @@ use App\Admin;
 use App\Http\Controllers\Controller;
 use App\Level;
 use App\LevelTopic;
+use App\MiscQuestion;
 use App\Question;
 use App\Topic;
 use App\Traits\SystemSettingTrait;
@@ -218,7 +219,29 @@ class WorksheetController extends Controller
      */
     public function destroy(Request $request)
     {
-        //dd($request->multiple_delete);
+        // dd($request->multiple_delete);
+        $worksheetIds = explode(',', $request->multiple_delete);
+        $levelTopics = LevelTopic::whereIn('worksheet_id', $worksheetIds)->get();
+        foreach($levelTopics as $levelTopic){
+            $levelTopic->delete();
+        }
+
+        $questions = Question::whereIn('worksheet_id', $worksheetIds)->get();
+        foreach($questions as $question){
+            $miscQuestions = MiscQuestion::where('question_id', $question->id)->get();
+            foreach($miscQuestions as $miscQuestion){
+                $miscQuestion->delete();
+            }
+            $question->delete();
+        }
+
+
+        $worksheets = Worksheet::whereIn('id', $worksheetIds)->get();
+        // dd($worksheetIds);
+        foreach($worksheets as $worksheet){
+            $worksheet->delete();
+        }
+        return redirect()->route('worksheet.index')->with('success', __('constant.DELETED', ['module' => $this->title]));
     }
 
     public function search(Request $request)
