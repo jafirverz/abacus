@@ -105,17 +105,17 @@ class WorksheetController extends Controller
             $miscQuestion = array_unique($miscQuestion);
             if(count($miscQuestion) == 1){
                 if($miscQuestion[0] == 'multiply'){
-                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->groupBy('block')->paginate(2);
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->groupBy('block')->get();
                     return view('account.worksheetMultiply', compact("worksheet", 'level', 'questions', 'allQuestions'));
                 }else{
-                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->get();
                     return view('account.worksheetDivide', compact("worksheet", 'level', 'questions', 'allQuestions'));
                 }
             }else{
                 if(isset($_REQUEST['s'])){
-                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->paginate(10);
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->inRandomOrder()->get();
                 }else{
-                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
+                    $allQuestions = MiscQuestion::where('question_id', $questions->id)->get();
                 }
                 //$allQuestions = MiscQuestion::where('question_id', $questions->id)->paginate(10);
                 return view('account.worksheetMix', compact("worksheet", 'level', 'questions', 'allQuestions'));

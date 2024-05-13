@@ -45,8 +45,7 @@
         
         
         
-        <form method="post" action="{{ route('answer.submit') }}">
-          @csrf
+        
           <input type="hidden" name="worksheetId" value="{{ $questions->worksheet_id }}">
           <input type="hidden" name="levelId" value="{{ $level->id }}">
           <input type="hidden" name="questionTypeId" value="{{ $questions->question_type }}">
@@ -138,10 +137,9 @@
               </table>
             </div>
           </div>
-          <div class="output-1">
+          <!-- <div class="output-1">
             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
-          </div>
-        </form>
+          </div> -->
       </div>
     </div>
   </div>
