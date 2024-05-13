@@ -51,8 +51,10 @@
                 @if($flag == 1)
                 <div class="answer wrong">{{ $questionSub->user_answer }}</div>
                 @endif
-                <div class="answer">{{ $questionSub->question_answer }}</div>
                 
+                @if($questionSub->question_answer == $questionSub->user_answer)
+                <div class="answer">{{ $questionSub->question_answer }}</div>
+                @endif
               </div>
             </div>
           </div>

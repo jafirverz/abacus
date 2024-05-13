@@ -113,7 +113,7 @@
                         <i class="fa-solid fa-circle-xmark"></i>
                         <div class="row sp-col-5 inrow-1">
                           <!-- <div class="col-auto sp-col">$</div> -->
-                          <div class="col colanswer sp-col">{{ $questionnsCheck->question_answer }}</div>
+                          <!-- <div class="col colanswer sp-col">{{ $questionnsCheck->question_answer }}</div> -->
                         </div>
                       </td>
                       @else
@@ -176,7 +176,7 @@
                     @else
                     <td class="colanswer answer-false">
                       <span class="ansfalse">{{ $questionnsCheck->user_answer }}</span>
-                      <strong>{{ $questionnsCheck->question_answer }}</strong>
+                      <!-- <strong>{{ $questionnsCheck->question_answer }}</strong> -->
                       <i class="fa-solid fa-circle-xmark"></i>
                     </td>
                     @endif

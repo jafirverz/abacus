@@ -81,7 +81,7 @@
                     @else
                     <td class="colanswer answer-false">
                       <span class="ansfalse">{{ $questionnsCheck->user_answer }}</span>
-                      <strong>{{ $questionnsCheck->question_answer }}</strong>
+                      <!-- <strong>{{ $questionnsCheck->question_answer }}</strong> -->
                       <i class="fa-solid fa-circle-xmark"></i>
                     </td>
                     @endif

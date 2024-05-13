@@ -114,10 +114,12 @@
                         <div class="col colanswer sp-col"><span class="ansfalse">{{ $questionnsCheck->user_answer }}</span></div>
                       </div>
                       <i class="fa-solid fa-circle-xmark"></i>
+                      {{--
                       <div class="row sp-col-5 inrow-1">
                         <!-- <div class="col-auto sp-col">$</div> -->
                         <div class="col colanswer sp-col">{{ $questionnsCheck->question_answer }}</div>
                       </div>
+                      --}}
                     </td>
                     @else
                     <td class="coltype answer-true">
