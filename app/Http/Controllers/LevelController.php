@@ -33,7 +33,8 @@ class LevelController extends Controller
             $levelTitle = $checkSlug->title;
             $levelDescription = $checkSlug->description;
             $levelTopics = LevelTopic::where('level_id', $levelId)->pluck('worksheet_id')->toArray();
-            $worksheetsQuestionTemplate = Worksheet::whereIn('id', $levelTopics)->pluck('question_template_id')->toArray();
+            //$worksheetsQuestionTemplate = Worksheet::whereIn('id', $levelTopics)->pluck('question_template_id')->toArray();
+            $worksheetsQuestionTemplate = Worksheet::whereHas('questions')->whereIn('id', $levelTopics)->where('status', 1)->pluck('question_template_id')->toArray();
             $worksheets = Worksheet::whereHas('questions')->whereIn('id', $levelTopics)->where('status', 1)->orderBy('title', 'asc')->get();
             $qestionTemplate = QuestionTemplate::whereIn('id', $worksheetsQuestionTemplate)->orderBy('order_by', 'asc')->get();
             $todayDate = date('Y-m-d');
