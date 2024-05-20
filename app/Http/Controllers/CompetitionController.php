@@ -29,7 +29,7 @@ class CompetitionController extends Controller
     }
     //
     public function index($id){
-        $competition = Competition::where('id', $id)->first();
+        $competition = Competition::where('id', $id)->where('status', 1)->first();
         if($competition){
             if($competition->competition_type == 'physical'){
                 return view('competition_physical', compact("competition"));
@@ -46,6 +46,9 @@ class CompetitionController extends Controller
         $compPaperTitle = $compPaper->title;
         $compId = $compPaper->competition_controller_id;
         $comDetails = Competition::where('id', $compId)->first();
+        if($comDetails->status == 2){
+            return redirect('/home');
+        }
         $compeTitle = $comDetails->title;
         $compStudent = CompetitionStudent::where('competition_controller_id', $compId)->where('user_id', Auth::user()->id)->first();
         $compStudentCateogyId = $compStudent->category_id;
