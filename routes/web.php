@@ -116,6 +116,7 @@ Route::post('/instructor-competition/register/edit/{id?}', 'ProfileController@up
 
 //TEST
 Route::get('/my-test/detail/{id?}', 'ProfileController@detail_test')->name('test.detail');
+Route::get('/my-test/view/{id?}', 'ProfileController@detail_test2')->name('test.paper.view');
 Route::get('/view-test-result/{user}/{id?}', 'ProfileController@view_test_result')->name('view.test.result');
 Route::post('/my-test/result', 'ProfileController@submit_test')->name('test.answer.submit');
 Route::get('/survey-form', 'SurveyController@index');

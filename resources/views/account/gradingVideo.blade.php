@@ -19,7 +19,7 @@
           <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-          {{ $compPaper->description }}
+            {!! $compPaper->description !!}
         </div>
         <div class="shuffle-wrap">
           <div class="shuffle"><button type="button" class="btn-tooltip" data-bs-toggle="tooltip"

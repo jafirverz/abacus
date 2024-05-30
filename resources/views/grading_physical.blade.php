@@ -69,9 +69,21 @@
 
                         @php
                         $compId = $competition->id;
-                        //$userCategory = json_decode(Auth::user()->category_id);
-                        $catComp = \App\CategoryGrading::where('competition_id', $compId)->pluck('category_id')->toArray();
+                        $catComp=[];
+                        $catgrade = \App\GradingStudent::where('grading_exam_id', $compId)->where('user_id', Auth::user()->id)->orderBy('id','desc')->first();
+                        //dd($catgrade);
+                        if(isset($catgrade->mental_grade) && $catgrade->mental_grade!=NULL)
+                        {
+                            array_push($catComp,$catgrade->mental_grade);
+                        }
+
+                        if(isset($catgrade->abacus_grade) && $catgrade->abacus_grade!=NULL)
+                        {
+                            array_push($catComp,$catgrade->abacus_grade);
+                        }
+
                         $i = 1;
+                        //dd($catgrade);
                         @endphp
 
                         @if(isset($catComp) && count($catComp) > 0)

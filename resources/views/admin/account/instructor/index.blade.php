@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-header">
                     <a href="{{ route('instructor-account.destroy', 'instructor-account') }}"
-                        class="btn btn-danger d-none destroy" data-confirm="Do you want to continue?"
+                        class="btn btn-danger d-none destroy" @if(Auth::user()->admin_role==1) data-confirm="Do you want to permanently delete this record?" @else data-confirm="Do you want to continue?" @endif
                         data-confirm-yes="event.preventDefault();document.getElementById('destroy').submit();"
                         data-toggle="tooltip" data-original-title="Delete"> <i class="fas fa-trash"></i> <span
                             class="badge badge-transparent">0</span></a>

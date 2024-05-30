@@ -53,7 +53,7 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
                     if(isset($row['certificate_id']) && $row['certificate_id']!='')
                     {
                     //dd($row['certificate_id']);
-                    $gradingSub = GradingSubmitted::where('grading_exam_id',$this->grading_id)->where('user_id',$checkUserName->id)->where('paper_id',$this->paper_id)->first();
+                    $gradingSub = GradingSubmitted::where('grading_exam_id',$this->grading_id)->where('user_id',$checkUserName->id)->first();
                     //dd($this->paper_id);
                         if(isset($gradingSub))
                         {

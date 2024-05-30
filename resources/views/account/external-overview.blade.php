@@ -23,21 +23,28 @@
                   <form method="post" name="profile" id="profileform" enctype="multipart/form-data" action="{{route('external-profile.update')}}">
                       @csrf
                   <div class="row sp-col-xl-30">
-                      <div class="col-xl-4 sp-col">
-                          <label class="lb-1">Full Name <span class="required">*</span></label>
+                      <div class="col-xl-3 sp-col">
+                          <label class="lb-1">Centre Name <span class="required">*</span></label>
                           <input class="form-control" name="name" type="text" value="{{ old('name', $user->name) ?? '' }}" disabled />
                           @if ($errors->has('name'))
                               <span class="text-danger">&nbsp;{{ $errors->first('name') }}</span>
                           @endif
                       </div>
-                      <div class="col-xl-4 sp-col">
+                      <div class="col-xl-3 sp-col">
+                        <label class="lb-1">Person In-Charge Name <span class="required">*</span></label>
+                        <input class="form-control" name="in_charge_name" type="text" value="{{ old('in_charge_name', $user->in_charge_name) ?? '' }}" disabled />
+                        @if ($errors->has('in_charge_name'))
+                            <span class="text-danger">&nbsp;{{ $errors->first('in_charge_name') }}</span>
+                        @endif
+                    </div>
+                      <div class="col-xl-3 sp-col">
                           <label class="lb-1">Email <span class="required">*</span></label>
                           <input class="form-control" name="email" type="text" value="{{ old('email', $user->email) ?? '' }}" disabled />
                           @if ($errors->has('email'))
                               <span class="text-danger">&nbsp;{{ $errors->first('email') }}</span>
                           @endif
                       </div>
-                      <div class="col-xl-4 sp-col">
+                      <div class="col-xl-3 sp-col">
                           <label class="lb-1">Password <span class="required">*</span></label>
                           <input class="form-control" name="password" type="password" placeholder="*****" disabled />
                           @if ($errors->has('password'))
@@ -118,7 +125,7 @@
                   </div>
                   <div class="row sp-col-xl-30">
                       <div class="col-xl-3 sp-col" id="disablecountry">
-                          <label class="lb-1">Country <span class="required">*</span></label>
+                          <label class="lb-1">Centre Location <span class="required">*</span></label>
                           <select data-live-search="true" class="selectpicker"  disabled>
                               <option>Please Select</option>
                               @if(getCountry())

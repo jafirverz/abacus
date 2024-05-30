@@ -27,7 +27,7 @@
         @include('inc.messages')
         <div class="box-1">
           <h2 class="title-4">Registered Student's List</h2>
-          <div><strong>Exam Title: {{ $competition->title ?? '' }}</strong></div>
+          <div><strong>Competition Title: {{ $competition->title ?? '' }}</strong></div>
           <div class="dateinfo mt-10"><i class="fa-solid fa-calendar-days ico"></i> {{ date('d/m/Y',strtotime( $competition->date_of_competition)) }}</div>
           <div class="xscrollbar mt-30">
             <table class="tb-2 tbtype-4">

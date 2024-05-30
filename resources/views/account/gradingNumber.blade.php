@@ -19,7 +19,7 @@
           <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
         <div class="box-1">
-          {{ $compPaper->description ?? '' }}
+            {!! $compPaper->description !!}
         </div>
         @if($compPaper->time)
         <div class="timer-wrap">

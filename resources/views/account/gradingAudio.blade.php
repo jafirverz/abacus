@@ -18,6 +18,9 @@
           <li>{{ $compeTitle }}</li>
           <li><strong>{{ $compPaperTitle }}</strong></li>
         </ul>
+        <div class="box-1">
+            {!! $compPaper->description !!}
+        </div>
         @if($compPaper->time)
         <div class="timer-wrap">
           <div class="timer"><i class="icon-clock"></i> <strong>Timer: <span id="time"></span></strong></div>
