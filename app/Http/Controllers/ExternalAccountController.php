@@ -118,7 +118,7 @@ class ExternalAccountController extends Controller
             $customer->country_code = Auth::user()->country_code;
             $customer->learning_updates = $request->learning_updates??NULL;
         }
-        
+
         $customer->name = $request->name;
         $customer->account_id = $accountId;
         $customer->instructor_id = $this->user->id;
@@ -128,7 +128,7 @@ class ExternalAccountController extends Controller
         $customer->gender = $request->gender??NULL;
         $customer->learning_locations = $request->learning_locations??NULL;
         $customer->remarks = $request->remarks??NULL;
-        
+
         $customer->country_code_phone = $request->country_code_phone??NULL;
         $customer->mobile = $request->mobile??NULL;
         if(Auth::user()->user_type_id==6)
@@ -341,6 +341,7 @@ class ExternalAccountController extends Controller
         ];
         $request->validate([
             'name' => 'required',
+            'in_charge_name' => 'required',
             'email' => 'required|unique:users,email,' . $updateUserProfile->id,
             'dob' => 'required',
             'country_code_phone' => 'required',
@@ -354,6 +355,7 @@ class ExternalAccountController extends Controller
         $dob = date('Y-m-d', strtotime($request->dob));
         //$updateUserProfile = new User();
         $updateUserProfile->name = $request->name;
+        $updateUserProfile->in_charge_name = $request->in_charge_name;
         $updateUserProfile->email = $request->email;
         //$users->email = $request->email;
         if ($request->password != '') {

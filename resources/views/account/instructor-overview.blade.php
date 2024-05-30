@@ -190,7 +190,7 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
                 title: '{{ $value->full_name }}',
                 start: '{{ $value->start_date }}T{{ $value->start_time }}',
                 end: '{{ $value->start_date }}T{{ $value->start_time }}',
-                description: '{{ $value->note }}',
+                description: '{{ trim(preg_replace('/\s+/', ' ', $value->note)) }}',
             },
             @endforeach],
           eventClick: function(info) {

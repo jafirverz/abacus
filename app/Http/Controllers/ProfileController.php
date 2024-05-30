@@ -355,6 +355,47 @@ class ProfileController extends Controller
 
     public function detail_test($id){
         $test = TestManagement::join('allocations','allocations.assigned_id','test_management.id')->where('allocations.student_id',$this->user->id)->where('test_management.id',$id)->select('test_management.*','allocations.id as allocation_id')->first();
+        dd($test);
+        //$test = TestManagement::find($id);
+        $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
+        $qId=$test->paper->question_template_id;
+        //dd($qId);
+        if($qId == 5){
+            return view('account.testMultipleDivision', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 6){
+            return view('account.testChallenge', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 8){
+            return view('account.testAbacus', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 11){
+            $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->first();
+            return view('account.testOther', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 7){
+            $all_paper_detail_v=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',1)->get();
+            $all_paper_detail_h=TestPaperDetail::where('paper_id',$test->paper->id)->where('template',2)->get();
+            return view('account.testMix', compact("test","all_paper_detail_h","all_paper_detail_v"));
+        }
+        elseif($qId == 4){
+            return view('account.testAddSubQuestion', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 3){
+            return view('account.testNumber', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 1){
+            return view('account.testAudio', compact("test","all_paper_detail"));
+        }
+        elseif($qId == 2){
+            return view('account.testVideo', compact("test","all_paper_detail"));
+        }
+        //return view('account.online-my-course-detail', compact('course'));
+    }
+
+    public function detail_test2($id){
+        $test = TestManagement::find($id);
+        dd($test);
         //$test = TestManagement::find($id);
         $all_paper_detail=TestPaperDetail::where('paper_id',$test->paper->id)->get();
         $qId=$test->paper->question_template_id;

@@ -312,9 +312,16 @@ class InstructorAccountController extends Controller
         //User::destroy($id);
         foreach($ids as $id)
         {
-            $customer = User::find($id);
-            $customer->approve_status = NULL;
-            $customer->save();
+            if($this->user->admin_role==1)
+            {
+             User::destroy($id);
+            }
+            else
+            {
+                $customer = User::find($id);
+                $customer->approve_status = NULL;
+                $customer->save();
+            }
         }
 
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
