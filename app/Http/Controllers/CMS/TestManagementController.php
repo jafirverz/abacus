@@ -61,12 +61,10 @@ class TestManagementController extends Controller
         $title = $this->title;
         if(Auth::user()->admin_role == 1){
             $students = User::where('user_type_id', 5)->orderBy('id','desc')->get();
-            //$userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
-            $userStudent = User::whereIn('user_type_id', [1,2,3])->orderBy('id','desc')->get();
+            $userStudent = User::whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
         }else{
             $students = User::where('country_code', Auth::user()->country_id)->where('user_type_id', 5)->orderBy('id','desc')->get();
-            //$userStudent = User::where('country_code', Auth::user()->country_id)->whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
-            $userStudent = User::where('country_code', Auth::user()->country_id)->whereIn('user_type_id', [1,2,3])->orderBy('id','desc')->get();
+            $userStudent = User::where('country_code', Auth::user()->country_id)->whereIn('user_type_id', [1,2])->orderBy('id','desc')->get();
         }
 
         $courses = Course::orderBy('id','desc')->get();
