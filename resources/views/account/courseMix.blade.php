@@ -110,7 +110,7 @@
                                 <td class="coltype">
                                     <div class="row sp-col-5 inrow-1">
                                     <div class="col-auto sp-col"></div>
-                                    <div class="col colanswer sp-col"><input style="text-align: right;"  class="form-control number-separator" type="text" name="answer[{{ $question->id }}]" /></div>
+                                    <div class="col colanswer sp-col"><input  value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$question->id)->question_answer ?? '' }} @endif" style="text-align: right;"  class="form-control number-separator" type="text" name="answer[{{ $question->id }}]" /></div>
                                     </div>
                                 </td>
                                 @php
@@ -161,7 +161,7 @@
                             <tr>
                               <td class="colnumber">{{ $i }}</td>
                               <td class="text-center">{{ number_format($ques->input_1) }} {{ $symbol }} {{ number_format($ques->input_2) }}  =</td>
-                              <td class="colanswer"><input  class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
+                              <td class="colanswer"><input value="@if(isset($courseSubmitted)) {{ getCourseAnswer($courseSubmitted->id,$ques->id)->question_answer ?? '' }} @endif"  class="form-control number-separator" type="text" name="answer[{{ $ques->id }}]" /></td>
                             </tr>
                             @php
                             $i++;
