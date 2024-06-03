@@ -1643,7 +1643,8 @@ class ProfileController extends Controller
     public function competition_register_instructor($competition_id)
 	{
         $user = $this->user;
-		$competition = Competition::where('status', 1)->where('id', $competition_id)->first();
+        $todayDate = date('Y-m-d');
+		$competition = Competition::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->where('id', $competition_id)->first();
         $allocated_user = CompetitionStudent::where('instructor_id', $user->id)->where('competition_controller_id',$competition_id)->pluck('user_id');
         if($user->user_type_id==6)
         {
