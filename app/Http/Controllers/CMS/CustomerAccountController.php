@@ -531,6 +531,7 @@ class CustomerAccountController extends Controller
             }
         }
 
+
         return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  $this->title]));
     }
 
