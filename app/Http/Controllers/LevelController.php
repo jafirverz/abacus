@@ -36,7 +36,8 @@ class LevelController extends Controller
             //$worksheetsQuestionTemplate = Worksheet::whereIn('id', $levelTopics)->pluck('question_template_id')->toArray();
             $worksheetsQuestionTemplate = Worksheet::whereHas('questions')->whereIn('id', $levelTopics)->where('status', 1)->pluck('question_template_id')->toArray();
             $worksheets = Worksheet::whereHas('questions')->whereIn('id', $levelTopics)->where('status', 1)->orderBy('title', 'asc')->get();
-            $qestionTemplate = QuestionTemplate::whereIn('id', $worksheetsQuestionTemplate)->orderBy('order_by', 'asc')->get();
+            //$qestionTemplate = QuestionTemplate::whereIn('id', $worksheetsQuestionTemplate)->orderBy('order_by', 'asc')->get();
+            $qestionTemplate = QuestionTemplate::whereIn('id', $worksheetsQuestionTemplate)->where('id', '!=', 8)->orderBy('order_by', 'asc')->get();
             $todayDate = date('Y-m-d');
             $checkUserPurchase = Order::where('user_id', Auth::user()->id)->where('payment_status', 'COMPLETED')->pluck('id')->toArray();
             $orderDetails = OrderDetail::whereIn('order_id', $checkUserPurchase)->where('expiry_date', '>=', $todayDate)->where('order_type', 'level')->pluck('level_id')->toArray();
