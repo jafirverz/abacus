@@ -117,7 +117,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="title">Result</label>
                                     <select class="form-control" name="result">
                                         <option value="">Please select</option>
@@ -129,7 +129,7 @@
                                         <strong>{{ $errors->first('result') }}</strong>
                                     </span>
                                     @endif
-                                </div>
+                                </div> -->
 
                                 <!-- <div class="form-group">
                                     <label for="title">Certificate</label>
