@@ -517,7 +517,11 @@ class CustomerAccountController extends Controller
         {
             if($this->user->admin_role==1)
             {
-             User::destroy($id);
+
+                $customer = User::find($id);
+                $customer->role_id = NULL;
+                $customer->save();
+                User::destroy($id);
             }
             else
             {

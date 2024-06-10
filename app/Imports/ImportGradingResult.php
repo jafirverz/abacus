@@ -40,7 +40,7 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
                     $gradingStudentResults->user_id =  $checkUserName->id;
                     //$gradingStudentResults->total_marks =  $row['marks'];
                     //$gradingStudentResults->rank =  $row['rank'];
-                    $gradingStudentResults->result =  $row['result'];
+                    $gradingStudentResults->result =  $row['result_instructorfe'];
                    // $gradingStudentResults->remark_grade =  $row['passfail'];
                     $gradingStudentResults->abacus_grade =  $row['abacus_grade'];
                     $gradingStudentResults->mental_results =  $row['mental_results'];
