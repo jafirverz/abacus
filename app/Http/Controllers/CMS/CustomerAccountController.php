@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\EmailNotification;
 use App\Traits\GetEmailTemplate;
 use App\UserFeedback;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 
 class CustomerAccountController extends Controller
@@ -517,11 +518,17 @@ class CustomerAccountController extends Controller
         {
             if($this->user->admin_role==1)
             {
-
-                $customer = User::find($id);
-                $customer->role_id = NULL;
-                $customer->save();
-                User::destroy($id);
+                try {
+                    $customer = User::find($id);
+                    $customer->role_id = NULL;
+                    $customer->save();
+                    User::destroy($id);
+                } catch (Exception $exception) {
+                    //return back()->withError($exception->getMessage())->withInput();
+                    //dd($exception->getMessage());
+                    return redirect()->back()->with('error', 'Student cannot be deleted');
+                }
+                
             }
             else
             {
