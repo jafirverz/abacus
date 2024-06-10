@@ -60,7 +60,7 @@
                                 @endphp
                                 <div class="col-lg-12 sp-col gincol-2">
                                     <div class="inrow">
-                                        <strong>Result:</strong> <span class="status-1">{{ $userCompetition->result ?? '' }}</span>
+                                        <strong>Result:</strong> <span class="status-1">{{ $userCompetition->prize  ?? '' }}</span>
                                     </div>		
                                     <div class="inrow">
                                         <strong>Competition Type:</strong> <span class="status-1">{{ ucwords($competition->competition_type) }}</span>

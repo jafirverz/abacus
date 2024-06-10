@@ -72,7 +72,11 @@ class GradingPaperController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'questiontemplate.required_if' => 'This field is required',
+            //'questiontemplate.required_if' => 'This field is required',
+            'price.required_if' => 'Price field is required',
+            'pdf_upload.required_if' => 'PDF Upload field is required',
+            'questiontemplate.required_if' => 'Question Template field is required',
+            'time.required_if' => 'Time field is required',
         ];
         $request->validate([
             'title'  =>  'required',
@@ -159,8 +163,11 @@ class GradingPaperController extends Controller
     public function update(Request $request, $id)
     {
         $messages = [
-            'questiontemplate.required_if' => 'This field is required',
             'paper_type.required_if' => 'This field is required',
+            'price.required_if' => 'Price field is required',
+            //'pdf_upload.required_if' => 'PDF Upload field is required',
+            'questiontemplate.required_if' => 'Question Template field is required',
+            'time.required_if' => 'Time field is required',
         ];
         $request->validate([
             'title'  =>  'required',

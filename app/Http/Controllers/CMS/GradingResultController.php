@@ -108,5 +108,14 @@ class GradingResultController extends Controller
         $competition = GradingExam::where('id', $request->competitionId)->first();
         return view('admin.grading_result.userList', compact('title', 'userList', 'competitionId', 'competition'));
     }
+    public function deleteUser(Request $request){
+        // dd($request->multiple_delete);
+        $ids = explode(',',$request->multiple_delete);
+        $gradingStudentResult = GradingStudentResults::whereIn('id', $ids)->get();
+        foreach($gradingStudentResult as $user){
+            $user->delete();
+        }
+        return redirect()->back()->with('success', 'Deleted Successfully');
+    }
 
 }

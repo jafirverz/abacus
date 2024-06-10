@@ -196,8 +196,12 @@ class CompetitionPaperController extends Controller
         // ], $messages);
 
         $messages = [
-            'questiontemplate.required_if' => 'This field is required',
+            //'questiontemplate.required_if' => 'This field is required',
             'paper_type.required_if' => 'This field is required',
+            'price.required_if' => 'Price field is required',
+            //'pdf_upload.required_if' => 'PDF Upload field is required',
+            'questiontemplate.required_if' => 'Question Template field is required',
+            'time.required_if' => 'Time field is required',
         ];
         $request->validate([
             'title'  =>  'required',
