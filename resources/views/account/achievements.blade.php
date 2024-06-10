@@ -44,7 +44,7 @@
                           @endif
                         @elseif(isset($paperSubmited->title)) {!! $paperSubmited->result ?? '' !!}
                         @else
-                        {{ $paperSubmited->category->category_name ?? '' }} : {{ $paperSubmited->rank ?? '' }}
+                        {{ $paperSubmited->category->category_name ?? '' }} : {{ $paperSubmited->prize ?? '' }}
                           @if(!empty($paperSubmited->abacus_grade && $paperSubmited->mental_grade))
                           {{--Mental Grade 70:  <strong class="type-1">{{ $paperSubmited->mental_grade }}</strong><br/>
                           Abacus Grade 80:  <strong class="type-1">{{ $paperSubmited->abacus_grade }}</strong></td>--}}

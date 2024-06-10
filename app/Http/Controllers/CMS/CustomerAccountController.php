@@ -277,9 +277,13 @@ class CustomerAccountController extends Controller
 
         $achievementsOther = AchievementOther::where('user_id', $id)->orderBy('total_marks', 'desc')->get();
 
-        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(10);
+        // $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(10);
 
-        $merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
+        // $merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
+        $collection = collect([$actualCompetitionPaperSubted, $gradingExamResult, $achievementsOther]);
+
+        $merged = $collection->collapse();
+        $merged = $merged->paginate(10);
 
         return view('admin.account.customer.show', compact('title', 'customer','instructors','merged'));
     }
