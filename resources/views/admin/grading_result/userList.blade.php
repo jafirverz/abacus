@@ -114,7 +114,7 @@
                                             <td>{{ $item->mental_results }}</td>
                                             <td>{{ $item->mental_result_passfail }}</td>
                                             <td>{{ $item->abacus_grade }}</td>
-                                            <td>{{ $item->abacus_marks }}</td>
+                                            <td>{{ $item->abacus_results }}</td>
                                             <td>{{ $item->abacus_result_passfail }}</td>
 
                                         </tr>

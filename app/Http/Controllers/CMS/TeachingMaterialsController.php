@@ -79,7 +79,9 @@ class TeachingMaterialsController extends Controller
                 $material->title = $request->title ?? '';
                 $material->sub_heading = $request->sub_heading ?? '';
                 if ($request->hasFile('uploaded_files')) {
-                    $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
+                    $material->uploaded_files=$uploaded_file = uploadPicture($request->file('uploaded_files'), __('constant.TEACHING_MATERIALS'));
+                    $ext = pathinfo($uploaded_file, PATHINFO_EXTENSION);
+                    $material->file_type = $ext;
                 }
                 $material->description = $request->description ?? '';
                 $material->teacher_id = $value;
@@ -142,7 +144,9 @@ class TeachingMaterialsController extends Controller
         $material->title = $request->title ?? '';
         $material->sub_heading = $request->sub_heading ?? '';
         if ($request->hasFile('uploaded_files')) {
-            $material->uploaded_files = uploadPicture($request->file('uploaded_files'), $this->title);
+            $material->uploaded_files=$uploaded_file = uploadPicture($request->file('uploaded_files'), __('constant.TEACHING_MATERIALS'));
+            $ext = pathinfo($uploaded_file, PATHINFO_EXTENSION);
+            $material->file_type = $ext;
         }
         $material->description = $request->description ?? '';
         $material->teacher_id = $request->teacher_id ?? '';

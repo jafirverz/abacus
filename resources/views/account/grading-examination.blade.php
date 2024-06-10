@@ -64,7 +64,7 @@
                                     <td><em>{{ $grade->abacus->category_name ?? '' }}</em></td>
                                     <td>{!! ($grade->approve_status==1)?'<em class="status-2">Approved</em>':'<em class="status-3">Pending</em>' !!}</td>
                                     <td><em>{{ $grade->remarks ?? ''}}</em></td>
-                                    <td><em>{{ getGradingStudentResult($grade->grading_exam_id,$grade->user_id )->result ?? '-'}} </em></td>
+                                    <td><em>{!! getGradingStudentResult($grade->grading_exam_id,$grade->user_id )->result ?? '-'!!} </em></td>
                                 </tr>
                                 @endforeach
                                 @endif
