@@ -2048,9 +2048,23 @@ class ProfileController extends Controller
 
         $achievementsOther = AchievementOther::where('user_id', $userId)->orderBy('total_marks', 'desc')->get();
 
-        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(10);
+        $collection = collect([$actualCompetitionPaperSubted, $gradingExamResult, $achievementsOther]);
 
-        $merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
+        $merged = $collection->collapse();
+        
+        //$merged->paginate(10);
+
+        //$merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->paginate(100);
+
+        //$merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
+        //dd($merged);
+
+
+        $merged = $merged->paginate(10);
+
+        // $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('total_marks')->get();
+
+        // $merged = $merged->merge($achievementsOther)->sortByDesc('total_marks')->paginate(10);
         //dd($merged);
 
 
