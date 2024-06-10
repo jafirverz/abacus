@@ -439,6 +439,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('g-results', 'CMS\GradingResultController');
     Route::get('g-results/grading/{id?}', 'CMS\GradingResultController@studentList')->name('g-results.grading');
     Route::get('g-results/{id?}/edit', 'CMS\GradingResultController@edit')->name('g-results-user.edit');
+
+    Route::post('g-results/grading/{id?}', 'CMS\GradingResultController@deleteUser')->name('g-results.destroy');
+
     Route::get('g-results/user/search', 'CMS\GradingResultController@userresultsearch')->name('g-userresults.search');
     Route::get('g-results/download/excel/{id?}', 'CMS\GradingResultController@excelDownload')->name('studentResultDownload2');
     Route::get('grading-result-upload', 'CMS\GradingAssignUploadReportController@index');
