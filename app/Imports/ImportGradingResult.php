@@ -48,13 +48,11 @@ class ImportGradingResult implements ToCollection, WithHeadingRow
                     $gradingStudentResults->mental_result_passfail =  $row['mental_result_passfail'];
                     $gradingStudentResults->abacus_result_passfail =  $row['abacus_result_passfail'];
                     $gradingStudentResults->mental_grade =  $row['mental_grade'];
-                    $gradingStudentResults->certificate_id =isset($row['certificate_id']) ?? NULL;
+                    $gradingStudentResults->certificate_id =$row['certificate_id'] ?? NULL;
 
                     if(isset($row['certificate_id']) && $row['certificate_id']!='')
                     {
-                    //dd($row['certificate_id']);
                     $gradingSub = GradingSubmitted::where('grading_exam_id',$this->grading_id)->where('user_id',$checkUserName->id)->first();
-                    //dd($this->paper_id);
                         if(isset($gradingSub))
                         {
                             $gradingSub->certificate_id =  $row['certificate_id'];
