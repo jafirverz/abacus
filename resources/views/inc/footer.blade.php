@@ -51,7 +51,9 @@
             </div>
         </div>
         <div class="footer-copyright">
-            Copyright &copy; 2023 UE 3G Abacus Pte. Ltd. All rights reserved.
+            Copyright &copy; <script>
+                            document.write(new Date().getFullYear());
+                        </script> UE 3G Abacus Pte. Ltd. All rights reserved.
         </div>
     </div>
 </footer>

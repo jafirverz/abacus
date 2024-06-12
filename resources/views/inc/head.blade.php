@@ -24,7 +24,7 @@
 
 
 
-    <link rel="preload" as="logo" href="{{asset('images/diy-cars-logo.png')}}" />
+    <link rel="preload" as="logo" href="https://3gabels.3gabacus.com/images/3g-abacus-logo.png" />
 
     {!! config('system_settings')->google_anaytics_code ?? '' !!}
 
