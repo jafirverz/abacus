@@ -65,7 +65,7 @@
                                                     <input class="form-control" required value="{{ $json_question->input_2[$i] }}" name="input_2[]" placeholder="Number 2" type="text">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input class="form-control" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
+                                                    <input class="form-control number-separator" required value="{{ $json_question->input_3[$i] }}" name="input_3[]" placeholder="= Answer" type="text">
                                                 </div>
                                             </div>
                                             <!-- <div class="input-group-btn">
@@ -99,7 +99,7 @@
                                                         <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
+                                                        <input class="form-control number-separator" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <input class="form-control" required value="{{ $quest->marks }}" name="marks_old[]" placeholder="Marks" type="text">
@@ -136,7 +136,7 @@
                                                         <a href="{{ url('/') }}/upload-file/{{ $quest->question_1 }}" target="_blank"> {{ $quest->question_1 }} </a>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <input class="form-control" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
+                                                        <input class="form-control number-separator" required value="{{ $quest->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <input class="form-control" required value="{{ $quest->marks }}" name="marks_old[]" placeholder="Marks" type="text">
@@ -174,7 +174,7 @@
                                                 <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                                <input class="form-control number-separator" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">
@@ -219,7 +219,7 @@
                                                 <input class="form-control" required value="{{ $ques->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                                <input class="form-control number-separator" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                             </div>
                                             <div class="col-md-1">
                                                 <input class="form-control" required value="{{ $ques->marks }}" name="marks[]" placeholder="Marks" type="text" required>
@@ -268,7 +268,7 @@
                                                 <input class="form-control" required value="{{ $ques->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                                <input class="form-control number-separator" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                             </div>
                                             <div class="col-md-1">
                                                 <input class="form-control" required value="{{ $ques->marks }}" name="marks[]" placeholder="Marks" type="text" required>
@@ -303,7 +303,7 @@
                                                 <textarea rows="5" cols="40" name="vertical_1[]">{{ $quest->question_1 }}</textarea>
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $quest->answer }}" name="vertical_2[]" placeholder="Answer" type="text">
+                                                <input class="form-control number-separator" required value="{{ $quest->answer }}" name="vertical_2[]" placeholder="Answer" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $quest->marks }}" name="vertical_3[]" placeholder="Marks" type="text">
@@ -351,7 +351,7 @@
                                                 <input class="form-control" required value="{{ $ques->question_2 }}" name="input_3[]" placeholder="Variable 2" type="text" required>
                                             </div>
                                             <div class="col-md-2">
-                                                <input class="form-control" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                                <input class="form-control number-separator" required value="{{ $ques->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                             </div>
                                             <div class="col-md-1">
                                                 <input class="form-control" required value="{{ $ques->marks }}" name="marks[]" placeholder="Marks" type="text" required>
@@ -390,7 +390,7 @@
                                                 <textarea rows="5" cols="40" name="input_1[]">{{ $quest->question_1 }}</textarea>
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
+                                                <input class="form-control number-separator" required value="{{ $quest->answer }}" name="answer[]" placeholder="Answer" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $quest->marks }}" name="marks[]" placeholder="Marks" type="text">

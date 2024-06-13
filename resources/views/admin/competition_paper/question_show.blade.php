@@ -41,7 +41,7 @@
                                             <input class="form-control" required value="" name="input_1[]" placeholder="Number 1" type="text">
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control" required value="" name="input_2[]" placeholder="Number 2" type="text">
+                                            <input class="form-control number-separator" required value="" name="input_2[]" placeholder="Number 2" type="text">
                                         </div>
                                         <div class="col-md-4">
                                             <input class="form-control" required value="" name="input_3[]" placeholder="= Answer" type="text">
@@ -67,7 +67,7 @@
                                             <input class="form-control" required value="{{  $questionss->question_1 }}" name="input_1_old[]" placeholder="" type="hidden">
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="form-control" required value="{{  $questionss->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
+                                            <input class="form-control number-separator" required value="{{  $questionss->answer }}" name="input_2_old[]" placeholder="Answer" type="text">
                                         </div>
                                         <div class="col-md-2">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks_old[]" placeholder="Marks" type="text">
@@ -103,7 +103,7 @@
                                                 <textarea rows="5" cols="40" name="vertical_1[]">{{ $questionss->question_1 }}</textarea>
                                             </div>
                                             <div class="col-md-4">
-                                                <input class="form-control" required value="{{ $questionss->answer }}" name="vertical_2[]" placeholder="Answer" type="text">
+                                                <input class="form-control number-separator" required value="{{ $questionss->answer }}" name="vertical_2[]" placeholder="Answer" type="text">
                                             </div>
                                             <div class="col-md-2">
                                                 <input class="form-control" required value="{{ $questionss->marks }}" name="vertical_3[]" placeholder="Marks" type="text">
@@ -148,7 +148,7 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                            <input class="form-control number-separator" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
@@ -195,7 +195,7 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                            <input class="form-control number-separator" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
@@ -240,7 +240,7 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <input class="form-control" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
+                                            <input class="form-control number-separator" required value="{{ $questionss->answer }}" name="answer[]" placeholder="Answer" type="text" required>
                                         </div>
                                         <div class="col-md-1">
                                             <input class="form-control" required value="{{  $questionss->marks }}" name="marks[]" placeholder="Marks" type="text">
