@@ -94,7 +94,7 @@ class GradingExamController extends Controller
 
             Storage::putFileAs(
 
-                'public/competition',
+                'public/grading',
                 $compoverimage,
                 $filename
 
@@ -114,7 +114,7 @@ class GradingExamController extends Controller
 
             Storage::putFileAs(
 
-                'public/competition',
+                'public/grading',
                 $compimage,
                 $filename
 
@@ -241,7 +241,7 @@ class GradingExamController extends Controller
 
             Storage::putFileAs(
 
-                'public/competition',
+                'public/grading',
                 $compimage,
                 $filename
 

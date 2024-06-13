@@ -88,7 +88,7 @@
                                     <td><em>{{ date('d/m/Y',strtotime($item->start_date)) }}</em></td>
                                     <td><em>{{ date('d/m/Y',strtotime($item->end_date)) }}</em></td>
                                     <td><em>{{ diff_between_dates($item->start_date,$item->end_date) }}</em></td>
-                                    <td>@if(isset($item->submission->user_marks) && $item->submission->user_marks>0)<em class="status-5"> {{ $item->submission->user_marks  }} out of {{ $item->submission->total_marks  }}</em>@endif</td>
+                                    <td>@if(isset($item->submission->total_marks) && $item->submission->total_marks>0)<em class="status-5"> {{ $item->submission->user_marks  }} out of {{ $item->submission->total_marks  }}</em>@endif</td>
                                 </tr>
                                 @endforeach
                                 @else

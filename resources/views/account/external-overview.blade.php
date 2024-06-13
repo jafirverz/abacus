@@ -124,39 +124,11 @@
                       </div>
                   </div>
                   <div class="row sp-col-xl-30">
-                      <div class="col-xl-3 sp-col" id="disablecountry">
+                    <div class="col-xl-6 sp-col">
                           <label class="lb-1">Centre Location <span class="required">*</span></label>
-                          <select data-live-search="true" class="selectpicker"  disabled>
-                              <option>Please Select</option>
-                              @if(getCountry())
-                              @foreach (getCountry() as $key => $item)
-                              <option value="{{ $key }}" @if($user->country_code==$key) selected @endif>{{ $item }}
-                              </option>
-                              @endforeach
-                              @endif
-                          </select>
+                          <input class="form-control" name="centre_location" type="text" value="{{ $user->centre_location  }}" disabled />
                       </div>
-                      @php
-                          $country_code = $user->country_code;
-                          if(old("country_code")){
-                              $country_code = old("country_code");
-                          }
-                      @endphp
-                      <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
-                          <label class="lb-1">Country <span class="required">*</span></label>
-                          <select  data-live-search="true" class="selectpicker" name="country_code">
-                              <option value="">Please Select</option>
-                              @if(getCountry())
-                              @foreach (getCountry() as $key => $item)
-                              <option value="{{ $key }}" @if($user->country_code==$key && !$errors->has('country_code')) selected @endif>{{ $item }}
-                              </option>
-                              @endforeach
-                              @endif
-                          </select>
-                          @if ($errors->has('country_code'))
-                              <span class="text-danger">&nbsp;{{ $errors->first('country_code') }}</span>
-                          @endif
-                      </div>
+
                       <div class="col-xl-6 sp-col">
                           <label class="lb-1">Address</label>
                           <input class="form-control" name="address" type="text" value="{{ $user->address  }}" disabled />
