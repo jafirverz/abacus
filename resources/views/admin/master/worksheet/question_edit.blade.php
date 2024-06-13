@@ -747,52 +747,102 @@
           $(".add-more").click(function(){
               var html = $(".copy").html();
               $(".after-add-more").append(html);
+              easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
           });
 
 
           $(".add-more1").click(function(){
               var html = $(".copy1").html();
               $(".after-add-more").append(html);
+              easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
           });
 
           $(".add-more2").click(function(){
           var html = $(".copy2").html();
           $(".after-add-more").append(html);
+          easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
           });
 
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
             $(".after-add-more").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
         $(".add-more6").click(function(){
             var html = $(".copy6").html();
             $(".after-add-more").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
         $(".add-more7").click(function(){
             var html = $(".copy7").html();
             $(".after-add-more").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
         $(".add-more7-1").click(function(){
             var html = $(".copy7-1").html();
             $(".after-add-more7-1").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
         $(".add-more5").click(function(){
             var html = $(".copy5").html();
             $(".after-add-more").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
         $(".add-more8").click(function(){
             var html = $(".copy8").html();
             $(".after-add-more").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
         $(".add-more11").click(function(){
             var html = $(".copy11").html();
             $(".after-add-more").append(html);
+            easyNumberSeparator({
+            selector: '.number-separator',
+            separator: ',',
+            //resultInput: '.number-separator',
+            })
         });
 
           $("body").on("click",".remove",function(){
