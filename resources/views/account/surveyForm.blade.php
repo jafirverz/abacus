@@ -3,9 +3,9 @@
 <main class="main-wrap">	
   <div class="tempt-3">
     <div class="container maxmain">
-      <div class="mb-20">
+      <!-- <div class="mb-20">
         <a class="link-1 lico" href="{{ url('/') }}"><i class="fa-solid fa-arrow-left"></i> Go Back</a>
-      </div>
+      </div> -->
       <h1 class="title-3">Survey Form</h1>
       <form name="surveyform" method="post" action="{{ route('survey.submit') }}">
         @csrf
@@ -211,9 +211,11 @@
         </div>
       
       </div>
+      @if(Auth::user()->user_type_id != 5)
       <div class="output-1">
         <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i></button>
       </div>
+      @endif
     </form>
     </div>
   </div>	

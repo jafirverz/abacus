@@ -26,10 +26,14 @@ class SurveyController extends Controller
         }else{
             $surveyQuestions = '';
         }
-        $allocation = Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
-        if(!$allocation){
-            return abort(404);
+        $userTypeId = Auth::user()->user_type_id;
+        if($userTypeId != 5){
+            $allocation = Allocation::where('student_id', Auth::user()->id)->where('is_finished', null)->orderBy('id', 'desc')->first();
+            if(!$allocation){
+                return abort(404);
+            }
         }
+        
         return view('account.surveyForm', compact('surveyQuestions', 'surveys'));
     }
 

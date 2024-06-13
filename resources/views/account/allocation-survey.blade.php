@@ -20,7 +20,7 @@
                             <h2 class="title-4">{{ $survey->title ?? '' }}</h2>
                         </div>
                         <div class="col-sm-auto mt-574-15">
-                            <a class="link-1 rico" href="#">View Survey Form <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <a class="link-1 rico" href="{{ url('survey-form') }}">View Survey Form <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
                     <form method="post" name="survey" id="survey" enctype="multipart/form-data" action="{{route('survey.update',$survey_id)}}">
