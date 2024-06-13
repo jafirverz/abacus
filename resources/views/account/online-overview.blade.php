@@ -168,7 +168,7 @@
                   $country_code = old("country_code");
               }
           @endphp
-          {{-- 
+          {{--
           <div class="col-xl-3 sp-col" id="enablecountry" style="display: none">
               <label class="lb-1">Country <span class="required">*</span></label>
               <select data-live-search="true" class="selectpicker" name="country_code">
@@ -218,10 +218,16 @@
                     <tbody>
                         @if($lesson)
                         @foreach($lesson as $key => $value)
+
+                        @php
+
+                        $is_submitted = \App\CourseSubmitted::where('user_id', Auth::user()->id)->where('course_id', $value->course_id)->where('is_submitted', 1)->first();
+                        //echo $value->course_id;
+                        @endphp
                         <tr>
                             <td><em>{{ $value->title ?? '' }}</em></td>
-                            <td><em class="status-2">{{ ( isset($value->submitted->is_submitted) && $value->submitted->is_submitted==1)?'Completed':'Pending' }}</em></td>
-                            <td><em> @if(isset($value->submitted->created_at)) {{ date('d/m/Y',strtotime($value->submitted->created_at)) }} @endif</em></td>
+                            <td><em class="status-2">{{ ( isset($is_submitted->id))?'Completed':'Pending' }}</em></td>
+                            <td><em> @if(isset($is_submitted->created_at)) {{ date('d/m/Y',strtotime($is_submitted->created_at)) }} @endif</em></td>
                         </tr>
                         @endforeach
                         @endif

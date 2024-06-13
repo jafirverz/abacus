@@ -133,7 +133,7 @@
                                     </div>
 
                                     <div class="col-md-2">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="answer[]" placeholder="= Answer" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -149,7 +149,7 @@
                                         <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                     </div>
                                     <div class="col-md-3">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -165,7 +165,7 @@
                                         <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                     </div>
                                     <div class="col-md-2">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -184,7 +184,7 @@
                                         <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                     </div>
                                     <div class="col-md-3">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -199,7 +199,7 @@
                                         <input class="form-control" required value="" name="o_input_1[]"  type="file">
                                     </div>
                                     <div class="col-md-3">
-                                        <input class="form-control" required value="" name="o_answer[]" placeholder="Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="o_answer[]" placeholder="Answer" type="text">
                                     </div>
                                     <div class="col-md-3">
                                         <input class="form-control" required value="" name="o_marks[]" placeholder="Marks" type="text">
@@ -217,7 +217,7 @@
                                     <input class="form-control" required value="" name="input_1[]"  type="file">
                                 </div>
                                 <div class="col-md-3">
-                                    <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                    <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                 </div>
                                 <div class="col-md-3">
                                     <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -237,7 +237,7 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                    <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                 </div>
                                 <div class="col-md-2">
                                     <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -256,7 +256,7 @@
                                     <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
                                 </div>
                                 <div class="col-md-3">
-                                    <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                                    <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
                                 </div>
                                 <div class="col-md-3">
                                     <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -284,7 +284,7 @@
                                     </div>
 
                                     <div class="col-md-2">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="answer[]" placeholder="= Answer" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -315,7 +315,7 @@
                                     </div>
 
                                     <div class="col-md-2">
-                                        <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                                        <input class="form-control number-separator" required value="" name="answer[]" placeholder="= Answer" type="text">
                                     </div>
                                     <div class="col-md-2">
                                         <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -363,7 +363,7 @@
             </div>
 
             <div class="col-md-2">
-                <input class="form-control" required value="" name="answer[]" placeholder="= Answer" type="text">
+                <input class="form-control number-separator" required value="" name="answer[]" placeholder="= Answer" type="text">
             </div>
             <div class="col-md-2">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -382,7 +382,7 @@
             <input class="form-control" required name="input_1[]"  type="file">
         </div>
         <div class="col-md-3">
-            <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+            <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
         </div>
         <div class="col-md-3">
             <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -401,7 +401,7 @@
             <input class="form-control" required name="o_input_1[]"  type="file">
         </div>
         <div class="col-md-3">
-            <input class="form-control" required value="" name="o_answer[]" placeholder="Answer" type="text">
+            <input class="form-control number-separator" required value="" name="o_answer[]" placeholder="Answer" type="text">
         </div>
         <div class="col-md-3">
             <input class="form-control" required value="" name="o_marks[]" placeholder="Marks" type="text">
@@ -420,7 +420,7 @@
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
             <div class="col-md-3">
-                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
             <div class="col-md-3">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -439,7 +439,7 @@
                 <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
             </div>
             <div class="col-md-3">
-                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
             <div class="col-md-3">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -459,7 +459,7 @@
             </div>
 
             <div class="col-md-2">
-                <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+                <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
             </div>
             <div class="col-md-2">
                 <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -477,7 +477,7 @@
                <textarea class="" rows="5" cols="40" required value="" name="input_1[]" placeholder="Enter Column 1 data"></textarea>
            </div>
            <div class="col-md-2">
-               <input class="form-control" required value="" name="answer[]" placeholder="Answer" type="text">
+               <input class="form-control number-separator" required value="" name="answer[]" placeholder="Answer" type="text">
            </div>
            <div class="col-md-2">
                <input class="form-control" required value="" name="marks[]" placeholder="Marks" type="text">
@@ -496,34 +496,69 @@
           $(".add-more").click(function(){
               var html = $(".copy").html();
               $(".after-add-more").after(html);
+               easyNumberSeparator({
+                selector: '.number-separator',
+                separator: ',',
+                //resultInput: '.number-separator',
+                })
           });
 
           $(".add-more2").click(function(){
           var html = $(".copy2").html();
           $(".after-add-more").after(html);
+          easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
           });
           $(".add-more22").click(function(){
           var html = $(".copy22").html();
           $(".after-add-more-oth-file").after(html);
+          easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
           });
 
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
             $(".after-add-more").after(html);
+            easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
         });
         $(".add-more33").click(function(){
             var html = $(".copy33").html();
             $(".after-add-more-oth-text").after(html);
+            easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
         });
 
         $(".add-more4").click(function(){
             var html = $(".copy4").html();
             $(".after-add-more").after(html);
+            easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
         });
 
         $(".add-more5").click(function(){
         var html = $(".copy5").html();
         $(".after-add-more").after(html);
+        easyNumberSeparator({
+      selector: '.number-separator',
+      separator: ',',
+      //resultInput: '.number-separator',
+    })
         });
 
           $("body").on("click",".remove",function(){
