@@ -96,6 +96,20 @@ class ExternalCentreAccountController extends Controller
             $acName .= strtoupper(substr($funame, 0, 1));
         }
         $accountId = 'SUD-'.$dob1.$acName;
+        $chkAccountId = User::where('account_id', 'like', '%'.$accountId.'%')->orderBy('id', 'desc')->first();
+        if($chkAccountId){
+            $accId = $chkAccountId->account_id;
+            $expAcc = explode('-', $accId);
+            $i = 1;
+            if(count($expAcc) < 3){
+                $accountId = 'SUD-'.$dob1.$acName.'-'.$i;
+            }else{
+                $incre = $expAcc[2] + 1;
+                $accountId = 'SUD-'.$dob1.$acName.'-'.$incre;
+            }
+        }else{
+            $accountId = 'SUD-'.$dob1.$acName;
+        }
         $customer = new User();
         $customer->name = $request->name;
         $customer->in_charge_name = $request->in_charge_name;
