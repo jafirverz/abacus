@@ -115,6 +115,21 @@ class InstructorAccountController extends Controller
             $acName .= strtoupper(substr($funame, 0, 1));
         }
         $accountId = 'INS-'.$dob1.$acName;
+        $chkAccountId = User::where('account_id', 'like', '%'.$accountId.'%')->orderBy('id', 'desc')->first();
+        if($chkAccountId){
+            $accId = $chkAccountId->account_id;
+            $expAcc = explode('-', $accId);
+            $i = 1;
+            if(count($expAcc) < 3){
+                $accountId = 'INS-'.$dob1.$acName.'-'.$i;
+            }else{
+                $incre = $expAcc[2] + 1;
+                $accountId = 'INS-'.$dob1.$acName.'-'.$incre;
+            }
+        }else{
+            $accountId = 'INS-'.$dob1.$acName;
+        }
+
         $customer = new User();
         $customer->name = $request->name;
         $customer->instructor_full_name = $request->instructor_full_name??NULL;
