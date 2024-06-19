@@ -113,6 +113,10 @@
                                                         for="checkbox-{{ ($key+1) }}"
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
+                                            @else
+                                            <td scope="row">
+                                                <div class="custom-checkbox custom-control"> </div>
+                                            </td>
                                             @endif
                                             <td>
                                                 <a href="{{ route('worksheet.show', $item->id) }}"
