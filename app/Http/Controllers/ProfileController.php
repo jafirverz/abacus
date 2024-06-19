@@ -2082,7 +2082,12 @@ class ProfileController extends Controller
         //dd($actualCompetitionPaperSubted);
         $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
 
-        $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
+        $collection = collect([$actualCompetitionPaperSubted, $gradingExamResult, $achievementsOther]);
+
+        $merged = $collection->collapse();
+        $merged = $merged->paginate(10);
+
+        // $merged = $actualCompetitionPaperSubted->merge($gradingExamResult)->sortByDesc('created_at')->paginate(10);
         //dd($merged);
         $user=User::find($id);
 
