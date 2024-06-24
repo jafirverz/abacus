@@ -396,7 +396,7 @@
         $(".add-more").click(function(){
               var html = $(".copy").html();
               $(".after-add-more").append(html);
-              $(".after-add-more").append(html);
+              //$(".after-add-more").append(html);
             easyNumberSeparator({
             selector: '.number-separator',
             separator: ',',
@@ -407,7 +407,7 @@
           $(".add-more2").click(function(){
               var html = $(".copy2").html();
               $(".after-add-more").append(html);
-              $(".after-add-more").append(html);
+              //$(".after-add-more").append(html);
             easyNumberSeparator({
             selector: '.number-separator',
             separator: ',',
@@ -418,7 +418,7 @@
         $(".add-more3").click(function(){
             var html = $(".copy3").html();
             $(".after-add-more").append(html);
-            $(".after-add-more").append(html);
+            //$(".after-add-more").append(html);
             easyNumberSeparator({
             selector: '.number-separator',
             separator: ',',
@@ -429,7 +429,7 @@
         $(".add-more5").click(function(){
             var html = $(".copy5").html();
             $(".after-add-more").append(html);
-            $(".after-add-more").append(html);
+            //$(".after-add-more").append(html);
             easyNumberSeparator({
             selector: '.number-separator',
             separator: ',',
@@ -440,7 +440,7 @@
         $(".add-more6").click(function(){
             var html = $(".copy6").html();
             $(".after-add-more").append(html);
-            $(".after-add-more").append(html);
+            //$(".after-add-more").append(html);
             easyNumberSeparator({
             selector: '.number-separator',
             separator: ',',
@@ -450,7 +450,7 @@
         $(".add-more7").click(function(){
             var html = $(".copy7").html();
             $(".after-add-more").append(html);
-            $(".after-add-more").append(html);
+            //$(".after-add-more").append(html);
             easyNumberSeparator({
             selector: '.number-separator',
             separator: ',',

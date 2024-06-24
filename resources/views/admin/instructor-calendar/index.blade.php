@@ -93,7 +93,7 @@
                                             </td>
                                             <td>{{ $item->full_name }}</td>
                                             <td>{{ $item->start_date }} {{ $item->start_time }}</td>
-                                            <td>{{ $item->teacher->name }}</td>
+                                            <td>{{ $item->teacher->name ?? '' }}</td>
                                             <td>{{ ($item->reminder==1)?'Yes':'No' }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
