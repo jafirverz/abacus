@@ -61,8 +61,8 @@
                 @endphp
                 <tr>
                   <td class="colnumber">{{ $i }}</td>
-                  <td><em>{{ $studend->user->name }}</em></td>
-                  <td class="text-center">{{ $studend->user_marks }}</td>
+                  <td><em>{{ $studend->user->name ?? '' }}</em></td>
+                  <td class="text-center">{{ $studend->user_marks ?? '' }}</td>
                   <td></td>
                 </tr>
                 @php 

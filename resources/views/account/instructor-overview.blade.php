@@ -56,7 +56,7 @@ $calendars =  \App\InstructorCalendar::where('teacher_id', Auth::user()->id)->ge
                                         </ul>
 
                                         <div class="mt-15">
-                                            <a class="link-3" href="{{ route('instructor.download_all_announcements',$item->id) }}">Download All Attachements</a>
+                                            <a class="link-3" href="{{ route('instructor.download_all_announcements',$item->id) }}">Download All Attachments</a>
                                         </div>
 
                                         @endif

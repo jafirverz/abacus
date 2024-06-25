@@ -337,4 +337,13 @@ class GradingExamController extends Controller
         ob_start();
         return Excel::download(new GradingStudentList($allItems), 'GradingStudentList.xlsx');
     }
+
+    public function studentDelete(Request $request){
+        $items = explode(',', $request->multiple_delete);
+        foreach($items as $item){
+            $comStu = GradingStudent::where('id', $item)->first();
+            $comStu->delete();
+        }
+        return redirect()->back()->with('success',  __('constant.DELETED', ['module'    =>  'Grading Exam Student']));
+    }
 }

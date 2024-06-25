@@ -1270,17 +1270,17 @@ class ProfileController extends Controller
 		$instructor_id = User::where('id', Auth::user()->id)->first();
         if(isset($_GET['level_id']) && $_GET['level_id']!='')
         {
-            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+            $students = User::where('level_id','like','%' .$_GET['level_id'].'%')->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
         }
         elseif(isset($_GET['learning_locations']) && $_GET['learning_locations']!='')
-        {   $students = User::where('learning_locations',$_GET['learning_locations'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        {   $students = User::where('learning_locations',$_GET['learning_locations'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
         }
         elseif(isset($_GET['status']) && $_GET['status']!='')
-        {   $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->paginate($this->pagination);
+        {   $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
         }
         else
         {
-            $students = User::where('instructor_id', $instructor_id->id)->whereIn('approve_status',[1,0])->paginate($this->pagination);
+            $students = User::where('instructor_id', $instructor_id->id)->whereIn('approve_status',[1,0])->orderBy('id', 'desc')->paginate($this->pagination);
         }
         $locations = LearningLocation::orderBy('title','asc')->get();
 		$levels = Level::where('status',1)->get();
