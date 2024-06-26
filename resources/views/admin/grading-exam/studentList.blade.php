@@ -93,17 +93,26 @@
                                                         class="custom-control-label">&nbsp;</label></div>
                                             </td>
 
-                                            <td>{{ $item->userlist->account_id }}</td>
-                                            <td>{{ $item->userlist->name }}</td>
-                                            <td>{{ $item->userlist->dob }}</td>
+                                            <td>{{ $item->userlist->account_id ?? '' }}</td>
+                                            <td>{{ $item->userlist->name ?? '' }}</td>
+                                            <td>{{ $item->userlist->dob ?? '' }}</td>
 
+                                            @if($item->userlist)
                                             <td>{{ getInstructor($item->userlist->instructor_id)->account_id ?? '' }}</td>
                                             <td>{{ getInstructor($item->userlist->instructor_id)->name ?? '' }}</td>
+                                            @else
+                                            <td></td>
+                                            <td></td>
+                                            @endif
                                             <td>{{ $item->mental->category_name ?? '' }}</td>
                                             <td>{{ $item->abacus->category_name ?? '' }}</td>
                                             <td>{{ $item->userlist->location->title ?? '' }}</td>
 
-                                            <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>
+                                            @if($item->userlist)
+                                            <td>{{ getUserTypes($item->userlist->user_type_id) ?? '' }}</td>
+                                            @else
+                                            <td></td>
+                                            @endif
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>
                                               @if($item->approve_status == 1)
