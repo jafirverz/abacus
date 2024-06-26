@@ -44,8 +44,11 @@
               <input class="form-control" name="email" type="text" value="{{old('email', $user->email) ?? ''}}" disabled />
             </div>
             <div class="col-xl-4 sp-col">
-              <label class="lb-1">Password <span class="required">*</span></label>
-              <input class="form-control" name="password" value="" type="password" placeholder="*****" disabled />
+              <div class="hasicon">
+                <label class="lb-1">Password <span class="required">*</span></label>
+                <input id="enterpassword" class="form-control" name="password" value="" type="password" placeholder="*****" disabled />
+                <i toggle="#enterpassword" class="ico toggle-password"></i>
+              </div>
             </div>
           </div>
           <div class="row sp-col-xl-30">

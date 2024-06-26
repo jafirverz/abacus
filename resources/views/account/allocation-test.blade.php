@@ -80,15 +80,18 @@
                             <tbody>
                                 @if($list->count())
                                 @foreach ($list as $key => $item)
+                                @php
+                                $testSubmission = \App\TestSubmission:: where('allocation_id', $item->id)->first();
+                                @endphp
                                 <tr>
                                     <td>
                                         <em>{{ $item->student->name }}</em>
-                                        <div class="tbactions">@if(isset($item->submission->user_marks) && $item->submission->user_marks>0) <a href="{{route('view.test.result', [$item->student->id,$test_id])}}">View</a> @endif <a onclick="return confirm('Are you sure to delete this record?')" href="{{ url('allocation/test/delete/'.$item->id) }}">Delete</a></div>
+                                        <div class="tbactions">@if(isset($testSubmission->user_marks) && $testSubmission->user_marks>0) <a href="{{route('view.test.result', [$item->student->id,$test_id])}}">View</a> @endif <a onclick="return confirm('Are you sure to delete this record?')" href="{{ url('allocation/test/delete/'.$item->id) }}">Delete</a></div>
                                     </td>
                                     <td><em>{{ date('d/m/Y',strtotime($item->start_date)) }}</em></td>
                                     <td><em>{{ date('d/m/Y',strtotime($item->end_date)) }}</em></td>
                                     <td><em>{{ diff_between_dates($item->start_date,$item->end_date) }}</em></td>
-                                    <td>@if(isset($item->submission->total_marks) && $item->submission->total_marks>0)<em class="status-5"> {{ $item->submission->user_marks  }} out of {{ $item->submission->total_marks  }}</em>@endif</td>
+                                    <td>@if(isset($testSubmission->total_marks) && $testSubmission->total_marks>0)<em class="status-5"> {{ $testSubmission->user_marks  }} out of {{ $testSubmission->total_marks  }}</em>@endif</td>
                                 </tr>
                                 @endforeach
                                 @else

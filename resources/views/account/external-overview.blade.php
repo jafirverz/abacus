@@ -45,8 +45,11 @@
                           @endif
                       </div>
                       <div class="col-xl-3 sp-col">
+                        <div class="hasicon">
                           <label class="lb-1">Password <span class="required">*</span></label>
-                          <input class="form-control" name="password" type="password" placeholder="*****" disabled />
+                          <input id="enterpassword" class="form-control" name="password" type="password" placeholder="*****" disabled />
+                          <i toggle="#enterpassword" class="ico toggle-password"></i>
+                        </div>
                           @if ($errors->has('password'))
                               <span class="text-danger">&nbsp;{{ $errors->first('password') }}</span>
                           @endif
