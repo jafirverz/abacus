@@ -1277,7 +1277,12 @@ class ProfileController extends Controller
         {   $students = User::where('learning_locations',$_GET['learning_locations'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
         }
         elseif(isset($_GET['status']) && $_GET['status']!='')
-        {   $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[1,0])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
+        {   
+            if($_GET['status'] == 1){
+                $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[1])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
+            }else{
+                $students = User::where('approve_status', $_GET['status'])->whereIn('approve_status',[0])->where('instructor_id', $instructor_id->id)->orderBy('id', 'desc')->paginate($this->pagination);
+            }
         }
         else
         {
