@@ -13,6 +13,7 @@
                 @include('inc.account-sidebar-event-student')
             @endif
         </div>
+        @include('inc.messages')
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="mb-20">

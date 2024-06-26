@@ -7,9 +7,12 @@ use App\GradingPaper;
 use App\GradingExamList;
 use App\GradingSubmitted;
 use App\Certificate;
+use App\GradingCategory;
 use PDF;
 use App\GradingQuestionSubmitted;
 use App\GradingPaperQuestion;
+use App\GradingStudent;
+use App\GradingStudentResults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -71,17 +74,46 @@ class GradingSubmitController extends Controller
     }
 
     public function downloadCertificate( $id = null){
-        $GradingSubmitted = GradingSubmitted::where('id', $id)->first();
-        $date_of_issue=date('j F Y',strtotime($GradingSubmitted->created_at));
-        $certificate = Certificate::where('id', $GradingSubmitted->certificate_id)->first();
-        $logo='<img style="width: 320px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
-        $logoFoot='<img style="width: 250px"  src="http://abacus.verz1.com/storage/images/1702371736__65782198b8449__3g-abacus-foot.png" alt="abacus" />';
-        $bg1 = 'http://abacus.verz1.com/images/bg-certificate-4.jpg';
-        $bg = '<div style="background: url('.$bg1.') no-repeat center center; background-size: contain; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 100%">';
-
-        $key = ['{{grading_name}}','{{full_name}}','{{dob}}','{{category}}','{{date_of_issue}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
-        $value = [$GradingSubmitted->grade->title, Auth::user()->name,  Auth::user()->dob, $GradingSubmitted->gcategory->category_name, $date_of_issue, $logo, $logoFoot,$bg];
-        $newContents = str_replace($key, $value, $certificate->content);
+        $gradingStudentResult = GradingStudentResults::where('id', $id)->first();
+        $gradingExamId = GradingExam::where('id', $gradingStudentResult->grading_id)->first();
+        
+        //dd($gradingExamId);
+        if($gradingExamId->competition_type=='physical'){
+            $gradingStudent = GradingStudent::where('user_id', $gradingStudentResult->user_id)->where('grading_exam_id', $gradingStudentResult->grading_id)->first();
+            $mentalGrade = $gradingStudent->mental_grade;
+            $abacusGrade = $gradingStudent->abacus_grade;
+            $mentalCagtegory = GradingCategory::where('id', $mentalGrade)->first();
+            $abacusCagtegory = GradingCategory::where('id', $abacusGrade)->first();
+            $cat = array();
+            array_push($cat, $mentalCagtegory->category_name);
+            array_push($cat, $abacusCagtegory->category_name);
+            $category = implode(', ', $cat);
+            //$category = $mentalCagtegory->category_name ?? '' . "," . $abacusCagtegory->category_name ?? '';
+            //$GradingSubmitted = GradingSubmitted::where('id', $id)->first();
+            $date_of_issue=date('j F Y',strtotime($gradingExamId->created_at));
+            $certificate = Certificate::where('id', 4)->first();
+            $logo='<img style="width: 320px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
+            $logoFoot='<img style="width: 250px"  src="http://abacus.verz1.com/storage/images/1702371736__65782198b8449__3g-abacus-foot.png" alt="abacus" />';
+            $bg1 = 'http://abacus.verz1.com/images/bg-certificate-4.jpg';
+            $bg = '<div style="background: url('.$bg1.') no-repeat center center; background-size: contain; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 100%">';
+    
+            $key = ['{{grading_name}}','{{full_name}}','{{dob}}','{{category}}','{{date_of_issue}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
+            $value = [$gradingExamId->title, Auth::user()->name,  Auth::user()->dob, $category, $date_of_issue, $logo, $logoFoot,$bg];
+            $newContents = str_replace($key, $value, $certificate->content);
+        }else{
+            $GradingSubmitted = GradingSubmitted::where('id', $id)->first();
+            $date_of_issue=date('j F Y',strtotime($GradingSubmitted->created_at));
+            $certificate = Certificate::where('id', $GradingSubmitted->certificate_id)->first();
+            $logo='<img style="width: 320px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
+            $logoFoot='<img style="width: 250px"  src="http://abacus.verz1.com/storage/images/1702371736__65782198b8449__3g-abacus-foot.png" alt="abacus" />';
+            $bg1 = 'http://abacus.verz1.com/images/bg-certificate-4.jpg';
+            $bg = '<div style="background: url('.$bg1.') no-repeat center center; background-size: contain; color: #000; font-family: NotoSans, Arial; font-size: 16px; line-height: 1.4; margin: 0 auto; max-width: 100%">';
+    
+            $key = ['{{grading_name}}','{{full_name}}','{{dob}}','{{category}}','{{date_of_issue}}','{{logo}}','{{logofoot}}', '{{$bg}}'];
+            $value = [$GradingSubmitted->grade->title, Auth::user()->name,  Auth::user()->dob, $GradingSubmitted->gcategory->category_name, $date_of_issue, $logo, $logoFoot,$bg];
+            $newContents = str_replace($key, $value, $certificate->content);
+        }
+        
         $pdf = PDF::loadView('account.certificate_pdf', compact('newContents'))->setPaper('a4', 'landscape');
         return $pdf->download('certificate.pdf');
     }

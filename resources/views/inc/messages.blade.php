@@ -10,9 +10,9 @@
 <div class="alert alert-danger alert-dismissible show fade">
     <div class="alert-title">Error</div>
     <div class="alert-body">
-        <button class="close" data-dismiss="alert">
+        <!-- <button class="close" data-dismiss="alert">
             <span>×</span>
-        </button>
+        </button> -->
         {{ session('error') }}
     </div>
 </div>

@@ -29,6 +29,7 @@ use App\Partner;
 use App\SystemSetting;
 use App\GradingExam;
 use App\GradingStudent;
+use App\GradingStudentResults;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -90,8 +91,9 @@ class PagesFrontController extends Controller
         //$competition = Competition::where('status', 1)->where('date_of_competition', '>=', $todayDate)->first();
         $competitionStudent = CompetitionStudent::where('user_id', Auth::user()->id)->pluck('competition_controller_id')->toArray();
         $competition = Competition::whereIn('id', $competitionStudent)->where('status', 1)->where('date_of_competition', '>=', $todayDate)->orderBy('date_of_competition', 'asc')->first();
-        $gradingCertificate = GradingSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
+        // $gradingCertificate = GradingSubmitted::where('user_id', Auth::user()->id)->where('certificate_id', '!=', null)->get();
         $competitionCertificate = CompetitionStudentResult::where('certificate_id', 2)->where('user_id', Auth::user()->id)->get();
+        $gradingCertificate = GradingStudentResults::where('user_id', Auth::user()->id)->where('certificate_id', 4)->get();
 
 
 //        $sliders = Slider::where('status', 1)->orderBy('view_order', 'asc')->get();

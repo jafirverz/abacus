@@ -2301,9 +2301,7 @@ class ProfileController extends Controller
         $user = User::where('id', $user_id)->first();
         $examPass = GradingPassUpload::where('competition_id', $id)->where('student_id', $user->account_id)->first();
 
-        $weekDat = date('l', strtotime($examPass->competition_date));
-        $dateFor = date('d F Y', strtotime($examPass->competition_date));
-        $competitionDate = $dateFor . ', '.$weekDat;
+        
 
         //dd($examPass);
         // if($grading->start_time_of_competition <= 12){
@@ -2319,6 +2317,9 @@ class ProfileController extends Controller
         // }
         if(isset($examPass))
         {
+            $weekDat = date('l', strtotime($examPass->competition_date));
+            $dateFor = date('d F Y', strtotime($examPass->competition_date));
+            $competitionDate = $dateFor . ', '.$weekDat;
             // $compTime=$start_time_of_competition.' - '.$end_time_of_competition;
             $logo='<img style="width: 120px;" src="http://abacus.verz1.com/storage/site_logo/20230522101759_3g-abacus-logo.png" alt="abacus" />';
             // $key = ['{{grading_name}}','{{student_name}}','{{exam_date}}','{{exam_venue}}','{{exam_time}}','{{logo}}'];
@@ -2330,6 +2331,9 @@ class ProfileController extends Controller
             $newContents = str_replace($key, $value, $pass->content);
             $pdf = PDF::loadView('account.grading_pass', compact('newContents'))->setPaper('a4', 'landscape');
             return $pdf->download('grading-pass.pdf');
+        }
+        else{
+            return redirect()->back()->with('error', 'Examination Pass not found');
         }
     }
 }
