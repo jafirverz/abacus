@@ -57,7 +57,7 @@
                                         @if($grade->approve_status==1)
                                         <div class="tbactions"><a href="{{ route('grading-examination.view',$grade->user_id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
                                         @else
-                                        <div class="tbactions"><a href="{{ route('grading-examination.edit',$grade->id) }}">Edit</a> <a href="{{ route('grading-examination.view',$grade->user_id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
+                                        <div class="tbactions"><a href="{{ route('grading-examination.edit', ['id'=>$grade->id, 'geid'=>$id]) }}">Edit</a> <a href="{{ route('grading-examination.view',$grade->user_id) }}">View</a> <a href="{{ route('grading-examination.delete',$grade->id) }}"  onclick="return confirm('Are you sure want to delete this?');">Delete</a></div>
                                         @endif
                                     </td>
                                     <td><em>{{ $grade->mental->category_name ?? '' }}</em></td>

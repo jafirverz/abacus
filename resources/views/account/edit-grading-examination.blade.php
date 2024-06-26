@@ -13,6 +13,7 @@
             @endif
             </div>
         </div>
+        
         <div class="col-lg-9 sp-col tempt-2-inner">
             <div class="tempt-2-content">
                 <div class="mb-20">
@@ -96,7 +97,7 @@
                             <select name="mental_grade" class="selectpicker" data-title="Select Option">
                                 @if($mental_grades)
                                 @foreach($mental_grades as $grade)
-                                <option @if($grade->id==$grading->mental_grade) selected @endif value="{{ $grade->id }}">{{ $grade->title }}</option>
+                                <option @if($grade->id==$grading->mental_grade) selected @endif value="{{ $grade->id }}">{{ $grade->category_name }}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -113,7 +114,7 @@
                             <select name="abacus_grade" class="selectpicker" data-title="Select Option">
                                 @if($abacus_grades)
                                 @foreach($abacus_grades as $grade)
-                                <option  @if($grade->id==$grading->abacus_grade) selected @endif value="{{ $grade->id }}">{{ $grade->title }}</option>
+                                <option  @if($grade->id==$grading->abacus_grade) selected @endif value="{{ $grade->id }}">{{ $grade->category_name }}</option>
                                 @endforeach
                                 @endif
                             </select>

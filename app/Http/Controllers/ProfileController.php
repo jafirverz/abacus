@@ -160,7 +160,7 @@ class ProfileController extends Controller
         $gradingExam = GradingExam::where('status', 1)->whereDate('date_of_competition','>=',$todayDate)->where('id',$id)->first();
 		//dd($user);
 
-		return view('account.grading-examination', compact("page", "user","grading","gradingExam"));
+		return view('account.grading-examination', compact("page", "user","grading","gradingExam","id"));
 	}
 
     public function grading_examination_listing()
@@ -216,7 +216,7 @@ class ProfileController extends Controller
 		return view('account.register-grading-examination', compact("page", "user","students","locations","mental_grades","abacus_grades","gradingExam"));
 	}
 
-    public function edit_grading($id)
+    public function edit_grading($id, $geid)
 	{
 		//
 
@@ -225,8 +225,8 @@ class ProfileController extends Controller
 
 		$user = $this->user;
         $students = User::where('user_type_id',1)->orderBy('id','desc')->get();
-        $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
-        $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $id)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
+        $mental_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 1)->where('category_gradings.competition_id', $geid)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
+        $abacus_grades = CategoryGrading::join('grading_categories','grading_categories.id','category_gradings.category_id')->where('grading_categories.grade_type_id', 2)->where('category_gradings.competition_id', $geid)->orderBy('grading_categories.category_name','asc')->select('grading_categories.*')->get();
         $gradingExam = GradingExam::where('status', 1)->get();
         $locations = LearningLocation::orderBy('title','asc')->get();
 		$page = get_page_by_slug($slug);
@@ -824,7 +824,8 @@ class ProfileController extends Controller
         $gradingStudent->remarks  = $request->remarks ?? NULL;
         $gradingStudent->save();
 
-		return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
+		//return redirect()->route('grading-examination')->with('success', __('constant.GRADING_UPDATED'));
+        return redirect()->back()->with('success', 'Updated successfully');
 	}
 
     public function cal_store(Request $request)
