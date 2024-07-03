@@ -12,6 +12,7 @@
       <th>Mental Grade</th>
       <th>Abacus Grade</th>
       <th>Learning Location</th>
+      <th>Remarks</th>
       <th>Student Type</th>
       <th>Approve Status</th>
     </tr>
@@ -38,6 +39,7 @@
       <td>{{ $item->mental->category_name ?? '' }}</td>
       <td>{{ $item->abacus->category_name ?? '' }}</td>
       <td>{{ $item->userlist->location->title ?? '' }}</td>
+      <td>{{ $item->remarks ?? '' }}</td>
 
       <td>{{ getUserTypes($item->userlist->user_type_id) }}</td>
       <td>

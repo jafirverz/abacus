@@ -204,7 +204,7 @@
 
                         </div>
                         <div class="card-footer">
-                            {{ $users->links() }}
+                            {{ $users->appends(request()->input())->links() }}
                         </div>
                     </div>
                 </div>
