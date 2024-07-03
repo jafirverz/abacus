@@ -306,10 +306,17 @@ class GradingExamController extends Controller
     }
 
 
-    public function studentList($id){
+    public function studentList($id, Request $request){
         $title = 'Student List';
         $grading_exam = GradingExam::find($id);
-        $studentList = GradingStudent::where('grading_exam_id', $id)->orderBy('id', 'desc')->paginate($this->pagination);
+        $search_term = $request->search;
+        if(isset($search_term)){
+            $users = User::where('users.name','like','%'.$search_term.'%')->orWhere('users.email','like','%'.$search_term.'%')->pluck('id')->toArray();
+            $studentList = GradingStudent::where('grading_exam_id', $id)->whereIn('user_id', $users)->orderBy('id', 'desc')->paginate($this->pagination);
+        }else{
+            $studentList = GradingStudent::where('grading_exam_id', $id)->orderBy('id', 'desc')->paginate($this->pagination);
+        }
+        
         return view('admin.grading-exam.studentList', compact('title', 'studentList','grading_exam'));
     }
 

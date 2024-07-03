@@ -39,10 +39,10 @@
                             </form>
                             <h4></h4>
                             <div class="card-header-form form-inline">
-                                <form action="{{ route('grading-exam.search') }}" method="get">
+                                <form action="{{ route('grading-exam.studentlist', ['id'=>$grading_exam->id]) }}" method="get">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="search" class="form-control" placeholder="Search"
+                                        <input type="text" name="search" class="form-control" placeholder="Search by name"
                                             value="{{ $_GET['search'] ?? '' }}">
                                         <div class="input-group-btn">
                                             <button type="submit" class="btn btn-primary"><i
@@ -76,6 +76,7 @@
                                             <th>Mental Grade</th>
                                             <th>Abacus Grade</th>
                                             <th>Learning Location</th>
+                                            <th>Remarks</th>
                                             <th>Student Type</th>
                                             <th>Created At</th>
                                             <th>Approve Status</th>
@@ -107,6 +108,7 @@
                                             <td>{{ $item->mental->category_name ?? '' }}</td>
                                             <td>{{ $item->abacus->category_name ?? '' }}</td>
                                             <td>{{ $item->userlist->location->title ?? '' }}</td>
+                                            <td>{{ $item->remarks ?? '' }}</td>
 
                                             @if($item->userlist)
                                             <td>{{ getUserTypes($item->userlist->user_type_id) ?? '' }}</td>
