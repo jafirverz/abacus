@@ -53,7 +53,7 @@
                                 <div class="col-auto sp-col">
                                     <select disabled name="country_code_phone" class="selectpicker" >
                                         @foreach($country as $phonecode)
-                                            <option value="{{ $phonecode->phonecode }}" >+ {{ $phonecode->phonecode }}</option>
+                                            <option value="{{ $phonecode->phonecode }}" @if($phonecode->phonecode == $customer->country_code_phone) selected @endif >+ {{ $phonecode->phonecode }}</option>
                                         @endforeach
                                     </select>
 
@@ -79,7 +79,7 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
-                            <textarea disabled class="form-control" name="learning_locations">{{ old('learning_locations', $customer->learning_locations) }}</textarea>
+                            <textarea disabled class="form-control" name="learning_locations">{{ old('learning_locations', $customer->location->title ?? '') }}</textarea>
                             @if ($errors->has('learning_locations'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('learning_locations') }}</strong>
