@@ -80,7 +80,7 @@
                                                 @endif
                                 </div>
                                 <div class="col sp-col">
-                                    <input class="form-control" name="mobile" type="text" value=""  />
+                                    <input class="form-control" name="mobile" type="text" value="{{ old('mobile') }}"  />
                                     @if ($errors->has('mobile'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('mobile') }}</strong>
@@ -111,13 +111,21 @@
                     <div class="row sp-col-xl-30">
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Learning Locations </label>
-                            <textarea data-live-search="true" class="form-control" name="learning_locations">{{ old('learning_locations') }}</textarea>
+                            <select data-live-search="true" name="learning_locations" class="selectpicker" data-title="Select Option">
+                                @if($locations)
+                                @foreach($locations as $item)
+                                <option @if(old('learning_locations')==$item->id) selected @endif  value="{{ $item->id }}">{{ $item->title }}</option>
+                                @endforeach
+                                @endif
+                            </select>
                             @if ($errors->has('learning_locations'))
                                     <span class="text-danger d-block">
                                         <strong>{{ $errors->first('learning_locations') }}</strong>
                                     </span>
                            @endif
                         </div>
+
+                       
                         <div class="col-xl-6 sp-col">
                             <label class="lb-1">Remarks </label>
                             <textarea class="form-control" name="remarks">{{ old('remarks') }}</textarea>

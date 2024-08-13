@@ -58,7 +58,7 @@ class ExternalAccountController extends Controller
     {
         $country = Country::orderBy('phonecode')->get();
         $levels = Level::get();
-        $locations = LearningLocation::orderBy('id','desc')->get();
+        $locations = LearningLocation::orderBy('title','asc')->get();
         return view('account.external-add-students', compact('levels', 'country','locations'));
     }
 
