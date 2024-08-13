@@ -879,6 +879,12 @@ class ProfileController extends Controller
 	 */
 	public function store(Request $request)
 	{
+        //dd($this->user->id);
+
+        $checkUserUpdateRequest = UserProfileUpdate::where('user_id', $this->user->id)->where('approve_status', 0)->first();
+        if($checkUserUpdateRequest){
+            return redirect()->back()->with('error', __('Update profile request is already pending'));
+        }
 
         $users = User::find($this->user->id);
         if($request->updateimage == 1 && $request->updateprofile == 0){
@@ -1537,7 +1543,7 @@ class ProfileController extends Controller
     {
 
         $fields = [
-            //'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            'email' =>  'required|email',
             'name' => 'required|string',
             'country_code' => 'required',
             'dob' => 'required',
