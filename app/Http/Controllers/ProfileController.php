@@ -914,7 +914,8 @@ class ProfileController extends Controller
                 if($users->user_type_id == 3){
                     $request->validate([
                         'name' => 'required',
-                        'email' => 'required|unique:users,email,'.$users->id,
+                        //'email' => 'required|unique:users,email,'.$users->id,
+                        'email' => 'required',
                         'dob' => 'required',
                         //'country_code_phone' => 'required',
                         'mobile' => 'required',
@@ -943,7 +944,8 @@ class ProfileController extends Controller
                 else{
                     $request->validate([
                         'name' => 'required',
-                        'email' => 'required|unique:users,email,'.$users->id,
+                        //'email' => 'required|unique:users,email,'.$users->id,
+                        'email' => 'required',
                         'dob' => 'required',
                         'country_code_phone' => 'required',
                         'mobile' => 'required',
@@ -1260,7 +1262,7 @@ class ProfileController extends Controller
 
     public function approve_students($user_id)
     {
-        $customer=UserProfileUpdate::where('user_id',$user_id)->first();
+        $customer=UserProfileUpdate::where('user_id',$user_id)->orderBy('id', 'desc')->first();
         $levels = Level::where('status',1)->get();
         $country = Country::orderBy('phonecode')->get();
         //dd($customer);
@@ -1535,7 +1537,7 @@ class ProfileController extends Controller
     {
 
         $fields = [
-            'email' =>  'required|email|unique:users,email,' . $id . ',id',
+            //'email' =>  'required|email|unique:users,email,' . $id . ',id',
             'name' => 'required|string',
             'country_code' => 'required',
             'dob' => 'required',

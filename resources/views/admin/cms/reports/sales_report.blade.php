@@ -150,7 +150,7 @@
                                   class="custom-control-label">&nbsp;</label></div>
                         </td>
                         <td>{{ $i }}</td>
-                        <td>{{ $users->name }}</td>
+                        <td>{{ $users->name ?? '' }}</td>
                         <td>{{ $orderDetails ?? '' }}</td>
                         <td>{{ $value->total_amount ?? '' }}</td>
                         <td>{{ $value->created_at ?? '-' }}</td>

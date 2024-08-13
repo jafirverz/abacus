@@ -31,6 +31,8 @@
                                 {{ $errors->first('email') }}
                             </span>
                         @endif
+                        
+                        <input name="college"  type="hidden" value=""  />
 
                         <label class="lb-1">Password <span class="required">*</span></label>
                         <div class="hasicon">

@@ -85,6 +85,10 @@ class RegisterController extends Controller
         if(!empty($request->url)){
             return redirect('register')->with('success',  'Your account has been created with DIY Cars! We have sent you an account activation email. Please check your inbox to activate the account.');
         }
+        if(!empty($request->college)){
+            return redirect('register')->with('success',  'Your account has been created with DIY Cars! We have sent you an account activation email. Please check your inbox to activate the account.');
+        }
+        
 
         $messages = [
             'country_code.regex' => 'The Country code entered is invalid.',
