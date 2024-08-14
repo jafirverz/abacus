@@ -13,7 +13,7 @@
                     </div>
                     <hr class="bdrtype-3"/>
                     <form action="{{ route('register') }}" name="student_registration" enctype="multipart/form-data"
-                          method="post">
+                          method="post" autocomplete="off">
                         @csrf
                         <label class="lb-1">Full Name <span class="required">*</span></label>
                         <input class="form-control" name="name" value="{{old('name')}}" type="text"
@@ -131,6 +131,19 @@
                             <button class="btn-1" type="submit">Submit <i class="fa-solid fa-arrow-right-long"></i>
                             </button>
                         </div>
+
+
+                        <div class="captcha">
+                            <!-- Google reCAPTCHA widget -->
+                            <div class="google-recaptcha">
+                                <div class="g-recaptcha" data-callback="setResponse" data-size="invisible"
+                                    data-sitekey="{{config('system_settings')->recaptcha_site_key}}"></div>
+                                <input type="hidden" id="captcha-response" name="captcha_response" />
+                            </div>
+                            <!-- Google reCAPTCHA widget -->
+                        </div>
+
+
                     </form>
                 </div>
             </div>
@@ -148,6 +161,21 @@
             </div>
         </div>
     </main>
+
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+<script>
+    var onloadCallback = function () {
+        grecaptcha.execute();
+    };
+
+    function setResponse(response) {
+        document.getElementById('captcha-response').value = response;
+    }
+
+</script>
+
+
 <script>
     function getInstructor(id)
     {
