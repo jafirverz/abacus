@@ -59,8 +59,9 @@
                                 @endif
                             </div>
                             <div class="col-xl-4 sp-col">
-                                <div class="hasicon">
+                                
                                     <label class="lb-1">Password <span class="required">*</span></label>
+                                    <div class="hasicon">
                                     <input id="enterpassword" class="form-control" name="password" value="" type="password" placeholder="*****" disabled />
                                     <i toggle="#enterpassword" class="ico toggle-password"></i>
                                 </div>
@@ -71,7 +72,7 @@
                                 <label class="lb-1">Date of Birth {{ $user->dob }} <span class="required">*</span></label>
                                 <div class="date-wrap disabled">
                                     <i class="fa-solid fa-calendar-days ico"></i>
-                                    <input class="form-control" type="text" name="dob" value="{{old('dob', date('Y-m-d', strtotime($user->dob))) ?? ''}}" disabled />
+                                    <input class="form-control" type="text" name="dob" value="{{old('dob', date('Y-m-d', strtotime($user->dob))) ?? ''}}" id="dob" disabled />
                                 </div>
                             </div>
 
@@ -296,6 +297,7 @@
     $('#editinformation').click(function () {
         $("#profileform").find("input, select, textarea").attr("disabled", false);
         $('#instructor').attr('disabled', true);
+        $('#dob').attr('disabled', true);
         $('#disablephone').hide();
         $('#enablephone').show();
         $('#disablegender').hide();

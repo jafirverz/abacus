@@ -881,10 +881,10 @@ class ProfileController extends Controller
 	{
         //dd($this->user->id);
 
-        $checkUserUpdateRequest = UserProfileUpdate::where('user_id', $this->user->id)->where('approve_status', 0)->first();
-        if($checkUserUpdateRequest){
-            return redirect()->back()->with('error', __('Update profile request is already pending'));
-        }
+        // $checkUserUpdateRequest = UserProfileUpdate::where('user_id', $this->user->id)->where('approve_status', 0)->first();
+        // if($checkUserUpdateRequest){
+        //     return redirect()->back()->with('error', __('Update profile request is already pending'));
+        // }
 
         $users = User::find($this->user->id);
         if($request->updateimage == 1 && $request->updateprofile == 0){
@@ -922,7 +922,7 @@ class ProfileController extends Controller
                         'name' => 'required',
                         //'email' => 'required|unique:users,email,'.$users->id,
                         'email' => 'required',
-                        'dob' => 'required',
+                        //'dob' => 'required',
                         //'country_code_phone' => 'required',
                         'mobile' => 'required',
                         'gender' => 'required',
@@ -937,7 +937,7 @@ class ProfileController extends Controller
                 {
                     $request->validate([
                         'name' => 'required',
-                        'dob' => 'required',
+                        //'dob' => 'required',
                         'country_code_phone' => 'required',
                         'mobile' => 'required',
                         'gender' => 'required',
@@ -952,7 +952,7 @@ class ProfileController extends Controller
                         'name' => 'required',
                         //'email' => 'required|unique:users,email,'.$users->id,
                         'email' => 'required',
-                        'dob' => 'required',
+                        //'dob' => 'required',
                         'country_code_phone' => 'required',
                         'mobile' => 'required',
                         'gender' => 'required',
@@ -963,33 +963,29 @@ class ProfileController extends Controller
                         ], $messages); //dd($request);
                 }
             }
-            //            $checkPendingRequest = UserProfileUpdate::where('user_id', $users->id)->where('approve_status', '!=', 1)->first();
-            //            if($checkPendingRequest){
-            //                //throw ValidationException::withMessages(['Profile Update request already pending']);
-            //                return back()->withErrors('Profile Update request already pending');
-            //            }
+            
             $var = $request->dob;
             $date = str_replace('/', '-', $var);
             $dob = date('Y-m-d', strtotime($date));
             //dd($request);
 
             // $dob = date('Y-m-d', strtotime($request->dob));
-            $updateUserProfile = new UserProfileUpdate();
-            $updateUserProfile->user_id  = $users->id;
-            $updateUserProfile->name = $request->name;
-            $updateUserProfile->email = $request->email;
+            //$updateUserProfile = new UserProfileUpdate();
+            //$users->user_id  = $users->id;
+            $users->name = $request->name;
+            $users->email = $request->email;
             //$users->email = $request->email;
             if ($request->password != '') {
                 //dd($request->password);
-                $updateUserProfile->password = Hash::make($request->password);
+                $users->password = Hash::make($request->password);
             }
-            $updateUserProfile->address = $request->address ?? NULL;
+            $users->address = $request->address ?? NULL;
             // $updateUserProfile->country_code = $request->country_code;
-            $updateUserProfile->country_code_phone = $request->country_code_phone;
-            $updateUserProfile->dob = $dob;
-            $updateUserProfile->instructor_id  = $request->oldInstructorId;
-            $updateUserProfile->mobile = $request->mobile;
-            $updateUserProfile->gender = $request->gender;
+            $users->country_code_phone = $request->country_code_phone;
+            //$users->dob = $dob;
+            $users->instructor_id  = $request->oldInstructorId;
+            $users->mobile = $request->mobile;
+            $users->gender = $request->gender;
 
             //Image upload..
 
@@ -1011,10 +1007,10 @@ class ProfileController extends Controller
 
                 $path_profile_picture = $filepath . $filename;
 
-                $updateUserProfile->profile_picture = $path_profile_picture;
+                $users->profile_picture = $path_profile_picture;
             }
-            $updateUserProfile->updated_at = Carbon::now();
-            $updateUserProfile->save();
+            $users->updated_at = Carbon::now();
+            $users->save();
 
             if($request->gender == 1){
                 $gender = 'Male';
@@ -1022,67 +1018,66 @@ class ProfileController extends Controller
                 $gender = 'Female';
             }
 
-            //$instructorDetail = User::where('id', $request->oldInstructorId)->first();
-            $instructorDetail = User::where('id', $users->instructor_id)->first();
-            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_PROFILE_UPDATE'));
+            // $instructorDetail = User::where('id', $users->instructor_id)->first();
+            // $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_INSTRUCTOR_STUDENT_PROFILE_UPDATE'));
 
-            if ($email_template) {
-                if($instructorDetail){
-                    $data = [];
-                    $data['email_sender_name'] = systemSetting()->email_sender_name;
-                    $data['from_email'] = systemSetting()->from_email;
-                    $data['to_email'] = [$instructorDetail->email];
-                    $data['cc_to_email'] = [];
-                    $data['subject'] = $email_template->subject;
+            // if ($email_template) {
+            //     if($instructorDetail){
+            //         $data = [];
+            //         $data['email_sender_name'] = systemSetting()->email_sender_name;
+            //         $data['from_email'] = systemSetting()->from_email;
+            //         $data['to_email'] = [$instructorDetail->email];
+            //         $data['cc_to_email'] = [];
+            //         $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
+            //         $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
+            //         $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
 
-                    $newContents = str_replace($key, $value, $email_template->content);
+            //         $newContents = str_replace($key, $value, $email_template->content);
 
-                    $data['contents'] = $newContents;
-                    try {
-                        $mail = Mail::to($instructorDetail->email)->send(new EmailNotification($data));
-                    } catch (Exception $exception) {
-                        dd($exception);
-                    }
-                }
+            //         $data['contents'] = $newContents;
+            //         try {
+            //             $mail = Mail::to($instructorDetail->email)->send(new EmailNotification($data));
+            //         } catch (Exception $exception) {
+            //             dd($exception);
+            //         }
+            //     }
 
 
-            }
+            // }
             // dd("aa");
             //			Admin email for new student registration
-            $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE'));
-            $admins = Admin::get();
+            // $email_template = $this->emailTemplate(__('constant.EMAIL_TEMPLATE_TO_ADMIN_STUDENT_PROFILE_UPDATE'));
+            // $admins = Admin::get();
 
-            if ($email_template) {
-                $data = [];
-                foreach($admins as $admin){
-                    $data['email_sender_name'] = systemSetting()->email_sender_name;
-                    $data['from_email'] = systemSetting()->from_email;
-                    $data['to_email'] = [$admin->email];
-                    $data['cc_to_email'] = [];
-                    $data['subject'] = $email_template->subject;
+            // if ($email_template) {
+            //     $data = [];
+            //     foreach($admins as $admin){
+            //         $data['email_sender_name'] = systemSetting()->email_sender_name;
+            //         $data['from_email'] = systemSetting()->from_email;
+            //         $data['to_email'] = [$admin->email];
+            //         $data['cc_to_email'] = [];
+            //         $data['subject'] = $email_template->subject;
 
-                    $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
-                    //dd($instructorDetail);
-                    $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
-                    $newContents = str_replace($key, $value, $email_template->content);
+            //         $key = ['{{full_name}}','{{email}}','{{dob}}','{{gender}}','{{contact_number}}','{{address}}','{{instructor}}'];
+            //         //dd($instructorDetail);
+            //         $value = [$request->name, $request->email, $dob, $gender, $request->mobile, $request->address, $instructorDetail->name];
+            //         $newContents = str_replace($key, $value, $email_template->content);
 
-                    $data['contents'] = $newContents;
-                    try {
-                        $mail = Mail::to($admin->email)->send(new EmailNotification($data));
-                    } catch (Exception $exception) {
-                        dd($exception);
-                    }
-                }
+            //         $data['contents'] = $newContents;
+            //         try {
+            //             $mail = Mail::to($admin->email)->send(new EmailNotification($data));
+            //         } catch (Exception $exception) {
+            //             dd($exception);
+            //         }
+            //     }
 
-            }
+            // }
         }
 
 
 
-		return redirect()->back()->with('success', __('constant.ACOUNT_UPDATED'));
+		return redirect()->back()->with('success', __('Profile updated successfully'));
 	}
 
 
@@ -2095,6 +2090,8 @@ class ProfileController extends Controller
         $actualCompetitionPaperSubted = CompetitionStudentResult::where('user_id', $userId)->orderBy('id', 'desc')->get();
         //dd($actualCompetitionPaperSubted);
         $gradingExamResult = GradingStudentResults::where('user_id', $userId)->orderBy('id', 'desc')->get();
+
+        $achievementsOther = AchievementOther::where('user_id', $userId)->orderBy('total_marks', 'desc')->get();
 
         $collection = collect([$actualCompetitionPaperSubted, $gradingExamResult, $achievementsOther]);
 
