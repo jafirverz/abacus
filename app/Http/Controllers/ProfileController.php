@@ -1594,7 +1594,13 @@ class ProfileController extends Controller
         {
             $students = User::where('user_type_id',1)->whereNotIn('id',$allocated_user)->get();
         }
-        $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->where('competition_controller_id', $competition->id)->paginate($this->pagination);
+
+        if($competition){
+            $compStudents = CompetitionStudent::where('instructor_id', $instructor_id->id)->where('competition_controller_id', $competition->id)->paginate($this->pagination);
+        }else{
+            abort(404);
+        }
+        
 
 
 		return view('account.competition-students', compact('competition', 'compStudents', 'competition'));

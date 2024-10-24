@@ -7,8 +7,8 @@
 
 
     <div class="mm-page" id="toppage">
-			 @include('inc.headerstudent')
-			 @yield('content')
+        @include('inc.headerstudent')
+        @yield('content')
 
     </div><!-- //page -->
 
@@ -23,6 +23,40 @@
                 format: 'YYYY-MM-DD H:i:s',
             });
         });
+
+        // window.onload = function () {
+        //     if (typeof history.pushState === "function") {
+        //         history.pushState("jibberish", null, null);
+        //         window.onpopstate = function () {
+        //             history.pushState('newjibberish', null, null);
+        //         };
+        //     }
+        //     else {
+        //         var ignoreHashChange = true;
+        //         window.onhashchange = function () {
+        //             if (!ignoreHashChange) {
+        //                 ignoreHashChange = true;
+        //                 window.location.hash = Math.random();
+        //             }
+        //             else {
+        //                 ignoreHashChange = false;
+        //             }
+        //         };
+        //     }
+        // };
+
+
+        //     $(window).keydown(function (event) {
+        //         if (event.keyCode == 116) {
+
+        //             event.preventDefault();
+
+        //             return false;
+
+        //         }
+
+        //     });
+
     </script>
 </body>
 

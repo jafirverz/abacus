@@ -29,6 +29,20 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="ggroup">
+                                    <label for="filter">Students:</label>
+                                    <div class="selectwrap">
+                                        <select data-live-search="true" class="selectpicker" > 
+                                            <option value="">Select Students</option>
+                                        @if($students->count() > 0)
+                                        @foreach($students as $student)
+                                        <option value="">{{ $student->name }}</option>
+                                        @endforeach
+                                        @endif
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-3 col-sm mt-767-15">
                                         <select data-live-search="true" class="selectpicker"  onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">

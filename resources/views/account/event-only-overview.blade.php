@@ -12,7 +12,7 @@
                         <h3>Grading Examination</h3>
                         <div class="gactions">
                             @if($grading_exam)
-                            <a href="{{ route('grading-overview',$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <a href="{{ route('grading',$grading_exam->id) }}">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @else
                             <a href="javascript::void();">View More <i class="fa-solid fa-arrow-right-long"></i></a>
                             @endif
